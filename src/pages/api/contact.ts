@@ -1,5 +1,9 @@
 import type { APIRoute } from "astro";
 
+// Astro v5: garante que essa rota NÃO será pré-gerada no build,
+// virando um endpoint “on-demand” (ex.: Vercel Function).
+export const prerender = false;
+
 function json(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
