@@ -1,0 +1,48 @@
+---
+export async function getStaticPaths() {
+  return [
+    { params: { locale: "es" } },
+    { params: { locale: "pt" } },
+    { params: { locale: "en" } },
+  ];
+}
+
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getLocale, ui } from "../../../i18n/ui";
+import ContactForm from "../../../islands/ContactForm.jsx";
+
+const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
+const dict = (ui as any)?.[locale] ?? (ui as any)?.es ?? (ui as any)?.en ?? (ui as any)?.pt ?? {};
+const contact = (dict as any)?.contact ?? (dict as any)?.home?.contact ?? {};
+
+const t = {
+  badge: contact?.badge ?? "Contact",
+  title: contact?.title ?? "Let’s talk",
+  subtitle: contact?.subtitle ?? "Tell us what you want to build.",
+};
+
+const metaTitle = contact?.metaTitle ?? `${t.title} | IA Operators`;
+const metaDescription = contact?.metaDescription ?? t.subtitle;
+---
+
+<BaseLayout title={metaTitle} description={metaDescription}>
+  <div class="bg-transparent text-white min-h-screen">
+    <!-- HERO (sem GridSpotlight local, porque já está no BaseLayout) -->
+    <section class="relative flex items-center justify-center pt-28 pb-14 px-4 overflow-hidden">
+      <div class="relative z-10 max-w-3xl text-center">
+        <span class="inline-block px-4 py-1 rounded-full bg-[#232323] text-orange-400 text-xs font-semibold mb-4">
+          {t.badge}
+        </span>
+        <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">
+          {t.title}
+        </h1>
+        <p class="text-lg md:text-xl text-gray-200">
+          {t.subtitle}
+        </p>
+      </div>
+    </section>
+
+    <!-- Form + Sidebar (island React) -->
+    <ContactForm client:load locale={locale} />
+  </div>
+</BaseLayout>

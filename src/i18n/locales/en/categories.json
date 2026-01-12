@@ -1,0 +1,9 @@
+{
+    "all": "All",
+    "tools": "Tools",
+    "lawyers": "AI for Lawyers",
+    "architects": "AI for Architects",
+    "accounting": "AI for Accounting",
+    "restaurants": "AI for Restaurants",
+    "others": "Others"
+}

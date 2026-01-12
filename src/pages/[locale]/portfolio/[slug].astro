@@ -1,0 +1,305 @@
+---
+import { projects } from "../../../data/projects";
+import type { Project, ProjectMetric, ProjectPillar } from "../../../data/projects";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { createT } from "../../../i18n/t";
+
+export async function getStaticPaths() {
+  const locales = ["es", "pt", "en"];
+
+  return locales.flatMap((locale) =>
+    projects.map((p: Project) => ({
+      params: { locale, slug: p.slug },
+      props: { project: p },
+    }))
+  );
+}
+
+type Props = { project: Project };
+const { project } = Astro.props;
+
+const locale = Astro.params.locale!;
+const slug = Astro.params.slug!;
+
+// createT agora é async (porque carregamos JSON com import dinâmico)
+const t = await createT(locale, { namespaces: ["portfolio", "projects"] });
+
+const liveLink = project.links?.find((l) => l.external)?.href;
+
+const stackLike = [
+  ...project.pillars.map((p: ProjectPillar) => t(p.titleKey)),
+  ...(project.securityKeys?.length ? ["AES-GCM / RLS"] : []),
+].slice(0, 8);
+
+const pageTitle = `${t(project.titleKey)} — IA Operators`;
+const pageDescription = t(project.taglineKey);
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} ogImage={project.heroImage ?? undefined}>
+  <section class="bg-transparent text-white pt-28 pb-20 px-6">
+    <div class="max-w-6xl mx-auto">
+      <!-- Top nav -->
+      <div class="mb-8 flex items-center justify-between gap-4">
+        <a
+          href={`/${locale}/portfolio/`}
+          class="inline-flex items-center gap-2 text-gray-300 hover:text-white transition"
+        >
+          <span class="text-xl">←</span>
+          <span class="text-sm font-semibold">{t("portfolio:actions.back") ?? "Voltar ao portfolio"}</span>
+        </a>
+
+        {liveLink && (
+          <a
+            href={liveLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 text-green-300 text-sm font-bold hover:bg-green-500/15 transition"
+          >
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+            </span>
+            {t("portfolio:actions.live")}
+          </a>
+        )}
+      </div>
+
+      <!-- Hero -->
+      <header class="mb-10">
+        <div class="flex flex-wrap items-center gap-3 mb-6">
+          <span class="bg-black/70 backdrop-blur-md border border-white/10 text-orange-500 text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider">
+            {project.category}
+          </span>
+
+          <span class="bg-white/5 border border-white/10 text-gray-300 text-xs font-semibold px-4 py-2 rounded-full">
+            {slug}
+          </span>
+        </div>
+
+        <h1 class="text-3xl md:text-5xl font-bold leading-tight text-white mb-4">
+          {t(project.titleKey)}
+        </h1>
+
+        <p class="text-gray-400 text-lg leading-relaxed max-w-3xl">
+          {t(project.taglineKey)}
+        </p>
+      </header>
+
+      <!-- Hero image -->
+      {project.heroImage && (
+        <div class="mb-12 relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl aspect-16/8 bg-[#111]">
+          <img
+            src={project.heroImage}
+            alt={`${t(project.titleKey)} — IA Operators`}
+            loading="lazy"
+            class="w-full h-full object-cover opacity-95"
+          />
+          <div class="absolute inset-0 bg-linear-to-t from-[#050505] via-transparent to-transparent opacity-70" />
+        </div>
+      )}
+
+      <!-- Content grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <!-- Main -->
+        <div class="lg:col-span-2">
+          <!-- Problem / Engineering / Impact -->
+          <section class="space-y-10">
+            <div class="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
+              <h2 class="text-2xl font-bold mb-4 text-white">{t("portfolio:project.sections.gap.title") ?? "Problem"}</h2>
+              <p class="text-gray-300 leading-relaxed">{t(project.problemKey)}</p>
+            </div>
+
+            <div class="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
+              <h2 class="text-2xl font-bold mb-4 text-white">{t("portfolio:project.sections.engineering.title") ?? "Engineering"}</h2>
+              <p class="text-gray-300 leading-relaxed">{t(project.engineeringIntroKey)}</p>
+            </div>
+
+            <div class="bg-[#111] border border-white/10 rounded-3xl p-8 border-l-4 border-l-orange-500">
+              <div class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-orange-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+                <div>
+                  <span class="text-gray-500 text-xs uppercase font-bold tracking-wider block mb-1">{t("portfolio:actions.impact")}</span>
+                  <p class="text-white text-base font-medium">{t(project.impactKey)}</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- What it does / How it works -->
+          <section class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
+              <h3 class="text-xl font-bold mb-4">{t("projects:sections.whatItDoes.title") ?? "What it does"}</h3>
+              <ul class="space-y-2 text-gray-300">
+                {project.whatItDoesKeys.map((k) => (
+                  <li class="flex gap-3">
+                    <span class="mt-2 w-2 h-2 rounded-full bg-orange-500/90 shrink-0" />
+                    <span class="leading-relaxed">{t(k)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
+              <h3 class="text-xl font-bold mb-4">{t("portfolio:project.sections.howItWorks.title") ?? "How it works"}</h3>
+              <ol class="space-y-2 text-gray-300 list-decimal list-inside">
+                {project.howItWorksKeys.map((k) => (
+                  <li class="leading-relaxed">{t(k)}</li>
+                ))}
+              </ol>
+            </div>
+          </section>
+
+          <!-- Pillars -->
+          <section class="mt-12 bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
+            <h3 class="text-xl font-bold mb-6">{t("projects:sections.pillars.title") ?? "Pillars"}</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {project.pillars.map((pillar) => (
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <h4 class="font-bold text-white mb-2">{t(pillar.titleKey)}</h4>
+                  <p class="text-gray-300 text-sm leading-relaxed mb-4">{t(pillar.descriptionKey)}</p>
+
+                  {pillar.bulletsKeys?.length ? (
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                      {pillar.bulletsKeys.map((bk) => (
+                        <li class="flex gap-3">
+                          <span class="mt-2 w-2 h-2 rounded-full bg-orange-500/80 shrink-0" />
+                          <span>{t(bk)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <!-- Security -->
+          <section class="mt-12 bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
+            <h3 class="text-xl font-bold mb-4">{t("portfolio:project.sections.security.title") ?? "Security"}</h3>
+            <div class="flex flex-wrap gap-2 mb-6">
+              {stackLike.map((tech) => (
+                <span
+                  class:list={[
+                    "text-xs px-3 py-1.5 rounded border",
+                    tech.toLowerCase().includes("security") ||
+                    tech.toLowerCase().includes("aes") ||
+                    tech.toLowerCase().includes("rls")
+                      ? "bg-green-900/20 border-green-800 text-green-400"
+                      : "bg-white/5 border-white/10 text-gray-300",
+                  ]}
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            <ul class="space-y-2 text-gray-300">
+              {project.securityKeys.map((k) => (
+                <li class="flex gap-3">
+                  <span class="mt-2 w-2 h-2 rounded-full bg-green-400/90 shrink-0" />
+                  <span class="leading-relaxed">{t(k)}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="space-y-8">
+          <!-- Metrics -->
+          {project.metrics?.length ? (
+            <section class="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
+              <h3 class="text-xl font-bold mb-6">{t("projects:sections.metrics.title") ?? "Metrics"}</h3>
+
+              <div class="grid grid-cols-2 gap-4">
+                {project.metrics.map((m: ProjectMetric) => (
+                  <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <div class="text-2xl font-extrabold text-white">{m.value}</div>
+                    <div class="text-gray-400 text-xs uppercase tracking-wider font-bold mt-1">
+                      {t(m.labelKey)}
+                    </div>
+                    {m.noteKey && <div class="text-gray-400 text-xs mt-2">{t(m.noteKey)}</div>}
+                  </div>
+                ))}
+              </div>
+            </section>
+          ) : null}
+
+          <!-- Pricing -->
+          {project.pricing ? (
+            <section class="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
+              <h3 class="text-xl font-bold mb-6">{t("portfolio:project.sections.pricing.title") ?? "Pricing"}</h3>
+
+              <div class="space-y-4">
+                {project.pricing.monthly ? (
+                  <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-gray-300 font-semibold">{t("portfolio:project.pricing.monthly") ?? "Monthly"}</span>
+                      <span class="text-white font-extrabold">{project.pricing.monthly.price}</span>
+                    </div>
+
+                    {project.pricing.monthly.detailsKeys?.length ? (
+                      <ul class="space-y-2 text-gray-300 text-sm mt-3">
+                        {project.pricing.monthly.detailsKeys.map((k) => (
+                          <li class="flex gap-3">
+                            <span class="mt-2 w-2 h-2 rounded-full bg-orange-500/80 shrink-0" />
+                            <span>{t(k)}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </div>
+                ) : null}
+
+                {project.pricing.annual ? (
+                  <div class="rounded-2xl border border-orange-500/30 bg-orange-500/5 p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-orange-200 font-semibold">{t("portfolio:project.pricing.annual") ?? "Annual"}</span>
+                      <span class="text-white font-extrabold">{project.pricing.annual.price}</span>
+                    </div>
+
+                    {project.pricing.annual.detailsKeys?.length ? (
+                      <ul class="space-y-2 text-gray-200 text-sm mt-3">
+                        {project.pricing.annual.detailsKeys.map((k) => (
+                          <li class="flex gap-3">
+                            <span class="mt-2 w-2 h-2 rounded-full bg-orange-400 shrink-0" />
+                            <span>{t(k)}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </div>
+                ) : null}
+
+                {project.pricing.trialKey ? (
+                  <div class="text-gray-400 text-sm mt-2">{t(project.pricing.trialKey)}</div>
+                ) : null}
+              </div>
+            </section>
+          ) : null}
+
+          <!-- Links -->
+          <section class="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
+            <h3 class="text-xl font-bold mb-4">{t("projects:sections.links.title") ?? "Links"}</h3>
+            <div class="flex flex-col gap-3">
+              {project.links.map((l) => (
+                <a
+                  href={l.href}
+                  target={l.external ? "_blank" : undefined}
+                  rel={l.external ? "noopener noreferrer" : undefined}
+                  class="inline-flex items-center justify-between gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
+                >
+                  <span class="font-semibold">{l.label}</span>
+                  <span class="text-gray-400 text-sm">{l.external ? "↗" : "→"}</span>
+                </a>
+              ))}
+            </div>
+          </section>
+        </aside>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

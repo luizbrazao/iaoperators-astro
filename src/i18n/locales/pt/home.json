@@ -1,0 +1,141 @@
+{
+    "hero": {
+        "titleHighlight": "Especialistas em Inteligência Artificial",
+        "titleHighlightMobile": "Especialistas em IA",
+        "titleRest": "para automatizar seu negócio ✨",
+        "subtitle": "Fazemos sua empresa operar no piloto automático: processos automatizados, operações otimizadas e resultados surpreendentes, tudo com soluções de IA sob medida.",
+        "cta": "Falar com Luiz ↗",
+        "tech": "Aplicamos a tecnologia mais recente"
+    },
+    "why": {
+        "badge": "Para você",
+        "title": "IA para todos: soluções\nque se adaptam ao seu negócio",
+        "subtitle": "Descubra como a IA pode transformar seus processos e gerar resultados que fazem você sorrir todos os dias."
+    },
+    "industries": [
+        {
+            "title": "Lojas online (e-commerce)",
+            "description": "Atendimento 24/7, recomendações personalizadas e gestão de estoque sem falhas. A IA faz sua loja vender mais enquanto você descansa."
+        },
+        {
+            "title": "Restaurantes e bares",
+            "description": "Pedidos automáticos, estoque em tempo real e cardápios ajustados ao clima. Com IA, seu restaurante se torna uma operação organizada e deliciosa."
+        },
+        {
+            "title": "Escritórios de advocacia",
+            "description": "Automatize prazos, análise de documentos e até a pesquisa jurídica. Com IA, seu escritório ganha agilidade e precisão."
+        },
+        {
+            "title": "Escolas e cursos online",
+            "description": "Correção automática, trilhas de estudo personalizadas e gestão de matrículas sem dor de cabeça. A IA torna a educação mais inteligente e conectada."
+        },
+        {
+            "title": "Agências de marketing",
+            "description": "Relatórios automáticos, análise de campanhas em tempo real e criação de conteúdo com IA. Deixe o trabalho pesado com a IA e foque na criatividade."
+        },
+        {
+            "title": "Imobiliárias",
+            "description": "Gestão de leads, agendamento de visitas e análise de mercado em tempo real. A IA faz sua imobiliária vender mais e trabalhar menos."
+        }
+    ],
+    "services": {
+        "badge": "Como trabalhamos",
+        "title": "O caminho para a\nautomatização inteligente",
+        "subtitle": "3 etapas simples para transformar o caos em eficiência (e paz de espírito).",
+        "steps": [
+            {
+                "title": "1. Planejamento",
+                "body": "Antes de agir, a gente pensa. Analisamos suas necessidades, definimos objetivos claros e desenhamos uma estratégia sob medida. Assim, cada passo fica alinhado com o que realmente importa."
+            },
+            {
+                "title": "2. Implementação",
+                "body": "Hora de executar. Com tecnologia de ponta e integrações bem construídas, colocamos o plano em produção. Automatizamos processos, conectamos sistemas e garantimos que tudo funcione sem fricção."
+            },
+            {
+                "title": "3. Otimização",
+                "body": "O trabalho não termina no deploy. Monitoramos, ajustamos e melhoramos continuamente. Com IA, seu negócio fica sempre um passo à frente — pronto para crescer e superar expectativas."
+            }
+        ]
+    },
+    "testimonial": {
+        "title": "Olá, eu sou Luiz Brazão 👋",
+        "paragraphs": [
+            "Passei anos liderando times em empresas grandes, pequenas e médias, com marcas conhecidas e outras nem tanto.",
+            "E quer saber? Sempre batia na mesma parede:\nnão era falta de gente brilhante. Era tudo sendo feito na unha, como se ainda estivéssemos em 2002.",
+            "Processos improvisados, informação espalhada em mil lugares, decisões que se repetiam toda semana como um eterno déjà vu.\nE sim, por um tempo, só organizar um pouco já resolvia.\nHoje… não resolve mais.",
+            "Porque o mercado tá correndo.\nE se você não automatiza, você trava. Ponto.\nO que antes era o “processo estrela”, hoje virou o novo gargalo.",
+            "Foi por isso que nasceu a IA Operators: pra ajudar empresas (como a sua, que tem mil coisas rodando e zero tempo a perder) a transformar processos em sistemas inteligentes.",
+            "Com IA. Mas sem fumaça.",
+            "Porque inteligência artificial não é mágica, é estratégia.\nE quando bem usada, não só economiza tempo. Gera resultado. Daqueles que aparecem no Excel… e no alívio mental do seu time.",
+            "Bora colocar isso pra rodar?"
+        ],
+        "trustedBy": "Empresas que confiaram em nosso trabalho"
+    },
+    "blogSection": {
+        "badge": "Blog",
+        "title": "Últimas publicações",
+        "subtitle": "Bem-vindo ao cantinho tech onde a IA encontra a vida real.",
+        "posts": [
+            {
+                "category": "Ferramentas",
+                "title": "Manus: A Revolução da IA",
+                "date": "10 mar 2025"
+            },
+            {
+                "category": "IA para restaurantes",
+                "title": "IA para Restaurantes & Foto",
+                "date": "4 mar 2025"
+            },
+            {
+                "category": "Notícias",
+                "title": "GPT-4.5: O Futuro da OpenAI",
+                "date": "28 fev 2025"
+            }
+        ]
+    },
+    "faq": {
+        "title": "Perguntas frequentes",
+        "items": [
+            {
+                "q": "O que é a IA Operators?",
+                "a": "A IA Operators é uma agência especializada em automação de processos com inteligência artificial. Ajudamos empresas a otimizar operações, reduzir custos e aumentar eficiência com soluções sob medida."
+            },
+            {
+                "q": "Que tipos de negócios se beneficiam de automação com IA?",
+                "a": "Quase todos. De clínicas e escritórios a e-commerce e agências. Criamos soluções adaptadas ao seu setor e ao seu jeito real de operar."
+            },
+            {
+                "q": "Como funciona o processo com a IA Operators?",
+                "a": "Trabalhamos em 3 etapas: (1) Planejamento: entendemos o problema e definimos objetivos. (2) Implementação: construímos e integramos a automação. (3) Otimização: medimos, ajustamos e melhoramos continuamente."
+            },
+            {
+                "q": "Que tipo de tarefas dá para automatizar?",
+                "a": "Quase qualquer tarefa repetitiva ou baseada em regras/dados: atendimento ao cliente (chatbots), agendamentos, relatórios, follow-up de leads, integrações entre sistemas, geração de documentos e mais."
+            },
+            {
+                "q": "É difícil implementar IA no meu negócio?",
+                "a": "Não. Nós cuidamos do desenho, da integração e da entrada em produção. Seu time recebe orientação para operar o sistema com segurança."
+            },
+            {
+                "q": "Em quanto tempo aparece o retorno?",
+                "a": "Depende do escopo, mas muitos clientes veem ganhos em semanas: menos trabalho manual, respostas mais rápidas, menos erros e mais conversão."
+            },
+            {
+                "q": "É seguro usar IA?",
+                "a": "Sim, se for bem feito. Projetamos soluções com boas práticas: mínimo acesso, segredos no servidor, controle de permissões e respeito à privacidade."
+            },
+            {
+                "q": "O que diferencia a IA Operators de outras agências?",
+                "a": "Personalização, obsessão por qualidade e automações focadas em resultado real. A gente não vende “hype”: integra sistemas e mede impacto."
+            },
+            {
+                "q": "Como eu começo?",
+                "a": "Simples: fale com a gente. Fazemos uma avaliação inicial, identificamos oportunidades e propomos um plano claro de implementação."
+            },
+            {
+                "q": "E se eu precisar de melhorias depois?",
+                "a": "Oferecemos suporte contínuo e otimização. IA e processos mudam; seu sistema precisa evoluir junto com o seu negócio."
+            }
+        ]
+    }
+}

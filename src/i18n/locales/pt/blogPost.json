@@ -1,0 +1,13 @@
+{
+    "loading": "Carregando conteúdo...",
+    "invalidSlug": "Slug inválido.",
+    "notFound": "Não encontramos o artigo que você procura.",
+    "back": "Voltar ao Blog",
+    "dateUnavailable": "Data indisponível",
+    "readingTime": "{{minutes}} min de leitura",
+    "article": "Artigo",
+    "shareTitle": "Gostou deste artigo? Compartilhe:",
+    "copyLink": "Copiar link",
+    "shareLinkedIn": "Compartilhar no LinkedIn",
+    "shareTwitter": "Compartilhar no X/Twitter"
+}

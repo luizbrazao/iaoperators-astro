@@ -1,0 +1,91 @@
+{
+    "terms": {
+        "title": "Termos e Condições",
+        "intro": "Bem-vindo à IA Operators! Estes termos e condições descrevem as regras e diretrizes para o uso do nosso site e serviços.",
+        "acceptance": {
+            "title": "1. Aceitação dos Termos",
+            "text": "Ao acessar e utilizar os serviços da IA Operators, você concorda em cumprir estes Termos e Condições. Caso não concorde com qualquer parte, recomendamos que não utilize nossos serviços."
+        },
+        "services": {
+            "title": "2. Serviços Oferecidos",
+            "items": {
+                "automation": "Desenvolvimento de ferramentas de automação.",
+                "integration": "Integração de sistemas.",
+                "support": "Suporte técnico e otimização contínua."
+            }
+        },
+        "userResponsibilities": {
+            "title": "3. Responsabilidades do Usuário",
+            "items": {
+                "accurateInfo": "Fornecer informações precisas e atualizadas.",
+                "legalUse": "Utilizar os serviços de forma ética e em conformidade com a lei.",
+                "credentials": "Não compartilhar credenciais de acesso nem permitir uso não autorizado."
+            }
+        },
+        "intellectualProperty": {
+            "title": "4. Propriedade Intelectual",
+            "text": "Todos os direitos de propriedade intelectual relacionados aos serviços da IA Operators, incluindo software, designs e conteúdos, são de propriedade exclusiva da IA Operators."
+        },
+        "liability": {
+            "title": "5. Limitação de Responsabilidade",
+            "items": {
+                "indirectDamages": "Danos indiretos, incidentais ou consequentes.",
+                "misuse": "Problemas causados pelo uso inadequado das ferramentas pelo cliente.",
+                "downtime": "Interrupções de serviço por causas fora do nosso controle."
+            }
+        },
+        "modifications": {
+            "title": "6. Modificações",
+            "text": "Reservamo-nos o direito de modificar estes Termos e Condições a qualquer momento. O uso contínuo dos serviços constitui aceitação das alterações."
+        }
+    },
+    "privacy": {
+        "title": "Política de Privacidade",
+        "collection": {
+            "title": "1. Informações que Coletamos",
+            "items": {
+                "personal": "Nome, e-mail e dados de contato.",
+                "usage": "Informações de uso das nossas ferramentas (logs, métricas, etc.)."
+            }
+        },
+        "usage": {
+            "title": "2. Uso das Informações",
+            "items": {
+                "improve": "Fornecer e melhorar nossos serviços.",
+                "personalization": "Personalizar a experiência do usuário.",
+                "communication": "Enviar comunicações relacionadas ao serviço (sem spam)."
+            }
+        },
+        "sharing": {
+            "title": "3. Compartilhamento de Informações",
+            "text": "Não vendemos nem compartilhamos informações pessoais com terceiros, exceto quando exigido por lei ou necessário para a prestação dos serviços contratados."
+        },
+        "security": {
+            "title": "4. Segurança dos Dados",
+            "text": "Adotamos medidas avançadas de segurança para proteger suas informações, porém nenhum sistema é totalmente seguro."
+        },
+        "rights": {
+            "title": "5. Direitos do Usuário",
+            "items": {
+                "access": "Acessar, corrigir ou excluir seus dados pessoais.",
+                "portability": "Solicitar a portabilidade dos dados.",
+                "marketing": "Opor-se ao uso dos dados para fins de marketing."
+            }
+        },
+        "cookies": {
+            "title": "6. Cookies",
+            "text": "Utilizamos cookies para melhorar a experiência do usuário. Você pode gerenciar ou desativar os cookies nas configurações do navegador."
+        },
+        "changes": {
+            "title": "7. Alterações na Política de Privacidade",
+            "text": "Reservamo-nos o direito de atualizar esta política. Alterações relevantes serão comunicadas pelo site ou por e-mail."
+        }
+    },
+    "contact": {
+        "title": "Contato",
+        "text": "Se tiver dúvidas, entre em contato conosco em"
+    },
+    "privacyPage": {
+        "title": "Política de Privacidade"
+    }
+}

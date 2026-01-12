@@ -1,0 +1,75 @@
+{
+    "header": {
+        "badge": "Nossos Cases",
+        "title": "Soluções Reais,",
+        "highlight": "Resultados Mensuráveis",
+        "subtitle": "Não apenas escrevemos código. Criamos ecossistemas de IA que resolvem problemas complexos de integração, segurança e escala."
+    },
+    "actions": {
+        "details": "Ver detalhes",
+        "live": "Online",
+        "impact": "Impacto Gerado"
+    },
+    "breadcrumb": {
+        "portfolio": "Portfolio"
+    },
+    "notFound": {
+        "title": "Projeto não encontrado",
+        "subtitle": "Verifique o slug e confirme que existe em",
+        "back": "Voltar ao portfolio"
+    },
+    "project": {
+        "cta": {
+            "accessProduct": "Acessar produto",
+            "viewCase": "Ver o case",
+            "startNow": "Começar agora",
+            "talkToUs": "Vamos conversar"
+        },
+        "sections": {
+            "gap": {
+                "title": "O Problema (The Gap)"
+            },
+            "engineering": {
+                "title": "A Engenharia (The Tech)",
+                "archTitle": "Arquitetura (visão geral)"
+            },
+            "whatItDoes": {
+                "title": "O que faz"
+            },
+            "howItWorks": {
+                "title": "Como funciona"
+            },
+            "pillars": {
+                "title": "Pilares"
+            },
+            "impact": {
+                "title": "Impacto (ROI)"
+            },
+            "security": {
+                "title": "Segurança e compliance"
+            },
+            "metrics": {
+                "title": "Métricas"
+            },
+            "pricing": {
+                "title": "Preços"
+            },
+            "links": {
+                "title": "Links"
+            }
+        },
+        "arch": {
+            "whatsapp": "WhatsApp",
+            "chatplug": "ChatPlug",
+            "orchestration": "Orquestração (IA + regras)",
+            "altegio": "Altegio (agenda)",
+            "notifications": "Notificações",
+            "analytics": "Analytics",
+            "handoff": "Handoff humano"
+        },
+        "pricing": {
+            "monthly": "Mensal",
+            "annual": "Anual"
+        }
+    }
+}

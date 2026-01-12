@@ -1,0 +1,13 @@
+{
+    "loading": "Loading content...",
+    "invalidSlug": "Invalid slug.",
+    "notFound": "We couldn't find the article you're looking for.",
+    "back": "Back to Blog",
+    "dateUnavailable": "Date unavailable",
+    "readingTime": "{{minutes}} min read",
+    "article": "Article",
+    "shareTitle": "Did you like this article? Share it:",
+    "copyLink": "Copy link",
+    "shareLinkedIn": "Share on LinkedIn",
+    "shareTwitter": "Share on X/Twitter"
+}

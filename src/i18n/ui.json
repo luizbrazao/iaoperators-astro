@@ -1,0 +1,323 @@
+{
+  "es": {
+    "meta": {
+      "title": "IA Operators — Agentes de IA y Automatización",
+      "description": "Implementamos agentes de IA y automatizaciones para ventas, soporte y operaciones."
+    },
+    "nav": {
+      "features": "Funciones",
+      "pricing": "Precios",
+      "blog": "Blog",
+      "contact": "Contacto",
+      "cta": "Hablemos"
+    },
+    "home": {
+      "hero": {
+        "titleHighlightMobile": "Agentes de IA",
+        "titleHighlight": "Agentes de IA",
+        "titleRest": "para operar tu negocio",
+        "subtitle": "Automatización, atención y crecimiento con implementación rápida y resultados medibles.",
+        "cta": "Agenda una llamada",
+        "tech": "WhatsApp, CRM, email, APIs y dashboards"
+      },
+      "why": {
+        "badge": "Por qué IA Operators",
+        "title": "Implementación rápida, impacto real",
+        "subtitle": "Diseñamos, entrenamos y operamos agentes con foco en ROI y calidad de experiencia."
+      },
+      "services": {
+        "badge": "Servicios",
+        "title": "Tu operación, automatizada",
+        "subtitle": "Del diagnóstico al lanzamiento, con monitoreo y mejoras continuas.",
+        "steps": [
+          {
+            "title": "Diagnóstico y estrategia",
+            "body": "Mapeamos procesos críticos y definimos el roadmap de IA con quick wins."
+          },
+          {
+            "title": "Implementación y entrenamiento",
+            "body": "Construimos agentes conectados a tus datos, herramientas y canales."
+          },
+          {
+            "title": "Optimización continua",
+            "body": "Medimos resultados, ajustamos flujos y escalamos nuevos casos de uso."
+          }
+        ]
+      },
+      "testimonial": {
+        "title": "Resultados que se sienten",
+        "trustedBy": "Confiado por equipos que quieren velocidad y confiabilidad.",
+        "paragraphs": [
+          "Reducimos tiempos de respuesta y liberamos al equipo para tareas estratégicas.",
+          "Los agentes se integran a nuestro stack sin fricción y mejoran la experiencia del cliente."
+        ]
+      },
+      "blogSection": {
+        "badge": "Blog",
+        "title": "Ideas prácticas para operar con IA",
+        "subtitle": "Frameworks, casos reales y guías para acelerar tu roadmap."
+      },
+      "faq": {
+        "title": "Preguntas frecuentes",
+        "items": [
+          {
+            "q": "¿Cuánto tarda en implementarse un agente?",
+            "a": "Entre 2 y 6 semanas según complejidad e integraciones necesarias."
+          },
+          {
+            "q": "¿Se integra con mis herramientas actuales?",
+            "a": "Sí. Conectamos CRM, helpdesk, bases de datos y canales como WhatsApp o email."
+          },
+          {
+            "q": "¿Cómo miden el éxito?",
+            "a": "Definimos KPIs de negocio y experiencia, y optimizamos con métricas en tiempo real."
+          },
+          {
+            "q": "¿Puedo empezar con un piloto?",
+            "a": "Sí. Diseñamos un piloto enfocado en un caso de uso de alto impacto."
+          }
+        ]
+      },
+      "industries": [
+        {
+          "title": "Retail y e-commerce",
+          "description": "Atención automatizada, seguimiento de pedidos y recuperación de ventas."
+        },
+        {
+          "title": "Restaurantes",
+          "description": "Reservas, delivery, dudas frecuentes y campañas de fidelización."
+        },
+        {
+          "title": "Servicios legales",
+          "description": "Calificación de leads, onboarding y seguimiento de casos."
+        },
+        {
+          "title": "Educación",
+          "description": "Admisiones, soporte a alumnos y jornadas de inscripción."
+        },
+        {
+          "title": "Marketing",
+          "description": "Briefings, generación de contenido y reporting automático."
+        },
+        {
+          "title": "Real estate",
+          "description": "Captación, calificación y seguimiento de propiedades."
+        }
+      ]
+    }
+  },
+  "pt": {
+    "meta": {
+      "title": "IA Operators — Agentes de IA e Automacao",
+      "description": "Implementamos agentes de IA e automacoes para vendas, suporte e operacoes."
+    },
+    "nav": {
+      "features": "Recursos",
+      "pricing": "Precos",
+      "blog": "Blog",
+      "contact": "Contato",
+      "cta": "Fale com a gente"
+    },
+    "home": {
+      "hero": {
+        "titleHighlightMobile": "Agentes de IA",
+        "titleHighlight": "Agentes de IA",
+        "titleRest": "para operar seu negocio",
+        "subtitle": "Automacao, atendimento e crescimento com implementacao rapida e resultados mensuraveis.",
+        "cta": "Agende uma conversa",
+        "tech": "WhatsApp, CRM, email, APIs e dashboards"
+      },
+      "why": {
+        "badge": "Por que IA Operators",
+        "title": "Implementacao rapida, impacto real",
+        "subtitle": "Desenhamos, treinamos e operamos agentes com foco em ROI e experiencia."
+      },
+      "services": {
+        "badge": "Servicos",
+        "title": "Sua operacao, automatizada",
+        "subtitle": "Do diagnostico ao lancamento, com monitoramento e melhorias continuas.",
+        "steps": [
+          {
+            "title": "Diagnostico e estrategia",
+            "body": "Mapeamos processos criticos e definimos o roadmap de IA com quick wins."
+          },
+          {
+            "title": "Implementacao e treinamento",
+            "body": "Construimos agentes conectados aos seus dados, ferramentas e canais."
+          },
+          {
+            "title": "Otimizacao continua",
+            "body": "Medimos resultados, ajustamos fluxos e escalamos novos casos de uso."
+          }
+        ]
+      },
+      "testimonial": {
+        "title": "Resultados que fazem diferenca",
+        "trustedBy": "Confiado por times que querem velocidade e confiabilidade.",
+        "paragraphs": [
+          "Reduzimos tempos de resposta e liberamos o time para tarefas estrategicas.",
+          "Os agentes se integram ao nosso stack sem friccao e elevam a experiencia do cliente."
+        ]
+      },
+      "blogSection": {
+        "badge": "Blog",
+        "title": "Ideias praticas para operar com IA",
+        "subtitle": "Frameworks, casos reais e guias para acelerar seu roadmap."
+      },
+      "faq": {
+        "title": "Perguntas frequentes",
+        "items": [
+          {
+            "q": "Quanto tempo leva para implementar um agente?",
+            "a": "Entre 2 e 6 semanas, dependendo da complexidade e integracoes."
+          },
+          {
+            "q": "Integra com minhas ferramentas atuais?",
+            "a": "Sim. Conectamos CRM, helpdesk, bases de dados e canais como WhatsApp ou email."
+          },
+          {
+            "q": "Como medem o sucesso?",
+            "a": "Definimos KPIs de negocio e experiencia e otimizamos com metricas em tempo real."
+          },
+          {
+            "q": "Posso comecar com um piloto?",
+            "a": "Sim. Criamos um piloto focado em um caso de uso de alto impacto."
+          }
+        ]
+      },
+      "industries": [
+        {
+          "title": "Varejo e e-commerce",
+          "description": "Atendimento automatizado, acompanhamento de pedidos e recuperacao de vendas."
+        },
+        {
+          "title": "Restaurantes",
+          "description": "Reservas, delivery, perguntas frequentes e fidelizacao."
+        },
+        {
+          "title": "Servicos juridicos",
+          "description": "Qualificacao de leads, onboarding e acompanhamento de casos."
+        },
+        {
+          "title": "Educacao",
+          "description": "Matriculas, suporte a alunos e campanhas de inscricao."
+        },
+        {
+          "title": "Marketing",
+          "description": "Briefings, geracao de conteudo e reporting automatico."
+        },
+        {
+          "title": "Real estate",
+          "description": "Captacao, qualificacao e follow-up de imoveis."
+        }
+      ]
+    }
+  },
+  "en": {
+    "meta": {
+      "title": "IA Operators — AI Agents & Automation",
+      "description": "We implement AI agents and automations for sales, support, and operations."
+    },
+    "nav": {
+      "features": "Features",
+      "pricing": "Pricing",
+      "blog": "Blog",
+      "contact": "Contact",
+      "cta": "Talk to us"
+    },
+    "home": {
+      "hero": {
+        "titleHighlightMobile": "AI agents",
+        "titleHighlight": "AI agents",
+        "titleRest": "to run your business",
+        "subtitle": "Automation, support, and growth with fast implementation and measurable impact.",
+        "cta": "Book a call",
+        "tech": "WhatsApp, CRM, email, APIs, and dashboards"
+      },
+      "why": {
+        "badge": "Why IA Operators",
+        "title": "Fast rollout, real impact",
+        "subtitle": "We design, train, and operate agents focused on ROI and customer experience."
+      },
+      "services": {
+        "badge": "Services",
+        "title": "Your operations, automated",
+        "subtitle": "From discovery to launch, with monitoring and continuous improvements.",
+        "steps": [
+          {
+            "title": "Discovery and strategy",
+            "body": "We map critical processes and define an AI roadmap with quick wins."
+          },
+          {
+            "title": "Implementation and training",
+            "body": "We build agents connected to your data, tools, and channels."
+          },
+          {
+            "title": "Continuous optimization",
+            "body": "We track results, refine flows, and scale new use cases."
+          }
+        ]
+      },
+      "testimonial": {
+        "title": "Results you can feel",
+        "trustedBy": "Trusted by teams that want speed and reliability.",
+        "paragraphs": [
+          "We cut response times and free the team for strategic work.",
+          "The agents fit our stack with no friction and elevate the customer experience."
+        ]
+      },
+      "blogSection": {
+        "badge": "Blog",
+        "title": "Practical ideas to operate with AI",
+        "subtitle": "Frameworks, real cases, and guides to accelerate your roadmap."
+      },
+      "faq": {
+        "title": "Frequently asked questions",
+        "items": [
+          {
+            "q": "How long does it take to implement an agent?",
+            "a": "Between 2 and 6 weeks depending on complexity and integrations."
+          },
+          {
+            "q": "Does it integrate with my current tools?",
+            "a": "Yes. We connect CRM, helpdesk, databases, and channels like WhatsApp or email."
+          },
+          {
+            "q": "How do you measure success?",
+            "a": "We define business and experience KPIs and optimize with real-time metrics."
+          },
+          {
+            "q": "Can I start with a pilot?",
+            "a": "Yes. We design a pilot focused on a high-impact use case."
+          }
+        ]
+      },
+      "industries": [
+        {
+          "title": "Retail and e-commerce",
+          "description": "Automated support, order tracking, and cart recovery."
+        },
+        {
+          "title": "Restaurants",
+          "description": "Reservations, delivery, FAQs, and loyalty campaigns."
+        },
+        {
+          "title": "Legal services",
+          "description": "Lead qualification, onboarding, and case follow-up."
+        },
+        {
+          "title": "Education",
+          "description": "Admissions, student support, and enrollment campaigns."
+        },
+        {
+          "title": "Marketing",
+          "description": "Briefings, content generation, and automated reporting."
+        },
+        {
+          "title": "Real estate",
+          "description": "Lead capture, qualification, and property follow-up."
+        }
+      ]
+    }
+  }
+}

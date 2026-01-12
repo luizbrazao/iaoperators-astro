@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "forYou": "Para você",
+    "howWeWork": "Como trabalhamos",
+    "portfolio": "Portfolio",
+    "community": "Comunidade",
+    "youtube": "YouTube",
+    "blog": "Blog",
+    "contact": "Vamos conversar?"
+  },
+  "hero": {
+    "title": "Especialistas em Inteligência Artificial para Automatizar seu Negócio",
+    "cta": "Falar com Luiz"
+  },
+  "footer": {
+    "ready": "Pronto para automatizar?",
+    "title": "Vamos conversar",
+    "cta": "Solicitar orçamento",
+    "rights": "Todos os direitos reservados.",
+    "terms": "Termos e Condições",
+    "privacy": "Política de Privacidade",
+    "top": "TOPO"
+  }
+}

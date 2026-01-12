@@ -1,0 +1,110 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { getLocale, locales } from "../i18n/ui";
+import CookieBanner from "../islands/CookieBanner.jsx";
+import GridSpotlight from "../islands/GridSpotlight.jsx";
+
+type Props = {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  robots?: string;
+  meta?: string;
+  jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
+};
+
+const {
+  title = "IA Operators",
+  description = "",
+  ogImage = "/og.png",
+  robots,
+  meta,
+  jsonLd,
+} = Astro.props;
+
+const locale = getLocale(Astro.currentLocale);
+const defaultLocale = "es";
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+
+const pathname = Astro.url.pathname;
+const basePath = pathname.replace(new RegExp(`^/${locale}(?=/|$)`), "") || "/";
+const normalizedPath = basePath === "/" ? "" : basePath.replace(/^\/+/, "");
+
+const buildLocaleUrl = (lang: string) => {
+  const path = `/${lang}/${normalizedPath}`.replace(/\/+$/, "/");
+  return new URL(path, site).toString();
+};
+
+const canonical = buildLocaleUrl(locale);
+const alternates = locales.map((lang) => ({
+  lang,
+  href: buildLocaleUrl(lang),
+}));
+const xDefault = buildLocaleUrl(defaultLocale);
+
+const ogImageUrl = ogImage.startsWith("http")
+  ? ogImage
+  : new URL(ogImage, site).toString();
+
+const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+---
+
+<!doctype html>
+<html lang={locale} class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    {robots && <meta name="robots" content={robots} />}
+    {meta && <meta name="keywords" content={meta} />}
+
+    {alternates.map((a) => (
+      <link rel="alternate" hreflang={a.lang} href={a.href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={locale} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    {jsonLdItems.map((item) => (
+      <script type="application/ld+json" set:html={JSON.stringify(item)} />
+    ))}
+
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+
+  <body class="min-h-screen bg-background text-foreground">
+
+    <!-- GridSpotlight precisa ser o wrapper global (camada de fundo + mask) -->
+    <GridSpotlight client:load>
+      <Header />
+      <main class="pt-120px">
+        <slot />
+      </main>
+      <Footer />
+    </GridSpotlight>
+
+    <!-- Elementos fixos/overlays fora do wrapper (garante que ficam acima de tudo) -->
+    <CookieBanner client:idle />
+  </body>
+</html>
+
+<style is:global>
+  @import "../styles/global.css";
+</style>

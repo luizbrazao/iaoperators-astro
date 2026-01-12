@@ -1,0 +1,123 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getLocale, locales } from "../../../i18n/ui";
+
+// ✅ obrigatório em rotas dinâmicas [locale]
+export const getStaticPaths = () => locales.map((locale) => ({ params: { locale } }));
+
+const locale = getLocale(Astro.params.locale);
+
+// ✅ carrega TODOS os terms.json (build-time) e seleciona pelo locale atual
+const termsByLocale = import.meta.glob("../../../i18n/locales/*/terms.json", {
+  eager: true,
+});
+
+type JsonModule = { default: Record<string, unknown> };
+
+// monta a chave do módulo conforme a estrutura real
+const key = `../../../i18n/locales/${locale}/terms.json`;
+const terms = ((termsByLocale[key] as JsonModule | undefined)?.default ??
+  // fallbacks se faltar arquivo
+  (termsByLocale["../../../i18n/locales/es/terms.json"] as JsonModule | undefined)?.default ??
+  (termsByLocale["../../../i18n/locales/en/terms.json"] as JsonModule | undefined)?.default ??
+  (termsByLocale["../../../i18n/locales/pt/terms.json"] as JsonModule | undefined)?.default ??
+  {}) as Record<string, unknown>;
+
+// getter seguro + tipado
+function t(path: string, fallback: string = ""): string {
+  const value = path
+    .split(".")
+    .reduce<unknown>((acc: unknown, k: string) => {
+      if (acc && typeof acc === "object" && k in (acc as Record<string, unknown>)) {
+        return (acc as Record<string, unknown>)[k];
+      }
+      return undefined;
+    }, terms);
+
+  return typeof value === "string" ? value : fallback;
+}
+
+const title = `${t("privacyPage.title", "Política de Privacidad")} | IA Operators`;
+---
+
+<BaseLayout title={title} robots="index,follow">
+  <main class="container mx-auto px-4 pt-120px pb-16 max-w-4xl">
+    <h1 class="text-3xl font-bold mb-8">
+      {t("privacyPage.title", "Política de Privacidad")}
+    </h1>
+
+    <section class="space-y-8">
+      <div>
+        <h2 class="text-xl font-semibold mb-2">
+          {t("privacy.collection.title", "Recopilación de datos")}
+        </h2>
+        <ul class="list-disc pl-6 space-y-1">
+          <li>{t("privacy.collection.items.personal", "Datos personales")}</li>
+          <li>{t("privacy.collection.items.usage", "Datos de uso")}</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-2">
+          {t("privacy.usage.title", "Uso de datos")}
+        </h2>
+        <ul class="list-disc pl-6 space-y-1">
+          <li>{t("privacy.usage.items.improve", "Mejorar el servicio")}</li>
+          <li>{t("privacy.usage.items.personalization", "Personalización")}</li>
+          <li>{t("privacy.usage.items.communication", "Comunicación")}</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-2">
+          {t("privacy.sharing.title", "Compartir datos")}
+        </h2>
+        <p>{t("privacy.sharing.text", "No compartimos tus datos.")}</p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-2">
+          {t("privacy.security.title", "Seguridad")}
+        </h2>
+        <p>{t("privacy.security.text", "Protegemos tu información.")}</p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-2">
+          {t("privacy.rights.title", "Tus derechos")}
+        </h2>
+        <ul class="list-disc pl-6 space-y-1">
+          <li>{t("privacy.rights.items.access", "Acceso")}</li>
+          <li>{t("privacy.rights.items.portability", "Portabilidad")}</li>
+          <li>{t("privacy.rights.items.marketing", "Preferencias de marketing")}</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-2">
+          {t("privacy.cookies.title", "Cookies")}
+        </h2>
+        <p>{t("privacy.cookies.text", "Usamos cookies.")}</p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-2">
+          {t("privacy.changes.title", "Cambios")}
+        </h2>
+        <p>{t("privacy.changes.text", "Podemos actualizar esta política.")}</p>
+      </div>
+
+      <div class="mt-10">
+        <h2 class="text-xl font-semibold mb-2">
+          {t("contact.title", "Contacto")}
+        </h2>
+        <p>
+          {t("contact.text", "Escríbenos a")}{" "}
+          <a href="mailto:info@iaoperators.com" class="underline hover:text-orange-400">
+            info@iaoperators.com
+          </a>
+        </p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

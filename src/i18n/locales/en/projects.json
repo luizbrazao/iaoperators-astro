@@ -1,0 +1,192 @@
+{
+    "sections": {
+        "whatItDoes": {
+            "title": "What it does"
+        },
+        "pillars": {
+            "title": "Pillars"
+        },
+        "metrics": {
+            "title": "Metrics"
+        },
+        "links": {
+            "title": "Links"
+        }
+    },
+    "chatplug": {
+        "title": "ChatPlug: WhatsApp + Altegio Automation",
+        "tagline": "24/7 booking in Altegio via WhatsApp, with zero scheduling conflicts and full multilingual support.",
+        "gallery": {
+            "heroAlt": "ChatPlug — WhatsApp automation integrated with Altegio"
+        },
+        "problem": "Salons and barbershops lose revenue every day by not replying to WhatsApp instantly. Keeping staff available 24/7 is unrealistic, and generic chatbots don’t connect to the real calendar — causing double-bookings and frustration.",
+        "engineeringIntro": "We built ChatPlug not as a “chatbot”, but as a real-time synchronization layer between WhatsApp and Altegio, with critical-action validation, multilingual support, and strict tenant isolation with enterprise-grade security.",
+        "impact": "We turned scheduling into a smooth self-service flow: the client picks a slot, the bot confirms it in Altegio and notifies the team — using the business’ existing number, with no extra SIMs.",
+        "whatItDoes": [
+            "Replies on WhatsApp automatically, 24/7",
+            "Books, confirms, cancels, and reschedules directly in Altegio",
+            "Detects language and replies in the client’s language",
+            "Syncs services, staff, availability, and pricing",
+            "Hands off to a human when needed",
+            "Dashboard for message volume and performance",
+            "Unlimited messages — no caps"
+        ],
+        "howItWorks": [
+            "Client sends a WhatsApp message",
+            "ChatPlug detects intent (book/reschedule/cancel/question)",
+            "Fetches real-time availability from Altegio",
+            "Client picks → ChatPlug confirms in Altegio → team is notified",
+            "If out of scope, seamless handoff to a human"
+        ],
+        "pillars": {
+            "integration": {
+                "title": "Deep Integration (Altegio)",
+                "description": "Real-time read/write: services, pricing, staff, and availability come from Altegio, and appointments are confirmed/canceled directly in the CRM.",
+                "bullets": [
+                    "Real availability (no double-booking)",
+                    "Catalog sync (services/pricing/staff)",
+                    "Critical actions validated"
+                ]
+            },
+            "multilingual": {
+                "title": "Automatic multilingual support",
+                "description": "AI detects the client’s language and replies natively — ideal for tourist-heavy locations and international audiences.",
+                "bullets": [
+                    "PT/EN/ES/FR/RU (easy to extend)",
+                    "Business tone and context"
+                ]
+            },
+            "security": {
+                "title": "Enterprise security",
+                "description": "Credentials and data protected with modern encryption and strict tenant isolation.",
+                "bullets": [
+                    "AES-GCM for credentials",
+                    "Row-Level Security (RLS) per tenant",
+                    "Monitoring and auditing"
+                ]
+            }
+        },
+        "security": [
+            "Credentials encrypted with AES-GCM",
+            "RLS ensures each business can only see its own data",
+            "Critical actions are verified and monitored",
+            "Auditing and observability for traceability"
+        ],
+        "pricing": {
+            "trial": "7-day free trial — no card required",
+            "monthly": {
+                "details": [
+                    "Unlimited messages",
+                    "Altegio integration",
+                    "Email support",
+                    "Dashboard"
+                ]
+            },
+            "annual": {
+                "details": [
+                    "25% off",
+                    "Unlimited messages",
+                    "Altegio integration",
+                    "Dashboard"
+                ]
+            }
+        },
+        "metrics": [
+            {
+                "label": "Availability",
+                "note": "Includes weekends and holidays"
+            },
+            {
+                "label": "Languages",
+                "note": "Automatic detection"
+            },
+            {
+                "label": "Messages",
+                "note": "No caps"
+            }
+        ]
+    },
+    "tourBooking": {
+        "title": "Tour Booking Chatbot (WhatsApp + n8n)",
+        "tagline": "24/7 support and bookings with accurate pricing — based on real variables (boat, season, experience, duration and guests).",
+        "category": "Booking Automation / WhatsApp",
+        "galleryAlt": "Tour booking chatbot on WhatsApp powered by n8n",
+        "problem": "Tour and experience companies lose revenue when users ask for price and availability and don’t get an immediate answer. The real challenge isn’t “chatting well” — it’s computing the correct price every time, because it changes by boat, season, experience, duration and number of guests.",
+        "engineeringIntro": "We designed this system as a reliable agent: instead of throwing a spreadsheet into a prompt, we turned pricing rules into deterministic tools (code) and used AI only to understand intent, collect variables, and drive the conversation.",
+        "impact": "Users ask for a price on WhatsApp → the bot collects the minimum variables → validates available durations → returns the exact amount and guides the user to booking. Less friction, fewer mistakes, more conversions — without relying on human support.",
+        "whatItDoes": [
+            "24/7 WhatsApp support (text and voice)",
+            "Understands intent: pricing, questions, booking, changes",
+            "Collects variables (experience, boat, date, guests, duration)",
+            "Validates duration availability for that experience/date",
+            "Calculates the exact price using the client’s rule set (no guesswork)",
+            "Logs leads and conversation into a spreadsheet"
+        ],
+        "howItWorks": [
+            "Receives a WhatsApp message (text or voice)",
+            "Normalizes input and aggregates messages to avoid duplicate replies",
+            "Agent guides the flow and collects required variables",
+            "Deterministic tools: season check, duration listing, price calculation",
+            "Final response is “humanized” and split into WhatsApp-friendly chunks"
+        ],
+        "pillars": [
+            {
+                "title": "Zero-guess pricing (deterministic)",
+                "description": "Pricing must be exact. Rules become code and the agent only answers when all required variables are present.",
+                "bullets": [
+                    "Variables: boat, season, experience, duration, guests",
+                    "Validation: only allows durations that truly exist",
+                    "Always exact (no hallucinations)"
+                ]
+            },
+            {
+                "title": "Robust message pipeline",
+                "description": "Fixes the classic WhatsApp issue: users send 3 messages and the bot replies 3 times.",
+                "bullets": [
+                    "Message aggregation with a wait window",
+                    "Short-term context memory",
+                    "Chunked delivery for better UX"
+                ]
+            },
+            {
+                "title": "Scalable architecture",
+                "description": "Modular, step-based workflow with isolated tools — easy to adapt to other booking businesses.",
+                "bullets": [
+                    "Input: text + voice (transcription)",
+                    "Tools: season / durations / pricing",
+                    "Logs and lead capture"
+                ]
+            }
+        ],
+        "security": [
+            "Conversation data can be minimized and stored with controls",
+            "Deterministic tools reduce hallucination risk for pricing",
+            "Separation of concerns: AI handles dialogue; code handles numbers"
+        ],
+        "metrics": [
+            {
+                "label": "Pricing reliability",
+                "note": "Deterministic rules (no guesswork)"
+            },
+            {
+                "label": "Aggregation window",
+                "note": "Prevents duplicate replies"
+            },
+            {
+                "label": "Supported languages",
+                "note": "ES/EN/FR/CA in this project"
+            }
+        ],
+        "links": [
+            {
+                "label": "Watch video (YouTube)"
+            },
+            {
+                "label": "Get template (Community)"
+            },
+            {
+                "label": "Back to portfolio"
+            }
+        ]
+    }
+}

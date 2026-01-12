@@ -1,0 +1,192 @@
+{
+    "sections": {
+        "whatItDoes": {
+            "title": "O que faz"
+        },
+        "pillars": {
+            "title": "Pilares"
+        },
+        "metrics": {
+            "title": "Métricas"
+        },
+        "links": {
+            "title": "Links"
+        }
+    },
+    "chatplug": {
+        "title": "ChatPlug: Automação WhatsApp + Altegio",
+        "tagline": "Agendamento 24/7 no Altegio via WhatsApp, sem conflitos de agenda e com suporte multilíngue.",
+        "gallery": {
+            "heroAlt": "ChatPlug — Automação WhatsApp integrada ao Altegio"
+        },
+        "problem": "Salões e barbearias perdem receita diariamente por não responderem ao WhatsApp imediatamente. Manter recepcionistas 24/7 é inviável, e chatbots genéricos não conversam com a agenda real — gerando conflitos (double-booking) e frustração.",
+        "engineeringIntro": "Criamos o ChatPlug não como um ‘chatbot’, mas como uma camada de sincronização em tempo real entre WhatsApp e Altegio, com validações para ações críticas, suporte multilíngue e isolamento por empresa (multi-tenant) com segurança enterprise.",
+        "impact": "Transformamos o agendamento em uma experiência self-service fluida: o cliente escolhe o horário, o bot confirma no Altegio e notifica a equipe — usando o número atual do estabelecimento, sem chips extras.",
+        "whatItDoes": [
+            "Responde automaticamente no WhatsApp 24/7",
+            "Agenda, confirma, cancela e altera diretamente no Altegio",
+            "Detecta idioma e responde na língua do cliente",
+            "Sincroniza serviços, equipe, disponibilidade e preços",
+            "Faz handoff para humano quando necessário",
+            "Dashboard com volume de mensagens e performance",
+            "Mensagens ilimitadas — sem caps"
+        ],
+        "howItWorks": [
+            "Cliente envia mensagem no WhatsApp",
+            "ChatPlug identifica intenção (agendar/alterar/cancelar/dúvida)",
+            "Consulta disponibilidade em tempo real no Altegio",
+            "Cliente escolhe → ChatPlug confirma no Altegio → equipe é notificada",
+            "Se sair do escopo, handoff para humano sem ‘quebrar’ a conversa"
+        ],
+        "pillars": {
+            "integration": {
+                "title": "Deep Integration (Altegio)",
+                "description": "Leitura e escrita em tempo real: serviços, preços, equipe e disponibilidade vêm do Altegio, e agendamentos são confirmados/cancelados diretamente no CRM.",
+                "bullets": [
+                    "Disponibilidade real (sem double-booking)",
+                    "Sincronização de catálogo (serviços/preços/equipe)",
+                    "Operações críticas validadas"
+                ]
+            },
+            "multilingual": {
+                "title": "Multilíngue automático",
+                "description": "IA detecta o idioma do cliente e responde na língua nativa — ideal para regiões turísticas e público internacional.",
+                "bullets": [
+                    "PT/EN/ES/FR/RU (e expansão fácil)",
+                    "Tom e contexto do negócio"
+                ]
+            },
+            "security": {
+                "title": "Segurança enterprise",
+                "description": "Credenciais e dados protegidos com criptografia moderna e isolamento estrito por empresa.",
+                "bullets": [
+                    "AES-GCM para credenciais",
+                    "Row-Level Security (RLS) por tenant",
+                    "Monitoramento e auditoria"
+                ]
+            }
+        },
+        "security": [
+            "Credenciais criptografadas com AES-GCM",
+            "RLS garante que cada empresa veja apenas seus próprios dados",
+            "Ações críticas verificadas e monitoradas",
+            "Auditoria e observabilidade para rastreabilidade"
+        ],
+        "pricing": {
+            "trial": "7 dias grátis — sem cartão",
+            "monthly": {
+                "details": [
+                    "Mensagens ilimitadas",
+                    "Integração Altegio",
+                    "Suporte por email",
+                    "Dashboard"
+                ]
+            },
+            "annual": {
+                "details": [
+                    "25% off",
+                    "Mensagens ilimitadas",
+                    "Integração Altegio",
+                    "Dashboard"
+                ]
+            }
+        },
+        "metrics": [
+            {
+                "label": "Disponibilidade",
+                "note": "Inclui fins de semana e feriados"
+            },
+            {
+                "label": "Idiomas",
+                "note": "Detecção automática"
+            },
+            {
+                "label": "Mensagens",
+                "note": "Sem caps"
+            }
+        ]
+    },
+    "tourBooking": {
+        "title": "Chatbot de Reservas Turísticas (WhatsApp + n8n)",
+        "tagline": "Atendimento e reservas 24/7 com cálculo de preço 100% correto — baseado em variáveis reais (barco, temporada, experiência, duração e pessoas).",
+        "category": "Automação de Reservas / WhatsApp",
+        "galleryAlt": "Chatbot de reservas turísticas via WhatsApp integrado ao n8n",
+        "problem": "Empresas de passeios e experiências turísticas perdem vendas quando o cliente pergunta preço e disponibilidade e não recebe resposta imediata. O desafio real não é “conversar bem”, é calcular o preço certo sem falhas — porque o valor muda por barco, temporada, experiência, duração e número de pessoas.",
+        "engineeringIntro": "Projetamos este sistema como um agente confiável: em vez de “jogar a planilha no prompt”, transformamos regras de precificação em ferramentas determinísticas (código) e usamos IA apenas para entender intenção, coletar variáveis e conduzir o diálogo.",
+        "impact": "O cliente pergunta preço no WhatsApp → o bot coleta as variáveis mínimas → valida disponibilidade → retorna o valor exato e conduz para a reserva. Resultado: menos fricção, menos erros e mais conversões, sem depender de atendimento humano.",
+        "whatItDoes": [
+            "Atende no WhatsApp 24/7 (texto e áudio)",
+            "Entende intenção: preço, dúvidas, reserva, alteração",
+            "Coleta variáveis (experiência, barco, data, pessoas, duração)",
+            "Valida duração disponível para aquela experiência/data",
+            "Calcula preço exato com base nas regras do cliente (sem margem de erro)",
+            "Registra lead e conversa em planilha para acompanhamento"
+        ],
+        "howItWorks": [
+            "Recebe mensagem (texto ou áudio) no WhatsApp",
+            "Normaliza input e agrega mensagens para evitar respostas duplicadas",
+            "Agente conduz o diálogo e coleta variáveis obrigatórias",
+            "Tools determinísticas: verifica temporada, lista durações e calcula preço",
+            "Resposta final é “humanizada” e quebrada em partes para WhatsApp"
+        ],
+        "pillars": [
+            {
+                "title": "Precificação sem erro (determinística)",
+                "description": "Preço não pode ser “aproximado”. Regras do cliente viram código e o agente só responde quando todas as variáveis necessárias estiverem presentes.",
+                "bullets": [
+                    "Variáveis: barco, temporada, experiência, duração, pessoas",
+                    "Validação: só permite durações realmente disponíveis",
+                    "Resposta sempre exata (sem chute)"
+                ]
+            },
+            {
+                "title": "Pipeline de mensagens robusto",
+                "description": "Evita o comportamento clássico de WhatsApp: o usuário manda 3 mensagens e o bot responde 3 vezes.",
+                "bullets": [
+                    "Agregação de mensagens com janela de espera",
+                    "Memória curta para contexto",
+                    "Entrega de resposta em partes (melhor UX)"
+                ]
+            },
+            {
+                "title": "Arquitetura pronta para escalar",
+                "description": "Fluxo modular em etapas, com ferramentas isoladas, fácil de adaptar para outros negócios de reservas.",
+                "bullets": [
+                    "Entrada: texto e áudio (transcrição)",
+                    "Ferramentas: temporada / durações / preço",
+                    "Logs e registro de leads"
+                ]
+            }
+        ],
+        "security": [
+            "Dados de conversas podem ser minimizados e armazenados com controle",
+            "Ferramentas determinísticas reduzem risco de alucinação em preços",
+            "Separação de responsabilidades: IA decide conversa; código decide valores"
+        ],
+        "metrics": [
+            {
+                "label": "Confiabilidade do preço",
+                "note": "Regras determinísticas (sem chute)"
+            },
+            {
+                "label": "Janela de agregação",
+                "note": "Evita respostas duplicadas"
+            },
+            {
+                "label": "Idiomas suportados",
+                "note": "ES/EN/FR/CA no projeto"
+            }
+        ],
+        "links": [
+            {
+                "label": "Assistir vídeo (YouTube)"
+            },
+            {
+                "label": "Ver template (Comunidade)"
+            },
+            {
+                "label": "Voltar ao portfolio"
+            }
+        ]
+    }
+}

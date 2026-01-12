@@ -1,0 +1,230 @@
+---
+export async function getStaticPaths() {
+  return [
+    { params: { locale: "es" } },
+    { params: { locale: "pt" } },
+    { params: { locale: "en" } },
+  ];
+}
+
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getLocale, ui } from "../../../i18n/ui";
+import { fetchBlogPosts } from "../../../lib/blog";
+
+const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
+
+const dict =
+  (ui as any)?.[locale] ??
+  (ui as any)?.es ??
+  (ui as any)?.en ??
+  (ui as any)?.pt ??
+  {};
+
+const blogDict = (dict as any)?.blog ?? (dict as any)?.home?.blog ?? {};
+const categoriesDict = (dict as any)?.categories ?? {};
+
+const withLocale = (path: string) => `/${locale}/${path}`.replace(/\/+$/, "/");
+
+// ===== Categorias (igual ao projeto antigo)
+const CATEGORY_KEYS = ["all", "tools", "lawyers", "architects", "accounting", "restaurants", "others"] as const;
+
+function normalizeCategoryId(raw?: string | null) {
+  const v = (raw ?? "").toLowerCase().trim();
+
+  if (v === "all" || v === "todos") return "all";
+  if (v === "herramientas" || v === "tools" || v === "ferramentas") return "tools";
+  if (v === "ia para abogados" || v === "ai for lawyers" || v === "ia para advogados") return "lawyers";
+  if (v === "ia para arquitectos" || v === "ai for architects" || v === "ia para arquitetos") return "architects";
+  if (v === "ia para contabilidad" || v === "ai for accounting" || v === "ia para contabilidade") return "accounting";
+  if (v === "ia para restaurantes" || v === "ai for restaurants") return "restaurants";
+  if (v === "otros" || v === "others" || v === "outros") return "others";
+
+  return "others";
+}
+
+const posts = (await fetchBlogPosts()) ?? [];
+const preparedPosts = posts.map((p: any) => ({
+  ...p,
+  __catId: normalizeCategoryId(p.category),
+}));
+
+// textos com fallback
+const t = {
+  badge: blogDict?.badge ?? "Blog",
+  title: blogDict?.title ?? "Blog",
+  description: blogDict?.description ?? "Artigos e guias práticos.",
+  readMore: blogDict?.readMore ?? "Read more",
+  empty: blogDict?.empty ?? "Nenhum post encontrado.",
+  viewAll: blogDict?.viewAll ?? "Ver todos",
+};
+
+const categoryLabel = (key: string) =>
+  ((categoriesDict as any)?.[key]) ||
+  ({
+    all: "All",
+    tools: "Tools",
+    lawyers: "Lawyers",
+    architects: "Architects",
+    accounting: "Accounting",
+    restaurants: "Restaurants",
+    others: "Others",
+  } as any)[key] ||
+  key;
+---
+
+<BaseLayout title={t.title} description={t.description}>
+  <div class="bg-transparent text-white min-h-screen font-sans">
+    <!-- HEADER DO BLOG -->
+    <section class="pt-40 pb-10 px-4 text-center">
+      <div class="max-w-4xl mx-auto">
+        <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+          {t.badge}
+        </span>
+
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">
+          {t.title}
+        </h1>
+
+        <p class="text-gray-400 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
+          {t.description}
+        </p>
+      </div>
+    </section>
+
+    <!-- FILTRO DE CATEGORIAS (JS leve) -->
+    <section class="px-4 pb-12">
+      <div class="max-w-6xl mx-auto flex flex-wrap justify-center gap-3" id="blogCategoryBar">
+        {CATEGORY_KEYS.map((catId) => (
+          <button
+            type="button"
+            class:list={[
+              "px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border",
+              "bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:text-white",
+            ]}
+            data-cat={catId}
+          >
+            {categoryLabel(catId)}
+          </button>
+        ))}
+      </div>
+    </section>
+
+    <!-- LISTA DE POSTS -->
+    <section class="px-4 pb-20">
+      <div class="max-w-6xl mx-auto">
+        {preparedPosts.length > 0 ? (
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="blogGrid">
+            {preparedPosts.map((post: any) => (
+              <a
+                href={withLocale(`blog/${post.slug}/`)}
+                class="group bg-[#0a0a0a] border border-white/5 rounded-3xl overflow-hidden hover:border-orange-500/50 transition-all duration-300 hover:-translate-y-1 flex flex-col h-full"
+                data-cat={post.__catId}
+              >
+                <!-- Imagem -->
+                <div class="h-48 overflow-hidden bg-white/5 relative">
+                  {post.imageUrl ? (
+                    <img
+                      src={post.imageUrl}
+                      alt={post.title}
+                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <div class="w-full h-full flex items-center justify-center text-gray-700 font-medium">
+                      IA Operators
+                    </div>
+                  )}
+
+                  <div class="absolute top-4 left-4">
+                    <span class="px-3 py-1 bg-black/60 backdrop-blur-md text-orange-400 text-xs font-bold rounded-full uppercase border border-white/10">
+                      {categoryLabel(post.__catId)}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Conteúdo -->
+                <div class="p-6 flex flex-col flex-1">
+                  <h3 class="text-xl font-bold mb-3 text-white leading-tight group-hover:text-orange-500 transition-colors">
+                    {post.title}
+                  </h3>
+                  <p class="text-gray-400 text-sm line-clamp-3 mb-4 flex-1">
+                    {post.description}
+                  </p>
+                  <div class="text-gray-600 text-xs mt-auto pt-4 border-t border-white/5 flex justify-between">
+                    <span>{new Date(post.date).toLocaleDateString(locale)}</span>
+                    <span class="group-hover:translate-x-1 transition-transform">
+                      {t.readMore}
+                    </span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="text-center py-20">
+            <p class="text-gray-400 text-lg">{t.empty}</p>
+          </div>
+        )}
+
+        <!-- Empty state quando filtro zera -->
+        <div class="text-center py-20 hidden" id="blogEmpty">
+          <p class="text-gray-400 text-lg">{t.empty}</p>
+          <button type="button" class="mt-4 text-orange-500 hover:underline" id="blogViewAll">
+            {t.viewAll}
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script is:inline>
+    (function () {
+      const bar = document.getElementById("blogCategoryBar");
+      const grid = document.getElementById("blogGrid");
+      const empty = document.getElementById("blogEmpty");
+      const viewAll = document.getElementById("blogViewAll");
+
+      if (!bar || !grid) return;
+
+      const buttons = Array.from(bar.querySelectorAll("button[data-cat]"));
+      const cards = Array.from(grid.querySelectorAll("a[data-cat]"));
+
+      const ACTIVE =
+        "bg-orange-500 border-orange-500 text-white shadow-[0_0_15px_rgba(249,115,22,0.4)]";
+      const INACTIVE =
+        "bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:text-white";
+
+      function setButtonState(btn, active) {
+        if (active) {
+          btn.classList.remove(...INACTIVE.split(" "));
+          btn.classList.add(...ACTIVE.split(" "));
+        } else {
+          btn.classList.remove(...ACTIVE.split(" "));
+          btn.classList.add(...INACTIVE.split(" "));
+        }
+      }
+
+      function applyFilter(cat) {
+        buttons.forEach((b) => setButtonState(b, b.dataset.cat === cat));
+
+        let visible = 0;
+        cards.forEach((card) => {
+          const cardCat = card.dataset.cat || "others";
+          const show = cat === "all" || cardCat === cat;
+          card.classList.toggle("hidden", !show);
+          if (show) visible++;
+        });
+
+        if (empty) empty.classList.toggle("hidden", visible !== 0);
+        grid.classList.toggle("hidden", visible === 0);
+      }
+
+      const defaultBtn = buttons.find((b) => b.dataset.cat === "all") || buttons[0];
+      if (defaultBtn) applyFilter(defaultBtn.dataset.cat || "all");
+
+      buttons.forEach((b) => b.addEventListener("click", () => applyFilter(b.dataset.cat || "all")));
+      viewAll?.addEventListener("click", () => applyFilter("all"));
+    })();
+  </script>
+</BaseLayout>

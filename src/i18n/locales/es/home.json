@@ -1,0 +1,141 @@
+{
+    "hero": {
+        "titleHighlight": "Expertos en Inteligencia Artificial",
+        "titleHighlightMobile": "Expertos en IA",
+        "titleRest": " para Automatizar tu Negocio.✨",
+        "subtitle": "Hacemos que tu empresa funcione en piloto automático: procesos automatizados, operaciones optimizadas y resultados que quitan el hipo, todo gracias a soluciones de IA diseñadas a tu medida.",
+        "cta": "Hablar con Luiz ↗",
+        "tech": "Aplicamos la última tecnología"
+    },
+    "why": {
+        "badge": "Para ti",
+        "title": "IA Para Todos: Soluciones\nque Se Adaptan A Tu Negocio",
+        "subtitle": "Descubre cómo la IA puede dar un giro espectacular a tus procesos y generar resultados que te harán sonreír cada día."
+    },
+    "industries": [
+        {
+            "title": "Tiendas Online (E-commerce)",
+            "description": "Atención 24/7, recomendaciones personalizadas y gestión de inventario sin fallos. La IA hace que tu tienda venda más mientras descansas."
+        },
+        {
+            "title": "Restaurantes y Bares",
+            "description": "Pedidos automáticos, inventario en tiempo real y menús según el clima. Con la IA, tu restaurante es un éxito organizado y sabroso."
+        },
+        {
+            "title": "Despachos de Abogados",
+            "description": "Automatiza la gestión de plazos, análisis de documentos e incluso la investigación jurídica. Con la IA, tu despacho gana agilidad y precisión."
+        },
+        {
+            "title": "Escuelas y Cursos Online",
+            "description": "Corrección automática, planes de estudio personalizados y gestión de matrículas fácil. La IA hace la educación más inteligente y conectada."
+        },
+        {
+            "title": "Agencias de Marketing",
+            "description": "Informes automáticos, análisis de campañas en tiempo real y creación de contenido con IA. Deja el trabajo pesado a la IA y enfócate en la creatividad."
+        },
+        {
+            "title": "Inmobiliarias",
+            "description": "Gestión de leads, agendamiento de visitas y análisis de mercado en tiempo real. La IA hace que tu inmobiliaria venda más y trabaje menos."
+        }
+    ],
+    "services": {
+        "badge": "Cómo trabajamos",
+        "title": "El camino hacia la\nautomatización inteligente",
+        "subtitle": "3 pasos simples para transformar el caos en eficiencia (y tranquilidad).",
+        "steps": [
+            {
+                "title": "1. Planificación",
+                "body": "Antes de construir, pensamos. Analizamos tus necesidades, definimos objetivos claros y diseñamos una estrategia a medida. Cada paso está alineado con lo que realmente importa."
+            },
+            {
+                "title": "2. Implementación",
+                "body": "Es momento de ejecutar. Con ingeniería sólida e integraciones limpias, llevamos el plan a producción. Automatizamos procesos, conectamos sistemas y nos aseguramos de que todo funcione sin fricciones."
+            },
+            {
+                "title": "3. Optimización",
+                "body": "El trabajo no termina con el deploy. Monitorizamos, iteramos y mejoramos de forma continua. Con IA, tu negocio se mantiene siempre un paso por delante — listo para escalar y superar resultados."
+            }
+        ]
+    },
+    "testimonial": {
+        "title": "Hola, soy Luiz Brazão 👋",
+        "paragraphs": [
+            "Estuve años liderando equipos en empresas grandes, pequeñas, medianas, con logos que te suenan y otros que no tanto.",
+            "¿Y sabes qué? Siempre me encontraba con el mismo muro:\nNo era que faltara gente brillante. Era que todo se hacía a pulso, como si estuviéramos en 1998.",
+            "Procesos improvisados, info suelta en mil docs, decisiones que se repetían cada semana como si fueran déjà vu.\nY sí, durante un tiempo, solo con ordenar un poco ya bastaba.\nHoy… eso ya no alcanza.",
+            "Porque el mercado va a mil.\nY si no automatizas, te estancas. Punto.\nLo que antes era “el proceso estrella”, hoy es el nuevo cuello de botella.",
+            "Por eso nació IA Operators: para ayudar a empresas (como la tuya, sí, justo esa que tiene mil cosas andando y cero tiempo que perder) a convertir sus procesos en sistemas inteligentes.",
+            "Con IA. Pero sin humo.",
+            "Porque la IA no es magia, es estrategia.\nY bien usada, no solo ahorra tiempo. Da resultados. De esos que se ven en el Excel… y en el respiro mental de tu equipo.",
+            "¿Nos ponemos a trabajar en eso?"
+        ],
+        "trustedBy": "Empresas que confiaron en nuestro trabajo"
+    },
+    "blogSection": {
+        "badge": "Blog",
+        "title": "Últimas publicaciones",
+        "subtitle": "Bienvenido al rincón techie donde la IA se encuentra con la realidad.",
+        "posts": [
+            {
+                "category": "Herramientas",
+                "title": "Manus: La Revolución de la IA",
+                "date": "10 mar 2025"
+            },
+            {
+                "category": "IA para restaurantes",
+                "title": "IA para Restaurantes & Foto",
+                "date": "4 mar 2025"
+            },
+            {
+                "category": "Noticias",
+                "title": "GPT-4.5: El Futuro de OpenAI",
+                "date": "28 feb 2025"
+            }
+        ]
+    },
+    "faq": {
+        "title": "Preguntas frecuentes",
+        "items": [
+            {
+                "q": "¿Qué es IA Operators?",
+                "a": "IA Operators es una agencia especializada en automatización de procesos con inteligencia artificial. Ayudamos a empresas a optimizar sus operaciones, reducir costos y aumentar la eficiencia con soluciones personalizadas."
+            },
+            {
+                "q": "¿Qué tipos de negocios pueden beneficiarse de la automatización con IA?",
+                "a": "Prácticamente todos. Desde clínicas y despachos profesionales hasta e-commerce y agencias. Diseñamos soluciones adaptadas a cada sector y realidad operativa."
+            },
+            {
+                "q": "¿Cómo funciona el proceso con IA Operators?",
+                "a": "Trabajamos en 3 etapas: (1) Planificación: entendemos el problema y definimos objetivos. (2) Implementación: construimos e integramos la automatización. (3) Optimización: medimos, ajustamos y mejoramos continuamente."
+            },
+            {
+                "q": "¿Qué tipo de tareas se pueden automatizar?",
+                "a": "Casi cualquier tarea repetitiva o basada en reglas/datos: atención al cliente (chatbots), agendamientos, reportes, seguimiento de leads, integraciones entre sistemas, generación de documentos y más."
+            },
+            {
+                "q": "¿Es difícil implementar IA en mi negocio?",
+                "a": "No. Nosotros nos encargamos del diseño, la integración y la puesta en marcha. Tu equipo recibe orientación para operar el sistema con tranquilidad."
+            },
+            {
+                "q": "¿Cuánto tiempo tarda en verse el retorno?",
+                "a": "Depende del alcance, pero muchos clientes ven mejoras en semanas: menos trabajo manual, respuestas más rápidas, menos errores y mayor conversión."
+            },
+            {
+                "q": "¿Es seguro usar IA?",
+                "a": "Sí, siempre que se haga bien. Diseñamos soluciones con buenas prácticas: mínimo acceso, secretos en servidor, control de permisos y respeto a privacidad."
+            },
+            {
+                "q": "¿Qué diferencia a IA Operators de otras agencias?",
+                "a": "Enfoque personalizado, obsesión por calidad y automaciones orientadas a resultados reales. No vendemos “humo de IA”: integramos sistemas y medimos impacto."
+            },
+            {
+                "q": "¿Cómo empiezo?",
+                "a": "Simple: contáctanos. Hacemos una evaluación inicial, identificamos oportunidades y proponemos un plan de implementación claro."
+            },
+            {
+                "q": "¿Qué pasa si necesito mejoras después?",
+                "a": "Ofrecemos soporte continuo y optimización. La IA y los procesos cambian; tu sistema debe evolucionar con tu negocio."
+            }
+        ]
+    }
+}

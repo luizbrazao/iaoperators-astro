@@ -1,0 +1,70 @@
+---
+import AnimatedNodes from "../../islands/AnimatedNodes.jsx";
+import CodeBlock from "../../islands/CodeBlock.jsx";
+import WorkflowCycle from "../../islands/WorkflowCycle.jsx";
+
+const { services } = Astro.props;
+
+// Garantia defensiva (mas não exagerada):
+const steps = Array.isArray(services?.steps) ? services.steps : [];
+const s0 = steps[0];
+const s1 = steps[1];
+const s2 = steps[2];
+---
+
+<section id="services" class="py-24 px-4 bg-transparent">
+  <div class="max-w-6xl mx-auto text-center">
+    <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+      {services.badge}
+    </span>
+
+    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white whitespace-pre-line">
+      {services.title}
+    </h2>
+
+    <p class="text-gray-400 mb-16">
+      {services.subtitle}
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+      <!-- Card 1 -->
+      <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 flex flex-col hover:border-orange-500/20 transition-all duration-300">
+        <h3 class="text-2xl font-bold mb-6 pl-2 text-white/90">
+          {s0?.title ?? ""}
+        </h3>
+        <div class="w-full mb-6 overflow-hidden rounded-xl">
+          <AnimatedNodes client:idle />
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed pl-2">
+          {s0?.body ?? ""}
+        </p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 flex flex-col hover:border-orange-500/20 transition-all duration-300">
+        <h3 class="text-2xl font-bold mb-6 pl-2 text-white/90">
+          {s1?.title ?? ""}
+        </h3>
+        <div class="w-full mb-6 overflow-hidden rounded-xl">
+          <CodeBlock client:idle />
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed pl-2">
+          {s1?.body ?? ""}
+        </p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 flex flex-col hover:border-orange-500/20 transition-all duration-300">
+        <h3 class="text-2xl font-bold mb-6 pl-2 text-white/90">
+          {s2?.title ?? ""}
+        </h3>
+        <div class="w-full mb-6 overflow-hidden rounded-xl">
+          <WorkflowCycle client:idle />
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed pl-2">
+          {s2?.body ?? ""}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

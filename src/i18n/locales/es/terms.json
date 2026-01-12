@@ -1,0 +1,91 @@
+{
+    "terms": {
+        "title": "Términos y Condiciones",
+        "intro": "¡Bienvenido a IA Operators! Estos términos y condiciones describen las reglas y regulaciones para el uso de nuestro sitio web y servicios.",
+        "acceptance": {
+            "title": "1. Aceptación de los Términos",
+            "text": "Al acceder y utilizar los servicios de IA Operators, aceptas cumplir con estos Términos y Condiciones. Si no estás de acuerdo con alguna parte, te recomendamos no utilizar nuestros servicios."
+        },
+        "services": {
+            "title": "2. Servicios Ofrecidos",
+            "items": {
+                "automation": "Desarrollo de herramientas de automatización.",
+                "integration": "Integración de sistemas.",
+                "support": "Soporte técnico y optimización continua."
+            }
+        },
+        "userResponsibilities": {
+            "title": "3. Responsabilidades del Usuario",
+            "items": {
+                "accurateInfo": "Proporcionar información precisa y actualizada.",
+                "legalUse": "Utilizar los servicios de manera ética y conforme a la ley.",
+                "credentials": "No compartir credenciales de acceso ni permitir usos no autorizados."
+            }
+        },
+        "intellectualProperty": {
+            "title": "4. Propiedad Intelectual",
+            "text": "Todos los derechos de propiedad intelectual relacionados con los servicios de IA Operators son de su exclusiva propiedad."
+        },
+        "liability": {
+            "title": "5. Limitación de Responsabilidad",
+            "items": {
+                "indirectDamages": "Daños indirectos, incidentales o consecuentes.",
+                "misuse": "Problemas causados por el mal uso de las herramientas.",
+                "downtime": "Interrupciones del servicio por causas ajenas a nuestro control."
+            }
+        },
+        "modifications": {
+            "title": "6. Modificaciones",
+            "text": "Nos reservamos el derecho de modificar estos términos en cualquier momento."
+        }
+    },
+    "privacy": {
+        "title": "Política de Privacidad",
+        "collection": {
+            "title": "1. Información que Recopilamos",
+            "items": {
+                "personal": "Nombre, correo electrónico y datos de contacto.",
+                "usage": "Información de uso de nuestras herramientas."
+            }
+        },
+        "usage": {
+            "title": "2. Uso de la Información",
+            "items": {
+                "improve": "Proporcionar y mejorar nuestros servicios.",
+                "personalization": "Personalizar la experiencia del usuario.",
+                "communication": "Enviar comunicaciones relacionadas con el servicio."
+            }
+        },
+        "sharing": {
+            "title": "3. Compartir Información",
+            "text": "No vendemos ni compartimos información personal salvo obligación legal o técnica."
+        },
+        "security": {
+            "title": "4. Seguridad de los Datos",
+            "text": "Aplicamos medidas de seguridad avanzadas, aunque ningún sistema es completamente seguro."
+        },
+        "rights": {
+            "title": "5. Derechos del Usuario",
+            "items": {
+                "access": "Acceder, corregir o eliminar tus datos.",
+                "portability": "Solicitar la portabilidad de tus datos.",
+                "marketing": "Oponerte al uso para marketing."
+            }
+        },
+        "cookies": {
+            "title": "6. Cookies",
+            "text": "Utilizamos cookies para mejorar la experiencia del usuario."
+        },
+        "changes": {
+            "title": "7. Cambios en la Política",
+            "text": "Podemos actualizar esta política en cualquier momento."
+        }
+    },
+    "contact": {
+        "title": "Contacto",
+        "text": "Si tienes preguntas, contáctanos en"
+    },
+    "privacyPage": {
+        "title": "Política de Privacidad"
+    }
+}

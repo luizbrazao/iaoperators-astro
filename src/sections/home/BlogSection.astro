@@ -1,0 +1,101 @@
+=---
+type BlogPost = {
+  id: string;
+  slug: string;
+  title: string;
+  category: string;
+  date: string;
+  imageUrl?: string;
+};
+
+const { blogSection, posts, locale } = Astro.props as {
+  blogSection: { badge: string; title: string; subtitle: string };
+  posts: BlogPost[];
+  locale: "es" | "pt" | "en";
+};
+
+const safePosts: BlogPost[] = Array.isArray(posts) ? posts : [];
+const latestPosts = safePosts.slice(0, 3);
+const hasPosts = latestPosts.length > 0;
+
+function formatDate(iso: string) {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  return d.toLocaleDateString(locale, { day: "numeric", month: "short", year: "numeric" });
+}
+---
+
+<section class="py-24 px-4 bg-transparent">
+  <div class="max-w-5xl mx-auto text-center">
+    <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+      {blogSection.badge}
+    </span>
+
+    <h2 class="text-4xl font-bold mb-4 text-white">
+      {blogSection.title}
+    </h2>
+
+    <p class="text-gray-400 mb-12 max-w-2xl mx-auto">
+      {blogSection.subtitle}
+    </p>
+
+    {hasPosts && (
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {latestPosts.map((post: BlogPost) => (
+          <a
+            href={`/${locale}/blog/${post.slug}/`}
+            class="group bg-[#0a0a0a] border border-white/5 rounded-3xl overflow-hidden hover:border-orange-500/50 transition-all duration-300 hover:-translate-y-1 flex flex-col h-full"
+          >
+            <!-- Imagem -->
+            <div class="h-48 overflow-hidden bg-white/5 relative">
+              {post.imageUrl ? (
+                <img
+                  src={post.imageUrl}
+                  alt={post.title}
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div class="w-full h-full flex items-center justify-center text-gray-700 font-medium">
+                  IA Operators
+                </div>
+              )}
+            </div>
+
+            <!-- Texto -->
+            <div class="p-6 text-left flex flex-col flex-1">
+              <div class="text-orange-400 text-xs font-bold mb-2 uppercase">
+                {post.category}
+              </div>
+
+              <h3 class="text-lg font-bold mb-2 text-white leading-tight blog-title-clamp">
+                {post.title}
+              </h3>
+
+              <div class="text-gray-500 text-xs mt-auto pt-2">
+                {formatDate(post.date)}
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    )}
+
+    {!hasPosts && (
+      <div class="py-10 text-gray-500 text-sm">
+        <!-- opcional: mostrar nada (igual ao React retornava null) -->
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+/* Fallback caso line-clamp não esteja disponível */
+.blog-title-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+</style>

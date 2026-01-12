@@ -1,0 +1,255 @@
+---
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+import { getLocale, ui } from "../i18n/ui";
+
+const locale = getLocale(Astro.currentLocale);
+const dict =
+  (ui as any)?.[locale] ?? (ui as any)?.es ?? (ui as any)?.en ?? (ui as any)?.pt ?? {};
+
+const nav =
+  (dict as any)?.nav ??
+  (dict as any)?.common?.nav ??
+  (dict as any)?.home?.nav ??
+  {};
+
+const labels = {
+  portfolio: nav?.portfolio ?? "Portfolio",
+  community: nav?.community ?? "Community",
+  youtube: nav?.youtube ?? "YouTube",
+  blog: nav?.blog ?? "Blog",
+  contact: nav?.contact ?? "Contact",
+};
+
+const withLocale = (path: string) => `/${locale}/${path}`.replace(/\/+$/, "/");
+
+// Links (mantém os do header antigo)
+const links = {
+  home: `/${locale}/`,
+  portfolio: withLocale("portfolio/"),
+  blog: withLocale("blog/"),
+  contact: withLocale("contact/"),
+  community: "https://www.skool.com/ia-operators-hub-9023/about",
+  youtube: "https://www.youtube.com/@IAOperators",
+};
+
+const mobileLinks = [
+  { key: "portfolio", href: links.portfolio, external: false },
+  { key: "community", href: links.community, external: true },
+  { key: "youtube", href: links.youtube, external: true },
+  { key: "blog", href: links.blog, external: false },
+];
+---
+
+<header class="fixed top-6 left-0 right-0 z-50 flex justify-center pointer-events-none">
+  <div
+    class="
+      relative flex items-center gap-6
+      w-[90%] sm:w-auto sm:inline-flex
+      py-2 pl-6 pr-2
+      rounded-full
+      border border-white/10
+      bg-white/5
+      backdrop-blur-2xl
+      shadow-[0_12px_40px_rgba(0,0,0,0.55)]
+      pointer-events-auto
+    "
+  >
+    <div class="pointer-events-none absolute inset-0 rounded-full bg-linear-to-b from-white/10 via-white/0 to-transparent"></div>
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-px rounded-full bg-linear-to-r from-transparent via-white/30 to-transparent"></div>
+
+    <div class="relative z-10 flex items-center gap-6 w-full">
+      <!-- Logo -->
+      <a href={links.home} class="shrink-0" data-close-menu>
+        <img
+          src="https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png"
+          alt="IA Operators"
+          class="h-6 md:h-7 w-auto select-none"
+        />
+      </a>
+
+      <!-- Desktop navigation -->
+      <nav class="hidden md:flex gap-8 text-sm font-medium text-gray-300 whitespace-nowrap">
+        <a href={links.portfolio} class="hover:text-white transition-colors">
+          {labels.portfolio}
+        </a>
+
+        <a
+          href={links.community}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-white transition-colors"
+        >
+          {labels.community}
+        </a>
+
+        <a
+          href={links.youtube}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-white transition-colors"
+        >
+          {labels.youtube}
+        </a>
+
+        <a href={links.blog} class="hover:text-white transition-colors">
+          {labels.blog}
+        </a>
+      </nav>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-2 ml-auto md:ml-0">
+        <!-- Language -->
+        <div class="hidden md:block">
+          <LanguageSwitcher />
+        </div>
+
+        <!-- Desktop contact button (efeito conic spin) -->
+        <a href={links.contact} class="hidden md:inline-flex" data-close-menu>
+          <span class="relative group">
+            <span class="relative overflow-hidden rounded-full p-1px inline-flex">
+              <span class="spin-ring absolute inset-[-1000%]"></span>
+              <span class="relative flex items-center gap-2 rounded-full bg-[#0f0f0f]/70 px-5 py-2.5 text-sm font-medium text-white hover:bg-white/5 transition">
+                {labels.contact}
+                <span class="text-gray-400 group-hover:text-white transition">↗</span>
+              </span>
+            </span>
+          </span>
+        </a>
+
+        <!-- Hamburger mobile -->
+        <button
+          id="menuBtn"
+          type="button"
+          class="
+            md:hidden
+            h-12 w-12
+            rounded-full
+            border border-white/10
+            bg-white/5 hover:bg-white/10
+            backdrop-blur-xl
+            text-white
+            flex items-center justify-center
+            transition
+            cursor-pointer
+            z-50
+          "
+          aria-label="Toggle menu"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+        >
+          <span id="iconMenu" class="pointer-events-none">☰</span>
+          <span id="iconClose" class="pointer-events-none hidden">✕</span>
+        </button>
+      </div>
+
+      <!-- Mobile menu (hidden by default) -->
+      <div
+        id="mobileMenu"
+        class="
+          hidden md:hidden
+          absolute top-[120%] right-0
+          w-280px
+          rounded-2xl
+          border border-white/10
+          bg-[#0a0a0a]
+          shadow-[0_0_50px_rgba(0,0,0,0.8)]
+          z-999
+          overflow-hidden
+        "
+        role="dialog"
+        aria-label="Mobile menu"
+      >
+        <div class="p-3 flex flex-col gap-1">
+          {mobileLinks.map((item) => (
+            <a
+              href={item.href}
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noopener noreferrer" : undefined}
+              class="block px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition font-medium"
+              data-close-menu
+            >
+              {(labels as any)[item.key] ?? item.key}
+            </a>
+          ))}
+
+          <div class="h-px bg-white/10 my-2 mx-2"></div>
+
+          <a
+            href={links.contact}
+            class="block px-4 py-3 rounded-lg text-orange-400 hover:bg-orange-500/10 transition font-bold"
+            data-close-menu
+          >
+            {labels.contact}
+          </a>
+
+          <div class="px-4 py-2">
+            <LanguageSwitcher />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- CSS + Script -->
+<style is:global>
+  /* ring conic gradient como no Vite antigo */
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  .spin-ring {
+    background: conic-gradient(
+      from 90deg at 50% 50%,
+      #000000 0%,
+      #000000 50%,
+      #f97316 100%
+    );
+    animation: spin 3s linear infinite;
+  }
+</style>
+
+<script is:inline>
+  // Mobile menu: sem React, sem framer-motion — só funciona™
+  const btn = document.getElementById("menuBtn");
+  const menu = document.getElementById("mobileMenu");
+  const iconMenu = document.getElementById("iconMenu");
+  const iconClose = document.getElementById("iconClose");
+
+  function setOpen(next) {
+    if (!btn || !menu || !iconMenu || !iconClose) return;
+    btn.setAttribute("aria-expanded", String(next));
+    menu.classList.toggle("hidden", !next);
+    iconMenu.classList.toggle("hidden", next);
+    iconClose.classList.toggle("hidden", !next);
+  }
+
+  function isOpen() {
+    return btn?.getAttribute("aria-expanded") === "true";
+  }
+
+  // Toggle
+  btn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    setOpen(!isOpen());
+  });
+
+  // Fecha com ESC
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setOpen(false);
+  });
+
+  // Fecha ao clicar fora
+  document.addEventListener("mousedown", (e) => {
+    if (!isOpen()) return;
+    const target = e.target;
+    if (!(target instanceof Node)) return;
+    if (menu?.contains(target)) return;
+    if (btn?.contains(target)) return;
+    setOpen(false);
+  });
+
+  // Fecha ao clicar em qualquer link marcado
+  document.querySelectorAll("[data-close-menu]").forEach((el) => {
+    el.addEventListener("click", () => setOpen(false));
+  });
+</script>

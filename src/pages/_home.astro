@@ -1,0 +1,82 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { ui, getLocale } from "../i18n/ui";
+import Hero from "../sections/home/Hero.astro";
+import WhyUs from "../sections/home/WhyUs.astro";
+import Services from "../sections/home/Services.astro";
+import Testimonial from "../sections/home/Testimonial.astro";
+import BlogSection from "../sections/home/BlogSection.astro";
+import FAQ from "../sections/home/FAQ.astro";
+import { fetchBlogPosts } from "../lib/blog";
+
+type Social = { label: string; href: string };
+type FaqItem = { q: string; a: string };
+
+const locale = getLocale(Astro.currentLocale);
+
+// Fallback forte: nunca deixe dict virar undefined
+const dict = (ui as any)?.[locale] ?? (ui as any)?.es ?? (ui as any)?.en ?? (ui as any)?.pt ?? {};
+
+// Site
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+
+// Blog posts
+const posts = await fetchBlogPosts();
+const latestPosts = (posts ?? []).slice(0, 3);
+
+// Socials
+const socials: Social[] = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/iaoperators" },
+  { label: "Instagram", href: "https://www.instagram.com/iaoperators" },
+  { label: "YouTube", href: "https://www.youtube.com/@iaoperators" },
+];
+
+// Guards (evita undefined em cascata)
+const home = (dict as any)?.home ?? {};
+const meta = (dict as any)?.meta ?? {};
+
+// FAQ items seguros
+const faq = home?.faq ?? { items: [] };
+const faqItems: FaqItem[] = Array.isArray(faq?.items) ? (faq.items as FaqItem[]) : [];
+
+// JSON-LD: sempre Organization; FAQPage só se tiver itens
+const jsonLd: any[] = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "IA Operators",
+    url: site,
+    sameAs: socials.map((item) => item.href),
+  },
+];
+
+if (faqItems.length) {
+  jsonLd.push({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
+      },
+    })),
+  });
+}
+
+// Meta com fallback
+const metaTitle = meta?.title ?? "IA Operators";
+const metaDescription = meta?.description ?? "";
+---
+
+<BaseLayout title={metaTitle} description={metaDescription} jsonLd={jsonLd}>
+  <main>
+    <Hero locale={locale} hero={home?.hero ?? {}} />
+    <WhyUs why={home?.why ?? {}} industries={home?.industries ?? []} />
+    <Services services={home?.services ?? {}} />
+    <Testimonial testimonial={home?.testimonial ?? {}} socials={socials} />
+    <BlogSection blogSection={home?.blogSection ?? {}} posts={latestPosts} locale={locale} />
+    <FAQ faq={faq ?? { items: [] }} />
+  </main>
+</BaseLayout>

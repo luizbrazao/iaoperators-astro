@@ -1,0 +1,123 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getLocale, locales } from "../../../i18n/ui";
+
+// ✅ obrigatório em rotas dinâmicas
+export const getStaticPaths = () => locales.map((locale) => ({ params: { locale } }));
+
+const locale = getLocale(Astro.params.locale);
+
+// ✅ carrega terms.json de cada idioma e seleciona o atual
+const termsByLocale = import.meta.glob("../../../i18n/locales/*/terms.json", {
+  eager: true,
+});
+
+type JsonModule = { default: Record<string, unknown> };
+
+const key = `../../../i18n/locales/${locale}/terms.json`;
+const terms = ((termsByLocale[key] as JsonModule | undefined)?.default ??
+  (termsByLocale["../../../i18n/locales/es/terms.json"] as JsonModule | undefined)?.default ??
+  (termsByLocale["../../../i18n/locales/en/terms.json"] as JsonModule | undefined)?.default ??
+  (termsByLocale["../../../i18n/locales/pt/terms.json"] as JsonModule | undefined)?.default ??
+  {}) as Record<string, unknown>;
+
+// getter seguro + tipado
+function t(path: string, fallback: string = ""): string {
+  const value = path
+    .split(".")
+    .reduce<unknown>((acc: unknown, k: string) => {
+      if (acc && typeof acc === "object" && k in (acc as Record<string, unknown>)) {
+        return (acc as Record<string, unknown>)[k];
+      }
+      return undefined;
+    }, terms);
+
+  return typeof value === "string" ? value : fallback;
+}
+
+const pageTitle = `${t("terms.title", "Términos y Condiciones")} | IA Operators`;
+const canonical = `https://www.iaoperators.com/${locale}/terminos-y-condiciones/`;
+---
+
+<BaseLayout title={pageTitle} robots="index,follow">
+  <main class="container mx-auto px-4 pt-120px pb-16 max-w-4xl">
+    <h1 class="text-3xl font-bold mb-8">
+      {t("terms.title", "Términos y Condiciones")}
+    </h1>
+
+    <p class="mb-6 text-muted-foreground">
+      {t("terms.intro", "")}
+    </p>
+
+    <section class="space-y-8">
+      <div>
+        <h2 class="text-xl font-semibold mb-2">
+          {t("terms.acceptance.title", "Aceptación")}
+        </h2>
+        <p>{t("terms.acceptance.text", "")}</p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-2">
+          {t("terms.services.title", "Servicios")}
+        </h2>
+        <ul class="list-disc pl-6 space-y-1">
+          <li>{t("terms.services.items.automation", "")}</li>
+          <li>{t("terms.services.items.integration", "")}</li>
+          <li>{t("terms.services.items.support", "")}</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-2">
+          {t("terms.userResponsibilities.title", "Responsabilidades del usuario")}
+        </h2>
+        <ul class="list-disc pl-6 space-y-1">
+          <li>{t("terms.userResponsibilities.items.accurateInfo", "")}</li>
+          <li>{t("terms.userResponsibilities.items.legalUse", "")}</li>
+          <li>{t("terms.userResponsibilities.items.credentials", "")}</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-2">
+          {t("terms.intellectualProperty.title", "Propiedad intelectual")}
+        </h2>
+        <p>{t("terms.intellectualProperty.text", "")}</p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-2">
+          {t("terms.liability.title", "Responsabilidad")}
+        </h2>
+        <ul class="list-disc pl-6 space-y-1">
+          <li>{t("terms.liability.items.indirectDamages", "")}</li>
+          <li>{t("terms.liability.items.misuse", "")}</li>
+          <li>{t("terms.liability.items.downtime", "")}</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-2">
+          {t("terms.modifications.title", "Modificaciones")}
+        </h2>
+        <p>{t("terms.modifications.text", "")}</p>
+      </div>
+
+      <div class="mt-10">
+        <h3 class="font-semibold mb-2">
+          {t("contact.title", "Contacto")}
+        </h3>
+        <p>
+          {t("contact.text", "Escríbenos a")}{" "}
+          <a href="mailto:info@iaoperators.com" class="underline hover:text-orange-400">
+            info@iaoperators.com
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <!-- Canonical opcional (se seu BaseLayout não estiver setando isso já) -->
+    <link rel="canonical" href={canonical} />
+  </main>
+</BaseLayout>

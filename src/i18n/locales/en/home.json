@@ -1,0 +1,141 @@
+{
+    "hero": {
+        "titleHighlight": "Experts in Artificial Intelligence",
+        "titleHighlightMobile": "Experts in AI",
+        "titleRest": "to Automate Your Business.✨",
+        "subtitle": "We put your company on autopilot: automated processes, optimized operations, and impressive results powered by custom AI solutions.",
+        "cta": "Talk to Luiz ↗",
+        "tech": "We apply cutting-edge technology"
+    },
+    "why": {
+        "badge": "For you",
+        "title": "AI for everyone: solutions\nthat adapt to your business",
+        "subtitle": "Discover how AI can transform your processes and deliver results that make you smile every day."
+    },
+    "industries": [
+        {
+            "title": "Online stores (E-commerce)",
+            "description": "24/7 support, personalized recommendations, and fail-safe inventory management. AI helps your store sell more while you sleep."
+        },
+        {
+            "title": "Restaurants and bars",
+            "description": "Automated orders, real-time inventory, and menus that adapt to the weather. With AI, your restaurant becomes organized and deliciously efficient."
+        },
+        {
+            "title": "Law firms",
+            "description": "Automate deadlines, document analysis, and even legal research. With AI, your firm gains speed and precision."
+        },
+        {
+            "title": "Schools and online courses",
+            "description": "Auto-grading, personalized learning paths, and effortless enrollment management. AI makes education smarter and more connected."
+        },
+        {
+            "title": "Marketing agencies",
+            "description": "Automated reports, real-time campaign analysis, and AI-powered content creation. Let AI do the heavy lifting so you can focus on creativity."
+        },
+        {
+            "title": "Real estate agencies",
+            "description": "Lead management, tour scheduling, and real-time market insights. AI helps your agency sell more while working less."
+        }
+    ],
+    "services": {
+        "badge": "How we work",
+        "title": "The path to\nintelligent automation",
+        "subtitle": "3 simple steps to turn chaos into efficiency (and peace of mind).",
+        "steps": [
+            {
+                "title": "1. Planning",
+                "body": "Before we build, we think. We analyze your needs, define clear goals, and design a tailored strategy. Every step is aligned with what truly matters."
+            },
+            {
+                "title": "2. Implementation",
+                "body": "Time to execute. With solid engineering and clean integrations, we ship the plan into production. We automate processes, connect systems, and make sure everything runs smoothly."
+            },
+            {
+                "title": "3. Optimization",
+                "body": "The work doesn’t end at deploy. We monitor, iterate, and continuously improve. With AI, your business stays one step ahead — ready to scale and outperform."
+            }
+        ]
+    },
+    "testimonial": {
+        "title": "Hi, I'm Luiz Brazão 👋",
+        "paragraphs": [
+            "I spent years leading teams in big, small, and medium-sized companies — some with names you’d recognize, and others you wouldn’t.",
+            "And you know what? I kept running into the same wall:\nIt wasn’t a lack of brilliant people. It was that everything was done manually, like we were still stuck in 2002.",
+            "Messy processes, scattered info, decisions being made (and remade) every week like déjà vu on loop.\nFor a while, just tidying things up was enough.\nNot anymore.",
+            "Because the market is moving fast.\nAnd if you don’t automate, you stall. Period.\nWhat used to be your 'star process' is now the bottleneck.",
+            "That’s why I created IA Operators: to help companies (like yours, the one juggling a thousand things with zero time to waste) turn manual processes into intelligent systems.",
+            "With AI. But no smoke and mirrors.",
+            "Because AI isn’t magic — it’s strategy.\nAnd when used right, it doesn’t just save time. It delivers results. The kind you can see in your spreadsheets… and in your team’s collective sigh of relief.",
+            "Shall we get to work?"
+        ],
+        "trustedBy": "Companies that trusted our work"
+    },
+    "blogSection": {
+        "badge": "Blog",
+        "title": "Latest posts",
+        "subtitle": "Welcome to the tech corner where AI meets real life.",
+        "posts": [
+            {
+                "category": "Tools",
+                "title": "Manus: The AI Revolution",
+                "date": "Mar 10, 2025"
+            },
+            {
+                "category": "AI for restaurants",
+                "title": "AI for Restaurants & Photography",
+                "date": "Mar 4, 2025"
+            },
+            {
+                "category": "News",
+                "title": "GPT-4.5: The Future of OpenAI",
+                "date": "Feb 28, 2025"
+            }
+        ]
+    },
+    "faq": {
+        "title": "Frequently asked questions",
+        "items": [
+            {
+                "q": "What is IA Operators?",
+                "a": "IA Operators is an agency specialized in AI-driven process automation. We help businesses optimize operations, reduce costs, and increase efficiency with tailored solutions."
+            },
+            {
+                "q": "What kinds of businesses benefit from AI automation?",
+                "a": "Almost all of them. From clinics and professional services to e-commerce and agencies. We design solutions adapted to your industry and real workflows."
+            },
+            {
+                "q": "How does the IA Operators process work?",
+                "a": "We work in 3 stages: (1) Planning: understand the problem and define goals. (2) Implementation: build and integrate the automation. (3) Optimization: measure, iterate, and continuously improve."
+            },
+            {
+                "q": "What tasks can be automated?",
+                "a": "Almost any repetitive or rules/data-driven task: customer support (chatbots), scheduling, reporting, lead follow-ups, system integrations, document generation, and more."
+            },
+            {
+                "q": "Is it hard to implement AI in my business?",
+                "a": "No. We handle the design, integration, and go-live. Your team gets guidance to operate the system confidently."
+            },
+            {
+                "q": "How fast can I see ROI?",
+                "a": "It depends on scope, but many clients see improvements within weeks: less manual work, faster responses, fewer errors, and better conversion."
+            },
+            {
+                "q": "Is AI safe to use?",
+                "a": "Yes—when done properly. We follow good practices: least-privilege access, secrets stored server-side, permission controls, and privacy by design."
+            },
+            {
+                "q": "What makes IA Operators different from other agencies?",
+                "a": "A tailored approach, an obsession with quality, and automations focused on real outcomes. No AI hype: we integrate systems and measure impact."
+            },
+            {
+                "q": "How do I get started?",
+                "a": "Easy: contact us. We do an initial assessment, identify opportunities, and propose a clear implementation plan."
+            },
+            {
+                "q": "What if I need improvements after launch?",
+                "a": "We offer ongoing support and optimization. AI and processes change—your system should evolve with your business."
+            }
+        ]
+    }
+}

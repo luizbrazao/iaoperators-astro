@@ -1,0 +1,167 @@
+---
+import { projects } from "../../../data/projects";
+import type { Project } from "../../../data/projects";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { createT } from "../../../i18n/t";
+
+export async function getStaticPaths() {
+  const locales = ["es", "pt", "en"];
+  return locales.map((locale) => ({ params: { locale } }));
+}
+
+const locale = Astro.params.locale!;
+const t = await createT(locale, { namespaces: ["portfolio", "projects"] });
+
+const headerTitle = t("portfolio:header.title");
+const headerHighlight = t("portfolio:header.highlight");
+const pageTitle = `${headerTitle} ${headerHighlight} — IA Operators`;
+const pageDescription = t("portfolio:header.subtitle");
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <section class="bg-transparent text-white py-24 px-6" id="portfolio">
+    <div class="max-w-7xl mx-auto">
+      <!-- Cabeçalho -->
+      <div class="mb-20 text-center">
+        <span class="text-orange-500 font-bold tracking-[0.2em] text-sm uppercase mb-3 block">
+          {t("portfolio:header.badge")}
+        </span>
+
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 text-white">
+          {t("portfolio:header.title")}
+          <span class="text-gray-500"> {t("portfolio:header.highlight")}</span>
+        </h1>
+
+        <p class="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
+          {t("portfolio:header.subtitle")}
+        </p>
+      </div>
+
+      <!-- Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        {projects.map((project: Project) => {
+          const liveLink = project.links?.find((l) => l.external)?.href;
+
+          const stackLike = [
+            ...project.pillars.map((p) => t(p.titleKey)),
+            ...(project.securityKeys?.length ? ["AES-GCM / RLS"] : []),
+          ].slice(0, 6);
+
+          return (
+            <article class="group flex flex-col bg-[#0A0A0A] border border-white/10 rounded-3xl overflow-hidden hover:border-orange-500/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(249,115,22,0.1)]">
+              <!-- Imagem -->
+              <div class="h-64 overflow-hidden relative bg-[#111]">
+                <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500 z-10" />
+
+                <img
+                  src={project.heroImage}
+                  alt={`${t(project.titleKey)} — IA Operators`}
+                  loading="lazy"
+                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out opacity-90 group-hover:opacity-100"
+                />
+
+                <!-- Badge Categoria -->
+                <div class="absolute top-5 left-5 z-20">
+                  <span class="bg-black/80 backdrop-blur-md border border-white/10 text-orange-500 text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider">
+                    {project.category}
+                  </span>
+                </div>
+
+                <!-- Badge Live -->
+                {liveLink && (
+                  <div class="absolute top-5 right-5 z-20 flex items-center gap-2 bg-green-500/10 backdrop-blur-md border border-green-500/20 text-green-400 text-xs font-bold px-3 py-1.5 rounded-full">
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+                    </span>
+                    {t("portfolio:actions.live")}
+                  </div>
+                )}
+              </div>
+
+              <!-- Conteúdo -->
+              <div class="p-8 flex flex-col grow">
+                <h2 class="text-2xl font-bold mb-4 text-white group-hover:text-orange-500 transition-colors">
+                  {t(project.titleKey)}
+                </h2>
+
+                <p class="text-gray-400 mb-6 text-sm leading-relaxed grow">
+                  {t(project.taglineKey)}
+                </p>
+
+                <!-- Stack -->
+                <div class="flex flex-wrap gap-2 mb-8">
+                  {stackLike.map((tech) => (
+                    <span
+                      class:list={[
+                        "text-xs px-3 py-1.5 rounded border",
+                        tech.toLowerCase().includes("security") ||
+                        tech.toLowerCase().includes("aes") ||
+                        tech.toLowerCase().includes("rls")
+                          ? "bg-green-900/20 border-green-800 text-green-400"
+                          : "bg-white/5 border-white/10 text-gray-300",
+                      ]}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <!-- Impacto -->
+                <div class="bg-[#111] p-5 rounded-xl border-l-2 border-l-orange-500 mb-8">
+                  <div class="flex items-start gap-3">
+                    <svg
+                      class="w-5 h-5 text-orange-500 mt-0.5 shrink-0"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                      />
+                    </svg>
+
+                    <div>
+                      <span class="text-gray-500 text-xs uppercase font-bold tracking-wider block mb-1">
+                        {t("portfolio:actions.impact")}
+                      </span>
+                      <p class="text-white text-sm font-medium">{t(project.impactKey)}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Botões -->
+                <div class="mt-auto flex gap-3">
+                  <a
+                    href={`/${locale}/portfolio/${project.slug}/`}
+                    class="w-full inline-flex items-center justify-center gap-2 py-4 rounded-xl bg-white/5 border border-white/10 hover:bg-orange-600 hover:border-orange-600 hover:text-white text-white font-semibold transition-all duration-300 group-hover:-translate-y-0.5"
+                  >
+                    {t("portfolio:actions.details")}
+                    <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </a>
+
+                  {liveLink && (
+                    <a
+                      href={liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="px-5 py-4 rounded-xl bg-white/0 border border-white/10 hover:bg-white/5 text-white font-semibold transition-all duration-300"
+                      title={t("portfolio:actions.live")}
+                    >
+                      {t("portfolio:actions.live")}
+                    </a>
+                  )}
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

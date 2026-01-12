@@ -1,0 +1,32 @@
+---
+import { getLocale, locales } from "../i18n/ui";
+
+const current = getLocale(Astro.currentLocale);
+const pathname = Astro.url.pathname;
+const basePath = pathname.replace(new RegExp(`^/${current}(?=/|$)`), "") || "/";
+
+const links = locales.map((locale) => ({
+  locale,
+  href: `/${locale}${basePath}`.replace(/\/+$/, "/"),
+  isActive: locale === current,
+}));
+---
+
+<nav aria-label="Language switcher" class="flex gap-2 text-sm">
+  {links.map((l) => (
+    <a
+      href={l.href}
+      class:list={[
+        "px-2 py-1 rounded border",
+        l.isActive
+          ? "border-border"
+          : "border-border/50 opacity-80 hover:opacity-100",
+      ]}
+      aria-current={l.isActive ? "page" : undefined}
+      rel="alternate"
+      hreflang={l.locale}
+    >
+      {l.locale.toUpperCase()}
+    </a>
+  ))}
+</nav>

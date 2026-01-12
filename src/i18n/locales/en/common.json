@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "forYou": "For you",
+    "howWeWork": "How we work",
+    "portfolio": "Portfolio",
+    "community": "Community",
+    "youtube": "YouTube",
+    "blog": "Blog",
+    "contact": "Let's talk?"
+  },
+  "hero": {
+    "title": "AI Experts to Automate Your Business",
+    "cta": "Talk to Luiz"
+  },
+  "footer": {
+    "ready": "Ready to automate?",
+    "title": "Let's talk",
+    "cta": "Get a quote",
+    "rights": "All rights reserved.",
+    "terms": "Terms and Conditions",
+    "privacy": "Privacy Policy",
+    "top": "TOP"
+  }
+}

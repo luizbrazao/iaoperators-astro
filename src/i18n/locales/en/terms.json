@@ -1,0 +1,91 @@
+{
+    "terms": {
+        "title": "Terms and Conditions",
+        "intro": "Welcome to IA Operators! These terms and conditions describe the rules and regulations for using our website and services.",
+        "acceptance": {
+            "title": "1. Acceptance of the Terms",
+            "text": "By accessing and using IA Operators services, you agree to comply with these Terms and Conditions. If you do not agree with any part of these terms, we recommend that you do not use our services."
+        },
+        "services": {
+            "title": "2. Services Offered",
+            "items": {
+                "automation": "Development of automation tools.",
+                "integration": "System integration.",
+                "support": "Technical support and continuous optimization."
+            }
+        },
+        "userResponsibilities": {
+            "title": "3. User Responsibilities",
+            "items": {
+                "accurateInfo": "Provide accurate and up-to-date information.",
+                "legalUse": "Use the services ethically and in compliance with the law.",
+                "credentials": "Do not share access credentials or allow unauthorized use."
+            }
+        },
+        "intellectualProperty": {
+            "title": "4. Intellectual Property",
+            "text": "All intellectual property rights related to IA Operators services, including software, designs, and content, are the exclusive property of IA Operators."
+        },
+        "liability": {
+            "title": "5. Limitation of Liability",
+            "items": {
+                "indirectDamages": "Indirect, incidental, or consequential damages.",
+                "misuse": "Issues caused by improper use of the tools by the client.",
+                "downtime": "Service interruptions due to causes beyond our control."
+            }
+        },
+        "modifications": {
+            "title": "6. Modifications",
+            "text": "We reserve the right to modify these Terms and Conditions at any time. Continued use of the services constitutes acceptance of the updated terms."
+        }
+    },
+    "privacy": {
+        "title": "Privacy Policy",
+        "collection": {
+            "title": "1. Information We Collect",
+            "items": {
+                "personal": "Name, email address, and contact details.",
+                "usage": "Information about the use of our tools (logs, metrics, etc.)."
+            }
+        },
+        "usage": {
+            "title": "2. Use of Information",
+            "items": {
+                "improve": "Provide and improve our services.",
+                "personalization": "Personalize the user experience.",
+                "communication": "Send service-related communications (no spam)."
+            }
+        },
+        "sharing": {
+            "title": "3. Information Sharing",
+            "text": "We do not sell or share personal information with third parties, except when required by law or necessary to provide contracted services."
+        },
+        "security": {
+            "title": "4. Data Security",
+            "text": "We implement advanced security measures to protect your information; however, no system is 100% secure."
+        },
+        "rights": {
+            "title": "5. User Rights",
+            "items": {
+                "access": "Access, correct, or delete your personal information.",
+                "portability": "Request data portability.",
+                "marketing": "Object to the use of your data for marketing purposes."
+            }
+        },
+        "cookies": {
+            "title": "6. Cookies",
+            "text": "We use cookies to improve the user experience. You can manage or disable cookies in your browser settings."
+        },
+        "changes": {
+            "title": "7. Changes to the Privacy Policy",
+            "text": "We reserve the right to update this policy. Significant changes will be communicated via our website or email."
+        }
+    },
+    "contact": {
+        "title": "Contact",
+        "text": "If you have any questions, contact us at"
+    },
+    "privacyPage": {
+        "title": "Privacy Policy"
+    }
+}

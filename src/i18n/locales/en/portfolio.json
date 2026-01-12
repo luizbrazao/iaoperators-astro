@@ -1,0 +1,75 @@
+{
+    "header": {
+        "badge": "Our cases",
+        "title": "Real Solutions,",
+        "highlight": "Measurable Results",
+        "subtitle": "We don’t just write code. We build AI ecosystems that solve complex integration, security, and scalability problems."
+    },
+    "actions": {
+        "details": "View details",
+        "live": "Live",
+        "impact": "Impact delivered"
+    },
+    "breadcrumb": {
+        "portfolio": "Portfolio"
+    },
+    "notFound": {
+        "title": "Project not found",
+        "subtitle": "Check the slug and make sure it exists in",
+        "back": "Back to portfolio"
+    },
+    "project": {
+        "cta": {
+            "accessProduct": "Access product",
+            "viewCase": "View the case",
+            "startNow": "Start now",
+            "talkToUs": "Let’s talk"
+        },
+        "sections": {
+            "gap": {
+                "title": "The Problem (The Gap)"
+            },
+            "engineering": {
+                "title": "The Engineering (The Tech)",
+                "archTitle": "Architecture (high-level)"
+            },
+            "whatItDoes": {
+                "title": "What it does"
+            },
+            "howItWorks": {
+                "title": "How it works"
+            },
+            "pillars": {
+                "title": "Pillars"
+            },
+            "impact": {
+                "title": "Impact (ROI)"
+            },
+            "security": {
+                "title": "Security & compliance"
+            },
+            "metrics": {
+                "title": "Metrics"
+            },
+            "pricing": {
+                "title": "Pricing"
+            },
+            "links": {
+                "title": "Links"
+            }
+        },
+        "arch": {
+            "whatsapp": "WhatsApp",
+            "chatplug": "ChatPlug",
+            "orchestration": "Orchestration (AI + rules)",
+            "altegio": "Altegio (calendar)",
+            "notifications": "Notifications",
+            "analytics": "Analytics",
+            "handoff": "Human handoff"
+        },
+        "pricing": {
+            "monthly": "Monthly",
+            "annual": "Annual"
+        }
+    }
+}

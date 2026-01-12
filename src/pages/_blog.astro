@@ -1,0 +1,193 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { ui, getLocale } from "../i18n/ui";
+import { fetchBlogPosts } from "../lib/blog";
+
+const locale = getLocale(Astro.currentLocale);
+const dict = (ui as any)?.[locale] ?? (ui as any)?.es ?? (ui as any)?.en ?? (ui as any)?.pt ?? {};
+
+// Namespaces (compat: pode estar em dict.blog / dict.categories ou em dict.common.*)
+const blogDict = (dict as any)?.blog ?? (dict as any)?.common?.blog ?? {};
+const categoriesDict = (dict as any)?.categories ?? (dict as any)?.common?.categories ?? {};
+const meta = (dict as any)?.meta ?? {};
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+
+const CATEGORY_KEYS = [
+  "all",
+  "tools",
+  "lawyers",
+  "architects",
+  "accounting",
+  "restaurants",
+  "others",
+] as const;
+
+type CategoryKey = (typeof CATEGORY_KEYS)[number];
+
+function normalizeCategoryId(raw?: string | null): CategoryKey {
+  const v = (raw ?? "").toLowerCase().trim();
+
+  if (v === "all" || v === "todos") return "all";
+  if (v === "herramientas" || v === "tools" || v === "ferramentas") return "tools";
+  if (v === "ia para abogados" || v === "ai for lawyers" || v === "ia para advogados") return "lawyers";
+  if (v === "ia para arquitectos" || v === "ai for architects" || v === "ia para arquitetos") return "architects";
+  if (v === "ia para contabilidad" || v === "ai for accounting" || v === "ia para contabilidade") return "accounting";
+  if (v === "ia para restaurantes" || v === "ai for restaurants") return "restaurants";
+  if (v === "otros" || v === "others" || v === "outros") return "others";
+
+  return "others";
+}
+
+// categoria selecionada via querystring ?cat=tools
+const catParam = (Astro.url.searchParams.get("cat") ?? "all") as CategoryKey;
+const selectedCategory: CategoryKey = (CATEGORY_KEYS as readonly string[]).includes(catParam) ? catParam : "all";
+
+// posts (server-side)
+const posts = (await fetchBlogPosts()) ?? [];
+
+const filteredPosts =
+  selectedCategory === "all"
+    ? posts
+    : posts.filter((post: any) => normalizeCategoryId(post?.category) === selectedCategory);
+
+const withLocale = (path: string) => `/${locale}/${path}`.replace(/\/+$/, "/");
+
+// Socials (JSON-LD)
+const socials = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/iaoperators" },
+  { label: "Instagram", href: "https://www.instagram.com/iaoperators" },
+  { label: "YouTube", href: "https://www.youtube.com/@iaoperators" },
+];
+
+const jsonLd: any[] = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "IA Operators",
+    url: site,
+    sameAs: socials.map((s) => s.href),
+  },
+];
+
+// Meta (fallback)
+const title = blogDict?.meta?.title ?? blogDict?.title ?? meta?.title ?? "IA Operators — Blog";
+const description = blogDict?.meta?.description ?? blogDict?.description ?? meta?.description ?? "";
+---
+
+<BaseLayout title={title} description={description} jsonLd={jsonLd}>
+  <div class="bg-[#050505] text-white min-h-screen font-sans">
+    <!-- HEADER DO BLOG -->
+    <section class="pt-40 pb-10 px-4 text-center">
+      <div class="max-w-4xl mx-auto">
+        <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+          {blogDict?.badge ?? "Blog"}
+        </span>
+
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">
+          {blogDict?.title ?? "Blog"}
+        </h1>
+
+        <p class="text-gray-400 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
+          {blogDict?.description ?? ""}
+        </p>
+      </div>
+    </section>
+
+    <!-- FILTRO DE CATEGORIAS (SSR via querystring) -->
+    <section class="px-4 pb-12">
+      <div class="max-w-6xl mx-auto flex flex-wrap justify-center gap-3">
+        {CATEGORY_KEYS.map((catId) => {
+          const isActive = selectedCategory === catId;
+          return (
+            <a
+              href={catId === "all" ? withLocale("blog/") : withLocale(`blog/?cat=${catId}`)}
+              class={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border ${
+                isActive
+                  ? "bg-orange-500 border-orange-500 text-white shadow-[0_0_15px_rgba(249,115,22,0.4)]"
+                  : "bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:text-white"
+              }`}
+            >
+              {categoriesDict?.[catId] ?? catId}
+            </a>
+          );
+        })}
+      </div>
+    </section>
+
+    <!-- LISTA DE POSTS (SSR) -->
+    <section class="px-4 pb-20">
+      <div class="max-w-6xl mx-auto">
+        {filteredPosts.length > 0 ? (
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredPosts.map((post: any) => {
+              const postCatId = normalizeCategoryId(post?.category);
+              const postUrl = withLocale(`blog/${post?.slug ?? ""}/`);
+              const dateStr = post?.date ? new Date(post.date).toLocaleDateString(locale) : "";
+
+              return (
+                <a
+                  href={postUrl}
+                  class="group bg-[#0a0a0a] border border-white/5 rounded-3xl overflow-hidden hover:border-orange-500/50 transition-all duration-300 hover:-translate-y-1 flex flex-col h-full"
+                >
+                  <!-- Imagem -->
+                  <div class="h-48 overflow-hidden bg-white/5 relative">
+                    {post?.imageUrl ? (
+                      <img
+                        src={post.imageUrl}
+                        alt={post?.title ?? "IA Operators"}
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div class="w-full h-full flex items-center justify-center text-gray-700 font-medium">
+                        IA Operators
+                      </div>
+                    )}
+
+                    <!-- Badge categoria -->
+                    <div class="absolute top-4 left-4">
+                      <span class="px-3 py-1 bg-black/60 backdrop-blur-md text-orange-400 text-xs font-bold rounded-full uppercase border border-white/10">
+                        {categoriesDict?.[postCatId] ?? postCatId}
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Conteúdo -->
+                  <div class="p-6 flex flex-col flex-1">
+                    <h3 class="text-xl font-bold mb-3 text-white leading-tight group-hover:text-orange-500 transition-colors">
+                      {post?.title ?? ""}
+                    </h3>
+
+                    <p class="text-gray-400 text-sm line-clamp-3 mb-4 flex-1">
+                      {post?.description ?? ""}
+                    </p>
+
+                    <div class="text-gray-600 text-xs mt-auto pt-4 border-t border-white/5 flex justify-between">
+                      <span>{dateStr}</span>
+                      <span class="group-hover:translate-x-1 transition-transform">
+                        {blogDict?.readMore ?? "Read more"}
+                      </span>
+                    </div>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        ) : (
+          <div class="text-center py-20">
+            <p class="text-gray-400 text-lg">
+              {blogDict?.empty ?? "No posts found."}
+            </p>
+
+            {posts.length > 0 && selectedCategory !== "all" && (
+              <a class="mt-4 inline-block text-orange-500 hover:underline" href={withLocale("blog/")}>
+                {blogDict?.viewAll ?? "View all"}
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+    </section>
+  </div>
+</BaseLayout>
