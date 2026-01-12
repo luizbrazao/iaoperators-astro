@@ -62,6 +62,7 @@ export async function fetchBlogPosts(): Promise<BlogPost[]> {
   url.searchParams.set("sort[0][field]", "created_at");
   url.searchParams.set("sort[0][direction]", "desc");
   url.searchParams.set("pageSize", "50");
+  url.searchParams.set("filterByFormula", "{Divulgar}=TRUE()");
 
   const res = await fetch(url.toString(), {
     headers: { Authorization: `Bearer ${apiKey}` },
