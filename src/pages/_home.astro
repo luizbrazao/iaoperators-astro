@@ -15,7 +15,12 @@ type FaqItem = { q: string; a: string };
 const locale = getLocale(Astro.currentLocale);
 
 // Fallback forte: nunca deixe dict virar undefined
-const dict = (ui as any)?.[locale] ?? (ui as any)?.es ?? (ui as any)?.en ?? (ui as any)?.pt ?? {};
+const dict =
+  (ui as any)?.[locale] ??
+  (ui as any)?.es ??
+  (ui as any)?.en ??
+  (ui as any)?.pt ??
+  {};
 
 // Site
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
@@ -33,7 +38,9 @@ const socials: Social[] = [
 
 // Guards (evita undefined em cascata)
 const home = (dict as any)?.home ?? {};
-const meta = (dict as any)?.meta ?? {};
+
+// ✅ Meta deve vir do namespace "home" (home.json)
+const meta = home?.meta ?? {};
 
 // FAQ items seguros
 const faq = home?.faq ?? { items: [] };

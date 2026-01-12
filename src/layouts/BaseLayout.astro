@@ -16,7 +16,7 @@ type Props = {
 
 const {
   title = "IA Operators",
-  description = "",
+  description,
   ogImage = "/og.png",
   robots,
   meta,
@@ -48,6 +48,18 @@ const ogImageUrl = ogImage.startsWith("http")
   : new URL(ogImage, site).toString();
 
 const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+
+// ===== Fallback global de meta description por idioma =====
+const DEFAULT_DESCRIPTIONS: Record<string, string> = {
+  es: "Automatización con IA para empresas: agentes, flujos no-code e integraciones para escalar operaciones y ventas.",
+  pt: "Automação com IA para empresas: agentes, fluxos no-code e integrações para escalar operações e vendas.",
+  en: "AI automation for businesses: agents, no-code workflows, and integrations to scale operations and sales.",
+};
+
+const effectiveDescription =
+  (typeof description === "string" && description.trim()) ||
+  DEFAULT_DESCRIPTIONS[locale] ||
+  DEFAULT_DESCRIPTIONS[defaultLocale];
 ---
 
 <!doctype html>
@@ -57,7 +69,7 @@ const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 
     <title>{title}</title>
-    <meta name="description" content={description} />
+    <meta name="description" content={effectiveDescription} />
     <link rel="canonical" href={canonical} />
 
     {robots && <meta name="robots" content={robots} />}
@@ -72,14 +84,14 @@ const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={locale} />
     <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={effectiveDescription} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImageUrl} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:description" content={effectiveDescription} />
     <meta name="twitter:image" content={ogImageUrl} />
 
     {jsonLdItems.map((item) => (
@@ -90,7 +102,6 @@ const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   </head>
 
   <body class="min-h-screen bg-background text-foreground">
-
     <!-- GridSpotlight precisa ser o wrapper global (camada de fundo + mask) -->
     <GridSpotlight client:load>
       <Header />
@@ -100,7 +111,7 @@ const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
       <Footer />
     </GridSpotlight>
 
-    <!-- Elementos fixos/overlays fora do wrapper (garante que ficam acima de tudo) -->
+    <!-- Elementos fixos/overlays fora do wrapper -->
     <CookieBanner client:idle />
   </body>
 </html>
