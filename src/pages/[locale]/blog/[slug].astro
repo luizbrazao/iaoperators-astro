@@ -60,6 +60,26 @@ const formattedDate = hasValidDate
   ? parsedDate!.toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })
   : dict.meta.dateUnavailable ?? "Data indisponível";
 
+function toIsoWithOffset(dateIso: string, offsetMinutes: number): string {
+  const date = new Date(dateIso);
+  if (Number.isNaN(date.getTime())) return "";
+  const adjusted = new Date(date.getTime() + offsetMinutes * 60000);
+  const yyyy = adjusted.getUTCFullYear();
+  const mm = String(adjusted.getUTCMonth() + 1).padStart(2, "0");
+  const dd = String(adjusted.getUTCDate()).padStart(2, "0");
+  const hh = String(adjusted.getUTCHours()).padStart(2, "0");
+  const min = String(adjusted.getUTCMinutes()).padStart(2, "0");
+  const ss = String(adjusted.getUTCSeconds()).padStart(2, "0");
+  const sign = offsetMinutes >= 0 ? "+" : "-";
+  const abs = Math.abs(offsetMinutes);
+  const offH = String(Math.floor(abs / 60)).padStart(2, "0");
+  const offM = String(abs % 60).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}T${hh}:${min}:${ss}${sign}${offH}:${offM}`;
+}
+
+const ogPublishedTime = post.date ? toIsoWithOffset(post.date, 60) : "";
+const ogModifiedTime = post.date ? toIsoWithOffset(post.date, 60) : "";
+
 function stripHtml(input: string): string {
   return input.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
 }
@@ -92,7 +112,10 @@ const blogPostingJsonLd = {
   description,
   datePublished: post.date,
   dateModified: post.date,
-  mainEntityOfPage: canonicalUrl,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": canonicalUrl,
+  },
   image: post.imageUrl ? [post.imageUrl] : undefined,
   author: { "@type": "Organization", name: "IA Operators", url: site },
   publisher: {
@@ -135,6 +158,8 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
   ogImage={post.imageUrl ?? "/og.png"}
   ogImageAlt={title}
   ogType="article"
+  ogPublishedTime={ogPublishedTime || undefined}
+  ogModifiedTime={ogModifiedTime || undefined}
   robots={isDuplicateLocale ? "noindex,follow" : "index,follow"}
 >
   <!-- Breadcrumb / Voltar (fixo no desktop) -->

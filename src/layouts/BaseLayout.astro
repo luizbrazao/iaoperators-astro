@@ -11,6 +11,8 @@ type Props = {
   ogImage?: string;
   ogImageAlt?: string;
   ogType?: "website" | "article";
+  ogPublishedTime?: string;
+  ogModifiedTime?: string;
   robots?: string;
   meta?: string;
   jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
@@ -22,6 +24,8 @@ const {
   ogImage = "/og.png",
   ogImageAlt,
   ogType = "website",
+  ogPublishedTime,
+  ogModifiedTime,
   robots,
   meta,
   jsonLd,
@@ -109,7 +113,10 @@ const ogLocale = OG_LOCALE_MAP[locale] ?? locale;
 
     <!-- Open Graph -->
     <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="IA Operators" />
     <meta property="og:locale" content={ogLocale} />
+    {ogPublishedTime && <meta property="article:published_time" content={ogPublishedTime} />}
+    {ogModifiedTime && <meta property="article:modified_time" content={ogModifiedTime} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={effectiveDescription} />
     <meta property="og:url" content={canonical} />
