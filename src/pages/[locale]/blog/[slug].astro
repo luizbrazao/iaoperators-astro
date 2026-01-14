@@ -13,7 +13,7 @@ type BlogPost = {
   metaDescription?: string;
   content?: string;
   locale?: "es" | "pt" | "en";
-  faq?: { q: string; a: string }[];
+  faq?: string;
 };
 
 export async function getStaticPaths() {
@@ -60,6 +60,31 @@ const formattedDate = hasValidDate
   ? parsedDate!.toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })
   : dict.meta.dateUnavailable ?? "Data indisponível";
 
+function stripHtml(input: string): string {
+  return input.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+}
+
+function extractFaqItems(html?: string): { q: string; a: string }[] {
+  if (!html || !html.trim()) return [];
+
+  const items: { q: string; a: string }[] = [];
+  const regex = /<h3[^>]*>([\s\S]*?)<\/h3>\s*<p[^>]*>([\s\S]*?)<\/p>/gi;
+  let match: RegExpExecArray | null = null;
+
+  while ((match = regex.exec(html))) {
+    const q = stripHtml(match[1] ?? "");
+    const a = stripHtml(match[2] ?? "");
+    if (q && a) items.push({ q, a });
+  }
+
+  return items;
+}
+
+const faqItems = extractFaqItems(post.faq);
+if (import.meta.env?.DEV) {
+  console.log("faq length", post.faq?.length ?? 0);
+}
+
 const blogPostingJsonLd = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -82,11 +107,11 @@ const blogPostingJsonLd = {
 };
 
 const faqJsonLd =
-  post.faq && post.faq.length > 0
+  faqItems.length > 0
     ? {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        mainEntity: post.faq.map((item) => ({
+        mainEntity: faqItems.map((item) => ({
           "@type": "Question",
           name: item.q,
           acceptedAnswer: { "@type": "Answer", text: item.a },
@@ -254,6 +279,10 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
           </div>
         )}
       </div>
+
+      {post.faq && post.faq.trim() && (
+        <div class="px-2 md:px-8 mt-12" set:html={post.faq} />
+      )}
 
       <!-- Rodapé / Share -->
       <div class="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 px-8">

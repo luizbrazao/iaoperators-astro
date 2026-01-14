@@ -9,7 +9,7 @@ export type BlogPost = {
   // extras (opcional, útil p/ futuro)
   metaDescription?: string;
   content?: string;
-  faq?: { q: string; a: string }[];
+  faq?: string;
 
   locale?: "es" | "pt" | "en";
 };
@@ -74,36 +74,6 @@ function asAttachmentUrl(v: unknown): string | undefined {
   return undefined;
 }
 
-function stripHtml(input: string): string {
-  return input.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
-}
-
-function parseFaq(raw: unknown): { q: string; a: string }[] {
-  if (!raw) return [];
-
-  let data: unknown = raw;
-  if (typeof raw === "string") {
-    const trimmed = raw.trim();
-    if (!trimmed) return [];
-    try {
-      data = JSON.parse(trimmed);
-    } catch {
-      return [];
-    }
-  }
-
-  if (!Array.isArray(data)) return [];
-
-  return data
-    .map((item) => {
-      if (!item || typeof item !== "object") return null;
-      const q = stripHtml(asString((item as any).q));
-      const a = stripHtml(asString((item as any).a));
-      if (!q || !a) return null;
-      return { q, a };
-    })
-    .filter(Boolean) as { q: string; a: string }[];
-}
 function asCategoryName(fields: Record<string, unknown>): string {
   const raw =
     fields.category_name ??
@@ -216,7 +186,7 @@ export async function fetchBlogPosts(locale: BlogLocale = "es"): Promise<BlogPos
 
       const metaDescription = asString(f.meta_description) || undefined;
       const content = asString(f.content) || undefined;
-      const faq = parseFaq((f as any).faq);
+      const faq = asString((f as any).faq) || undefined;
 
       const localeRaw = asString(f.locale);
       const locale =
