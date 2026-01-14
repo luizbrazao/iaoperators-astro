@@ -70,7 +70,10 @@ const jsonLd = [
     mainEntityOfPage: canonicalUrl,
     image: post.imageUrl ? [post.imageUrl] : undefined,
     author: { "@type": "Organization", name: "IA Operators", url: site },
-    publisher: { "@type": "Organization", name: "IA Operators", url: site },
+    publisher: { "@type": "Organization", name: "IA Operators", url: site, "logo": {
+    "@type": "ImageObject",
+    "url": "https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png"
+  } },
   },
 ];
 
