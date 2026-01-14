@@ -46,9 +46,12 @@ const pathname = Astro.url.pathname;
 const basePath = pathname.replace(new RegExp(`^/${locale}(?=/|$)`), "") || "/";
 const normalizedPath = basePath === "/" ? "" : basePath.replace(/^\/+/, "");
 
+const ensureTrailingSlash = (value: string) => value.replace(/\/?$/, "/");
+
 const buildLocaleUrl = (lang: string) => {
-  const path = `/${lang}/${normalizedPath}`.replace(/\/+$/, "/");
-  return new URL(path, site).toString();
+  const rawPath = `/${lang}/${normalizedPath}`;
+  const path = ensureTrailingSlash(rawPath);
+  return ensureTrailingSlash(new URL(path, site).toString());
 };
 
 const canonical = buildLocaleUrl(locale);
