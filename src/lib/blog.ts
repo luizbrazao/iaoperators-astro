@@ -106,6 +106,10 @@ function parseFaq(raw: unknown): { q: string; a: string }[] {
 }
 function asCategoryName(fields: Record<string, unknown>): string {
   const raw =
+    fields.category_name ??
+    fields.Category_name ??
+    fields.categoryName ??
+    fields.CategoryName ??
     fields.category ??
     fields.Category ??
     fields.categoria ??
