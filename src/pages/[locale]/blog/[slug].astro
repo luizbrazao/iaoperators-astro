@@ -192,7 +192,8 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
           <img
             src={post.imageUrl}
             alt={post.title}
-            loading="lazy"
+            loading="eager"
+            fetchpriority="high"
             decoding="async"
             class="w-full h-full object-cover"
           />
