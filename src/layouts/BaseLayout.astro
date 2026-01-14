@@ -9,6 +9,7 @@ type Props = {
   title?: string;
   description?: string;
   ogImage?: string;
+  ogType?: "website" | "article";
   robots?: string;
   meta?: string;
   jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
@@ -18,6 +19,7 @@ const {
   title = "IA Operators",
   description,
   ogImage = "/og.png",
+  ogType = "website",
   robots,
   meta,
   jsonLd,
@@ -71,6 +73,14 @@ const effectiveDescription =
   (typeof description === "string" && description.trim()) ||
   DEFAULT_DESCRIPTIONS[locale] ||
   DEFAULT_DESCRIPTIONS[defaultLocale];
+
+const OG_LOCALE_MAP: Record<string, string> = {
+  pt: "pt_BR",
+  en: "en_US",
+  es: "es_ES",
+};
+
+const ogLocale = OG_LOCALE_MAP[locale] ?? locale;
 ---
 
 <!doctype html>
@@ -92,8 +102,8 @@ const effectiveDescription =
     <link rel="alternate" hreflang="x-default" href={xDefault} />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content={locale} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content={ogLocale} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={effectiveDescription} />
     <meta property="og:url" content={canonical} />
