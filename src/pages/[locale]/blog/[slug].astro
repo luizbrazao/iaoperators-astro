@@ -16,16 +16,17 @@ type BlogPost = {
 };
 
 export async function getStaticPaths() {
-  const posts = (await fetchBlogPosts()) as BlogPost[];
   const locales: Locale[] = ["es", "pt", "en"];
 
-  return locales.flatMap((loc) =>
-    posts
-      .filter((p) => !p.locale || p.locale === loc)
-      .map((post) => ({
-        params: { locale: loc, slug: post.slug },
-        props: { locale: loc, post },
-      }))
+  const postsByLocale = await Promise.all(
+    locales.map(async (loc) => ({ locale: loc, posts: (await fetchBlogPosts(loc)) as BlogPost[] })),
+  );
+
+  return postsByLocale.flatMap(({ locale: loc, posts }) =>
+    posts.map((post) => ({
+      params: { locale: loc, slug: post.slug },
+      props: { locale: loc, post },
+    })),
   );
 }
 

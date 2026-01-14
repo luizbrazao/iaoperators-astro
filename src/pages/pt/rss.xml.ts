@@ -2,7 +2,7 @@ import rss from "@astrojs/rss";
 import { fetchBlogPosts } from "../../lib/blog";
 
 export async function GET() {
-  const posts = (await fetchBlogPosts()).filter((p) => !p.locale || p.locale === "pt");
+  const posts = await fetchBlogPosts("pt");
 
   return rss({
     title: "IA Operators (PT) — Blog",

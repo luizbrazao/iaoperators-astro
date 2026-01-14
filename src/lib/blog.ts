@@ -10,7 +10,7 @@ export type BlogPost = {
   metaDescription?: string;
   content?: string;
 
-    locale?: "es" | "pt" | "en";
+  locale?: "es" | "pt" | "en";
 };
 
 type AirtableRecord = {
@@ -36,6 +36,28 @@ function asString(v: unknown): string {
 function asISODate(v: unknown): string {
   const s = asString(v);
   if (!s) return "";
+  const parsed = Date.parse(s);
+  if (!Number.isNaN(parsed)) return new Date(parsed).toISOString();
+
+  // Airtable pode retornar data como "14/1/2026 10:07am"
+  const match = s.match(
+    /^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2})(am|pm)?)?$/i,
+  );
+  if (match) {
+    const day = Number(match[1]);
+    const month = Number(match[2]);
+    const year = Number(match[3]);
+    let hour = Number(match[4] ?? "0");
+    const minute = Number(match[5] ?? "0");
+    const meridiem = (match[6] ?? "").toLowerCase();
+
+    if (meridiem === "pm" && hour < 12) hour += 12;
+    if (meridiem === "am" && hour === 12) hour = 0;
+
+    const date = new Date(Date.UTC(year, month - 1, day, hour, minute));
+    if (!Number.isNaN(date.getTime())) return date.toISOString();
+  }
+
   const d = new Date(s);
   return Number.isNaN(d.getTime()) ? "" : d.toISOString();
 }
@@ -51,7 +73,64 @@ function asAttachmentUrl(v: unknown): string | undefined {
   return undefined;
 }
 
-export async function fetchBlogPosts(): Promise<BlogPost[]> {
+function asCategoryName(fields: Record<string, unknown>): string {
+  const raw =
+    fields.category ??
+    fields.Category ??
+    fields.categoria ??
+    fields.Categoria ??
+    fields.categories ??
+    fields.Categories ??
+    fields.Categorias;
+
+  if (Array.isArray(raw)) {
+    const firstString = raw.find((item) => typeof item === "string" && item.trim());
+    if (typeof firstString === "string") return firstString.trim();
+
+    const firstNamed = raw.find(
+      (item) =>
+        item &&
+        typeof item === "object" &&
+        (typeof (item as any).name === "string" ||
+          typeof (item as any).title === "string" ||
+          typeof (item as any).value === "string"),
+    );
+    if (firstNamed && typeof firstNamed === "object") {
+      const name =
+        (firstNamed as any).name ?? (firstNamed as any).title ?? (firstNamed as any).value ?? "";
+      return typeof name === "string" ? name.trim() : "";
+    }
+    return "";
+  }
+
+  if (raw && typeof raw === "object") {
+    const name = (raw as any).name ?? (raw as any).title ?? (raw as any).value ?? "";
+    return typeof name === "string" ? name.trim() : "";
+  }
+
+  if (typeof raw === "string") {
+    const trimmed = raw.trim();
+    if (!trimmed) return "";
+    const [first] = trimmed.split(",");
+    return (first ?? "").trim();
+  }
+
+  return "";
+}
+
+type BlogLocale = "es" | "pt" | "en";
+
+function escapeFormulaString(value: string): string {
+  return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+}
+
+function mapUserLocale(locale: BlogLocale): string {
+  if (locale === "pt") return "pt-BR";
+  if (locale === "en") return "en-US";
+  return "es-ES";
+}
+
+export async function fetchBlogPosts(locale: BlogLocale = "es"): Promise<BlogPost[]> {
   const apiKey = requireEnv("AIRTABLE_API_KEY");
   const baseId = requireEnv("AIRTABLE_BASE_ID");
   const tableName = requireEnv("AIRTABLE_TABLE_NAME");
@@ -62,7 +141,15 @@ export async function fetchBlogPosts(): Promise<BlogPost[]> {
   url.searchParams.set("sort[0][field]", "created_at");
   url.searchParams.set("sort[0][direction]", "desc");
   url.searchParams.set("pageSize", "50");
-  url.searchParams.set("filterByFormula", "{Divulgar}=TRUE()");
+  url.searchParams.set("cellFormat", "string");
+  url.searchParams.set("timeZone", "Europe/Madrid");
+  url.searchParams.set("userLocale", mapUserLocale(locale));
+
+  const escapedLocale = escapeFormulaString(locale);
+  url.searchParams.set(
+    "filterByFormula",
+    `AND({Divulgar}=TRUE(), {Locale}="${escapedLocale}")`,
+  );
 
   const res = await fetch(url.toString(), {
     headers: { Authorization: `Bearer ${apiKey}` },
@@ -70,18 +157,22 @@ export async function fetchBlogPosts(): Promise<BlogPost[]> {
 
   if (!res.ok) {
     const text = await res.text().catch(() => "");
+    console.error("Airtable fetch failed", {
+      status: res.status,
+      statusText: res.statusText,
+      body: text,
+    });
     throw new Error(`Airtable fetch failed: ${res.status} ${res.statusText} ${text}`);
   }
 
   const data = (await res.json()) as AirtableListResponse;
-
   const posts = (data.records ?? [])
     .map((r): BlogPost | null => {
       const f = r.fields ?? {};
 
       const slug = asString(f.slug);
       const title = asString(f.tittle); // ✅ seu campo real (typo)
-      const category = asString(f.category) || "Blog";
+      const category = asCategoryName(f) || "Blog";
       const date = asISODate(f.created_at); // ✅ seu campo real
 
       const imageUrl =
@@ -117,12 +208,15 @@ export async function fetchBlogPosts(): Promise<BlogPost[]> {
   return posts;
 }
 
-export async function fetchBlogPostBySlug(slug: string): Promise<BlogPost | null> {
-  const posts = await fetchBlogPosts();
+export async function fetchBlogPostBySlug(
+  slug: string,
+  locale: BlogLocale = "es",
+): Promise<BlogPost | null> {
+  const posts = await fetchBlogPosts(locale);
   return posts.find((p) => p.slug === slug) ?? null;
 }
 
-export async function fetchBlogSlugs(): Promise<string[]> {
-  const posts = await fetchBlogPosts();
+export async function fetchBlogSlugs(locale: BlogLocale = "es"): Promise<string[]> {
+  const posts = await fetchBlogPosts(locale);
   return posts.map((p) => p.slug);
 }

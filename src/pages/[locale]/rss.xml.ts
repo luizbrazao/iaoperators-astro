@@ -8,7 +8,7 @@ export async function getStaticPaths() {
 export async function GET({ params }: { params: { locale: "es" | "pt" | "en" } }) {
   const locale = params.locale;
 
-  const posts = (await fetchBlogPosts()).filter((p) => !p.locale || p.locale === locale);
+  const posts = await fetchBlogPosts(locale);
 
   const titleMap = {
     es: "IA Operators (ES) — Blog",

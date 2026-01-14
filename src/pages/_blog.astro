@@ -44,7 +44,7 @@ const catParam = (Astro.url.searchParams.get("cat") ?? "all") as CategoryKey;
 const selectedCategory: CategoryKey = (CATEGORY_KEYS as readonly string[]).includes(catParam) ? catParam : "all";
 
 // posts (server-side)
-const posts = (await fetchBlogPosts()) ?? [];
+const posts = (await fetchBlogPosts(locale)) ?? [];
 
 const filteredPosts =
   selectedCategory === "all"

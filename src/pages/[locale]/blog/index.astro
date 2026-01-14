@@ -42,7 +42,7 @@ function normalizeCategoryId(raw?: string | null) {
   return "others";
 }
 
-const posts = (await fetchBlogPosts()) ?? [];
+const posts = (await fetchBlogPosts(locale)) ?? [];
 const preparedPosts = posts.map((p: any) => ({
   ...p,
   __catId: normalizeCategoryId(p.category),

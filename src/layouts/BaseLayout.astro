@@ -23,6 +23,17 @@ const {
   jsonLd,
 } = Astro.props;
 
+const publicSiteEnv = import.meta.env.PUBLIC_SITE_ENV;
+const isProd = publicSiteEnv
+  ? publicSiteEnv === "production"
+  : Boolean(import.meta.env.PROD);
+
+const effectiveRobots = robots
+  ? isProd && robots.includes("noindex")
+    ? "index,follow"
+    : robots
+  : undefined;
+
 const locale = getLocale(Astro.currentLocale);
 const defaultLocale = "es";
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
@@ -72,7 +83,7 @@ const effectiveDescription =
     <meta name="description" content={effectiveDescription} />
     <link rel="canonical" href={canonical} />
 
-    {robots && <meta name="robots" content={robots} />}
+    {effectiveRobots && <meta name="robots" content={effectiveRobots} />}
     {meta && <meta name="keywords" content={meta} />}
 
     {alternates.map((a) => (
