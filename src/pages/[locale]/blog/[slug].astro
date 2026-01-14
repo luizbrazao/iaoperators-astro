@@ -13,6 +13,7 @@ type BlogPost = {
   metaDescription?: string;
   content?: string;
   locale?: "es" | "pt" | "en";
+  faq?: { q: string; a: string }[];
 };
 
 export async function getStaticPaths() {
@@ -59,23 +60,41 @@ const formattedDate = hasValidDate
   ? parsedDate!.toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })
   : dict.meta.dateUnavailable ?? "Data indisponível";
 
-const jsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: title,
-    description,
-    datePublished: post.date,
-    dateModified: post.date,
-    mainEntityOfPage: canonicalUrl,
-    image: post.imageUrl ? [post.imageUrl] : undefined,
-    author: { "@type": "Organization", name: "IA Operators", url: site },
-    publisher: { "@type": "Organization", name: "IA Operators", url: site, "logo": {
-    "@type": "ImageObject",
-    "url": "https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png"
-  } },
+const blogPostingJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description,
+  datePublished: post.date,
+  dateModified: post.date,
+  mainEntityOfPage: canonicalUrl,
+  image: post.imageUrl ? [post.imageUrl] : undefined,
+  author: { "@type": "Organization", name: "IA Operators", url: site },
+  publisher: {
+    "@type": "Organization",
+    name: "IA Operators",
+    url: site,
+    logo: {
+      "@type": "ImageObject",
+      url: "https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png",
+    },
   },
-];
+};
+
+const faqJsonLd =
+  post.faq && post.faq.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: post.faq.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
+        })),
+      }
+    : null;
+
+const jsonLd = [blogPostingJsonLd, ...(faqJsonLd ? [faqJsonLd] : [])];
 
 // Share URLs (estáticos, sem depender de window)
 const shareLinkedIn = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonicalUrl)}`;
