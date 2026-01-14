@@ -40,8 +40,9 @@ const site = (Astro.site?.toString() ?? "https://iaoperators.com").replace(/\/$/
 // Canonical “anti-duplicação”: se o post não tem locale, canonical cai em ES
 const canonicalLocale = (post.locale ?? "es") as Locale;
 const isDuplicateLocale = !post.locale && locale !== canonicalLocale;
-const canonicalPath = `/${canonicalLocale}/blog/${post.slug}/`;
-const canonicalUrl = `${site}${canonicalPath}`;
+
+const canonicalPath = Astro.url.pathname.replace(/\/?$/, "/");
+const canonicalUrl = new URL(canonicalPath, site).toString();
 
 // SEO
 const title = post.title;
