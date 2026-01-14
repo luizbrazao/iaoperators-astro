@@ -85,6 +85,8 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
   title={title}
   description={description}
   jsonLd={jsonLd}
+  ogImage={post.imageUrl ?? "/og.png"}
+  ogImageAlt={title}
   ogType="article"
   robots={isDuplicateLocale ? "noindex,follow" : "index,follow"}
 >
