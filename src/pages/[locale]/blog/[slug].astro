@@ -35,6 +35,7 @@ const { locale: localeParam, post } = Astro.props as { locale: Locale; post: Blo
 
 const locale = getLocale(localeParam);
 const dict = ui[locale];
+const blogPostDict = (dict as any)?.blogPost ?? {};
 
 const site = (Astro.site?.toString() ?? "https://iaoperators.com").replace(/\/$/, "");
 
@@ -58,7 +59,12 @@ const parsedDate = post.date ? new Date(post.date) : null;
 const hasValidDate = parsedDate instanceof Date && !Number.isNaN(parsedDate.getTime());
 const formattedDate = hasValidDate
   ? parsedDate!.toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })
-  : dict.meta.dateUnavailable ?? "Data indisponível";
+  : blogPostDict?.dateUnavailable ?? dict.meta.dateUnavailable ?? "Data indisponível";
+
+const readingTimeLabel = (blogPostDict?.readingTime ?? "{{minutes}} min de leitura").replace(
+  "{{minutes}}",
+  String(readMinutes),
+);
 
 function toIsoWithOffset(dateIso: string, offsetMinutes: number): string {
   const date = new Date(dateIso);
@@ -167,8 +173,8 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
     <a
       href={`/${locale}/blog/`}
       class="flex items-center justify-center w-10 h-10 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 transition-all hover:-translate-x-1"
-      aria-label="Voltar ao blog"
-      title="Voltar ao blog"
+      aria-label={blogPostDict?.back ?? "Voltar ao Blog"}
+      title={blogPostDict?.back ?? "Voltar ao Blog"}
     >
       <!-- ArrowLeft -->
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="opacity-90">
@@ -232,7 +238,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
                 stroke-linejoin="round"
               />
             </svg>
-            <span>{readMinutes} min de leitura</span>
+            <span>{readingTimeLabel}</span>
           </div>
 
           <div class="flex items-center gap-2">
@@ -311,13 +317,13 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
 
       <!-- Rodapé / Share -->
       <div class="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 px-8">
-        <div class="text-gray-400 text-sm">Compartilhar</div>
+        <div class="text-gray-400 text-sm">{blogPostDict?.shareTitle ?? "Compartilhar"}</div>
 
         <div class="flex gap-4">
           <button
             type="button"
             class="p-3 rounded-full bg-[#151515] hover:bg-orange-500 hover:text-white transition-all text-gray-400"
-            title="Copiar link"
+            title={blogPostDict?.copyLink ?? "Copiar link"}
             data-copy-link={canonicalUrl}
           >
             <!-- Share2 icon -->
@@ -351,7 +357,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
             target="_blank"
             rel="noopener noreferrer"
             class="p-3 rounded-full bg-[#151515] hover:bg-[#0077b5] hover:text-white transition-all text-gray-400"
-            title="Compartilhar no LinkedIn"
+            title={blogPostDict?.shareLinkedIn ?? "Compartilhar no LinkedIn"}
           >
             <!-- LinkedIn icon -->
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -384,7 +390,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
             target="_blank"
             rel="noopener noreferrer"
             class="p-3 rounded-full bg-[#151515] hover:bg-black hover:text-white transition-all text-gray-400 border border-transparent hover:border-white/20"
-            title="Compartilhar no X"
+            title={blogPostDict?.shareTwitter ?? "Compartilhar no X/Twitter"}
           >
             <!-- Simple X icon -->
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
