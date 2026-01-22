@@ -135,7 +135,18 @@ const ogLocale = OG_LOCALE_MAP[locale] ?? locale;
       <script type="application/ld+json" set:html={JSON.stringify(item)} />
     ))}
 
-    <link rel="icon" href="/favicon.ico" />
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+    <!-- iOS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- PWA -->
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#ffffff" />
+
   </head>
 
   <body class="min-h-screen bg-background text-foreground">
