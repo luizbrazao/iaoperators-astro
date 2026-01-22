@@ -106,17 +106,26 @@ const ogLocale = OG_LOCALE_MAP[locale] ?? locale;
     {effectiveRobots && <meta name="robots" content={effectiveRobots} />}
     {meta && <meta name="keywords" content={meta} />}
 
-    {alternates.map((a) => (
-      <link rel="alternate" hreflang={a.lang} href={a.href} />
-    ))}
-   
+    {
+      alternates.map((a) => (
+        <link rel="alternate" hreflang={a.lang} href={a.href} />
+      ))
+    }
 
     <!-- Open Graph -->
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="IA Operators" />
     <meta property="og:locale" content={ogLocale} />
-    {ogPublishedTime && <meta property="article:published_time" content={ogPublishedTime} />}
-    {ogModifiedTime && <meta property="article:modified_time" content={ogModifiedTime} />}
+    {
+      ogPublishedTime && (
+        <meta property="article:published_time" content={ogPublishedTime} />
+      )
+    }
+    {
+      ogModifiedTime && (
+        <meta property="article:modified_time" content={ogModifiedTime} />
+      )
+    }
     <meta property="og:title" content={title} />
     <meta property="og:description" content={effectiveDescription} />
     <meta property="og:url" content={canonical} />
@@ -131,9 +140,11 @@ const ogLocale = OG_LOCALE_MAP[locale] ?? locale;
     <meta name="twitter:description" content={effectiveDescription} />
     <meta name="twitter:image" content={ogImageUrl} />
 
-    {jsonLdItems.map((item) => (
-      <script type="application/ld+json" set:html={JSON.stringify(item)} />
-    ))}
+    {
+      jsonLdItems.map((item) => (
+        <script type="application/ld+json" set:html={JSON.stringify(item)} />
+      ))
+    }
 
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -145,8 +156,7 @@ const ogLocale = OG_LOCALE_MAP[locale] ?? locale;
 
     <!-- PWA -->
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#ffffff" />
-
+    <meta name="theme-color" content="#FF6900" />
   </head>
 
   <body class="min-h-screen bg-background text-foreground">
@@ -167,4 +177,3 @@ const ogLocale = OG_LOCALE_MAP[locale] ?? locale;
 <style is:global>
   @import "../styles/global.css";
 </style>
- 
