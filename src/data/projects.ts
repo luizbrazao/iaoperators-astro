@@ -58,11 +58,11 @@ export const projects: Project[] = [
 
         category: "SaaS / CRM Integration",
         heroImage:
-            "https://ia-operators.s3.eu-north-1.amazonaws.com/ChatGPT-Image-28-de-ago.-de-2025_-09_52_35-min.webp",
+            "https://s3.eu-north-1.amazonaws.com/ia-operators/IA+Operators+Website/common-whatsapp-mistakes-beauty-salon.webp",
 
         gallery: [
             {
-                src: "https://ia-operators.s3.eu-north-1.amazonaws.com/ChatGPT-Image-28-de-ago.-de-2025_-09_52_35-min.webp",
+                src: "https://s3.eu-north-1.amazonaws.com/ia-operators/IA+Operators+Website/common-whatsapp-mistakes-beauty-salon.webp",
                 altKey: "projects:chatplug.gallery.heroAlt",
             },
         ],
