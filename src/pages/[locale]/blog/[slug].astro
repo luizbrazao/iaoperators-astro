@@ -28,6 +28,7 @@ export async function getStaticPaths() {
 
 const { locale: localeParam, slug } = Astro.params;
 const locale = getLocale(localeParam as string);
+const defaultLocale: Locale = "es";
 
 const entry = await fetchBlogEntry(slug as string, locale);
 
@@ -45,13 +46,47 @@ const { Content } = await render(entry);
 
 const dict = ui[locale];
 const blogPostDict = (dict as any)?.blogPost ?? {};
+const homeLabelByLocale: Record<Locale, string> = {
+  es: "Inicio",
+  pt: "Início",
+  en: "Home",
+};
+const homeLabel = homeLabelByLocale[locale] ?? "Home";
+const blogLabel = "Blog";
 
 const site = (Astro.site?.toString() ?? "https://iaoperators.com").replace(/\/$/, "");
 const canonicalPath = Astro.url.pathname.replace(/\/?$/, "/");
 const canonicalUrl = new URL(canonicalPath, site).toString();
 
+function entrySlugByLocale(id: string, lang: Locale): string {
+  return id.replace(`${lang}/`, "").replace(/\.(md|mdx)$/, "");
+}
+
+function entryClusterKey(e: any, lang: Locale): string {
+  return e.data.translationKey ?? `slug:${entrySlugByLocale(e.id, lang)}`;
+}
+
+const currentClusterKey = entryClusterKey(entry, locale);
+const localeAlternates: Array<{ lang: Locale; href: string }> = [];
+
+for (const lang of ["es", "pt", "en"] as const) {
+  const entries = await getCollection("blog", ({ id, data }) => id.startsWith(`${lang}/`) && !data.draft);
+  const matched = entries.find((candidate) => entryClusterKey(candidate, lang) === currentClusterKey);
+  if (!matched) continue;
+  const localizedSlug = entrySlugByLocale(matched.id, lang);
+  const href = new URL(`/${lang}/blog/${localizedSlug}/`, site).toString();
+  localeAlternates.push({ lang, href });
+}
+
+const canonicalFromAlternates =
+  localeAlternates.find((item) => item.lang === locale)?.href ?? canonicalUrl;
+const xDefaultUrl =
+  localeAlternates.find((item) => item.lang === defaultLocale)?.href ?? canonicalFromAlternates;
+
 const title = entry.data.title;
 const description = entry.data.description;
+const articleKeywords = entry.data.tags ?? [];
+const wordCount = entry.body ? entry.body.trim().split(/\s+/).filter(Boolean).length : undefined;
 
 // Reading time from raw markdown body
 const readMinutes = Math.max(3, Math.ceil((entry.body?.length ?? 0) / 1500));
@@ -95,9 +130,12 @@ const blogPostingJsonLd = {
   inLanguage: locale,
   mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": canonicalUrl,
+    "@id": canonicalFromAlternates,
   },
   image: entry.data.image ? [new URL(entry.data.image, site).toString()] : undefined,
+  articleSection: entry.data.articleSection,
+  keywords: articleKeywords.length ? articleKeywords.join(", ") : undefined,
+  wordCount,
   author: {
     "@type": "Organization",
     name: entry.data.author ?? "IA Operators",
@@ -118,9 +156,9 @@ const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: `${site}/${locale}/` },
-    { "@type": "ListItem", position: 2, name: "Blog", item: `${site}/${locale}/blog/` },
-    { "@type": "ListItem", position: 3, name: title, item: canonicalUrl },
+    { "@type": "ListItem", position: 1, name: homeLabel, item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: blogLabel, item: `${site}/${locale}/blog/` },
+    { "@type": "ListItem", position: 3, name: title, item: canonicalFromAlternates },
   ],
 };
 
@@ -140,16 +178,19 @@ const faqJsonLd =
 const jsonLd = [blogPostingJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [])];
 
 // Share URLs
-const shareLinkedIn = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonicalUrl)}`;
-const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(canonicalUrl)}`;
+const shareLinkedIn = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonicalFromAlternates)}`;
+const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(canonicalFromAlternates)}`;
 ---
 
 <BaseLayout
   title={title}
   description={description}
+  canonicalUrl={canonicalFromAlternates}
+  alternates={localeAlternates}
+  xDefaultUrl={xDefaultUrl}
   jsonLd={jsonLd}
   ogImage={entry.data.image ?? "/og.png"}
-  ogImageAlt={title}
+  ogImageAlt={entry.data.imageAlt ?? title}
   ogType="article"
   ogPublishedTime={ogPublishedTime}
   ogModifiedTime={ogModifiedTime}
@@ -180,9 +221,9 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
       <!-- Visible breadcrumb nav -->
       <nav aria-label="Breadcrumb" class="mb-8 text-sm text-gray-500">
         <ol class="flex flex-wrap items-center gap-1">
-          <li><a href={`/${locale}/`} class="hover:text-orange-400 transition-colors">Home</a></li>
+          <li><a href={`/${locale}/`} class="hover:text-orange-400 transition-colors">{homeLabel}</a></li>
           <li class="text-gray-700">/</li>
-          <li><a href={`/${locale}/blog/`} class="hover:text-orange-400 transition-colors">Blog</a></li>
+          <li><a href={`/${locale}/blog/`} class="hover:text-orange-400 transition-colors">{blogLabel}</a></li>
           <li class="text-gray-700">/</li>
           <li class="text-gray-400 truncate max-w-[200px]" aria-current="page">{title}</li>
         </ol>
@@ -262,7 +303,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
         <div class="mb-12 relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl aspect-video">
           <img
             src={entry.data.image}
-            alt={title}
+            alt={entry.data.imageAlt ?? title}
             loading="eager"
             fetchpriority="high"
             decoding="async"
@@ -346,7 +387,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
             type="button"
             class="p-3 rounded-full bg-[#151515] hover:bg-orange-500 hover:text-white transition-all text-gray-400"
             title={blogPostDict?.copyLink ?? "Copiar link"}
-            data-copy-link={canonicalUrl}
+            data-copy-link={canonicalFromAlternates}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path

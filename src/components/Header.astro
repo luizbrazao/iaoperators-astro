@@ -2,6 +2,8 @@
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import { getLocale, ui } from "../i18n/ui";
 
+type Props = { languageLinks?: Array<{ locale: string; href: string }> };
+const { languageLinks } = Astro.props as Props;
 const locale = getLocale(Astro.currentLocale);
 const dict =
   (ui as any)?.[locale] ?? (ui as any)?.es ?? (ui as any)?.en ?? (ui as any)?.pt ?? {};
@@ -100,7 +102,7 @@ const mobileLinks = [
       <div class="flex items-center gap-2 ml-auto md:ml-0">
         <!-- Language -->
         <div class="hidden md:block">
-          <LanguageSwitcher />
+          <LanguageSwitcher linksOverride={languageLinks} />
         </div>
 
         <!-- Desktop contact button (efeito conic spin) -->
@@ -183,7 +185,7 @@ const mobileLinks = [
           </a>
 
           <div class="px-4 py-2">
-            <LanguageSwitcher />
+            <LanguageSwitcher linksOverride={languageLinks} />
           </div>
         </div>
       </div>

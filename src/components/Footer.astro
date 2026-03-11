@@ -2,6 +2,8 @@
 import { getLocale, ui } from "../i18n/ui";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 
+type Props = { languageLinks?: Array<{ locale: string; href: string }> };
+const { languageLinks } = Astro.props as Props;
 const locale = getLocale(Astro.currentLocale);
 const dict = (ui as any)?.[locale] ?? (ui as any)?.es ?? (ui as any)?.en ?? (ui as any)?.pt ?? {};
 
@@ -178,7 +180,7 @@ const links = {
         <div class="h-4 w-px bg-white/20 mx-2 hidden md:block"></div>
 
         <!-- Reusa seu LanguageSwitcher -->
-        <LanguageSwitcher />
+        <LanguageSwitcher linksOverride={languageLinks} />
       </div>
 
       <!-- Back to Top -->

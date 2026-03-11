@@ -8,6 +8,9 @@ import GridSpotlight from "../islands/GridSpotlight.jsx";
 type Props = {
   title?: string;
   description?: string;
+  canonicalUrl?: string;
+  alternates?: Array<{ lang: string; href: string }>;
+  xDefaultUrl?: string;
   ogImage?: string;
   ogImageAlt?: string;
   ogType?: "website" | "article";
@@ -21,6 +24,9 @@ type Props = {
 const {
   title = "IA Operators",
   description,
+  canonicalUrl,
+  alternates: alternatesOverride,
+  xDefaultUrl,
   ogImage = "/og.png",
   ogImageAlt,
   ogType = "website",
@@ -58,12 +64,13 @@ const buildLocaleUrl = (lang: string) => {
   return ensureTrailingSlash(new URL(path, site).toString());
 };
 
-const canonical = buildLocaleUrl(locale);
-const alternates = locales.map((lang) => ({
+const canonical = ensureTrailingSlash(canonicalUrl ?? buildLocaleUrl(locale));
+const alternates = alternatesOverride ?? locales.map((lang) => ({
   lang,
   href: buildLocaleUrl(lang),
 }));
-const xDefault = buildLocaleUrl(defaultLocale);
+const xDefault = ensureTrailingSlash(xDefaultUrl ?? buildLocaleUrl(defaultLocale));
+const languageLinks = alternates.map((item) => ({ locale: item.lang, href: item.href }));
 
 const ogImageUrl = ogImage.startsWith("http")
   ? ogImage
@@ -111,6 +118,7 @@ const ogLocale = OG_LOCALE_MAP[locale] ?? locale;
         <link rel="alternate" hreflang={a.lang} href={a.href} />
       ))
     }
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
 
     <!-- Open Graph -->
     <meta property="og:type" content={ogType} />
@@ -162,11 +170,11 @@ const ogLocale = OG_LOCALE_MAP[locale] ?? locale;
   <body class="min-h-screen bg-background text-foreground">
     <!-- GridSpotlight precisa ser o wrapper global (camada de fundo + mask) -->
     <GridSpotlight client:load>
-      <Header />
+      <Header languageLinks={languageLinks} />
       <main class="pt-120px">
         <slot />
       </main>
-      <Footer />
+      <Footer languageLinks={languageLinks} />
     </GridSpotlight>
 
     <!-- Elementos fixos/overlays fora do wrapper -->

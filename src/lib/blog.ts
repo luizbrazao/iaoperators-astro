@@ -17,9 +17,12 @@ export type BlogPost = {
   slug: string;
   title: string;
   category: string;
+  articleSection?: string;
   date: string; // ISO 8601
   imageUrl?: string;
+  imageAlt?: string;
   description?: string;
+  tags?: string[];
   locale?: "es" | "pt" | "en";
   faq?: { q: string; a: string }[];
   author?: string;
@@ -45,9 +48,12 @@ function entryToPost(entry: CollectionEntry<"blog">, locale: BlogLocale): BlogPo
     slug: entrySlug(entry, locale),
     title: entry.data.title,
     category: entry.data.category,
+    articleSection: entry.data.articleSection,
     date: entry.data.date.toISOString(),
     imageUrl: entry.data.image,
+    imageAlt: entry.data.imageAlt,
     description: entry.data.description,
+    tags: entry.data.tags,
     locale: entry.data.locale,
     faq: entry.data.faq,
     author: entry.data.author,

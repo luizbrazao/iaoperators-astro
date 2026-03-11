@@ -31,5 +31,11 @@ export default defineConfig({
 
   redirects: {
     "/": "/es/",
+    "/es/blog/ia-local-privada-sem-mensalidade-qwen-pc/":
+      "/es/blog/ia-local-privada-sin-mensualidad-qwen-pc/",
+    "/pt/blog/ia-local-privada-sem-mensalidade-qwen-pc/":
+      "/pt/blog/como-rodar-modelos-qwen-no-seu-pc/",
+    "/en/blog/ia-local-privada-sem-mensalidade-qwen-pc/":
+      "/en/blog/run-qwen-models-locally-on-your-pc/",
   },
 });

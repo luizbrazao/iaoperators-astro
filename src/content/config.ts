@@ -19,9 +19,13 @@ const blog = defineCollection({
     title: z.string(),
     description: z.string(),
     category: z.enum(CATEGORY_KEYS).default("others"),
+    articleSection: z.string().optional(),
     date: z.coerce.date(),
     image: z.string().optional(),
+    imageAlt: z.string().optional(),
+    tags: z.array(z.string()).optional(),
     locale: z.enum(["es", "pt", "en"]),
+    translationKey: z.string().optional(),
     draft: z.boolean().default(false),
     author: z.string().default("IA Operators"),
     faq: z

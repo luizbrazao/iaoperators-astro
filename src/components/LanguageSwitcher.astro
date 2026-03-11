@@ -1,15 +1,27 @@
 ---
 import { getLocale, locales } from "../i18n/ui";
 
+type SwitcherLink = { locale: string; href: string };
+type Props = { linksOverride?: SwitcherLink[] };
+
+const { linksOverride } = Astro.props as Props;
 const current = getLocale(Astro.currentLocale);
 const pathname = Astro.url.pathname;
 const basePath = pathname.replace(new RegExp(`^/${current}(?=/|$)`), "") || "/";
 
-const links = locales.map((locale) => ({
+const fallbackLinks = locales.map((locale) => ({
   locale,
   href: `/${locale}${basePath}`.replace(/\/+$/, "/"),
   isActive: locale === current,
 }));
+
+const links = linksOverride?.length
+  ? linksOverride.map((l) => ({
+      ...l,
+      href: l.href.replace(/\/+$/, "/"),
+      isActive: l.locale === current,
+    }))
+  : fallbackLinks;
 ---
 
 <nav aria-label="Language switcher" class="flex gap-2 text-sm">
