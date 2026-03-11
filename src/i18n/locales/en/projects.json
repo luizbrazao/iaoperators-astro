@@ -15,13 +15,14 @@
     },
     "chatplug": {
         "title": "ChatPlug: WhatsApp + Altegio Automation",
-        "tagline": "24/7 booking in Altegio via WhatsApp, with zero scheduling conflicts and full multilingual support.",
+        "tagline": "24/7 booking in Altegio via WhatsApp, with zero scheduling conflicts, multilingual support, and scalable operations.",
+        "category": "SaaS / CRM Integration",
         "gallery": {
             "heroAlt": "ChatPlug — WhatsApp automation integrated with Altegio"
         },
         "problem": "Salons and barbershops lose revenue every day by not replying to WhatsApp instantly. Keeping staff available 24/7 is unrealistic, and generic chatbots don’t connect to the real calendar — causing double-bookings and frustration.",
         "engineeringIntro": "We built ChatPlug not as a “chatbot”, but as a real-time synchronization layer between WhatsApp and Altegio, with critical-action validation, multilingual support, and strict tenant isolation with enterprise-grade security.",
-        "impact": "We turned scheduling into a smooth self-service flow: the client picks a slot, the bot confirms it in Altegio and notifies the team — using the business’ existing number, with no extra SIMs.",
+        "impact": "Bookings confirmed in seconds, continuous 24/7 operation, and fewer scheduling conflicts. Teams spend less time on repetitive ops and more on high-value customer service.",
         "whatItDoes": [
             "Replies on WhatsApp automatically, 24/7",
             "Books, confirms, cancels, and reschedules directly in Altegio",
@@ -104,6 +105,14 @@
                 "label": "Messages",
                 "note": "No caps"
             }
+        ],
+        "links": [
+            {
+                "label": "Access product (Live)"
+            },
+            {
+                "label": "Back to portfolio"
+            }
         ]
     },
     "tourBooking": {
@@ -113,7 +122,7 @@
         "galleryAlt": "Tour booking chatbot on WhatsApp powered by n8n",
         "problem": "Tour and experience companies lose revenue when users ask for price and availability and don’t get an immediate answer. The real challenge isn’t “chatting well” — it’s computing the correct price every time, because it changes by boat, season, experience, duration and number of guests.",
         "engineeringIntro": "We designed this system as a reliable agent: instead of throwing a spreadsheet into a prompt, we turned pricing rules into deterministic tools (code) and used AI only to understand intent, collect variables, and drive the conversation.",
-        "impact": "Users ask for a price on WhatsApp → the bot collects the minimum variables → validates available durations → returns the exact amount and guides the user to booking. Less friction, fewer mistakes, more conversions — without relying on human support.",
+        "impact": "Price quotes in seconds with deterministic pricing and a guided WhatsApp booking flow, reducing operational errors and first-contact manual workload.",
         "whatItDoes": [
             "24/7 WhatsApp support (text and voice)",
             "Understands intent: pricing, questions, booking, changes",
@@ -179,10 +188,13 @@
         ],
         "links": [
             {
+                "label": "Access product (WhatsApp)"
+            },
+            {
                 "label": "Watch video (YouTube)"
             },
             {
-                "label": "Get template (Community)"
+                "label": "View community"
             },
             {
                 "label": "Back to portfolio"

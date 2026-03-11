@@ -16,6 +16,16 @@ const headerTitle = t("portfolio:header.title");
 const headerHighlight = t("portfolio:header.highlight");
 const pageTitle = `${headerTitle} ${headerHighlight} — IA Operators`;
 const pageDescription = t("portfolio:header.subtitle");
+
+const tx = (key: string, fallback: string) => {
+  const value = t(key);
+  return value === key ? fallback : value;
+};
+
+const liveProjectsCount = projects.filter((project) => project.links?.some((l) => l.external)).length;
+const uniqueVerticalsCount = new Set(
+  projects.map((project) => (project.categoryKey ? t(project.categoryKey) : project.category))
+).size;
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
@@ -35,10 +45,41 @@ const pageDescription = t("portfolio:header.subtitle");
         <p class="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
           {t("portfolio:header.subtitle")}
         </p>
+
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href={`/${locale}/contact/`}
+            class="inline-flex items-center gap-2 rounded-xl bg-orange-600 hover:bg-orange-500 px-6 py-3 font-semibold text-white transition-all"
+          >
+            {tx("portfolio:actions.talk", "Talk to us")}
+          </a>
+          <a
+            href="#portfolio-grid"
+            class="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 px-6 py-3 font-semibold text-white transition-all"
+          >
+            {tx("portfolio:actions.seeCases", "See case studies")}
+          </a>
+        </div>
+      </div>
+
+      <!-- Proof strip -->
+      <div class="mb-12 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="rounded-2xl border border-white/10 bg-[#0A0A0A] p-5">
+          <div class="text-3xl font-extrabold text-white">{projects.length}</div>
+          <div class="mt-1 text-sm text-gray-400">{tx("portfolio:proof.totalCases", "Case studies in production")}</div>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-[#0A0A0A] p-5">
+          <div class="text-3xl font-extrabold text-white">{liveProjectsCount}</div>
+          <div class="mt-1 text-sm text-gray-400">{tx("portfolio:proof.liveProjects", "Live projects")}</div>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-[#0A0A0A] p-5">
+          <div class="text-3xl font-extrabold text-white">{uniqueVerticalsCount}</div>
+          <div class="mt-1 text-sm text-gray-400">{tx("portfolio:proof.verticals", "Business verticals")}</div>
+        </div>
       </div>
 
       <!-- Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 scroll-mt-24" id="portfolio-grid">
         {projects.map((project: Project) => {
           const liveLink = project.links?.find((l) => l.external)?.href;
 
@@ -61,9 +102,9 @@ const pageDescription = t("portfolio:header.subtitle");
                 />
 
                 <!-- Badge Categoria -->
-                <div class="absolute top-5 left-5 z-20">
-                  <span class="bg-black/80 backdrop-blur-md border border-white/10 text-orange-500 text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider">
-                    {project.category}
+                <div class="absolute top-5 left-5 z-20 max-w-[65%]">
+                  <span class="block truncate bg-black/80 backdrop-blur-md border border-white/10 text-orange-500 text-[10px] sm:text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider">
+                    {project.categoryKey ? t(project.categoryKey) : project.category}
                   </span>
                 </div>
 
@@ -85,9 +126,18 @@ const pageDescription = t("portfolio:header.subtitle");
                   {t(project.titleKey)}
                 </h2>
 
-                <p class="text-gray-400 mb-6 text-sm leading-relaxed grow">
+                <p class="text-gray-300 mb-4 text-sm leading-relaxed line-clamp-2">
                   {t(project.taglineKey)}
                 </p>
+
+                <div class="mb-6 rounded-xl border border-white/10 bg-white/5 p-4">
+                  <div class="text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
+                    {tx("portfolio:actions.challenge", "Challenge")}
+                  </div>
+                  <p class="text-sm text-gray-300 leading-relaxed line-clamp-3">
+                    {t(project.problemKey)}
+                  </p>
+                </div>
 
                 <!-- Stack -->
                 <div class="flex flex-wrap gap-2 mb-8">
@@ -134,7 +184,7 @@ const pageDescription = t("portfolio:header.subtitle");
                 </div>
 
                 <!-- Botões -->
-                <div class="mt-auto flex gap-3">
+                <div class="mt-auto flex flex-col sm:flex-row gap-3">
                   <a
                     href={`/${locale}/portfolio/${project.slug}/`}
                     class="w-full inline-flex items-center justify-center gap-2 py-4 rounded-xl bg-white/5 border border-white/10 hover:bg-orange-600 hover:border-orange-600 hover:text-white text-white font-semibold transition-all duration-300 group-hover:-translate-y-0.5"
@@ -150,7 +200,7 @@ const pageDescription = t("portfolio:header.subtitle");
                       href={liveLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="px-5 py-4 rounded-xl bg-white/0 border border-white/10 hover:bg-white/5 text-white font-semibold transition-all duration-300"
+                      class="w-full sm:w-auto px-5 py-4 rounded-xl bg-white/0 border border-white/10 hover:bg-white/5 text-white font-semibold transition-all duration-300 text-center"
                       title={t("portfolio:actions.live")}
                     >
                       {t("portfolio:actions.live")}
@@ -161,6 +211,22 @@ const pageDescription = t("portfolio:header.subtitle");
             </article>
           );
         })}
+      </div>
+
+      <div class="mt-14 rounded-3xl border border-orange-500/30 bg-orange-500/10 p-8 text-center">
+        <h2 class="text-2xl font-bold text-white mb-3">{tx("portfolio:cta.title", "Want a case like this for your business?")}</h2>
+        <p class="text-gray-300 max-w-2xl mx-auto mb-6">
+          {tx(
+            "portfolio:cta.subtitle",
+            "We design and ship AI-first systems for WhatsApp, CRM automation, booking flows, and multi-agent operations."
+          )}
+        </p>
+        <a
+          href={`/${locale}/contact/`}
+          class="inline-flex items-center gap-2 rounded-xl bg-orange-600 hover:bg-orange-500 px-6 py-3 font-semibold text-white transition-all"
+        >
+          {tx("portfolio:actions.startProject", "Start a project")}
+        </a>
       </div>
     </div>
   </section>

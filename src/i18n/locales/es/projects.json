@@ -15,13 +15,14 @@
     },
     "chatplug": {
         "title": "ChatPlug: Automatización de WhatsApp + Altegio",
-        "tagline": "Reservas 24/7 en Altegio vía WhatsApp, sin conflictos de agenda y con soporte multilingüe completo.",
+        "tagline": "Reservas 24/7 en Altegio vía WhatsApp, sin conflictos de agenda, con soporte multilingüe y operación escalable.",
+        "category": "SaaS / Integración con CRM",
         "gallery": {
             "heroAlt": "ChatPlug — Automatización de WhatsApp integrada con Altegio"
         },
         "problem": "Las peluquerías y barberías pierden ingresos cada día por no responder de inmediato en WhatsApp. Mantener un recepcionista 24/7 no es viable, y los chatbots genéricos no se conectan con la agenda real, generando dobles reservas y frustración.",
         "engineeringIntro": "Creamos ChatPlug no como un “chatbot”, sino como una capa de sincronización en tiempo real entre WhatsApp y Altegio, con validación de acciones críticas, soporte multilingüe y aislamiento por negocio (multi-tenant) con seguridad de nivel enterprise.",
-        "impact": "Convertimos la reserva en una experiencia self-service fluida: el cliente elige el horario, el bot confirma en Altegio y notifica al equipo — usando el número actual del negocio, sin chips extra.",
+        "impact": "Reservas confirmadas en segundos, operación continua 24/7 y reducción de conflictos de agenda. El equipo sale del trabajo repetitivo y se enfoca en atención de mayor valor.",
         "whatItDoes": [
             "Responde automáticamente en WhatsApp 24/7",
             "Reserva, confirma, cancela y reprograma directamente en Altegio",
@@ -104,6 +105,14 @@
                 "label": "Mensajes",
                 "note": "Sin límites"
             }
+        ],
+        "links": [
+            {
+                "label": "Acceder al producto (Live)"
+            },
+            {
+                "label": "Volver al portfolio"
+            }
         ]
     },
     "tourBooking": {
@@ -113,7 +122,7 @@
         "galleryAlt": "Chatbot de reservas turísticas en WhatsApp con n8n",
         "problem": "Las empresas de tours y experiencias pierden ventas cuando el cliente pregunta precio y disponibilidad y no recibe respuesta inmediata. El reto real no es “conversar bien”, sino calcular el precio exacto siempre — porque varía por barco, temporada, experiencia, duración y número de personas.",
         "engineeringIntro": "Diseñamos este sistema como un agente fiable: en vez de meter una hoja de cálculo en el prompt, convertimos las reglas de precios en herramientas determinísticas (código) y usamos IA solo para entender la intención, recopilar variables y guiar la conversación.",
-        "impact": "El cliente pregunta precio en WhatsApp → el bot recoge las variables mínimas → valida duraciones disponibles → devuelve el importe exacto y guía a la reserva. Menos fricción, menos errores y más conversiones, sin depender de atención humana.",
+        "impact": "Cotización en segundos con precio determinístico y flujo hasta la reserva en WhatsApp, con menos errores operativos y menos dependencia de respuesta manual en el primer contacto.",
         "whatItDoes": [
             "Atiende por WhatsApp 24/7 (texto y audio)",
             "Entiende intención: precio, dudas, reserva, cambios",
@@ -179,13 +188,16 @@
         ],
         "links": [
             {
+                "label": "Acceder al producto (WhatsApp)"
+            },
+            {
                 "label": "Ver vídeo (YouTube)"
             },
             {
-                "label": "Obtener template (Comunidad)"
+                "label": "Ver comunidad"
             },
             {
-                "label": "Volver al portafolio"
+                "label": "Volver al portfolio"
             }
         ]
     }

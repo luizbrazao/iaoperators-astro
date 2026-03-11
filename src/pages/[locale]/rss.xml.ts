@@ -28,7 +28,7 @@ export async function GET({ params }: { params: { locale: "es" | "pt" | "en" } }
     site: "https://iaoperators.com",
     items: posts.map((p) => ({
       title: p.title,
-      description: p.metaDescription ?? "",
+      description: p.description ?? "",
       link: `/${locale}/blog/${p.slug}/`,
       pubDate: new Date(p.date),
     })),

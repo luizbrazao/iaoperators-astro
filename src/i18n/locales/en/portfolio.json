@@ -8,7 +8,11 @@
     "actions": {
         "details": "View details",
         "live": "Live",
-        "impact": "Impact delivered"
+        "impact": "Impact delivered",
+        "talk": "Let's talk",
+        "seeCases": "See case studies",
+        "challenge": "Challenge",
+        "startProject": "Start a project"
     },
     "breadcrumb": {
         "portfolio": "Portfolio"
@@ -71,5 +75,14 @@
             "monthly": "Monthly",
             "annual": "Annual"
         }
+    },
+    "proof": {
+        "totalCases": "Case studies in production",
+        "liveProjects": "Live projects",
+        "verticals": "Business verticals"
+    },
+    "cta": {
+        "title": "Want a case like this for your business?",
+        "subtitle": "We design and ship AI-first systems for WhatsApp, CRM automation, booking flows, and multi-agent operations."
     }
 }

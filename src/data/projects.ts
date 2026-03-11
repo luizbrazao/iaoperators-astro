@@ -14,6 +14,7 @@ export type ProjectMetric = {
 
 export type ProjectLink = {
     label: string;
+    labelKey?: string;
     href: string;
     external?: boolean;
 };
@@ -23,6 +24,7 @@ export type Project = {
     slug: string;
 
     category: string;
+    categoryKey?: string;
     heroImage: string;
     gallery?: { src: string; altKey?: string }[];
 
@@ -57,6 +59,7 @@ export const projects: Project[] = [
         slug: "chatplug-whatsapp-altegio",
 
         category: "SaaS / CRM Integration",
+        categoryKey: "projects:chatplug.category",
         heroImage:
             "https://s3.eu-north-1.amazonaws.com/ia-operators/IA+Operators+Website/common-whatsapp-mistakes-beauty-salon.webp",
 
@@ -163,7 +166,7 @@ export const projects: Project[] = [
             },
             {
                 labelKey: "projects:chatplug.metrics.2.label",
-                value: "Ilimitadas",
+                value: "∞",
                 noteKey: "projects:chatplug.metrics.2.note",
             },
         ],
@@ -171,10 +174,15 @@ export const projects: Project[] = [
         links: [
             {
                 label: "Acessar produto (Live)",
+                labelKey: "projects:chatplug.links.0.label",
                 href: "https://chatplug.iaoperators.com",
                 external: true,
             },
-            { label: "Voltar ao portfolio", href: "/portfolio" },
+            {
+                label: "Voltar ao portfolio",
+                labelKey: "projects:chatplug.links.1.label",
+                href: "/portfolio",
+            },
         ],
     },
 
@@ -186,6 +194,7 @@ export const projects: Project[] = [
         slug: "chatbot-reservas-turisticas-whatsapp",
 
         category: "Automação de Reservas / WhatsApp",
+        categoryKey: "projects:tourBooking.category",
         heroImage:
             "https://i.ytimg.com/vi/tLRpDAQc7i4/maxresdefault.jpg",
 
@@ -278,20 +287,27 @@ export const projects: Project[] = [
         links: [
             {
                 label: "Acessar produto (WhatsApp)",
+                labelKey: "projects:tourBooking.links.0.label",
                 href: "https://wa.me/34665403456",
                 external: true
             },
             {
                 label: "Assistir vídeo (YouTube)",
+                labelKey: "projects:tourBooking.links.1.label",
                 href: "https://www.youtube.com/watch?v=tLRpDAQc7i4",
                 external: true,
             },
             {
                 label: "Ver comunidade",
+                labelKey: "projects:tourBooking.links.2.label",
                 href: "https://www.skool.com/ia-operators-hub-9023/about",
                 external: true,
             },
-            { label: "Voltar ao portfolio", href: "/portfolio" },
+            {
+                label: "Voltar ao portfolio",
+                labelKey: "projects:tourBooking.links.3.label",
+                href: "/portfolio",
+            },
         ],
     },
 ];

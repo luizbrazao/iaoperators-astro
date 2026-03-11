@@ -31,6 +31,21 @@ const stackLike = [
   ...(project.securityKeys?.length ? ["AES-GCM / RLS"] : []),
 ].slice(0, 8);
 
+const tx = (key: string, fallback: string) => {
+  const value = t(key);
+  return value === key ? fallback : value;
+};
+
+const resolveLinkHref = (href: string, external?: boolean) => {
+  if (external) return href;
+  if (/^(https?:)?\/\//.test(href)) return href;
+  if (href.startsWith(`/${locale}/`) || href === `/${locale}`) return href;
+  if (href.startsWith("#") || href.startsWith("?")) return href;
+  if (href.startsWith("/")) return `/${locale}${href}`;
+  return `/${locale}/${href}`;
+};
+
+const primaryMetric = project.metrics?.[0];
 const pageTitle = `${t(project.titleKey)} — IA Operators`;
 const pageDescription = t(project.taglineKey);
 ---
@@ -39,13 +54,13 @@ const pageDescription = t(project.taglineKey);
   <section class="bg-transparent text-white pt-28 pb-20 px-6">
     <div class="max-w-6xl mx-auto">
       <!-- Top nav -->
-      <div class="mb-8 flex items-center justify-between gap-4">
+      <div class="mb-8 flex flex-wrap items-center justify-between gap-3">
         <a
           href={`/${locale}/portfolio/`}
           class="inline-flex items-center gap-2 text-gray-300 hover:text-white transition"
         >
           <span class="text-xl">←</span>
-          <span class="text-sm font-semibold">{t("portfolio:actions.back") ?? "Voltar ao portfolio"}</span>
+          <span class="text-xs sm:text-sm font-semibold">{t("portfolio:actions.back") ?? "Voltar ao portfolio"}</span>
         </a>
 
         {liveLink && (
@@ -67,8 +82,8 @@ const pageDescription = t(project.taglineKey);
       <!-- Hero -->
       <header class="mb-10">
         <div class="flex flex-wrap items-center gap-3 mb-6">
-          <span class="bg-black/70 backdrop-blur-md border border-white/10 text-orange-500 text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider">
-            {project.category}
+          <span class="max-w-full truncate bg-black/70 backdrop-blur-md border border-white/10 text-orange-500 text-[10px] sm:text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider">
+            {project.categoryKey ? t(project.categoryKey) : project.category}
           </span>
 
           <span class="bg-white/5 border border-white/10 text-gray-300 text-xs font-semibold px-4 py-2 rounded-full">
@@ -83,6 +98,29 @@ const pageDescription = t(project.taglineKey);
         <p class="text-gray-400 text-lg leading-relaxed max-w-3xl">
           {t(project.taglineKey)}
         </p>
+
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-4xl">
+          <div class="rounded-xl border border-white/10 bg-[#0A0A0A] p-4">
+            <div class="text-xs uppercase tracking-wider font-bold text-gray-500 mb-1">
+              {tx("portfolio:actions.challenge", "Challenge")}
+            </div>
+            <p class="text-sm text-gray-300 line-clamp-2">{t(project.problemKey)}</p>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-[#0A0A0A] p-4">
+            <div class="text-xs uppercase tracking-wider font-bold text-gray-500 mb-1">
+              {t("portfolio:actions.impact")}
+            </div>
+            <p class="text-sm text-gray-100 line-clamp-2">{t(project.impactKey)}</p>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-[#0A0A0A] p-4">
+            <div class="text-xs uppercase tracking-wider font-bold text-gray-500 mb-1">
+              {tx("portfolio:proof.liveProjects", "Signal")}
+            </div>
+            <p class="text-sm text-gray-100">
+              {primaryMetric ? `${primaryMetric.value} • ${t(primaryMetric.labelKey)}` : tx("portfolio:actions.live", "Live")}
+            </p>
+          </div>
+        </div>
       </header>
 
       <!-- Hero image -->
@@ -105,16 +143,19 @@ const pageDescription = t(project.taglineKey);
           <!-- Problem / Engineering / Impact -->
           <section class="space-y-10">
             <div class="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
+              <div class="text-xs uppercase tracking-wider font-bold text-orange-400 mb-2">01</div>
               <h2 class="text-2xl font-bold mb-4 text-white">{t("portfolio:project.sections.gap.title") ?? "Problem"}</h2>
               <p class="text-gray-300 leading-relaxed">{t(project.problemKey)}</p>
             </div>
 
             <div class="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
+              <div class="text-xs uppercase tracking-wider font-bold text-orange-400 mb-2">02</div>
               <h2 class="text-2xl font-bold mb-4 text-white">{t("portfolio:project.sections.engineering.title") ?? "Engineering"}</h2>
               <p class="text-gray-300 leading-relaxed">{t(project.engineeringIntroKey)}</p>
             </div>
 
             <div class="bg-[#111] border border-white/10 rounded-3xl p-8 border-l-4 border-l-orange-500">
+              <div class="text-xs uppercase tracking-wider font-bold text-orange-400 mb-2">03</div>
               <div class="flex items-start gap-3">
                 <svg class="w-6 h-6 text-orange-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
@@ -209,6 +250,33 @@ const pageDescription = t(project.taglineKey);
 
         <!-- Sidebar -->
         <aside class="space-y-8">
+          <section class="lg:sticky lg:top-24 bg-orange-500/10 border border-orange-500/30 rounded-3xl p-6">
+            <h3 class="text-lg font-bold text-white mb-2">
+              {tx("portfolio:cta.title", "Want this outcome in your operation?")}
+            </h3>
+            <p class="text-sm text-gray-300 mb-4">
+              {tx("portfolio:cta.subtitle", "We can design and deploy an AI-first workflow for your business.")}
+            </p>
+            <div class="flex flex-col gap-2">
+              <a
+                href={`/${locale}/contact/`}
+                class="inline-flex items-center justify-center rounded-xl bg-orange-600 hover:bg-orange-500 px-4 py-3 font-semibold text-white transition-all"
+              >
+                {tx("portfolio:actions.startProject", "Start a project")}
+              </a>
+              {liveLink && (
+                <a
+                  href={liveLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 px-4 py-3 font-semibold text-white transition-all"
+                >
+                  {t("portfolio:actions.live")}
+                </a>
+              )}
+            </div>
+          </section>
+
           <!-- Metrics -->
           {project.metrics?.length ? (
             <section class="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
@@ -287,12 +355,12 @@ const pageDescription = t(project.taglineKey);
             <div class="flex flex-col gap-3">
               {project.links.map((l) => (
                 <a
-                  href={l.href}
+                  href={resolveLinkHref(l.href, l.external)}
                   target={l.external ? "_blank" : undefined}
                   rel={l.external ? "noopener noreferrer" : undefined}
                   class="inline-flex items-center justify-between gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
                 >
-                  <span class="font-semibold">{l.label}</span>
+                  <span class="font-semibold">{l.labelKey ? t(l.labelKey) : l.label}</span>
                   <span class="text-gray-400 text-sm">{l.external ? "↗" : "→"}</span>
                 </a>
               ))}

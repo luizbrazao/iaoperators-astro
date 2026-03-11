@@ -20,6 +20,7 @@ const CATEGORY_KEYS = [
   "architects",
   "accounting",
   "restaurants",
+  "beauty-salons",
   "others",
 ] as const;
 
@@ -28,12 +29,14 @@ type CategoryKey = (typeof CATEGORY_KEYS)[number];
 function normalizeCategoryId(raw?: string | null): CategoryKey {
   const v = (raw ?? "").toLowerCase().trim();
 
+  if ((CATEGORY_KEYS as readonly string[]).includes(v)) return v as CategoryKey;
   if (v === "all" || v === "todos") return "all";
   if (v === "herramientas" || v === "tools" || v === "ferramentas") return "tools";
   if (v === "ia para abogados" || v === "ai for lawyers" || v === "ia para advogados") return "lawyers";
   if (v === "ia para arquitectos" || v === "ai for architects" || v === "ia para arquitetos") return "architects";
   if (v === "ia para contabilidad" || v === "ai for accounting" || v === "ia para contabilidade") return "accounting";
   if (v === "ia para restaurantes" || v === "ai for restaurants") return "restaurants";
+  if (v === "ia para salones de belleza" || v === "ia para salões de beleza" || v === "ai for beauty salons") return "beauty-salons";
   if (v === "otros" || v === "others" || v === "outros") return "others";
 
   return "others";

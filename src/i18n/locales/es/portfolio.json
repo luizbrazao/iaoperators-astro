@@ -8,7 +8,11 @@
     "actions": {
         "details": "Ver detalles",
         "live": "Online",
-        "impact": "Impacto generado"
+        "impact": "Impacto generado",
+        "talk": "Hablemos",
+        "seeCases": "Ver casos",
+        "challenge": "Desafío",
+        "startProject": "Iniciar proyecto"
     },
     "breadcrumb": {
         "portfolio": "Portfolio"
@@ -71,5 +75,14 @@
             "monthly": "Mensual",
             "annual": "Anual"
         }
+    },
+    "proof": {
+        "totalCases": "Casos en producción",
+        "liveProjects": "Proyectos online",
+        "verticals": "Verticales de negocio"
+    },
+    "cta": {
+        "title": "¿Quieres un caso así para tu negocio?",
+        "subtitle": "Diseñamos y entregamos sistemas AI-first para WhatsApp, automatización CRM, flujos de reservas y operaciones multiagente."
     }
 }

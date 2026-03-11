@@ -1,138 +1,127 @@
 ---
+import { getCollection, render } from "astro:content";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { ui, getLocale, type Locale } from "../../../i18n/ui";
-import { fetchBlogPosts } from "../../../lib/blog";
-
-type BlogPost = {
-  id: string;
-  slug: string;
-  title: string;
-  category: string;
-  date: string;
-  imageUrl?: string;
-  metaDescription?: string;
-  content?: string;
-  locale?: "es" | "pt" | "en";
-  faq?: string;
-};
+import { fetchBlogEntry } from "../../../lib/blog";
 
 export async function getStaticPaths() {
   const locales: Locale[] = ["es", "pt", "en"];
+  const paths: { params: { locale: string; slug: string } }[] = [];
 
-  const postsByLocale = await Promise.all(
-    locales.map(async (loc) => ({ locale: loc, posts: (await fetchBlogPosts(loc)) as BlogPost[] })),
-  );
+  for (const loc of locales) {
+    const entries = await getCollection("blog", ({ id, data }) => {
+      return id.startsWith(`${loc}/`) && !data.draft;
+    });
 
-  return postsByLocale.flatMap(({ locale: loc, posts }) =>
-    posts.map((post) => ({
-      params: { locale: loc, slug: post.slug },
-      props: { locale: loc, post },
-    })),
+    for (const entry of entries) {
+      const slug = entry.id
+        .replace(`${loc}/`, "")
+        .replace(/\.(md|mdx)$/, "");
+      paths.push({ params: { locale: loc, slug } });
+    }
+  }
+
+  return paths;
+}
+
+// ─── Data fetching ─────────────────────────────────────────────────────────
+
+const { locale: localeParam, slug } = Astro.params;
+const locale = getLocale(localeParam as string);
+
+const entry = await fetchBlogEntry(slug as string, locale);
+
+if (!entry) {
+  // Fail loudly at build time — this should never happen if getStaticPaths is correct
+  throw new Error(
+    `[blog] Content entry not found: ${locale}/${slug}\n` +
+      `Make sure the file src/content/blog/${locale}/${slug}.md exists and is not a draft.`,
   );
 }
 
-const { locale: localeParam, post } = Astro.props as { locale: Locale; post: BlogPost };
+const { Content } = await render(entry);
 
-const locale = getLocale(localeParam);
+// ─── SEO / Meta ────────────────────────────────────────────────────────────
+
 const dict = ui[locale];
 const blogPostDict = (dict as any)?.blogPost ?? {};
 
 const site = (Astro.site?.toString() ?? "https://iaoperators.com").replace(/\/$/, "");
-
-// Canonical “anti-duplicação”: se o post não tem locale, canonical cai em ES
-const canonicalLocale = (post.locale ?? "es") as Locale;
-const isDuplicateLocale = !post.locale && locale !== canonicalLocale;
-
 const canonicalPath = Astro.url.pathname.replace(/\/?$/, "/");
 const canonicalUrl = new URL(canonicalPath, site).toString();
 
-// SEO
-const title = post.title;
-const description = post.metaDescription ?? dict.meta.description;
+const title = entry.data.title;
+const description = entry.data.description;
 
-// Tempo de leitura (mesma ideia do antigo)
-const safeContent = typeof post.content === "string" ? post.content : "";
-const readMinutes = Math.max(3, Math.ceil(safeContent.length / 1500));
-
-// Data
-const parsedDate = post.date ? new Date(post.date) : null;
-const hasValidDate = parsedDate instanceof Date && !Number.isNaN(parsedDate.getTime());
-const formattedDate = hasValidDate
-  ? parsedDate!.toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })
-  : blogPostDict?.dateUnavailable ?? dict.meta.dateUnavailable ?? "Data indisponível";
-
-const readingTimeLabel = (blogPostDict?.readingTime ?? "{{minutes}} min de leitura").replace(
+// Reading time from raw markdown body
+const readMinutes = Math.max(3, Math.ceil((entry.body?.length ?? 0) / 1500));
+const readingTimeLabel = (blogPostDict?.readingTime ?? "{{minutes}} min").replace(
   "{{minutes}}",
   String(readMinutes),
 );
 
-function toIsoWithOffset(dateIso: string, offsetMinutes: number): string {
-  const date = new Date(dateIso);
-  if (Number.isNaN(date.getTime())) return "";
+// Date formatting
+const parsedDate = entry.data.date;
+const formattedDate = parsedDate.toLocaleDateString(locale, {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+function toIsoWithOffset(date: Date, offsetMinutes: number): string {
   const adjusted = new Date(date.getTime() + offsetMinutes * 60000);
-  const yyyy = adjusted.getUTCFullYear();
-  const mm = String(adjusted.getUTCMonth() + 1).padStart(2, "0");
-  const dd = String(adjusted.getUTCDate()).padStart(2, "0");
-  const hh = String(adjusted.getUTCHours()).padStart(2, "0");
-  const min = String(adjusted.getUTCMinutes()).padStart(2, "0");
-  const ss = String(adjusted.getUTCSeconds()).padStart(2, "0");
+  const iso = adjusted.toISOString();
   const sign = offsetMinutes >= 0 ? "+" : "-";
   const abs = Math.abs(offsetMinutes);
-  const offH = String(Math.floor(abs / 60)).padStart(2, "0");
-  const offM = String(abs % 60).padStart(2, "0");
-  return `${yyyy}-${mm}-${dd}T${hh}:${min}:${ss}${sign}${offH}:${offM}`;
+  const hh = String(Math.floor(abs / 60)).padStart(2, "0");
+  const mm = String(abs % 60).padStart(2, "0");
+  return iso.replace("Z", `${sign}${hh}:${mm}`);
 }
 
-const ogPublishedTime = post.date ? toIsoWithOffset(post.date, 60) : "";
-const ogModifiedTime = post.date ? toIsoWithOffset(post.date, 60) : "";
+const ogPublishedTime = toIsoWithOffset(parsedDate, 60);
+const ogModifiedTime = toIsoWithOffset(parsedDate, 60);
 
-function stripHtml(input: string): string {
-  return input.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
-}
+// ─── Structured data (JSON-LD) ─────────────────────────────────────────────
 
-function extractFaqItems(html?: string): { q: string; a: string }[] {
-  if (!html || !html.trim()) return [];
-
-  const items: { q: string; a: string }[] = [];
-  const regex = /<h3[^>]*>([\s\S]*?)<\/h3>\s*<p[^>]*>([\s\S]*?)<\/p>/gi;
-  let match: RegExpExecArray | null = null;
-
-  while ((match = regex.exec(html))) {
-    const q = stripHtml(match[1] ?? "");
-    const a = stripHtml(match[2] ?? "");
-    if (q && a) items.push({ q, a });
-  }
-
-  return items;
-}
-
-const faqItems = extractFaqItems(post.faq);
-if (import.meta.env?.DEV) {
-  console.log("faq length", post.faq?.length ?? 0);
-}
+const faqItems = entry.data.faq ?? [];
 
 const blogPostingJsonLd = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   headline: title,
   description,
-  datePublished: post.date,
-  dateModified: post.date,
+  datePublished: parsedDate.toISOString(),
+  dateModified: parsedDate.toISOString(),
+  inLanguage: locale,
   mainEntityOfPage: {
     "@type": "WebPage",
     "@id": canonicalUrl,
   },
-  image: post.imageUrl ? [post.imageUrl] : undefined,
-  author: { "@type": "Organization", name: "IA Operators", url: site },
+  image: entry.data.image ? [new URL(entry.data.image, site).toString()] : undefined,
+  author: {
+    "@type": "Organization",
+    name: entry.data.author ?? "IA Operators",
+    url: site,
+  },
   publisher: {
     "@type": "Organization",
     name: "IA Operators",
     url: site,
     logo: {
       "@type": "ImageObject",
-      url: "https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png",
+      url: `${site}/favicon-32x32.png`,
     },
   },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: "Blog", item: `${site}/${locale}/blog/` },
+    { "@type": "ListItem", position: 3, name: title, item: canonicalUrl },
+  ],
 };
 
 const faqJsonLd =
@@ -148,35 +137,31 @@ const faqJsonLd =
       }
     : null;
 
-const jsonLd = [blogPostingJsonLd, ...(faqJsonLd ? [faqJsonLd] : [])];
+const jsonLd = [blogPostingJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [])];
 
-// Share URLs (estáticos, sem depender de window)
+// Share URLs
 const shareLinkedIn = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonicalUrl)}`;
-const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(
-  canonicalUrl
-)}`;
+const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(canonicalUrl)}`;
 ---
 
 <BaseLayout
   title={title}
   description={description}
   jsonLd={jsonLd}
-  ogImage={post.imageUrl ?? "/og.png"}
+  ogImage={entry.data.image ?? "/og.png"}
   ogImageAlt={title}
   ogType="article"
-  ogPublishedTime={ogPublishedTime || undefined}
-  ogModifiedTime={ogModifiedTime || undefined}
-  robots={isDuplicateLocale ? "noindex,follow" : "index,follow"}
+  ogPublishedTime={ogPublishedTime}
+  ogModifiedTime={ogModifiedTime}
 >
-  <!-- Breadcrumb / Voltar (fixo no desktop) -->
+  <!-- Back button (fixed desktop) -->
   <div class="fixed top-24 left-4 z-40 hidden xl:block">
     <a
       href={`/${locale}/blog/`}
       class="flex items-center justify-center w-10 h-10 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 transition-all hover:-translate-x-1"
-      aria-label={blogPostDict?.back ?? "Voltar ao Blog"}
-      title={blogPostDict?.back ?? "Voltar ao Blog"}
+      aria-label={blogPostDict?.back ?? "Volver al Blog"}
+      title={blogPostDict?.back ?? "Volver al Blog"}
     >
-      <!-- ArrowLeft -->
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="opacity-90">
         <path
           d="M15 18l-6-6 6-6"
@@ -190,24 +175,41 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
   </div>
 
   <div class="pt-32 pb-20 px-4">
-    <article class="max-w-4xl mx-auto">
-      <!-- Cabeçalho do artigo -->
+    <article class="max-w-4xl mx-auto" itemscope itemtype="https://schema.org/BlogPosting">
+
+      <!-- Visible breadcrumb nav -->
+      <nav aria-label="Breadcrumb" class="mb-8 text-sm text-gray-500">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href={`/${locale}/`} class="hover:text-orange-400 transition-colors">Home</a></li>
+          <li class="text-gray-700">/</li>
+          <li><a href={`/${locale}/blog/`} class="hover:text-orange-400 transition-colors">Blog</a></li>
+          <li class="text-gray-700">/</li>
+          <li class="text-gray-400 truncate max-w-[200px]" aria-current="page">{title}</li>
+        </ol>
+      </nav>
+
+      <!-- Article header -->
       <header class="text-center mb-12">
         <div class="flex justify-center mb-6">
           <span
             class="px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold uppercase tracking-wider"
           >
-            {post.category}
+            {entry.data.category}
           </span>
         </div>
 
-        <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-8 text-white">
-          {post.title}
+        <h1
+          itemprop="headline"
+          class="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-8 text-white"
+        >
+          {title}
         </h1>
 
-        <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-400 border-b border-white/10 pb-8 mx-auto max-w-2xl">
+        <div
+          class="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-400 border-b border-white/10 pb-8 mx-auto max-w-2xl"
+        >
+          <!-- Date -->
           <div class="flex items-center gap-2">
-            <!-- Calendar -->
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="text-orange-500">
               <path
                 d="M8 2v3M16 2v3M3 9h18M5 5h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"
@@ -217,116 +219,135 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
                 stroke-linejoin="round"
               />
             </svg>
-            <span>{formattedDate}</span>
+            <time itemprop="datePublished" datetime={parsedDate.toISOString()}>{formattedDate}</time>
           </div>
 
+          <!-- Reading time -->
           <div class="flex items-center gap-2">
-            <!-- Clock -->
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="text-orange-500">
-              <path
-                d="M12 22a10 10 0 1010-10 10 10 0 00-10 10z"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
               <path
                 d="M12 6v6l4 2"
                 stroke="currentColor"
                 stroke-width="2"
                 stroke-linecap="round"
-                stroke-linejoin="round"
               />
             </svg>
             <span>{readingTimeLabel}</span>
           </div>
 
-          <div class="flex items-center gap-2">
-            <!-- User -->
+          <!-- Author -->
+          <div class="flex items-center gap-2" itemprop="author" itemscope itemtype="https://schema.org/Organization">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="text-orange-500">
               <path
                 d="M20 21a8 8 0 10-16 0"
                 stroke="currentColor"
                 stroke-width="2"
                 stroke-linecap="round"
-                stroke-linejoin="round"
               />
               <path
                 d="M12 13a4 4 0 100-8 4 4 0 000 8z"
                 stroke="currentColor"
                 stroke-width="2"
                 stroke-linecap="round"
-                stroke-linejoin="round"
               />
             </svg>
-            <span>IA Operators</span>
+            <span itemprop="name">{entry.data.author ?? "IA Operators"}</span>
           </div>
         </div>
       </header>
 
-      <!-- Imagem de capa -->
-      {post.imageUrl && (
+      <!-- Cover image -->
+      {entry.data.image && (
         <div class="mb-12 relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl aspect-video">
           <img
-            src={post.imageUrl}
-            alt={post.title}
+            src={entry.data.image}
+            alt={title}
             loading="eager"
             fetchpriority="high"
             decoding="async"
             class="w-full h-full object-cover"
+            itemprop="image"
           />
           <div class="absolute inset-0 bg-linear-to-t from-[#050505] via-transparent to-transparent opacity-60" />
         </div>
       )}
 
-      <!-- Conteúdo do artigo -->
-      <div class="px-2 md:px-8">
-        {post.content ? (
-          <div
-            class="
-              prose prose-invert prose-lg max-w-none
-              prose-headings:text-white prose-headings:font-bold prose-headings:leading-tight
-              prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:border-l-4 prose-h2:border-orange-500 prose-h2:pl-4
-              prose-h3:text-2xl prose-h3:text-orange-100/90 prose-h3:mt-8
-              prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-6
-              prose-a:text-orange-500 prose-a:font-semibold prose-a:no-underline
-              hover:prose-a:text-orange-400 hover:prose-a:underline transition-colors
-              prose-ul:text-gray-300 prose-li:marker:text-orange-500
-              prose-strong:text-white prose-strong:font-bold
-              prose-blockquote:border-l-orange-500 prose-blockquote:bg-white/5 prose-blockquote:py-2 prose-blockquote:px-6
-              prose-blockquote:rounded-r-lg prose-blockquote:text-gray-200 prose-blockquote:italic
-              prose-img:rounded-2xl prose-img:shadow-xl prose-img:border prose-img:border-white/10
-            "
-            set:html={post.content}
-          />
-        ) : (
-          <div
-            class="
-              prose prose-invert prose-lg max-w-none
-              prose-p:text-gray-300 prose-p:leading-relaxed
-            "
-          >
-            <p class="text-gray-400">Conteúdo em breve.</p>
-          </div>
-        )}
+      <!-- Article body (Markdown rendered) -->
+      <div
+        class="px-2 md:px-8"
+        itemprop="articleBody"
+      >
+        <div
+          class="
+            prose prose-invert prose-lg max-w-none
+            prose-headings:text-white prose-headings:font-bold prose-headings:leading-tight
+            prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:border-l-4 prose-h2:border-orange-500 prose-h2:pl-4
+            prose-h3:text-2xl prose-h3:text-orange-100/90 prose-h3:mt-8
+            prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-6
+            prose-a:text-orange-500 prose-a:font-semibold prose-a:no-underline
+            hover:prose-a:text-orange-400 hover:prose-a:underline
+            prose-ul:text-gray-300 prose-li:marker:text-orange-500
+            prose-strong:text-white prose-strong:font-bold
+            prose-blockquote:border-l-orange-500 prose-blockquote:bg-white/5 prose-blockquote:py-2 prose-blockquote:px-6
+            prose-blockquote:rounded-r-lg prose-blockquote:text-gray-200 prose-blockquote:italic
+            prose-img:rounded-2xl prose-img:shadow-xl prose-img:border prose-img:border-white/10
+            prose-table:text-gray-300 prose-th:text-white prose-th:border-white/20 prose-td:border-white/10
+            prose-code:text-orange-300 prose-code:bg-white/5 prose-code:rounded prose-code:px-1
+          "
+        >
+          <Content />
+        </div>
       </div>
 
-      {post.faq && post.faq.trim() && (
-        <div class="px-2 md:px-8 mt-12" set:html={post.faq} />
+      <!-- FAQ section (typed frontmatter array) -->
+      {faqItems.length > 0 && (
+        <div class="px-2 md:px-8 mt-16">
+          <h2 class="text-2xl font-bold text-white mb-8 border-l-4 border-orange-500 pl-4">
+            {blogPostDict?.faqTitle ?? "Preguntas frecuentes"}
+          </h2>
+          <div class="space-y-4">
+            {faqItems.map((item) => (
+              <details class="group border border-white/10 rounded-2xl overflow-hidden bg-white/[0.02]">
+                <summary class="flex items-center justify-between px-6 py-4 cursor-pointer text-white font-medium hover:bg-white/5 transition-colors list-none">
+                  <span>{item.q}</span>
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    class="shrink-0 ml-4 text-orange-500 transition-transform group-open:rotate-180"
+                  >
+                    <path
+                      d="M6 9l6 6 6-6"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </summary>
+                <div class="px-6 pb-5 pt-2 text-gray-300 text-sm leading-relaxed border-t border-white/10">
+                  {item.a}
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
       )}
 
-      <!-- Rodapé / Share -->
+      <!-- Share footer -->
       <div class="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 px-8">
         <div class="text-gray-400 text-sm">{blogPostDict?.shareTitle ?? "Compartilhar"}</div>
 
         <div class="flex gap-4">
+          <!-- Copy link -->
           <button
             type="button"
             class="p-3 rounded-full bg-[#151515] hover:bg-orange-500 hover:text-white transition-all text-gray-400"
             title={blogPostDict?.copyLink ?? "Copiar link"}
             data-copy-link={canonicalUrl}
           >
-            <!-- Share2 icon -->
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path
                 d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"
@@ -352,6 +373,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
             </svg>
           </button>
 
+          <!-- LinkedIn -->
           <a
             href={shareLinkedIn}
             target="_blank"
@@ -359,7 +381,6 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
             class="p-3 rounded-full bg-[#151515] hover:bg-[#0077b5] hover:text-white transition-all text-gray-400"
             title={blogPostDict?.shareLinkedIn ?? "Compartilhar no LinkedIn"}
           >
-            <!-- LinkedIn icon -->
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path
                 d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4V9h4v2a4 4 0 014-3z"
@@ -368,23 +389,12 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
-              <path
-                d="M2 9h4v12H2z"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M4 4a2 2 0 110 4 2 2 0 010-4z"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+              <path d="M2 9h4v12H2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M4 4a2 2 0 110 4 2 2 0 010-4z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </a>
 
+          <!-- X / Twitter -->
           <a
             href={shareX}
             target="_blank"
@@ -392,42 +402,34 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
             class="p-3 rounded-full bg-[#151515] hover:bg-black hover:text-white transition-all text-gray-400 border border-transparent hover:border-white/20"
             title={blogPostDict?.shareTwitter ?? "Compartilhar no X/Twitter"}
           >
-            <!-- Simple X icon -->
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M4 4l16 16M20 4L4 20"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
+              <path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
             </svg>
           </a>
         </div>
       </div>
     </article>
-
-    <!-- JS mínimo (client-side) para copiar link -->
-    <script is:inline>
-      (function () {
-        const btn = document.querySelector('button[data-copy-link]');
-        if (!btn) return;
-        btn.addEventListener('click', async () => {
-          const url = btn.getAttribute('data-copy-link') || window.location.href;
-          try {
-            await navigator.clipboard.writeText(url);
-            btn.classList.add('text-white');
-            setTimeout(() => btn.classList.remove('text-white'), 900);
-          } catch (e) {
-            // fallback antigo
-            const input = document.createElement('input');
-            input.value = url;
-            document.body.appendChild(input);
-            input.select();
-            document.execCommand('copy');
-            document.body.removeChild(input);
-          }
-        });
-      })();
-    </script>
   </div>
+
+  <script is:inline>
+    (function () {
+      const btn = document.querySelector("button[data-copy-link]");
+      if (!btn) return;
+      btn.addEventListener("click", async () => {
+        const url = btn.getAttribute("data-copy-link") || window.location.href;
+        try {
+          await navigator.clipboard.writeText(url);
+          btn.classList.add("text-white");
+          setTimeout(() => btn.classList.remove("text-white"), 900);
+        } catch (_) {
+          const input = document.createElement("input");
+          input.value = url;
+          document.body.appendChild(input);
+          input.select();
+          document.execCommand("copy");
+          document.body.removeChild(input);
+        }
+      });
+    })();
+  </script>
 </BaseLayout>
