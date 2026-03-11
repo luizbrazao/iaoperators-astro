@@ -3,7 +3,7 @@ title: "Local, private, and no monthly bill: how to run Qwen models on your PC"
 description: "Learn how to run local AI with Qwen models for document analysis, computer vision, and code generation with full privacy and predictable cost."
 category: tools
 date: 2026-03-11
-image: /blog/ia-local-privada-sem-mensalidade-qwen-pc.png
+image: /images/blog/ia-local-privada-sem-mensalidade-qwen-pc.png
 locale: en
 author: IA Operators
 draft: false

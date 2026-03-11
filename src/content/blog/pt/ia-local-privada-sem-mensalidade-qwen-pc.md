@@ -3,7 +3,7 @@ title: "IA local, privada e sem mensalidade: como rodar modelos Qwen no seu PC"
 description: "Aprenda a rodar IA local com modelos Qwen para análise de documentos, visão computacional e geração de código com privacidade total e custo previsível."
 category: tools
 date: 2026-03-11
-image: /blog/ia-local-privada-sem-mensalidade-qwen-pc.png
+image: /images/blog/ia-local-privada-sem-mensalidade-qwen-pc.png
 locale: pt
 author: IA Operators
 draft: false
