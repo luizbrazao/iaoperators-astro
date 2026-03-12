@@ -30,111 +30,367 @@ faq:
     a: "No. En producción, el mejor resultado suele ser híbrido: local para datos sensibles y tareas repetitivas; cloud para tareas complejas o picos de demanda."
 ---
 
-Si tu operación depende de IA todos los días, hay un cambio estructural en marcha: los modelos pequeños ya son suficientemente buenos para producción local en muchos flujos.
+# IA local, privada y sin mensualidad: cómo ejecutar modelos Qwen en tu PC
 
-Eso impacta tres variables críticas:
+Te voy a contar algo que hace apenas un año habría sonado bastante extraño.
 
-- privacidad de datos,
-- coste por operación,
-- previsibilidad de arquitectura.
+IA potente…  
+corriendo **directamente en tu ordenador**.
 
-En lugar de enviar todo a APIs externas, puedes ejecutar una parte relevante del pipeline en tu propia infraestructura con control técnico total.
+Sin depender todo el tiempo de una API.  
+Sin enviar datos sensibles fuera.  
+Y sin ver cómo la factura por tokens crece cada mes como una planta con esteroides.
 
-## Por qué Qwen local ya es viable
+Hace poco estuve probando **modelos Qwen ejecutándose en local** para flujos reales de negocio. Nada de demos bonitas. Hablo de cosas como:
 
-Los modelos Qwen recientes en rangos pequeños/medios alcanzaron un equilibrio práctico entre calidad y eficiencia. El valor real no está en benchmark aislado, sino en throughput útil para negocio.
+- analizar documentos
+- extraer datos de imágenes
+- generar pequeñas herramientas internas
+- automatizar tareas repetitivas
 
-En la práctica, habilitan:
+Y la conclusión fue clara.
 
-- extracción estructurada desde documentos e imágenes,
-- generación de código y utilidades internas,
-- análisis de texto largo con reglas estrictas,
-- respuestas con menor latencia para tareas repetitivas.
+La **IA local ya no es un experimento para frikis de GPUs**.
 
-## Requisitos mínimos: RAM, VRAM y tipo de carga
+En muchos casos… es simplemente una decisión técnica inteligente.
 
-Antes de instalar nada, define el caso de uso principal y tu presupuesto de memoria.
+Porque cuando ejecutas modelos en tu propia infraestructura, cambian tres variables muy importantes:
+
+- privacidad de datos  
+- coste por operación  
+- previsibilidad de arquitectura  
+
+En lugar de enviar todo a APIs externas, puedes ejecutar parte del pipeline en tu propia infraestructura con control técnico total.
+
+---
+
+# Por qué Qwen local ya es viable
+
+Durante mucho tiempo, ejecutar modelos localmente tenía un problema bastante evidente:
+
+o eran demasiado grandes  
+o demasiado lentos  
+o demasiado malos.
+
+Pero los modelos **Qwen en tamaños pequeños y medianos** han encontrado algo que en ingeniería siempre se agradece:
+
+**un equilibrio práctico entre calidad y eficiencia.**
+
+Y eso cambia bastante el juego.
+
+Porque la pregunta correcta ya no es:
+
+> “¿Puede competir con los modelos gigantes?”
+
+La pregunta real es:
+
+> “¿Es suficientemente bueno para resolver tareas concretas de negocio?”
+
+Y en muchos casos, la respuesta es **sí**.
+
+Especialmente para tareas como:
+
+- extracción de información desde documentos  
+- análisis estructurado de texto largo  
+- generación de código utilitario  
+- clasificación y normalización de datos  
+- respuestas rápidas para procesos repetitivos  
+
+No necesitas el modelo más grande del planeta para hacer estas cosas.
+
+Necesitas uno que sea **estable, razonablemente preciso y barato de ejecutar**.
+
+Y ahí es donde Qwen empieza a brillar.
+
+---
+
+# Requisitos mínimos: RAM, VRAM y tipo de carga
+
+Antes de instalar nada, te voy a dar el consejo más importante de todo el artículo.
+
+No empieces por el modelo.
+
+Empieza por **el caso de uso**.
+
+Porque no es lo mismo:
+
+- clasificar emails  
+- analizar contratos de 50 páginas  
+- procesar imágenes  
+- generar código complejo  
+
+Cada tarea tiene un coste distinto en memoria y procesamiento.
+
+Para orientarte, esta tabla suele funcionar bastante bien.
 
 | Perfil | Hardware recomendado | Tipo de modelo | Uso típico |
-| --- | --- | --- | --- |
+|---|---|---|---|
 | Inicio | 16 GB RAM (CPU) | pequeño cuantizado | pruebas de prompts y clasificación básica |
 | Operación ligera | 32 GB RAM o 8 GB VRAM | pequeño/medio cuantizado | extracción de campos y soporte interno |
-| Producción local | 12-24 GB VRAM | medio con mayor contexto | documentos extensos, código y multimodal |
+| Producción local | 12–24 GB VRAM | medio con contexto largo | documentos complejos, código y multimodal |
 
-Regla práctica: si el modelo entra "justo", habrá degradación. Busca margen de memoria para estabilidad.
+Ahora, una regla que aprendí a base de errores:
 
-## Qué modelo Qwen elegir según tu entorno
+**Si el modelo entra “justo” en memoria, no es una buena idea.**
 
-1. **Empieza por estabilidad, no por tamaño máximo.**
-2. **Prioriza cuantizaciones que mantengan calidad aceptable en tu tarea real.**
-3. **Valida con un set fijo de casos críticos** (documentos reales, tablas complejas, prompts de código).
-4. **Mide latencia por tarea**, no solo tokens por segundo.
+Cuando eso ocurre pasan tres cosas:
 
-## LM Studio vs Ollama: cuándo usar cada uno
+- la latencia se dispara  
+- el sistema se vuelve inestable  
+- la experiencia se degrada  
 
-- **LM Studio:** ideal para evaluación rápida, ajuste de prompts y pruebas por equipos no técnicos.
-- **Ollama:** mejor para integración en automatizaciones, CLI y servicios internos.
+Siempre deja **margen de memoria**.
 
-Si estás diseñando agentes y flujos, combina esto con una capa de orquestación como la que usamos en [automatizaciones con asistentes y herramientas](https://iaoperators.com/es/blog/gems-de-gemini-como-crear-asistentes-con-herramientas-predeterminadas-canvas-deep-research-nanobanana/).
+Tu yo del futuro te lo va a agradecer.
 
-## Paso a paso en LM Studio (sin hype)
+---
 
-1. Instala LM Studio y actualiza drivers de GPU.
-2. Descarga un Qwen compatible con tu memoria.
-3. Selecciona cuantización con holgura de VRAM/RAM.
-4. Ejecuta prompts cortos para calibrar instrucciones.
-5. Sube gradualmente complejidad (tablas, PDFs, código).
-6. Define criterios de validación humana para salida crítica.
+# Qué modelo Qwen elegir según tu entorno
 
-## Casos de uso con retorno directo
+Cuando alguien empieza con modelos locales suele cometer el mismo error.
 
-### 1) Documento en imagen -> dato estructurado
+Ir directo al modelo más grande que su máquina puede soportar.
 
-- extraer campos de comprobantes,
-- normalizar en CSV,
-- validar totales y reglas,
-- registrar excepciones para revisión.
+Es comprensible.  
+Pero rara vez es la mejor decisión.
 
-Resultado: menos operación manual y menor exposición de datos sensibles.
+Una estrategia mucho más sensata sería algo así:
 
-### 2) Generación rápida de interfaces internas
+## 1. Empieza por estabilidad
 
-- HTML/CSS/JS para backoffice,
-- componentes visuales para pruebas,
-- utilidades de soporte para equipos operativos.
+Un modelo ligeramente más pequeño pero estable casi siempre gana frente a uno enorme que va al límite de memoria.
 
-### 3) Análisis de documentos largos con gobernanza
+## 2. Usa cuantización con cabeza
 
-- usar solo evidencia del documento,
-- separar hechos de interpretación,
-- generar informe con estructura fija y trazabilidad.
+La cuantización reduce el tamaño del modelo (por ejemplo a 4-bit u 8-bit).  
+Esto permite ejecutarlo en hardware más modesto.
 
-## Errores comunes al ejecutar LLM local en PC
+La clave está en encontrar **el punto donde el modelo sigue siendo útil para tu tarea real**.
 
-- elegir un modelo más grande que tu memoria real,
-- no definir prompts y criterios de validación,
-- mezclar datos sensibles sin política de acceso,
-- intentar reemplazar toda la nube desde el día 1.
+## 3. Crea un pequeño benchmark interno
 
-Para evaluación comparativa de herramientas en workflows reales, revisa también esta [comparativa de Deep Research vs Perplexity](https://iaoperators.com/es/blog/comparativa-google-deep-research-vs-perplexity/).
+Nada de benchmarks académicos.
 
-## Arquitectura recomendada: local + cloud
+Usa:
 
-El patrón que mejor funciona en producción suele ser híbrido:
+- documentos reales  
+- prompts que uses en producción  
+- tablas complejas  
+- ejemplos de código  
 
-- **Local:** datos sensibles, tareas repetitivas y baja latencia.
-- **Cloud:** razonamiento pesado, picos y tareas de mayor complejidad.
+Ese conjunto de pruebas vale más que cualquier leaderboard.
 
-No es "local o cloud". Es decidir qué etapa del flujo conviene ejecutar en cada capa.
+## 4. Mide latencia por tarea
 
-## Conclusión
+Tokens por segundo está bien para marketing.
 
-La IA local ya no es experimento: es una decisión arquitectónica viable para negocio.
+Pero lo que realmente importa es:
 
-Si operas automatizaciones, análisis documental y generación de código con datos sensibles, vale la pena activar una capa local ahora y medir impacto con KPIs reales.
+**¿cuánto tarda en resolver la tarea completa?**
 
-## ¿Quieres implementarlo en tu operación?
+Eso es lo que impacta la operación.
 
-IA Operators diseña e implementa arquitecturas híbridas (local + cloud), con observabilidad, gobernanza y rollout seguro en producción.
+---
 
-[Habla con nuestro equipo](https://iaoperators.com/es/contact/) y evaluamos tu caso.
+# LM Studio vs Ollama: cuándo usar cada uno
+
+Aquí suele surgir una pregunta muy común:
+
+> ¿Uso LM Studio o Ollama?
+
+La respuesta corta es: **depende de quién lo vaya a usar**.
+
+## LM Studio
+
+LM Studio es perfecto para:
+
+- probar modelos rápidamente  
+- experimentar con prompts  
+- trabajar con equipos no técnicos  
+- validar ideas antes de automatizar  
+
+Tiene interfaz visual y te permite ver rápidamente si un modelo funciona para tu caso.
+
+Es como el **laboratorio de pruebas**.
+
+## Ollama
+
+Ollama, en cambio, brilla cuando necesitas integrar el modelo en sistemas reales.
+
+Por ejemplo:
+
+- pipelines de automatización  
+- APIs internas  
+- agentes  
+- scripts  
+- workflows empresariales  
+
+No es tan visual, pero es mucho más cómodo para **integraciones técnicas**.
+
+En muchas organizaciones, el flujo acaba siendo algo así:
+
+LM Studio para explorar →  
+Ollama para producción.
+
+---
+
+# Paso a paso en LM Studio (sin hype)
+
+Instalar un modelo local puede sonar intimidante, pero en realidad el proceso es bastante directo.
+
+El flujo básico suele ser este:
+
+1. Instala LM Studio y actualiza drivers de GPU.  
+2. Descarga un modelo Qwen compatible con tu memoria.  
+3. Selecciona cuantización con margen de VRAM/RAM.  
+4. Ejecuta prompts simples para calibrar instrucciones.  
+5. Aumenta gradualmente la complejidad (tablas, PDFs, código).  
+6. Define criterios claros de validación humana.
+
+Esto último es especialmente importante si el resultado del modelo afecta procesos reales.
+
+---
+
+# Casos de uso con retorno directo
+
+Aquí es donde la IA local deja de ser interesante…  
+y empieza a ser útil.
+
+## Documento en imagen → dato estructurado
+
+Imagina algo muy común en muchas empresas:
+
+- recibos  
+- facturas  
+- comprobantes  
+- documentos escaneados  
+
+Un modelo local puede:
+
+- extraer campos relevantes  
+- convertirlos en CSV o JSON  
+- validar reglas básicas  
+- detectar inconsistencias  
+
+Todo **sin enviar esos documentos a servicios externos**.
+
+Eso significa:
+
+- menos riesgo de privacidad  
+- menos trabajo manual  
+- procesos más rápidos  
+
+---
+
+## Generación rápida de herramientas internas
+
+Otra aplicación muy interesante es generar pequeñas utilidades internas.
+
+Por ejemplo:
+
+- interfaces HTML para backoffice  
+- dashboards simples  
+- scripts de automatización  
+- herramientas para equipos de soporte  
+
+No necesitas un equipo completo de desarrollo para muchas de estas cosas.
+
+Un modelo local puede generar **prototipos funcionales en minutos**.
+
+---
+
+## Análisis de documentos largos con gobernanza
+
+Los modelos también funcionan muy bien para analizar documentos extensos:
+
+- contratos  
+- informes técnicos  
+- reportes operativos  
+
+Pero aquí hay un truco importante.
+
+El prompt debe obligar al modelo a:
+
+- usar solo información del documento  
+- separar hechos de interpretaciones  
+- citar evidencias  
+
+De esta forma obtienes **informes estructurados y auditables**.
+
+---
+
+# Errores comunes al ejecutar LLM local en PC
+
+Después de varias pruebas, hay errores que aparecen una y otra vez.
+
+Te ahorro el dolor.
+
+- elegir un modelo más grande que tu memoria real  
+- no definir prompts ni criterios de validación  
+- mezclar datos sensibles sin política de acceso  
+- intentar reemplazar toda la nube desde el día 1  
+
+Los modelos locales funcionan mejor cuando forman parte de una arquitectura bien diseñada.
+
+---
+
+# Arquitectura recomendada: local + cloud
+
+La arquitectura que mejor funciona en producción no es una guerra entre:
+
+**local vs cloud**
+
+Es una colaboración.
+
+Normalmente el patrón ganador es:
+
+**IA local**
+
+- datos sensibles  
+- tareas repetitivas  
+- baja latencia  
+- operaciones internas  
+
+**IA cloud**
+
+- razonamiento complejo  
+- modelos de última generación  
+- picos de demanda  
+- tareas multimodales avanzadas  
+
+Cada capa hace lo que mejor sabe hacer.
+
+---
+
+# Conclusión
+
+La IA local ya no es un experimento.
+
+Se está convirtiendo en **una decisión arquitectónica real para muchas empresas**.
+
+Si trabajas con:
+
+- automatización  
+- análisis documental  
+- generación de código  
+- datos sensibles  
+
+Vale la pena probar una capa local y medir el impacto.
+
+No con hype.
+
+Con métricas reales.
+
+Porque a veces la innovación no consiste en usar el modelo más grande…
+
+sino en **ejecutar el modelo correcto en el lugar correcto**.
+
+---
+
+# ¿Quieres implementarlo en tu operación?
+
+IA Operators diseña e implementa arquitecturas híbridas (local + cloud) para automatización, análisis documental y agentes de IA.
+
+Si quieres evaluar cómo aplicarlo en tu empresa:
+
+https://iaoperators.com/es/contact/
