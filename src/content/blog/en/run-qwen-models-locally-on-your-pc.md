@@ -425,4 +425,4 @@ but about **running the right model in the right place**.
 
 If you’d like to evaluate how this could work in your organization:
 
-https://iaoperators.com/es/contact/
+https://iaoperators.com/en/contact/

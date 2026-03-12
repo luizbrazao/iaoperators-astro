@@ -424,4 +424,4 @@ A **IA Operators** projeta e implementa arquiteturas híbridas (local + cloud) p
 
 Se quiser avaliar como aplicar isso na sua empresa:
 
-https://iaoperators.com/es/contact/
+https://iaoperators.com/pt/contact/
