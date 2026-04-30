@@ -2,7 +2,7 @@
 title: "Gemini GEMS: How to create wizards with default tools (Canvas, Deep Research, Nanobanana)"
 description: "Gemini GEMS: Learn how to configure wizards with default tools (Canvas, Deep Research, Nanobanana) to save time, standardize processes, and work as a team without repeating instructions."
 category: tools
-date: 2026-12-01
+date: 2026-01-12
 image: https://s3.eu-north-1.amazonaws.com/ia-operators/IA%20Operators%20Website/gems-de-gemini-como-crear-asistentes-con-herramientas-predeterminadas-canvas-deep-research-nanobanana.webp
 locale: en
 author: Luiz Brazão
