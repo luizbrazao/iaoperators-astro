@@ -1,0 +1,145 @@
+{
+    "meta": {
+        "title": "Technology Roadmap | Evolution plan for your stack",
+        "description": "From audit to plan: target architecture, prioritization with estimated ROI, and phased implementation plan. 4–6 weeks, from €10,000."
+    },
+    "hero": {
+        "badge": "Service · Technology roadmap",
+        "title": "From audit to evolution plan for your technology stack.",
+        "subtitle": "What to consolidate, automate, and build — and in what order.",
+        "intro": "You know something isn't working. Maybe you've already done a Digital X-Ray. What's missing is a plan the leadership team can sign off on: target architecture, priorities scored by impact vs. effort, ROI estimates, and a realistic implementation sequence.",
+        "ctaPrimary": "Request a proposal",
+        "ctaSecondary": "See deliverables"
+    },
+    "problem": {
+        "title": "When do you need a Roadmap?",
+        "subtitle": "The roadmap is the answer when knowing what you have isn't enough — you need to decide what to do with it.",
+        "items": [
+            "You have a digital transformation budget and don't know where to invest first",
+            "Every department asks for its own project and there's no shared criterion to prioritize",
+            "You want to bring in AI, but first you need to consolidate the technical foundation",
+            "Your IT team and your business team push for different things with the same urgency",
+            "The board asks for a 12–24 month plan with numbers, not a wish list"
+        ]
+    },
+    "deliverables": {
+        "title": "What you get in 4–6 weeks",
+        "subtitle": "Includes everything from the Digital X-Ray + target architecture and evolution plan.",
+        "items": [
+            {
+                "title": "Full diagnostic",
+                "body": "Inventory, license matrix, integration map, and risk analysis (Digital X-Ray scope included)."
+            },
+            {
+                "title": "Target architecture",
+                "body": "Future stack diagram: what stays, what gets replaced, what gets built. Data, integration, and application layers."
+            },
+            {
+                "title": "Prioritization with ROI",
+                "body": "Initiatives scored by operational impact, effort, risk, and estimated ROI. No theory: real numbers and auditable assumptions."
+            },
+            {
+                "title": "Phased plan",
+                "body": "Quarterly implementation sequence with dependencies, milestones, required team, and indicative budget."
+            },
+            {
+                "title": "Make / buy / consolidate decisions",
+                "body": "For each initiative: build custom, buy SaaS, or consolidate existing. Each call backed by explicit criteria."
+            },
+            {
+                "title": "Executive alignment session",
+                "body": "Final presentation with C-level and/or board. We defend the plan and answer questions live."
+            }
+        ]
+    },
+    "methodology": {
+        "badge": "Methodology",
+        "title": "How we build the Roadmap",
+        "subtitle": "Same team that audits, now focused on the future and the decision.",
+        "phases": [
+            {
+                "code": "Phase 1",
+                "title": "Diagnostic",
+                "body": "If there's no prior X-Ray, we do the full inventory. If there is, we validate and update what's critical."
+            },
+            {
+                "code": "Phase 2",
+                "title": "Business vision",
+                "body": "Workshops with C-level and area owners to capture 12–24 month goals, budget constraints, and appetite for change."
+            },
+            {
+                "code": "Phase 3",
+                "title": "Target architecture",
+                "body": "We design the stack the company should reach. Layered diagrams, justified make/buy/consolidate decisions."
+            },
+            {
+                "code": "Phase 4",
+                "title": "Prioritization",
+                "body": "Each initiative is scored on impact, effort, risk, and ROI. We cut what looks urgent but doesn't move the needle."
+            },
+            {
+                "code": "Phase 5",
+                "title": "Phased plan",
+                "body": "Quarterly sequencing with dependencies, team, and budget. Phased so each block delivers value on its own."
+            },
+            {
+                "code": "Phase 6",
+                "title": "Executive defense",
+                "body": "Presentation to committee or board with conclusions, risks, and plan. Informed decision — with the budget owner in the room."
+            }
+        ]
+    },
+    "audience": {
+        "title": "Who is the Technology Roadmap for?",
+        "subtitle": "Companies that need clarity before investing.",
+        "items": [
+            "Companies with an approved digital transformation budget and no clear plan",
+            "Post-M&A businesses that need to integrate two technology stacks",
+            "Companies that want to bring in AI but know the current foundation can't hold it",
+            "Companies with a new or absent CTO who need an auditable plan for the board",
+            "Mid-market (50–500 people) in hospitality, healthcare, services, retail, and manufacturing"
+        ]
+    },
+    "pricing": {
+        "badge": "Investment",
+        "title": "From €10,000 + VAT",
+        "subtitle": "Fixed-scope 4–6 week project. €10,000–€20,000 range depending on scope and number of areas.",
+        "items": [
+            "Full diagnostic + target architecture + prioritization + phased plan",
+            "Up to 12 functional areas and 50 systems in standard scope",
+            "2 executive sessions (kick-off and final defense) + workshops with area owners",
+            "Editable deliverables: diagrams, prioritization sheets, and plan in open formats"
+        ],
+        "cta": "Request a proposal"
+    },
+    "faq": {
+        "title": "Frequently asked questions",
+        "items": [
+            {
+                "q": "Do I need to do the Digital X-Ray first?",
+                "a": "It's not required. If there's no prior diagnostic, we include it in Phase 1. If we already did the X-Ray with you, we deduct that investment from the Roadmap."
+            },
+            {
+                "q": "Does the Roadmap include implementation?",
+                "a": "No. The Roadmap is the plan. Execution is a separate service (fixed-scope project or retainer). We deliver a plan that any partner — including us — can execute."
+            },
+            {
+                "q": "Do you work with the existing CTO or IT team?",
+                "a": "Yes, ideally. The Roadmap is built with your team, not against them. The CTO/Head of IT participates in key workshops and validates the target architecture."
+            },
+            {
+                "q": "What if the plan requires internal political decisions?",
+                "a": "We make them explicit. We flag the points where the roadmap requires executive decisions (switching vendors, reshaping responsibilities, invest vs. consolidate) and bring them to the committee."
+            },
+            {
+                "q": "How long does a Roadmap stay relevant?",
+                "a": "We design it for 12–24 months with a review at 6 months. If context changes (M&A, funding round, crisis), we revisit assumptions without redoing everything."
+            }
+        ]
+    },
+    "finalCta": {
+        "title": "Ready to have a plan the board can sign off on?",
+        "subtitle": "30-minute call to understand context and goals. If there's a fit, fixed-scope proposal in 48h.",
+        "cta": "Book a proposal call"
+    }
+}

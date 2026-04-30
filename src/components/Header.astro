@@ -15,6 +15,14 @@ const nav =
   {};
 
 const labels = {
+  services: nav?.services ?? "Services",
+  audit: nav?.audit ?? "Audit",
+  auditDescription: nav?.auditDescription ?? "",
+  roadmap: nav?.roadmap ?? "Roadmap",
+  roadmapDescription: nav?.roadmapDescription ?? "",
+  implementation: nav?.implementation ?? "Implementation",
+  implementationDescription: nav?.implementationDescription ?? "",
+  methodology: nav?.methodology ?? "Methodology",
   portfolio: nav?.portfolio ?? "Portfolio",
   community: nav?.community ?? "Community",
   youtube: nav?.youtube ?? "YouTube",
@@ -27,6 +35,10 @@ const withLocale = (path: string) => `/${locale}/${path}`.replace(/\/+$/, "/");
 // Links (mantém os do header antigo)
 const links = {
   home: `/${locale}/`,
+  audit: withLocale("auditoria-de-sistemas/"),
+  roadmap: withLocale("roadmap-tecnologico/"),
+  implementation: withLocale("implementacion/"),
+  methodology: withLocale("metodologia/"),
   portfolio: withLocale("portfolio/"),
   blog: withLocale("blog/"),
   contact: withLocale("contact/"),
@@ -35,6 +47,10 @@ const links = {
 };
 
 const mobileLinks = [
+  { key: "audit", href: links.audit, external: false },
+  { key: "roadmap", href: links.roadmap, external: false },
+  { key: "implementation", href: links.implementation, external: false },
+  { key: "methodology", href: links.methodology, external: false },
   { key: "portfolio", href: links.portfolio, external: false },
   { key: "community", href: links.community, external: true },
   { key: "youtube", href: links.youtube, external: true },
@@ -70,27 +86,104 @@ const mobileLinks = [
       </a>
 
       <!-- Desktop navigation -->
-      <nav class="hidden md:flex gap-8 text-sm font-medium text-gray-300 whitespace-nowrap">
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300 whitespace-nowrap">
+        <!-- Services dropdown -->
+        <div
+          id="servicesDropdown"
+          class="relative"
+          data-services-root
+        >
+          <button
+            type="button"
+            id="servicesBtn"
+            class="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="servicesMenu"
+          >
+            {labels.services}
+            <span class="text-xs transition-transform duration-200" data-services-arrow>▾</span>
+          </button>
+
+          <div
+            id="servicesMenu"
+            class="
+              hidden absolute left-1/2 -translate-x-1/2 top-full pt-3
+              z-50
+            "
+            role="menu"
+          >
+            <div
+              class="
+                w-[360px]
+                rounded-2xl
+                border border-white/10
+                bg-[#0a0a0a]/95
+                backdrop-blur-xl
+                shadow-[0_20px_60px_rgba(0,0,0,0.7)]
+                p-2
+              "
+            >
+              <a
+                href={links.audit}
+                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
+                role="menuitem"
+                data-close-services
+              >
+                <div class="flex items-center gap-2 text-white font-semibold">
+                  <span class="text-orange-400">01</span>
+                  {labels.audit}
+                </div>
+                {labels.auditDescription && (
+                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
+                    {labels.auditDescription}
+                  </p>
+                )}
+              </a>
+
+              <a
+                href={links.roadmap}
+                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
+                role="menuitem"
+                data-close-services
+              >
+                <div class="flex items-center gap-2 text-white font-semibold">
+                  <span class="text-orange-400">02</span>
+                  {labels.roadmap}
+                </div>
+                {labels.roadmapDescription && (
+                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
+                    {labels.roadmapDescription}
+                  </p>
+                )}
+              </a>
+
+              <a
+                href={links.implementation}
+                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
+                role="menuitem"
+                data-close-services
+              >
+                <div class="flex items-center gap-2 text-white font-semibold">
+                  <span class="text-orange-400">03</span>
+                  {labels.implementation}
+                </div>
+                {labels.implementationDescription && (
+                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
+                    {labels.implementationDescription}
+                  </p>
+                )}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <a href={links.methodology} class="hover:text-white transition-colors">
+          {labels.methodology}
+        </a>
+
         <a href={links.portfolio} class="hover:text-white transition-colors">
           {labels.portfolio}
-        </a>
-
-        <a
-          href={links.community}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="hover:text-white transition-colors"
-        >
-          {labels.community}
-        </a>
-
-        <a
-          href={links.youtube}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="hover:text-white transition-colors"
-        >
-          {labels.youtube}
         </a>
 
         <a href={links.blog} class="hover:text-white transition-colors">
@@ -100,9 +193,51 @@ const mobileLinks = [
 
       <!-- Actions -->
       <div class="flex items-center gap-2 ml-auto md:ml-0">
-        <!-- Language -->
-        <div class="hidden md:block">
-          <LanguageSwitcher linksOverride={languageLinks} />
+        <!-- Desktop social + lang icons -->
+        <div class="hidden md:flex items-center gap-1.5">
+          <a
+            href={links.youtube}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={labels.youtube}
+            title={labels.youtube}
+            class="
+              h-10 w-10
+              rounded-full
+              border border-white/10
+              bg-white/5 hover:bg-white/10
+              text-gray-300 hover:text-white
+              flex items-center justify-center
+              transition
+            "
+          >
+            <svg width="18" height="18" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+              <path d="M31.331 8.248A4.022 4.022 0 0 0 28.502 5.4C26.006 4.727 16 4.727 16 4.727s-10.007 0-12.502.673A4.02 4.02 0 0 0 .669 8.248C0 10.76 0 16 0 16s0 5.241.669 7.752a4.018 4.018 0 0 0 2.829 2.847c2.496.673 12.502.673 12.502.673s10.007 0 12.502-.673a4.02 4.02 0 0 0 2.829-2.847C32 21.24 32 16 32 16s0-5.24-.669-7.752Zm-18.604 12.51v-9.516L21.091 16l-8.364 4.758Z" />
+            </svg>
+          </a>
+
+          <a
+            href={links.community}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${labels.community} · Skool`}
+            title={`${labels.community} · Skool`}
+            class="
+              h-10 w-10
+              rounded-full
+              border border-white/10
+              bg-white/5 hover:bg-white/10
+              text-gray-300 hover:text-white
+              flex items-center justify-center
+              transition
+            "
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M17.5 6.5C16 5.5 14.2 5 12 5c-3 0-5 1-5 3s2 2.5 5 3 5 1.5 5 3.5-2 3.5-5 3.5c-2.2 0-4-.5-5.5-1.5"/>
+            </svg>
+          </a>
+
+          <LanguageSwitcher linksOverride={languageLinks} variant="dropdown" />
         </div>
 
         <!-- Desktop contact button (efeito conic spin) -->
@@ -253,5 +388,95 @@ const mobileLinks = [
   // Fecha ao clicar em qualquer link marcado
   document.querySelectorAll("[data-close-menu]").forEach((el) => {
     el.addEventListener("click", () => setOpen(false));
+  });
+
+  // Services dropdown (desktop)
+  const servicesRoot = document.querySelector("[data-services-root]");
+  const servicesBtn = document.getElementById("servicesBtn");
+  const servicesMenu = document.getElementById("servicesMenu");
+  const servicesArrow = document.querySelector("[data-services-arrow]");
+
+  function setServicesOpen(next) {
+    if (!servicesBtn || !servicesMenu) return;
+    servicesBtn.setAttribute("aria-expanded", String(next));
+    servicesMenu.classList.toggle("hidden", !next);
+    if (servicesArrow) {
+      servicesArrow.style.transform = next ? "rotate(180deg)" : "rotate(0deg)";
+    }
+  }
+
+  function isServicesOpen() {
+    return servicesBtn?.getAttribute("aria-expanded") === "true";
+  }
+
+  servicesBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    setServicesOpen(!isServicesOpen());
+  });
+
+  // Hover open on desktop (pointer: fine)
+  if (servicesRoot && window.matchMedia("(hover: hover)").matches) {
+    servicesRoot.addEventListener("mouseenter", () => setServicesOpen(true));
+    servicesRoot.addEventListener("mouseleave", () => setServicesOpen(false));
+  }
+
+  // Fecha com ESC
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setServicesOpen(false);
+  });
+
+  // Fecha ao clicar fora
+  document.addEventListener("mousedown", (e) => {
+    if (!isServicesOpen()) return;
+    const target = e.target;
+    if (!(target instanceof Node)) return;
+    if (servicesRoot?.contains(target)) return;
+    setServicesOpen(false);
+  });
+
+  // Fecha ao clicar em link interno do dropdown
+  document.querySelectorAll("[data-close-services]").forEach((el) => {
+    el.addEventListener("click", () => setServicesOpen(false));
+  });
+
+  // Language dropdown (desktop)
+  const langRoot = document.querySelector("[data-lang-root]");
+  const langBtn = document.getElementById("langBtn");
+  const langMenu = document.getElementById("langMenu");
+
+  function setLangOpen(next) {
+    if (!langBtn || !langMenu) return;
+    langBtn.setAttribute("aria-expanded", String(next));
+    langMenu.classList.toggle("hidden", !next);
+  }
+
+  function isLangOpen() {
+    return langBtn?.getAttribute("aria-expanded") === "true";
+  }
+
+  langBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    setLangOpen(!isLangOpen());
+  });
+
+  if (langRoot && window.matchMedia("(hover: hover)").matches) {
+    langRoot.addEventListener("mouseenter", () => setLangOpen(true));
+    langRoot.addEventListener("mouseleave", () => setLangOpen(false));
+  }
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setLangOpen(false);
+  });
+
+  document.addEventListener("mousedown", (e) => {
+    if (!isLangOpen()) return;
+    const target = e.target;
+    if (!(target instanceof Node)) return;
+    if (langRoot?.contains(target)) return;
+    setLangOpen(false);
+  });
+
+  document.querySelectorAll("[data-close-lang]").forEach((el) => {
+    el.addEventListener("click", () => setLangOpen(false));
   });
 </script>

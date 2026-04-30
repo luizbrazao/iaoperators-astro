@@ -1,0 +1,145 @@
+{
+    "meta": {
+        "title": "Digital X-Ray | Systems audit in 3 weeks",
+        "description": "Master inventory, integration map, risk analysis, and prioritized recommendations for your technology stack. Fixed-scope 3-week project, from €4,500."
+    },
+    "hero": {
+        "badge": "Service · Systems audit",
+        "title": "Digital X-Ray: the full inventory of your technology ecosystem.",
+        "subtitle": "Before optimizing, automating, or transforming, you need to know exactly what you have. Most companies don't.",
+        "intro": "Apps registered that no one uses, integrations someone keeps alive by hand, licenses that auto-renew, processes that depend on a single person who could leave tomorrow. The Digital X-Ray puts a name, cost, risk, and owner on every element of your technology stack in 3 weeks.",
+        "ctaPrimary": "Request a proposal",
+        "ctaSecondary": "See the methodology"
+    },
+    "problem": {
+        "title": "Does any of this sound familiar?",
+        "subtitle": "If you said yes to any of them, you have an operational architecture problem. Not a technology problem.",
+        "items": [
+            "Licenses no one knows are still being used, but keep getting paid every month",
+            "Cross-system integrations that break weekly and someone patches by hand",
+            "Critical processes that depend on a single person — and nobody documented how",
+            "You want to roll out AI, but don't know what foundation to build it on without breaking things",
+            "Your IT department and your business team describe the same system in different ways"
+        ]
+    },
+    "deliverables": {
+        "title": "What you get in 3 weeks",
+        "subtitle": "Actionable documentation, not slide decks.",
+        "items": [
+            {
+                "title": "Master inventory",
+                "body": "Full list of applications, SaaS, automations, and Shadow IT — with owner, criticality, and real usage."
+            },
+            {
+                "title": "License matrix",
+                "body": "Real per-user costs, renewal dates, redundancies, and immediate savings opportunities."
+            },
+            {
+                "title": "Integration map",
+                "body": "Dependency diagram between systems, critical data flows, and manual points of failure."
+            },
+            {
+                "title": "Risk analysis",
+                "body": "Criticality per system, key-person dependencies, security and compliance exposures."
+            },
+            {
+                "title": "Executive report",
+                "body": "Recommendations prioritized by impact vs. effort — ready to drive decisions this week."
+            }
+        ]
+    },
+    "methodology": {
+        "badge": "Methodology",
+        "title": "How we run the 3 weeks",
+        "subtitle": "The same process we apply in hotel chains, clinics, and professional services firms.",
+        "phases": [
+            {
+                "code": "Phase 0",
+                "title": "Kick-off",
+                "body": "We align scope, stakeholders by area, and accesses. We set up the steering committee and the check-in cadence."
+            },
+            {
+                "code": "Phase 1",
+                "title": "Inventory",
+                "body": "Structured interviews with each area lead. We cross-check what's declared against what's real (logs, billing, access records)."
+            },
+            {
+                "code": "Phase 2",
+                "title": "Licenses and costs",
+                "body": "We collect contracts, SaaS billing, and real usage per user. We surface redundancies and orphan licenses."
+            },
+            {
+                "code": "Phase 3",
+                "title": "Integrations",
+                "body": "We map how data flows between systems, what's done manually, and which undocumented automations exist."
+            },
+            {
+                "code": "Phase 4",
+                "title": "Risk analysis",
+                "body": "We score operational criticality, key-person dependencies, security risks, and technical debt."
+            },
+            {
+                "code": "Phase 5",
+                "title": "Recommendations",
+                "body": "Executive session with conclusions, priorities, and an evolution plan. You decide what to solve first — with data."
+            }
+        ]
+    },
+    "audience": {
+        "title": "Who is the Digital X-Ray for?",
+        "subtitle": "Companies with more than 15 active applications that have grown without a planned technology architecture.",
+        "items": [
+            "Hotel chains with PMS, booking engine, channel manager, and scattered CRMs",
+            "Clinics and medical centers with HIS, scheduling, billing, and compliance",
+            "Legal, accounting, and consulting firms running on manual processes",
+            "Omnichannel retail with decoupled ERP, e-commerce, marketplaces, and logistics",
+            "Companies of 50–500 people preparing an AI rollout, digital transformation, or M&A"
+        ]
+    },
+    "pricing": {
+        "badge": "Investment",
+        "title": "From €4,500 + VAT",
+        "subtitle": "Fixed-scope 3-week project. No hidden fees, no retainer.",
+        "items": [
+            "Kick-off, interviews, document collection, and field work all included",
+            "Up to 8 functional areas and 30 systems in standard scope",
+            "Final executive session with C-level and/or transformation steering committee",
+            "Editable deliverables (not just PDFs)"
+        ],
+        "cta": "Request a proposal"
+    },
+    "faq": {
+        "title": "Frequently asked questions",
+        "items": [
+            {
+                "q": "Do we need to prepare anything before we start?",
+                "a": "Just access to information that already exists (SaaS contracts, billing, vendor list). The rest we do through interviews. No new documentation required from your side."
+            },
+            {
+                "q": "Do you work under NDA?",
+                "a": "Yes, by default. We sign an NDA before the first discovery session."
+            },
+            {
+                "q": "Will you touch the systems during the audit?",
+                "a": "No. Read-only. We map what exists without modifying anything."
+            },
+            {
+                "q": "Are we forced to contract implementation after the X-Ray?",
+                "a": "No. The X-Ray is a fixed-scope project. If you decide to execute with us, we present a Technology Roadmap or an Implementation project. If you'd rather execute internally or with another partner, the deliverables are yours."
+            },
+            {
+                "q": "What if we have more than 30 systems or 8 areas?",
+                "a": "We extend scope with a fixed additional budget per block. We define this in the initial proposal."
+            },
+            {
+                "q": "Do you have prior cases?",
+                "a": "Yes. We've worked with hotel chains, clinics, and professional services firms. We share anonymized cases under NDA on the proposal call."
+            }
+        ]
+    },
+    "finalCta": {
+        "title": "Want to actually know what your company has?",
+        "subtitle": "30-minute call to understand your context. If there's a fit, we send a fixed-scope proposal within 48h.",
+        "cta": "Book a discovery call"
+    }
+}

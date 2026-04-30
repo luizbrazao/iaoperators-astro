@@ -1,64 +1,64 @@
 {
     "meta": {
-  "title": "IA Operators | Automação com Inteligência Artificial",
-  "description": "Automatizamos processos empresariais com IA: agentes inteligentes, fluxos no-code e integrações para escalar vendas, suporte e operações."
-},
+        "title": "IA Operators | Auditoria e Implementação Tecnológica",
+        "description": "Mapeamos, ordenamos e evoluímos o parque tecnológico de empresas de médio porte: diagnóstico, roadmap e implementação com IA, integrações API e desenvolvimento sob medida."
+    },
 
     "hero": {
-        "titleHighlight": "Especialistas em Inteligência Artificial",
-        "titleHighlightMobile": "Especialistas em IA",
-        "titleRest": "para automatizar seu negócio ✨",
-        "subtitle": "Fazemos sua empresa operar no piloto automático: processos automatizados, operações otimizadas e resultados surpreendentes, tudo com soluções de IA sob medida.",
-        "cta": "Falar com Luiz ↗",
-        "tech": "Aplicamos a tecnologia mais recente"
+        "titleHighlight": "Mapeamos, ordenamos e evoluímos",
+        "titleHighlightMobile": "Mais tecnologia do que você controla",
+        "titleRest": "o parque tecnológico da sua empresa.",
+        "subtitle": "Diagnosticamos seu ecossistema digital, priorizamos o que move o ponteiro e construímos as soluções — automações com IA, integrações API e sistemas sob medida.",
+        "cta": "Falar com um especialista ↗",
+        "tech": "Trabalhamos com a tecnologia que você já usa"
     },
     "why": {
-        "badge": "Para você",
-        "title": "IA para todos: soluções\nque se adaptam ao seu negócio",
-        "subtitle": "Descubra como a IA pode transformar seus processos e gerar resultados que fazem você sorrir todos os dias."
+        "badge": "O problema",
+        "title": "Sua empresa tem mais tecnologia\ndo que realmente controla",
+        "subtitle": "Licenças que ninguém usa, integrações sustentadas no braço, processos que dependem de uma única pessoa. Resolvemos com diagnóstico rigoroso e implementação real."
     },
     "industries": [
         {
-            "title": "Lojas online (e-commerce)",
-            "description": "Atendimento 24/7, recomendações personalizadas e gestão de estoque sem falhas. A IA faz sua loja vender mais enquanto você descansa."
+            "title": "Hotelaria",
+            "description": "PMS, motores de reserva, channel managers, CRMs e SaaS dispersos. Mapeamos integrações críticas e eliminamos pontos de falha manuais."
         },
         {
-            "title": "Restaurantes e bares",
-            "description": "Pedidos automáticos, estoque em tempo real e cardápios ajustados ao clima. Com IA, seu restaurante se torna uma operação organizada e deliciosa."
+            "title": "Saúde e clínicas",
+            "description": "HIS, agendas, faturamento e compliance. Auditamos riscos operacionais e conectamos sistemas sem quebrar o que já funciona."
         },
         {
-            "title": "Escritórios de advocacia",
-            "description": "Automatize prazos, análise de documentos e até a pesquisa jurídica. Com IA, seu escritório ganha agilidade e precisão."
+            "title": "Serviços profissionais",
+            "description": "Escritórios jurídicos, contábeis e consultorias. Documentamos processos críticos e reduzimos a dependência de pessoas-chave."
         },
         {
-            "title": "Escolas e cursos online",
-            "description": "Correção automática, trilhas de estudo personalizadas e gestão de matrículas sem dor de cabeça. A IA torna a educação mais inteligente e conectada."
-        },
-        {
-            "title": "Agências de marketing",
-            "description": "Relatórios automáticos, análise de campanhas em tempo real e criação de conteúdo com IA. Deixe o trabalho pesado com a IA e foque na criatividade."
+            "title": "Varejo omnicanal",
+            "description": "ERPs, e-commerce, marketplaces e logística. Identificamos custos ocultos e desenhamos arquiteturas de dados limpas."
         },
         {
             "title": "Imobiliárias",
-            "description": "Gestão de leads, agendamento de visitas e análise de mercado em tempo real. A IA faz sua imobiliária vender mais e trabalhar menos."
+            "description": "CRMs, portais, contratos e assinatura digital. Mapeamos o fluxo do lead ao fechamento e automatizamos o repetível."
+        },
+        {
+            "title": "Manufatura mid-market",
+            "description": "ERPs, MES, sensores e relatórios operacionais. Auditamos integrações e construímos dashboards e automações sob medida."
         }
     ],
     "services": {
         "badge": "Como trabalhamos",
-        "title": "O caminho para a\nautomatização inteligente",
-        "subtitle": "3 etapas simples para transformar o caos em eficiência (e paz de espírito).",
+        "title": "Diagnóstico, prioridade\ne execução — sem hand-offs",
+        "subtitle": "O mesmo time que mapeia o problema constrói a solução. Sem relatórios que ninguém implementa.",
         "steps": [
             {
-                "title": "1. Planejamento",
-                "body": "Antes de agir, a gente pensa. Analisamos suas necessidades, definimos objetivos claros e desenhamos uma estratégia sob medida. Assim, cada passo fica alinhado com o que realmente importa."
+                "title": "1. Diagnosticamos",
+                "body": "Inventário completo de aplicações, licenças, integrações, dependências e Shadow IT. Identificamos custos ocultos, riscos operacionais e pontos de falha em 3 semanas."
             },
             {
-                "title": "2. Implementação",
-                "body": "Hora de executar. Com tecnologia de ponta e integrações bem construídas, colocamos o plano em produção. Automatizamos processos, conectamos sistemas e garantimos que tudo funcione sem fricção."
+                "title": "2. Priorizamos",
+                "body": "Roadmap com impacto real: o que consolidar, o que automatizar, o que construir e em que ordem. Estimativas de ROI e plano faseado, sem teoria nem vendor lock-in."
             },
             {
-                "title": "3. Otimização",
-                "body": "O trabalho não termina no deploy. Monitoramos, ajustamos e melhoramos continuamente. Com IA, seu negócio fica sempre um passo à frente — pronto para crescer e superar expectativas."
+                "title": "3. Construímos",
+                "body": "Executamos o que o roadmap prescreve: automações com IA (n8n, LangChain, multi-agent), integrações API-first, dashboards operacionais e sistemas sob medida."
             }
         ]
     },
@@ -66,20 +66,20 @@
         "title": "Olá, eu sou Luiz Brazão 👋",
         "paragraphs": [
             "Passei anos liderando times em empresas grandes, pequenas e médias, com marcas conhecidas e outras nem tanto.",
-            "E quer saber? Sempre batia na mesma parede:\nnão era falta de gente brilhante. Era tudo sendo feito na unha, como se ainda estivéssemos em 2002.",
-            "Processos improvisados, informação espalhada em mil lugares, decisões que se repetiam toda semana como um eterno déjà vu.\nE sim, por um tempo, só organizar um pouco já resolvia.\nHoje… não resolve mais.",
-            "Porque o mercado tá correndo.\nE se você não automatiza, você trava. Ponto.\nO que antes era o “processo estrela”, hoje virou o novo gargalo.",
-            "Foi por isso que nasceu a IA Operators: pra ajudar empresas (como a sua, que tem mil coisas rodando e zero tempo a perder) a transformar processos em sistemas inteligentes.",
+            "E quer saber? Sempre batia na mesma parede:\nnão era falta de gente brilhante. Era falta de clareza sobre o que a empresa tinha de fato em cima da mesa.",
+            "Aplicações que ninguém sabia se usava, integrações que alguém remendava no braço toda semana, decisões refeitas como um eterno déjà vu.\nPor um tempo, só organizar um pouco já resolvia.\nHoje não resolve mais.",
+            "Porque o mercado tá correndo.\nE se você tenta colocar IA em cima de um ecossistema que ninguém controla, a única coisa que escala é o caos.",
+            "Foi por isso que nasceu a IA Operators: para diagnosticar o parque tecnológico de empresas de médio porte, priorizar o que realmente move o ponteiro e construir as soluções — sem hand-offs entre quem pensa e quem executa.",
             "Com IA. Mas sem fumaça.",
-            "Porque inteligência artificial não é mágica, é estratégia.\nE quando bem usada, não só economiza tempo. Gera resultado. Daqueles que aparecem no Excel… e no alívio mental do seu time.",
-            "Bora colocar isso pra rodar?"
+            "Porque IA não é mágica, é estratégia.\nE antes de automatizar, alguém precisa saber exatamente o que tem na mesa.",
+            "Bora começar por aí?"
         ],
         "trustedBy": "Empresas que confiaram em nosso trabalho"
     },
     "blogSection": {
         "badge": "Blog",
         "title": "Últimas publicações",
-        "subtitle": "Bem-vindo ao cantinho tech onde a IA encontra a vida real.",
+        "subtitle": "Auditoria, automação e arquitetura tecnológica para empresas que já não cabem nas próprias ferramentas.",
         "posts": [
             {
                 "category": "Ferramentas",
@@ -102,44 +102,36 @@
         "title": "Perguntas frequentes",
         "items": [
             {
-                "q": "O que é a IA Operators?",
-                "a": "A IA Operators é uma agência especializada em automação de processos com inteligência artificial. Ajudamos empresas a otimizar operações, reduzir custos e aumentar eficiência com soluções sob medida."
+                "q": "O que a IA Operators faz exatamente?",
+                "a": "Auditamos o parque tecnológico de empresas de médio porte (50–500 pessoas), priorizamos o que resolver primeiro e construímos as soluções — automações com IA, integrações API e sistemas sob medida. Diagnosticamos e executamos, sem hand-offs."
             },
             {
-                "q": "Que tipos de negócios se beneficiam de automação com IA?",
-                "a": "Quase todos. De clínicas e escritórios a e-commerce e agências. Criamos soluções adaptadas ao seu setor e ao seu jeito real de operar."
+                "q": "Qual a diferença entre vocês e uma consultoria ou agência de IA?",
+                "a": "Consultorias entregam apresentações e somem; agências de IA constroem o que você pedir sem diagnóstico prévio. Nós somos o mesmo time que mapeia o problema real e depois constrói."
             },
             {
-                "q": "Como funciona o processo com a IA Operators?",
-                "a": "Trabalhamos em 3 etapas: (1) Planejamento: entendemos o problema e definimos objetivos. (2) Implementação: construímos e integramos a automação. (3) Otimização: medimos, ajustamos e melhoramos continuamente."
+                "q": "O que é a Radiografia Digital?",
+                "a": "É nosso serviço de entrada: em 3 semanas mapeamos todas as aplicações, licenças, integrações, dependências e Shadow IT da sua empresa. Entregamos inventário mestre, matriz de licenças, mapa de integrações, análise de risco e um relatório executivo com recomendações priorizadas."
             },
             {
-                "q": "Que tipo de tarefas dá para automatizar?",
-                "a": "Quase qualquer tarefa repetitiva ou baseada em regras/dados: atendimento ao cliente (chatbots), agendamentos, relatórios, follow-up de leads, integrações entre sistemas, geração de documentos e mais."
+                "q": "Para que tipo de empresa isso é pensado?",
+                "a": "Empresas de 50–500 pessoas que cresceram acumulando ferramentas sem arquitetura planejada. Setores: hotelaria, saúde, serviços profissionais, varejo, imobiliário, manufatura mid-market."
             },
             {
-                "q": "É difícil implementar IA no meu negócio?",
-                "a": "Não. Nós cuidamos do desenho, da integração e da entrada em produção. Seu time recebe orientação para operar o sistema com segurança."
+                "q": "Quanto custa uma Radiografia Digital?",
+                "a": "A partir de €4.500 + impostos, projeto fechado de 3 semanas. Inclui inventário, mapa de integrações, análise de risco e recomendações priorizadas."
             },
             {
-                "q": "Em quanto tempo aparece o retorno?",
-                "a": "Depende do escopo, mas muitos clientes veem ganhos em semanas: menos trabalho manual, respostas mais rápidas, menos erros e mais conversão."
+                "q": "E se depois da auditoria a gente quiser executar?",
+                "a": "É o caminho mais comum. A auditoria evolui para um Roadmap Tecnológico (4–6 semanas) e/ou Implementação: automações, integrações e sistemas sob medida. Trabalhamos por projeto fechado ou retainer mensal."
             },
             {
-                "q": "É seguro usar IA?",
-                "a": "Sim, se for bem feito. Projetamos soluções com boas práticas: mínimo acesso, segredos no servidor, controle de permissões e respeito à privacidade."
+                "q": "Vocês mexem na infraestrutura que já temos?",
+                "a": "Não quebramos o que funciona. Documentamos primeiro, integramos depois. As recomendações sempre são priorizadas por impacto vs. risco."
             },
             {
-                "q": "O que diferencia a IA Operators de outras agências?",
-                "a": "Personalização, obsessão por qualidade e automações focadas em resultado real. A gente não vende “hype”: integra sistemas e mede impacto."
-            },
-            {
-                "q": "Como eu começo?",
-                "a": "Simples: fale com a gente. Fazemos uma avaliação inicial, identificamos oportunidades e propomos um plano claro de implementação."
-            },
-            {
-                "q": "E se eu precisar de melhorias depois?",
-                "a": "Oferecemos suporte contínuo e otimização. IA e processos mudam; seu sistema precisa evoluir junto com o seu negócio."
+                "q": "Como começamos?",
+                "a": "Uma call de 30 minutos para entender o contexto. Se houver fit, enviamos uma proposta fechada de Radiografia Digital."
             }
         ]
     }

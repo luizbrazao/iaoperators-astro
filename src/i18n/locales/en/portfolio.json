@@ -1,9 +1,9 @@
 {
     "header": {
-        "badge": "Our cases",
-        "title": "Real Solutions,",
-        "highlight": "Measurable Results",
-        "subtitle": "We don’t just write code. We build AI ecosystems that solve complex integration, security, and scalability problems."
+        "badge": "Cases",
+        "title": "Real diagnostics,",
+        "highlight": "measurable solutions",
+        "subtitle": "Audits, automations, and integrations shipped to production. Each case shows how the same team diagnoses the problem and builds the solution."
     },
     "actions": {
         "details": "View details",
@@ -15,12 +15,12 @@
         "startProject": "Start a project"
     },
     "breadcrumb": {
-        "portfolio": "Portfolio"
+        "portfolio": "Cases"
     },
     "notFound": {
-        "title": "Project not found",
+        "title": "Case not found",
         "subtitle": "Check the slug and make sure it exists in",
-        "back": "Back to portfolio"
+        "back": "Back to Cases"
     },
     "project": {
         "cta": {

@@ -1,84 +1,84 @@
 {
     "meta": {
-  "title": "IA Operators | AI Agents & Automation for Business",
-  "description": "We build AI agents and no-code automations that integrate with your systems to scale sales, support, and operations."
-},
+        "title": "IA Operators | Technology Audit & Implementation",
+        "description": "We map, organize, and evolve the technology stack of mid-sized companies: diagnostics, roadmap, and implementation with AI, API integrations, and custom development."
+    },
     "hero": {
-        "titleHighlight": "Experts in Artificial Intelligence",
-        "titleHighlightMobile": "Experts in AI",
-        "titleRest": "to Automate Your Business.✨",
-        "subtitle": "We put your company on autopilot: automated processes, optimized operations, and impressive results powered by custom AI solutions.",
-        "cta": "Talk to Luiz ↗",
-        "tech": "We apply cutting-edge technology"
+        "titleHighlight": "We map, organize and evolve",
+        "titleHighlightMobile": "More tech than you control",
+        "titleRest": "your company's technology stack.",
+        "subtitle": "We audit your digital ecosystem, prioritize what moves the needle, and build the solutions — AI automations, API integrations, and custom systems.",
+        "cta": "Talk to a specialist ↗",
+        "tech": "We work with the stack you already use"
     },
     "why": {
-        "badge": "For you",
-        "title": "AI for everyone: solutions\nthat adapt to your business",
-        "subtitle": "Discover how AI can transform your processes and deliver results that make you smile every day."
+        "badge": "The problem",
+        "title": "Your company has more technology\nthan it actually controls",
+        "subtitle": "Licenses no one uses, integrations held together by hand, processes that depend on a single person. We solve it with rigorous diagnostics and real implementation."
     },
     "industries": [
         {
-            "title": "Online stores (E-commerce)",
-            "description": "24/7 support, personalized recommendations, and fail-safe inventory management. AI helps your store sell more while you sleep."
+            "title": "Hospitality",
+            "description": "PMS, booking engines, channel managers, CRMs, and scattered SaaS. We map critical integrations and remove manual points of failure."
         },
         {
-            "title": "Restaurants and bars",
-            "description": "Automated orders, real-time inventory, and menus that adapt to the weather. With AI, your restaurant becomes organized and deliciously efficient."
+            "title": "Healthcare and clinics",
+            "description": "HIS, scheduling, billing, and compliance. We audit operational risks and connect systems without breaking what already works."
         },
         {
-            "title": "Law firms",
-            "description": "Automate deadlines, document analysis, and even legal research. With AI, your firm gains speed and precision."
+            "title": "Professional services",
+            "description": "Legal, accounting, and consulting firms. We document critical processes and reduce dependence on key individuals."
         },
         {
-            "title": "Schools and online courses",
-            "description": "Auto-grading, personalized learning paths, and effortless enrollment management. AI makes education smarter and more connected."
+            "title": "Omnichannel retail",
+            "description": "ERPs, e-commerce, marketplaces, and logistics. We surface hidden costs and design clean data architectures."
         },
         {
-            "title": "Marketing agencies",
-            "description": "Automated reports, real-time campaign analysis, and AI-powered content creation. Let AI do the heavy lifting so you can focus on creativity."
+            "title": "Real estate",
+            "description": "CRMs, portals, contracts, and digital signatures. We map the lead-to-close flow and automate what's repeatable."
         },
         {
-            "title": "Real estate agencies",
-            "description": "Lead management, tour scheduling, and real-time market insights. AI helps your agency sell more while working less."
+            "title": "Mid-market manufacturing",
+            "description": "ERPs, MES, sensors, and operational reporting. We audit integrations and build custom dashboards and automations."
         }
     ],
     "services": {
         "badge": "How we work",
-        "title": "The path to\nintelligent automation",
-        "subtitle": "3 simple steps to turn chaos into efficiency (and peace of mind).",
+        "title": "Diagnose, prioritize,\nbuild — no hand-offs",
+        "subtitle": "Same team that maps the problem builds the solution. No reports nobody implements.",
         "steps": [
             {
-                "title": "1. Planning",
-                "body": "Before we build, we think. We analyze your needs, define clear goals, and design a tailored strategy. Every step is aligned with what truly matters."
+                "title": "1. Diagnose",
+                "body": "Full inventory of applications, licenses, integrations, dependencies, and Shadow IT. We surface hidden costs, operational risks, and failure points in 3 weeks."
             },
             {
-                "title": "2. Implementation",
-                "body": "Time to execute. With solid engineering and clean integrations, we ship the plan into production. We automate processes, connect systems, and make sure everything runs smoothly."
+                "title": "2. Prioritize",
+                "body": "Real-impact roadmap: what to consolidate, automate, and build — and in what order. ROI estimates and a phased plan, no theory, no vendor lock-in."
             },
             {
-                "title": "3. Optimization",
-                "body": "The work doesn’t end at deploy. We monitor, iterate, and continuously improve. With AI, your business stays one step ahead — ready to scale and outperform."
+                "title": "3. Build",
+                "body": "We execute what the roadmap prescribes: AI automations (n8n, LangChain, multi-agent), API-first integrations, operational dashboards, and custom systems."
             }
         ]
     },
     "testimonial": {
         "title": "Hi, I'm Luiz Brazão 👋",
         "paragraphs": [
-            "I spent years leading teams in big, small, and medium-sized companies — some with names you’d recognize, and others you wouldn’t.",
-            "And you know what? I kept running into the same wall:\nIt wasn’t a lack of brilliant people. It was that everything was done manually, like we were still stuck in 2002.",
-            "Messy processes, scattered info, decisions being made (and remade) every week like déjà vu on loop.\nFor a while, just tidying things up was enough.\nNot anymore.",
-            "Because the market is moving fast.\nAnd if you don’t automate, you stall. Period.\nWhat used to be your 'star process' is now the bottleneck.",
-            "That’s why I created IA Operators: to help companies (like yours, the one juggling a thousand things with zero time to waste) turn manual processes into intelligent systems.",
+            "I spent years leading teams in big, small, and medium-sized companies — some with names you'd recognize, and others you wouldn't.",
+            "And you know what? I kept hitting the same wall:\nit wasn't a lack of brilliant people. It was a lack of clarity about what the company actually had on its plate.",
+            "Apps no one knew were still in use, integrations someone patched by hand every week, decisions getting remade like a weekly déjà vu.\nFor a while, just tidying things up was enough.\nNot anymore.",
+            "Because the market moves fast.\nAnd if you try to layer AI on top of a stack nobody controls, the only thing that scales is the chaos.",
+            "That's why IA Operators exists: to diagnose the technology stack of mid-sized companies, prioritize what really moves the needle, and build the solutions — with no hand-offs between who thinks and who executes.",
             "With AI. But no smoke and mirrors.",
-            "Because AI isn’t magic — it’s strategy.\nAnd when used right, it doesn’t just save time. It delivers results. The kind you can see in your spreadsheets… and in your team’s collective sigh of relief.",
-            "Shall we get to work?"
+            "Because AI isn't magic — it's strategy.\nAnd before you automate, someone needs to know exactly what's on the table.",
+            "Shall we start there?"
         ],
         "trustedBy": "Companies that trusted our work"
     },
     "blogSection": {
         "badge": "Blog",
         "title": "Latest posts",
-        "subtitle": "Welcome to the tech corner where AI meets real life.",
+        "subtitle": "Audit, automation, and technology architecture for companies that have outgrown their own tools.",
         "posts": [
             {
                 "category": "Tools",
@@ -101,44 +101,36 @@
         "title": "Frequently asked questions",
         "items": [
             {
-                "q": "What is IA Operators?",
-                "a": "IA Operators is an agency specialized in AI-driven process automation. We help businesses optimize operations, reduce costs, and increase efficiency with tailored solutions."
+                "q": "What does IA Operators actually do?",
+                "a": "We audit the technology stack of mid-sized companies (50–500 people), prioritize what to solve first, and build the solutions — AI automations, API integrations, and custom systems. We diagnose and execute. No hand-offs."
             },
             {
-                "q": "What kinds of businesses benefit from AI automation?",
-                "a": "Almost all of them. From clinics and professional services to e-commerce and agencies. We design solutions adapted to your industry and real workflows."
+                "q": "How are you different from a consultancy or an AI agency?",
+                "a": "Consultancies deliver slide decks and disappear; AI agencies build whatever you ask without prior diagnostics. We're the same team that maps the real problem and then builds it."
             },
             {
-                "q": "How does the IA Operators process work?",
-                "a": "We work in 3 stages: (1) Planning: understand the problem and define goals. (2) Implementation: build and integrate the automation. (3) Optimization: measure, iterate, and continuously improve."
+                "q": "What is the Digital X-Ray?",
+                "a": "Our entry-level service: in 3 weeks we map every application, license, integration, dependency, and Shadow IT in your company. Deliverables: master inventory, license matrix, integration map, risk analysis, and an executive report with prioritized recommendations."
             },
             {
-                "q": "What tasks can be automated?",
-                "a": "Almost any repetitive or rules/data-driven task: customer support (chatbots), scheduling, reporting, lead follow-ups, system integrations, document generation, and more."
+                "q": "Who is this for?",
+                "a": "Companies of 50–500 people that have grown by accumulating tools without a planned architecture. Sectors: hospitality, healthcare, professional services, retail, real estate, mid-market manufacturing."
             },
             {
-                "q": "Is it hard to implement AI in my business?",
-                "a": "No. We handle the design, integration, and go-live. Your team gets guidance to operate the system confidently."
+                "q": "How much does the Digital X-Ray cost?",
+                "a": "From €4,500 + VAT, fixed-scope 3-week project. Includes inventory, integration map, risk analysis, and prioritized recommendations."
             },
             {
-                "q": "How fast can I see ROI?",
-                "a": "It depends on scope, but many clients see improvements within weeks: less manual work, faster responses, fewer errors, and better conversion."
+                "q": "What if we want to execute after the audit?",
+                "a": "It's the usual path. The audit leads into a Technology Roadmap (4–6 weeks) and/or Implementation: automations, integrations, and custom systems. Fixed-scope projects or monthly retainer."
             },
             {
-                "q": "Is AI safe to use?",
-                "a": "Yes—when done properly. We follow good practices: least-privilege access, secrets stored server-side, permission controls, and privacy by design."
+                "q": "Will you touch the infrastructure we already have?",
+                "a": "We don't break what works. We document first, integrate after. Recommendations are always prioritized by impact vs. risk."
             },
             {
-                "q": "What makes IA Operators different from other agencies?",
-                "a": "A tailored approach, an obsession with quality, and automations focused on real outcomes. No AI hype: we integrate systems and measure impact."
-            },
-            {
-                "q": "How do I get started?",
-                "a": "Easy: contact us. We do an initial assessment, identify opportunities, and propose a clear implementation plan."
-            },
-            {
-                "q": "What if I need improvements after launch?",
-                "a": "We offer ongoing support and optimization. AI and processes change—your system should evolve with your business."
+                "q": "How do we get started?",
+                "a": "A 30-minute call to understand the context. If there's a fit, we send a fixed-scope Digital X-Ray proposal."
             }
         ]
     }

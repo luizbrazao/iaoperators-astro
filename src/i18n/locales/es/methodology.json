@@ -1,0 +1,167 @@
+{
+    "meta": {
+        "title": "Metodología | Diagnosticar, priorizar y construir",
+        "description": "El mismo equipo mapea el problema, prioriza qué resolver y construye la solución. Sin hand-offs, sin informes que nadie implementa."
+    },
+    "hero": {
+        "badge": "Metodología",
+        "title": "Diagnosticar, priorizar y construir — sin hand-offs.",
+        "subtitle": "El mismo equipo recorre todo el ciclo. Mapea el ecosistema, encuentra los problemas reales, decide qué resolver primero y lo construye.",
+        "intro": "La mayoría del mercado se divide en consultores que entregan presentaciones y desaparecen, o en desarrolladores que ejecutan sin diagnóstico. Nosotros ocupamos el espacio vacío entre los dos: claridad rigurosa al diagnosticar y manos en el código al construir.",
+        "cta": "Hablar con un especialista"
+    },
+    "principles": {
+        "badge": "Cómo trabajamos",
+        "title": "5 principios no negociables",
+        "subtitle": "Las reglas que sostienen cada proyecto, en cualquier producto.",
+        "items": [
+            {
+                "title": "Diagnóstico antes de ejecución",
+                "body": "No automatizamos lo que no entendemos. Antes de construir, mapeamos el contexto, las integraciones y las dependencias críticas."
+            },
+            {
+                "title": "Sin hand-offs",
+                "body": "El equipo que diagnostica es el mismo que construye. La información no se pierde entre presentaciones y briefings."
+            },
+            {
+                "title": "Decisiones con criterio explícito",
+                "body": "Cada recomendación make / buy / consolidate viene justificada por impacto, esfuerzo, riesgo y ROI estimado. Nada de teoría."
+            },
+            {
+                "title": "Sin vendor lock-in",
+                "body": "Recomendamos lo que mejor encaja, no lo que cobramos por revender. Si tu CRM funciona, integramos. Si está roto, lo decimos antes."
+            },
+            {
+                "title": "Entregables editables",
+                "body": "Los informes, diagramas y planes son tuyos en formato editable. Si decides ejecutar internamente o con otro partner, no quedas atado a nosotros."
+            }
+        ]
+    },
+    "pillars": {
+        "badge": "Los 3 productos",
+        "title": "Tres etapas conectadas, tres servicios autónomos",
+        "subtitle": "Puedes empezar por cualquiera. La mayoría empieza por la Radiografía y avanza al Roadmap o directamente a la Implementación.",
+        "items": [
+            {
+                "code": "01",
+                "title": "Radiografía Digital",
+                "summary": "Diagnosticamos. Inventario completo, mapa de integraciones, análisis de riesgo y recomendaciones priorizadas en 3 semanas.",
+                "duration": "3 semanas",
+                "price": "Desde 4.500 €",
+                "href": "/auditoria-de-sistemas/",
+                "linkLabel": "Ver Radiografía Digital"
+            },
+            {
+                "code": "02",
+                "title": "Roadmap Tecnológico",
+                "summary": "Priorizamos. Arquitectura objetivo, decisiones make/buy/consolidate, ROI estimado y plan faseado en 4–6 semanas.",
+                "duration": "4–6 semanas",
+                "price": "Desde 10.000 €",
+                "href": "/roadmap-tecnologico/",
+                "linkLabel": "Ver Roadmap Tecnológico"
+            },
+            {
+                "code": "03",
+                "title": "Implementación",
+                "summary": "Construimos. Automatizaciones con IA, integraciones API, dashboards y sistemas a medida. Proyecto cerrado o retainer mensual.",
+                "duration": "Sprints continuos",
+                "price": "Desde 3.000 €/mes",
+                "href": "/implementacion/",
+                "linkLabel": "Ver Implementación"
+            }
+        ]
+    },
+    "flow": {
+        "badge": "El ciclo completo",
+        "title": "Diagnosticar → Priorizar → Construir → Evolucionar",
+        "subtitle": "Cada bloque entrega valor por sí solo. Encadenados, transforman la operación tecnológica de la empresa.",
+        "steps": [
+            {
+                "code": "01",
+                "title": "Diagnosticar",
+                "body": "Inventario maestro, matriz de licencias, mapa de integraciones y análisis de riesgo. Salida: foto real del ecosistema."
+            },
+            {
+                "code": "02",
+                "title": "Priorizar",
+                "body": "Visión de negocio, arquitectura objetivo, decisiones make/buy/consolidate y plan faseado con ROI. Salida: hoja de ruta auditable."
+            },
+            {
+                "code": "03",
+                "title": "Construir",
+                "body": "Sprints de 1–2 semanas con entregas funcionales. Discovery técnico, build iterativo, despliegue controlado. Salida: capacidades en producción."
+            },
+            {
+                "code": "04",
+                "title": "Evolucionar",
+                "body": "Monitorización, mejora continua, nuevos casos de uso. La automatización no se construye y se olvida — evoluciona con el negocio."
+            }
+        ]
+    },
+    "differentiator": {
+        "title": "Por qué este modelo no existe en el mercado",
+        "subtitle": "El espacio entre consultores y desarrolladores es donde se pierde la mayoría de proyectos de transformación digital.",
+        "columns": [
+            {
+                "title": "Consultoras tradicionales",
+                "items": [
+                    "Entregan presentaciones y se van",
+                    "Cobran caro por relatorios sin ejecución",
+                    "Recomiendan partners externos para construir",
+                    "Sin responsabilidad sobre el resultado final"
+                ],
+                "tone": "muted"
+            },
+            {
+                "title": "IA Operators",
+                "items": [
+                    "Mismo equipo diagnostica y construye",
+                    "Recomendaciones priorizadas con ROI",
+                    "Implementación en sprints con entregas reales",
+                    "Responsabilidad end-to-end del resultado"
+                ],
+                "tone": "accent"
+            },
+            {
+                "title": "Agencias de IA / desarrollo",
+                "items": [
+                    "Construyen lo que pides sin diagnóstico",
+                    "Demos bonitas que no llegan a producción",
+                    "Sin visión sistémica del ecosistema",
+                    "Riesgo alto de automatizar caos sobre caos"
+                ],
+                "tone": "muted"
+            }
+        ]
+    },
+    "faq": {
+        "title": "Preguntas frecuentes",
+        "items": [
+            {
+                "q": "¿Tengo que contratar los 3 productos?",
+                "a": "No. Cada producto entrega valor por sí solo. Puedes hacer solo una Radiografía, solo un Roadmap, o entrar directamente en Implementación si ya tienes claridad sobre qué construir."
+            },
+            {
+                "q": "¿Cuál es el camino más común?",
+                "a": "Empresas medianas suelen empezar por la Radiografía Digital, avanzar al Roadmap si el alcance es alto, y luego contratar Implementación por proyecto cerrado o retainer."
+            },
+            {
+                "q": "¿Trabajan con stack moderno o legacy?",
+                "a": "Ambos. La realidad mid-market mezcla SaaS modernos con sistemas legados. La metodología funciona igual en los dos contextos."
+            },
+            {
+                "q": "¿Qué tamaño de empresa atienden?",
+                "a": "50–500 personas, facturación €2M–€100M. Sectores con alta dependencia operativa de sistemas: hotelería, salud, servicios profesionales, retail, real estate, manufactura mid-market."
+            },
+            {
+                "q": "¿Trabajan junto al equipo de IT interno?",
+                "a": "Sí, idealmente. La metodología se construye con tu equipo, no contra él. CTO, IT Manager y dueños de área participan en workshops y validan decisiones."
+            }
+        ]
+    },
+    "finalCta": {
+        "title": "¿Quieres aplicar esta metodología en tu empresa?",
+        "subtitle": "Llamada de 30 minutos para entender el contexto y proponer el punto de entrada correcto — Radiografía, Roadmap o Implementación.",
+        "cta": "Agendar llamada"
+    }
+}

@@ -1,0 +1,323 @@
+---
+export async function getStaticPaths() {
+  return [
+    { params: { locale: "es" } },
+    { params: { locale: "pt" } },
+    { params: { locale: "en" } },
+  ];
+}
+
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getLocale, ui } from "../../../i18n/ui";
+
+const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
+const dict = (ui as any)?.[locale] ?? {};
+const audit = (dict as any)?.audit ?? {};
+
+const meta = audit?.meta ?? {};
+const hero = audit?.hero ?? {};
+const problem = audit?.problem ?? {};
+const deliverables = audit?.deliverables ?? {};
+const methodology = audit?.methodology ?? {};
+const audience = audit?.audience ?? {};
+const pricing = audit?.pricing ?? {};
+const faq = audit?.faq ?? {};
+const finalCta = audit?.finalCta ?? {};
+
+const contactHref = `/${locale}/contact/`;
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(`/${locale}/auditoria-de-sistemas/`, site).toString();
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Radiografía Digital",
+  alternateName: ["Digital X-Ray", "Radiografia Digital"],
+  serviceType: "Technology audit and systems inventory",
+  provider: {
+    "@type": "Organization",
+    name: "IA Operators",
+    url: site,
+  },
+  areaServed: ["ES", "PT", "BR"],
+  description: meta?.description,
+  url: pageUrl,
+  offers: {
+    "@type": "Offer",
+    priceCurrency: "EUR",
+    price: "4500",
+    priceSpecification: {
+      "@type": "PriceSpecification",
+      priceCurrency: "EUR",
+      minPrice: "4500",
+      maxPrice: "8000",
+    },
+    availability: "https://schema.org/InStock",
+    url: pageUrl,
+  },
+};
+
+const faqJsonLd = Array.isArray(faq?.items) && faq.items.length > 0
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faq.items.map((item: any) => ({
+        "@type": "Question",
+        name: item?.q,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item?.a,
+        },
+      })),
+    }
+  : null;
+
+const jsonLd = faqJsonLd ? [serviceJsonLd, faqJsonLd] : [serviceJsonLd];
+---
+
+<BaseLayout
+  title={meta?.title ?? "Radiografía Digital"}
+  description={meta?.description}
+  jsonLd={jsonLd}
+>
+  <div class="bg-transparent text-white">
+    <!-- HERO -->
+    <section class="relative px-4 pt-28 pb-20">
+      <div class="max-w-5xl mx-auto text-center">
+        {hero?.badge && (
+          <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-6">
+            {hero.badge}
+          </span>
+        )}
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
+          {hero?.title}
+        </h1>
+        {hero?.subtitle && (
+          <p class="text-lg md:text-2xl text-gray-200 mb-6 max-w-3xl mx-auto">
+            {hero.subtitle}
+          </p>
+        )}
+        {hero?.intro && (
+          <p class="text-base md:text-lg text-gray-400 mb-10 max-w-3xl mx-auto leading-relaxed">
+            {hero.intro}
+          </p>
+        )}
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={contactHref}
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-base hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+          >
+            {hero?.ctaPrimary}
+          </a>
+          {hero?.ctaSecondary && (
+            <a
+              href="#metodologia"
+              class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-base hover:bg-orange-500/10 transition-all duration-300"
+            >
+              {hero.ctaSecondary}
+            </a>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    {problem?.items && problem.items.length > 0 && (
+      <section class="px-4 py-20">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
+            {problem?.title}
+          </h2>
+          {problem?.subtitle && (
+            <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+              {problem.subtitle}
+            </p>
+          )}
+          <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {problem.items.map((item: string) => (
+              <li class="flex items-start gap-3 bg-[#0a0a0a] border border-white/5 rounded-2xl p-5">
+                <span class="text-orange-400 text-xl leading-none mt-0.5">✕</span>
+                <p class="text-gray-200 text-base leading-relaxed">{item}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )}
+
+    <!-- DELIVERABLES -->
+    {deliverables?.items && deliverables.items.length > 0 && (
+      <section class="px-4 py-20">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+              {deliverables?.title}
+            </h2>
+            {deliverables?.subtitle && (
+              <p class="text-gray-400 max-w-2xl mx-auto">
+                {deliverables.subtitle}
+              </p>
+            )}
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {deliverables.items.map((item: any, idx: number) => (
+              <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
+                <div class="flex items-center gap-3 mb-4">
+                  <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 font-bold text-sm">
+                    0{idx + 1}
+                  </span>
+                  <h3 class="text-xl font-semibold text-white">{item?.title}</h3>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed">{item?.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- METHODOLOGY -->
+    {methodology?.phases && methodology.phases.length > 0 && (
+      <section id="metodologia" class="px-4 py-24 bg-white/[0.02] border-y border-white/5">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-16">
+            {methodology?.badge && (
+              <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+                {methodology.badge}
+              </span>
+            )}
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+              {methodology?.title}
+            </h2>
+            {methodology?.subtitle && (
+              <p class="text-gray-400 max-w-2xl mx-auto">
+                {methodology.subtitle}
+              </p>
+            )}
+          </div>
+          <ol class="space-y-6 max-w-4xl mx-auto">
+            {methodology.phases.map((phase: any) => (
+              <li class="flex flex-col md:flex-row gap-6 bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8 hover:border-orange-500/20 transition-all duration-300">
+                <div class="md:w-32 shrink-0">
+                  <div class="text-orange-400 text-xs font-semibold uppercase tracking-widest mb-1">
+                    {phase?.code}
+                  </div>
+                  <h3 class="text-xl md:text-2xl font-bold text-white">
+                    {phase?.title}
+                  </h3>
+                </div>
+                <p class="text-gray-300 leading-relaxed flex-1">{phase?.body}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    )}
+
+    <!-- AUDIENCE -->
+    {audience?.items && audience.items.length > 0 && (
+      <section class="px-4 py-20">
+        <div class="max-w-5xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+              {audience?.title}
+            </h2>
+            {audience?.subtitle && (
+              <p class="text-gray-400 max-w-2xl mx-auto">
+                {audience.subtitle}
+              </p>
+            )}
+          </div>
+          <ul class="space-y-3 max-w-3xl mx-auto">
+            {audience.items.map((item: string) => (
+              <li class="flex items-start gap-3 bg-[#0a0a0a] border border-white/5 rounded-2xl px-5 py-4">
+                <span class="text-orange-400 text-xl leading-none mt-0.5">→</span>
+                <p class="text-gray-200">{item}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )}
+
+    <!-- PRICING -->
+    {pricing?.title && (
+      <section class="px-4 py-24">
+        <div class="max-w-3xl mx-auto bg-gradient-to-br from-orange-500/10 to-transparent border border-orange-500/20 rounded-3xl p-8 md:p-12 text-center">
+          {pricing?.badge && (
+            <span class="inline-block px-4 py-1 rounded-full bg-orange-500/20 text-orange-300 text-xs font-semibold mb-4 uppercase tracking-widest">
+              {pricing.badge}
+            </span>
+          )}
+          <h2 class="text-4xl md:text-5xl font-bold mb-3 text-white">
+            {pricing.title}
+          </h2>
+          {pricing?.subtitle && (
+            <p class="text-gray-300 mb-8">{pricing.subtitle}</p>
+          )}
+          {pricing?.items && pricing.items.length > 0 && (
+            <ul class="text-left space-y-3 mb-10 max-w-xl mx-auto">
+              {pricing.items.map((item: string) => (
+                <li class="flex items-start gap-3">
+                  <span class="text-orange-400 mt-0.5">✓</span>
+                  <span class="text-gray-200">{item}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+          <a
+            href={contactHref}
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-base hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+          >
+            {pricing?.cta}
+          </a>
+        </div>
+      </section>
+    )}
+
+    <!-- FAQ -->
+    {faq?.items && faq.items.length > 0 && (
+      <section class="px-4 py-20">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
+            {faq?.title}
+          </h2>
+          <div class="space-y-3">
+            {faq.items.map((item: any) => (
+              <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-4 hover:border-orange-500/20 transition-all duration-300">
+                <summary class="flex items-center justify-between cursor-pointer list-none">
+                  <span class="text-white font-medium pr-4">{item?.q}</span>
+                  <span class="text-orange-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
+                </summary>
+                <p class="text-gray-400 mt-3 leading-relaxed">{item?.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- FINAL CTA -->
+    {finalCta?.title && (
+      <section class="px-4 py-24">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">
+            {finalCta.title}
+          </h2>
+          {finalCta?.subtitle && (
+            <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
+              {finalCta.subtitle}
+            </p>
+          )}
+          <a
+            href={contactHref}
+            class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+          >
+            {finalCta?.cta} ↗
+          </a>
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>

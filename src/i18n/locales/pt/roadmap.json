@@ -1,0 +1,145 @@
+{
+    "meta": {
+        "title": "Roadmap Tecnológico | Plano de evolução do seu stack",
+        "description": "Da auditoria ao plano: arquitetura objetivo, priorização com ROI estimado e plano faseado de implementação. 4–6 semanas, a partir de €10.000."
+    },
+    "hero": {
+        "badge": "Serviço · Roadmap tecnológico",
+        "title": "Da auditoria ao plano de evolução do seu parque tecnológico.",
+        "subtitle": "O que consolidar, o que automatizar, o que construir — e em que ordem.",
+        "intro": "Você sabe que algo não funciona. Talvez já tenha feito uma Radiografia Digital. O que falta é um plano que a diretoria possa assinar: arquitetura objetivo, prioridades com critério de impacto vs. esforço, estimativas de ROI e sequência de implementação realista.",
+        "ctaPrimary": "Solicitar proposta",
+        "ctaSecondary": "Ver entregáveis"
+    },
+    "problem": {
+        "title": "Quando você precisa de um Roadmap",
+        "subtitle": "O roadmap é a resposta quando saber o que você tem já não basta — você precisa decidir o que fazer com isso.",
+        "items": [
+            "Você tem orçamento de transformação digital e não sabe onde investir primeiro",
+            "Cada área pede o próprio projeto e não há critério compartilhado para priorizar",
+            "Você quer incorporar IA, mas antes precisa consolidar a base técnica",
+            "Seu time de TI e o de negócio pedem coisas diferentes com a mesma urgência",
+            "O conselho pede um plano de 12–24 meses com números, não uma lista de desejos"
+        ]
+    },
+    "deliverables": {
+        "title": "O que você recebe em 4–6 semanas",
+        "subtitle": "Inclui todo o conteúdo da Radiografia Digital + arquitetura e plano de evolução.",
+        "items": [
+            {
+                "title": "Diagnóstico completo",
+                "body": "Inventário, matriz de licenças, mapa de integrações e análise de risco (escopo da Radiografia incluso)."
+            },
+            {
+                "title": "Arquitetura objetivo",
+                "body": "Diagrama do stack futuro: o que se mantém, o que se substitui, o que se constrói. Camadas de dados, integração e aplicação."
+            },
+            {
+                "title": "Priorização com ROI",
+                "body": "Iniciativas pontuadas por impacto operacional, esforço, risco e ROI estimado. Sem teoria: com números e premissas auditáveis."
+            },
+            {
+                "title": "Plano faseado",
+                "body": "Sequência de implementação trimestral com dependências, marcos, time necessário e orçamento orientativo."
+            },
+            {
+                "title": "Decisões make / buy / consolidate",
+                "body": "Para cada iniciativa: construir sob medida, contratar SaaS ou consolidar o existente. Com critério explícito."
+            },
+            {
+                "title": "Sessão de alinhamento executivo",
+                "body": "Apresentação final com C-level e/ou conselho. Defendemos o plano e respondemos perguntas ao vivo."
+            }
+        ]
+    },
+    "methodology": {
+        "badge": "Metodologia",
+        "title": "Como construímos o Roadmap",
+        "subtitle": "Mesmo time da auditoria, agora com foco em futuro e decisão.",
+        "phases": [
+            {
+                "code": "Fase 1",
+                "title": "Diagnóstico",
+                "body": "Se não há Radiografia prévia, fazemos o inventário completo. Se há, validamos e atualizamos o que é crítico."
+            },
+            {
+                "code": "Fase 2",
+                "title": "Visão de negócio",
+                "body": "Workshops com C-level e responsáveis de área para capturar objetivos de 12–24 meses, restrições de orçamento e apetite à mudança."
+            },
+            {
+                "code": "Fase 3",
+                "title": "Arquitetura objetivo",
+                "body": "Desenhamos o stack que a empresa precisa alcançar. Diagramas em camadas, decisões make/buy/consolidate justificadas."
+            },
+            {
+                "code": "Fase 4",
+                "title": "Priorização",
+                "body": "Cada iniciativa é pontuada por impacto, esforço, risco e ROI. Cortamos o que parece urgente mas não move o ponteiro."
+            },
+            {
+                "code": "Fase 5",
+                "title": "Plano faseado",
+                "body": "Sequenciamos por trimestre com dependências, time e orçamento. Faseado para que cada bloco gere valor por si só."
+            },
+            {
+                "code": "Fase 6",
+                "title": "Defesa executiva",
+                "body": "Apresentação ao comitê ou conselho com conclusões, riscos e plano. Decisão informada — com quem assina o cheque presente."
+            }
+        ]
+    },
+    "audience": {
+        "title": "Para quem é o Roadmap Tecnológico?",
+        "subtitle": "Empresas que precisam de clareza antes de investir.",
+        "items": [
+            "Empresas com orçamento de transformação digital aprovado e sem plano claro",
+            "Negócios pós-M&A que precisam integrar dois parques tecnológicos",
+            "Empresas que querem incorporar IA, mas sabem que a base atual não aguenta",
+            "Empresas com CTO novo ou sem CTO que precisam de plano auditável para o conselho",
+            "Mid-market (50–500 pessoas) em hotelaria, saúde, serviços, varejo e manufatura"
+        ]
+    },
+    "pricing": {
+        "badge": "Investimento",
+        "title": "A partir de €10.000 + impostos",
+        "subtitle": "Projeto fechado de 4–6 semanas. Faixa €10.000–€20.000 conforme escopo e número de áreas.",
+        "items": [
+            "Diagnóstico completo + arquitetura objetivo + priorização + plano faseado",
+            "Até 12 áreas funcionais e 50 sistemas no escopo padrão",
+            "2 sessões executivas (kick-off e defesa final) + workshops com responsáveis de área",
+            "Entregáveis editáveis: diagramas, planilhas de priorização e plano em formatos abertos"
+        ],
+        "cta": "Solicitar proposta"
+    },
+    "faq": {
+        "title": "Perguntas frequentes",
+        "items": [
+            {
+                "q": "Preciso fazer a Radiografia antes?",
+                "a": "Não é obrigatório. Se não houver diagnóstico prévio, incluímos na Fase 1. Se já fizemos a Radiografia com você, descontamos o investimento correspondente do Roadmap."
+            },
+            {
+                "q": "O Roadmap inclui implementação?",
+                "a": "Não. O Roadmap é o plano. A execução é um serviço à parte (projeto fechado ou retainer). Entregamos um plano que qualquer parceiro — inclusive nós — pode executar."
+            },
+            {
+                "q": "Vocês trabalham com o CTO ou TI atual?",
+                "a": "Sim, idealmente. O Roadmap é construído com o seu time, não contra ele. O CTO/Head de TI participa dos workshops-chave e valida a arquitetura objetivo."
+            },
+            {
+                "q": "E se o plano exigir decisões políticas internas?",
+                "a": "Explicitamos. Identificamos os pontos onde o roadmap exige decisão executiva (trocar fornecedor, redistribuir responsabilidades, investir vs. consolidar) e levamos ao comitê."
+            },
+            {
+                "q": "Quanto tempo o Roadmap permanece válido?",
+                "a": "Desenhamos para 12–24 meses com revisão aos 6. Se o contexto mudar (M&A, rodada de investimento, crise), revisamos as premissas sem refazer tudo."
+            }
+        ]
+    },
+    "finalCta": {
+        "title": "Pronto para ter um plano que o conselho possa assinar?",
+        "subtitle": "Call de 30 minutos para entender contexto e objetivos. Se houver fit, proposta fechada em 48h.",
+        "cta": "Agendar call de proposta"
+    }
+}

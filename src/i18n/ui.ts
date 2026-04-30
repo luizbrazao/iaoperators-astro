@@ -45,6 +45,10 @@ export const ui: Record<Locale, Record<string, Dict>> = locales.reduce((acc, loc
     terms: getDict(locale, "terms"),
     categories: getDict(locale, "categories"),
     blogPost: getDict(locale, "blogPost"),
+    audit: getDict(locale, "audit"),
+    roadmap: getDict(locale, "roadmap"),
+    implementation: getDict(locale, "implementation"),
+    methodology: getDict(locale, "methodology"),
   };
   return acc;
 }, {} as Record<Locale, Record<string, Dict>>);

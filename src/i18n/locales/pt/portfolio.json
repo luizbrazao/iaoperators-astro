@@ -1,9 +1,9 @@
 {
     "header": {
-        "badge": "Nossos Cases",
-        "title": "Soluções Reais,",
-        "highlight": "Resultados Mensuráveis",
-        "subtitle": "Não apenas escrevemos código. Criamos ecossistemas de IA que resolvem problemas complexos de integração, segurança e escala."
+        "badge": "Cases",
+        "title": "Diagnósticos reais,",
+        "highlight": "soluções mensuráveis",
+        "subtitle": "Auditorias, automações e integrações entregues em produção. Cada case mostra como o mesmo time diagnostica o problema e constrói a solução."
     },
     "actions": {
         "details": "Ver detalhes",
@@ -15,12 +15,12 @@
         "startProject": "Iniciar projeto"
     },
     "breadcrumb": {
-        "portfolio": "Portfolio"
+        "portfolio": "Cases"
     },
     "notFound": {
-        "title": "Projeto não encontrado",
+        "title": "Case não encontrado",
         "subtitle": "Verifique o slug e confirme que existe em",
-        "back": "Voltar ao portfolio"
+        "back": "Voltar aos Cases"
     },
     "project": {
         "cta": {

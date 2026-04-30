@@ -48,8 +48,6 @@ export default function ContactForm({ locale: localeProp = "es" }) {
     companyPlaceholder: contact?.companyPlaceholder ?? "Company name",
     city: contact?.city ?? "City",
     cityPlaceholder: contact?.cityPlaceholder ?? "Málaga",
-    budget: contact?.budget ?? "Budget",
-    budgetPlaceholder: contact?.budgetPlaceholder ?? "Select one",
     message: contact?.message ?? "Message",
     messagePlaceholder: contact?.messagePlaceholder ?? "Tell us briefly what you need",
     send: contact?.send ?? "Send",
@@ -69,13 +67,6 @@ export default function ContactForm({ locale: localeProp = "es" }) {
     faq2a: contact?.faq2a ?? "Yes—projects are adapted to your stage.",
     faq3q: contact?.faq3q ?? "Can we start with a pilot?",
     faq3a: contact?.faq3a ?? "Yes. We can validate ROI quickly.",
-    budgetOptions: [
-      contact?.budgetLess1k ?? "Less than €1k",
-      contact?.budget1to3k ?? "€1k–€3k",
-      contact?.budget3to5k ?? "€3k–€5k",
-      contact?.budgetMore5k ?? "More than €5k",
-      contact?.budgetCustom ?? "Custom",
-    ],
   };
 
   async function onSubmit(e) {
@@ -206,25 +197,6 @@ export default function ContactForm({ locale: localeProp = "es" }) {
                 />
               </label>
             </div>
-
-            <label className="block">
-              <span className="text-sm text-gray-300">{t.budget} *</span>
-              <select
-                name="budget"
-                required
-                defaultValue=""
-                className="mt-1 w-full rounded-lg bg-[#1a1a1a] border border-white/10 px-3 py-2 outline-none focus:border-orange-500"
-              >
-                <option value="" disabled>
-                  {t.budgetPlaceholder}
-                </option>
-                {t.budgetOptions.map((opt) => (
-                  <option key={opt} value={opt}>
-                    {opt}
-                  </option>
-                ))}
-              </select>
-            </label>
 
             <label className="block">
               <span className="text-sm text-gray-300">{t.message}</span>

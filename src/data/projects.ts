@@ -52,6 +52,128 @@ export type Project = {
 
 export const projects: Project[] = [
     // =========================
+    // Cadena hotelera Menorca — Radiografía Digital
+    // =========================
+    {
+        id: 3,
+        slug: "radiografia-cadena-hotelera-menorca",
+
+        category: "Auditoría tecnológica / Hotelería",
+        categoryKey: "projects:menorcaHotelChain.category",
+        heroImage:
+            "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&q=80",
+
+        gallery: [
+            {
+                src: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&q=80",
+                altKey: "projects:menorcaHotelChain.gallery.heroAlt",
+            },
+        ],
+
+        titleKey: "projects:menorcaHotelChain.title",
+        taglineKey: "projects:menorcaHotelChain.tagline",
+
+        problemKey: "projects:menorcaHotelChain.problem",
+        engineeringIntroKey: "projects:menorcaHotelChain.engineeringIntro",
+        impactKey: "projects:menorcaHotelChain.impact",
+
+        whatItDoesKeys: [
+            "projects:menorcaHotelChain.whatItDoes.0",
+            "projects:menorcaHotelChain.whatItDoes.1",
+            "projects:menorcaHotelChain.whatItDoes.2",
+            "projects:menorcaHotelChain.whatItDoes.3",
+            "projects:menorcaHotelChain.whatItDoes.4",
+            "projects:menorcaHotelChain.whatItDoes.5",
+        ],
+
+        howItWorksKeys: [
+            "projects:menorcaHotelChain.howItWorks.0",
+            "projects:menorcaHotelChain.howItWorks.1",
+            "projects:menorcaHotelChain.howItWorks.2",
+            "projects:menorcaHotelChain.howItWorks.3",
+            "projects:menorcaHotelChain.howItWorks.4",
+            "projects:menorcaHotelChain.howItWorks.5",
+        ],
+
+        pillars: [
+            {
+                titleKey: "projects:menorcaHotelChain.pillars.0.title",
+                descriptionKey: "projects:menorcaHotelChain.pillars.0.description",
+                bulletsKeys: [
+                    "projects:menorcaHotelChain.pillars.0.bullets.0",
+                    "projects:menorcaHotelChain.pillars.0.bullets.1",
+                    "projects:menorcaHotelChain.pillars.0.bullets.2",
+                ],
+            },
+            {
+                titleKey: "projects:menorcaHotelChain.pillars.1.title",
+                descriptionKey: "projects:menorcaHotelChain.pillars.1.description",
+                bulletsKeys: [
+                    "projects:menorcaHotelChain.pillars.1.bullets.0",
+                    "projects:menorcaHotelChain.pillars.1.bullets.1",
+                    "projects:menorcaHotelChain.pillars.1.bullets.2",
+                ],
+            },
+            {
+                titleKey: "projects:menorcaHotelChain.pillars.2.title",
+                descriptionKey: "projects:menorcaHotelChain.pillars.2.description",
+                bulletsKeys: [
+                    "projects:menorcaHotelChain.pillars.2.bullets.0",
+                    "projects:menorcaHotelChain.pillars.2.bullets.1",
+                    "projects:menorcaHotelChain.pillars.2.bullets.2",
+                ],
+            },
+        ],
+
+        securityKeys: [
+            "projects:menorcaHotelChain.security.0",
+            "projects:menorcaHotelChain.security.1",
+            "projects:menorcaHotelChain.security.2",
+        ],
+
+        metrics: [
+            {
+                labelKey: "projects:menorcaHotelChain.metrics.0.label",
+                value: "47",
+                noteKey: "projects:menorcaHotelChain.metrics.0.note",
+            },
+            {
+                labelKey: "projects:menorcaHotelChain.metrics.1.label",
+                value: "12",
+                noteKey: "projects:menorcaHotelChain.metrics.1.note",
+            },
+            {
+                labelKey: "projects:menorcaHotelChain.metrics.2.label",
+                value: "23%",
+                noteKey: "projects:menorcaHotelChain.metrics.2.note",
+            },
+            {
+                labelKey: "projects:menorcaHotelChain.metrics.3.label",
+                value: "3",
+                noteKey: "projects:menorcaHotelChain.metrics.3.note",
+            },
+        ],
+
+        links: [
+            {
+                label: "Solicitar propuesta",
+                labelKey: "projects:menorcaHotelChain.links.0.label",
+                href: "/contact/",
+            },
+            {
+                label: "Ver Radiografía Digital",
+                labelKey: "projects:menorcaHotelChain.links.1.label",
+                href: "/auditoria-de-sistemas/",
+            },
+            {
+                label: "Volver al portfolio",
+                labelKey: "projects:menorcaHotelChain.links.2.label",
+                href: "/portfolio/",
+            },
+        ],
+    },
+
+    // =========================
     // ChatPlug
     // =========================
     {

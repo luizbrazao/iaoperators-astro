@@ -1,0 +1,167 @@
+{
+    "meta": {
+        "title": "Methodology | Diagnose, prioritize, and build",
+        "description": "The same team maps the problem, prioritizes what to solve, and builds the solution. No hand-offs, no reports nobody implements."
+    },
+    "hero": {
+        "badge": "Methodology",
+        "title": "Diagnose, prioritize, build — no hand-offs.",
+        "subtitle": "The same team runs the full cycle. Maps the ecosystem, surfaces the real problems, decides what to solve first, and builds it.",
+        "intro": "Most of the market splits into consultancies that deliver slide decks and disappear, or developers that execute without diagnostics. We sit in the empty space between the two: rigorous clarity in diagnosis and hands-on engineering in execution.",
+        "cta": "Talk to a specialist"
+    },
+    "principles": {
+        "badge": "How we work",
+        "title": "5 non-negotiable principles",
+        "subtitle": "The rules that hold every project together, regardless of which product.",
+        "items": [
+            {
+                "title": "Diagnostic before execution",
+                "body": "We don't automate what we don't understand. Before building, we map the context, integrations, and critical dependencies."
+            },
+            {
+                "title": "No hand-offs",
+                "body": "The team that diagnoses is the same one that builds. Information doesn't get lost between slide decks and briefings."
+            },
+            {
+                "title": "Decisions with explicit criteria",
+                "body": "Every make / buy / consolidate recommendation is backed by impact, effort, risk, and estimated ROI. No theory."
+            },
+            {
+                "title": "No vendor lock-in",
+                "body": "We recommend what fits, not what we get paid to resell. If your CRM works, we integrate. If it's broken, we say so first."
+            },
+            {
+                "title": "Editable deliverables",
+                "body": "Reports, diagrams, and plans are yours in editable format. If you decide to execute internally or with another partner, you're not stuck with us."
+            }
+        ]
+    },
+    "pillars": {
+        "badge": "The 3 products",
+        "title": "Three connected stages, three standalone services",
+        "subtitle": "You can start with any of them. Most companies start with the Digital X-Ray and move to the Roadmap or directly to Implementation.",
+        "items": [
+            {
+                "code": "01",
+                "title": "Digital X-Ray",
+                "summary": "We diagnose. Full inventory, integration map, risk analysis, and prioritized recommendations in 3 weeks.",
+                "duration": "3 weeks",
+                "price": "From €4,500",
+                "href": "/auditoria-de-sistemas/",
+                "linkLabel": "See Digital X-Ray"
+            },
+            {
+                "code": "02",
+                "title": "Technology Roadmap",
+                "summary": "We prioritize. Target architecture, make/buy/consolidate decisions, estimated ROI, and phased plan in 4–6 weeks.",
+                "duration": "4–6 weeks",
+                "price": "From €10,000",
+                "href": "/roadmap-tecnologico/",
+                "linkLabel": "See Technology Roadmap"
+            },
+            {
+                "code": "03",
+                "title": "Implementation",
+                "summary": "We build. AI automations, API integrations, dashboards, and custom systems. Fixed-scope project or monthly retainer.",
+                "duration": "Continuous sprints",
+                "price": "From €3,000/month",
+                "href": "/implementacion/",
+                "linkLabel": "See Implementation"
+            }
+        ]
+    },
+    "flow": {
+        "badge": "The full cycle",
+        "title": "Diagnose → Prioritize → Build → Evolve",
+        "subtitle": "Each block delivers value on its own. Chained together, they transform the technology operation of the company.",
+        "steps": [
+            {
+                "code": "01",
+                "title": "Diagnose",
+                "body": "Master inventory, license matrix, integration map, and risk analysis. Output: a real picture of the ecosystem."
+            },
+            {
+                "code": "02",
+                "title": "Prioritize",
+                "body": "Business vision, target architecture, make/buy/consolidate decisions, and phased plan with ROI. Output: an auditable roadmap."
+            },
+            {
+                "code": "03",
+                "title": "Build",
+                "body": "1–2 week sprints with functional deliveries. Technical discovery, iterative build, controlled deployment. Output: capabilities in production."
+            },
+            {
+                "code": "04",
+                "title": "Evolve",
+                "body": "Monitoring, continuous improvement, new use cases. Automation isn't built and forgotten — it evolves with the business."
+            }
+        ]
+    },
+    "differentiator": {
+        "title": "Why this model doesn't exist in the market",
+        "subtitle": "The space between consultancies and developers is where most digital transformation projects die.",
+        "columns": [
+            {
+                "title": "Traditional consultancies",
+                "items": [
+                    "Deliver slide decks and disappear",
+                    "Charge premium for reports without execution",
+                    "Recommend external partners to build",
+                    "No responsibility over the final outcome"
+                ],
+                "tone": "muted"
+            },
+            {
+                "title": "IA Operators",
+                "items": [
+                    "Same team diagnoses and builds",
+                    "Prioritized recommendations with ROI",
+                    "Implementation in sprints with real deliveries",
+                    "End-to-end accountability for the result"
+                ],
+                "tone": "accent"
+            },
+            {
+                "title": "AI / dev agencies",
+                "items": [
+                    "Build whatever you ask without diagnostics",
+                    "Pretty demos that never reach production",
+                    "No systemic view of the ecosystem",
+                    "High risk of automating chaos on top of chaos"
+                ],
+                "tone": "muted"
+            }
+        ]
+    },
+    "faq": {
+        "title": "Frequently asked questions",
+        "items": [
+            {
+                "q": "Do I have to contract all 3 products?",
+                "a": "No. Each product delivers value on its own. You can run only the X-Ray, only the Roadmap, or jump straight into Implementation if you already know what to build."
+            },
+            {
+                "q": "What's the most common path?",
+                "a": "Mid-sized companies usually start with the Digital X-Ray, move to the Roadmap when scope is large, and then contract Implementation as a fixed-scope project or retainer."
+            },
+            {
+                "q": "Modern stack or legacy?",
+                "a": "Both. Mid-market reality blends modern SaaS with legacy systems. The methodology works the same way in either context."
+            },
+            {
+                "q": "What size of company do you serve?",
+                "a": "50–500 people, revenue €2M–€100M. Sectors with high operational dependence on systems: hospitality, healthcare, professional services, retail, real estate, mid-market manufacturing."
+            },
+            {
+                "q": "Do you work alongside the in-house IT team?",
+                "a": "Yes, ideally. The methodology is built with your team, not against it. CTO, IT Manager, and area owners participate in workshops and validate decisions."
+            }
+        ]
+    },
+    "finalCta": {
+        "title": "Want to apply this methodology in your company?",
+        "subtitle": "30-minute call to understand context and recommend the right entry point — X-Ray, Roadmap, or Implementation.",
+        "cta": "Book a call"
+    }
+}

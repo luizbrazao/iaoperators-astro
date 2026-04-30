@@ -1,0 +1,138 @@
+{
+    "meta": {
+        "title": "Implementation | We build what the roadmap prescribes",
+        "description": "AI automations, API-first integrations, dashboards, and custom systems. Fixed-scope projects or monthly retainer from €3,000/month."
+    },
+    "hero": {
+        "badge": "Service · Implementation",
+        "title": "We build what the roadmap prescribes.",
+        "subtitle": "AI automations, API integrations, and custom systems — executed by the same team that diagnosed the problem.",
+        "intro": "Having a plan transforms nothing. Transformation happens when someone builds. We implement the initiatives prioritized by the audit and the roadmap: AI agents, operational automations, system integrations, dashboards, and custom software — with no hand-offs between who designed the solution and who builds it.",
+        "ctaPrimary": "Talk about a project",
+        "ctaSecondary": "See capabilities"
+    },
+    "problem": {
+        "title": "When do you need Implementation?",
+        "subtitle": "The service starts when you already know what to solve and need a team that builds it well.",
+        "items": [
+            "You have an approved roadmap and no one internally can execute it on time",
+            "You want to automate critical processes without hiring and onboarding a new team",
+            "You need to integrate SaaS and internal systems without building an in-house IT department",
+            "You've tried AI agencies and only got pretty demos — nothing in production",
+            "Your IT team is buried in maintenance and can't take on new projects"
+        ]
+    },
+    "deliverables": {
+        "title": "What we build",
+        "subtitle": "Real capabilities, not labels. Every block delivers value in production.",
+        "items": [
+            {
+                "title": "AI automations",
+                "body": "Agents and workflows with n8n, LangChain, multi-agent setups, and OpenAI/Anthropic models. Real use cases, not demos."
+            },
+            {
+                "title": "API-first integrations",
+                "body": "We connect PMS, CRM, ERP, marketplaces, billing tools, helpdesks, and internal SaaS. APIs, webhooks, queues, ETL."
+            },
+            {
+                "title": "WhatsApp and omnichannel bots",
+                "body": "Customer service, booking, support, and acquisition bots with WhatsApp Business API, Telegram, and CRM integration."
+            },
+            {
+                "title": "Operational dashboards",
+                "body": "Consolidated operational and financial metrics. Data from multiple sources in a panel that answers the real questions."
+            },
+            {
+                "title": "Custom systems",
+                "body": "Internal apps, customer portals, admin panels, and internal tools when no SaaS fits."
+            },
+            {
+                "title": "Support and evolution",
+                "body": "Maintenance, monitoring, and continuous improvements on a retainer model. Automation isn't built and forgotten — it evolves."
+            }
+        ]
+    },
+    "methodology": {
+        "badge": "How we work",
+        "title": "Execution without hand-offs",
+        "subtitle": "Same team from discovery through production. Short iterations, fast decisions, every block ships.",
+        "phases": [
+            {
+                "code": "Sprint 0",
+                "title": "Technical discovery",
+                "body": "We validate requirements, accesses, data, and constraints. We define concrete architecture and a sprint plan."
+            },
+            {
+                "code": "Sprint 1+",
+                "title": "Iterative build",
+                "body": "1–2 week sprints with functional deliveries. Your team tests each block in its own environment before promotion."
+            },
+            {
+                "code": "Go-live",
+                "title": "Controlled deployment",
+                "body": "We promote to production with active monitoring. Documented rollback plan, observability from day one."
+            },
+            {
+                "code": "Support",
+                "title": "Continuous evolution",
+                "body": "Monthly retainer or one-off sprints. We resolve incidents, tune models, integrate new sources, and scale."
+            }
+        ]
+    },
+    "audience": {
+        "title": "Engagement models",
+        "subtitle": "We adapt the model to the size of the problem.",
+        "items": [
+            "Fixed-scope project: fixed scope, fixed budget, defined timeline — ideal for concrete initiatives with clear scope",
+            "Monthly retainer: dedicated team with reserved capacity — ideal for multi-month roadmaps with shifting priorities",
+            "Support and evolution: post go-live monitoring, improvements, and new use cases on top of what's built",
+            "Embedded squad: our team works alongside yours in shared tools and processes"
+        ]
+    },
+    "pricing": {
+        "badge": "Investment",
+        "title": "From €3,000 / month",
+        "subtitle": "Monthly retainer between €3,000–€8,000/month based on reserved capacity. Fixed-scope projects priced by scope.",
+        "items": [
+            "Senior AI and development team — no junior masking, no hidden outsourcing",
+            "Reserved, predictable capacity (not hourly billing)",
+            "Direct team access on Slack/WhatsApp — no account manager middleman",
+            "Bi-weekly reports with progress, risks, and pending decisions"
+        ],
+        "cta": "Talk about a project"
+    },
+    "faq": {
+        "title": "Frequently asked questions",
+        "items": [
+            {
+                "q": "Do I need to have done the X-Ray or Roadmap first?",
+                "a": "No, but it helps. If you arrive with a clear roadmap, we execute. If you arrive with a concrete problem, we run a brief technical Discovery before planning the implementation."
+            },
+            {
+                "q": "Do you work with the technology we already use?",
+                "a": "Yes. We don't push vendor lock-in. If your CRM, ERP, or PMS works, we integrate. If it's broken, we say so before building on top."
+            },
+            {
+                "q": "Who owns the code?",
+                "a": "The client. Repositories in your organization, documentation included, no hidden dependencies on our systems."
+            },
+            {
+                "q": "Who handles support after go-live?",
+                "a": "Two options: we run a support and evolution retainer, or we transfer to your team with documentation and a technical handover."
+            },
+            {
+                "q": "Modern stack or legacy?",
+                "a": "Both. Mid-market reality mixes modern SaaS with legacy systems. We build clean integrations between both without rewriting what doesn't need to be touched."
+            },
+            {
+                "q": "How fast is the first delivery?",
+                "a": "Typically 2–4 weeks from kick-off. Every sprint ships something functional. If you don't see value in the first month, something failed — and we fix it."
+            }
+        ]
+    },
+    "finalCta": {
+        "title": "Have a concrete project or an approved roadmap?",
+        "subtitle": "30-minute call to understand scope and constraints. If there's a fit, implementation proposal in 48–72h.",
+        "cta": "Book a technical call"
+    }
+}

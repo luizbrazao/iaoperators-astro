@@ -13,6 +13,96 @@
             "title": "Enlaces"
         }
     },
+    "menorcaHotelChain": {
+        "title": "Radiografía Digital — Cadena hotelera (Menorca)",
+        "tagline": "Inventario completo de aplicaciones, integraciones y Shadow IT para una cadena hotelera con 4 propiedades en Menorca y 400+ empleados.",
+        "category": "Auditoría tecnológica · Hotelería",
+        "gallery": {
+            "heroAlt": "Hotel costero en Menorca — caso de Radiografía Digital"
+        },
+        "problem": "Cuatro propiedades, 400+ empleados, una década de crecimiento sumando herramientas: PMS, motor de reservas, channel manager, CRMs por departamento, hojas de cálculo críticas mantenidas por una sola persona. Nadie tenía la lista completa de lo que la cadena usaba, pagaba ni dependía. La dirección quería implementar IA, pero no sabía sobre qué base.",
+        "engineeringIntro": "Aplicamos la metodología Radiografía Digital en 3 semanas: kick-off, entrevistas estructuradas con 12 áreas funcionales, recopilación documental (contratos SaaS, facturación, accesos), mapeo de integraciones reales y análisis de riesgo por sistema. Cruzamos lo declarado con logs y facturación para detectar Shadow IT.",
+        "impact": "47 aplicaciones inventariadas (12 sin propietario claro), 23% de coste SaaS identificado como redundante o sin uso, 3 dependencias críticas de personas-clave documentadas y plan ejecutivo para los 12 meses siguientes.",
+        "whatItDoes": [
+            "Inventario maestro de aplicaciones, SaaS y automatizaciones",
+            "Matriz de licencias con costes reales y fechas de renovación",
+            "Mapa de integraciones entre PMS, motor de reservas y CRMs",
+            "Identificación de Shadow IT y procesos no documentados",
+            "Análisis de riesgo y criticidad por sistema",
+            "Informe ejecutivo con recomendaciones priorizadas por impacto"
+        ],
+        "howItWorks": [
+            "Fase 0 — Kick-off: alineación con C-level, accesos y comité de seguimiento",
+            "Fase 1 — Inventario: entrevistas con 12 áreas funcionales (operaciones, F&B, recepción, marketing, IT, RRHH, finanzas, etc.)",
+            "Fase 2 — Licencias: contratos SaaS, facturación real y uso por usuario",
+            "Fase 3 — Integraciones: mapa de flujos de datos entre PMS, channel manager, CRMs y herramientas operativas",
+            "Fase 4 — Riesgos: criticidad operativa, dependencias de personas, exposición de datos",
+            "Fase 5 — Recomendaciones: sesión ejecutiva con conclusiones y plan priorizado"
+        ],
+        "pillars": [
+            {
+                "title": "Inventario sin agujeros",
+                "description": "Cruzamos lo declarado con la realidad: facturación SaaS, logs y accesos. Aparece todo lo que la dirección no sabía que existía.",
+                "bullets": [
+                    "47 aplicaciones identificadas (vs. ~25 declaradas inicialmente)",
+                    "12 con propietario formal indefinido",
+                    "Shadow IT explícito y documentado"
+                ]
+            },
+            {
+                "title": "Mapa de integraciones",
+                "description": "Cómo viaja la información entre PMS, motor de reservas, channel manager y CRMs. Qué se hace a mano, qué se rompe semanalmente.",
+                "bullets": [
+                    "Diagrama de dependencias entre sistemas críticos",
+                    "Identificación de integraciones manuales (CSV, copy-paste)",
+                    "Puntos de falla con impacto operativo claro"
+                ]
+            },
+            {
+                "title": "Recomendaciones priorizadas",
+                "description": "No una lista de deseos. Iniciativas ordenadas por impacto vs. esfuerzo, con responsable y horizonte temporal.",
+                "bullets": [
+                    "Cancelaciones inmediatas: licencias sin uso",
+                    "Consolidaciones: redundancias entre departamentos",
+                    "Roadmap de integraciones para los próximos 12 meses"
+                ]
+            }
+        ],
+        "security": [
+            "Trabajo bajo NDA desde la primera sesión",
+            "Acceso solo de lectura: ninguna modificación a sistemas durante la auditoría",
+            "Entregables editables propiedad del cliente"
+        ],
+        "metrics": [
+            {
+                "label": "Aplicaciones inventariadas",
+                "note": "Vs. ~25 declaradas inicialmente"
+            },
+            {
+                "label": "Áreas funcionales mapeadas",
+                "note": "Operaciones, F&B, marketing, IT, finanzas y más"
+            },
+            {
+                "label": "Coste SaaS reducible",
+                "note": "Redundancias y licencias sin uso"
+            },
+            {
+                "label": "Semanas de proyecto",
+                "note": "Kick-off a sesión ejecutiva final"
+            }
+        ],
+        "links": [
+            {
+                "label": "Solicitar una Radiografía"
+            },
+            {
+                "label": "Ver el servicio completo"
+            },
+            {
+                "label": "Volver a Casos"
+            }
+        ]
+    },
     "chatplug": {
         "title": "ChatPlug: Automatización de WhatsApp + Altegio",
         "tagline": "Reservas 24/7 en Altegio vía WhatsApp, sin conflictos de agenda, con soporte multilingüe y operación escalable.",

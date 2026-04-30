@@ -1,0 +1,145 @@
+{
+    "meta": {
+        "title": "Radiografia Digital | Auditoria de sistemas em 3 semanas",
+        "description": "Inventário mestre, mapa de integrações, análise de risco e recomendações priorizadas para o seu parque tecnológico. Projeto fechado de 3 semanas, a partir de €4.500."
+    },
+    "hero": {
+        "badge": "Serviço · Auditoria de sistemas",
+        "title": "Radiografia Digital: o inventário completo do seu ecossistema tecnológico.",
+        "subtitle": "Antes de otimizar, automatizar ou transformar, você precisa saber exatamente o que tem. A maioria das empresas não sabe.",
+        "intro": "Aplicações registradas que ninguém usa, integrações que alguém mantém no braço, licenças que se renovam sozinhas, processos que dependem de uma pessoa que pode sair amanhã. A Radiografia Digital coloca nome, custo, risco e responsável em cada elemento do seu parque tecnológico em 3 semanas.",
+        "ctaPrimary": "Solicitar proposta",
+        "ctaSecondary": "Ver metodologia"
+    },
+    "problem": {
+        "title": "Algum desses cenários soa familiar?",
+        "subtitle": "Se você respondeu sim a algum, tem um problema de arquitetura operacional. Não de tecnologia.",
+        "items": [
+            "Licenças que ninguém sabe se ainda são usadas, mas continuam sendo pagas todo mês",
+            "Integrações entre sistemas que falham toda semana e alguém remenda no braço",
+            "Processos críticos que dependem de uma única pessoa — e ninguém documentou o como",
+            "Você quer implementar IA, mas não sabe sobre que base fazer isso sem quebrar o resto",
+            "Seu time de TI e seu time de negócio descrevem o mesmo sistema de formas diferentes"
+        ]
+    },
+    "deliverables": {
+        "title": "O que você recebe em 3 semanas",
+        "subtitle": "Documentação acionável, não apresentações.",
+        "items": [
+            {
+                "title": "Inventário mestre",
+                "body": "Lista completa de aplicações, SaaS, automações e Shadow IT com responsável, criticidade e uso real."
+            },
+            {
+                "title": "Matriz de licenças",
+                "body": "Custos reais por usuário, datas de renovação, redundâncias e oportunidades imediatas de economia."
+            },
+            {
+                "title": "Mapa de integrações",
+                "body": "Diagrama de dependências entre sistemas, fluxos de dados críticos e pontos de falha manuais."
+            },
+            {
+                "title": "Análise de risco",
+                "body": "Criticidade por sistema, dependências de pessoas-chave, exposições de segurança e compliance."
+            },
+            {
+                "title": "Relatório executivo",
+                "body": "Recomendações priorizadas por impacto vs. esforço, prontas para tomada de decisão nesta semana."
+            }
+        ]
+    },
+    "methodology": {
+        "badge": "Metodologia",
+        "title": "Como conduzimos as 3 semanas",
+        "subtitle": "O mesmo processo que aplicamos em redes hoteleiras, clínicas e empresas de serviços profissionais.",
+        "phases": [
+            {
+                "code": "Fase 0",
+                "title": "Kick-off",
+                "body": "Alinhamos escopo, stakeholders por área e acessos. Definimos o comitê de acompanhamento e a cadência de check-ins."
+            },
+            {
+                "code": "Fase 1",
+                "title": "Inventário",
+                "body": "Entrevistas estruturadas com responsáveis de cada área. Cruzamos o declarado com o real (logs, faturamento, acessos)."
+            },
+            {
+                "code": "Fase 2",
+                "title": "Licenças e custos",
+                "body": "Coletamos contratos, faturamento SaaS e uso real por usuário. Identificamos redundâncias e licenças órfãs."
+            },
+            {
+                "code": "Fase 3",
+                "title": "Integrações",
+                "body": "Mapeamos como a informação trafega entre sistemas, o que é feito no braço e quais automações existem sem documentação."
+            },
+            {
+                "code": "Fase 4",
+                "title": "Análise de risco",
+                "body": "Qualificamos criticidade operacional, dependências de pessoas, riscos de segurança e dívida técnica."
+            },
+            {
+                "code": "Fase 5",
+                "title": "Recomendações",
+                "body": "Sessão executiva com conclusões, prioridades e plano de evolução. Você decide o que resolver primeiro — com dados."
+            }
+        ]
+    },
+    "audience": {
+        "title": "Para quem é a Radiografia Digital?",
+        "subtitle": "Empresas com mais de 15 aplicações ativas que cresceram sem uma estratégia de arquitetura tecnológica.",
+        "items": [
+            "Redes hoteleiras com PMS, motor de reservas, channel manager e CRMs dispersos",
+            "Clínicas e centros médicos com HIS, agenda, faturamento e compliance",
+            "Escritórios jurídicos, contábeis e consultorias dependentes de processos manuais",
+            "Varejo omnicanal com ERP, e-commerce, marketplaces e logística desacoplados",
+            "Empresas de 50–500 pessoas antes de um projeto de IA, transformação digital ou M&A"
+        ]
+    },
+    "pricing": {
+        "badge": "Investimento",
+        "title": "A partir de €4.500 + impostos",
+        "subtitle": "Projeto fechado de 3 semanas. Sem cobranças ocultas, sem retainer.",
+        "items": [
+            "Kick-off, entrevistas, coleta documental e trabalho de campo inclusos",
+            "Até 8 áreas funcionais e 30 sistemas no escopo padrão",
+            "Sessão executiva final com C-level e/ou comitê de transformação",
+            "Acesso aos entregáveis em formato editável (não apenas PDF)"
+        ],
+        "cta": "Solicitar proposta"
+    },
+    "faq": {
+        "title": "Perguntas frequentes",
+        "items": [
+            {
+                "q": "Precisamos preparar algo antes de começar?",
+                "a": "Apenas acesso à informação que já existe (contratos SaaS, faturamento, lista de fornecedores). O resto fazemos por entrevistas. Não pedimos documentação nova."
+            },
+            {
+                "q": "Trabalham sob NDA?",
+                "a": "Sim, por padrão. Assinamos NDA antes da primeira sessão de descoberta."
+            },
+            {
+                "q": "Vocês mexem nos sistemas durante a auditoria?",
+                "a": "Não. Apenas leitura. Mapeamos o que existe sem alterar absolutamente nada."
+            },
+            {
+                "q": "Depois da Radiografia somos obrigados a contratar implementação?",
+                "a": "Não. A Radiografia é um projeto fechado. Se você decidir executar conosco, apresentamos um Roadmap Tecnológico ou um projeto de Implementação. Se preferir executar internamente ou com outro parceiro, os entregáveis são seus."
+            },
+            {
+                "q": "E se tivermos mais de 30 sistemas ou 8 áreas?",
+                "a": "Ampliamos escopo com orçamento adicional fechado por bloco. Definimos isso na proposta inicial."
+            },
+            {
+                "q": "Vocês têm casos anteriores?",
+                "a": "Sim. Trabalhamos com redes hoteleiras, clínicas e empresas de serviços profissionais. Compartilhamos casos anonimizados sob NDA na call de proposta."
+            }
+        ]
+    },
+    "finalCta": {
+        "title": "Quer realmente saber o que sua empresa tem?",
+        "subtitle": "Call de 30 minutos para entender o contexto. Se houver fit, enviamos uma proposta fechada em 48h.",
+        "cta": "Agendar call de diagnóstico"
+    }
+}

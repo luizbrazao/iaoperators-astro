@@ -1,0 +1,138 @@
+{
+    "meta": {
+        "title": "Implementação | Construímos o que o roadmap prescreve",
+        "description": "Automações com IA, integrações API-first, dashboards e sistemas sob medida. Projetos fechados ou retainer mensal a partir de €3.000/mês."
+    },
+    "hero": {
+        "badge": "Serviço · Implementação",
+        "title": "Construímos o que o roadmap prescreve.",
+        "subtitle": "Automações com IA, integrações API e sistemas sob medida — executados pelo mesmo time que diagnosticou o problema.",
+        "intro": "Ter um plano não transforma nada. A transformação acontece quando alguém constrói. Implementamos as iniciativas priorizadas pela auditoria e pelo roadmap: agentes de IA, automações operacionais, integrações entre sistemas, dashboards e software sob medida — sem hand-offs entre quem pensou a solução e quem constrói.",
+        "ctaPrimary": "Falar de um projeto",
+        "ctaSecondary": "Ver capacidades"
+    },
+    "problem": {
+        "title": "Quando você precisa de Implementação",
+        "subtitle": "O serviço começa quando você já sabe o que resolver e precisa de um time que construa bem.",
+        "items": [
+            "Você tem um roadmap aprovado e ninguém internamente consegue executar no prazo",
+            "Quer automatizar processos críticos sem contratar e formar um time novo",
+            "Precisa integrar SaaS e sistemas internos sem construir um departamento de TI próprio",
+            "Já testou agências de IA e só recebeu demos bonitas — nada em produção",
+            "Seu time de TI está soterrado em manutenção e não consegue tocar projetos novos"
+        ]
+    },
+    "deliverables": {
+        "title": "O que construímos",
+        "subtitle": "Capacidades reais, não rótulos. Cada bloco entrega valor em produção.",
+        "items": [
+            {
+                "title": "Automações com IA",
+                "body": "Agentes e fluxos com n8n, LangChain, setups multi-agent e modelos OpenAI/Anthropic. Casos de uso reais, não demos."
+            },
+            {
+                "title": "Integrações API-first",
+                "body": "Conectamos PMS, CRM, ERP, marketplaces, ferramentas de billing, helpdesk e SaaS internos. APIs, webhooks, filas, ETL."
+            },
+            {
+                "title": "Bots WhatsApp e omnicanal",
+                "body": "Bots de atendimento, reservas, suporte e captação com WhatsApp Business API, Telegram e integração com CRMs."
+            },
+            {
+                "title": "Dashboards operacionais",
+                "body": "Métricas operacionais e financeiras consolidadas. Dados de várias fontes em um painel que responde às perguntas reais do negócio."
+            },
+            {
+                "title": "Sistemas sob medida",
+                "body": "Aplicações internas, portais de cliente, painéis administrativos e ferramentas internas quando nenhum SaaS encaixa."
+            },
+            {
+                "title": "Suporte e evolução",
+                "body": "Manutenção, monitoramento e melhorias contínuas em modelo retainer. Automação não se constrói e esquece — evolui."
+            }
+        ]
+    },
+    "methodology": {
+        "badge": "Como trabalhamos",
+        "title": "Execução sem hand-offs",
+        "subtitle": "Mesmo time do descobrimento à produção. Iterações curtas, decisões rápidas, cada bloco vai a produção.",
+        "phases": [
+            {
+                "code": "Sprint 0",
+                "title": "Discovery técnico",
+                "body": "Validamos requisitos, acessos, dados e restrições. Definimos arquitetura concreta e plano de sprints."
+            },
+            {
+                "code": "Sprint 1+",
+                "title": "Build iterativo",
+                "body": "Sprints de 1–2 semanas com entregas funcionais. Seu time testa cada bloco no ambiente próprio antes de promover."
+            },
+            {
+                "code": "Go-live",
+                "title": "Deploy controlado",
+                "body": "Promovemos para produção com monitoramento ativo. Plano de rollback documentado, observabilidade desde o dia um."
+            },
+            {
+                "code": "Suporte",
+                "title": "Evolução contínua",
+                "body": "Retainer mensal ou sprints pontuais. Resolvemos incidentes, ajustamos modelos, integramos novas fontes e escalamos."
+            }
+        ]
+    },
+    "audience": {
+        "title": "Modalidades de contratação",
+        "subtitle": "Adaptamos o modelo ao tamanho do problema.",
+        "items": [
+            "Projeto fechado: escopo fixo, orçamento fechado, prazo definido — ideal para iniciativas concretas com escopo claro",
+            "Retainer mensal: time dedicado com capacidade reservada — ideal para roadmaps de vários meses com prioridades mutáveis",
+            "Suporte e evolução: pós go-live, monitoramento, melhorias e novos casos de uso sobre o que já foi construído",
+            "Squad embarcado: nosso time trabalha junto ao seu em ferramentas e processos compartilhados"
+        ]
+    },
+    "pricing": {
+        "badge": "Investimento",
+        "title": "A partir de €3.000 / mês",
+        "subtitle": "Retainer mensal entre €3.000–€8.000/mês conforme capacidade reservada. Projetos fechados precificados por escopo.",
+        "items": [
+            "Time sênior de IA e desenvolvimento — sem junior masking nem terceirização oculta",
+            "Capacidade reservada e previsível (não cobrança por hora)",
+            "Acesso direto ao time no Slack/WhatsApp — sem gerente de conta intermediário",
+            "Reportes quinzenais com avanços, riscos e decisões pendentes"
+        ],
+        "cta": "Falar de um projeto"
+    },
+    "faq": {
+        "title": "Perguntas frequentes",
+        "items": [
+            {
+                "q": "Preciso ter feito a Radiografia ou o Roadmap antes?",
+                "a": "Não, mas ajuda. Se você chega com um roadmap claro, executamos. Se chega com um problema concreto, fazemos um Discovery técnico breve antes de planejar a implementação."
+            },
+            {
+                "q": "Vocês trabalham com a tecnologia que já usamos?",
+                "a": "Sim. Não empurramos vendor lock-in. Se seu CRM, ERP ou PMS funciona, integramos. Se está quebrado, dizemos antes de construir em cima."
+            },
+            {
+                "q": "Quem é dono do código?",
+                "a": "O cliente. Repositórios na sua organização, documentação inclusa, sem dependências ocultas a sistemas nossos."
+            },
+            {
+                "q": "Quem faz o suporte depois do go-live?",
+                "a": "Duas opções: contratamos retainer de suporte e evolução, ou transferimos ao seu time com documentação e handover técnico."
+            },
+            {
+                "q": "Stack moderno ou legado?",
+                "a": "Ambos. A realidade mid-market mistura SaaS modernos com sistemas legados. Construímos integrações limpas entre os dois sem reescrever o que não precisa."
+            },
+            {
+                "q": "Quanto demora o primeiro entregável?",
+                "a": "Tipicamente 2–4 semanas a partir do kick-off. Cada sprint entrega algo funcional. Se você não vê valor no primeiro mês, algo falhou — e a gente resolve."
+            }
+        ]
+    },
+    "finalCta": {
+        "title": "Tem um projeto concreto ou um roadmap aprovado?",
+        "subtitle": "Call de 30 minutos para entender escopo e restrições. Se houver fit, proposta de implementação em 48–72h.",
+        "cta": "Agendar call técnica"
+    }
+}

@@ -13,6 +13,96 @@
             "title": "Links"
         }
     },
+    "menorcaHotelChain": {
+        "title": "Digital X-Ray — Hotel chain (Menorca)",
+        "tagline": "Full inventory of applications, integrations, and Shadow IT for a hotel chain with 4 properties in Menorca and 400+ employees.",
+        "category": "Technology audit · Hospitality",
+        "gallery": {
+            "heroAlt": "Coastal hotel in Menorca — Digital X-Ray case"
+        },
+        "problem": "Four properties, 400+ employees, a decade of growth piling up tools: PMS, booking engine, channel manager, department-level CRMs, critical spreadsheets owned by a single person. No one had the full list of what the chain used, paid for, or depended on. Leadership wanted to roll out AI but didn't know on what foundation.",
+        "engineeringIntro": "We applied the Digital X-Ray methodology in 3 weeks: kick-off, structured interviews with 12 functional areas, document collection (SaaS contracts, billing, accesses), real integration mapping, and per-system risk analysis. We cross-checked declarations against logs and billing to surface Shadow IT.",
+        "impact": "47 applications inventoried (12 without a clear owner), 23% of SaaS spend flagged as redundant or unused, 3 critical key-person dependencies documented, and an executive plan for the next 12 months.",
+        "whatItDoes": [
+            "Master inventory of applications, SaaS, and automations",
+            "License matrix with real costs and renewal dates",
+            "Integration map between PMS, booking engine, and CRMs",
+            "Shadow IT and undocumented processes surfaced",
+            "Per-system risk and criticality analysis",
+            "Executive report with impact-prioritized recommendations"
+        ],
+        "howItWorks": [
+            "Phase 0 — Kick-off: alignment with C-level, accesses, and steering committee",
+            "Phase 1 — Inventory: interviews with 12 functional areas (operations, F&B, front desk, marketing, IT, HR, finance, etc.)",
+            "Phase 2 — Licenses: SaaS contracts, real billing, and per-user usage",
+            "Phase 3 — Integrations: data flow map between PMS, channel manager, CRMs, and operational tools",
+            "Phase 4 — Risks: operational criticality, key-person dependencies, data exposure",
+            "Phase 5 — Recommendations: executive session with conclusions and prioritized plan"
+        ],
+        "pillars": [
+            {
+                "title": "No-blind-spots inventory",
+                "description": "We cross-check declarations against reality: SaaS billing, logs, and access records. Everything leadership didn't know was there shows up.",
+                "bullets": [
+                    "47 applications identified (vs. ~25 initially declared)",
+                    "12 with no formal owner",
+                    "Shadow IT explicit and documented"
+                ]
+            },
+            {
+                "title": "Integration map",
+                "description": "How information flows between PMS, booking engine, channel manager, and CRMs. What's done by hand, what breaks weekly.",
+                "bullets": [
+                    "Dependency diagram between critical systems",
+                    "Manual integrations surfaced (CSV, copy-paste)",
+                    "Failure points with clear operational impact"
+                ]
+            },
+            {
+                "title": "Prioritized recommendations",
+                "description": "Not a wish list. Initiatives ranked by impact vs. effort, each with owner and timeframe.",
+                "bullets": [
+                    "Immediate cancellations: licenses without usage",
+                    "Consolidations: redundancies across departments",
+                    "Integration roadmap for the next 12 months"
+                ]
+            }
+        ],
+        "security": [
+            "Work under NDA from the first session",
+            "Read-only access: no modifications to systems during the audit",
+            "Editable deliverables owned by the client"
+        ],
+        "metrics": [
+            {
+                "label": "Applications inventoried",
+                "note": "Vs. ~25 initially declared"
+            },
+            {
+                "label": "Functional areas mapped",
+                "note": "Operations, F&B, marketing, IT, finance, and more"
+            },
+            {
+                "label": "Reducible SaaS spend",
+                "note": "Redundancies and unused licenses"
+            },
+            {
+                "label": "Weeks of project",
+                "note": "Kick-off to final executive session"
+            }
+        ],
+        "links": [
+            {
+                "label": "Request an X-Ray"
+            },
+            {
+                "label": "See the full service"
+            },
+            {
+                "label": "Back to Cases"
+            }
+        ]
+    },
     "chatplug": {
         "title": "ChatPlug: WhatsApp + Altegio Automation",
         "tagline": "24/7 booking in Altegio via WhatsApp, with zero scheduling conflicts, multilingual support, and scalable operations.",
