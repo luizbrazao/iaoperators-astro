@@ -45,8 +45,8 @@
             {
                 "code": "01",
                 "title": "Radiografía Digital",
-                "summary": "Diagnosticamos. Inventario completo, mapa de integraciones, análisis de riesgo y recomendaciones priorizadas en 3 semanas.",
-                "duration": "3 semanas",
+                "summary": "Diagnosticamos. Inventario completo, mapa de integraciones, análisis de riesgo y recomendaciones priorizadas.",
+                "duration": "Desde 3 semanas",
                 "price": "Desde 4.500 €",
                 "href": "/auditoria-de-sistemas/",
                 "linkLabel": "Ver Radiografía Digital"

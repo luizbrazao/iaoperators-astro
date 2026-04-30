@@ -21,7 +21,7 @@
             "heroAlt": "Hotel costeiro em Menorca — caso de Radiografia Digital"
         },
         "problem": "Quatro propriedades, 400+ funcionários, uma década de crescimento acumulando ferramentas: PMS, motor de reservas, channel manager, CRMs por departamento, planilhas críticas mantidas por uma única pessoa. Ninguém tinha a lista completa do que a rede usava, pagava ou dependia. A diretoria queria implementar IA, mas não sabia sobre que base.",
-        "engineeringIntro": "Aplicamos a metodologia Radiografia Digital em 3 semanas: kick-off, entrevistas estruturadas com 12 áreas funcionais, coleta documental (contratos SaaS, faturamento, acessos), mapeamento real de integrações e análise de risco por sistema. Cruzamos o declarado com logs e faturamento para identificar Shadow IT.",
+        "engineeringIntro": "Aplicamos a metodologia Radiografia Digital: kick-off, entrevistas estruturadas com 12 áreas funcionais, coleta documental (contratos SaaS, faturamento, acessos), mapeamento real de integrações e análise de risco por sistema. Cruzamos o declarado com logs e faturamento para identificar Shadow IT.",
         "impact": "47 aplicações inventariadas (12 sem responsável claro), 23% do gasto SaaS identificado como redundante ou sem uso, 3 dependências críticas de pessoas-chave documentadas e plano executivo para os 12 meses seguintes.",
         "whatItDoes": [
             "Inventário mestre de aplicações, SaaS e automações",

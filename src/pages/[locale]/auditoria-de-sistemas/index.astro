@@ -199,11 +199,11 @@ const jsonLd = faqJsonLd ? [serviceJsonLd, faqJsonLd] : [serviceJsonLd];
           <ol class="space-y-6 max-w-4xl mx-auto">
             {methodology.phases.map((phase: any) => (
               <li class="flex flex-col md:flex-row gap-6 bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8 hover:border-orange-500/20 transition-all duration-300">
-                <div class="md:w-32 shrink-0">
+                <div class="md:w-52 shrink-0">
                   <div class="text-orange-400 text-xs font-semibold uppercase tracking-widest mb-1">
                     {phase?.code}
                   </div>
-                  <h3 class="text-xl md:text-2xl font-bold text-white">
+                  <h3 class="text-xl font-bold text-white">
                     {phase?.title}
                   </h3>
                 </div>

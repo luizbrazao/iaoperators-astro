@@ -1,13 +1,13 @@
 {
     "meta": {
-        "title": "Radiografia Digital | Auditoria de sistemas em 3 semanas",
-        "description": "Inventário mestre, mapa de integrações, análise de risco e recomendações priorizadas para o seu parque tecnológico. Projeto fechado de 3 semanas, a partir de €4.500."
+        "title": "Radiografia Digital | Auditoria de sistemas",
+        "description": "Inventário mestre, mapa de integrações, análise de risco e recomendações priorizadas para o seu parque tecnológico. A partir de €4.500."
     },
     "hero": {
         "badge": "Serviço · Auditoria de sistemas",
         "title": "Radiografia Digital: o inventário completo do seu ecossistema tecnológico.",
         "subtitle": "Antes de otimizar, automatizar ou transformar, você precisa saber exatamente o que tem. A maioria das empresas não sabe.",
-        "intro": "Aplicações registradas que ninguém usa, integrações que alguém mantém no braço, licenças que se renovam sozinhas, processos que dependem de uma pessoa que pode sair amanhã. A Radiografia Digital coloca nome, custo, risco e responsável em cada elemento do seu parque tecnológico em 3 semanas.",
+        "intro": "Aplicações registradas que ninguém usa, integrações que alguém mantém no braço, licenças que se renovam sozinhas, processos que dependem de uma pessoa que pode sair amanhã. A Radiografia Digital coloca nome, custo, risco e responsável em cada elemento do seu parque tecnológico.",
         "ctaPrimary": "Solicitar proposta",
         "ctaSecondary": "Ver metodologia"
     },
@@ -23,7 +23,7 @@
         ]
     },
     "deliverables": {
-        "title": "O que você recebe em 3 semanas",
+        "title": "O que você recebe",
         "subtitle": "Documentação acionável, não apresentações.",
         "items": [
             {
@@ -50,7 +50,7 @@
     },
     "methodology": {
         "badge": "Metodologia",
-        "title": "Como conduzimos as 3 semanas",
+        "title": "Como conduzimos",
         "subtitle": "O mesmo processo que aplicamos em redes hoteleiras, clínicas e empresas de serviços profissionais.",
         "phases": [
             {
@@ -99,7 +99,7 @@
     "pricing": {
         "badge": "Investimento",
         "title": "A partir de €4.500 + impostos",
-        "subtitle": "Projeto fechado de 3 semanas. Sem cobranças ocultas, sem retainer.",
+        "subtitle": "Sem cobranças ocultas, sem retainer.",
         "items": [
             "Kick-off, entrevistas, coleta documental e trabalho de campo inclusos",
             "Até 8 áreas funcionais e 30 sistemas no escopo padrão",

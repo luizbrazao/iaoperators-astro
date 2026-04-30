@@ -1,13 +1,13 @@
 {
     "meta": {
-        "title": "Digital X-Ray | Systems audit in 3 weeks",
+        "title": "Digital X-Ray | Systems audit",
         "description": "Master inventory, integration map, risk analysis, and prioritized recommendations for your technology stack. Fixed-scope 3-week project, from €4,500."
     },
     "hero": {
         "badge": "Service · Systems audit",
         "title": "Digital X-Ray: the full inventory of your technology ecosystem.",
         "subtitle": "Before optimizing, automating, or transforming, you need to know exactly what you have. Most companies don't.",
-        "intro": "Apps registered that no one uses, integrations someone keeps alive by hand, licenses that auto-renew, processes that depend on a single person who could leave tomorrow. The Digital X-Ray puts a name, cost, risk, and owner on every element of your technology stack in 3 weeks.",
+        "intro": "Apps registered that no one uses, integrations someone keeps alive by hand, licenses that auto-renew, processes that depend on a single person who could leave tomorrow. The Digital X-Ray puts a name, cost, risk, and owner on every element of your technology stack.",
         "ctaPrimary": "Request a proposal",
         "ctaSecondary": "See the methodology"
     },
@@ -23,7 +23,7 @@
         ]
     },
     "deliverables": {
-        "title": "What you get in 3 weeks",
+        "title": "What you get",
         "subtitle": "Actionable documentation, not slide decks.",
         "items": [
             {
@@ -50,7 +50,7 @@
     },
     "methodology": {
         "badge": "Methodology",
-        "title": "How we run the 3 weeks",
+        "title": "How we run it",
         "subtitle": "The same process we apply in hotel chains, clinics, and professional services firms.",
         "phases": [
             {

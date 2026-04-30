@@ -3,7 +3,6 @@
         "title": "IA Operators | Auditoria e Implementação Tecnológica",
         "description": "Mapeamos, ordenamos e evoluímos o parque tecnológico de empresas de médio porte: diagnóstico, roadmap e implementação com IA, integrações API e desenvolvimento sob medida."
     },
-
     "hero": {
         "titleHighlight": "Mapeamos, ordenamos e evoluímos",
         "titleHighlightMobile": "Mais tecnologia do que você controla",
@@ -50,7 +49,7 @@
         "steps": [
             {
                 "title": "1. Diagnosticamos",
-                "body": "Inventário completo de aplicações, licenças, integrações, dependências e Shadow IT. Identificamos custos ocultos, riscos operacionais e pontos de falha em 3 semanas."
+                "body": "Inventário completo de aplicações, licenças, integrações, dependências e Shadow IT. Identificamos custos ocultos, riscos operacionais e pontos de falha."
             },
             {
                 "title": "2. Priorizamos",
@@ -111,7 +110,7 @@
             },
             {
                 "q": "O que é a Radiografia Digital?",
-                "a": "É nosso serviço de entrada: em 3 semanas mapeamos todas as aplicações, licenças, integrações, dependências e Shadow IT da sua empresa. Entregamos inventário mestre, matriz de licenças, mapa de integrações, análise de risco e um relatório executivo com recomendações priorizadas."
+                "a": "É nosso serviço de entrada: mapeamos todas as aplicações, licenças, integrações, dependências e Shadow IT da sua empresa. Entregamos inventário mestre, matriz de licenças, mapa de integrações, análise de risco e um relatório executivo com recomendações priorizadas."
             },
             {
                 "q": "Para que tipo de empresa isso é pensado?",
@@ -119,7 +118,7 @@
             },
             {
                 "q": "Quanto custa uma Radiografia Digital?",
-                "a": "A partir de €4.500 + impostos, projeto fechado de 3 semanas. Inclui inventário, mapa de integrações, análise de risco e recomendações priorizadas."
+                "a": "A partir de €4.500 + impostos. Inclui inventário, mapa de integrações, análise de risco e recomendações priorizadas."
             },
             {
                 "q": "E se depois da auditoria a gente quiser executar?",

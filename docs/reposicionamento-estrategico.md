@@ -185,7 +185,7 @@ Empresas de 50–500 personas en sectores con alta dependencia operativa de sist
 
 > Antes de optimizar, automatizar o transformar, necesitas saber exactamente qué tienes. La mayoría de las empresas no lo sabe. Tenemos aplicaciones registradas que nadie usa, integraciones que alguien mantiene a mano, licencias que se renuevan solas y procesos que dependen de una persona que podría irse mañana.
 >
-> La Radiografía Digital pone nombre, coste, riesgo y propietario a cada elemento de tu parque tecnológico en 3 semanas.
+> La Radiografía Digital pone nombre, coste, riesgo y propietario a cada elemento de tu parque tecnológico.
 
 **Lo que recibes:**
 

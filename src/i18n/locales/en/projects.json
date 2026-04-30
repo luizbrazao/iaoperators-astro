@@ -21,7 +21,7 @@
             "heroAlt": "Coastal hotel in Menorca — Digital X-Ray case"
         },
         "problem": "Four properties, 400+ employees, a decade of growth piling up tools: PMS, booking engine, channel manager, department-level CRMs, critical spreadsheets owned by a single person. No one had the full list of what the chain used, paid for, or depended on. Leadership wanted to roll out AI but didn't know on what foundation.",
-        "engineeringIntro": "We applied the Digital X-Ray methodology in 3 weeks: kick-off, structured interviews with 12 functional areas, document collection (SaaS contracts, billing, accesses), real integration mapping, and per-system risk analysis. We cross-checked declarations against logs and billing to surface Shadow IT.",
+        "engineeringIntro": "We applied the Digital X-Ray methodology: kick-off, structured interviews with 12 functional areas, document collection (SaaS contracts, billing, accesses), real integration mapping, and per-system risk analysis. We cross-checked declarations against logs and billing to surface Shadow IT.",
         "impact": "47 applications inventoried (12 without a clear owner), 23% of SaaS spend flagged as redundant or unused, 3 critical key-person dependencies documented, and an executive plan for the next 12 months.",
         "whatItDoes": [
             "Master inventory of applications, SaaS, and automations",

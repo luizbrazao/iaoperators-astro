@@ -49,7 +49,7 @@
         "steps": [
             {
                 "title": "1. Diagnose",
-                "body": "Full inventory of applications, licenses, integrations, dependencies, and Shadow IT. We surface hidden costs, operational risks, and failure points in 3 weeks."
+                "body": "Full inventory of applications, licenses, integrations, dependencies, and Shadow IT. We surface hidden costs, operational risks, and failure points."
             },
             {
                 "title": "2. Prioritize",
@@ -110,7 +110,7 @@
             },
             {
                 "q": "What is the Digital X-Ray?",
-                "a": "Our entry-level service: in 3 weeks we map every application, license, integration, dependency, and Shadow IT in your company. Deliverables: master inventory, license matrix, integration map, risk analysis, and an executive report with prioritized recommendations."
+                "a": "Our entry-level service: we map every application, license, integration, dependency, and Shadow IT in your company. Deliverables: master inventory, license matrix, integration map, risk analysis, and an executive report with prioritized recommendations."
             },
             {
                 "q": "Who is this for?",

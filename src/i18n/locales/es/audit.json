@@ -1,13 +1,13 @@
 {
     "meta": {
-        "title": "Radiografía Digital | Auditoría de sistemas en 3 semanas",
-        "description": "Inventario maestro, mapa de integraciones, análisis de riesgos y recomendaciones priorizadas para tu parque tecnológico. Proyecto cerrado de 3 semanas, desde 4.500 €."
+        "title": "Radiografía Digital | Auditoría de sistemas",
+        "description": "Inventario maestro, mapa de integraciones, análisis de riesgos y recomendaciones priorizadas para tu parque tecnológico. Desde 4.500 €."
     },
     "hero": {
         "badge": "Servicio · Auditoría de sistemas",
         "title": "Radiografía Digital: el inventario completo de tu ecosistema tecnológico.",
         "subtitle": "Antes de optimizar, automatizar o transformar, necesitas saber exactamente qué tienes. La mayoría de las empresas no lo sabe.",
-        "intro": "Aplicaciones registradas que nadie usa, integraciones que alguien mantiene a mano, licencias que se renuevan solas, procesos que dependen de una persona que podría irse mañana. La Radiografía Digital pone nombre, coste, riesgo y propietario a cada elemento de tu parque tecnológico en 3 semanas.",
+        "intro": "Aplicaciones registradas que nadie usa, integraciones que alguien mantiene a mano, licencias que se renuevan solas, procesos que dependen de una persona que podría irse mañana. La Radiografía Digital pone nombre, coste, riesgo y propietario a cada elemento de tu parque tecnológico.",
         "ctaPrimary": "Solicitar propuesta",
         "ctaSecondary": "Ver metodología"
     },
@@ -23,7 +23,7 @@
         ]
     },
     "deliverables": {
-        "title": "Lo que recibes en 3 semanas",
+        "title": "Lo que recibes",
         "subtitle": "Documentación accionable, no presentaciones.",
         "items": [
             {
@@ -50,7 +50,7 @@
     },
     "methodology": {
         "badge": "Metodología",
-        "title": "Cómo trabajamos las 3 semanas",
+        "title": "Cómo trabajamos",
         "subtitle": "El mismo proceso que aplicamos en cadenas hoteleras, clínicas y empresas de servicios profesionales.",
         "phases": [
             {
@@ -99,7 +99,7 @@
     "pricing": {
         "badge": "Inversión",
         "title": "Desde 4.500 € + IVA",
-        "subtitle": "Proyecto cerrado de 3 semanas. Sin cargos ocultos, sin retainer.",
+        "subtitle": "Sin cargos ocultos, sin retainer.",
         "items": [
             "Kick-off, entrevistas, recopilación documental y trabajo de campo incluidos",
             "Hasta 8 áreas funcionales y 30 sistemas en alcance estándar",
