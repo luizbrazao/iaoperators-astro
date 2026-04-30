@@ -63,13 +63,32 @@ const socials = [
   { label: "YouTube", href: "https://www.youtube.com/@iaoperators" },
 ];
 
+const blogUrl = new URL(`/${locale}/blog/`, site).toString();
+const homeLabel = locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio";
+
 const jsonLd: any[] = [
   {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "IA Operators",
-    url: site,
-    sameAs: socials.map((s) => s.href),
+    "@type": "Blog",
+    name: title,
+    description: description || undefined,
+    url: blogUrl,
+    inLanguage: locale,
+    publisher: {
+      "@type": ["Organization", "ProfessionalService"],
+      name: "IA Operators",
+      url: site,
+      logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+      sameAs: socials.map((s) => s.href),
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: homeLabel, item: new URL(`/${locale}/`, site).toString() },
+      { "@type": "ListItem", position: 2, name: "Blog", item: blogUrl },
+    ],
   },
 ];
 

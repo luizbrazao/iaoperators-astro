@@ -70,6 +70,49 @@ const jsonLd: any[] = [
       jobTitle: "Fundador",
       url: site,
     },
+    knowsAbout: [
+      "Technology audit",
+      "Digital transformation",
+      "AI automation",
+      "Systems integration",
+      "Technology roadmap",
+      "Mid-market technology consulting",
+      "SaaS management",
+      "Shadow IT",
+      "n8n",
+      "LangChain",
+      "API integration",
+    ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Servicios de IA Operators",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Radiografía Digital — Auditoría de sistemas",
+            url: new URL(`/${locale}/auditoria-de-sistemas/`, site).toString(),
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Roadmap Tecnológico",
+            url: new URL(`/${locale}/roadmap-tecnologico/`, site).toString(),
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Implementación tecnológica",
+            url: new URL(`/${locale}/implementacion/`, site).toString(),
+          },
+        },
+      ],
+    },
     sameAs: socials.map((item) => item.href),
   },
   {

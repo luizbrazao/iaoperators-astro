@@ -48,9 +48,52 @@ const resolveLinkHref = (href: string, external?: boolean) => {
 const primaryMetric = project.metrics?.[0];
 const pageTitle = `${t(project.titleKey)} — IA Operators`;
 const pageDescription = t(project.taglineKey);
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const projectUrl = new URL(`/${locale}/portfolio/${slug}/`, site).toString();
+const portfolioUrl = new URL(`/${locale}/portfolio/`, site).toString();
+const homeLabel = locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio";
+
+const portfolioSlugJsonLd: any[] = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: pageTitle,
+    description: pageDescription,
+    url: projectUrl,
+    inLanguage: locale,
+    image: project.heroImage ? new URL(project.heroImage, site).toString() : undefined,
+    author: {
+      "@type": "Organization",
+      name: "IA Operators",
+      url: site,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "IA Operators",
+      url: site,
+      logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+    },
+    about: {
+      "@type": "Service",
+      name: t(project.titleKey),
+      description: pageDescription,
+      provider: { "@type": "Organization", name: "IA Operators", url: site },
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: homeLabel, item: new URL(`/${locale}/`, site).toString() },
+      { "@type": "ListItem", position: 2, name: "Portfolio", item: portfolioUrl },
+      { "@type": "ListItem", position: 3, name: t(project.titleKey), item: projectUrl },
+    ],
+  },
+];
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription} ogImage={project.heroImage ?? undefined}>
+<BaseLayout title={pageTitle} description={pageDescription} ogImage={project.heroImage ?? undefined} jsonLd={portfolioSlugJsonLd}>
   <section class="bg-transparent text-white pt-28 pb-20 px-6">
     <div class="max-w-6xl mx-auto">
       <!-- Top nav -->

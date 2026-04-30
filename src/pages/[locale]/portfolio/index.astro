@@ -26,9 +26,51 @@ const liveProjectsCount = projects.filter((project) => project.links?.some((l) =
 const uniqueVerticalsCount = new Set(
   projects.map((project) => (project.categoryKey ? t(project.categoryKey) : project.category))
 ).size;
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const portfolioUrl = new URL(`/${locale}/portfolio/`, site).toString();
+const homeLabel = locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio";
+
+const portfolioJsonLd: any[] = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: pageTitle,
+    description: pageDescription,
+    url: portfolioUrl,
+    inLanguage: locale,
+    publisher: {
+      "@type": "Organization",
+      name: "IA Operators",
+      url: site,
+      logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: pageTitle,
+    url: portfolioUrl,
+    numberOfItems: projects.length,
+    itemListElement: projects.map((p: Project, idx: number) => ({
+      "@type": "ListItem",
+      position: idx + 1,
+      url: new URL(`/${locale}/portfolio/${p.slug}/`, site).toString(),
+      name: t(p.titleKey),
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: homeLabel, item: new URL(`/${locale}/`, site).toString() },
+      { "@type": "ListItem", position: 2, name: "Portfolio", item: portfolioUrl },
+    ],
+  },
+];
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription}>
+<BaseLayout title={pageTitle} description={pageDescription} jsonLd={portfolioJsonLd}>
   <section class="bg-transparent text-white py-24 px-6" id="portfolio">
     <div class="max-w-7xl mx-auto">
       <!-- Cabeçalho -->
