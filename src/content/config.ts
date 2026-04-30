@@ -28,6 +28,8 @@ const blog = defineCollection({
     translationKey: z.string().optional(),
     draft: z.boolean().default(false),
     author: z.string().default("IA Operators"),
+    authorTitle: z.string().optional(),
+    updatedAt: z.coerce.date().optional(),
     faq: z
       .array(z.object({ q: z.string(), a: z.string() }))
       .optional(),

@@ -23,9 +23,38 @@ const t = {
 
 const metaTitle = contact?.metaTitle ?? `${t.title} | IA Operators`;
 const metaDescription = contact?.metaDescription ?? t.subtitle;
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(`/${locale}/contact/`, site).toString();
+
+const contactJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  name: metaTitle,
+  description: metaDescription,
+  url: pageUrl,
+  mainEntity: {
+    "@type": ["Organization", "ProfessionalService"],
+    name: "IA Operators",
+    url: site,
+    telephone: "+34662423523",
+    email: "info@iaoperators.com",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Málaga",
+      addressCountry: "ES",
+    },
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: "+34662423523",
+      contactType: "sales",
+      availableLanguage: ["Spanish", "Portuguese", "English"],
+    },
+  },
+};
 ---
 
-<BaseLayout title={metaTitle} description={metaDescription}>
+<BaseLayout title={metaTitle} description={metaDescription} jsonLd={contactJsonLd}>
   <div class="bg-transparent text-white min-h-screen">
     <!-- HERO (sem GridSpotlight local, porque já está no BaseLayout) -->
     <section class="relative flex items-center justify-center pt-28 pb-14 px-4 overflow-hidden">

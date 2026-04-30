@@ -29,17 +29,21 @@ const contactHref = `/${locale}/contact/`;
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const pageUrl = new URL(`/${locale}/auditoria-de-sistemas/`, site).toString();
 
+const providerSchema = {
+  "@type": ["Organization", "ProfessionalService"],
+  name: "IA Operators",
+  url: site,
+  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+};
+
 const serviceJsonLd = {
   "@context": "https://schema.org",
   "@type": "Service",
   name: "Radiografía Digital",
   alternateName: ["Digital X-Ray", "Radiografia Digital"],
   serviceType: "Technology audit and systems inventory",
-  provider: {
-    "@type": "Organization",
-    name: "IA Operators",
-    url: site,
-  },
+  provider: providerSchema,
   areaServed: ["ES", "PT", "BR"],
   description: meta?.description,
   url: pageUrl,
@@ -58,6 +62,15 @@ const serviceJsonLd = {
   },
 };
 
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: hero?.badge ?? "Auditoría de sistemas", item: pageUrl },
+  ],
+};
+
 const faqJsonLd = Array.isArray(faq?.items) && faq.items.length > 0
   ? {
       "@context": "https://schema.org",
@@ -73,7 +86,7 @@ const faqJsonLd = Array.isArray(faq?.items) && faq.items.length > 0
     }
   : null;
 
-const jsonLd = faqJsonLd ? [serviceJsonLd, faqJsonLd] : [serviceJsonLd];
+const jsonLd = [serviceJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [])];
 ---
 
 <BaseLayout

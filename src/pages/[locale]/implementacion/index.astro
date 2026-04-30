@@ -30,17 +30,21 @@ const roadmapHref = `/${locale}/roadmap-tecnologico/`;
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const pageUrl = new URL(`/${locale}/implementacion/`, site).toString();
 
+const providerSchema = {
+  "@type": ["Organization", "ProfessionalService"],
+  name: "IA Operators",
+  url: site,
+  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+};
+
 const serviceJsonLd = {
   "@context": "https://schema.org",
   "@type": "Service",
   name: "Implementación tecnológica",
   alternateName: ["Implementation", "Implementação"],
   serviceType: "AI automation, API integrations and custom software development",
-  provider: {
-    "@type": "Organization",
-    name: "IA Operators",
-    url: site,
-  },
+  provider: providerSchema,
   areaServed: ["ES", "PT", "BR"],
   description: meta?.description,
   url: pageUrl,
@@ -72,7 +76,16 @@ const faqJsonLd = Array.isArray(faq?.items) && faq.items.length > 0
     }
   : null;
 
-const jsonLd = faqJsonLd ? [serviceJsonLd, faqJsonLd] : [serviceJsonLd];
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: hero?.badge ?? "Implementación", item: pageUrl },
+  ],
+};
+
+const jsonLd = [serviceJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [])];
 ---
 
 <BaseLayout

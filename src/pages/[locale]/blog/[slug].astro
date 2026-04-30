@@ -87,6 +87,7 @@ const title = entry.data.title;
 const description = entry.data.description;
 const articleKeywords = entry.data.tags ?? [];
 const wordCount = entry.body ? entry.body.trim().split(/\s+/).filter(Boolean).length : undefined;
+const updatedAt = entry.data.updatedAt;
 
 // Reading time from raw markdown body
 const readMinutes = Math.max(3, Math.ceil((entry.body?.length ?? 0) / 1500));
@@ -120,13 +121,18 @@ const ogModifiedTime = toIsoWithOffset(parsedDate, 60);
 
 const faqItems = entry.data.faq ?? [];
 
+const isPersonAuthor = entry.data.author && entry.data.author !== "IA Operators";
+const authorSchema = isPersonAuthor
+  ? { "@type": "Person", name: entry.data.author, jobTitle: entry.data.authorTitle ?? "Fundador, IA Operators", url: site }
+  : { "@type": "Organization", name: "IA Operators", url: site };
+
 const blogPostingJsonLd = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   headline: title,
   description,
   datePublished: parsedDate.toISOString(),
-  dateModified: parsedDate.toISOString(),
+  dateModified: (updatedAt ?? parsedDate).toISOString(),
   inLanguage: locale,
   mainEntityOfPage: {
     "@type": "WebPage",
@@ -136,11 +142,7 @@ const blogPostingJsonLd = {
   articleSection: entry.data.articleSection,
   keywords: articleKeywords.length ? articleKeywords.join(", ") : undefined,
   wordCount,
-  author: {
-    "@type": "Organization",
-    name: entry.data.author ?? "IA Operators",
-    url: site,
-  },
+  author: authorSchema,
   publisher: {
     "@type": "Organization",
     name: "IA Operators",
@@ -189,7 +191,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
   alternates={localeAlternates}
   xDefaultUrl={xDefaultUrl}
   jsonLd={jsonLd}
-  ogImage={entry.data.image ?? "/og.png"}
+  ogImage={entry.data.image ?? `/og/${locale}/${slug}.png`}
   ogImageAlt={entry.data.imageAlt ?? title}
   ogType="article"
   ogPublishedTime={ogPublishedTime}
@@ -262,6 +264,19 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
             </svg>
             <time itemprop="datePublished" datetime={parsedDate.toISOString()}>{formattedDate}</time>
           </div>
+
+          {updatedAt && (
+            <div class="flex items-center gap-2 text-orange-400/80">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="text-orange-400">
+                <path d="M23 4v6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M1 20v-6h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <time itemprop="dateModified" datetime={updatedAt.toISOString()}>
+                {blogPostDict?.updatedLabel ?? "Actualizado"}: {updatedAt.toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })}
+              </time>
+            </div>
+          )}
 
           <!-- Reading time -->
           <div class="flex items-center gap-2">

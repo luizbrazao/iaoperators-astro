@@ -46,14 +46,45 @@ const meta = home?.meta ?? {};
 const faq = home?.faq ?? { items: [] };
 const faqItems: FaqItem[] = Array.isArray(faq?.items) ? (faq.items as FaqItem[]) : [];
 
-// JSON-LD: sempre Organization; FAQPage só se tiver itens
+// JSON-LD: Organization + WebSite; FAQPage só se tiver itens
 const jsonLd: any[] = [
   {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": ["Organization", "ProfessionalService"],
     name: "IA Operators",
     url: site,
+    logo: {
+      "@type": "ImageObject",
+      url: `${site}/favicon-32x32.png`,
+    },
+    description: "Auditoría, roadmap e implementación tecnológica para empresas medianas. Diagnóstico riguroso, priorización y ejecución sin hand-offs.",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Málaga",
+      addressCountry: "ES",
+    },
+    areaServed: ["ES", "PT", "BR"],
+    founder: {
+      "@type": "Person",
+      name: "Luiz Brazão",
+      jobTitle: "Fundador",
+      url: site,
+    },
     sameAs: socials.map((item) => item.href),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "IA Operators",
+    url: site,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${site}/{locale}/blog/?cat={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
   },
 ];
 

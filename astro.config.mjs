@@ -8,7 +8,8 @@ import vercel from "@astrojs/vercel";
 export default defineConfig({
   site: "https://iaoperators.com",
 
-  // Astro v5: "hybrid" foi absorvido por "static".
+  // "static" com adapter: páginas são pré-geradas, mas endpoints
+  // com prerender=false (ex: /api/contact) correm como Vercel Functions.
   output: "static",
   adapter: vercel(),
 

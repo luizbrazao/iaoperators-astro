@@ -42,6 +42,26 @@ const aboutJsonLd = {
   },
 };
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": ["Organization", "ProfessionalService"],
+  name: "IA Operators",
+  url: site,
+  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+  description: meta?.description,
+  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+  areaServed: ["ES", "PT", "BR"],
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: hero?.badge ?? "Metodología", item: pageUrl },
+  ],
+};
+
 const faqJsonLd = Array.isArray(faq?.items) && faq.items.length > 0
   ? {
       "@context": "https://schema.org",
@@ -54,7 +74,7 @@ const faqJsonLd = Array.isArray(faq?.items) && faq.items.length > 0
     }
   : null;
 
-const jsonLd = faqJsonLd ? [aboutJsonLd, faqJsonLd] : [aboutJsonLd];
+const jsonLd = [aboutJsonLd, organizationJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [])];
 ---
 
 <BaseLayout
