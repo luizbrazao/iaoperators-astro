@@ -5,7 +5,7 @@ category: others
 date: 2026-04-30
 locale: pt
 translationKey: tech-systems-audit
-image: /blog/auditoria-sistemas-tecnologicos.png
+image: /images/blog/auditoria-sistemas-tecnologicos.png
 imageAlt: "Diagrama abstracto de ecosistema tecnológico interconectado sobre fondo oscuro"
 author: Luiz Brazão
 authorTitle: Fundador, IA Operators

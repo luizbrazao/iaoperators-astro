@@ -5,7 +5,7 @@ category: tools
 date: 2026-04-30
 locale: es
 translationKey: n8n-vs-zapier-vs-make
-image: /blog/automatizacion-comparativa.png
+image: /images/blog/automatizacion-comparativa.png
 imageAlt: "Diagrama abstracto de pipelines de automatización interconectados sobre fondo oscuro"
 author: Luiz Brazão
 authorTitle: Fundador, IA Operators

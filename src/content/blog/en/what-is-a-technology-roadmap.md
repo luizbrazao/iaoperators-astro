@@ -5,7 +5,7 @@ category: others
 date: 2026-04-30
 locale: en
 translationKey: what-is-tech-roadmap
-image: /blog/roadmap-tecnologico.png
+image: /images/blog/roadmap-tecnologico.png
 imageAlt: "Diagrama abstracto de timeline tecnológico con fases y hitos sobre fondo oscuro"
 author: Luiz Brazão
 authorTitle: Founder, IA Operators
