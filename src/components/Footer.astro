@@ -84,6 +84,25 @@ const links = {
       </div>
     </div>
 
+    <!-- Navegação de serviços e páginas -->
+    <nav aria-label="Site links" class="w-full py-8 border-b border-white/5">
+      <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm">
+        <a href={withLocale("auditoria-de-sistemas/")} class="text-gray-400 hover:text-orange-400 transition-colors">Radiografía Digital</a>
+        <span class="text-white/15 select-none">·</span>
+        <a href={withLocale("roadmap-tecnologico/")} class="text-gray-400 hover:text-orange-400 transition-colors">Roadmap Tecnológico</a>
+        <span class="text-white/15 select-none">·</span>
+        <a href={withLocale("implementacion/")} class="text-gray-400 hover:text-orange-400 transition-colors">Implementación</a>
+        <span class="text-white/15 select-none">·</span>
+        <a href={withLocale("metodologia/")} class="text-gray-400 hover:text-orange-400 transition-colors">Metodología</a>
+        <span class="text-white/15 hidden md:inline select-none">—</span>
+        <a href={withLocale("portfolio/")} class="text-gray-400 hover:text-orange-400 transition-colors">Portfolio</a>
+        <span class="text-white/15 select-none">·</span>
+        <a href={links.blog} class="text-gray-400 hover:text-orange-400 transition-colors">Blog</a>
+        <span class="text-white/15 select-none">·</span>
+        <a href={links.contact} class="text-gray-400 hover:text-orange-400 transition-colors">{t.cta}</a>
+      </div>
+    </nav>
+
     <!-- Rodapé Inferior -->
     <div class="w-full flex flex-col md:flex-row items-center justify-between mt-12 gap-6 relative">
       <!-- Copyright + Legal -->

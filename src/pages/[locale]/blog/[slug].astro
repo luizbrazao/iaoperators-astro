@@ -392,6 +392,53 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
         </div>
       )}
 
+      <!-- CTA block -->
+      <div class="mx-2 md:mx-8 mt-16 rounded-3xl border border-orange-500/20 bg-gradient-to-br from-orange-500/8 to-transparent p-8 md:p-10">
+        <p class="text-xs font-semibold uppercase tracking-widest text-orange-400 mb-3">
+          {locale === "pt" ? "Próximos passos" : locale === "en" ? "Next steps" : "Próximos pasos"}
+        </p>
+        <h3 class="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight">
+          {locale === "pt"
+            ? "Pronto para agir?"
+            : locale === "en"
+            ? "Ready to act?"
+            : "¿Listo para actuar?"}
+        </h3>
+        <p class="text-gray-400 mb-6 max-w-xl">
+          {locale === "pt"
+            ? "Diagnóstico, priorização e execução — sem hand-offs. O mesmo time que mapeia o problema constrói a solução."
+            : locale === "en"
+            ? "Diagnosis, prioritization and execution — no hand-offs. The same team that maps the problem builds the solution."
+            : "Diagnóstico, priorización y ejecución — sin hand-offs. El mismo equipo que mapea el problema construye la solución."}
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a
+            href={`/${locale}/contact/`}
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-orange-500 text-black font-semibold text-sm hover:bg-orange-400 transition-all hover:scale-105"
+          >
+            {locale === "pt" ? "Falar com um especialista" : locale === "en" ? "Talk to a specialist" : "Hablar con un especialista"} ↗
+          </a>
+          <a
+            href={`/${locale}/auditoria-de-sistemas/`}
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-gray-300 font-medium text-sm hover:border-orange-500/30 hover:text-white transition-all"
+          >
+            Radiografía Digital
+          </a>
+          <a
+            href={`/${locale}/roadmap-tecnologico/`}
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-gray-300 font-medium text-sm hover:border-orange-500/30 hover:text-white transition-all"
+          >
+            Roadmap Tecnológico
+          </a>
+          <a
+            href={`/${locale}/implementacion/`}
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-gray-300 font-medium text-sm hover:border-orange-500/30 hover:text-white transition-all"
+          >
+            {locale === "pt" ? "Implementação" : locale === "en" ? "Implementation" : "Implementación"}
+          </a>
+        </div>
+      </div>
+
       <!-- Share footer -->
       <div class="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 px-8">
         <div class="text-gray-400 text-sm">{blogPostDict?.shareTitle ?? "Compartilhar"}</div>
