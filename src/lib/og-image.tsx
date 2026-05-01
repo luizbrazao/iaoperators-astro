@@ -1,4 +1,6 @@
 import React from "react";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -8,26 +10,23 @@ export interface BlogOGProps {
   categoryLabel: string;
 }
 
-// ─── Font loading (cached at module level) ────────────────────────────────────
+// ─── Font loading (from bundled files — no network dependency) ────────────────
+// process.cwd() is always the project root during `astro build`
 
 let fontRegular: ArrayBuffer | undefined;
 let fontBold: ArrayBuffer | undefined;
 
-async function loadFont(weight: 400 | 700): Promise<ArrayBuffer> {
-  const file =
-    weight === 700
-      ? "inter-latin-700-normal.woff"
-      : "inter-latin-400-normal.woff";
-  const res = await fetch(
-    `https://cdn.jsdelivr.net/npm/@fontsource/inter@5.1.1/files/${file}`
-  );
-  if (!res.ok) throw new Error(`Font fetch failed (${weight}): ${res.status}`);
-  return res.arrayBuffer();
-}
-
 export async function getOGFonts() {
-  if (!fontRegular) fontRegular = await loadFont(400);
-  if (!fontBold) fontBold = await loadFont(700);
+  if (!fontRegular) {
+    fontRegular = readFileSync(
+      join(process.cwd(), "src/assets/fonts/inter-400.woff")
+    ).buffer as ArrayBuffer;
+  }
+  if (!fontBold) {
+    fontBold = readFileSync(
+      join(process.cwd(), "src/assets/fonts/inter-700.woff")
+    ).buffer as ArrayBuffer;
+  }
   return [
     { name: "Inter", data: fontRegular, weight: 400 as const, style: "normal" as const },
     { name: "Inter", data: fontBold, weight: 700 as const, style: "normal" as const },
