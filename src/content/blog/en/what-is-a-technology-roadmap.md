@@ -1,6 +1,6 @@
 ---
 title: "What is a technology roadmap: a guide for mid-market companies"
-description: "A technology roadmap is a phased plan defining what to build, buy, or consolidate in your company's digital ecosystem, with prioritization criteria based on business impact, effort, and ROI. Learn how to create one."
+description: "What is a technology roadmap, what it contains and how to prioritize it with ROI. A practical guide for mid-market companies aligning technology with business."
 category: others
 date: 2026-04-30
 locale: en

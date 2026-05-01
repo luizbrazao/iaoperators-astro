@@ -84,10 +84,19 @@ const xDefaultUrl =
   localeAlternates.find((item) => item.lang === defaultLocale)?.href ?? canonicalFromAlternates;
 
 const title = entry.data.title;
+const pageTitle = `${title} | IA Operators`;
 const description = entry.data.description;
 const articleKeywords = entry.data.tags ?? [];
 const wordCount = entry.body ? entry.body.trim().split(/\s+/).filter(Boolean).length : undefined;
 const updatedAt = entry.data.updatedAt;
+
+// ─── Category labels ─────────────────────────────────────────────────────────
+const CATEGORY_LABELS: Record<string, Record<string, string>> = {
+  es: { tools: "Herramientas", lawyers: "IA para abogados", architects: "IA para arquitectos", accounting: "IA para contabilidad", restaurants: "IA para restaurantes", "beauty-salons": "IA para salones", others: "Blog" },
+  pt: { tools: "Ferramentas", lawyers: "IA para advogados", architects: "IA para arquitetos", accounting: "IA para contabilidade", restaurants: "IA para restaurantes", "beauty-salons": "IA para salões", others: "Blog" },
+  en: { tools: "Tools", lawyers: "AI for Lawyers", architects: "AI for Architects", accounting: "AI for Accounting", restaurants: "AI for Restaurants", "beauty-salons": "AI for Beauty", others: "Blog" },
+};
+const categoryLabel = CATEGORY_LABELS[locale]?.[entry.data.category] ?? entry.data.category;
 
 // Reading time from raw markdown body
 const readMinutes = Math.max(3, Math.ceil((entry.body?.length ?? 0) / 1500));
@@ -185,7 +194,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
 ---
 
 <BaseLayout
-  title={title}
+  title={pageTitle}
   description={description}
   canonicalUrl={canonicalFromAlternates}
   alternates={localeAlternates}
@@ -237,7 +246,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
           <span
             class="px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold uppercase tracking-wider"
           >
-            {entry.data.category}
+            {categoryLabel}
           </span>
         </div>
 
@@ -435,6 +444,42 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
             class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-gray-300 font-medium text-sm hover:border-orange-500/30 hover:text-white transition-all"
           >
             {locale === "pt" ? "Implementação" : locale === "en" ? "Implementation" : "Implementación"}
+          </a>
+        </div>
+      </div>
+
+      <!-- Author bio -->
+      <div class="mx-2 md:mx-8 mt-12 flex items-start gap-5 p-6 rounded-2xl bg-white/[0.03] border border-white/5">
+        <img
+          src="https://framerusercontent.com/images/F57rOWtJqaFD6Xm3xWmqp6bM.png"
+          alt="Luiz Brazão"
+          width="64"
+          height="64"
+          class="w-14 h-14 rounded-full object-cover shrink-0"
+          loading="lazy"
+          decoding="async"
+        />
+        <div>
+          <p class="font-semibold text-white text-sm mb-0.5">
+            {entry.data.author ?? "Luiz Brazão"}
+          </p>
+          <p class="text-orange-400 text-xs mb-2">
+            {locale === "pt" ? "Fundador, IA Operators" : locale === "en" ? "Founder, IA Operators" : "Fundador, IA Operators"}
+          </p>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            {locale === "pt"
+              ? "Anos liderando equipes em empresas de médio e grande porte. Criou a IA Operators para diagnosticar ecossistemas tecnológicos, priorizar o que move o ponteiro e construir soluções — sem hand-offs entre quem pensa e quem executa."
+              : locale === "en"
+              ? "Years leading teams across mid-size and large companies. Founded IA Operators to diagnose technology ecosystems, prioritize what moves the needle, and build solutions — no hand-offs between those who think and those who build."
+              : "Años liderando equipos en empresas medianas y grandes. Creó IA Operators para diagnosticar ecosistemas tecnológicos, priorizar lo que mueve la aguja y construir soluciones — sin hand-offs entre quien piensa y quien ejecuta."}
+          </p>
+          <a
+            href="https://www.linkedin.com/in/ferbrazao/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 mt-3 text-xs text-orange-400 hover:text-orange-300 transition-colors"
+          >
+            LinkedIn ↗
           </a>
         </div>
       </div>

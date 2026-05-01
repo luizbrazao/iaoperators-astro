@@ -1,6 +1,6 @@
 ---
 title: "O que é um roadmap tecnológico: guia para empresas de médio porte"
-description: "Um roadmap tecnológico é um plano faseado que define o que construir, comprar ou consolidar no ecossistema digital da sua empresa, com critérios de priorização baseados em impacto, esforço e ROI. Aprenda como criá-lo."
+description: "O que é um roadmap tecnológico, o que contém e como priorizá-lo com ROI. Guia prático para empresas de médio porte alinharem tecnologia com negócio."
 category: others
 date: 2026-04-30
 locale: pt

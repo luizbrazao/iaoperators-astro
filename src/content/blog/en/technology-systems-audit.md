@@ -1,6 +1,6 @@
 ---
 title: "What is a technology systems audit (and why your company needs one)"
-description: "A technology systems audit is a complete inventory of your company's applications, licenses, integrations, and operational risks. Learn how it works, what it covers, and what you get at the end."
+description: "What is a technology systems audit, what it covers and when your company needs one. Complete guide with phases, deliverables and pricing."
 category: others
 date: 2026-04-30
 locale: en
@@ -8,6 +8,7 @@ translationKey: tech-systems-audit
 image: /images/blog/auditoria-sistemas-tecnologicos.png
 imageAlt: "Diagrama abstracto de ecosistema tecnológico interconectado sobre fondo oscuro"
 author: Luiz Brazão
+updatedAt: 2026-05-01
 authorTitle: Founder, IA Operators
 tags:
   - technology audit
@@ -39,7 +40,7 @@ Most companies with more than 50 people accumulate technology without a strategy
 
 The problem isn't the technology itself — it's that nobody knows exactly what they have.
 
-According to Productiv's State of SaaS Spend 2024 report, mid-market companies manage an average of more than 75 active SaaS applications. Between 40% and 60% of those licenses have low or zero adoption from teams. In underused or redundant licenses alone, the average annual spend per company ranges from €15,000 to €60,000.
+According to [Productiv's State of SaaS Spend 2024 report](https://productiv.com), mid-market companies manage an average of more than 75 active SaaS applications. Between 40% and 60% of those licenses have low or zero adoption from teams. In underused or redundant licenses alone, the average annual spend per company ranges from €15,000 to €60,000.
 
 And that's before counting what isn't registered anywhere: Shadow IT.
 
@@ -47,7 +48,7 @@ And that's before counting what isn't registered anywhere: Shadow IT.
 
 Shadow IT refers to tools adopted without IT department approval or management knowledge: spreadsheets that replace a CRM, messaging apps that carry customer data, automation scripts that nobody documented.
 
-In companies of 100–500 people, Shadow IT represents between 30% and 40% of the total tools in use, according to Gartner estimates. It doesn't appear on any invoice. It has no formal owner. And when the person who created it leaves, nobody knows how it works.
+In companies of 100–500 people, Shadow IT represents between 30% and 40% of the total tools in use, according to [Gartner estimates](https://www.gartner.com/en/information-technology/topics/shadow-it). It doesn't appear on any invoice. It has no formal owner. And when the person who created it leaves, nobody knows how it works.
 
 A technology systems audit detects it and puts it on the map.
 

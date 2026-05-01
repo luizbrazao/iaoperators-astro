@@ -13,7 +13,17 @@ export default defineConfig({
   output: "static",
   adapter: vercel(),
 
-  integrations: [sitemap(), react()],
+  integrations: [
+    sitemap({
+      serialize(item) {
+        return {
+          ...item,
+          lastmod: new Date().toISOString().split("T")[0],
+        };
+      },
+    }),
+    react(),
+  ],
 
   vite: {
     plugins: [tailwindcss()],

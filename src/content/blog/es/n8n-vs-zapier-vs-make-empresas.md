@@ -1,6 +1,6 @@
 ---
 title: "n8n vs Zapier vs Make: cuál elegir para automatizar tu empresa en 2026"
-description: "Comparativa honesta entre n8n, Zapier y Make para empresas medianas. Analizamos precio, complejidad, integraciones y casos de uso para ayudarte a elegir la herramienta de automatización correcta."
+description: "n8n vs Zapier vs Make: comparativa honesta para empresas medianas. Precio, complejidad, integraciones y casos de uso para elegir la herramienta de automatización correcta."
 category: tools
 date: 2026-04-30
 locale: es

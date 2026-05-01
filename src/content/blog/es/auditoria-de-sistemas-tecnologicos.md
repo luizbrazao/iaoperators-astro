@@ -1,6 +1,6 @@
 ---
 title: "Qué es una auditoría de sistemas tecnológicos (y por qué tu empresa la necesita)"
-description: "Una auditoría de sistemas tecnológicos es un inventario completo de aplicaciones, licencias, integraciones y riesgos del parque digital de tu empresa. Descubre cómo funciona, qué cubre y qué recibes al final."
+description: "Qué es una auditoría de sistemas tecnológicos, qué cubre y cuándo la necesita tu empresa. Guía completa con fases, entregables y precio."
 category: others
 date: 2026-04-30
 locale: es
@@ -8,6 +8,7 @@ translationKey: tech-systems-audit
 image: /images/blog/auditoria-sistemas-tecnologicos.png
 imageAlt: "Diagrama abstracto de ecosistema tecnológico interconectado sobre fondo oscuro"
 author: Luiz Brazão
+updatedAt: 2026-05-01
 authorTitle: Fundador, IA Operators
 tags:
   - auditoría tecnológica
@@ -39,7 +40,7 @@ La mayoría de las empresas con más de 50 personas acumula tecnología sin una 
 
 El problema no es la tecnología en sí — es que nadie sabe exactamente qué tiene.
 
-Según el informe State of SaaS Spend 2024 de Productiv, las empresas medianas gestionan en promedio más de 75 aplicaciones SaaS activas. Entre el 40% y el 60% de esas licencias tiene baja o nula adopción real. Solo en licencias infrautilizadas o redundantes, el gasto medio por empresa oscila entre 15.000 € y 60.000 € anuales.
+Según el [State of SaaS Spend 2024 de Productiv](https://productiv.com), las empresas medianas gestionan en promedio más de 75 aplicaciones SaaS activas. Entre el 40% y el 60% de esas licencias tiene baja o nula adopción real. Solo en licencias infrautilizadas o redundantes, el gasto medio por empresa oscila entre 15.000 € y 60.000 € anuales.
 
 Y eso antes de contar lo que no está registrado en ningún sitio: el Shadow IT.
 
@@ -47,7 +48,7 @@ Y eso antes de contar lo que no está registrado en ningún sitio: el Shadow IT.
 
 El Shadow IT son las herramientas adoptadas sin aprobación del departamento de IT o sin conocimiento de dirección: hojas de cálculo que sustituyen a un CRM, apps de mensajería que llevan datos de clientes, scripts de automatización que nadie documentó.
 
-En empresas de 100–500 personas, el Shadow IT representa entre el 30% y el 40% del total de herramientas en uso, según estimaciones de Gartner. No aparece en ninguna factura. No tiene propietario formal. Y cuando la persona que lo creó se va, nadie sabe cómo funciona.
+En empresas de 100–500 personas, el Shadow IT representa entre el 30% y el 40% del total de herramientas en uso, [según estimaciones de Gartner](https://www.gartner.com/en/information-technology/topics/shadow-it). No aparece en ninguna factura. No tiene propietario formal. Y cuando la persona que lo creó se va, nadie sabe cómo funciona.
 
 Una auditoría de sistemas lo detecta y lo pone en el mapa.
 
