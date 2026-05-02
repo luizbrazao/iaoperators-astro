@@ -25,6 +25,16 @@ export type ProjectTestimonial = {
     roleKey: string;
 };
 
+export type ProjectFaqItem = {
+    qKey: string;
+    aKey: string;
+};
+
+export type ProjectForWho = {
+    yesKeys: string[];
+    noKeys: string[];
+};
+
 export type Project = {
     id: number;
     slug: string;
@@ -41,8 +51,10 @@ export type Project = {
     taglineKey: string;
 
     problemKey: string;
+    contextKey?: string;
     engineeringIntroKey: string;
     impactKey: string;
+    iaReadinessKey?: string;
 
     whatItDoesKeys: string[];
     howItWorksKeys: string[];
@@ -50,6 +62,8 @@ export type Project = {
     securityKeys: string[];
     metrics?: ProjectMetric[];
     testimonial?: ProjectTestimonial;
+    forWho?: ProjectForWho;
+    faq?: ProjectFaqItem[];
 
     pricing?: {
         monthly?: { price: string; detailsKeys?: string[] };
@@ -86,8 +100,10 @@ export const projects: Project[] = [
         taglineKey: "projects:menorcaHotelChain.tagline",
 
         problemKey: "projects:menorcaHotelChain.problem",
+        contextKey: "projects:menorcaHotelChain.context",
         engineeringIntroKey: "projects:menorcaHotelChain.engineeringIntro",
         impactKey: "projects:menorcaHotelChain.impact",
+        iaReadinessKey: "projects:menorcaHotelChain.iaReadiness",
 
         whatItDoesKeys: [
             "projects:menorcaHotelChain.whatItDoes.0",
@@ -148,6 +164,29 @@ export const projects: Project[] = [
             authorKey: "projects:menorcaHotelChain.testimonial.author",
             roleKey: "projects:menorcaHotelChain.testimonial.role",
         },
+
+        forWho: {
+            yesKeys: [
+                "projects:menorcaHotelChain.forWho.yes.0",
+                "projects:menorcaHotelChain.forWho.yes.1",
+                "projects:menorcaHotelChain.forWho.yes.2",
+                "projects:menorcaHotelChain.forWho.yes.3",
+                "projects:menorcaHotelChain.forWho.yes.4",
+            ],
+            noKeys: [
+                "projects:menorcaHotelChain.forWho.no.0",
+                "projects:menorcaHotelChain.forWho.no.1",
+                "projects:menorcaHotelChain.forWho.no.2",
+            ],
+        },
+
+        faq: [
+            { qKey: "projects:menorcaHotelChain.faq.0.q", aKey: "projects:menorcaHotelChain.faq.0.a" },
+            { qKey: "projects:menorcaHotelChain.faq.1.q", aKey: "projects:menorcaHotelChain.faq.1.a" },
+            { qKey: "projects:menorcaHotelChain.faq.2.q", aKey: "projects:menorcaHotelChain.faq.2.a" },
+            { qKey: "projects:menorcaHotelChain.faq.3.q", aKey: "projects:menorcaHotelChain.faq.3.a" },
+            { qKey: "projects:menorcaHotelChain.faq.4.q", aKey: "projects:menorcaHotelChain.faq.4.a" },
+        ],
 
         metrics: [
             {

@@ -26,8 +26,10 @@
             "role": "Hotel chain, Menorca (confidential per NDA)"
         },
         "problem": "Four properties, 400+ employees, a decade of growth piling up tools: PMS, booking engine, channel manager, department-level CRMs, critical spreadsheets owned by a single person. No one had the full list of what the chain used, paid for, or depended on. Leadership wanted to roll out AI but didn't know on what foundation.",
+        "context": "When the PMS doesn't talk directly to the channel manager, someone does it by hand. When each department has its own CRM and none consolidates the guest history, marketing campaigns fire without real data. When only one person knows how the rate connector works, that person can't take a vacation.\n\nEvery manual integration is hours. Every unused SaaS license is money. Every single-owner system is an operational risk. Before adding new layers of automation or AI, leadership needs to know exactly what they're building on.",
         "engineeringIntro": "We applied the Digital X-Ray methodology: kick-off, structured interviews with 12 functional areas, document collection (SaaS contracts, billing, accesses), real integration mapping, and per-system risk analysis. We cross-checked declarations against logs and billing to surface Shadow IT.",
         "impact": "47 applications inventoried (12 without a clear owner), 23% of SaaS spend flagged as redundant or unused, 3 critical key-person dependencies documented, and an executive plan for the next 12 months.",
+        "iaReadiness": "Every AI project starts with data. If data is fragmented across silos, duplicated between systems, or managed by hand in spreadsheets, the AI model will reproduce those problems at speed and scale. The Digital X-Ray is not just an audit — it's the map that turns a hotel chain into an organization ready to automate.",
         "whatItDoes": [
             "Master inventory of applications, SaaS, and automations",
             "License matrix with real costs and renewal dates",
@@ -94,6 +96,42 @@
             {
                 "label": "Weeks of project",
                 "note": "Kick-off to final executive session"
+            }
+        ],
+        "forWho": {
+            "yes": [
+                "Chains with 2+ properties and distributed IT systems",
+                "Hotels planning to implement AI or automation in the next 12 months",
+                "Leadership teams that want to implement AI but don't know on what technology foundation",
+                "Organizations in an expansion, merger, or system migration phase",
+                "Teams where only one or two people know the full technology stack"
+            ],
+            "no": [
+                "Hotels with a single technology provider that manages everything centrally",
+                "Properties without leadership involvement (requires access to contracts, billing, and area owners)",
+                "Projects looking solely for cybersecurity or compliance audits (PCI, GDPR)"
+            ]
+        },
+        "faq": [
+            {
+                "q": "How long does a Digital X-Ray take?",
+                "a": "The full project runs 3 weeks: kick-off and access setup, interviews across 12 functional areas, data analysis and cross-checking, and a final executive session with the report. We do not interrupt hotel operations."
+            },
+            {
+                "q": "How much does a hotel technology audit cost?",
+                "a": "Each Digital X-Ray is scoped based on the size of the chain and number of properties. Request a proposal to receive a detailed estimate within 48 hours."
+            },
+            {
+                "q": "How is this different from a cybersecurity audit?",
+                "a": "A cybersecurity audit looks for vulnerabilities and attack vectors. The Digital X-Ray maps the full operational technology stack: what systems exist, how they integrate, what SaaS is being paid for, what Shadow IT runs without IT's knowledge, and what needs to be resolved before scaling or implementing AI."
+            },
+            {
+                "q": "What happens after the audit?",
+                "a": "The executive report includes a prioritized 12-month plan. If you choose, IA Operators can support implementation with a Technology Roadmap or begin automation projects directly on the already-mapped stack."
+            },
+            {
+                "q": "Do we need an audit before implementing AI in the hotel?",
+                "a": "Yes. Without a complete inventory of systems and documented integrations, any AI project will build on assumptions. The result is integrations that don't work, inconsistent data, and projects that don't scale. The Digital X-Ray is the safe starting point."
             }
         ],
         "links": [

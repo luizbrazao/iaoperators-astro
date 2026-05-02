@@ -26,8 +26,10 @@
             "role": "Rede hoteleira, Menorca (confidencial por NDA)"
         },
         "problem": "Quatro propriedades, 400+ funcionários, uma década de crescimento acumulando ferramentas: PMS, motor de reservas, channel manager, CRMs por departamento, planilhas críticas mantidas por uma única pessoa. Ninguém tinha a lista completa do que a rede usava, pagava ou dependia. A diretoria queria implementar IA, mas não sabia sobre que base.",
+        "context": "Quando o PMS não fala diretamente com o channel manager, alguém faz isso na mão. Quando cada departamento tem seu CRM e nenhum consolida o histórico do hóspede, as campanhas de marketing disparam sem dados reais. Quando só uma pessoa sabe como funciona o conector de tarifas, essa pessoa não pode tirar férias.\n\nCada integração manual são horas. Cada licença SaaS que ninguém usa é dinheiro. Cada sistema com um único conhecedor é um risco operacional. Antes de adicionar novas camadas de automação ou IA, a diretoria precisa saber exatamente sobre que base está construindo.",
         "engineeringIntro": "Aplicamos a metodologia Radiografia Digital: kick-off, entrevistas estruturadas com 12 áreas funcionais, coleta documental (contratos SaaS, faturamento, acessos), mapeamento real de integrações e análise de risco por sistema. Cruzamos o declarado com logs e faturamento para identificar Shadow IT.",
         "impact": "47 aplicações inventariadas (12 sem responsável claro), 23% do gasto SaaS identificado como redundante ou sem uso, 3 dependências críticas de pessoas-chave documentadas e plano executivo para os 12 meses seguintes.",
+        "iaReadiness": "Todo projeto de IA parte dos dados. Se os dados estão fragmentados em silos, duplicados entre sistemas ou gerenciados na mão em planilhas, o modelo de IA vai reproduzir esses problemas em velocidade e escala. A Radiografia Digital não é só uma auditoria: é o mapa que transforma uma rede hoteleira em uma organização pronta para automatizar.",
         "whatItDoes": [
             "Inventário mestre de aplicações, SaaS e automações",
             "Matriz de licenças com custos reais e datas de renovação",
@@ -94,6 +96,42 @@
             {
                 "label": "Semanas de projeto",
                 "note": "Kick-off à sessão executiva final"
+            }
+        ],
+        "forWho": {
+            "yes": [
+                "Redes com 2 ou mais propriedades e sistemas de TI distribuídos",
+                "Hotéis que planejam implementar IA ou automação nos próximos 12 meses",
+                "Diretorias que querem implementar IA mas não sabem sobre que base tecnológica",
+                "Organizações em fase de expansão, fusão ou migração de sistemas",
+                "Equipes onde apenas uma ou duas pessoas conhecem o stack tecnológico completo"
+            ],
+            "no": [
+                "Hotéis com um único fornecedor tecnológico que gerencia tudo de forma centralizada",
+                "Estabelecimentos sem envolvimento da diretoria (requer acesso a contratos, faturas e responsáveis por área)",
+                "Projetos que buscam apenas auditoria de segurança ou conformidade (PCI, LGPD, GDPR)"
+            ]
+        },
+        "faq": [
+            {
+                "q": "Quanto tempo dura uma Radiografia Digital?",
+                "a": "O projeto completo dura 3 semanas: kick-off e acessos, entrevistas com as 12 áreas funcionais, análise e cruzamento de dados, e sessão executiva final com o relatório. Não interrompemos a operação do hotel."
+            },
+            {
+                "q": "Quanto custa uma auditoria tecnológica para hotéis?",
+                "a": "Cada Radiografia Digital é orçada conforme o tamanho da rede e o número de propriedades. Solicite uma proposta para receber uma estimativa detalhada em 48 horas."
+            },
+            {
+                "q": "Qual a diferença em relação a uma auditoria de cibersegurança?",
+                "a": "Uma auditoria de cibersegurança busca vulnerabilidades e vetores de ataque. A Radiografia Digital mapeia o stack tecnológico operacional completo: quais sistemas existem, como se integram, quais SaaS são pagos, qual Shadow IT opera sem controle da TI, e o que precisa ser resolvido antes de escalar ou implementar IA."
+            },
+            {
+                "q": "O que acontece depois da auditoria?",
+                "a": "O relatório executivo inclui um plano priorizado de 12 meses. Se desejar, a IA Operators pode acompanhar a implementação com um Roadmap Tecnológico ou iniciar diretamente projetos de automação sobre o stack já mapeado."
+            },
+            {
+                "q": "Precisamos de uma auditoria antes de implementar IA no hotel?",
+                "a": "Sim. Sem um inventário completo de sistemas e integrações documentadas, qualquer projeto de IA vai construir sobre suposições. O resultado são integrações que não funcionam, dados inconsistentes e projetos que não escalam. A Radiografia Digital é o ponto de partida seguro."
             }
         ],
         "links": [

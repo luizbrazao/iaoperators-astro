@@ -60,6 +60,18 @@ const ogImageUrl = project.ogImage
     ? new URL(project.heroImage, site).toString()
     : undefined;
 
+const faqJsonLd = project.faq?.length
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: project.faq.map((item) => ({
+        "@type": "Question",
+        name: t(item.qKey),
+        acceptedAnswer: { "@type": "Answer", text: t(item.aKey) },
+      })),
+    }
+  : null;
+
 const portfolioSlugJsonLd: any[] = [
   {
     "@context": "https://schema.org",
@@ -103,6 +115,7 @@ const portfolioSlugJsonLd: any[] = [
       { "@type": "ListItem", position: 3, name: t(project.titleKey), item: projectUrl },
     ],
   },
+  ...(faqJsonLd ? [faqJsonLd] : []),
 ];
 ---
 
@@ -211,6 +224,21 @@ const portfolioSlugJsonLd: any[] = [
               <h2 class="text-2xl font-bold mb-4 text-white">{t("portfolio:project.sections.gap.title") ?? "Problem"}</h2>
               <p class="text-gray-300 leading-relaxed">{t(project.problemKey)}</p>
             </div>
+
+            {project.contextKey && (
+              <div class="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 border-l-4 border-l-white/20">
+                <h2 class="text-2xl font-bold mb-4 text-white">
+                  {locale === "pt"
+                    ? "O custo real da desintegração"
+                    : locale === "en"
+                    ? "The real cost of disintegration"
+                    : "El coste real de la desintegración"}
+                </h2>
+                {t(project.contextKey).split("\n\n").map((para: string) => (
+                  <p class="text-gray-300 leading-relaxed mb-4 last:mb-0">{para}</p>
+                ))}
+              </div>
+            )}
 
             <div class="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
               <div class="text-xs uppercase tracking-wider font-bold text-orange-400 mb-2">02</div>
@@ -333,6 +361,99 @@ const portfolioSlugJsonLd: any[] = [
               ))}
             </ul>
           </section>
+
+          <!-- Para quién es -->
+          {project.forWho && (
+            <section class="mt-12 bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
+              <h2 class="text-2xl font-bold mb-6 text-white">
+                {locale === "pt"
+                  ? "Para quem é (e para quem não é)"
+                  : locale === "en"
+                  ? "Who it's for (and who it's not)"
+                  : "Para quién es (y para quién no es)"}
+              </h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <div class="text-xs uppercase tracking-wider font-bold text-green-400 mb-3">
+                    {locale === "pt" ? "Ideal para" : locale === "en" ? "Ideal for" : "Ideal para"}
+                  </div>
+                  <ul class="space-y-3">
+                    {project.forWho.yesKeys.map((k) => (
+                      <li class="flex gap-3">
+                        <span class="mt-0.5 text-green-400 shrink-0">✓</span>
+                        <span class="text-gray-300 text-sm leading-relaxed">{t(k)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <div class="text-xs uppercase tracking-wider font-bold text-red-400 mb-3">
+                    {locale === "pt" ? "Não indicado para" : locale === "en" ? "Not for" : "No es para"}
+                  </div>
+                  <ul class="space-y-3">
+                    {project.forWho.noKeys.map((k) => (
+                      <li class="flex gap-3">
+                        <span class="mt-0.5 text-red-400 shrink-0">✕</span>
+                        <span class="text-gray-300 text-sm leading-relaxed">{t(k)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </section>
+          )}
+
+          <!-- IA Readiness -->
+          {project.iaReadinessKey && (
+            <section class="mt-12 bg-gradient-to-br from-orange-500/10 to-transparent border border-orange-500/20 rounded-3xl p-8">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/30 flex items-center justify-center shrink-0">
+                  <svg class="w-4 h-4 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.346.346a3.001 3.001 0 00-.877 2.121V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.879a3.001 3.001 0 00-.877-2.121l-.347-.346z" />
+                  </svg>
+                </div>
+                <h2 class="text-xl font-bold text-white">
+                  {locale === "pt"
+                    ? "Radiografia Digital: o passo antes da IA"
+                    : locale === "en"
+                    ? "Digital X-Ray: the step before AI"
+                    : "Radiografía Digital: el paso previo a la IA"}
+                </h2>
+              </div>
+              <p class="text-gray-300 leading-relaxed">{t(project.iaReadinessKey)}</p>
+            </section>
+          )}
+
+          <!-- FAQ -->
+          {project.faq?.length && (
+            <section class="mt-12 bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
+              <h2 class="text-2xl font-bold mb-6 text-white">
+                {locale === "pt"
+                  ? "Perguntas frequentes"
+                  : locale === "en"
+                  ? "Frequently asked questions"
+                  : "Preguntas frecuentes"}
+              </h2>
+              <div class="space-y-0 divide-y divide-white/5">
+                {project.faq.map((item) => (
+                  <details class="group py-5 first:pt-0 last:pb-0">
+                    <summary class="flex items-center justify-between gap-4 cursor-pointer list-none">
+                      <h3 class="font-semibold text-white group-open:text-orange-400 transition-colors">
+                        {t(item.qKey)}
+                      </h3>
+                      <span class="text-gray-400 group-open:text-orange-400 shrink-0 transition-colors text-lg leading-none">
+                        <span class="group-open:hidden">+</span>
+                        <span class="hidden group-open:inline">−</span>
+                      </span>
+                    </summary>
+                    <p class="mt-3 text-gray-300 leading-relaxed text-sm">
+                      {t(item.aKey)}
+                    </p>
+                  </details>
+                ))}
+              </div>
+            </section>
+          )}
         </div>
 
         <!-- Sidebar -->
