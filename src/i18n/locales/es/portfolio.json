@@ -64,6 +64,9 @@
             "iaReadiness": {
                 "title": "Radiografía Digital: el paso previo a la IA"
             },
+            "deliverables": {
+                "title": "Qué recibió el cliente al final de las 3 semanas"
+            },
             "faq": {
                 "title": "Preguntas frecuentes"
             },

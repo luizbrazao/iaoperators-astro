@@ -47,14 +47,19 @@ export type Project = {
     ogImage?: string;
     gallery?: { src: string; altKey?: string }[];
 
+    seoTitleKey?: string;
     titleKey: string;
+    h1Key?: string;
     taglineKey: string;
+    ctaTitleKey?: string;
+    ctaSubtitleKey?: string;
 
     problemKey: string;
     contextKey?: string;
     engineeringIntroKey: string;
     impactKey: string;
     iaReadinessKey?: string;
+    deliverablesKeys?: string[];
 
     whatItDoesKeys: string[];
     howItWorksKeys: string[];
@@ -91,7 +96,7 @@ export const projects: Project[] = [
         categoryKey: "projects:menorcaHotelChain.category",
         heroImage:
             "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&q=80",
-        ogImage: "/og/portfolio-radiografia-cadena-hotelera-menorca.svg",
+        ogImage: "/og/portfolio-radiografia-cadena-hotelera-menorca.png",
 
         gallery: [
             {
@@ -100,14 +105,25 @@ export const projects: Project[] = [
             },
         ],
 
+        seoTitleKey: "projects:menorcaHotelChain.seoTitle",
         titleKey: "projects:menorcaHotelChain.title",
+        h1Key: "projects:menorcaHotelChain.h1",
         taglineKey: "projects:menorcaHotelChain.tagline",
+        ctaTitleKey: "projects:menorcaHotelChain.ctaTitle",
+        ctaSubtitleKey: "projects:menorcaHotelChain.ctaSubtitle",
 
         problemKey: "projects:menorcaHotelChain.problem",
         contextKey: "projects:menorcaHotelChain.context",
         engineeringIntroKey: "projects:menorcaHotelChain.engineeringIntro",
         impactKey: "projects:menorcaHotelChain.impact",
         iaReadinessKey: "projects:menorcaHotelChain.iaReadiness",
+        deliverablesKeys: [
+            "projects:menorcaHotelChain.deliverables.0",
+            "projects:menorcaHotelChain.deliverables.1",
+            "projects:menorcaHotelChain.deliverables.2",
+            "projects:menorcaHotelChain.deliverables.3",
+            "projects:menorcaHotelChain.deliverables.4",
+        ],
 
         whatItDoesKeys: [
             "projects:menorcaHotelChain.whatItDoes.0",

@@ -14,12 +14,23 @@
         }
     },
     "menorcaHotelChain": {
+        "seoTitle": "Hotel Technology Audit in Menorca | IA Operators Case Study",
         "title": "Digital X-Ray — Hotel chain (Menorca)",
+        "h1": "Technology audit for a hotel chain in Menorca",
         "tagline": "Hotel technology audit: how a 4-property chain in Menorca cut SaaS costs by 23% and mapped 47 applications with IA Operators.",
+        "ctaTitle": "Want to audit your hotel chain's technology stack?",
+        "ctaSubtitle": "We map systems, licenses, integrations, risks, and automation opportunities before implementing AI.",
         "category": "Technology audit · Hospitality",
         "gallery": {
-            "heroAlt": "Aerial view of coastal hotel in Menorca — technology audit case study by IA Operators"
+            "heroAlt": "Coastal hotel in Menorca — technology audit case study by IA Operators"
         },
+        "deliverables": [
+            "Master inventory — spreadsheet with 47 applications: owner, monthly cost, contract, renewal, active users, and operational criticality",
+            "Integration map — diagram of data flows between PMS, channel manager, CRMs, and operational tools across all departments",
+            "Shadow IT analysis — 12 unowned apps documented with assignment or cancellation recommendations",
+            "Risk matrix — critical key-person dependencies and systems with no documentation or backup",
+            "Executive report — leadership summary with priority findings and action plan for the next 12 months"
+        ],
         "testimonial": {
             "quote": "For the first time we had a complete map of what we actually used. The report let us move into the next digitalization phase with a real inventory, not assumptions.",
             "author": "Head of Operations",

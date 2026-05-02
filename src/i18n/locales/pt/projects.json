@@ -14,12 +14,23 @@
         }
     },
     "menorcaHotelChain": {
+        "seoTitle": "Auditoria tecnológica hoteleira em Menorca | Caso IA Operators",
         "title": "Radiografia Digital — Rede hoteleira (Menorca)",
+        "h1": "Auditoria tecnológica para uma rede hoteleira em Menorca",
         "tagline": "Auditoria tecnológica hoteleira: como uma rede de 4 propriedades em Menorca reduziu 23% do gasto SaaS e mapeou 47 aplicações com a IA Operators.",
+        "ctaTitle": "Quer auditar o stack tecnológico da sua rede hoteleira?",
+        "ctaSubtitle": "Mapeamos sistemas, licenças, integrações, riscos e oportunidades antes de implementar IA.",
         "category": "Auditoria tecnológica · Hotelaria",
         "gallery": {
-            "heroAlt": "Vista aérea de hotel costeiro em Menorca — caso de auditoria tecnológica IA Operators"
+            "heroAlt": "Hotel costeiro em Menorca — caso de auditoria tecnológica IA Operators"
         },
+        "deliverables": [
+            "Inventário mestre — planilha com 47 aplicações: responsável, custo mensal, contrato, renovação, usuários ativos e criticidade operacional",
+            "Mapa de integrações — diagrama com os fluxos de dados entre PMS, channel manager, CRMs e ferramentas operacionais por área",
+            "Análise de Shadow IT — 12 aplicações sem responsável documentadas com recomendação de atribuição ou cancelamento",
+            "Matriz de riscos — dependências críticas de pessoas-chave e sistemas sem documentação ou backup",
+            "Relatório executivo — resumo para a diretoria com descobertas prioritárias e plano de ação para os próximos 12 meses"
+        ],
         "testimonial": {
             "quote": "Pela primeira vez tínhamos o mapa completo do que realmente utilizávamos. O relatório nos permitiu entrar na próxima fase de digitalização com um inventário real, não suposições.",
             "author": "Diretor de Operações",

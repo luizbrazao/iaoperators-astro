@@ -46,7 +46,10 @@ const resolveLinkHref = (href: string, external?: boolean) => {
 };
 
 const primaryMetric = project.metrics?.[0];
-const pageTitle = `${t(project.titleKey)} — IA Operators`;
+const pageTitle = project.seoTitleKey
+  ? t(project.seoTitleKey)
+  : `${t(project.titleKey)} — IA Operators`;
+const displayH1 = t(project.h1Key ?? project.titleKey);
 const pageDescription = t(project.taglineKey);
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
@@ -78,26 +81,27 @@ const faqJsonLd = project.faq?.length
     }
   : null;
 
+const orgSchema = {
+  "@type": "Organization",
+  name: "IA Operators",
+  url: site,
+};
+
 const portfolioSlugJsonLd: any[] = [
   {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "CreativeWork",
     headline: pageTitle,
+    name: pageTitle,
     description: pageDescription,
     url: projectUrl,
     inLanguage: locale,
     datePublished: project.publishedAt,
     dateModified: project.updatedAt ?? project.publishedAt,
     image: ogImageUrl,
-    author: {
-      "@type": "Organization",
-      name: "IA Operators",
-      url: site,
-    },
+    author: orgSchema,
     publisher: {
-      "@type": "Organization",
-      name: "IA Operators",
-      url: site,
+      ...orgSchema,
       logo: {
         "@type": "ImageObject",
         url: new URL("/android-chrome-512x512.png", site).toString(),
@@ -105,12 +109,20 @@ const portfolioSlugJsonLd: any[] = [
         height: 512,
       },
     },
-    about: {
-      "@type": "Service",
-      name: t(project.titleKey),
-      description: pageDescription,
-      provider: { "@type": "Organization", name: "IA Operators", url: site },
-    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: t(project.titleKey),
+    description: pageDescription,
+    url: projectUrl,
+    provider: orgSchema,
+    serviceType: locale === "pt"
+      ? "Auditoria tecnológica"
+      : locale === "en"
+      ? "Technology audit"
+      : "Auditoría tecnológica",
+    areaServed: { "@type": "Country", name: "Spain" },
   },
   {
     "@context": "https://schema.org",
@@ -177,7 +189,7 @@ const portfolioSlugJsonLd: any[] = [
         </div>
 
         <h1 class="text-3xl md:text-5xl font-bold leading-tight text-white mb-4">
-          {t(project.titleKey)}
+          {displayH1}
         </h1>
 
         <p class="text-gray-400 text-lg leading-relaxed max-w-3xl">
@@ -214,7 +226,8 @@ const portfolioSlugJsonLd: any[] = [
           <img
             src={project.heroImage}
             alt={project.gallery?.[0]?.altKey ? t(project.gallery[0].altKey) : `${t(project.titleKey)} — IA Operators`}
-            loading="lazy"
+            loading="eager"
+            fetchpriority="high"
             class="w-full h-full object-cover opacity-95"
           />
           <div class="absolute inset-0 bg-linear-to-t from-[#050505] via-transparent to-transparent opacity-70" />
@@ -263,6 +276,32 @@ const portfolioSlugJsonLd: any[] = [
               </div>
             </div>
           </section>
+
+          <!-- Deliverables -->
+          {project.deliverablesKeys?.length && (
+            <section class="mt-10 bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
+              <div class="text-xs uppercase tracking-wider font-bold text-orange-400 mb-2">04</div>
+              <h2 class="text-2xl font-bold mb-6 text-white">
+                {t("portfolio:project.sections.deliverables.title")}
+              </h2>
+              <ul class="space-y-4">
+                {project.deliverablesKeys.map((k, i) => {
+                  const [label, ...rest] = t(k).split(" — ");
+                  return (
+                    <li class="flex gap-4">
+                      <span class="mt-0.5 w-6 h-6 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-xs font-bold flex items-center justify-center shrink-0">
+                        {i + 1}
+                      </span>
+                      <span class="text-gray-300 leading-relaxed text-sm">
+                        <strong class="text-white font-semibold">{label}</strong>
+                        {rest.length > 0 && ` — ${rest.join(" — ")}`}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          )}
 
           <!-- What it does / How it works -->
           <section class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -452,10 +491,10 @@ const portfolioSlugJsonLd: any[] = [
         <aside class="space-y-8">
           <section class="lg:sticky lg:top-24 bg-orange-500/10 border border-orange-500/30 rounded-3xl p-6">
             <h3 class="text-lg font-bold text-white mb-2">
-              {tx("portfolio:cta.title", "Want this outcome in your operation?")}
+              {project.ctaTitleKey ? t(project.ctaTitleKey) : tx("portfolio:cta.title", "Want this outcome in your operation?")}
             </h3>
             <p class="text-sm text-gray-300 mb-4">
-              {tx("portfolio:cta.subtitle", "We can design and deploy an AI-first workflow for your business.")}
+              {project.ctaSubtitleKey ? t(project.ctaSubtitleKey) : tx("portfolio:cta.subtitle", "We can design and deploy an AI-first workflow for your business.")}
             </p>
             <div class="flex flex-col gap-2">
               <a
