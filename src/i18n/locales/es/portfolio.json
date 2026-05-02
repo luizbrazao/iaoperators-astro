@@ -52,6 +52,20 @@
             "security": {
                 "title": "Seguridad y cumplimiento"
             },
+            "context": {
+                "title": "El coste real de la desintegración"
+            },
+            "forWho": {
+                "title": "Para quién es (y para quién no es)",
+                "yes": "Ideal para",
+                "no": "No es para"
+            },
+            "iaReadiness": {
+                "title": "Radiografía Digital: el paso previo a la IA"
+            },
+            "faq": {
+                "title": "Preguntas frecuentes"
+            },
             "metrics": {
                 "title": "Métricas"
             },

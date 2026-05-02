@@ -52,6 +52,20 @@
             "security": {
                 "title": "Security & compliance"
             },
+            "context": {
+                "title": "The real cost of disintegration"
+            },
+            "forWho": {
+                "title": "Who it's for (and who it's not)",
+                "yes": "Ideal for",
+                "no": "Not for"
+            },
+            "iaReadiness": {
+                "title": "Digital X-Ray: the step before AI"
+            },
+            "faq": {
+                "title": "Frequently asked questions"
+            },
             "metrics": {
                 "title": "Metrics"
             },

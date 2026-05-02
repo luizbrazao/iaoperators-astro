@@ -228,11 +228,7 @@ const portfolioSlugJsonLd: any[] = [
             {project.contextKey && (
               <div class="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 border-l-4 border-l-white/20">
                 <h2 class="text-2xl font-bold mb-4 text-white">
-                  {locale === "pt"
-                    ? "O custo real da desintegração"
-                    : locale === "en"
-                    ? "The real cost of disintegration"
-                    : "El coste real de la desintegración"}
+                  {t("portfolio:project.sections.context.title")}
                 </h2>
                 {t(project.contextKey).split("\n\n").map((para: string) => (
                   <p class="text-gray-300 leading-relaxed mb-4 last:mb-0">{para}</p>
@@ -366,16 +362,12 @@ const portfolioSlugJsonLd: any[] = [
           {project.forWho && (
             <section class="mt-12 bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
               <h2 class="text-2xl font-bold mb-6 text-white">
-                {locale === "pt"
-                  ? "Para quem é (e para quem não é)"
-                  : locale === "en"
-                  ? "Who it's for (and who it's not)"
-                  : "Para quién es (y para quién no es)"}
+                {t("portfolio:project.sections.forWho.title")}
               </h2>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
                   <div class="text-xs uppercase tracking-wider font-bold text-green-400 mb-3">
-                    {locale === "pt" ? "Ideal para" : locale === "en" ? "Ideal for" : "Ideal para"}
+                    {t("portfolio:project.sections.forWho.yes")}
                   </div>
                   <ul class="space-y-3">
                     {project.forWho.yesKeys.map((k) => (
@@ -388,7 +380,7 @@ const portfolioSlugJsonLd: any[] = [
                 </div>
                 <div>
                   <div class="text-xs uppercase tracking-wider font-bold text-red-400 mb-3">
-                    {locale === "pt" ? "Não indicado para" : locale === "en" ? "Not for" : "No es para"}
+                    {t("portfolio:project.sections.forWho.no")}
                   </div>
                   <ul class="space-y-3">
                     {project.forWho.noKeys.map((k) => (
@@ -413,11 +405,7 @@ const portfolioSlugJsonLd: any[] = [
                   </svg>
                 </div>
                 <h2 class="text-xl font-bold text-white">
-                  {locale === "pt"
-                    ? "Radiografia Digital: o passo antes da IA"
-                    : locale === "en"
-                    ? "Digital X-Ray: the step before AI"
-                    : "Radiografía Digital: el paso previo a la IA"}
+                  {t("portfolio:project.sections.iaReadiness.title")}
                 </h2>
               </div>
               <p class="text-gray-300 leading-relaxed">{t(project.iaReadinessKey)}</p>
@@ -428,11 +416,7 @@ const portfolioSlugJsonLd: any[] = [
           {project.faq?.length && (
             <section class="mt-12 bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
               <h2 class="text-2xl font-bold mb-6 text-white">
-                {locale === "pt"
-                  ? "Perguntas frequentes"
-                  : locale === "en"
-                  ? "Frequently asked questions"
-                  : "Preguntas frecuentes"}
+                {t("portfolio:project.sections.faq.title")}
               </h2>
               <div class="space-y-0 divide-y divide-white/5">
                 {project.faq.map((item) => (
