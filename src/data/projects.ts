@@ -37,7 +37,7 @@ export type ProjectForWho = {
 
 export type Project = {
     id: number;
-    slug: string;
+    slugs: { es: string; en: string; pt: string };
     publishedAt: string;
     updatedAt?: string;
 
@@ -80,7 +80,11 @@ export const projects: Project[] = [
     // =========================
     {
         id: 3,
-        slug: "radiografia-cadena-hotelera-menorca",
+        slugs: {
+            es: "radiografia-cadena-hotelera-menorca",
+            en: "hotel-chain-digital-audit-menorca",
+            pt: "radiografia-rede-hoteleira-menorca",
+        },
         publishedAt: "2025-04-10",
 
         category: "Auditoría tecnológica / Hotelería",
@@ -235,7 +239,11 @@ export const projects: Project[] = [
     // =========================
     {
         id: 1,
-        slug: "chatplug-whatsapp-altegio",
+        slugs: {
+            es: "chatplug-whatsapp-altegio",
+            en: "chatplug-whatsapp-altegio",
+            pt: "chatplug-whatsapp-altegio",
+        },
         publishedAt: "2025-03-01",
 
         category: "SaaS / CRM Integration",
@@ -371,7 +379,11 @@ export const projects: Project[] = [
     // =========================
     {
         id: 2,
-        slug: "chatbot-reservas-turisticas-whatsapp",
+        slugs: {
+            es: "chatbot-reservas-turisticas-whatsapp",
+            en: "tourism-booking-chatbot-whatsapp",
+            pt: "chatbot-reservas-turisticas-whatsapp",
+        },
         publishedAt: "2025-02-15",
 
         category: "Automação de Reservas / WhatsApp",

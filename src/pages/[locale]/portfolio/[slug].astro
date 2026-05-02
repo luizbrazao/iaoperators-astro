@@ -5,11 +5,11 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { createT } from "../../../i18n/t";
 
 export async function getStaticPaths() {
-  const locales = ["es", "pt", "en"];
+  const locales = ["es", "pt", "en"] as const;
 
   return locales.flatMap((locale) =>
     projects.map((p: Project) => ({
-      params: { locale, slug: p.slug },
+      params: { locale, slug: p.slugs[locale] },
       props: { project: p },
     }))
   );
@@ -53,6 +53,12 @@ const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const projectUrl = new URL(`/${locale}/portfolio/${slug}/`, site).toString();
 const portfolioUrl = new URL(`/${locale}/portfolio/`, site).toString();
 const homeLabel = locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio";
+
+const hreflangAlternates = (["es", "en", "pt"] as const).map((lang) => ({
+  lang,
+  href: new URL(`/${lang}/portfolio/${project.slugs[lang]}/`, site).toString(),
+}));
+const xDefaultUrl = new URL(`/es/portfolio/${project.slugs.es}/`, site).toString();
 
 const ogImageUrl = project.ogImage
   ? new URL(project.ogImage, site).toString()
@@ -126,6 +132,8 @@ const portfolioSlugJsonLd: any[] = [
   ogType="article"
   ogPublishedTime={project.publishedAt}
   ogModifiedTime={project.updatedAt ?? project.publishedAt}
+  alternates={hreflangAlternates}
+  xDefaultUrl={xDefaultUrl}
   jsonLd={portfolioSlugJsonLd}
 >
   <section class="bg-transparent text-white pt-28 pb-20 px-6">

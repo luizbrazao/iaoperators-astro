@@ -55,7 +55,7 @@ const portfolioJsonLd: any[] = [
     itemListElement: projects.map((p: Project, idx: number) => ({
       "@type": "ListItem",
       position: idx + 1,
-      url: new URL(`/${locale}/portfolio/${p.slug}/`, site).toString(),
+      url: new URL(`/${locale}/portfolio/${p.slugs[locale as "es" | "en" | "pt"]}/`, site).toString(),
       name: t(p.titleKey),
     })),
   },
@@ -228,7 +228,7 @@ const portfolioJsonLd: any[] = [
                 <!-- Botões -->
                 <div class="mt-auto flex flex-col sm:flex-row gap-3">
                   <a
-                    href={`/${locale}/portfolio/${project.slug}/`}
+                    href={`/${locale}/portfolio/${project.slugs[locale as "es" | "en" | "pt"]}/`}
                     class="w-full inline-flex items-center justify-center gap-2 py-4 rounded-xl bg-white/5 border border-white/10 hover:bg-orange-600 hover:border-orange-600 hover:text-white text-white font-semibold transition-all duration-300 group-hover:-translate-y-0.5"
                   >
                     {t("portfolio:actions.details")}

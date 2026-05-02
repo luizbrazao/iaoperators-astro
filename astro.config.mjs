@@ -17,14 +17,17 @@ export default defineConfig({
     sitemap({
       serialize(item) {
         const knownDates = {
+          // Menorca hotel chain
           "https://iaoperators.com/es/portfolio/radiografia-cadena-hotelera-menorca/": "2025-04-10",
-          "https://iaoperators.com/en/portfolio/radiografia-cadena-hotelera-menorca/": "2025-04-10",
-          "https://iaoperators.com/pt/portfolio/radiografia-cadena-hotelera-menorca/": "2025-04-10",
+          "https://iaoperators.com/en/portfolio/hotel-chain-digital-audit-menorca/": "2025-04-10",
+          "https://iaoperators.com/pt/portfolio/radiografia-rede-hoteleira-menorca/": "2025-04-10",
+          // ChatPlug
           "https://iaoperators.com/es/portfolio/chatplug-whatsapp-altegio/": "2025-03-01",
           "https://iaoperators.com/en/portfolio/chatplug-whatsapp-altegio/": "2025-03-01",
           "https://iaoperators.com/pt/portfolio/chatplug-whatsapp-altegio/": "2025-03-01",
+          // Tour booking
           "https://iaoperators.com/es/portfolio/chatbot-reservas-turisticas-whatsapp/": "2025-02-15",
-          "https://iaoperators.com/en/portfolio/chatbot-reservas-turisticas-whatsapp/": "2025-02-15",
+          "https://iaoperators.com/en/portfolio/tourism-booking-chatbot-whatsapp/": "2025-02-15",
           "https://iaoperators.com/pt/portfolio/chatbot-reservas-turisticas-whatsapp/": "2025-02-15",
         };
         const knownDate = knownDates[item.url];
@@ -53,6 +56,10 @@ export default defineConfig({
   redirects: {
     "/": "/es/",
     "/sitemap.xml": "/sitemap-index.xml",
+    // Portfolio slug redirects (old → new localized slugs)
+    "/en/portfolio/radiografia-cadena-hotelera-menorca/": "/en/portfolio/hotel-chain-digital-audit-menorca/",
+    "/pt/portfolio/radiografia-cadena-hotelera-menorca/": "/pt/portfolio/radiografia-rede-hoteleira-menorca/",
+    "/en/portfolio/chatbot-reservas-turisticas-whatsapp/": "/en/portfolio/tourism-booking-chatbot-whatsapp/",
     "/es/blog/ia-local-privada-sem-mensalidade-qwen-pc/":
       "/es/blog/ia-local-privada-sin-mensualidad-qwen-pc/",
     "/pt/blog/ia-local-privada-sem-mensalidade-qwen-pc/":
