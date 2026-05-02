@@ -17,9 +17,13 @@
         "seoTitle": "Auditoria tecnológica hoteleira em Menorca | Caso IA Operators",
         "title": "Radiografia Digital — Rede hoteleira (Menorca)",
         "h1": "Auditoria tecnológica para uma rede hoteleira em Menorca",
-        "tagline": "Auditoria tecnológica hoteleira: como uma rede de 4 propriedades em Menorca reduziu 23% do gasto SaaS e mapeou 47 aplicações com a IA Operators.",
+        "subtitle": "Rede hoteleira · 4 propriedades · Menorca",
+        "tagline": "Caso real de auditoria tecnológica hoteleira em Menorca: 47 aplicações inventariadas, 23% do gasto SaaS reduzível e roadmap de digitalização para uma rede de 4 hotéis.",
+        "signal": "Aplicações auditadas",
         "ctaTitle": "Quer auditar o stack tecnológico da sua rede hoteleira?",
         "ctaSubtitle": "Mapeamos sistemas, licenças, integrações, riscos e oportunidades antes de implementar IA.",
+        "relatedService": "serviço de auditoria tecnológica hoteleira",
+        "serviceAudience": "Redes hoteleiras",
         "category": "Auditoria tecnológica · Hotelaria",
         "gallery": {
             "heroAlt": "Hotel costeiro em Menorca — caso de auditoria tecnológica IA Operators"

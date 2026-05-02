@@ -122,7 +122,12 @@ const portfolioSlugJsonLd: any[] = [
       : locale === "en"
       ? "Technology audit"
       : "Auditoría tecnológica",
-    areaServed: { "@type": "Country", name: "Spain" },
+    areaServed: project.serviceAreas
+      ? project.serviceAreas.map((name) => ({ "@type": "Place", name }))
+      : [{ "@type": "Country", name: "Spain" }],
+    ...(project.serviceAudienceKey
+      ? { audience: { "@type": "BusinessAudience", audienceType: t(project.serviceAudienceKey) } }
+      : {}),
   },
   {
     "@context": "https://schema.org",
@@ -141,7 +146,7 @@ const portfolioSlugJsonLd: any[] = [
   title={pageTitle}
   description={pageDescription}
   ogImage={project.ogImage ?? project.heroImage ?? undefined}
-  ogType="article"
+  ogType="website"
   ogPublishedTime={project.publishedAt}
   ogModifiedTime={project.updatedAt ?? project.publishedAt}
   alternates={hreflangAlternates}
@@ -184,7 +189,7 @@ const portfolioSlugJsonLd: any[] = [
           </span>
 
           <span class="bg-white/5 border border-white/10 text-gray-300 text-xs font-semibold px-4 py-2 rounded-full">
-            {slug}
+            {project.subtitleKey ? t(project.subtitleKey) : slug}
           </span>
         </div>
 
@@ -211,7 +216,7 @@ const portfolioSlugJsonLd: any[] = [
           </div>
           <div class="rounded-xl border border-white/10 bg-[#0A0A0A] p-4">
             <div class="text-xs uppercase tracking-wider font-bold text-gray-500 mb-1">
-              {tx("portfolio:proof.liveProjects", "Signal")}
+              {project.signalKey ? t(project.signalKey) : tx("portfolio:proof.liveProjects", "Signal")}
             </div>
             <p class="text-sm text-gray-100">
               {primaryMetric ? `${primaryMetric.value} • ${t(primaryMetric.labelKey)}` : tx("portfolio:actions.live", "Live")}
@@ -254,6 +259,15 @@ const portfolioSlugJsonLd: any[] = [
                 {t(project.contextKey).split("\n\n").map((para: string) => (
                   <p class="text-gray-300 leading-relaxed mb-4 last:mb-0">{para}</p>
                 ))}
+                {project.relatedServiceKey && project.relatedServiceHref && (
+                  <a
+                    href={`/${locale}${project.relatedServiceHref}`}
+                    class="mt-4 inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 text-sm font-semibold transition-colors"
+                  >
+                    {t(project.relatedServiceKey)}
+                    <span aria-hidden="true">→</span>
+                  </a>
+                )}
               </div>
             )}
 

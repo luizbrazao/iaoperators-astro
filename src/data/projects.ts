@@ -50,9 +50,15 @@ export type Project = {
     seoTitleKey?: string;
     titleKey: string;
     h1Key?: string;
+    subtitleKey?: string;
     taglineKey: string;
+    signalKey?: string;
     ctaTitleKey?: string;
     ctaSubtitleKey?: string;
+    relatedServiceKey?: string;
+    relatedServiceHref?: string;
+    serviceAudienceKey?: string;
+    serviceAreas?: string[];
 
     problemKey: string;
     contextKey?: string;
@@ -108,9 +114,15 @@ export const projects: Project[] = [
         seoTitleKey: "projects:menorcaHotelChain.seoTitle",
         titleKey: "projects:menorcaHotelChain.title",
         h1Key: "projects:menorcaHotelChain.h1",
+        subtitleKey: "projects:menorcaHotelChain.subtitle",
         taglineKey: "projects:menorcaHotelChain.tagline",
+        signalKey: "projects:menorcaHotelChain.signal",
         ctaTitleKey: "projects:menorcaHotelChain.ctaTitle",
         ctaSubtitleKey: "projects:menorcaHotelChain.ctaSubtitle",
+        relatedServiceKey: "projects:menorcaHotelChain.relatedService",
+        relatedServiceHref: "/auditoria-de-sistemas/",
+        serviceAudienceKey: "projects:menorcaHotelChain.serviceAudience",
+        serviceAreas: ["Menorca", "España"],
 
         problemKey: "projects:menorcaHotelChain.problem",
         contextKey: "projects:menorcaHotelChain.context",
