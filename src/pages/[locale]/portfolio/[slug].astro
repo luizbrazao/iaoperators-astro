@@ -54,6 +54,12 @@ const projectUrl = new URL(`/${locale}/portfolio/${slug}/`, site).toString();
 const portfolioUrl = new URL(`/${locale}/portfolio/`, site).toString();
 const homeLabel = locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio";
 
+const ogImageUrl = project.ogImage
+  ? new URL(project.ogImage, site).toString()
+  : project.heroImage
+    ? new URL(project.heroImage, site).toString()
+    : undefined;
+
 const portfolioSlugJsonLd: any[] = [
   {
     "@context": "https://schema.org",
@@ -62,7 +68,9 @@ const portfolioSlugJsonLd: any[] = [
     description: pageDescription,
     url: projectUrl,
     inLanguage: locale,
-    image: project.heroImage ? new URL(project.heroImage, site).toString() : undefined,
+    datePublished: project.publishedAt,
+    dateModified: project.updatedAt ?? project.publishedAt,
+    image: ogImageUrl,
     author: {
       "@type": "Organization",
       name: "IA Operators",
@@ -72,7 +80,12 @@ const portfolioSlugJsonLd: any[] = [
       "@type": "Organization",
       name: "IA Operators",
       url: site,
-      logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+      logo: {
+        "@type": "ImageObject",
+        url: new URL("/android-chrome-512x512.png", site).toString(),
+        width: 512,
+        height: 512,
+      },
     },
     about: {
       "@type": "Service",
@@ -93,7 +106,15 @@ const portfolioSlugJsonLd: any[] = [
 ];
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription} ogImage={project.heroImage ?? undefined} jsonLd={portfolioSlugJsonLd}>
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  ogImage={project.ogImage ?? project.heroImage ?? undefined}
+  ogType="article"
+  ogPublishedTime={project.publishedAt}
+  ogModifiedTime={project.updatedAt ?? project.publishedAt}
+  jsonLd={portfolioSlugJsonLd}
+>
   <section class="bg-transparent text-white pt-28 pb-20 px-6">
     <div class="max-w-6xl mx-auto">
       <!-- Top nav -->
@@ -171,7 +192,7 @@ const portfolioSlugJsonLd: any[] = [
         <div class="mb-12 relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl aspect-16/8 bg-[#111]">
           <img
             src={project.heroImage}
-            alt={`${t(project.titleKey)} — IA Operators`}
+            alt={project.gallery?.[0]?.altKey ? t(project.gallery[0].altKey) : `${t(project.titleKey)} — IA Operators`}
             loading="lazy"
             class="w-full h-full object-cover opacity-95"
           />
@@ -259,6 +280,29 @@ const portfolioSlugJsonLd: any[] = [
               ))}
             </div>
           </section>
+
+          <!-- Testimonial -->
+          {project.testimonial && (
+            <section class="mt-12 relative bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 overflow-hidden">
+              <span class="absolute top-4 right-6 text-7xl text-orange-500/10 font-serif leading-none select-none" aria-hidden="true">"</span>
+              <blockquote class="relative">
+                <p class="text-white text-lg leading-relaxed font-medium mb-6">
+                  "{t(project.testimonial.quoteKey)}"
+                </p>
+                <footer class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-orange-500/20 border border-orange-500/30 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <cite class="not-italic font-bold text-white text-sm">{t(project.testimonial.authorKey)}</cite>
+                    <p class="text-gray-400 text-xs mt-0.5">{t(project.testimonial.roleKey)}</p>
+                  </div>
+                </footer>
+              </blockquote>
+            </section>
+          )}
 
           <!-- Security -->
           <section class="mt-12 bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">

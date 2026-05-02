@@ -15,10 +15,15 @@
     },
     "menorcaHotelChain": {
         "title": "Digital X-Ray — Hotel chain (Menorca)",
-        "tagline": "Full inventory of applications, integrations, and Shadow IT for a hotel chain with 4 properties in Menorca and 400+ employees.",
+        "tagline": "Hotel technology audit: how a 4-property chain in Menorca cut SaaS costs by 23% and mapped 47 applications with IA Operators.",
         "category": "Technology audit · Hospitality",
         "gallery": {
-            "heroAlt": "Coastal hotel in Menorca — Digital X-Ray case"
+            "heroAlt": "Aerial view of coastal hotel in Menorca — technology audit case study by IA Operators"
+        },
+        "testimonial": {
+            "quote": "For the first time we had a complete map of what we actually used. The report let us move into the next digitalization phase with a real inventory, not assumptions.",
+            "author": "Head of Operations",
+            "role": "Hotel chain, Menorca (confidential per NDA)"
         },
         "problem": "Four properties, 400+ employees, a decade of growth piling up tools: PMS, booking engine, channel manager, department-level CRMs, critical spreadsheets owned by a single person. No one had the full list of what the chain used, paid for, or depended on. Leadership wanted to roll out AI but didn't know on what foundation.",
         "engineeringIntro": "We applied the Digital X-Ray methodology: kick-off, structured interviews with 12 functional areas, document collection (SaaS contracts, billing, accesses), real integration mapping, and per-system risk analysis. We cross-checked declarations against logs and billing to surface Shadow IT.",

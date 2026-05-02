@@ -19,13 +19,22 @@ export type ProjectLink = {
     external?: boolean;
 };
 
+export type ProjectTestimonial = {
+    quoteKey: string;
+    authorKey: string;
+    roleKey: string;
+};
+
 export type Project = {
     id: number;
     slug: string;
+    publishedAt: string;
+    updatedAt?: string;
 
     category: string;
     categoryKey?: string;
     heroImage: string;
+    ogImage?: string;
     gallery?: { src: string; altKey?: string }[];
 
     titleKey: string;
@@ -40,6 +49,7 @@ export type Project = {
     pillars: ProjectPillar[];
     securityKeys: string[];
     metrics?: ProjectMetric[];
+    testimonial?: ProjectTestimonial;
 
     pricing?: {
         monthly?: { price: string; detailsKeys?: string[] };
@@ -57,11 +67,13 @@ export const projects: Project[] = [
     {
         id: 3,
         slug: "radiografia-cadena-hotelera-menorca",
+        publishedAt: "2025-04-10",
 
         category: "Auditoría tecnológica / Hotelería",
         categoryKey: "projects:menorcaHotelChain.category",
         heroImage:
             "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&q=80",
+        ogImage: "/og/portfolio-radiografia-cadena-hotelera-menorca.svg",
 
         gallery: [
             {
@@ -131,6 +143,12 @@ export const projects: Project[] = [
             "projects:menorcaHotelChain.security.2",
         ],
 
+        testimonial: {
+            quoteKey: "projects:menorcaHotelChain.testimonial.quote",
+            authorKey: "projects:menorcaHotelChain.testimonial.author",
+            roleKey: "projects:menorcaHotelChain.testimonial.role",
+        },
+
         metrics: [
             {
                 labelKey: "projects:menorcaHotelChain.metrics.0.label",
@@ -179,6 +197,7 @@ export const projects: Project[] = [
     {
         id: 1,
         slug: "chatplug-whatsapp-altegio",
+        publishedAt: "2025-03-01",
 
         category: "SaaS / CRM Integration",
         categoryKey: "projects:chatplug.category",
@@ -314,6 +333,7 @@ export const projects: Project[] = [
     {
         id: 2,
         slug: "chatbot-reservas-turisticas-whatsapp",
+        publishedAt: "2025-02-15",
 
         category: "Automação de Reservas / WhatsApp",
         categoryKey: "projects:tourBooking.category",

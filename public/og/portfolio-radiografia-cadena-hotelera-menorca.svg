@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A0A0A"/>
+      <stop offset="100%" style="stop-color:#111111"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FF6900"/>
+      <stop offset="100%" style="stop-color:#FF8C00"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grid pattern -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="0.3" opacity="0.06"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Orange top accent bar -->
+  <rect x="0" y="0" width="1200" height="4" fill="url(#accent)"/>
+
+  <!-- Left orange vertical line -->
+  <rect x="80" y="60" width="4" height="510" fill="#FF6900" opacity="0.3"/>
+
+  <!-- Category pill -->
+  <rect x="108" y="60" width="260" height="36" rx="18" fill="#FF6900" fill-opacity="0.12" stroke="#FF6900" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="238" y="84" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#FF6900" text-anchor="middle" letter-spacing="2">AUDITORÍA TECNOLÓGICA · HOTELERÍA</text>
+
+  <!-- Main title -->
+  <text x="108" y="165" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="800" fill="#FFFFFF" letter-spacing="-0.5">Radiografía Digital</text>
+  <text x="108" y="225" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="600" fill="#E5E5E5">Cadena hotelera · Menorca</text>
+
+  <!-- Subtitle -->
+  <text x="108" y="285" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#9CA3AF">Inventario de aplicaciones, integraciones y Shadow IT</text>
+  <text x="108" y="310" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#9CA3AF">para una cadena con 4 propiedades y 400+ empleados</text>
+
+  <!-- Divider -->
+  <line x1="108" y1="345" x2="1092" y2="345" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
+
+  <!-- Metric cards -->
+  <!-- Card 1 -->
+  <rect x="108" y="368" width="220" height="100" rx="12" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
+  <text x="218" y="415" font-family="system-ui, -apple-system, sans-serif" font-size="40" font-weight="800" fill="#FFFFFF" text-anchor="middle">47</text>
+  <text x="218" y="450" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#9CA3AF" text-anchor="middle">Aplicaciones inventariadas</text>
+
+  <!-- Card 2 -->
+  <rect x="352" y="368" width="220" height="100" rx="12" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
+  <text x="462" y="415" font-family="system-ui, -apple-system, sans-serif" font-size="40" font-weight="800" fill="#FF6900" text-anchor="middle">23%</text>
+  <text x="462" y="450" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#9CA3AF" text-anchor="middle">Reducción de coste SaaS</text>
+
+  <!-- Card 3 -->
+  <rect x="596" y="368" width="220" height="100" rx="12" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
+  <text x="706" y="415" font-family="system-ui, -apple-system, sans-serif" font-size="40" font-weight="800" fill="#FFFFFF" text-anchor="middle">12</text>
+  <text x="706" y="450" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#9CA3AF" text-anchor="middle">Áreas funcionales mapeadas</text>
+
+  <!-- Card 4 -->
+  <rect x="840" y="368" width="220" height="100" rx="12" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
+  <text x="950" y="415" font-family="system-ui, -apple-system, sans-serif" font-size="40" font-weight="800" fill="#FFFFFF" text-anchor="middle">3</text>
+  <text x="950" y="450" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#9CA3AF" text-anchor="middle">Semanas de proyecto</text>
+
+  <!-- Brand footer -->
+  <text x="108" y="560" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">IA Operators</text>
+  <text x="108" y="588" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6B7280">iaoperators.com</text>
+
+  <!-- Right side decoration -->
+  <circle cx="1080" cy="480" r="120" fill="#FF6900" fill-opacity="0.04" stroke="#FF6900" stroke-opacity="0.12" stroke-width="1"/>
+  <circle cx="1080" cy="480" r="80" fill="#FF6900" fill-opacity="0.04" stroke="#FF6900" stroke-opacity="0.08" stroke-width="1"/>
+</svg>

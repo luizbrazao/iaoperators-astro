@@ -15,10 +15,15 @@
     },
     "menorcaHotelChain": {
         "title": "Radiografía Digital — Cadena hotelera (Menorca)",
-        "tagline": "Inventario completo de aplicaciones, integraciones y Shadow IT para una cadena hotelera con 4 propiedades en Menorca y 400+ empleados.",
+        "tagline": "Auditoría tecnológica hotelera: cómo una cadena de 4 propiedades en Menorca redujo un 23% su coste SaaS e identificó 47 aplicaciones con IA Operators.",
         "category": "Auditoría tecnológica · Hotelería",
         "gallery": {
-            "heroAlt": "Hotel costero en Menorca — caso de Radiografía Digital"
+            "heroAlt": "Vista aérea de hotel costero en Menorca — caso de auditoría tecnológica IA Operators"
+        },
+        "testimonial": {
+            "quote": "Por primera vez teníamos el mapa completo de lo que realmente usábamos. El informe nos permitió entrar en la siguiente fase de digitalización con un inventario real, no suposiciones.",
+            "author": "Director de Operaciones",
+            "role": "Cadena hotelera, Menorca (confidencial por NDA)"
         },
         "problem": "Cuatro propiedades, 400+ empleados, una década de crecimiento sumando herramientas: PMS, motor de reservas, channel manager, CRMs por departamento, hojas de cálculo críticas mantenidas por una sola persona. Nadie tenía la lista completa de lo que la cadena usaba, pagaba ni dependía. La dirección quería implementar IA, pero no sabía sobre qué base.",
         "engineeringIntro": "Aplicamos la metodología Radiografía Digital: kick-off, entrevistas estructuradas con 12 áreas funcionales, recopilación documental (contratos SaaS, facturación, accesos), mapeo de integraciones reales y análisis de riesgo por sistema. Cruzamos lo declarado con logs y facturación para detectar Shadow IT.",

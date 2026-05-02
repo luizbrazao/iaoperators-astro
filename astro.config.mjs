@@ -16,10 +16,20 @@ export default defineConfig({
   integrations: [
     sitemap({
       serialize(item) {
-        return {
-          ...item,
-          lastmod: new Date().toISOString().split("T")[0],
+        const knownDates = {
+          "https://iaoperators.com/es/portfolio/radiografia-cadena-hotelera-menorca/": "2025-04-10",
+          "https://iaoperators.com/en/portfolio/radiografia-cadena-hotelera-menorca/": "2025-04-10",
+          "https://iaoperators.com/pt/portfolio/radiografia-cadena-hotelera-menorca/": "2025-04-10",
+          "https://iaoperators.com/es/portfolio/chatplug-whatsapp-altegio/": "2025-03-01",
+          "https://iaoperators.com/en/portfolio/chatplug-whatsapp-altegio/": "2025-03-01",
+          "https://iaoperators.com/pt/portfolio/chatplug-whatsapp-altegio/": "2025-03-01",
+          "https://iaoperators.com/es/portfolio/chatbot-reservas-turisticas-whatsapp/": "2025-02-15",
+          "https://iaoperators.com/en/portfolio/chatbot-reservas-turisticas-whatsapp/": "2025-02-15",
+          "https://iaoperators.com/pt/portfolio/chatbot-reservas-turisticas-whatsapp/": "2025-02-15",
         };
+        const knownDate = knownDates[item.url];
+        if (knownDate) return { ...item, lastmod: knownDate };
+        return item;
       },
     }),
     react(),
@@ -42,6 +52,7 @@ export default defineConfig({
 
   redirects: {
     "/": "/es/",
+    "/sitemap.xml": "/sitemap-index.xml",
     "/es/blog/ia-local-privada-sem-mensalidade-qwen-pc/":
       "/es/blog/ia-local-privada-sin-mensualidad-qwen-pc/",
     "/pt/blog/ia-local-privada-sem-mensalidade-qwen-pc/":
