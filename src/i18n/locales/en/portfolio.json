@@ -12,7 +12,8 @@
         "talk": "Let's talk",
         "seeCases": "See case studies",
         "challenge": "Challenge",
-        "startProject": "Start a project"
+        "startProject": "Start a project",
+        "back": "Back to Cases"
     },
     "breadcrumb": {
         "portfolio": "Cases"
