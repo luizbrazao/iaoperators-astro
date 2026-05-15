@@ -403,7 +403,8 @@
       padding: 3rem 2rem 2rem;
       text-align: center;
     }
-    .footer-logo { height: 40px; filter: brightness(0) invert(1); margin-bottom: 1.25rem; display: inline-block; opacity: 0.85; }
+    .footer-logo { height: 40px; margin-bottom: 1.25rem; display: inline-block; opacity: 0.9; transition: opacity 0.2s; }
+    .footer-logo:hover { opacity: 1; }
     .footer-links { display: flex; gap: 1.75rem; justify-content: center; margin: 0.75rem 0 1.25rem; flex-wrap: wrap; }
     .footer-links a { color: var(--text-light); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
     .footer-links a:hover { color: var(--primary); }
@@ -442,7 +443,7 @@
       .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .footer { background: #f3f4f6 !important; }
       .footer * { color: #374151 !important; }
-      .footer-logo { filter: brightness(0) !important; }
+      .footer-logo { opacity: 1 !important; }
       .fade-in { opacity: 1 !important; transform: none !important; }
       .section { padding: 2rem 1.5rem; }
     }
@@ -834,7 +835,9 @@
 
 <!-- FOOTER -->
 <footer class="footer">
-  <img src="/propostas/Logo-IAOperators.png" alt="IA Operators" class="footer-logo">
+  <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
+    <img src="https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png" alt="IA Operators" class="footer-logo">
+  </a>
   <div class="footer-line"></div>
   <div class="footer-links">
     <a href="mailto:ferbrazao@gmail.com">ferbrazao@gmail.com</a>
