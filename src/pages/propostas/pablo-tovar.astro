@@ -1,0 +1,860 @@
+---
+// Página de proposta comercial — noindex,nofollow (nunca indexada pelo Google)
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Auditoría de Presencia Digital · Pablo Tovar Martínez · IA Operators</title>
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --bg-alt: #F9FAFB;
+      --surface: #FFFFFF;
+      --primary: #FF6900;
+      --primary-soft: #FFF4ED;
+      --primary-border: rgba(255, 105, 0, 0.4);
+      --text: #111827;
+      --text-muted: #6B7280;
+      --text-light: #9CA3AF;
+      --border: #E5E7EB;
+      --risk: #DC2626;
+      --risk-bg: #FEF2F2;
+      --positive: #16A34A;
+      --positive-bg: #F0FDF4;
+      --shadow: 0 1px 4px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+    h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; line-height: 1.15; }
+    h2 { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 700; line-height: 1.2; }
+    h3 { font-size: 1.15rem; font-weight: 600; }
+    h4 { font-size: 1rem; font-weight: 600; }
+    p { color: var(--text-muted); }
+    strong { color: var(--text); }
+
+    /* NAV */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    }
+    .nav-logo { height: 40px; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text); font-size: 0.82rem; font-weight: 500; transition: color 0.2s; white-space: nowrap; }
+    .nav-links a:hover { color: var(--primary); }
+
+    /* HERO */
+    .hero {
+      background-image: url('/propostas/Capa-propostas.png');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 4rem 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      pointer-events: none;
+    }
+    .hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+    .hero h1 { color: white; margin-bottom: 1rem; }
+    .hero-subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.85); margin-bottom: 2.5rem; max-width: 680px; }
+    .hero-band {
+      background: rgba(0,0,0,0.2);
+      margin: 0 -2rem;
+      padding: 0.85rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+    .hero-band span { color: rgba(255,255,255,0.9); font-size: 0.875rem; }
+    .badge-proposal {
+      background: var(--primary);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* SECTIONS */
+    .section { padding: 4rem 2rem; }
+    .section-alt { background: var(--bg-alt); }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .section-title { color: var(--text); margin-bottom: 0.4rem; }
+    .section-subtitle { color: var(--text-muted); font-size: 0.97rem; margin-bottom: 2rem; max-width: 680px; }
+
+    /* RESUMEN EJECUTIVO */
+    .exec-summary {
+      border-left: 4px solid var(--primary);
+      background: var(--primary-soft);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 2rem 2.5rem;
+    }
+    .exec-quote {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.22rem;
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      line-height: 1.65;
+      border-bottom: 1px solid rgba(255,105,0,0.2);
+      padding-bottom: 1.25rem;
+    }
+    .exec-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .exec-bullets li { display: flex; align-items: flex-start; gap: 0.6rem; color: var(--text-muted); font-size: 0.95rem; }
+    .exec-bullets li::before { content: '→'; color: var(--primary); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+
+    /* RIESGOS */
+    .risk-cards { display: flex; flex-direction: column; gap: 1rem; }
+    .risk-card {
+      border-left: 4px solid var(--risk);
+      background: var(--risk-bg);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.25rem 1.75rem;
+    }
+    .risk-card h4 { color: var(--risk); margin-bottom: 0.35rem; font-size: 1rem; }
+    .risk-card p { color: #374151; font-size: 0.9rem; }
+
+    /* MÉTRICAS */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .metric-card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--primary);
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+    .metric-number {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .metric-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
+
+    /* TIMELINE */
+    .timeline {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      position: relative;
+      margin-top: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 56px;
+      right: 56px;
+      height: 2px;
+      background: var(--border);
+      z-index: 0;
+    }
+    .timeline-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      padding: 0 0.5rem;
+    }
+    .timeline-node {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      font-size: 1.15rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 14px rgba(255,105,0,0.35);
+      flex-shrink: 0;
+    }
+    .timeline-content {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+      text-align: center;
+      width: 100%;
+    }
+    .timeline-content h4 { color: var(--text); font-size: 0.85rem; margin-bottom: 0.3rem; }
+    .timeline-content p { font-size: 0.78rem; color: var(--text-muted); line-height: 1.45; }
+    .timeline-deliverable {
+      display: inline-block;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      margin-top: 0.6rem;
+    }
+
+    /* PLATAFORMAS */
+    .platform-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .platform-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border-top: 3px solid var(--primary);
+      padding: 1.25rem 1rem;
+      text-align: center;
+    }
+    .platform-name { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .platform-query { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.75rem; line-height: 1.45; }
+    .platform-badge {
+      display: inline-block;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+    }
+
+    /* ENTREGABLES */
+    .deliverables-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .deliverable-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .deliverable-card:hover { box-shadow: var(--shadow-md); border-color: var(--primary-border); }
+    .deliverable-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .deliverable-content h4 { color: var(--text); margin-bottom: 0.3rem; }
+    .deliverable-content p { font-size: 0.85rem; line-height: 1.5; }
+
+    /* INVERSIÓN */
+    .investment-card {
+      background: var(--primary-soft);
+      border: 1px solid var(--primary-border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-top: 1.5rem;
+    }
+    .investment-table { width: 100%; border-collapse: collapse; margin: 1rem 0; background: white; border-radius: var(--radius-sm); overflow: hidden; }
+    .investment-table th { text-align: left; padding: 0.7rem 1rem; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); background: var(--bg-alt); border-bottom: 2px solid var(--border); }
+    .investment-table td { padding: 0.7rem 1rem; font-size: 0.9rem; border-bottom: 1px solid var(--border); color: var(--text); }
+    .investment-table tr:last-child td { border-bottom: none; }
+    .investment-table tr:hover td { background: var(--primary-soft); }
+    .price-badge {
+      text-align: center;
+      font-size: 2.75rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 1.25rem 0 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .price-note { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+    .payment-milestones {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .payment-milestone {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.5rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .payment-milestone .amount { font-weight: 700; color: var(--text); font-size: 1.1rem; }
+    .payment-milestone .label { font-size: 0.78rem; color: var(--text-muted); }
+    .payment-arrow { font-size: 1.5rem; color: var(--primary); font-weight: 700; }
+
+    /* INCLUYE */
+    .include-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+    .include-col { border-radius: var(--radius); padding: 1.75rem; }
+    .include-col.yes { background: var(--positive-bg); border-left: 4px solid var(--positive); }
+    .include-col.no { background: var(--bg-alt); border-left: 4px solid var(--text-light); }
+    .include-col h3 { margin-bottom: 1rem; font-size: 1rem; }
+    .include-col.yes h3 { color: var(--positive); }
+    .include-col.no h3 { color: var(--text-muted); }
+    .include-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .include-list li { display: flex; gap: 0.6rem; font-size: 0.88rem; align-items: flex-start; color: var(--text); }
+    .check-yes { color: var(--positive); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .check-no { color: var(--text-light); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* NOTA IA */
+    .ia-note {
+      border-left: 4px solid var(--primary);
+      background: var(--primary-soft);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 2rem 2.5rem;
+      margin-top: 1.5rem;
+    }
+    .ia-note h3 { color: var(--text); margin-bottom: 1rem; }
+    .ia-note p { color: #374151; margin-bottom: 0.75rem; font-size: 0.95rem; line-height: 1.65; }
+    .ia-note p:last-child { margin-bottom: 0; }
+    .ia-note .conclusion { color: var(--primary); font-style: italic; font-weight: 500; }
+
+    /* PRÓXIMOS PASOS */
+    .steps-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow);
+      transition: border-color 0.2s;
+    }
+    .step-item:hover { border-color: var(--primary-border); }
+    .step-checkbox { font-size: 1.4rem; color: var(--primary); flex-shrink: 0; line-height: 1.4; }
+    .step-content h4 { color: var(--text); margin-bottom: 0.25rem; }
+    .step-content p { font-size: 0.88rem; }
+    .validity-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.55rem 1.5rem;
+      border-radius: 999px;
+      border: 1px solid var(--primary-border);
+      margin-top: 1.75rem;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: #111827;
+      color: var(--text-light);
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+    .footer-logo { height: 40px; filter: brightness(0) invert(1); margin-bottom: 1.25rem; display: inline-block; opacity: 0.85; }
+    .footer-links { display: flex; gap: 1.75rem; justify-content: center; margin: 0.75rem 0 1.25rem; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-light); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-line { width: 40px; height: 2px; background: var(--primary); margin: 0 auto 1rem; border-radius: 2px; }
+    .footer-disclaimer { font-size: 0.78rem; color: #4B5563; }
+
+    /* FADE IN */
+    .fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .platform-grid { grid-template-columns: repeat(3, 1fr); }
+      .deliverables-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .platform-grid { grid-template-columns: repeat(2, 1fr); }
+      .deliverables-grid { grid-template-columns: 1fr; }
+      .include-grid { grid-template-columns: 1fr; }
+      .timeline { flex-direction: column; align-items: stretch; gap: 1.25rem; }
+      .timeline::before { display: none; }
+      .timeline-item { flex-direction: row; align-items: flex-start; gap: 1rem; padding: 0; }
+      .timeline-content { text-align: left; flex: 1; }
+      .timeline-node { margin-bottom: 0; }
+      .hero-band { flex-direction: column; align-items: flex-start; }
+      .payment-milestones { flex-direction: column; align-items: stretch; }
+      .payment-arrow { transform: rotate(90deg); text-align: center; }
+    }
+
+    /* PRINT */
+    @media print {
+      .nav { position: static; box-shadow: none; }
+      .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .footer { background: #f3f4f6 !important; }
+      .footer * { color: #374151 !important; }
+      .footer-logo { filter: brightness(0) !important; }
+      .fade-in { opacity: 1 !important; transform: none !important; }
+      .section { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="nav">
+  <img src="/propostas/Logo-IAOperators.png" alt="IA Operators" class="nav-logo">
+  <ul class="nav-links">
+    <li><a href="#resumen">Resumen</a></li>
+    <li><a href="#riesgos">Riesgos</a></li>
+    <li><a href="#metricas">Alcance</a></li>
+    <li><a href="#plan">Plan de trabajo</a></li>
+    <li><a href="#entregables">Entregables</a></li>
+    <li><a href="#inversion">Inversión</a></li>
+    <li><a href="#pasos">Próximos pasos</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Auditoría de Presencia Digital<br>e Inteligencia Artificial</h1>
+    <p class="hero-subtitle">Pablo Tovar Martínez · Diagnóstico completo, visibilidad en IA y preparación para Wikipedia en inglés</p>
+  </div>
+  <div class="hero-band">
+    <span>IA Operators · Luiz Brazão · Mayo 2026</span>
+    <span class="badge-proposal">Propuesta Comercial</span>
+  </div>
+</section>
+
+<!-- RESUMEN EJECUTIVO -->
+<section class="section" id="resumen">
+  <div class="container">
+    <span class="section-label">Resumen ejecutivo</span>
+    <h2 class="section-title">Qué es, y qué no es, este trabajo</h2>
+    <p class="section-subtitle">Auditoría sistemática y documentada de cómo aparece un profesional en buscadores, modelos de IA y bases de conocimiento estructurado.</p>
+    <div class="exec-summary fade-in">
+      <p class="exec-quote">"No se trata de posicionarse en ChatGPT. Se trata de saber exactamente qué dicen los sistemas de IA sobre ti, y por qué."</p>
+      <ul class="exec-bullets">
+        <li>Es un diagnóstico riguroso de la presencia en Google, Bing, cinco plataformas de IA y Wikipedia, con hallazgos concretos, documentados y accionables</li>
+        <li>No es linkbuilding, gestión de redes sociales ni promesas de posicionamiento en IA generativa</li>
+        <li>Entrega seis documentos independientes más un plan de acción a 30, 60 y 90 días, con sesión de revisión de 60 minutos incluida</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TRES RIESGOS -->
+<section class="section section-alt" id="riesgos">
+  <div class="container">
+    <span class="section-label">Diagnóstico previo</span>
+    <h2 class="section-title">Tres riesgos identificados en el briefing</h2>
+    <p class="section-subtitle">El perfil de Pablo Tovar Martínez presenta vectores de riesgo reputacional específicos que esta auditoría aborda de forma directa.</p>
+    <div class="risk-cards fade-in">
+      <div class="risk-card">
+        <h4>🔴 Contaminación por homónimos</h4>
+        <p>Otros profesionales con nombre similar pueden mezclarse con la trayectoria de Pablo Tovar Martínez en buscadores y modelos de IA. Los LLMs no distinguen por apellidos: priorizan la frecuencia de aparición y la autoridad de las fuentes que los citan juntos.</p>
+      </div>
+      <div class="risk-card">
+        <h4>🔴 Información desactualizada o ausente</h4>
+        <p>Los modelos tienen fechas de corte de entrenamiento. Proyectos recientes, publicaciones posteriores y el rol fundador en AddVenture pueden estar fuera del conocimiento de los sistemas, no por ocultamiento, sino por ausencia de fuentes indexables de autoridad suficiente.</p>
+      </div>
+      <div class="risk-card">
+        <h4>🔴 Wikipedia como ancla de conocimiento en IA</h4>
+        <p>Wikipedia en inglés es una de las fuentes más ponderadas en el entrenamiento de LLMs. Su ausencia o contenido incompleto impacta directamente en cómo ChatGPT, Claude, Gemini y Perplexity describen al profesional. Una página mal construida puede generar más problemas que no tener ninguna.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MÉTRICAS -->
+<section class="section" id="metricas">
+  <div class="container">
+    <span class="section-label">Alcance de la auditoría</span>
+    <h2 class="section-title">Qué cubre este trabajo</h2>
+    <div class="metrics-grid fade-in">
+      <div class="metric-card" style="border-top-color:#FF6900">
+        <div class="metric-number" style="color:#FF6900">5</div>
+        <div class="metric-label">Plataformas de IA auditadas</div>
+      </div>
+      <div class="metric-card" style="border-top-color:#2563EB">
+        <div class="metric-number" style="color:#2563EB">2</div>
+        <div class="metric-label">Buscadores analizados<br>Google + Bing</div>
+      </div>
+      <div class="metric-card" style="border-top-color:#7C3AED">
+        <div class="metric-number" style="color:#7C3AED">6</div>
+        <div class="metric-label">Entregables documentados</div>
+      </div>
+      <div class="metric-card" style="border-top-color:#059669">
+        <div class="metric-number" style="color:#059669">5</div>
+        <div class="metric-label">Días de trabajo</div>
+      </div>
+      <div class="metric-card" style="border-top-color:#F59E0B">
+        <div class="metric-number" style="color:#F59E0B;font-size:2rem;line-height:1.2">30/60<br>/90</div>
+        <div class="metric-label">Días del plan de acción</div>
+      </div>
+      <div class="metric-card" style="border-top-color:#0891B2">
+        <div class="metric-number" style="color:#0891B2">1</div>
+        <div class="metric-label">Diagnóstico Wikipedia completo</div>
+      </div>
+      <div class="metric-card" style="border-top-color:#DC2626">
+        <div class="metric-number" style="color:#DC2626">0</div>
+        <div class="metric-label">Promesas de posicionamiento</div>
+      </div>
+      <div class="metric-card" style="border-top-color:#374151">
+        <div class="metric-number" style="color:#374151;font-size:2.5rem">100%</div>
+        <div class="metric-label">Criterio y rigor</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLAN DE TRABAJO -->
+<section class="section section-alt" id="plan">
+  <div class="container">
+    <span class="section-label">Plan de trabajo</span>
+    <h2 class="section-title">5 días · 5 entregables parciales</h2>
+    <p class="section-subtitle">Cada día produce un entregable documentado. La entrega final ocurre al cierre del Día 5 con sesión de revisión incluida.</p>
+    <div class="timeline fade-in">
+      <div class="timeline-item">
+        <div class="timeline-node">1</div>
+        <div class="timeline-content">
+          <h4>Auditoría en buscadores</h4>
+          <p>Google, Bing, Google News. SERP, Knowledge Panel, imágenes, detección de homónimos.</p>
+          <span class="timeline-deliverable">Inventario de presencia</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-node">2</div>
+        <div class="timeline-content">
+          <h4>Visibilidad en IA</h4>
+          <p>ChatGPT, Claude, Gemini, Perplexity, Copilot. Consultas estructuradas + tabla comparativa.</p>
+          <span class="timeline-deliverable">Informe de IA</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-node">3</div>
+        <div class="timeline-content">
+          <h4>Fuentes + Wikipedia</h4>
+          <p>Matriz de fuentes clasificadas. Diagnóstico de notoriedad y verificabilidad Wikipedia.</p>
+          <span class="timeline-deliverable">Matriz + diagnóstico</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-node">4</div>
+        <div class="timeline-content">
+          <h4>Informe de diagnóstico</h4>
+          <p>Consolidación de hallazgos: errores, omisiones, riesgos y oportunidades priorizadas.</p>
+          <span class="timeline-deliverable">Informe consolidado</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-node">5</div>
+        <div class="timeline-content">
+          <h4>Plan de acción + entrega</h4>
+          <p>Plan 30/60/90 días accionable. Sesión de revisión de 60 min incluida.</p>
+          <span class="timeline-deliverable">Entrega final</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATAFORMAS IA -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">Auditoría de IA</span>
+    <h2 class="section-title">5 plataformas · protocolo estructurado</h2>
+    <p class="section-subtitle">Cada plataforma recibe un conjunto de consultas documentadas con capturas, análisis de consistencia y detección de alucinaciones.</p>
+    <div class="platform-grid fade-in">
+      <div class="platform-card">
+        <div class="platform-name">ChatGPT</div>
+        <div class="platform-query">GPT-4o · Consultas directas y de contexto profesional</div>
+        <span class="platform-badge">Alucinaciones</span>
+      </div>
+      <div class="platform-card">
+        <div class="platform-name">Claude</div>
+        <div class="platform-query">Anthropic · Verificación de hechos y atribuciones</div>
+        <span class="platform-badge">Consistencia</span>
+      </div>
+      <div class="platform-card">
+        <div class="platform-name">Gemini</div>
+        <div class="platform-query">Google · Integración con búsqueda y Knowledge Graph</div>
+        <span class="platform-badge">Fuentes Google</span>
+      </div>
+      <div class="platform-card">
+        <div class="platform-name">Perplexity</div>
+        <div class="platform-query">Cita fuentes explícitas · análisis de qué fuentes pondera</div>
+        <span class="platform-badge">Fuentes citadas</span>
+      </div>
+      <div class="platform-card">
+        <div class="platform-name">Copilot</div>
+        <div class="platform-query">Microsoft · Búsqueda integrada con índice Bing</div>
+        <span class="platform-badge">Bing index</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENTREGABLES -->
+<section class="section section-alt" id="entregables">
+  <div class="container">
+    <span class="section-label">Entregables</span>
+    <h2 class="section-title">6 documentos independientes</h2>
+    <p class="section-subtitle">Cada entregable es un documento autónomo, editable y propiedad del cliente.</p>
+    <div class="deliverables-grid fade-in">
+      <div class="deliverable-card">
+        <div class="deliverable-number">1</div>
+        <div class="deliverable-content">
+          <h4>📋 Informe de auditoría digital</h4>
+          <p>Estado en buscadores, SERP, Knowledge Panel, imágenes, Google News y homónimos detectados con análisis de solapamiento.</p>
+        </div>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-number">2</div>
+        <div class="deliverable-content">
+          <h4>🤖 Informe de visibilidad en IA</h4>
+          <p>Resultados por plataforma + tabla comparativa de consistencia + fuentes que los modelos citan actualmente.</p>
+        </div>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-number">3</div>
+        <div class="deliverable-content">
+          <h4>📊 Hoja de cálculo de fuentes</h4>
+          <p>Todas las fuentes clasificadas por tipo, autoridad, fecha, contenido y utilidad para Wikipedia como referencia válida.</p>
+        </div>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-number">4</div>
+        <div class="deliverable-content">
+          <h4>📖 Diagnóstico Wikipedia</h4>
+          <p>Evaluación de notoriedad (WP:NOTABILITY), verificabilidad (WP:V), riesgos de borrado y brechas de cobertura documentadas.</p>
+        </div>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-number">5</div>
+        <div class="deliverable-content">
+          <h4>⚡ Lista priorizada de hallazgos</h4>
+          <p>Errores, omisiones y oportunidades ordenados por impacto, urgencia y esfuerzo estimado de corrección.</p>
+        </div>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-number">6</div>
+        <div class="deliverable-content">
+          <h4>🗓️ Plan de acción 30/60/90</h4>
+          <p>Acciones concretas por horizonte: correcciones inmediatas de bajo esfuerzo, acciones de esfuerzo medio y estrategia a largo plazo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INVERSIÓN -->
+<section class="section" id="inversion">
+  <div class="container">
+    <span class="section-label">Inversión</span>
+    <h2 class="section-title">Precio fijo · 5 días de trabajo</h2>
+    <p class="section-subtitle">Sin sorpresas. El precio cubre los cinco días completos, todos los entregables y la sesión de revisión final.</p>
+    <div class="investment-card fade-in">
+      <table class="investment-table">
+        <thead>
+          <tr>
+            <th>Concepto</th>
+            <th style="text-align:right">Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Día 1 · Auditoría en buscadores + detección de homónimos</td>
+            <td style="text-align:right;font-weight:600;color:var(--text)">400 EUR + IVA</td>
+          </tr>
+          <tr>
+            <td>Día 2 · Visibilidad en IA (5 plataformas)</td>
+            <td style="text-align:right;font-weight:600;color:var(--text)">400 EUR + IVA</td>
+          </tr>
+          <tr>
+            <td>Día 3 · Matriz de fuentes + diagnóstico Wikipedia</td>
+            <td style="text-align:right;font-weight:600;color:var(--text)">400 EUR + IVA</td>
+          </tr>
+          <tr>
+            <td>Día 4 · Informe de diagnóstico consolidado</td>
+            <td style="text-align:right;font-weight:600;color:var(--text)">400 EUR + IVA</td>
+          </tr>
+          <tr>
+            <td>Día 5 · Plan de acción 30/60/90 + sesión de entrega (60 min)</td>
+            <td style="text-align:right;font-weight:600;color:var(--text)">400 EUR + IVA</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="price-badge">2.000 EUR + IVA</div>
+      <p class="price-note">Entrega en 5 días hábiles desde el kick-off</p>
+      <div class="payment-milestones">
+        <div class="payment-milestone">
+          <div class="amount">1.000 EUR + IVA</div>
+          <div class="label">50% al inicio del proyecto</div>
+        </div>
+        <div class="payment-arrow">→</div>
+        <div class="payment-milestone">
+          <div class="amount">1.000 EUR + IVA</div>
+          <div class="label">50% en la entrega final</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INCLUYE / NO INCLUYE -->
+<section class="section section-alt">
+  <div class="container">
+    <span class="section-label">Alcance</span>
+    <h2 class="section-title">Qué está incluido y qué no</h2>
+    <div class="include-grid fade-in">
+      <div class="include-col yes">
+        <h3>✓ Incluido</h3>
+        <ul class="include-list">
+          <li><span class="check-yes">✓</span> Auditoría sistemática en Google, Bing y Google News</li>
+          <li><span class="check-yes">✓</span> Consultas documentadas en ChatGPT, Claude, Gemini, Perplexity y Copilot</li>
+          <li><span class="check-yes">✓</span> Detección y análisis de confusiones con homónimos</li>
+          <li><span class="check-yes">✓</span> Hoja de cálculo de fuentes clasificadas con evaluación para Wikipedia</li>
+          <li><span class="check-yes">✓</span> Diagnóstico completo de preparación para Wikipedia en inglés</li>
+          <li><span class="check-yes">✓</span> Informe consolidado con hallazgos priorizados por impacto</li>
+          <li><span class="check-yes">✓</span> Plan de acción 30/60/90 días accionable</li>
+          <li><span class="check-yes">✓</span> Sesión de entrega de 60 minutos para revisión y preguntas</li>
+        </ul>
+      </div>
+      <div class="include-col no">
+        <h3>✗ No incluido</h3>
+        <ul class="include-list">
+          <li><span class="check-no">✗</span> Redacción ni edición de la página de Wikipedia (requiere proceso editorial independiente)</li>
+          <li><span class="check-no">✗</span> Creación de contenido, artículos o gestión de medios</li>
+          <li><span class="check-no">✗</span> Linkbuilding ni acciones de SEO off-page</li>
+          <li><span class="check-no">✗</span> Monitorización continua posterior a la entrega</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOTA SOBRE IA -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">Contexto técnico</span>
+    <h2 class="section-title">Por qué la visibilidad en IA no funciona como el SEO</h2>
+    <div class="ia-note fade-in">
+      <h3>Lo que los modelos de lenguaje saben, y por qué</h3>
+      <p>Los modelos de IA generativa no se "posicionan" como Google. Su conocimiento sobre una persona pública depende de las fuentes que existían en sus datos de entrenamiento, con fechas de corte específicas y criterios de peso que varían por plataforma. No hay un botón para actualizar lo que ChatGPT sabe sobre ti esta semana.</p>
+      <p>Lo que sí es accionable: identificar qué fuentes alimentan actualmente cada modelo, qué brechas existen entre la realidad y lo que los sistemas dicen, y qué contenido o referencias nuevas tienen más probabilidad de ser incorporadas en actualizaciones futuras del entrenamiento.</p>
+      <p class="conclusion">→ Eso es exactamente lo que entrega esta auditoría: no promesas, sino un mapa claro de la situación actual y los pasos concretos para mejorarla.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRÓXIMOS PASOS -->
+<section class="section section-alt" id="pasos">
+  <div class="container">
+    <span class="section-label">Próximos pasos</span>
+    <h2 class="section-title">Cómo empezamos</h2>
+    <ul class="steps-list fade-in">
+      <li class="step-item">
+        <span class="step-checkbox">☐</span>
+        <div class="step-content">
+          <h4>Confirmación de la propuesta y pago del 50% inicial</h4>
+          <p>1.000 EUR + IVA para reservar las fechas de inicio y arrancar el trabajo.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <span class="step-checkbox">☐</span>
+        <div class="step-content">
+          <h4>Envío de briefing breve (~15 min)</h4>
+          <p>Perfiles propios, publicaciones principales, medios donde aparece, homónimos conocidos y página de Wikipedia actual si existe.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <span class="step-checkbox">☐</span>
+        <div class="step-content">
+          <h4>Inicio del trabajo</h4>
+          <p>Entrega de los 6 documentos en 5 días hábiles desde el kick-off. Sesión de revisión de 60 minutos incluida al cierre.</p>
+        </div>
+      </li>
+    </ul>
+    <div style="text-align:center">
+      <span class="validity-badge">⏱ Propuesta válida por 15 días · Mayo 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <img src="/propostas/Logo-IAOperators.png" alt="IA Operators" class="footer-logo">
+  <div class="footer-line"></div>
+  <div class="footer-links">
+    <a href="mailto:ferbrazao@gmail.com">ferbrazao@gmail.com</a>
+    <a href="tel:+34662423523">+34 662 423 523</a>
+    <a href="https://iaoperators.com" target="_blank" rel="noopener">iaoperators.com</a>
+  </div>
+  <p class="footer-disclaimer">Elaborado por IA Operators · Luiz Brazão · Mayo 2026</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
