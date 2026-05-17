@@ -75,6 +75,23 @@
         ],
         "trustedBy": "Empresas que confiaram em nosso trabalho"
     },
+    "clientTestimonials": {
+        "badge": "Depoimentos",
+        "title": "O que dizem quem trabalhou conosco",
+        "items": [
+            {
+                "name": "Marco Toscano",
+                "photo": "/images/marco-toscano.jpeg",
+                "link": "https://marcotoscano.de/",
+                "paragraphs": [
+                    "Tive a oportunidade de trabalhar com Luiz no desenvolvimento de uma aplicação personalizada de automação com IA para um dos meus negócios.",
+                    "Luiz trouxe sólidos conhecimentos técnicos, uma mentalidade orientada para soluções e muita flexibilidade ao longo do projeto. O escopo envolveu vários requisitos complexos, incluindo lógica de fluxos de trabalho e integração com sistemas externos.",
+                    "O que mais apreciei foi a sua capacidade de trabalhar em meio a incertezas técnicas, adaptar-se a requisitos em constante mudança e continuar aprimorando a solução por meio de testes e iteração. Ele também foi proativo na identificação de desafios técnicos, na explicação das opções possíveis e na busca de caminhos práticos para avançar.",
+                    "Recomendo Luiz a qualquer pessoa que procure um desenvolvedor capaz de construir sistemas de automação personalizados, conectar diferentes plataformas e trabalhar com lógica de fluxos de trabalho complexa com uma abordagem prática e comprometida."
+                ]
+            }
+        ]
+    },
     "blogSection": {
         "badge": "Blog",
         "title": "Últimas publicações",

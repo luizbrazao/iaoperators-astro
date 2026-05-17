@@ -1,0 +1,62 @@
+---
+const { clientTestimonials } = Astro.props as {
+  clientTestimonials: {
+    badge: string;
+    title: string;
+    items: {
+      name: string;
+      photo: string;
+      link: string;
+      paragraphs: string[];
+    }[];
+  };
+};
+---
+
+<section id="client-testimonials" class="py-24 px-4">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-16">
+      <span class="inline-block text-orange-500 text-sm font-semibold uppercase tracking-widest mb-4">
+        {clientTestimonials.badge}
+      </span>
+      <h2 class="text-3xl md:text-4xl font-bold text-white">
+        {clientTestimonials.title}
+      </h2>
+    </div>
+
+    <div class="flex flex-col gap-8">
+      {clientTestimonials.items.map((item) => (
+        <div class="bg-black border border-white/5 rounded-[32px] p-8 md:p-12">
+          <div class="flex flex-col md:flex-row gap-8 md:gap-12">
+            <div class="flex-shrink-0 flex flex-col items-center gap-4">
+              <img
+                src={item.photo}
+                alt={item.name}
+                class="w-24 h-24 md:w-32 md:h-32 rounded-2xl object-cover shadow-xl"
+                loading="lazy"
+                decoding="async"
+              />
+              <a
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm font-semibold text-white hover:text-orange-400 transition-colors duration-200 text-center"
+              >
+                {item.name}
+              </a>
+            </div>
+
+            <div class="flex-1">
+              <span class="text-orange-500 text-5xl font-serif leading-none select-none">"</span>
+              <div class="space-y-4 text-gray-300 leading-relaxed -mt-2">
+                {item.paragraphs.map((text: string) => (
+                  <p>{text}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

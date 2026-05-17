@@ -13,7 +13,7 @@ const { testimonial, socials } = Astro.props as {
 
 
 const PARTNER_LOGOS = [
-  { src: "https://ia-operators.s3.eu-north-1.amazonaws.com/IA+Operators+Website/logoB2W.png", alt: "B2W" },
+  { src: "/images/champions.png", alt: "Champions", href: "https://champions.men/" },
   { src: "https://ia-operators.s3.eu-north-1.amazonaws.com/IA+Operators+Website/logoAmericanasBranco.svg", alt: "Americanas" },
   { src: "https://ia-operators.s3.eu-north-1.amazonaws.com/IA+Operators+Website/logoRocket.png", alt: "Rocket Internet" },
   { src: "https://ia-operators.s3.eu-north-1.amazonaws.com/IA+Operators+Website/logoWalmart.png", alt: "Walmart" },
@@ -89,13 +89,25 @@ const PARTNER_LOGOS_REPEATED = [
       <ul class="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll">
         {PARTNER_LOGOS_REPEATED.map((logo) => (
           <li>
-            <img
-              src={logo.src}
-              alt={logo.alt}
-              class="h-10 md:h-12 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-              loading="lazy"
-              decoding="async"
-            />
+            {logo.href ? (
+              <a href={logo.href} target="_blank" rel="noopener noreferrer" aria-label={logo.alt}>
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  class="h-10 md:h-12 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+            ) : (
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                class="h-10 md:h-12 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                loading="lazy"
+                decoding="async"
+              />
+            )}
           </li>
         ))}
       </ul>

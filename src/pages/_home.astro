@@ -5,6 +5,7 @@ import Hero from "../sections/home/Hero.astro";
 import WhyUs from "../sections/home/WhyUs.astro";
 import Services from "../sections/home/Services.astro";
 import Testimonial from "../sections/home/Testimonial.astro";
+import ClientTestimonials from "../sections/home/ClientTestimonials.astro";
 import BlogSection from "../sections/home/BlogSection.astro";
 import FAQ from "../sections/home/FAQ.astro";
 import { fetchBlogPosts } from "../lib/blog";
@@ -157,6 +158,7 @@ const metaDescription = meta?.description ?? "";
     <WhyUs why={home?.why ?? {}} industries={home?.industries ?? []} />
     <Services services={home?.services ?? {}} />
     <Testimonial testimonial={home?.testimonial ?? {}} socials={socials} />
+    <ClientTestimonials clientTestimonials={home?.clientTestimonials ?? { badge: "", title: "", items: [] }} />
     <BlogSection blogSection={home?.blogSection ?? {}} posts={latestPosts} locale={locale} />
     <FAQ faq={faq ?? { items: [] }} />
   </main>
