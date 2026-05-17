@@ -2,788 +2,1476 @@
 // Proposta comercial Salones Marfa — Fase 2 · noindex,nofollow
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex,nofollow">
-  <title>Sistema de Automatización Fase 2 · Marco Toscano · IA Operators</title>
-  <style>
-    :root {
-      --bg: #FFFFFF;
-      --bg-alt: #F9FAFB;
-      --primary: #FF6900;
-      --primary-soft: #FFF4ED;
-      --primary-border: rgba(255, 105, 0, 0.4);
-      --text: #111827;
-      --text-muted: #6B7280;
-      --text-light: #9CA3AF;
-      --border: #E5E7EB;
-      --positive: #16A34A;
-      --positive-bg: #F0FDF4;
-      --negative-bg: #FEF2F2;
-      --negative: #DC2626;
-      --shadow: 0 1px 4px rgba(0,0,0,0.08);
-      --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
-      --radius: 12px;
-      --radius-sm: 8px;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-
-    h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; line-height: 1.15; }
-    h2 { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 700; line-height: 1.2; }
-    h3 { font-size: 1.15rem; font-weight: 600; }
-    h4 { font-size: 1rem; font-weight: 600; }
-    p { color: var(--text-muted); }
-    strong { color: var(--text); }
-
-    /* NAV */
-    .nav {
-      position: sticky; top: 0; z-index: 100;
-      background: #fff; border-bottom: 1px solid var(--border);
-      padding: 0 2rem; display: flex; align-items: center;
-      justify-content: space-between; height: 56px;
-      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
-    }
-    .nav-logo { height: 40px; }
-    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
-    .nav-links a { text-decoration: none; color: var(--text); font-size: 0.82rem; font-weight: 500; transition: color 0.2s; white-space: nowrap; }
-    .nav-links a:hover { color: var(--primary); }
-
-    /* HERO */
-    .hero {
-      background-image: url('/propostas/Capa-propostas.png');
-      background-size: cover; background-position: center;
-      color: white; padding: 4rem 2rem 0;
-      position: relative; overflow: hidden;
-    }
-    .hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
-    .hero h1 { color: white; margin-bottom: 1rem; }
-    .hero-subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.85); margin-bottom: 2.5rem; max-width: 680px; }
-    .hero-band {
-      background: rgba(0,0,0,0.2); margin: 2rem -2rem 0;
-      padding: 0.85rem 2rem; display: flex;
-      align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 0.5rem;
-    }
-    .hero-band span { color: rgba(255,255,255,0.9); font-size: 0.875rem; }
-    .badge-proposal {
-      background: var(--primary); color: white;
-      font-size: 0.72rem; font-weight: 700;
-      padding: 0.3rem 0.9rem; border-radius: 999px;
-      letter-spacing: 0.06em; text-transform: uppercase;
-    }
-
-    /* SECTIONS */
-    .section { padding: 4rem 2rem; }
-    .section-alt { background: var(--bg-alt); }
-    .container { max-width: 1100px; margin: 0 auto; }
-    .section-label {
-      display: inline-block; font-size: 0.72rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.12em;
-      color: var(--primary); margin-bottom: 0.5rem;
-    }
-    .section-title { color: var(--text); margin-bottom: 0.4rem; }
-    .section-subtitle { color: var(--text-muted); font-size: 0.97rem; margin-bottom: 2rem; max-width: 680px; }
-
-    /* CALLOUT */
-    .callout {
-      border-left: 4px solid var(--primary);
-      background: var(--primary-soft);
-      border-radius: 0 var(--radius) var(--radius) 0;
-      padding: 1.5rem 2rem; margin-bottom: 2rem;
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: 1.1rem; font-style: italic;
-      color: var(--text); line-height: 1.65;
-    }
-
-    /* ARCH FLOW */
-    .arch-flow {
-      background: white; border: 1px solid var(--border);
-      border-radius: var(--radius); box-shadow: var(--shadow);
-      padding: 2rem; margin-bottom: 2rem;
-    }
-    .arch-nodes {
-      display: flex; align-items: center; justify-content: center;
-      flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.5rem;
-    }
-    .arch-node {
-      background: var(--bg-alt); border: 1px solid var(--border);
-      border-radius: var(--radius-sm); padding: 0.6rem 1.2rem;
-      font-size: 0.9rem; font-weight: 600; color: var(--text);
-    }
-    .arch-node.accent {
-      background: var(--primary-soft);
-      border-color: var(--primary-border);
-      color: var(--primary);
-    }
-    .arch-arrow { color: var(--text-muted); font-size: 1.25rem; font-weight: 700; }
-    .arch-notes { display: flex; flex-direction: column; gap: 0.5rem; }
-    .arch-note { display: flex; gap: 0.6rem; font-size: 0.88rem; color: var(--text-muted); align-items: flex-start; }
-    .arch-note strong { color: var(--text); flex-shrink: 0; }
-    .arch-note::before { content: '→'; color: var(--primary); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
-
-    /* METRICS */
-    .metrics-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 1rem; margin-top: 1.5rem;
-    }
-    .metric-card {
-      background: white; border-radius: var(--radius);
-      box-shadow: var(--shadow); border: 1px solid var(--border);
-      border-top: 3px solid var(--primary);
-      padding: 1.5rem 1rem; text-align: center;
-    }
-    .metric-number {
-      font-size: 3.5rem; font-weight: 800;
-      color: var(--primary); line-height: 1; margin-bottom: 0.4rem;
-    }
-    .metric-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
-
-    /* MODULE CARDS (alcance) */
-    .module-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
-    .module-card {
-      background: white; border: 1px solid var(--border);
-      border-radius: var(--radius); box-shadow: var(--shadow);
-      padding: 1.5rem; display: flex; gap: 1.25rem;
-      align-items: flex-start;
-      transition: box-shadow 0.2s, border-color 0.2s;
-    }
-    .module-card:hover { box-shadow: var(--shadow-md); border-color: var(--primary-border); }
-    .module-num {
-      flex-shrink: 0; width: 40px; height: 40px;
-      border-radius: 50%; background: var(--primary);
-      color: white; font-size: 1rem; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 3px 10px rgba(255,105,0,0.3);
-    }
-    .module-body h4 { color: var(--text); margin-bottom: 0.35rem; }
-    .module-body p { font-size: 0.9rem; line-height: 1.55; }
-    .module-body ul { list-style: none; margin-top: 0.6rem; display: flex; flex-direction: column; gap: 0.4rem; }
-    .module-body ul li { font-size: 0.875rem; color: var(--text-muted); display: flex; gap: 0.5rem; }
-    .module-body ul li::before { content: '→'; color: var(--primary); font-weight: 700; flex-shrink: 0; }
-
-    /* TIMELINE */
-    .timeline {
-      display: flex; align-items: flex-start;
-      justify-content: space-between; position: relative; margin-top: 2rem;
-    }
-    .timeline::before {
-      content: ''; position: absolute; top: 28px;
-      left: 56px; right: 56px; height: 2px;
-      background: var(--border); z-index: 0;
-    }
-    .timeline-item {
-      flex: 1; display: flex; flex-direction: column;
-      align-items: center; position: relative; z-index: 1; padding: 0 0.5rem;
-    }
-    .timeline-node {
-      width: 56px; height: 56px; border-radius: 50%;
-      background: var(--primary); color: white;
-      font-size: 1rem; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1rem; box-shadow: 0 4px 14px rgba(255,105,0,0.35);
-      flex-shrink: 0;
-    }
-    .timeline-node-label {
-      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.08em; color: var(--primary); margin-bottom: 0.5rem;
-    }
-    .timeline-content {
-      background: white; border: 1px solid var(--border);
-      border-radius: var(--radius); box-shadow: var(--shadow);
-      padding: 1rem; text-align: center; width: 100%;
-    }
-    .timeline-content h4 { color: var(--text); font-size: 0.85rem; margin-bottom: 0.3rem; }
-    .timeline-content p { font-size: 0.78rem; color: var(--text-muted); line-height: 1.45; }
-    .timeline-deliverable {
-      display: inline-block; background: var(--primary-soft);
-      color: var(--primary); font-size: 0.68rem; font-weight: 600;
-      padding: 0.2rem 0.6rem; border-radius: 999px; margin-top: 0.6rem;
-    }
-
-    /* DELIVERABLES */
-    .deliverables-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem; margin-top: 1.5rem;
-    }
-    .deliverable-card {
-      background: white; border: 1px solid var(--border);
-      border-radius: var(--radius); box-shadow: var(--shadow);
-      padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;
-      transition: box-shadow 0.2s, border-color 0.2s;
-    }
-    .deliverable-card:hover { box-shadow: var(--shadow-md); border-color: var(--primary-border); }
-    .deliverable-icon { font-size: 1.75rem; line-height: 1; flex-shrink: 0; }
-    .deliverable-content h4 { color: var(--text); margin-bottom: 0.3rem; }
-    .deliverable-content p { font-size: 0.85rem; line-height: 1.5; }
-
-    /* INVESTMENT */
-    .price-display {
-      background: var(--primary-soft); border: 1px solid var(--primary-border);
-      border-radius: var(--radius); padding: 2rem; text-align: center; margin-top: 1.5rem;
-    }
-    .price-old {
-      font-size: 1.1rem; color: var(--text-light);
-      text-decoration: line-through; margin-bottom: 0.25rem;
-    }
-    .price-main {
-      font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800;
-      color: var(--primary); letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.4rem;
-    }
-    .price-sub { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; }
-    .discount-badge {
-      display: inline-block; background: var(--positive-bg);
-      border: 1px solid rgba(22,163,74,0.3); color: var(--positive);
-      font-size: 0.8rem; font-weight: 600;
-      padding: 0.3rem 1rem; border-radius: 999px;
-    }
-
-    .payment-milestones {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 1rem; margin-top: 1.5rem;
-    }
-    .payment-milestone {
-      background: white; border: 1px solid var(--border);
-      border-radius: var(--radius-sm); padding: 1.25rem;
-      text-align: center; box-shadow: var(--shadow);
-    }
-    .payment-milestone.highlight { border-color: var(--primary-border); }
-    .payment-milestone .pct { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 0.4rem; }
-    .payment-milestone .amount { font-weight: 700; font-size: 1.4rem; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
-    .payment-milestone.highlight .amount { color: var(--primary); }
-    .payment-milestone .label { font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; }
-
-    .tax-note {
-      font-size: 0.82rem; color: var(--text-muted);
-      border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 1.5rem;
-      line-height: 1.6;
-    }
-
-    /* INCLUDE GRID */
-    .include-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
-    .include-col { border-radius: var(--radius); padding: 1.75rem; }
-    .include-col.yes { background: var(--positive-bg); border-left: 4px solid var(--positive); }
-    .include-col.no { background: var(--bg-alt); border-left: 4px solid var(--text-light); }
-    .include-col h3 { margin-bottom: 1rem; font-size: 1rem; }
-    .include-col.yes h3 { color: var(--positive); }
-    .include-col.no h3 { color: var(--text-muted); }
-    .include-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
-    .include-list li { display: flex; gap: 0.6rem; font-size: 0.88rem; align-items: flex-start; color: var(--text); }
-    .check-yes { color: var(--positive); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-    .check-no { color: var(--text-light); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-
-    /* STEPS */
-    .steps-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
-    .step-item {
-      display: flex; align-items: flex-start; gap: 1rem;
-      background: white; border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1.25rem 1.5rem;
-      box-shadow: var(--shadow); transition: border-color 0.2s;
-    }
-    .step-item:hover { border-color: var(--primary-border); }
-    .step-num {
-      flex-shrink: 0; width: 36px; height: 36px;
-      border-radius: 50%; background: var(--primary);
-      color: white; font-size: 1rem; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 3px 10px rgba(255,105,0,0.3);
-    }
-    .step-content h4 { color: var(--text); margin-bottom: 0.25rem; }
-    .step-content p { font-size: 0.88rem; }
-    .validity-badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: var(--primary-soft); color: var(--primary);
-      font-size: 0.85rem; font-weight: 600;
-      padding: 0.55rem 1.5rem; border-radius: 999px;
-      border: 1px solid var(--primary-border); margin-top: 1.75rem;
-    }
-
-    /* FOOTER */
-    .footer {
-      background: #111827; color: var(--text-light);
-      padding: 3rem 2rem 2rem; text-align: center;
-    }
-    .footer-logo { height: 40px; margin-bottom: 1.25rem; display: inline-block; opacity: 0.9; transition: opacity 0.2s; }
-    .footer-logo:hover { opacity: 1; }
-    .footer-links { display: flex; gap: 1.75rem; justify-content: center; margin: 0.75rem 0 1.25rem; flex-wrap: wrap; }
-    .footer-links a { color: var(--text-light); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--primary); }
-    .footer-line { width: 40px; height: 2px; background: var(--primary); margin: 0 auto 1rem; border-radius: 2px; }
-    .footer-disclaimer { font-size: 0.78rem; color: #4B5563; }
-
-    /* FADE IN */
-    .fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
-
-    /* RESPONSIVE */
-    @media (max-width: 960px) {
-      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
-      .deliverables-grid { grid-template-columns: repeat(2, 1fr); }
-      .payment-milestones { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 680px) {
-      .nav-links { display: none; }
-      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
-      .deliverables-grid { grid-template-columns: 1fr; }
-      .include-grid { grid-template-columns: 1fr; }
-      .timeline { flex-direction: column; align-items: stretch; gap: 1.25rem; }
-      .timeline::before { display: none; }
-      .timeline-item { flex-direction: row; align-items: flex-start; gap: 1rem; padding: 0; }
-      .timeline-content { text-align: left; flex: 1; }
-      .timeline-node { margin-bottom: 0; }
-      .hero-band { flex-direction: column; align-items: flex-start; }
-      .arch-nodes { justify-content: flex-start; }
-    }
-
-    @media print {
-      .nav { position: static; box-shadow: none; }
-      .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .footer { background: #f3f4f6 !important; }
-      .footer * { color: #374151 !important; }
-      .footer-logo { opacity: 1 !important; }
-      .fade-in { opacity: 1 !important; transform: none !important; }
-      .section { padding: 2rem 1.5rem; }
-    }
-  </style>
-</head>
-<body>
-
-<!-- NAV -->
-<nav class="nav">
-  <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
-    <img src="https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png" alt="IA Operators" class="nav-logo">
-  </a>
-  <ul class="nav-links">
-    <li><a href="#contexto">Contexto</a></li>
-    <li><a href="#alcance">Módulos</a></li>
-    <li><a href="#calendario">Calendario</a></li>
-    <li><a href="#entregables">Entregables</a></li>
-    <li><a href="#inversion">Inversión</a></li>
-    <li><a href="#pasos">Próximos pasos</a></li>
-  </ul>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
-    <h1>Sistema de Automatización<br>Inteligente — Fase 2</h1>
-    <p class="hero-subtitle">Marco Toscano · Salones Marfa — Migración a OneReserve, lógica de negocio avanzada y cierre de funcionalidades pendientes</p>
-  </div>
-  <div class="hero-band">
-    <span>IA Operators · Luiz Brazão · Mayo 2026</span>
-    <span class="badge-proposal">Propuesta Comercial · Continuidad</span>
-  </div>
-</section>
-
-<!-- CONTEXTO -->
-<section class="section" id="contexto">
-  <div class="container">
-    <span class="section-label">Contexto</span>
-    <h2 class="section-title">Qué es, y qué no es, esta fase</h2>
-    <p class="section-subtitle">La Fase 1 entregó un motor de reservas funcional. La Fase 2 no empieza desde cero — adapta, migra y cierra.</p>
-
-    <div class="callout fade-in">
-      "No se reescribe el sistema. Se cambia la capa técnica de agenda a OneReserve, se rehacen los mappings y se construye encima la lógica de negocio avanzada que se pospuso intencionalmente."
-    </div>
-
-    <div class="arch-flow fade-in">
-      <div class="arch-nodes">
-        <div class="arch-node">Respond.io</div>
-        <div class="arch-arrow">→</div>
-        <div class="arch-node accent">Middleware Champions</div>
-        <div class="arch-arrow">→</div>
-        <div class="arch-node">OneReserve</div>
-      </div>
-      <div class="arch-notes">
-        <div class="arch-note"><strong>Respond.io</strong> — cualifica al lead y activa el flujo conversacional</div>
-        <div class="arch-note"><strong>Middleware Champions</strong> — ejecuta la lógica de negocio, gestiona estado y orquesta operaciones de agenda</div>
-        <div class="arch-note"><strong>OneReserve</strong> — fuente de verdad: agenda, clientes, servicios, paquetes, pagos e historial</div>
-      </div>
-    </div>
-
-    <div class="metrics-grid fade-in">
-      <div class="metric-card">
-        <div class="metric-number">7</div>
-        <div class="metric-label">Módulos de desarrollo</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-number">4</div>
-        <div class="metric-label">Semanas de trabajo</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-number">6</div>
-        <div class="metric-label">Funcionalidades diferidas de Fase 1</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-number">0</div>
-        <div class="metric-label">Lógica de negocio reescrita desde cero</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ALCANCE -->
-<section class="section section-alt" id="alcance">
-  <div class="container">
-    <span class="section-label">Alcance</span>
-    <h2 class="section-title">Siete módulos de trabajo</h2>
-    <p class="section-subtitle">Cada módulo tiene un entregable claro y se puede verificar de forma independiente.</p>
-
-    <div class="module-list fade-in">
-
-      <div class="module-card">
-        <div class="module-num">1</div>
-        <div class="module-body">
-          <h4>Adaptación del Conector a OneReserve</h4>
-          <p>Reemplazo del conector Altegio por un cliente HTTP nuevo orientado a la API de OneReserve, con tipado estricto y manejo de errores en producción.</p>
-          <ul>
-            <li>Análisis de la documentación técnica de OneReserve</li>
-            <li>Autenticación y gestión de credenciales</li>
-            <li>Endpoints de consulta: disponibilidad, clientes, servicios, reservas</li>
-            <li>Endpoints de escritura: nueva cita, modificación, cancelación</li>
-            <li>Reintentos, logging estructurado y observabilidad</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="module-card">
-        <div class="module-num">2</div>
-        <div class="module-body">
-          <h4>Mappings de Servicios, Clientes y Reservas</h4>
-          <p>Los IDs de Altegio no son reutilizables. Toda la capa de mapping se rehace y se desacopla por configuración para que futuros cambios no requieran tocar la lógica del agente.</p>
-          <ul>
-            <li>Campos Respond.io → entidades OneReserve (servicio, consulta, paquete, programa)</li>
-            <li>Servicios sueltos, consultas/valoraciones, paquetes y programas</li>
-            <li>Reservas compuestas, clientes y servicios promocionales</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="module-card">
-        <div class="module-num">3</div>
-        <div class="module-body">
-          <h4>Paquetes, Programas y Servicios Compuestos</h4>
-          <p>OneReserve gestiona internamente la composición de servicios. El middleware delega esa lógica y no la duplica.</p>
-          <ul>
-            <li>Si OneReserve expone un paquete como entidad reservable, el middleware lo reserva completo</li>
-            <li>No se separan servicios internos en días distintos ni se cambia su orden</li>
-            <li>No se convierte un paquete en una consulta</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="module-card">
-        <div class="module-num">4</div>
-        <div class="module-body">
-          <h4>Funcionalidades Diferidas de Fase 1</h4>
-          <p>Seis puntos identificados en la Fase 1 y pospuestos para este contexto.</p>
-          <ul>
-            <li>Agendamiento <strong>consecutivo</strong> sin margen de tiempo entre servicios</li>
-            <li>Agendamiento <strong>en paralelo</strong> en servicios de manos libres</li>
-            <li>Reconocimiento de <strong>arranque y desarranque</strong></li>
-            <li>Validación de <strong>aparatología y cabina</strong> en uso</li>
-            <li>Oferta del slot más cercano a la hora preferida del cliente</li>
-            <li>Sustitución de profesional si no está disponible</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="module-card">
-        <div class="module-num">5</div>
-        <div class="module-body">
-          <h4>Política de Cancelaciones</h4>
-          <p>La lógica de cancelación se cierra en esta fase, apoyándose en el historial de cliente de OneReserve.</p>
-          <ul>
-            <li><strong>Consulta sin coste:</strong> hasta 3 cancelaciones. Desde la 4.ª, pasa a revisión humana</li>
-            <li><strong>Servicio suelto:</strong> hasta 2 cancelaciones. En la 3.ª, se requiere paga y señal de 20 €</li>
-            <li><strong>Sesión de programa:</strong> puede cancelarse una vez. Si la reagendada vuelve a cancelarse, pasa a humano</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="module-card">
-        <div class="module-num">6</div>
-        <div class="module-body">
-          <h4>Paga y Señal (20 €)</h4>
-          <p>Flujo de cobro previo a la confirmación de reserva para los casos que lo requieren según la política de cancelaciones.</p>
-          <ul>
-            <li>Validación de la capacidad nativa de OneReserve: enlace de pago, registro de estado, bloqueo y liberación de slot</li>
-            <li>Si OneReserve lo soporta: flujo automático dentro del middleware</li>
-            <li>Si no lo soporta aún: caso derivado a humano con marcador "requiere paga y señal"</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="module-card">
-        <div class="module-num">7</div>
-        <div class="module-body">
-          <h4>Validaciones de Compatibilidad con OneReserve</h4>
-          <p>Los flujos de Fase 1 deben validarse sobre la nueva estructura. No es lógica nueva — es verificación de compatibilidad.</p>
-          <ul>
-            <li>Encontrar citas creadas manualmente (no sólo las del bot)</li>
-            <li>Clientes con múltiples citas activas: modificar y cancelar la correcta</li>
-            <li>No crear cita nueva cuando el objetivo es modificar una existente</li>
-            <li>Integridad de reservas compuestas y paquetes tras operaciones</li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- CALENDARIO -->
-<section class="section" id="calendario">
-  <div class="container">
-    <span class="section-label">Calendario</span>
-    <h2 class="section-title">4 semanas · 4 entregas verificables</h2>
-    <p class="section-subtitle">Cada semana produce un estado del sistema que el cliente puede revisar antes de avanzar.</p>
-
-    <div class="timeline fade-in">
-      <div class="timeline-item">
-        <div class="timeline-node-label">Semana 1</div>
-        <div class="timeline-node">1</div>
-        <div class="timeline-content">
-          <h4>Conector + autenticación</h4>
-          <p>Análisis de la API, cliente HTTP, autenticación y endpoints base de consulta y escritura.</p>
-          <span class="timeline-deliverable">Conector operativo</span>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-node-label">Semana 2</div>
-        <div class="timeline-node">2</div>
-        <div class="timeline-content">
-          <h4>Mappings + flujos principales</h4>
-          <p>Mappings de servicios, paquetes y clientes. Nueva cita, modificación y cancelación con OneReserve.</p>
-          <span class="timeline-deliverable">Flujos validados</span>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-node-label">Semana 3</div>
-        <div class="timeline-node">3</div>
-        <div class="timeline-content">
-          <h4>Diferidas + cancelaciones + señal</h4>
-          <p>Los seis puntos de Fase 1. Política de cancelaciones operativa. Paga y señal cerrada o derivada.</p>
-          <span class="timeline-deliverable">Lógica completa</span>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-node-label">Semana 4</div>
-        <div class="timeline-node">4</div>
-        <div class="timeline-content">
-          <h4>Tests + despliegue + docs</h4>
-          <p>Suite de tests, validación de casos edge, despliegue y documentación técnica actualizada.</p>
-          <span class="timeline-deliverable">Entrega final</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ENTREGABLES -->
-<section class="section section-alt" id="entregables">
-  <div class="container">
-    <span class="section-label">Entregables</span>
-    <h2 class="section-title">8 entregables verificables</h2>
-    <p class="section-subtitle">Cada entregable es autónomo y verificable por el cliente de forma independiente.</p>
-
-    <div class="deliverables-grid fade-in">
-      <div class="deliverable-card">
-        <div class="deliverable-icon">🔌</div>
-        <div class="deliverable-content">
-          <h4>Conector OneReserve</h4>
-          <p>Cliente HTTP con tipado completo, manejo de errores y logging estructurado.</p>
-        </div>
-      </div>
-      <div class="deliverable-card">
-        <div class="deliverable-icon">🗂️</div>
-        <div class="deliverable-content">
-          <h4>Mappings documentados</h4>
-          <p>Servicios, clientes y reservas desacoplados por configuración.</p>
-        </div>
-      </div>
-      <div class="deliverable-card">
-        <div class="deliverable-icon">📦</div>
-        <div class="deliverable-content">
-          <h4>Paquetes y programas</h4>
-          <p>Tratados como entidades nativas de OneReserve, sin duplicar lógica interna.</p>
-        </div>
-      </div>
-      <div class="deliverable-card">
-        <div class="deliverable-icon">⚙️</div>
-        <div class="deliverable-content">
-          <h4>Funcionalidades Fase 1</h4>
-          <p>Paralelo, consecutivo, arranque/desarranque, aparatología, hora cercana, sustitución de profesional.</p>
-        </div>
-      </div>
-      <div class="deliverable-card">
-        <div class="deliverable-icon">🚫</div>
-        <div class="deliverable-content">
-          <h4>Política de cancelaciones</h4>
-          <p>Operativa y validada con historial real de OneReserve.</p>
-        </div>
-      </div>
-      <div class="deliverable-card">
-        <div class="deliverable-icon">💳</div>
-        <div class="deliverable-content">
-          <h4>Paga y señal</h4>
-          <p>Implementada o derivada a humano con marcador claro según capacidades de OneReserve.</p>
-        </div>
-      </div>
-      <div class="deliverable-card">
-        <div class="deliverable-icon">🧪</div>
-        <div class="deliverable-content">
-          <h4>Tests de integración</h4>
-          <p>Suite que cubre los flujos principales y casos edge críticos.</p>
-        </div>
-      </div>
-      <div class="deliverable-card">
-        <div class="deliverable-icon">📄</div>
-        <div class="deliverable-content">
-          <h4>Documentación técnica</h4>
-          <p>Arquitectura, endpoints, mappings e instrucciones de despliegue actualizadas.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- INVERSIÓN -->
-<section class="section" id="inversion">
-  <div class="container">
-    <span class="section-label">Inversión</span>
-    <h2 class="section-title">Precio fijo · 4 semanas de trabajo</h2>
-    <p class="section-subtitle">Descuento por continuidad de proyecto. La base técnica de la Fase 1 ya existe — ese ahorro se traslada al precio.</p>
-
-    <div class="price-display fade-in">
-      <div class="price-old">2.500 €</div>
-      <div class="price-main">1.800 €</div>
-      <div class="price-sub">sin IVA · precio de continuidad</div>
-      <span class="discount-badge">Descuento 700 € · 28% por continuidad de proyecto</span>
-    </div>
-
-    <div class="payment-milestones fade-in">
-      <div class="payment-milestone">
-        <div class="pct">Primer pago · 30%</div>
-        <div class="amount">540 €</div>
-        <div class="label">Al inicio, tras la firma. Cubre análisis de API OneReserve y conector base.</div>
-      </div>
-      <div class="payment-milestone highlight">
-        <div class="pct">Segundo pago · 30%</div>
-        <div class="amount">540 €</div>
-        <div class="label">Al cierre de la Semana 2, una vez verificados los flujos principales.</div>
-      </div>
-      <div class="payment-milestone">
-        <div class="pct">Pago final · 40%</div>
-        <div class="amount">720 €</div>
-        <div class="label">Tras la entrega final. Aceptado si no hay incidencias graves en 5 días naturales.</div>
-      </div>
-    </div>
-
-    <div class="tax-note fade-in">
-      Se aplica el mismo marco fiscal de la Fase 1: inversión del sujeto pasivo (<em>reverse charge</em>) conforme al art. 196 de la Directiva 2006/112/CE. Operación no sujeta a IVA en España. El pago final se realiza dentro de los 3 días naturales siguientes a la aceptación.
-    </div>
-  </div>
-</section>
-
-<!-- INCLUYE / NO INCLUYE -->
-<section class="section section-alt">
-  <div class="container">
-    <span class="section-label">Alcance</span>
-    <h2 class="section-title">Qué está incluido y qué no</h2>
-    <div class="include-grid fade-in">
-      <div class="include-col yes">
-        <h3>✓ Incluido</h3>
-        <ul class="include-list">
-          <li><span class="check-yes">✓</span> Conector OneReserve con tipado completo</li>
-          <li><span class="check-yes">✓</span> Mappings desacoplados y documentados</li>
-          <li><span class="check-yes">✓</span> Paquetes y programas como entidades nativas</li>
-          <li><span class="check-yes">✓</span> 6 funcionalidades diferidas de Fase 1</li>
-          <li><span class="check-yes">✓</span> Política de cancelaciones operativa</li>
-          <li><span class="check-yes">✓</span> Flujo de paga y señal (o derivación a humano)</li>
-          <li><span class="check-yes">✓</span> Suite de tests de integración</li>
-          <li><span class="check-yes">✓</span> Documentación técnica actualizada</li>
-          <li><span class="check-yes">✓</span> Acceso al repositorio durante todo el desarrollo</li>
-          <li><span class="check-yes">✓</span> Código fuente propiedad del cliente tras pago completo</li>
-        </ul>
-      </div>
-      <div class="include-col no">
-        <h3>✗ No incluido</h3>
-        <ul class="include-list">
-          <li><span class="check-no">✗</span> Integración con facturación (Alegra u otros)</li>
-          <li><span class="check-no">✗</span> Sincronización OneReserve → Respond.io</li>
-          <li><span class="check-no">✗</span> Nuevas funcionalidades no descritas en este documento</li>
-          <li><span class="check-no">✗</span> Mantenimiento post-entrega (contrato independiente)</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRÓXIMOS PASOS -->
-<section class="section" id="pasos">
-  <div class="container">
-    <span class="section-label">Próximos pasos</span>
-    <h2 class="section-title">Cómo empezamos</h2>
-    <ul class="steps-list fade-in">
-      <li class="step-item">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <h4>Confirmación de la propuesta y pago del 30% inicial</h4>
-          <p>540 € para reservar las fechas de inicio y arrancar el análisis de la API de OneReserve.</p>
-        </div>
-      </li>
-      <li class="step-item">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <h4>Acceso a la documentación técnica de OneReserve</h4>
-          <p>Credenciales de sandbox, documentación de la API, contacto técnico si existe. Determina la profundidad del análisis en la Semana 1.</p>
-        </div>
-      </li>
-      <li class="step-item">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <h4>Inicio del desarrollo</h4>
-          <p>El middleware Champions queda conectado a OneReserve en 4 semanas. Entrega con tests internos realizados y documentación actualizada.</p>
-        </div>
-      </li>
-    </ul>
-    <div style="text-align:center">
-      <span class="validity-badge">⏱ Propuesta válida por 15 días · Mayo 2026</span>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
-    <img src="https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png" alt="IA Operators" class="footer-logo">
-  </a>
-  <div class="footer-line"></div>
-  <div class="footer-links">
-    <a href="mailto:ferbrazao@gmail.com">ferbrazao@gmail.com</a>
-    <a href="tel:+34662423523">+34 662 423 523</a>
-    <a href="https://iaoperators.com" target="_blank" rel="noopener">iaoperators.com</a>
-  </div>
-  <p class="footer-disclaimer">Elaborado por IA Operators · Luiz Brazão · Mayo 2026</p>
-</footer>
-
-<script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Sistema de Automatización Fase 2 · IA Operators</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --bg-alt: #f9fafb;
+        --primary: #ff6900;
+        --primary-soft: #fff4ed;
+        --primary-border: rgba(255, 105, 0, 0.4);
+        --text: #111827;
+        --text-muted: #6b7280;
+        --text-light: #9ca3af;
+        --border: #e5e7eb;
+        --positive: #16a34a;
+        --positive-bg: #f0fdf4;
+        --negative-bg: #fef2f2;
+        --negative: #dc2626;
+        --shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+        --radius: 12px;
+        --radius-sm: 8px;
       }
-    });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-</script>
 
-</body>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      h1 {
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        font-weight: 800;
+        line-height: 1.15;
+      }
+      h2 {
+        font-size: clamp(1.4rem, 2.5vw, 2rem);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      h3 {
+        font-size: 1.15rem;
+        font-weight: 600;
+      }
+      h4 {
+        font-size: 1rem;
+        font-weight: 600;
+      }
+      p {
+        color: var(--text-muted);
+      }
+      strong {
+        color: var(--text);
+      }
+
+      /* NAV */
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 56px;
+        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+      }
+      .nav-logo {
+        height: 40px;
+      }
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        list-style: none;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.82rem;
+        font-weight: 500;
+        transition: color 0.2s;
+        white-space: nowrap;
+      }
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      /* HERO */
+      .hero {
+        background-image: url("/propostas/Capa-propostas.png");
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 4rem 2rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+      .hero h1 {
+        color: white;
+        margin-bottom: 1rem;
+      }
+      .hero-subtitle {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 2.5rem;
+        max-width: 680px;
+      }
+      .hero-band {
+        background: rgba(0, 0, 0, 0.2);
+        margin: 2rem -2rem 0;
+        padding: 0.85rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .hero-band span {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.875rem;
+      }
+      .badge-proposal {
+        background: var(--primary);
+        color: white;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 0.3rem 0.9rem;
+        border-radius: 999px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      /* SECTIONS */
+      .section {
+        padding: 4rem 2rem;
+      }
+      .section-alt {
+        background: var(--bg-alt);
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .section-label {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+      .section-title {
+        color: var(--text);
+        margin-bottom: 0.4rem;
+      }
+      .section-subtitle {
+        color: var(--text-muted);
+        font-size: 0.97rem;
+        margin-bottom: 2rem;
+        max-width: 680px;
+      }
+
+      /* CALLOUT */
+      .callout {
+        border-left: 4px solid var(--primary);
+        background: var(--primary-soft);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        padding: 1.5rem 2rem;
+        margin-bottom: 2rem;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.65;
+      }
+
+      /* ARCH FLOW */
+      .arch-flow {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+      .arch-nodes {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+      }
+      .arch-node {
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .arch-node.accent {
+        background: var(--primary-soft);
+        border-color: var(--primary-border);
+        color: var(--primary);
+      }
+      .arch-arrow {
+        color: var(--text-muted);
+        font-size: 1.25rem;
+        font-weight: 700;
+      }
+      .arch-notes {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .arch-note {
+        display: flex;
+        gap: 0.6rem;
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        align-items: flex-start;
+      }
+      .arch-note strong {
+        color: var(--text);
+        flex-shrink: 0;
+      }
+      .arch-note::before {
+        content: "→";
+        color: var(--primary);
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      /* METRICS */
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .metric-card {
+        background: white;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+        border-top: 3px solid var(--primary);
+        padding: 1.5rem 1rem;
+        text-align: center;
+      }
+      .metric-number {
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: var(--primary);
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .metric-label {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        line-height: 1.4;
+      }
+
+      /* MODULE CARDS (alcance) */
+      .module-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .module-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        display: flex;
+        gap: 1.25rem;
+        align-items: flex-start;
+        transition:
+          box-shadow 0.2s,
+          border-color 0.2s;
+      }
+      .module-card:hover {
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary-border);
+      }
+      .module-num {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 3px 10px rgba(255, 105, 0, 0.3);
+      }
+      .module-body h4 {
+        color: var(--text);
+        margin-bottom: 0.35rem;
+      }
+      .module-body p {
+        font-size: 0.9rem;
+        line-height: 1.55;
+      }
+      .module-body ul {
+        list-style: none;
+        margin-top: 0.6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .module-body ul li {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        display: flex;
+        gap: 0.5rem;
+      }
+      .module-body ul li::before {
+        content: "→";
+        color: var(--primary);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      /* TIMELINE */
+      .timeline {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        position: relative;
+        margin-top: 2rem;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        top: 28px;
+        left: 56px;
+        right: 56px;
+        height: 2px;
+        background: var(--border);
+        z-index: 0;
+      }
+      .timeline-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+        padding: 0 0.5rem;
+      }
+      .timeline-node {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 14px rgba(255, 105, 0, 0.35);
+        flex-shrink: 0;
+      }
+      .timeline-node-label {
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+      .timeline-content {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1rem;
+        text-align: center;
+        width: 100%;
+      }
+      .timeline-content h4 {
+        color: var(--text);
+        font-size: 0.85rem;
+        margin-bottom: 0.3rem;
+      }
+      .timeline-content p {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        line-height: 1.45;
+      }
+      .timeline-deliverable {
+        display: inline-block;
+        background: var(--primary-soft);
+        color: var(--primary);
+        font-size: 0.68rem;
+        font-weight: 600;
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        margin-top: 0.6rem;
+      }
+
+      /* DELIVERABLES */
+      .deliverables-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+        margin-top: 1.5rem;
+      }
+      .deliverable-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        transition:
+          box-shadow 0.2s,
+          border-color 0.2s;
+      }
+      .deliverable-card:hover {
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary-border);
+      }
+      .deliverable-icon {
+        font-size: 1.75rem;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .deliverable-content h4 {
+        color: var(--text);
+        margin-bottom: 0.3rem;
+      }
+      .deliverable-content p {
+        font-size: 0.85rem;
+        line-height: 1.5;
+      }
+
+      /* INVESTMENT */
+      .price-display {
+        background: var(--primary-soft);
+        border: 1px solid var(--primary-border);
+        border-radius: var(--radius);
+        padding: 2rem;
+        text-align: center;
+        margin-top: 1.5rem;
+      }
+      .price-old {
+        font-size: 1.1rem;
+        color: var(--text-light);
+        text-decoration: line-through;
+        margin-bottom: 0.25rem;
+      }
+      .price-main {
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        font-weight: 800;
+        color: var(--primary);
+        letter-spacing: -0.03em;
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .price-sub {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+      }
+      .discount-badge {
+        display: inline-block;
+        background: var(--positive-bg);
+        border: 1px solid rgba(22, 163, 74, 0.3);
+        color: var(--positive);
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 0.3rem 1rem;
+        border-radius: 999px;
+      }
+
+      .payment-milestones {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .payment-milestone {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 1.25rem;
+        text-align: center;
+        box-shadow: var(--shadow);
+      }
+      .payment-milestone.highlight {
+        border-color: var(--primary-border);
+      }
+      .payment-milestone .pct {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+        margin-bottom: 0.4rem;
+      }
+      .payment-milestone .amount {
+        font-weight: 700;
+        font-size: 1.4rem;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.3rem;
+      }
+      .payment-milestone.highlight .amount {
+        color: var(--primary);
+      }
+      .payment-milestone .label {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        line-height: 1.4;
+      }
+
+      .tax-note {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border);
+        padding-top: 1rem;
+        margin-top: 1.5rem;
+        line-height: 1.6;
+      }
+
+      /* INCLUDE GRID */
+      .include-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+      .include-col {
+        border-radius: var(--radius);
+        padding: 1.75rem;
+      }
+      .include-col.yes {
+        background: var(--positive-bg);
+        border-left: 4px solid var(--positive);
+      }
+      .include-col.no {
+        background: var(--bg-alt);
+        border-left: 4px solid var(--text-light);
+      }
+      .include-col h3 {
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+      .include-col.yes h3 {
+        color: var(--positive);
+      }
+      .include-col.no h3 {
+        color: var(--text-muted);
+      }
+      .include-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+      }
+      .include-list li {
+        display: flex;
+        gap: 0.6rem;
+        font-size: 0.88rem;
+        align-items: flex-start;
+        color: var(--text);
+      }
+      .check-yes {
+        color: var(--positive);
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .check-no {
+        color: var(--text-light);
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+
+      /* STEPS */
+      .steps-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .step-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.25rem 1.5rem;
+        box-shadow: var(--shadow);
+        transition: border-color 0.2s;
+      }
+      .step-item:hover {
+        border-color: var(--primary-border);
+      }
+      .step-num {
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 3px 10px rgba(255, 105, 0, 0.3);
+      }
+      .step-content h4 {
+        color: var(--text);
+        margin-bottom: 0.25rem;
+      }
+      .step-content p {
+        font-size: 0.88rem;
+      }
+      .validity-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--primary-soft);
+        color: var(--primary);
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 0.55rem 1.5rem;
+        border-radius: 999px;
+        border: 1px solid var(--primary-border);
+        margin-top: 1.75rem;
+      }
+
+      /* FOOTER */
+      .footer {
+        background: #111827;
+        color: var(--text-light);
+        padding: 3rem 2rem 2rem;
+        text-align: center;
+      }
+      .footer-logo {
+        height: 40px;
+        margin-bottom: 1.25rem;
+        display: inline-block;
+        opacity: 0.9;
+        transition: opacity 0.2s;
+      }
+      .footer-logo:hover {
+        opacity: 1;
+      }
+      .footer-links {
+        display: flex;
+        gap: 1.75rem;
+        justify-content: center;
+        margin: 0.75rem 0 1.25rem;
+        flex-wrap: wrap;
+      }
+      .footer-links a {
+        color: var(--text-light);
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color 0.2s;
+      }
+      .footer-links a:hover {
+        color: var(--primary);
+      }
+      .footer-line {
+        width: 40px;
+        height: 2px;
+        background: var(--primary);
+        margin: 0 auto 1rem;
+        border-radius: 2px;
+      }
+      .footer-disclaimer {
+        font-size: 0.78rem;
+        color: #4b5563;
+      }
+
+      /* FADE IN */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(18px);
+        transition:
+          opacity 0.55s ease,
+          transform 0.55s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 960px) {
+        .metrics-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .deliverables-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .payment-milestones {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 680px) {
+        .nav-links {
+          display: none;
+        }
+        .metrics-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .deliverables-grid {
+          grid-template-columns: 1fr;
+        }
+        .include-grid {
+          grid-template-columns: 1fr;
+        }
+        .timeline {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 1.25rem;
+        }
+        .timeline::before {
+          display: none;
+        }
+        .timeline-item {
+          flex-direction: row;
+          align-items: flex-start;
+          gap: 1rem;
+          padding: 0;
+        }
+        .timeline-content {
+          text-align: left;
+          flex: 1;
+        }
+        .timeline-node {
+          margin-bottom: 0;
+        }
+        .hero-band {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .arch-nodes {
+          justify-content: flex-start;
+        }
+      }
+
+      @media print {
+        .nav {
+          position: static;
+          box-shadow: none;
+        }
+        .hero {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .footer {
+          background: #f3f4f6 !important;
+        }
+        .footer * {
+          color: #374151 !important;
+        }
+        .footer-logo {
+          opacity: 1 !important;
+        }
+        .fade-in {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+        .section {
+          padding: 2rem 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav class="nav">
+      <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
+        <img
+          src="https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png"
+          alt="IA Operators"
+          class="nav-logo"
+        />
+      </a>
+      <ul class="nav-links">
+        <li><a href="#contexto">Contexto</a></li>
+        <li><a href="#alcance">Módulos</a></li>
+        <li><a href="#calendario">Calendario</a></li>
+        <li><a href="#entregables">Entregables</a></li>
+        <li><a href="#inversion">Inversión</a></li>
+        <li><a href="#pasos">Próximos pasos</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Sistema de Automatización<br />Inteligente — Fase 2</h1>
+        <p class="hero-subtitle">
+          Champions — Migración a OneReserve, lógica de negocio avanzada y
+          cierre de funcionalidades pendientes
+        </p>
+      </div>
+      <div class="hero-band">
+        <span>IA Operators · Luiz Brazão · Mayo 2026</span>
+        <span class="badge-proposal">Propuesta Comercial · Continuidad</span>
+      </div>
+    </section>
+
+    <!-- CONTEXTO -->
+    <section class="section" id="contexto">
+      <div class="container">
+        <span class="section-label">Contexto</span>
+        <h2 class="section-title">Qué es, y qué no es, esta fase</h2>
+        <p class="section-subtitle">
+          La Fase 1 entregó un motor de reservas funcional. La Fase 2 no empieza
+          desde cero — adapta, migra y cierra.
+        </p>
+
+        <div class="callout fade-in">
+          "No se reescribe el sistema. Se cambia la capa técnica de agenda a
+          OneReserve, se rehacen los mappings y se construye encima la lógica de
+          negocio avanzada que se pospuso intencionalmente."
+        </div>
+
+        <div class="arch-flow fade-in">
+          <div class="arch-nodes">
+            <div class="arch-node">Respond.io</div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node accent">Middleware Champions</div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node">OneReserve</div>
+          </div>
+          <div class="arch-notes">
+            <div class="arch-note">
+              <strong>Respond.io</strong> — cualifica al lead y activa el flujo conversacional
+            </div>
+            <div class="arch-note">
+              <strong>Middleware Champions</strong> — ejecuta la lógica de negocio,
+              gestiona estado y orquesta operaciones de agenda
+            </div>
+            <div class="arch-note">
+              <strong>OneReserve</strong> — fuente de verdad: agenda, clientes, servicios,
+              paquetes, pagos e historial
+            </div>
+          </div>
+        </div>
+
+        <div class="metrics-grid fade-in">
+          <div class="metric-card">
+            <div class="metric-number">7</div>
+            <div class="metric-label">Módulos de desarrollo</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">4</div>
+            <div class="metric-label">Semanas de trabajo</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">6</div>
+            <div class="metric-label">Funcionalidades diferidas de Fase 1</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">0</div>
+            <div class="metric-label">
+              Lógica de negocio reescrita desde cero
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ALCANCE -->
+    <section class="section section-alt" id="alcance">
+      <div class="container">
+        <span class="section-label">Alcance</span>
+        <h2 class="section-title">Siete módulos de trabajo</h2>
+        <p class="section-subtitle">
+          Cada módulo tiene un entregable claro y se puede verificar de forma
+          independiente.
+        </p>
+
+        <div class="module-list fade-in">
+          <div class="module-card">
+            <div class="module-num">1</div>
+            <div class="module-body">
+              <h4>Adaptación del Conector a OneReserve</h4>
+              <p>
+                Reemplazo del conector Altegio por un cliente HTTP nuevo
+                orientado a la API de OneReserve, con tipado estricto y manejo
+                de errores en producción.
+              </p>
+              <ul>
+                <li>Análisis de la documentación técnica de OneReserve</li>
+                <li>Autenticación y gestión de credenciales</li>
+                <li>
+                  Endpoints de consulta: disponibilidad, clientes, servicios,
+                  reservas
+                </li>
+                <li>
+                  Endpoints de escritura: nueva cita, modificación, cancelación
+                </li>
+                <li>Reintentos, logging estructurado y observabilidad</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">2</div>
+            <div class="module-body">
+              <h4>Mappings de Servicios, Clientes y Reservas</h4>
+              <p>
+                Los IDs de Altegio no son reutilizables. Toda la capa de mapping
+                se rehace y se desacopla por configuración para que futuros
+                cambios no requieran tocar la lógica del agente.
+              </p>
+              <ul>
+                <li>
+                  Campos Respond.io → entidades OneReserve (servicio, consulta,
+                  paquete, programa)
+                </li>
+                <li>
+                  Servicios sueltos, consultas/valoraciones, paquetes y
+                  programas
+                </li>
+                <li>Reservas compuestas, clientes y servicios promocionales</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">3</div>
+            <div class="module-body">
+              <h4>Paquetes, Programas y Servicios Compuestos</h4>
+              <p>
+                OneReserve gestiona internamente la composición de servicios. El
+                middleware delega esa lógica y no la duplica.
+              </p>
+              <ul>
+                <li>
+                  Si OneReserve expone un paquete como entidad reservable, el
+                  middleware lo reserva completo
+                </li>
+                <li>
+                  No se separan servicios internos en días distintos ni se
+                  cambia su orden
+                </li>
+                <li>No se convierte un paquete en una consulta</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">4</div>
+            <div class="module-body">
+              <h4>Funcionalidades Diferidas de Fase 1</h4>
+              <p>
+                Seis puntos identificados en la Fase 1 y pospuestos para este
+                contexto.
+              </p>
+              <ul>
+                <li>
+                  Agendamiento <strong>consecutivo</strong> sin margen de tiempo entre
+                  servicios
+                </li>
+                <li>
+                  Agendamiento <strong>en paralelo</strong> en servicios de manos
+                  libres
+                </li>
+                <li>
+                  Reconocimiento de <strong>arranque y desarranque</strong>
+                </li>
+                <li>
+                  Validación de <strong>aparatología y cabina</strong> en uso
+                </li>
+                <li>
+                  Oferta del slot más cercano a la hora preferida del cliente
+                </li>
+                <li>Sustitución de profesional si no está disponible</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">5</div>
+            <div class="module-body">
+              <h4>Política de Cancelaciones</h4>
+              <p>
+                La lógica de cancelación se cierra en esta fase, apoyándose en
+                el historial de cliente de OneReserve.
+              </p>
+              <ul>
+                <li>
+                  <strong>Consulta sin coste:</strong> hasta 3 cancelaciones. Desde
+                  la 4.ª, pasa a revisión humana
+                </li>
+                <li>
+                  <strong>Servicio suelto:</strong> hasta 2 cancelaciones. En la 3.ª,
+                  se requiere paga y señal de 20 €
+                </li>
+                <li>
+                  <strong>Sesión de programa:</strong> puede cancelarse una vez. Si
+                  la reagendada vuelve a cancelarse, pasa a humano
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">6</div>
+            <div class="module-body">
+              <h4>Paga y Señal (20 €)</h4>
+              <p>
+                Flujo de cobro previo a la confirmación de reserva para los
+                casos que lo requieren según la política de cancelaciones.
+              </p>
+              <ul>
+                <li>
+                  Validación de la capacidad nativa de OneReserve: enlace de
+                  pago, registro de estado, bloqueo y liberación de slot
+                </li>
+                <li>
+                  Si OneReserve lo soporta: flujo automático dentro del
+                  middleware
+                </li>
+                <li>
+                  Si no lo soporta aún: caso derivado a humano con marcador
+                  "requiere paga y señal"
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">7</div>
+            <div class="module-body">
+              <h4>Validaciones de Compatibilidad con OneReserve</h4>
+              <p>
+                Los flujos de Fase 1 deben validarse sobre la nueva estructura.
+                No es lógica nueva — es verificación de compatibilidad.
+              </p>
+              <ul>
+                <li>
+                  Encontrar citas creadas manualmente (no sólo las del bot)
+                </li>
+                <li>
+                  Clientes con múltiples citas activas: modificar y cancelar la
+                  correcta
+                </li>
+                <li>
+                  No crear cita nueva cuando el objetivo es modificar una
+                  existente
+                </li>
+                <li>
+                  Integridad de reservas compuestas y paquetes tras operaciones
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALENDARIO -->
+    <section class="section" id="calendario">
+      <div class="container">
+        <span class="section-label">Calendario</span>
+        <h2 class="section-title">4 semanas · 4 entregas verificables</h2>
+        <p class="section-subtitle">
+          Cada semana produce un estado del sistema que el cliente puede revisar
+          antes de avanzar.
+        </p>
+
+        <div class="timeline fade-in">
+          <div class="timeline-item">
+            <div class="timeline-node-label">Semana 1</div>
+            <div class="timeline-node">1</div>
+            <div class="timeline-content">
+              <h4>Conector + autenticación</h4>
+              <p>
+                Análisis de la API, cliente HTTP, autenticación y endpoints base
+                de consulta y escritura.
+              </p>
+              <span class="timeline-deliverable">Conector operativo</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-node-label">Semana 2</div>
+            <div class="timeline-node">2</div>
+            <div class="timeline-content">
+              <h4>Mappings + flujos principales</h4>
+              <p>
+                Mappings de servicios, paquetes y clientes. Nueva cita,
+                modificación y cancelación con OneReserve.
+              </p>
+              <span class="timeline-deliverable">Flujos validados</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-node-label">Semana 3</div>
+            <div class="timeline-node">3</div>
+            <div class="timeline-content">
+              <h4>Diferidas + cancelaciones + señal</h4>
+              <p>
+                Los seis puntos de Fase 1. Política de cancelaciones operativa.
+                Paga y señal cerrada o derivada.
+              </p>
+              <span class="timeline-deliverable">Lógica completa</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-node-label">Semana 4</div>
+            <div class="timeline-node">4</div>
+            <div class="timeline-content">
+              <h4>Tests + despliegue + docs</h4>
+              <p>
+                Suite de tests, validación de casos edge, despliegue y
+                documentación técnica actualizada.
+              </p>
+              <span class="timeline-deliverable">Entrega final</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENTREGABLES -->
+    <section class="section section-alt" id="entregables">
+      <div class="container">
+        <span class="section-label">Entregables</span>
+        <h2 class="section-title">8 entregables verificables</h2>
+        <p class="section-subtitle">
+          Cada entregable es autónomo y verificable por el cliente de forma
+          independiente.
+        </p>
+
+        <div class="deliverables-grid fade-in">
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🔌</div>
+            <div class="deliverable-content">
+              <h4>Conector OneReserve</h4>
+              <p>
+                Cliente HTTP con tipado completo, manejo de errores y logging
+                estructurado.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🗂️</div>
+            <div class="deliverable-content">
+              <h4>Mappings documentados</h4>
+              <p>
+                Servicios, clientes y reservas desacoplados por configuración.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">📦</div>
+            <div class="deliverable-content">
+              <h4>Paquetes y programas</h4>
+              <p>
+                Tratados como entidades nativas de OneReserve, sin duplicar
+                lógica interna.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">⚙️</div>
+            <div class="deliverable-content">
+              <h4>Funcionalidades Fase 1</h4>
+              <p>
+                Paralelo, consecutivo, arranque/desarranque, aparatología, hora
+                cercana, sustitución de profesional.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🚫</div>
+            <div class="deliverable-content">
+              <h4>Política de cancelaciones</h4>
+              <p>Operativa y validada con historial real de OneReserve.</p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">💳</div>
+            <div class="deliverable-content">
+              <h4>Paga y señal</h4>
+              <p>
+                Implementada o derivada a humano con marcador claro según
+                capacidades de OneReserve.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🧪</div>
+            <div class="deliverable-content">
+              <h4>Tests de integración</h4>
+              <p>
+                Suite que cubre los flujos principales y casos edge críticos.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">📄</div>
+            <div class="deliverable-content">
+              <h4>Documentación técnica</h4>
+              <p>
+                Arquitectura, endpoints, mappings e instrucciones de despliegue
+                actualizadas.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INVERSIÓN -->
+    <section class="section" id="inversion">
+      <div class="container">
+        <span class="section-label">Inversión</span>
+        <h2 class="section-title">Precio fijo · 4 semanas de trabajo</h2>
+        <p class="section-subtitle">
+          Descuento por continuidad de proyecto. La base técnica de la Fase 1 ya
+          existe — ese ahorro se traslada al precio.
+        </p>
+
+        <div class="price-display fade-in">
+          <div class="price-old">2.500 €</div>
+          <div class="price-main">1.800 €</div>
+          <div class="price-sub">sin IVA · precio de continuidad</div>
+          <span class="discount-badge"
+            >Descuento 700 € · 28% por continuidad de proyecto</span
+          >
+        </div>
+
+        <div class="payment-milestones fade-in">
+          <div class="payment-milestone">
+            <div class="pct">Primer pago · 30%</div>
+            <div class="amount">540 €</div>
+            <div class="label">
+              Al inicio, tras la firma. Cubre análisis de API OneReserve y
+              conector base.
+            </div>
+          </div>
+          <div class="payment-milestone highlight">
+            <div class="pct">Segundo pago · 30%</div>
+            <div class="amount">540 €</div>
+            <div class="label">
+              Al cierre de la Semana 2, una vez verificados los flujos
+              principales.
+            </div>
+          </div>
+          <div class="payment-milestone">
+            <div class="pct">Pago final · 40%</div>
+            <div class="amount">720 €</div>
+            <div class="label">
+              Tras la entrega final. Aceptado si no hay incidencias graves en 5
+              días naturales.
+            </div>
+          </div>
+        </div>
+
+        <div class="tax-note fade-in">
+          Se aplica el mismo marco fiscal de la Fase 1: inversión del sujeto
+          pasivo (<em>reverse charge</em>) conforme al art. 196 de la Directiva
+          2006/112/CE. Operación no sujeta a IVA en España. El pago final se
+          realiza dentro de los 3 días naturales siguientes a la aceptación.
+        </div>
+      </div>
+    </section>
+
+    <!-- INCLUYE / NO INCLUYE -->
+    <section class="section section-alt">
+      <div class="container">
+        <span class="section-label">Alcance</span>
+        <h2 class="section-title">Qué está incluido y qué no</h2>
+        <div class="include-grid fade-in">
+          <div class="include-col yes">
+            <h3>✓ Incluido</h3>
+            <ul class="include-list">
+              <li>
+                <span class="check-yes">✓</span> Conector OneReserve con tipado completo
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Mappings desacoplados y documentados
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Paquetes y programas como entidades
+                nativas
+              </li>
+              <li>
+                <span class="check-yes">✓</span> 6 funcionalidades diferidas de Fase
+                1
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Política de cancelaciones operativa
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Flujo de paga y señal (o derivación
+                a humano)
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Suite de tests de integración
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Documentación técnica actualizada
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Acceso al repositorio durante todo
+                el desarrollo
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Código fuente propiedad del cliente
+                tras pago completo
+              </li>
+            </ul>
+          </div>
+          <div class="include-col no">
+            <h3>✗ No incluido</h3>
+            <ul class="include-list">
+              <li>
+                <span class="check-no">✗</span> Integración con facturación (Alegra
+                u otros)
+              </li>
+              <li>
+                <span class="check-no">✗</span> Sincronización OneReserve → Respond.io
+              </li>
+              <li>
+                <span class="check-no">✗</span> Nuevas funcionalidades no descritas
+                en este documento
+              </li>
+              <li>
+                <span class="check-no">✗</span> Mantenimiento post-entrega (contrato
+                independiente)
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRÓXIMOS PASOS -->
+    <section class="section" id="pasos">
+      <div class="container">
+        <span class="section-label">Próximos pasos</span>
+        <h2 class="section-title">Cómo empezamos</h2>
+        <ul class="steps-list fade-in">
+          <li class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Confirmación de la propuesta y pago del 30% inicial</h4>
+              <p>
+                540 € para reservar las fechas de inicio y arrancar el análisis
+                de la API de OneReserve.
+              </p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Acceso a la documentación técnica de OneReserve</h4>
+              <p>
+                Credenciales de sandbox, documentación de la API, contacto
+                técnico si existe. Determina la profundidad del análisis en la
+                Semana 1.
+              </p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Inicio del desarrollo</h4>
+              <p>
+                El middleware Champions queda conectado a OneReserve en 4
+                semanas. Entrega con tests internos realizados y documentación
+                actualizada.
+              </p>
+            </div>
+          </li>
+        </ul>
+        <div style="text-align:center">
+          <span class="validity-badge"
+            >⏱ Propuesta válida por 15 días · Mayo 2026</span
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
+        <img
+          src="https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png"
+          alt="IA Operators"
+          class="footer-logo"
+        />
+      </a>
+      <div class="footer-line"></div>
+      <div class="footer-links">
+        <a href="mailto:ferbrazao@gmail.com">ferbrazao@gmail.com</a>
+        <a href="tel:+34662423523">+34 662 423 523</a>
+        <a href="https://iaoperators.com" target="_blank" rel="noopener"
+          >iaoperators.com</a
+        >
+      </div>
+      <p class="footer-disclaimer">
+        Elaborado por IA Operators · Luiz Brazão · Mayo 2026
+      </p>
+    </footer>
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.08 },
+      );
+      document
+        .querySelectorAll(".fade-in")
+        .forEach((el) => observer.observe(el));
+    </script>
+  </body>
 </html>
