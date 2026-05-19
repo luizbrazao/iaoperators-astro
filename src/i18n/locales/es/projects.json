@@ -267,7 +267,9 @@
         "title": "Chatbot de Reservas Turísticas (WhatsApp + n8n)",
         "tagline": "Atención y reservas 24/7 con precio 100% correcto — basado en variables reales (barco, temporada, experiencia, duración y personas).",
         "category": "Automatización de Reservas / WhatsApp",
-        "galleryAlt": "Chatbot de reservas turísticas en WhatsApp con n8n",
+        "gallery": {
+            "heroAlt": "Chatbot de reservas turísticas en WhatsApp con n8n"
+        },
         "problem": "Las empresas de tours y experiencias pierden ventas cuando el cliente pregunta precio y disponibilidad y no recibe respuesta inmediata. El reto real no es “conversar bien”, sino calcular el precio exacto siempre — porque varía por barco, temporada, experiencia, duración y número de personas.",
         "engineeringIntro": "Diseñamos este sistema como un agente fiable: en vez de meter una hoja de cálculo en el prompt, convertimos las reglas de precios en herramientas determinísticas (código) y usamos IA solo para entender la intención, recopilar variables y guiar la conversación.",
         "impact": "Cotización en segundos con precio determinístico y flujo hasta la reserva en WhatsApp, con menos errores operativos y menos dependencia de respuesta manual en el primer contacto.",

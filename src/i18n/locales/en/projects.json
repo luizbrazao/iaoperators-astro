@@ -267,7 +267,9 @@
         "title": "Tour Booking Chatbot (WhatsApp + n8n)",
         "tagline": "24/7 support and bookings with accurate pricing — based on real variables (boat, season, experience, duration and guests).",
         "category": "Booking Automation / WhatsApp",
-        "galleryAlt": "Tour booking chatbot on WhatsApp powered by n8n",
+        "gallery": {
+            "heroAlt": "Tour booking chatbot on WhatsApp powered by n8n"
+        },
         "problem": "Tour and experience companies lose revenue when users ask for price and availability and don’t get an immediate answer. The real challenge isn’t “chatting well” — it’s computing the correct price every time, because it changes by boat, season, experience, duration and number of guests.",
         "engineeringIntro": "We designed this system as a reliable agent: instead of throwing a spreadsheet into a prompt, we turned pricing rules into deterministic tools (code) and used AI only to understand intent, collect variables, and drive the conversation.",
         "impact": "Price quotes in seconds with deterministic pricing and a guided WhatsApp booking flow, reducing operational errors and first-contact manual workload.",

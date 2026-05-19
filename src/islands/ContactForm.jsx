@@ -55,6 +55,7 @@ export default function ContactForm({ locale: localeProp = "es" }) {
     sla: contact?.sla ?? "We usually reply within 24 hours.",
     errorGeneric: contact?.errorGeneric ?? "Something went wrong. Try again.",
     errorWhatsapp: contact?.errorWhatsapp ?? "If it fails, contact us on WhatsApp.",
+    successTitle: contact?.successTitle ?? "Thank you!",
     successText: contact?.successText ?? "We received your message. We’ll contact you soon.",
     backHome: contact?.backHome ?? "Back home",
     whatsappText: contact?.whatsappText ?? "Hi! I want to talk about AI Operators.",
@@ -120,7 +121,7 @@ export default function ContactForm({ locale: localeProp = "es" }) {
       <div className="bg-transparent text-white min-h-screen flex items-center justify-center">
         <div className="max-w-2xl text-center p-8">
           <h1 id="msg-sucesso-lead" className="text-3xl font-bold mb-4">
-            ¡Gracias por contactarnos!
+            {t.successTitle}
           </h1>
           <p className="text-gray-300 mb-8">{t.successText}</p>
           <a
