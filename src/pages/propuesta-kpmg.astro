@@ -1,0 +1,1053 @@
+---
+// Propuesta comercial — Process Mining & BPR · Proyecto Malt · noindex,nofollow
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Consultoría en Reingeniería de Procesos y Process Mining · IA Operators</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --bg-alt: #f9fafb;
+        --primary: #ff6900;
+        --primary-soft: #fff4ed;
+        --primary-border: rgba(255, 105, 0, 0.4);
+        --text: #111827;
+        --text-muted: #6b7280;
+        --text-light: #9ca3af;
+        --border: #e5e7eb;
+        --positive: #16a34a;
+        --positive-bg: #f0fdf4;
+        --negative-bg: #fef2f2;
+        --negative: #dc2626;
+        --shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+        --radius: 12px;
+        --radius-sm: 8px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; line-height: 1.15; }
+      h2 { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 700; line-height: 1.2; }
+      h3 { font-size: 1.15rem; font-weight: 600; }
+      h4 { font-size: 1rem; font-weight: 600; }
+      p { color: var(--text-muted); }
+      strong { color: var(--text); }
+
+      /* NAV */
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 56px;
+        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+      }
+      .nav-logo { height: 40px; }
+      .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.82rem;
+        font-weight: 500;
+        transition: color 0.2s;
+        white-space: nowrap;
+      }
+      .nav-links a:hover { color: var(--primary); }
+
+      /* HERO */
+      .hero {
+        background-image: url("/propostas/Capa-propostas.png");
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 4rem 2rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+      .hero h1 { color: white; margin-bottom: 1rem; }
+      .hero-subtitle {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 2.5rem;
+        max-width: 680px;
+      }
+      .hero-meta {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .hero-meta-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+      }
+      .hero-meta-label {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .hero-meta-value {
+        font-size: 1rem;
+        font-weight: 700;
+        color: white;
+      }
+      .hero-band {
+        background: rgba(0, 0, 0, 0.2);
+        margin: 0 -2rem;
+        padding: 0.85rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 2rem;
+      }
+      .hero-band span { color: rgba(255, 255, 255, 0.9); font-size: 0.875rem; }
+      .badge-proposal {
+        background: var(--primary);
+        color: white;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 0.3rem 0.9rem;
+        border-radius: 999px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      /* SECTIONS */
+      .section { padding: 4rem 2rem; }
+      .section-alt { background: var(--bg-alt); }
+      .container { max-width: 1100px; margin: 0 auto; }
+      .section-label {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+      .section-title { color: var(--text); margin-bottom: 0.4rem; }
+      .section-subtitle { color: var(--text-muted); font-size: 0.97rem; margin-bottom: 2rem; max-width: 680px; }
+
+      /* CALLOUT */
+      .callout {
+        border-left: 4px solid var(--primary);
+        background: var(--primary-soft);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        padding: 1.5rem 2rem;
+        margin-bottom: 2rem;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.65;
+      }
+
+      /* INFO BLOCK */
+      .info-block {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+      }
+      .info-block h3 {
+        color: var(--text);
+        margin-bottom: 1rem;
+        font-size: 1.05rem;
+      }
+      .info-block p {
+        font-size: 0.93rem;
+        line-height: 1.65;
+        margin-bottom: 0.75rem;
+        color: #374151;
+      }
+      .info-block p:last-child { margin-bottom: 0; }
+
+      /* BULLET LIST */
+      .bullet-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        margin-top: 0.75rem;
+      }
+      .bullet-list li {
+        display: flex;
+        gap: 0.65rem;
+        font-size: 0.93rem;
+        color: #374151;
+        align-items: flex-start;
+        line-height: 1.55;
+      }
+      .bullet-list li::before {
+        content: "→";
+        color: var(--primary);
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      /* METRICS */
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .metric-card {
+        background: white;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+        border-top: 3px solid var(--primary);
+        padding: 1.5rem 1rem;
+        text-align: center;
+      }
+      .metric-number {
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: var(--primary);
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .metric-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
+
+      /* PROOF CARD */
+      .proof-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2rem;
+        display: flex;
+        gap: 2rem;
+        align-items: flex-start;
+      }
+      .proof-icon {
+        font-size: 2.5rem;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .proof-body h4 { color: var(--text); margin-bottom: 0.4rem; font-size: 1.05rem; }
+      .proof-body p { font-size: 0.93rem; color: #374151; line-height: 1.6; margin-bottom: 0.75rem; }
+      .proof-results {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        margin-bottom: 1.25rem;
+      }
+      .proof-results li {
+        display: flex;
+        gap: 0.5rem;
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        align-items: flex-start;
+      }
+      .proof-results li::before {
+        content: "✓";
+        color: var(--positive);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .proof-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: var(--primary);
+        color: white;
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 0.55rem 1.25rem;
+        border-radius: 999px;
+        text-decoration: none;
+        transition: opacity 0.2s;
+      }
+      .proof-link:hover { opacity: 0.88; }
+
+      /* MODULE CARDS */
+      .module-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .module-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        display: flex;
+        gap: 1.25rem;
+        align-items: flex-start;
+        transition: box-shadow 0.2s, border-color 0.2s;
+      }
+      .module-card:hover { box-shadow: var(--shadow-md); border-color: var(--primary-border); }
+      .module-num {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 3px 10px rgba(255, 105, 0, 0.3);
+      }
+      .module-body h4 { color: var(--text); margin-bottom: 0.3rem; }
+      .module-body p { font-size: 0.9rem; line-height: 1.55; margin-bottom: 0.5rem; }
+      .module-badge {
+        display: inline-block;
+        background: var(--primary-soft);
+        color: var(--primary);
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 0.2rem 0.7rem;
+        border-radius: 999px;
+        margin-right: 0.4rem;
+        margin-top: 0.2rem;
+      }
+      .module-body ul {
+        list-style: none;
+        margin-top: 0.6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+      .module-body ul li {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        display: flex;
+        gap: 0.5rem;
+      }
+      .module-body ul li::before {
+        content: "→";
+        color: var(--primary);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      /* DELIVERABLES */
+      .deliverables-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+        margin-top: 1.5rem;
+      }
+      .deliverable-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        transition: box-shadow 0.2s, border-color 0.2s;
+      }
+      .deliverable-card:hover { box-shadow: var(--shadow-md); border-color: var(--primary-border); }
+      .deliverable-icon { font-size: 1.75rem; line-height: 1; flex-shrink: 0; }
+      .deliverable-content h4 { color: var(--text); margin-bottom: 0.3rem; }
+      .deliverable-content p { font-size: 0.85rem; line-height: 1.5; }
+
+      /* VALUE TABLE */
+      .value-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5rem;
+        background: white;
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+      }
+      .value-table th {
+        text-align: left;
+        padding: 0.85rem 1.25rem;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--text-muted);
+        background: var(--bg-alt);
+        border-bottom: 2px solid var(--border);
+      }
+      .value-table td {
+        padding: 0.85rem 1.25rem;
+        font-size: 0.9rem;
+        border-bottom: 1px solid var(--border);
+        color: var(--text);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .value-table tr:last-child td { border-bottom: none; }
+      .value-table tr:hover td { background: var(--primary-soft); }
+      .value-table td:first-child { font-weight: 600; color: var(--text); }
+      .value-table td:last-child { color: var(--text-muted); }
+
+      /* CONDITIONS TABLE */
+      .conditions-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .condition-row {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 1.1rem 1.5rem;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+      .condition-row.full { grid-column: 1 / -1; }
+      .condition-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-light);
+      }
+      .condition-value {
+        font-size: 0.97rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .condition-value.accent { color: var(--primary); font-size: 1.3rem; }
+
+      /* COMMITMENT LIST */
+      .commitment-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        margin-top: 1.5rem;
+      }
+      .commitment-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.1rem 1.5rem;
+        box-shadow: var(--shadow);
+        transition: border-color 0.2s;
+      }
+      .commitment-item:hover { border-color: var(--primary-border); }
+      .commitment-dot {
+        flex-shrink: 0;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--primary);
+        margin-top: 6px;
+        box-shadow: 0 0 0 3px var(--primary-soft);
+      }
+      .commitment-text {
+        font-size: 0.93rem;
+        color: #374151;
+        line-height: 1.55;
+      }
+      .commitment-text strong { color: var(--text); }
+
+      /* STEPS */
+      .steps-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .step-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.25rem 1.5rem;
+        box-shadow: var(--shadow);
+        transition: border-color 0.2s;
+      }
+      .step-item:hover { border-color: var(--primary-border); }
+      .step-num {
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 3px 10px rgba(255, 105, 0, 0.3);
+      }
+      .step-content h4 { color: var(--text); margin-bottom: 0.25rem; }
+      .step-content p { font-size: 0.88rem; }
+      .validity-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--primary-soft);
+        color: var(--primary);
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 0.55rem 1.5rem;
+        border-radius: 999px;
+        border: 1px solid var(--primary-border);
+        margin-top: 1.75rem;
+      }
+
+      /* CONFIDENTIAL NOTICE */
+      .confidential {
+        background: var(--bg-alt);
+        border-top: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        text-align: center;
+        font-size: 0.78rem;
+        color: var(--text-light);
+      }
+
+      /* FOOTER */
+      .footer {
+        background: #111827;
+        color: var(--text-light);
+        padding: 3rem 2rem 2rem;
+        text-align: center;
+      }
+      .footer-logo { height: 40px; margin-bottom: 1.25rem; display: inline-block; opacity: 0.9; transition: opacity 0.2s; }
+      .footer-logo:hover { opacity: 1; }
+      .footer-links { display: flex; gap: 1.75rem; justify-content: center; margin: 0.75rem 0 1.25rem; flex-wrap: wrap; }
+      .footer-links a { color: var(--text-light); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+      .footer-links a:hover { color: var(--primary); }
+      .footer-line { width: 40px; height: 2px; background: var(--primary); margin: 0 auto 1rem; border-radius: 2px; }
+      .footer-disclaimer { font-size: 0.78rem; color: #4b5563; }
+
+      /* FADE IN */
+      .fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
+      .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+      /* RESPONSIVE */
+      @media (max-width: 960px) {
+        .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+        .deliverables-grid { grid-template-columns: repeat(2, 1fr); }
+        .conditions-grid { grid-template-columns: 1fr; }
+        .condition-row.full { grid-column: auto; }
+      }
+      @media (max-width: 680px) {
+        .nav-links { display: none; }
+        .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+        .deliverables-grid { grid-template-columns: 1fr; }
+        .hero-band { flex-direction: column; align-items: flex-start; }
+        .proof-card { flex-direction: column; gap: 1rem; }
+        .value-table { font-size: 0.82rem; }
+        .value-table th, .value-table td { padding: 0.65rem 0.85rem; }
+      }
+
+      @media print {
+        .nav { position: static; box-shadow: none; }
+        .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .footer { background: #f3f4f6 !important; }
+        .footer * { color: #374151 !important; }
+        .footer-logo { opacity: 1 !important; }
+        .fade-in { opacity: 1 !important; transform: none !important; }
+        .section { padding: 2rem 1.5rem; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- NAV -->
+    <nav class="nav">
+      <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
+        <img src="/propostas/Logo-IAOperators.png" alt="IA Operators" class="nav-logo" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="#presentacion">Consultor</a></li>
+        <li><a href="#resultado">Resultado real</a></li>
+        <li><a href="#metodologia">Metodología</a></li>
+        <li><a href="#entregables">Entregables</a></li>
+        <li><a href="#valor">Propuesta de valor</a></li>
+        <li><a href="#condiciones">Condiciones</a></li>
+        <li><a href="#compromisos">Compromisos</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Consultoría en Reingeniería<br />de Procesos y Process Mining</h1>
+        <p class="hero-subtitle">
+          Mejora de Servicios Públicos — Proyecto Malt
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Consultor</span>
+            <span class="hero-meta-value">Luiz Fernão Brazão</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Fecha</span>
+            <span class="hero-meta-value">Mayo 2026</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Tarifa</span>
+            <span class="hero-meta-value">30 € / hora</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-band">
+        <span>IA Operators · Luiz Brazão · Mayo 2026</span>
+        <span class="badge-proposal">Propuesta Comercial · Proyecto Malt</span>
+      </div>
+    </section>
+
+    <!-- PRESENTACIÓN DEL CONSULTOR -->
+    <section class="section" id="presentacion">
+      <div class="container">
+        <span class="section-label">Presentación del consultor</span>
+        <h2 class="section-title">Quién soy y qué aporto</h2>
+        <p class="section-subtitle">
+          Fundador de IA Operators, agencia especializada en automatización de procesos con inteligencia artificial.
+        </p>
+
+        <div class="callout fade-in">
+          "Mi trabajo consiste en aplicar IA de forma práctica y rigurosa para mejorar la eficiencia operativa de organizaciones complejas: identifico cuellos de botella, diseño soluciones, las implemento y mido su impacto real."
+        </div>
+
+        <div class="info-block fade-in">
+          <h3>Transparencia sobre el perfil — y por qué no es un obstáculo</h3>
+          <p>
+            Mi perfil no es el de un consultor de procesos tradicional. No tengo 2 años de experiencia formal en el sector público, certificación Celonis ni titulación STEM universitaria. Lo digo con claridad porque creo en la honestidad como base de cualquier colaboración profesional.
+          </p>
+          <p>
+            Lo que sí tengo es algo que redefine el estándar de lo que un consultor puede entregar hoy: <strong>dominio avanzado de las herramientas de inteligencia artificial</strong> que han eliminado muchas de las barreras técnicas tradicionales de esta disciplina.
+          </p>
+        </div>
+
+        <div class="info-block fade-in">
+          <h3>La IA como equalizador técnico</h3>
+          <p>
+            Las certificaciones y los años de experiencia sectorial tienen un valor real: acreditan que alguien sabe hacer algo sin ayuda. Pero en 2026, la pregunta relevante no es si el consultor conoce Celonis de memoria, sino si puede entregar un análisis de process mining riguroso, accionable y bien comunicado.
+          </p>
+          <p>
+            Con las herramientas de IA actuales —integradas de forma sistemática en mi metodología— puedo:
+          </p>
+          <ul class="bullet-list">
+            <li>Analizar event logs y detectar variantes, cuellos de botella y desviaciones con la misma profundidad que una plataforma especializada</li>
+            <li>Generar modelos AS-IS y TO-BE en BPMN con trazabilidad completa, sin depender de una herramienta propietaria única</li>
+            <li>Procesar documentación institucional compleja, normativa pública y datos no estructurados para identificar ineficiencias ocultas</li>
+            <li>Diseñar KPIs, dashboards y mecanismos de medición adaptados al contexto específico de cada organización</li>
+            <li>Orquestar flujos de trabajo multi-agente que automatizan procesos administrativos de forma robusta y auditable</li>
+          </ul>
+          <p style="margin-top:1rem;">
+            Lo que la IA no reemplaza —y aquí está mi aportación diferencial— es el <strong>criterio para hacer las preguntas correctas</strong>, la capacidad de comunicar hallazgos de forma que la organización los entienda y actúe, y la responsabilidad de acompañar la implantación hasta que el impacto sea medible.
+          </p>
+        </div>
+
+        <div class="metrics-grid fade-in">
+          <div class="metric-card">
+            <div class="metric-number">30€</div>
+            <div class="metric-label">Tarifa horaria</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">4</div>
+            <div class="metric-label">Fases metodológicas</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">7</div>
+            <div class="metric-label">Entregables comprometidos</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">24</div>
+            <div class="metric-label">Meses de duración estimada</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRUEBA DE RESULTADO -->
+    <section class="section section-alt" id="resultado">
+      <div class="container">
+        <span class="section-label">Prueba de resultado</span>
+        <h2 class="section-title">Diagnóstico real para un cliente · Mayo 2026</h2>
+        <p class="section-subtitle">
+          En lugar de credenciales formales, presento trabajo real: un diagnóstico tecnológico integral entregado a una cadena hotelera.
+        </p>
+
+        <div class="proof-card fade-in">
+          <div class="proof-icon">🏨</div>
+          <div class="proof-body">
+            <h4>Diagnóstico Tecnológico — Cadena Hotelera (Mayo 2026)</h4>
+            <p>
+              El informe cubre resumen ejecutivo con alertas críticas priorizadas, mapa de stakeholders entrevistados, arquitectura de sistemas, hallazgos por área funcional, análisis de riesgos, recomendaciones estratégicas y roadmap de transformación a 3 horizontes.
+            </p>
+            <ul class="proof-results">
+              <li>11 puntos únicos de fallo humano identificados y documentados</li>
+              <li>Riesgo legal de greenwashing documentado con evidencia concreta</li>
+              <li>Fragmentación tecnológica sin gobernanza detectada y mapeada</li>
+              <li>Recomendación estratégica de modelo de datos corporativo</li>
+            </ul>
+            <p>
+              Este tipo de diagnóstico —estructurado, basado en evidencia, comunicado con claridad— es exactamente lo que puedo entregar para procesos administrativos públicos: no un análisis genérico, sino un documento accionable que la organización pueda usar para tomar decisiones reales.
+            </p>
+            <a
+              href="https://graceful-clafoutis-016814.netlify.app/"
+              target="_blank"
+              rel="noopener"
+              class="proof-link"
+            >
+              Ver informe completo →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- METODOLOGÍA -->
+    <section class="section" id="metodologia">
+      <div class="container">
+        <span class="section-label">Metodología</span>
+        <h2 class="section-title">Cuatro fases iterativas</h2>
+        <p class="section-subtitle">
+          Enfoque estructurado con puntos de revisión y ajuste en cada etapa. Cada fase produce entregables verificables antes de avanzar.
+        </p>
+
+        <div class="module-list fade-in">
+          <div class="module-card">
+            <div class="module-num">1</div>
+            <div class="module-body">
+              <h4>Diagnóstico AS-IS</h4>
+              <p>Entrevistas, análisis de event logs, documentación de procesos actuales y detección de ineficiencias.</p>
+              <div>
+                <span class="module-badge">Process mining con IA</span>
+                <span class="module-badge">BPMN automatizado</span>
+                <span class="module-badge">Análisis institucional</span>
+              </div>
+              <ul>
+                <li>Informe AS-IS con mapa funcional completo</li>
+                <li>Hallazgos priorizados por impacto y frecuencia</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">2</div>
+            <div class="module-body">
+              <h4>Diseño TO-BE</h4>
+              <p>Rediseño de procesos, flujos optimizados, roles, sistemas y flujos de información.</p>
+              <div>
+                <span class="module-badge">BPMN 2.0</span>
+                <span class="module-badge">Gemelos digitales</span>
+                <span class="module-badge">Análisis de impacto IA</span>
+              </div>
+              <ul>
+                <li>Mapa TO-BE con KPIs definidos</li>
+                <li>Propuestas de automatización con IA y estimación de ahorro</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">3</div>
+            <div class="module-body">
+              <h4>Implantación</h4>
+              <p>Implementación de mejoras, automatizaciones y flujos orquestados en producción.</p>
+              <div>
+                <span class="module-badge">n8n</span>
+                <span class="module-badge">LangChain</span>
+                <span class="module-badge">Agentes de IA</span>
+                <span class="module-badge">APIs</span>
+              </div>
+              <ul>
+                <li>Procesos automatizados en producción</li>
+                <li>Documentación técnica completa</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">4</div>
+            <div class="module-body">
+              <h4>Medición Continua</h4>
+              <p>Monitoreo de KPIs, dashboards, ciclos de mejora iterativos y alertas automáticas.</p>
+              <div>
+                <span class="module-badge">Process mining continuo</span>
+                <span class="module-badge">Dashboards de gestión</span>
+              </div>
+              <ul>
+                <li>Informe de impacto trimestral</li>
+                <li>Backlog de mejoras priorizado</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENTREGABLES -->
+    <section class="section section-alt" id="entregables">
+      <div class="container">
+        <span class="section-label">Entregables</span>
+        <h2 class="section-title">7 entregables comprometidos</h2>
+        <p class="section-subtitle">
+          Cada entregable está directamente alineado con los requerimientos del proyecto y es verificable de forma independiente.
+        </p>
+
+        <div class="deliverables-grid fade-in">
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🗺️</div>
+            <div class="deliverable-content">
+              <h4>Análisis AS-IS completo</h4>
+              <p>Mapas de procesos actuales, cuellos de botella identificados, variantes de proceso detectadas por análisis de datos y volumen de casos.</p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🎯</div>
+            <div class="deliverable-content">
+              <h4>Diseño TO-BE y hoja de ruta</h4>
+              <p>Flujos optimizados con BPMN, roles, sistemas involucrados y flujos de información. Priorización por impacto y viabilidad.</p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">📊</div>
+            <div class="deliverable-content">
+              <h4>KPIs e indicadores de desempeño</h4>
+              <p>Definición de métricas, línea base, objetivos y mecanismos de captura automática de datos.</p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🔬</div>
+            <div class="deliverable-content">
+              <h4>Gemelos digitales y simulaciones</h4>
+              <p>Modelos de simulación para validar el impacto de las mejoras antes de implantarlas.</p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🤖</div>
+            <div class="deliverable-content">
+              <h4>Propuestas con IA y automatización</h4>
+              <p>Identificación de procesos automatizables con agentes de IA y orquestación de flujos, con estimación de ahorro operativo.</p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🔧</div>
+            <div class="deliverable-content">
+              <h4>Acompañamiento en implantación</h4>
+              <p>Soporte técnico y funcional durante la implementación, pruebas piloto y ajustes iterativos.</p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">📈</div>
+            <div class="deliverable-content">
+              <h4>Informes de impacto periódicos</h4>
+              <p>Reportes trimestrales con evolución de KPIs, comparativa AS-IS vs. estado actual y próximos pasos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROPUESTA DE VALOR -->
+    <section class="section" id="valor">
+      <div class="container">
+        <span class="section-label">Propuesta de valor</span>
+        <h2 class="section-title">IA al servicio del análisis</h2>
+        <p class="section-subtitle">
+          La calidad de los entregables es lo que importa, no las credenciales que los respaldan. La IA permite producir análisis de nivel experto de forma sistemática, trazable y reproducible.
+        </p>
+
+        <table class="value-table fade-in">
+          <thead>
+            <tr>
+              <th>Capacidad (IA-augmented)</th>
+              <th>Impacto en el Proyecto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Análisis de event logs y detección de variantes de proceso con IA</td>
+              <td>Identificación de ineficiencias que el análisis manual perdería</td>
+            </tr>
+            <tr>
+              <td>Procesamiento de documentación institucional y normativa compleja</td>
+              <td>Comprensión rápida del contexto regulatorio sin experiencia previa en el sector</td>
+            </tr>
+            <tr>
+              <td>Generación de modelos BPMN y flujos optimizados asistida por IA</td>
+              <td>Entregables de calidad técnica alta en tiempos reducidos</td>
+            </tr>
+            <tr>
+              <td>Orquestación de agentes de IA para tareas distribuidas y complejas</td>
+              <td>Automatización real de procesos administrativos, no solo recomendaciones</td>
+            </tr>
+            <tr>
+              <td>Arquitecturas observables: tipado, validación, idempotencia, versionado</td>
+              <td>Sistemas robustos, auditables y mantenibles a largo plazo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CONDICIONES COMERCIALES -->
+    <section class="section section-alt" id="condiciones">
+      <div class="container">
+        <span class="section-label">Condiciones comerciales</span>
+        <h2 class="section-title">Términos claros desde el inicio</h2>
+        <p class="section-subtitle">Sin ambigüedades. Las condiciones están definidas en función de los requerimientos del proyecto publicado en Malt.</p>
+
+        <div class="conditions-grid fade-in">
+          <div class="condition-row">
+            <span class="condition-label">Tarifa</span>
+            <span class="condition-value accent">30 € / hora</span>
+          </div>
+          <div class="condition-row">
+            <span class="condition-label">Modalidad</span>
+            <span class="condition-value">100% remoto · tiempo completo</span>
+          </div>
+          <div class="condition-row">
+            <span class="condition-label">Inicio previsto</span>
+            <span class="condition-value">14 de junio de 2026</span>
+          </div>
+          <div class="condition-row">
+            <span class="condition-label">Duración estimada</span>
+            <span class="condition-value">24 meses (con opción de prórroga)</span>
+          </div>
+          <div class="condition-row">
+            <span class="condition-label">Disponibilidad</span>
+            <span class="condition-value">Lun–Jue 09:00–19:00 · Vie 09:00–15:00 (CET/CEST)</span>
+          </div>
+          <div class="condition-row">
+            <span class="condition-label">Localización</span>
+            <span class="condition-value">España · comunicación en español</span>
+          </div>
+          <div class="condition-row full">
+            <span class="condition-label">Reportes de avance</span>
+            <span class="condition-value">Actualizaciones semanales de progreso + hitos mensuales documentados</span>
+          </div>
+          <div class="condition-row full">
+            <span class="condition-label">Flexibilidad</span>
+            <span class="condition-value">Disponibilidad para ajustar el enfoque metodológico según las necesidades específicas del organismo</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPROMISOS DE COLABORACIÓN -->
+    <section class="section" id="compromisos">
+      <div class="container">
+        <span class="section-label">Compromisos de colaboración</span>
+        <h2 class="section-title">Cómo trabajo</h2>
+        <p class="section-subtitle">Estos compromisos son la base de cualquier colaboración. No son cláusulas de contrato — son la forma en que opero.</p>
+
+        <ul class="commitment-list fade-in">
+          <li class="commitment-item">
+            <div class="commitment-dot"></div>
+            <p class="commitment-text"><strong>Transparencia total:</strong> informes claros y periódicos sobre el estado del trabajo, hallazgos y decisiones clave. Sin zonas grises sobre el progreso.</p>
+          </li>
+          <li class="commitment-item">
+            <div class="commitment-dot"></div>
+            <p class="commitment-text"><strong>Adaptabilidad:</strong> ajuste iterativo de la metodología en función de los resultados y el contexto del cliente. El plan sirve al proyecto, no al revés.</p>
+          </li>
+          <li class="commitment-item">
+            <div class="commitment-dot"></div>
+            <p class="commitment-text"><strong>Orientación a impacto real:</strong> priorización de iniciativas con mayor retorno sobre la inversión de tiempo y recursos. Cero análisis por análisis.</p>
+          </li>
+          <li class="commitment-item">
+            <div class="commitment-dot"></div>
+            <p class="commitment-text"><strong>Transferencia de conocimiento:</strong> formación y documentación para que el equipo interno pueda mantener los procesos. El objetivo es la autonomía del cliente, no la dependencia.</p>
+          </li>
+          <li class="commitment-item">
+            <div class="commitment-dot"></div>
+            <p class="commitment-text"><strong>Disponibilidad en horario acordado</strong> y respuesta ágil ante cambios de prioridad o incidencias. Sin tiempos muertos no comunicados.</p>
+          </li>
+        </ul>
+
+        <div style="text-align:center">
+          <span class="validity-badge">✉️ Disponible para una reunión introductoria · Mayo 2026</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONFIDENTIAL NOTICE -->
+    <div class="confidential">
+      Esta propuesta ha sido elaborada específicamente para el proyecto publicado en Malt y es de carácter confidencial.
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
+        <img
+          src="https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png"
+          alt="IA Operators"
+          class="footer-logo"
+        />
+      </a>
+      <div class="footer-line"></div>
+      <div class="footer-links">
+        <a href="mailto:ferbrazao@gmail.com">ferbrazao@gmail.com</a>
+        <a href="https://www.malt.es/profile/iaoperators" target="_blank" rel="noopener">Malt: IA Operators</a>
+        <a href="https://iaoperators.com" target="_blank" rel="noopener">iaoperators.com</a>
+      </div>
+      <p class="footer-disclaimer">
+        Elaborado por IA Operators · Luiz Fernão Brazão · Mayo 2026
+      </p>
+    </footer>
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.08 },
+      );
+      document
+        .querySelectorAll(".fade-in")
+        .forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
