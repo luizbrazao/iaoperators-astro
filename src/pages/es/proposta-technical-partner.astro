@@ -1,0 +1,788 @@
+---
+// Propuesta de Technical Partner — IA B2B · noindex,nofollow
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Propuesta de Technical Partner · IA Operators</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --bg-alt: #f9fafb;
+        --primary: #ff6900;
+        --primary-soft: #fff4ed;
+        --primary-border: rgba(255, 105, 0, 0.4);
+        --text: #111827;
+        --text-muted: #6b7280;
+        --text-light: #9ca3af;
+        --border: #e5e7eb;
+        --positive: #16a34a;
+        --positive-bg: #f0fdf4;
+        --negative-bg: #fef2f2;
+        --negative: #dc2626;
+        --shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+        --radius: 12px;
+        --radius-sm: 8px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; line-height: 1.15; }
+      h2 { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 700; line-height: 1.2; }
+      h3 { font-size: 1.15rem; font-weight: 600; }
+      h4 { font-size: 1rem; font-weight: 600; }
+      p { color: var(--text-muted); }
+      strong { color: var(--text); }
+
+      /* NAV */
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 56px;
+        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+      }
+      .nav-logo { height: 40px; }
+      .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.82rem;
+        font-weight: 500;
+        transition: color 0.2s;
+        white-space: nowrap;
+      }
+      .nav-links a:hover { color: var(--primary); }
+
+      /* HERO */
+      .hero {
+        background-image: url("/propostas/Capa-propostas.png");
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 4rem 2rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+      .hero h1 { color: white; margin-bottom: 1rem; }
+      .hero-subtitle {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 2.5rem;
+        max-width: 680px;
+      }
+      .hero-meta {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .hero-meta-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+      }
+      .hero-meta-label {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .hero-meta-value {
+        font-size: 1rem;
+        font-weight: 700;
+        color: white;
+      }
+      .hero-band {
+        background: rgba(0, 0, 0, 0.2);
+        margin: 0 -2rem;
+        padding: 0.85rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 2rem;
+      }
+      .hero-band span { color: rgba(255, 255, 255, 0.9); font-size: 0.875rem; }
+      .badge-proposal {
+        background: var(--primary);
+        color: white;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 0.3rem 0.9rem;
+        border-radius: 999px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      /* SECTIONS */
+      .section { padding: 4rem 2rem; }
+      .section-alt { background: var(--bg-alt); }
+      .container { max-width: 1100px; margin: 0 auto; }
+      .section-label {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+      .section-title { color: var(--text); margin-bottom: 0.4rem; }
+      .section-subtitle { color: var(--text-muted); font-size: 0.97rem; margin-bottom: 2rem; max-width: 680px; }
+
+      /* CALLOUT */
+      .callout {
+        border-left: 4px solid var(--primary);
+        background: var(--primary-soft);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        padding: 1.5rem 2rem;
+        margin-bottom: 2rem;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.65;
+      }
+
+      /* INFO BLOCK */
+      .info-block {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+      }
+      .info-block h3 {
+        color: var(--text);
+        margin-bottom: 1rem;
+        font-size: 1.05rem;
+      }
+      .info-block p {
+        font-size: 0.93rem;
+        line-height: 1.65;
+        margin-bottom: 0.75rem;
+        color: #374151;
+      }
+      .info-block p:last-child { margin-bottom: 0; }
+
+      /* BULLET LIST */
+      .bullet-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        margin-top: 0.75rem;
+      }
+      .bullet-list li {
+        display: flex;
+        gap: 0.65rem;
+        font-size: 0.93rem;
+        color: #374151;
+        align-items: flex-start;
+        line-height: 1.55;
+      }
+      .bullet-list li::before {
+        content: "→";
+        color: var(--primary);
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      /* TABLE */
+      .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5rem;
+        background: white;
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+      }
+      .custom-table th {
+        text-align: left;
+        padding: 0.85rem 1.25rem;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--text-muted);
+        background: var(--bg-alt);
+        border-bottom: 2px solid var(--border);
+        font-weight: 600;
+      }
+      .custom-table td {
+        padding: 0.85rem 1.25rem;
+        font-size: 0.9rem;
+        border-bottom: 1px solid var(--border);
+        color: var(--text);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .custom-table tr:last-child td { border-bottom: none; }
+      .custom-table tr:hover td { background: var(--primary-soft); }
+
+      /* METRICS */
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .metric-card {
+        background: white;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+        border-top: 3px solid var(--primary);
+        padding: 1.5rem 1rem;
+        text-align: center;
+      }
+      .metric-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--primary);
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .metric-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
+
+      /* CARD WITH ICON */
+      .card-icon {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2rem;
+        display: flex;
+        gap: 1.5rem;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+      }
+      .card-icon-symbol { font-size: 2.5rem; flex-shrink: 0; }
+      .card-icon-body h4 { color: var(--text); margin-bottom: 0.4rem; }
+      .card-icon-body p { font-size: 0.93rem; color: #374151; line-height: 1.6; }
+
+      /* SOLUTION LIST */
+      .solution-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        margin-top: 1.5rem;
+      }
+      .solution-item {
+        display: flex;
+        gap: 0.75rem;
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1rem 1.5rem;
+        box-shadow: var(--shadow);
+      }
+      .solution-bullet {
+        flex-shrink: 0;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--primary);
+        margin-top: 7px;
+      }
+      .solution-text { font-size: 0.93rem; color: #374151; line-height: 1.55; }
+
+      /* CONDITIONS GRID */
+      .conditions-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .condition-row {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 1.1rem 1.5rem;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+      .condition-row.full { grid-column: 1 / -1; }
+      .condition-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-light);
+      }
+      .condition-value {
+        font-size: 0.97rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .condition-value.accent { color: var(--primary); font-size: 1.3rem; }
+
+      /* FADE IN */
+      .fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
+      .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+      /* CONFIDENTIAL NOTICE */
+      .confidential {
+        background: var(--bg-alt);
+        border-top: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        text-align: center;
+        font-size: 0.78rem;
+        color: var(--text-light);
+      }
+
+      /* FOOTER */
+      .footer {
+        background: #111827;
+        color: var(--text-light);
+        padding: 3rem 2rem 2rem;
+        text-align: center;
+      }
+      .footer-logo { height: 40px; margin-bottom: 1.25rem; display: inline-block; opacity: 0.9; transition: opacity 0.2s; }
+      .footer-logo:hover { opacity: 1; }
+      .footer-links { display: flex; gap: 1.75rem; justify-content: center; margin: 0.75rem 0 1.25rem; flex-wrap: wrap; }
+      .footer-links a { color: var(--text-light); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+      .footer-links a:hover { color: var(--primary); }
+      .footer-line { width: 40px; height: 2px; background: var(--primary); margin: 0 auto 1rem; border-radius: 2px; }
+      .footer-disclaimer { font-size: 0.78rem; color: #4b5563; }
+
+      /* RESPONSIVE */
+      @media (max-width: 960px) {
+        .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+        .conditions-grid { grid-template-columns: 1fr; }
+        .condition-row.full { grid-column: auto; }
+      }
+      @media (max-width: 680px) {
+        .nav-links { display: none; }
+        .metrics-grid { grid-template-columns: 1fr; }
+        .hero-band { flex-direction: column; align-items: flex-start; }
+        .card-icon { flex-direction: column; gap: 1rem; }
+      }
+
+      @media print {
+        .nav { position: static; box-shadow: none; }
+        .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .footer { background: #f3f4f6 !important; }
+        .footer * { color: #374151 !important; }
+        .footer-logo { opacity: 1 !important; }
+        .fade-in { opacity: 1 !important; transform: none !important; }
+        .section { padding: 2rem 1.5rem; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- NAV -->
+    <nav class="nav">
+      <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
+        <img src="/propostas/Logo-IAOperators.png" alt="IA Operators" class="nav-logo" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="#interes">Por Qué Este Rol</a></li>
+        <li><a href="#stack">Stack Técnico</a></li>
+        <li><a href="#contribucion">Cómo Contribuyo</a></li>
+        <li><a href="#propuesta">Propuesta Initial</a></li>
+        <li><a href="#soluciones">Soluciones</a></li>
+        <li><a href="#colaboracion">Colaboración</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Technical Partner<br />IA B2B</h1>
+        <p class="hero-subtitle">
+          Construyendo tu División de IA — Builder de Soluciones
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Consultor</span>
+            <span class="hero-meta-value">Luiz Brazão</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Email</span>
+            <span class="hero-meta-value">info@iaoperators.com</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Fecha</span>
+            <span class="hero-meta-value">Mayo 2026</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-band">
+        <span>IA Operators · Luiz Brazão · Mayo 2026</span>
+        <span class="badge-proposal">Propuesta Comercial</span>
+      </div>
+    </section>
+
+    <!-- POR QUÉ ESTE ROL -->
+    <section class="section" id="interes">
+      <div class="container">
+        <span class="section-label">Visión</span>
+        <h2 class="section-title">Por Qué Este Rol Me Interesa</h2>
+        <p class="section-subtitle">
+          No busco simplemente ejecutar tareas. Busco exactamente lo que describes: construir algo real junto a un equipo que quiere escalar una práctica de IA B2B seria.
+        </p>
+
+        <div class="callout fade-in">
+          "Llevo años montando soluciones de IA para negocios reales — automatizaciones que facturan, agentes que atienden clientes, integraciones que conectan sistemas que nadie más quiere tocar. Tengo el stack técnico, la mentalidad de builder y las cicatrices de producción que hacen falta para esto."
+        </div>
+
+        <div class="card-icon fade-in">
+          <div class="card-icon-symbol">🚀</div>
+          <div class="card-icon-body">
+            <h4>Mi propuesta</h4>
+            <p>No vendo horas. Propongo construir contigo la arquitectura, el catálogo de soluciones y las primeras demos que van a convertir prospects en clientes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STACK TÉCNICO -->
+    <section class="section section-alt" id="stack">
+      <div class="container">
+        <span class="section-label">Capacidades</span>
+        <h2 class="section-title">Stack Técnico — Alineación Directa</h2>
+        <p class="section-subtitle">
+          El stack que describes es exactamente el mío. Sin curva de aprendizaje, sin onboarding de herramientas.
+        </p>
+
+        <table class="custom-table fade-in">
+          <thead>
+            <tr>
+              <th>Herramienta</th>
+              <th>Nivel</th>
+              <th>Uso en Producción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>n8n</strong></td>
+              <td>★★★★★</td>
+              <td>Flujos complejos multi-step, lógica condicional, webhooks, self-hosted y cloud</td>
+            </tr>
+            <tr>
+              <td><strong>OpenAI / APIs LLM</strong></td>
+              <td>★★★★★</td>
+              <td>Agentes, RAG, function calling, prompting avanzado, gestión de contexto</td>
+            </tr>
+            <tr>
+              <td><strong>WhatsApp / Meta</strong></td>
+              <td>★★★★★</td>
+              <td>WhatsApp Cloud API, chatbots, flows, webhook handling, templates aprobadas</td>
+            </tr>
+            <tr>
+              <td><strong>Instagram / Meta Ads</strong></td>
+              <td>★★★★☆</td>
+              <td>Graph API, automatización de respuestas, captación de leads</td>
+            </tr>
+            <tr>
+              <td><strong>CRM / Automatizaciones</strong></td>
+              <td>★★★★★</td>
+              <td>Integraciones con HubSpot, Pipedrive, Notion, Airtable y CRMs custom</td>
+            </tr>
+            <tr>
+              <td><strong>Webhooks / Integraciones</strong></td>
+              <td>★★★★★</td>
+              <td>Diseño de arquitecturas event-driven, idempotencia, retry logic</td>
+            </tr>
+            <tr>
+              <td><strong>Go High Level</strong></td>
+              <td>★★★☆☆</td>
+              <td>Workflows, sub-accounts, integraciones API — en uso activo</td>
+            </tr>
+            <tr>
+              <td><strong>Voice AI</strong></td>
+              <td>★★★☆☆</td>
+              <td>Vapi.ai, ElevenLabs — agentes de voz para booking y atención telefónica</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CÓMO CONTRIBUYO -->
+    <section class="section" id="contribucion">
+      <div class="container">
+        <span class="section-label">Aportaciones</span>
+        <h2 class="section-title">Cómo Puedo Contribuir a la División</h2>
+        <p class="section-subtitle">
+          El valor de un Technical Partner no está solo en el código — está en saber qué construir, cómo venderlo y cómo escalarlo.
+        </p>
+
+        <div class="card-icon fade-in">
+          <div class="card-icon-symbol">🏗️</div>
+          <div class="card-icon-body">
+            <h4>Arquitectura de Soluciones</h4>
+            <p>Diseño arquitecturas modulares y reutilizables que permiten vender el mismo core a múltiples clientes con mínima personalización. Catálogo de soluciones con casos de uso replicables: onboarding automatizado, atención al cliente omnicanal, pipeline de ventas con IA, reporting automático.</p>
+          </div>
+        </div>
+
+        <div class="card-icon fade-in">
+          <div class="card-icon-symbol">🎬</div>
+          <div class="card-icon-body">
+            <h4>Demos que Convierten</h4>
+            <p>Una demo mal construida pierde clientes. Construyo demos funcionales y en vivo — no mockups — que muestran exactamente lo que el cliente va a recibir. El prospect ve WhatsApp respondiendo, el CRM actualizándose y el reporte generándose en tiempo real.</p>
+          </div>
+        </div>
+
+        <div class="card-icon fade-in">
+          <div class="card-icon-symbol">⚙️</div>
+          <div class="card-icon-body">
+            <h4>Delivery de Automatizaciones</h4>
+            <p>Entrego soluciones listas para producción: con manejo de errores, logging, idempotencia y documentación. No solo funciona en la demo — funciona en producción, bajo carga, con datos reales.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROPUESTA INICIAL -->
+    <section class="section section-alt" id="propuesta">
+      <div class="container">
+        <span class="section-label">Semana Inicial</span>
+        <h2 class="section-title">Propuesta para la Semana Inicial</h2>
+        <p class="section-subtitle">
+          Entiendo que el proyecto está planteado como una semana inicial. Mi propuesta es estructurarla como una semana de Discovery + Fundación.
+        </p>
+
+        <table class="custom-table fade-in">
+          <thead>
+            <tr>
+              <th>Día</th>
+              <th>Foco</th>
+              <th>Entregable</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Día 1</strong></td>
+              <td>Alineamiento estratégico</td>
+              <td>Reunión de kick-off, mapeo del ICP, definición de 3 casos de uso B2B prioritarios y arquitectura general de la división.</td>
+            </tr>
+            <tr>
+              <td><strong>Día 2-3</strong></td>
+              <td>Arquitectura + Stack</td>
+              <td>Definición del stack estándar de la división, plantillas de n8n reutilizables, estructura de repos y entornos.</td>
+            </tr>
+            <tr>
+              <td><strong>Día 4</strong></td>
+              <td>Demo #1 en vivo</td>
+              <td>Primera demo funcional con el caso de uso de mayor impacto (agente WhatsApp + CRM o pipeline IA).</td>
+            </tr>
+            <tr>
+              <td><strong>Día 5</strong></td>
+              <td>Catálogo y roadmap</td>
+              <td>Catálogo de soluciones vendibles con pricing sugerido, roadmap de producto para las próximas 4-8 semanas.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p style="margin-top: 2rem; color: #374151; font-size: 0.93rem;">
+          Al final de la semana, la división tiene base técnica, una demo lista para vender y claridad sobre el roadmap. El paso natural es continuar la colaboración en régimen de partner continuado.
+        </p>
+      </div>
+    </section>
+
+    <!-- SOLUCIONES B2B -->
+    <section class="section" id="soluciones">
+      <div class="container">
+        <span class="section-label">Portfolio</span>
+        <h2 class="section-title">Ejemplos de Soluciones que Puedo Construir</h2>
+        <p class="section-subtitle">
+          Estas son soluciones listas para empaquetar y vender a clientes B2B desde el primer mes.
+        </p>
+
+        <ul class="solution-list fade-in">
+          <li class="solution-item">
+            <div class="solution-bullet"></div>
+            <div class="solution-text"><strong>Agente de atención al cliente omnicanal</strong> (WhatsApp + Instagram + Email) con escalado a humano y CRM sync</div>
+          </li>
+          <li class="solution-item">
+            <div class="solution-bullet"></div>
+            <div class="solution-text"><strong>Pipeline de ventas con IA:</strong> lead capture → calificación automática → agenda en calendario → seguimiento</div>
+          </li>
+          <li class="solution-item">
+            <div class="solution-bullet"></div>
+            <div class="solution-text"><strong>Onboarding automatizado de clientes:</strong> formulario → contratos → accesos → welcome sequence</div>
+          </li>
+          <li class="solution-item">
+            <div class="solution-bullet"></div>
+            <div class="solution-text"><strong>Reporting ejecutivo automático:</strong> datos del CRM + métricas → informe PDF semanal por email</div>
+          </li>
+          <li class="solution-item">
+            <div class="solution-bullet"></div>
+            <div class="solution-text"><strong>Agente de voz para recepción,</strong> reservas y FAQ (Vapi.ai + Go High Level)</div>
+          </li>
+          <li class="solution-item">
+            <div class="solution-bullet"></div>
+            <div class="solution-text"><strong>Automatización de RR.HH.:</strong> screening de CVs, programación de entrevistas, onboarding de empleados</div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- MODELO DE COLABORACIÓN -->
+    <section class="section section-alt" id="colaboracion">
+      <div class="container">
+        <span class="section-label">Términos</span>
+        <h2 class="section-title">Modelo de Colaboración Propuesto</h2>
+        <p class="section-subtitle">
+          Un Technical Partner no es un freelance de tareas. Propongo dos modalidades según cómo quieras estructurar la relación.
+        </p>
+
+        <table class="custom-table fade-in">
+          <thead>
+            <tr>
+              <th>Modalidad</th>
+              <th>Discovery Week</th>
+              <th>Partner Mensual</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Dedicación</strong></td>
+              <td>Full-time (5 días)</td>
+              <td>40-80h/mes acordadas</td>
+            </tr>
+            <tr>
+              <td><strong>Tarifa</strong></td>
+              <td>250 €/día = 1.250 €</td>
+              <td>A definir según alcance</td>
+            </tr>
+            <tr>
+              <td><strong>Entregables</strong></td>
+              <td>Arquitectura + Demo #1 + Catálogo</td>
+              <td>Soluciones, demos, clientes</td>
+            </tr>
+            <tr>
+              <td><strong>Compromiso</strong></td>
+              <td>1 semana, renovable</td>
+              <td>Rolling mensual</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="card-icon" style="margin-top: 2rem;">
+          <div class="card-icon-symbol">💡</div>
+          <div class="card-icon-body">
+            <p><strong>Nota:</strong> Estoy abierto a estructuras de partnership más profundas — revenue share, equity mínimo o combinación — si el fit estratégico lo justifica. Hablemos.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRÓXIMOS PASOS -->
+    <section class="section">
+      <div class="container">
+        <span class="section-label">Acción</span>
+        <h2 class="section-title">Próximo Paso</h2>
+        <p class="section-subtitle">
+          Si hay fit, propongo una llamada de 30 minutos para entender mejor la visión de la división, los primeros clientes objetivo y cómo encajaría mi perfil en el equipo.
+        </p>
+
+        <div class="metrics-grid fade-in">
+          <div class="metric-card">
+            <div class="metric-number">30m</div>
+            <div class="metric-label">Llamada inicial</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">5d</div>
+            <div class="metric-label">Discovery Week</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">∞</div>
+            <div class="metric-label">Partnership continuado</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">✓</div>
+            <div class="metric-label">Disponibilidad inmediata</div>
+          </div>
+        </div>
+
+        <div class="card-icon" style="margin-top: 2rem;">
+          <div class="card-icon-symbol">✉️</div>
+          <div class="card-icon-body">
+            <p><strong>Disponibilidad:</strong> Inmediata. Puedo tener la primera reunión esta semana.</p>
+            <p style="margin-top: 0.5rem; color: var(--primary); font-weight: 600;">Construyamos algo que escale.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONFIDENTIAL NOTICE -->
+    <div class="confidential">
+      Esta propuesta ha sido elaborada específicamente para el proyecto y es de carácter confidencial.
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
+        <img
+          src="https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png"
+          alt="IA Operators"
+          class="footer-logo"
+        />
+      </a>
+      <div class="footer-line"></div>
+      <div class="footer-links">
+        <a href="mailto:info@iaoperators.com">info@iaoperators.com</a>
+        <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">IA Operators</a>
+        <a href="https://iaoperators.com" target="_blank" rel="noopener">iaoperators.com</a>
+      </div>
+      <p class="footer-disclaimer">
+        Elaborado por IA Operators · Luiz Brazão · Mayo 2026
+      </p>
+    </footer>
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.08 },
+      );
+      document
+        .querySelectorAll(".fade-in")
+        .forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
