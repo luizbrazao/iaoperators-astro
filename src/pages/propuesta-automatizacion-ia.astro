@@ -1,0 +1,1389 @@
+---
+// Propuesta comercial — Automatización con IA y Desarrollo de Aplicaciones · noindex,nofollow
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Automatización con IA · IA Operators</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --bg-alt: #f9fafb;
+        --primary: #ff6900;
+        --primary-soft: #fff4ed;
+        --primary-border: rgba(255, 105, 0, 0.4);
+        --text: #111827;
+        --text-muted: #6b7280;
+        --text-light: #9ca3af;
+        --border: #e5e7eb;
+        --positive: #16a34a;
+        --positive-bg: #f0fdf4;
+        --negative-bg: #fef2f2;
+        --negative: #dc2626;
+        --shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+        --radius: 12px;
+        --radius-sm: 8px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      h1 {
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        font-weight: 800;
+        line-height: 1.15;
+      }
+      h2 {
+        font-size: clamp(1.4rem, 2.5vw, 2rem);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      h3 {
+        font-size: 1.15rem;
+        font-weight: 600;
+      }
+      h4 {
+        font-size: 1rem;
+        font-weight: 600;
+      }
+      p {
+        color: var(--text-muted);
+      }
+      strong {
+        color: var(--text);
+      }
+
+      /* NAV */
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 56px;
+        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+      }
+      .nav-logo {
+        height: 40px;
+      }
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        list-style: none;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.82rem;
+        font-weight: 500;
+        transition: color 0.2s;
+        white-space: nowrap;
+      }
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      /* HERO */
+      .hero {
+        background-image: url("/propostas/Capa-propostas.png");
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 4rem 2rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+      .hero h1 {
+        color: white;
+        margin-bottom: 1rem;
+      }
+      .hero-subtitle {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 2.5rem;
+        max-width: 680px;
+      }
+      .hero-band {
+        background: rgba(0, 0, 0, 0.2);
+        margin: 2rem -2rem 0;
+        padding: 0.85rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .hero-band span {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.875rem;
+      }
+      .badge-proposal {
+        background: var(--primary);
+        color: white;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 0.3rem 0.9rem;
+        border-radius: 999px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      /* SECTIONS */
+      .section {
+        padding: 4rem 2rem;
+      }
+      .section-alt {
+        background: var(--bg-alt);
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .section-label {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+      .section-title {
+        color: var(--text);
+        margin-bottom: 0.4rem;
+      }
+      .section-subtitle {
+        color: var(--text-muted);
+        font-size: 0.97rem;
+        margin-bottom: 2rem;
+        max-width: 680px;
+      }
+
+      /* CALLOUT */
+      .callout {
+        border-left: 4px solid var(--primary);
+        background: var(--primary-soft);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        padding: 1.5rem 2rem;
+        margin-bottom: 2rem;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.65;
+      }
+
+      /* ARCH FLOW */
+      .arch-flow {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+      .arch-nodes {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+      }
+      .arch-node {
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .arch-node.accent {
+        background: var(--primary-soft);
+        border-color: var(--primary-border);
+        color: var(--primary);
+      }
+      .arch-arrow {
+        color: var(--text-muted);
+        font-size: 1.25rem;
+        font-weight: 700;
+      }
+      .arch-notes {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .arch-note {
+        display: flex;
+        gap: 0.6rem;
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        align-items: flex-start;
+      }
+      .arch-note strong {
+        color: var(--text);
+        flex-shrink: 0;
+      }
+      .arch-note::before {
+        content: "→";
+        color: var(--primary);
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      /* METRICS */
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .metric-card {
+        background: white;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+        border-top: 3px solid var(--primary);
+        padding: 1.5rem 1rem;
+        text-align: center;
+      }
+      .metric-number {
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: var(--primary);
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .metric-label {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        line-height: 1.4;
+      }
+
+      /* MODULE CARDS (alcance) */
+      .module-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .module-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        display: flex;
+        gap: 1.25rem;
+        align-items: flex-start;
+        transition:
+          box-shadow 0.2s,
+          border-color 0.2s;
+      }
+      .module-card:hover {
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary-border);
+      }
+      .module-num {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 3px 10px rgba(255, 105, 0, 0.3);
+      }
+      .module-body h4 {
+        color: var(--text);
+        margin-bottom: 0.35rem;
+      }
+      .module-body p {
+        font-size: 0.9rem;
+        line-height: 1.55;
+      }
+      .module-body ul {
+        list-style: none;
+        margin-top: 0.6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .module-body ul li {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        display: flex;
+        gap: 0.5rem;
+      }
+      .module-body ul li::before {
+        content: "→";
+        color: var(--primary);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      /* TIMELINE */
+      .timeline {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        position: relative;
+        margin-top: 2rem;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        top: 28px;
+        left: 56px;
+        right: 56px;
+        height: 2px;
+        background: var(--border);
+        z-index: 0;
+      }
+      .timeline-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+        padding: 0 0.5rem;
+      }
+      .timeline-node {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 14px rgba(255, 105, 0, 0.35);
+        flex-shrink: 0;
+      }
+      .timeline-node-label {
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+      .timeline-content {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1rem;
+        text-align: center;
+        width: 100%;
+      }
+      .timeline-content h4 {
+        color: var(--text);
+        font-size: 0.85rem;
+        margin-bottom: 0.3rem;
+      }
+      .timeline-content p {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        line-height: 1.45;
+      }
+      .timeline-deliverable {
+        display: inline-block;
+        background: var(--primary-soft);
+        color: var(--primary);
+        font-size: 0.68rem;
+        font-weight: 600;
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        margin-top: 0.6rem;
+      }
+
+      /* DELIVERABLES */
+      .deliverables-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+        margin-top: 1.5rem;
+      }
+      .deliverable-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        transition:
+          box-shadow 0.2s,
+          border-color 0.2s;
+      }
+      .deliverable-card:hover {
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary-border);
+      }
+      .deliverable-icon {
+        font-size: 1.75rem;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .deliverable-content h4 {
+        color: var(--text);
+        margin-bottom: 0.3rem;
+      }
+      .deliverable-content p {
+        font-size: 0.85rem;
+        line-height: 1.5;
+      }
+
+      /* INVESTMENT */
+      .price-display {
+        background: var(--primary-soft);
+        border: 1px solid var(--primary-border);
+        border-radius: var(--radius);
+        padding: 2rem;
+        text-align: center;
+        margin-top: 1.5rem;
+      }
+      .price-old {
+        font-size: 1.1rem;
+        color: var(--text-light);
+        text-decoration: line-through;
+        margin-bottom: 0.25rem;
+      }
+      .price-main {
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        font-weight: 800;
+        color: var(--primary);
+        letter-spacing: -0.03em;
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .price-sub {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+      }
+      .discount-badge {
+        display: inline-block;
+        background: var(--positive-bg);
+        border: 1px solid rgba(22, 163, 74, 0.3);
+        color: var(--positive);
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 0.3rem 1rem;
+        border-radius: 999px;
+      }
+
+      .payment-milestones {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .payment-milestone {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 1.25rem;
+        text-align: center;
+        box-shadow: var(--shadow);
+      }
+      .payment-milestone.highlight {
+        border-color: var(--primary-border);
+      }
+      .payment-milestone .pct {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+        margin-bottom: 0.4rem;
+      }
+      .payment-milestone .amount {
+        font-weight: 700;
+        font-size: 1.4rem;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.3rem;
+      }
+      .payment-milestone.highlight .amount {
+        color: var(--primary);
+      }
+      .payment-milestone .label {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        line-height: 1.4;
+      }
+
+      .tax-note {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border);
+        padding-top: 1rem;
+        margin-top: 1.5rem;
+        line-height: 1.6;
+      }
+
+      /* INCLUDE GRID */
+      .include-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+      .include-col {
+        border-radius: var(--radius);
+        padding: 1.75rem;
+      }
+      .include-col.yes {
+        background: var(--positive-bg);
+        border-left: 4px solid var(--positive);
+      }
+      .include-col.no {
+        background: var(--bg-alt);
+        border-left: 4px solid var(--text-light);
+      }
+      .include-col h3 {
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+      .include-col.yes h3 {
+        color: var(--positive);
+      }
+      .include-col.no h3 {
+        color: var(--text-muted);
+      }
+      .include-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+      }
+      .include-list li {
+        display: flex;
+        gap: 0.6rem;
+        font-size: 0.88rem;
+        align-items: flex-start;
+        color: var(--text);
+      }
+      .check-yes {
+        color: var(--positive);
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .check-no {
+        color: var(--text-light);
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+
+      /* STEPS */
+      .steps-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .step-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.25rem 1.5rem;
+        box-shadow: var(--shadow);
+        transition: border-color 0.2s;
+      }
+      .step-item:hover {
+        border-color: var(--primary-border);
+      }
+      .step-num {
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 3px 10px rgba(255, 105, 0, 0.3);
+      }
+      .step-content h4 {
+        color: var(--text);
+        margin-bottom: 0.25rem;
+      }
+      .step-content p {
+        font-size: 0.88rem;
+      }
+      .validity-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--primary-soft);
+        color: var(--primary);
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 0.55rem 1.5rem;
+        border-radius: 999px;
+        border: 1px solid var(--primary-border);
+        margin-top: 1.75rem;
+      }
+
+      /* FOOTER */
+      .footer {
+        background: #111827;
+        color: var(--text-light);
+        padding: 3rem 2rem 2rem;
+        text-align: center;
+      }
+      .footer-logo {
+        height: 40px;
+        margin-bottom: 1.25rem;
+        display: inline-block;
+        opacity: 0.9;
+        transition: opacity 0.2s;
+      }
+      .footer-logo:hover {
+        opacity: 1;
+      }
+      .footer-links {
+        display: flex;
+        gap: 1.75rem;
+        justify-content: center;
+        margin: 0.75rem 0 1.25rem;
+        flex-wrap: wrap;
+      }
+      .footer-links a {
+        color: var(--text-light);
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color 0.2s;
+      }
+      .footer-links a:hover {
+        color: var(--primary);
+      }
+      .footer-line {
+        width: 40px;
+        height: 2px;
+        background: var(--primary);
+        margin: 0 auto 1rem;
+        border-radius: 2px;
+      }
+      .footer-disclaimer {
+        font-size: 0.78rem;
+        color: #4b5563;
+      }
+
+      /* FADE IN */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(18px);
+        transition:
+          opacity 0.55s ease,
+          transform 0.55s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* TABLE STYLES */
+      .content-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        margin: 1.5rem 0;
+      }
+      .content-table th {
+        background: var(--bg-alt);
+        padding: 1rem;
+        text-align: left;
+        font-weight: 600;
+        color: var(--text);
+        border-bottom: 1px solid var(--border);
+        font-size: 0.875rem;
+      }
+      .content-table td {
+        padding: 1rem;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.875rem;
+        color: var(--text-muted);
+      }
+      .content-table tr:last-child td {
+        border-bottom: none;
+      }
+      .content-table strong {
+        color: var(--text);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 960px) {
+        .metrics-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .deliverables-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .payment-milestones {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 680px) {
+        .nav-links {
+          display: none;
+        }
+        .metrics-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .deliverables-grid {
+          grid-template-columns: 1fr;
+        }
+        .include-grid {
+          grid-template-columns: 1fr;
+        }
+        .timeline {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 1.25rem;
+        }
+        .timeline::before {
+          display: none;
+        }
+        .timeline-item {
+          flex-direction: row;
+          align-items: flex-start;
+          gap: 1rem;
+          padding: 0;
+        }
+        .timeline-content {
+          text-align: left;
+          flex: 1;
+        }
+        .timeline-node {
+          margin-bottom: 0;
+        }
+        .hero-band {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .arch-nodes {
+          justify-content: flex-start;
+        }
+      }
+
+      @media print {
+        .nav {
+          position: static;
+          box-shadow: none;
+        }
+        .hero {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .footer {
+          background: #f3f4f6 !important;
+        }
+        .footer * {
+          color: #374151 !important;
+        }
+        .footer-logo {
+          opacity: 1 !important;
+        }
+        .fade-in {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+        .section {
+          padding: 2rem 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav class="nav">
+      <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
+        <img
+          src="/propostas/Logo-IAOperators.png"
+          alt="IA Operators"
+          class="nav-logo"
+        />
+      </a>
+      <ul class="nav-links">
+        <li><a href="#resumen">Resumen</a></li>
+        <li><a href="#entendimiento">Proyecto</a></li>
+        <li><a href="#solucion">Solución</a></li>
+        <li><a href="#plan">Plan</a></li>
+        <li><a href="#inversion">Inversión</a></li>
+        <li><a href="#pasos">Próximos pasos</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Automatización con IA<br />y Desarrollo de Aplicaciones</h1>
+        <p class="hero-subtitle">
+          Sistema de agentes autónomos, integración multiplataforma y generador
+          de documentación técnica
+        </p>
+      </div>
+      <div class="hero-band">
+        <span>IA Operators · Luiz Brazão · Mayo 2026</span>
+        <span class="badge-proposal">Propuesta Comercial</span>
+      </div>
+    </section>
+
+    <!-- RESUMEN EJECUTIVO -->
+    <section class="section" id="resumen">
+      <div class="container">
+        <span class="section-label">Resumen Ejecutivo</span>
+        <h2 class="section-title">Qué es este proyecto</h2>
+        <p class="section-subtitle">
+          Una propuesta integral para tres líneas de entregables complementarias:
+          un agente administrativo autónomo, una app iPad de recogida de datos
+          con integración a Windows, y un generador de documentación técnica.
+        </p>
+
+        <div class="callout fade-in">
+          "Mi enfoque está centrado en soluciones LLM-first, escalables y listas
+          para producción, evitando reglas rígidas donde la IA puede gestionar
+          la lógica de negocio de forma más robusta."
+        </div>
+
+        <div class="metrics-grid fade-in">
+          <div class="metric-card">
+            <div class="metric-number">3</div>
+            <div class="metric-label">Entregables principales</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">4</div>
+            <div class="metric-label">Semanas de trabajo</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">100%</div>
+            <div class="metric-label">Remoto · Disponibilidad inmediata</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">2</div>
+            <div class="metric-label">Semanas de soporte post-entrega</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENTENDIMIENTO DEL PROYECTO -->
+    <section class="section section-alt" id="entendimiento">
+      <div class="container">
+        <span class="section-label">Entendimiento</span>
+        <h2 class="section-title">Tres líneas de entregables</h2>
+        <p class="section-subtitle">
+          Cada una es independiente pero se complementan en una arquitectura
+          coherente y escalable.
+        </p>
+
+        <div class="module-list fade-in">
+          <div class="module-card">
+            <div class="module-num">1</div>
+            <div class="module-body">
+              <h4>Agente de IA Administrativo</h4>
+              <p>
+                Un agente autónomo capaz de gestionar las operaciones diarias de
+                un autónomo o pequeña empresa en España.
+              </p>
+              <ul>
+                <li>Gestión y respuesta automática de correos electrónicos</li>
+                <li>Búsqueda y síntesis de normativas del BOE (Boletín Oficial del Estado)</li>
+                <li>Automatización de facturación y control de gastos</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">2</div>
+            <div class="module-body">
+              <h4>App iPad + Integración CE3X (Windows)</h4>
+              <p>
+                Una app nativa o progresiva para iPad que permita la recogida de
+                datos en campo para certificaciones energéticas, con exportación
+                e integración compatible con CE3X en Windows.
+              </p>
+              <ul>
+                <li>Formularios estructurados por tipología de edificio</li>
+                <li>Exportación en formato compatible con CE3X</li>
+                <li>Sincronización automática entre dispositivos</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">3</div>
+            <div class="module-body">
+              <h4>Generador de Proyectos Técnicos</h4>
+              <p>
+                Una solución para la generación automatizada de documentación
+                técnica repetitiva, donde el profesional modifica parámetros
+                clave y el sistema genera documentos completos.
+              </p>
+              <ul>
+                <li>Interfaz web sencilla para entrada de parámetros</li>
+                <li>Motor de plantillas con lógica condicional</li>
+                <li>Exportación automática a .docx / PDF</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOLUCIÓN TÉCNICA -->
+    <section class="section" id="solucion">
+      <div class="container">
+        <span class="section-label">Solución Técnica</span>
+        <h2 class="section-title">Arquitectura propuesta</h2>
+        <p class="section-subtitle">
+          Tres módulos integrados en una arquitectura escalable y mantenible.
+        </p>
+
+        <h3 style="margin-top: 2rem; color: var(--text); font-size: 1.1rem;">
+          Agente Administrativo
+        </h3>
+        <table class="content-table fade-in">
+          <tr>
+            <th>Módulo</th>
+            <th>Tecnología / Descripción</th>
+          </tr>
+          <tr>
+            <td><strong>Email Inteligente</strong></td>
+            <td>Gmail API / Microsoft Graph API + LLM para clasificación, redacción y envío con contexto del negocio. Webhooks para respuesta reactiva.</td>
+          </tr>
+          <tr>
+            <td><strong>Búsqueda BOE</strong></td>
+            <td>Scraping del BOE (boe.es) + RAG (Retrieval-Augmented Generation) sobre un índice vectorial de normativas. Consultas en lenguaje natural.</td>
+          </tr>
+          <tr>
+            <td><strong>Facturación y Gastos</strong></td>
+            <td>Integración con APIs de facturación (Holded, Factura Directa) o generación de documentos desde plantillas estructuradas.</td>
+          </tr>
+          <tr>
+            <td><strong>Orquestación</strong></td>
+            <td>n8n (self-hosted) para flujos visuales + agente LLM para decisiones complejas. Estado persistente en Supabase.</td>
+          </tr>
+        </table>
+
+        <h3 style="margin-top: 2rem; color: var(--text); font-size: 1.1rem;">
+          App iPad + CE3X
+        </h3>
+        <p style="color: var(--text-muted); margin-bottom: 1rem;">
+          La solución requiere un puente sólido entre iOS y Windows:
+        </p>
+        <div class="module-list">
+          <div class="module-card">
+            <div class="module-num">A</div>
+            <div class="module-body">
+              <h4>Frontend iPad</h4>
+              <p>React Native (Expo) o PWA con soporte offline — formularios estructurados por tipología de edificio, validación en tiempo real.</p>
+            </div>
+          </div>
+          <div class="module-card">
+            <div class="module-num">B</div>
+            <div class="module-body">
+              <h4>Exportación Compatible</h4>
+              <p>Formato .xml / .json compatible con la estructura de datos que CE3X importa, o generación directa del formato .cex.</p>
+            </div>
+          </div>
+          <div class="module-card">
+            <div class="module-num">C</div>
+            <div class="module-body">
+              <h4>Sincronización</strong></h4>
+              <p>Supabase o backend propio: datos del iPad disponibles en PC con Windows para importar en CE3X. Script Windows que observa una carpeta de Dropbox/OneDrive e importa automáticamente.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 2rem; color: var(--text); font-size: 1.1rem;">
+          Generador de Proyectos
+        </h3>
+        <p style="color: var(--text-muted); margin-bottom: 1rem;">
+          Motor de plantillas parametrizadas para documentación técnica:
+        </p>
+        <ul style="list-style: none; margin-left: 0; color: var(--text-muted);">
+          <li style="margin-bottom: 0.5rem; display: flex; gap: 0.5rem;"><span style="color: var(--primary); font-weight: 700;">→</span> Interfaz web sencilla (Next.js) donde el técnico introduce parámetros</li>
+          <li style="margin-bottom: 0.5rem; display: flex; gap: 0.5rem;"><span style="color: var(--primary); font-weight: 700;">→</span> Motor que genera documentos Word (.docx) completos con placeholders reemplazados</li>
+          <li style="margin-bottom: 0.5rem; display: flex; gap: 0.5rem;"><span style="color: var(--primary); font-weight: 700;">→</span> Lógica condicional: si la vivienda tiene X, incluir sección Y</li>
+          <li style="display: flex; gap: 0.5rem;"><span style="color: var(--primary); font-weight: 700;">→</span> Exportación directa a .docx / PDF con nomenclatura automática</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PLAN DE TRABAJO -->
+    <section class="section section-alt" id="plan">
+      <div class="container">
+        <span class="section-label">Plan de Trabajo</span>
+        <h2 class="section-title">4 semanas · Iterativo y verificable</h2>
+        <p class="section-subtitle">
+          Cada semana produce entregables concretos y checkpoints de validación.
+        </p>
+
+        <div class="timeline fade-in">
+          <div class="timeline-item">
+            <div class="timeline-node-label">Semana 1</div>
+            <div class="timeline-node">1</div>
+            <div class="timeline-content">
+              <h4>Arquitectura + Agente IA</h4>
+              <p>
+                Definición de arquitectura, setup de entorno, integración email + primer prototipo del agente con respuesta a correos y búsqueda BOE funcional.
+              </p>
+              <span class="timeline-deliverable">Agente base operativo</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-node-label">Semana 2</div>
+            <div class="timeline-node">2</div>
+            <div class="timeline-content">
+              <h4>Agente completo + App iPad v1</h4>
+              <p>
+                Agente administrativo completo (facturación + gastos). Primera versión de la app iPad con formularios de recogida de datos y exportación.
+              </p>
+              <span class="timeline-deliverable">Flujos integrados</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-node-label">Semana 3</div>
+            <div class="timeline-node">3</div>
+            <div class="timeline-content">
+              <h4>Integración CE3X + Generador</h4>
+              <p>
+                Puente iPad ↔ CE3X validado con datos reales. Motor de plantillas Word funcionando con casos de uso definidos.
+              </p>
+              <span class="timeline-deliverable">Integración validada</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-node-label">Semana 4</div>
+            <div class="timeline-node">4</div>
+            <div class="timeline-content">
+              <h4>QA, refinamiento y entrega</h4>
+              <p>
+                Tests end-to-end, documentación técnica, formación al usuario y entrega final de todos los entregables.
+              </p>
+              <span class="timeline-deliverable">Entrega completa</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENTREGABLES -->
+    <section class="section" id="entregables">
+      <div class="container">
+        <span class="section-label">Entregables</span>
+        <h2 class="section-title">Qué recibirás al final</h2>
+        <p class="section-subtitle">
+          Cada entregable es verificable y está completamente documentado.
+        </p>
+
+        <div class="deliverables-grid fade-in">
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🤖</div>
+            <div class="deliverable-content">
+              <h4>Agente Administrativo</h4>
+              <p>
+                Orquestación completa: email, BOE, facturación, gastos. Desplegado y operativo.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">📱</div>
+            <div class="deliverable-content">
+              <h4>App iPad</h4>
+              <p>
+                Formularios estructurados, offline-first, con sincronización a backend.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🔗</div>
+            <div class="deliverable-content">
+              <h4>Puente iPad ↔ CE3X</h4>
+              <p>
+                Exportación compatible e integración verificada con datos reales.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">📄</div>
+            <div class="deliverable-content">
+              <h4>Generador de Documentos</h4>
+              <p>
+                Motor de plantillas Word con lógica condicional y exportación automática.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🧪</div>
+            <div class="deliverable-content">
+              <h4>Suite de Tests</h4>
+              <p>
+                Tests end-to-end que cubren los flujos principales y casos edge.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">📚</div>
+            <div class="deliverable-content">
+              <h4>Documentación Técnica</h4>
+              <p>
+                Arquitectura, setup, APIs, y instrucciones de despliegue y mantenimiento.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INVERSIÓN -->
+    <section class="section section-alt" id="inversion">
+      <div class="container">
+        <span class="section-label">Inversión</span>
+        <h2 class="section-title">Precio fijo · 4 semanas de trabajo</h2>
+        <p class="section-subtitle">
+          Una propuesta económica clara y transparente, con estructura de pagos
+          flexible ajustada al avance del proyecto.
+        </p>
+
+        <div class="price-display fade-in">
+          <div class="price-old">8.000 €</div>
+          <div class="price-main">6.000 €</div>
+          <div class="price-sub">+ IVA</div>
+          <span class="discount-badge">Inversión optimizada para máximo valor</span>
+        </div>
+
+        <div class="payment-milestones fade-in">
+          <div class="payment-milestone highlight">
+            <div class="pct">Primer pago · 50%</div>
+            <div class="amount">3.000 €</div>
+            <div class="label">
+              Al inicio, tras la firma. Reserva de fechas y arranque del proyecto.
+            </div>
+          </div>
+          <div class="payment-milestone">
+            <div class="pct">Pago final · 50%</div>
+            <div class="amount">3.000 €</div>
+            <div class="label">
+              Tras la entrega final. Aceptado si no hay incidencias graves en 5 días naturales.
+            </div>
+          </div>
+        </div>
+
+        <div class="tax-note fade-in">
+          Se añadirá IVA (21%) al total. El pago final se realiza dentro de los 3 días naturales siguientes a la aceptación. Los costes de APIs externas (OpenAI, Gmail, etc.) corren a cargo del cliente.
+        </div>
+      </div>
+    </section>
+
+    <!-- INCLUYE / NO INCLUYE -->
+    <section class="section">
+      <div class="container">
+        <span class="section-label">Alcance</span>
+        <h2 class="section-title">Qué está incluido y qué no</h2>
+        <div class="include-grid fade-in">
+          <div class="include-col yes">
+            <h3>✓ Incluido</h3>
+            <ul class="include-list">
+              <li>
+                <span class="check-yes">✓</span> Agente administrativo multi-herramienta
+              </li>
+              <li>
+                <span class="check-yes">✓</span> App iPad con formularios y sincronización
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Puente iPad ↔ CE3X integrado y validado
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Generador de proyectos técnicos (Word)
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Suite de tests end-to-end
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Documentación técnica completa
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Acceso a repositorio durante todo el desarrollo
+              </li>
+              <li>
+                <span class="check-yes">✓</span> 2 semanas de soporte post-entrega
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Código fuente propiedad del cliente tras pago completo
+              </li>
+            </ul>
+          </div>
+          <div class="include-col no">
+            <h3>✗ No incluido</h3>
+            <ul class="include-list">
+              <li>
+                <span class="check-no">✗</span> Costes de APIs externas (OpenAI, etc.)
+              </li>
+              <li>
+                <span class="check-no">✗</span> Mantenimiento post-entrega (contrato independiente)
+              </li>
+              <li>
+                <span class="check-no">✗</span> Infraestructura en producción (hosting)
+              </li>
+              <li>
+                <span class="check-no">✗</span> Nuevas funcionalidades no descritas en este documento
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRÓXIMOS PASOS -->
+    <section class="section section-alt" id="pasos">
+      <div class="container">
+        <span class="section-label">Próximos pasos</span>
+        <h2 class="section-title">Cómo empezamos</h2>
+        <ul class="steps-list fade-in">
+          <li class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Confirmación de la propuesta y pago inicial</h4>
+              <p>
+                3.000 € para reservar las fechas de inicio y comenzar con el análisis de requisitos detallado.
+              </p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Kick-off y acceso a sistemas</h4>
+              <p>
+                Videollamada de arranque. Acceso a documentación, credenciales y contactos técnicos que sean necesarios.
+              </p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Desarrollo iterativo</h4>
+              <p>
+                4 semanas con checkpoints semanales. Código disponible en GitHub privado desde el primer día.
+              </p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>Entrega y soporte</h4>
+              <p>
+                Entrega final de todos los entregables. 2 semanas de soporte gratuito post-entrega.
+              </p>
+            </div>
+          </li>
+        </ul>
+        <div style="text-align:center">
+          <span class="validity-badge"
+            >⏱ Propuesta válida por 30 días · Mayo 2026</span
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
+        <img
+          src="https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png"
+          alt="IA Operators"
+          class="footer-logo"
+        />
+      </a>
+      <div class="footer-line"></div>
+      <div class="footer-links">
+        <a href="mailto:ferbrazao@gmail.com">ferbrazao@gmail.com</a>
+        <a href="tel:+34662423523">+34 662 423 523</a>
+        <a href="https://iaoperators.com" target="_blank" rel="noopener"
+          >iaoperators.com</a
+        >
+      </div>
+      <p class="footer-disclaimer">
+        Elaborado por IA Operators · Luiz Brazão · Mayo 2026
+      </p>
+    </footer>
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.08 },
+      );
+      document
+        .querySelectorAll(".fade-in")
+        .forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
