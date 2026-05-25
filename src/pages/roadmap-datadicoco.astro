@@ -1,0 +1,609 @@
+---
+// Roadmap Datadicoco — noindex,nofollow (propuesta confidencial)
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Roadmap Datadicoco · Plataforma Unificada de Chatbots · IA Operators</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --bg-alt: #f9fafb;
+        --primary: #ff6900;
+        --primary-soft: #fff4ed;
+        --primary-border: rgba(255, 105, 0, 0.4);
+        --text: #111827;
+        --text-muted: #6b7280;
+        --text-light: #9ca3af;
+        --border: #e5e7eb;
+        --positive: #16a34a;
+        --positive-bg: #f0fdf4;
+        --shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+        --radius: 12px;
+        --radius-sm: 8px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; line-height: 1.15; }
+      h2 { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 700; line-height: 1.2; }
+      h3 { font-size: 1.15rem; font-weight: 600; }
+      h4 { font-size: 1rem; font-weight: 600; }
+      p { color: var(--text-muted); }
+      strong { color: var(--text); }
+
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 56px;
+        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+      }
+      .nav-logo { height: 40px; }
+      .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.82rem;
+        font-weight: 500;
+        transition: color 0.2s;
+        white-space: nowrap;
+      }
+      .nav-links a:hover { color: var(--primary); }
+
+      .hero {
+        background-image: url("/propostas/Capa-propostas.png");
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 4rem 2rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+      .hero h1 { color: white; margin-bottom: 1rem; }
+      .hero-subtitle {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 2.5rem;
+        max-width: 680px;
+      }
+      .hero-meta {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+      .hero-meta-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+      }
+      .hero-meta-label {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .hero-meta-value {
+        font-size: 1rem;
+        font-weight: 700;
+        color: white;
+      }
+      .hero-band {
+        background: rgba(0, 0, 0, 0.2);
+        margin: 0 -2rem;
+        padding: 0.85rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 2rem;
+      }
+      .hero-band span { color: rgba(255, 255, 255, 0.9); font-size: 0.875rem; }
+      .badge-proposal {
+        background: var(--primary);
+        color: white;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 0.3rem 0.9rem;
+        border-radius: 999px;
+        text-transform: uppercase;
+      }
+
+      .section { padding: 4rem 2rem; }
+      .section-alt { background: var(--bg-alt); }
+      .container { max-width: 1100px; margin: 0 auto; }
+      .section-label {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+      .section-title { color: var(--text); margin-bottom: 0.4rem; }
+      .section-subtitle { color: var(--text-muted); font-size: 0.97rem; margin-bottom: 2rem; max-width: 680px; }
+
+      .module-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .module-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        display: flex;
+        gap: 1.25rem;
+        align-items: flex-start;
+        transition: box-shadow 0.2s, border-color 0.2s;
+      }
+      .module-card:hover { box-shadow: var(--shadow-md); border-color: var(--primary-border); }
+      .module-num {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 3px 10px rgba(255, 105, 0, 0.3);
+      }
+      .module-body h4 { color: var(--text); margin-bottom: 0.3rem; }
+      .module-body p { font-size: 0.9rem; line-height: 1.55; margin-bottom: 0.5rem; }
+      .module-badge {
+        display: inline-block;
+        background: var(--primary-soft);
+        color: var(--primary);
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 0.2rem 0.7rem;
+        border-radius: 999px;
+        margin-right: 0.4rem;
+        margin-top: 0.2rem;
+      }
+      .module-body ul {
+        list-style: none;
+        margin-top: 0.6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+      .module-body ul li {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        display: flex;
+        gap: 0.5rem;
+      }
+      .module-body ul li::before {
+        content: "→";
+        color: var(--primary);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .metric-card {
+        background: white;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+        border-top: 3px solid var(--primary);
+        padding: 1.5rem 1rem;
+        text-align: center;
+      }
+      .metric-number {
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: var(--primary);
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .metric-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
+
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .table-container {
+        background: white;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+        overflow: hidden;
+        margin-top: 1.5rem;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th {
+        text-align: left;
+        padding: 0.85rem 1.25rem;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--text-muted);
+        background: var(--bg-alt);
+        border-bottom: 2px solid var(--border);
+      }
+      td {
+        padding: 0.85rem 1.25rem;
+        font-size: 0.9rem;
+        border-bottom: 1px solid var(--border);
+        color: var(--text);
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      tr:last-child td { border-bottom: none; }
+      tr:hover td { background: var(--primary-soft); }
+      td:first-child { font-weight: 600; }
+      td:last-child { color: var(--text-muted); }
+
+      .timeline-item {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: var(--shadow);
+        border-left: 4px solid var(--primary);
+      }
+      .timeline-item h4 { color: var(--text); margin-bottom: 0.5rem; }
+      .timeline-item p { font-size: 0.93rem; margin-bottom: 0.5rem; }
+
+      .confidential {
+        background: var(--bg-alt);
+        border-top: 1px solid var(--border);
+        padding: 0.85rem 2rem;
+        text-align: center;
+        font-size: 0.78rem;
+        color: var(--text-light);
+      }
+
+      .footer {
+        background: #111827;
+        color: var(--text-light);
+        padding: 3rem 2rem 2rem;
+        text-align: center;
+      }
+      .footer-logo { height: 40px; margin-bottom: 1.25rem; display: inline-block; opacity: 0.9; }
+      .footer-disclaimer { font-size: 0.78rem; color: #4b5563; }
+
+      .fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
+      .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+      @media (max-width: 960px) {
+        .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (max-width: 680px) {
+        .nav-links { display: none; }
+        .metrics-grid { grid-template-columns: 1fr; }
+        table { font-size: 0.82rem; }
+        th, td { padding: 0.65rem 0.85rem; }
+      }
+
+      @media print {
+        .nav { position: static; box-shadow: none; }
+        .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .fade-in { opacity: 1 !important; transform: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav class="nav">
+      <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
+        <img src="/propostas/Logo-IAOperators.png" alt="IA Operators" class="nav-logo" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="#objetivo">Objetivo</a></li>
+        <li><a href="#epicas">Épicas</a></li>
+        <li><a href="#secuencia">Secuencia</a></li>
+        <li><a href="#metricas">Métricas</a></li>
+      </ul>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Roadmap Datadicoco<br />Plataforma Unificada de Chatbots</h1>
+        <p class="hero-subtitle">Consolidación de infraestructura y integración de transcripciones</p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Duración</span>
+            <span class="hero-meta-value">4 Semanas</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Período</span>
+            <span class="hero-meta-value">Mayo 26 – Junio 20</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Equipo</span>
+            <span class="hero-meta-value">Luiz, Daniel, Rafa</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-band">
+        <span>IA Operators · Mayo 2026</span>
+        <span class="badge-proposal">ROADMAP ESTRATÉGICO</span>
+      </div>
+    </section>
+
+    <section class="section" id="objetivo">
+      <div class="container">
+        <span class="section-label">Objetivo del Proyecto</span>
+        <h2 class="section-title">Consolidar 4 chatbots en una plataforma unificada</h2>
+        <p class="section-subtitle">
+          Datadicoco requiere integración de múltiples bots en un panel centralizado con acceso a transcripciones de llamadas, eliminando fragmentación y generando visibilidad total.
+        </p>
+
+        <div class="metrics-grid fade-in">
+          <div class="metric-card">
+            <div class="metric-number">4</div>
+            <div class="metric-label">Bots Unificados</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">100%</div>
+            <div class="metric-label">Transcripciones Centralizadas</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">1</div>
+            <div class="metric-label">Panel de Control</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">∞</div>
+            <div class="metric-label">Escalabilidad</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="epicas">
+      <div class="container">
+        <span class="section-label">Épicas Principales</span>
+        <h2 class="section-title">5 Iniciativas Estratégicas</h2>
+        <p class="section-subtitle">Cada épica es un hito verificable que genera valor inmediato y desbloquea las siguientes.</p>
+
+        <div class="module-list fade-in">
+          <div class="module-card">
+            <div class="module-num">1</div>
+            <div class="module-body">
+              <h4>Activación del Chatbot Actual</h4>
+              <p>Quick-win inicial: actualizar número de teléfono y activar bot en producción. Genera confianza temprana.</p>
+              <div>
+                <span class="module-badge">Semana 1</span>
+                <span class="module-badge">Crítica</span>
+              </div>
+              <ul>
+                <li>Bot en producción con número actualizado</li>
+                <li>Email automático de resumen (a confirmar)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">2</div>
+            <div class="module-body">
+              <h4>Migración Bot de UChat</h4>
+              <p>Replicar bot existente desde UChat a plataforma propia. Demuestra viabilidad técnica, libera dependencia externa.</p>
+              <div>
+                <span class="module-badge">Semanas 2-3</span>
+                <span class="module-badge">Crítica</span>
+              </div>
+              <ul>
+                <li>Auditoría completa de flujos e integraciones</li>
+                <li>Replicación con 100% de funcionalidad</li>
+                <li>Testing end-to-end</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">3</div>
+            <div class="module-body">
+              <h4>Bot Genérico Nuevo</h4>
+              <p>Diseñar flujo reutilizable que acelera replicación de bots futuros. Preparar arquitectura escalable.</p>
+              <div>
+                <span class="module-badge">Semanas 2-3</span>
+                <span class="module-badge">Paralelo</span>
+              </div>
+              <ul>
+                <li>Especificación de flujo genérico (Datadicoco)</li>
+                <li>Integración técnica en plataforma (Luiz)</li>
+                <li>Parámetros y puntos de extensión documentados</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">4</div>
+            <div class="module-body">
+              <h4>Callbots + Transcripciones</h4>
+              <p>Panel centralizado con historial de llamadas y transcripciones de sesiones. Diferenciador clave del cliente.</p>
+              <div>
+                <span class="module-badge">Semanas 3-4</span>
+                <span class="module-badge">Crítica</span>
+              </div>
+              <ul>
+                <li>Dashboard unificado de 4 bots</li>
+                <li>Historial de llamadas por bot</li>
+                <li>Transcripciones filtradas y consultables</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">5</div>
+            <div class="module-body">
+              <h4>Infraestructura Datadicoco</h4>
+              <p>Migrar plataforma completa a infraestructura Datadicoco. Elimina vendor lock-in, consolida propiedad del código.</p>
+              <div>
+                <span class="module-badge">Semanas 1-4</span>
+                <span class="module-badge">Crítica</span>
+              </div>
+              <ul>
+                <li>Repositorio GitHub bajo cuenta Datadicoco</li>
+                <li>Proyecto configurado en Render</li>
+                <li>Transferencia de ownership completa</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="secuencia">
+      <div class="container">
+        <span class="section-label">Plan de Ejecución</span>
+        <h2 class="section-title">Secuencia de 4 Semanas</h2>
+        <p class="section-subtitle">Cada semana produce entregables verificables. Paralelismo estratégico maximiza velocidad.</p>
+
+        <div class="timeline-item fade-in">
+          <h4>📅 Semana 1: 26–30 Mayo · Arranque</h4>
+          <p><strong>Objetivo:</strong> Setup técnico + quick win inicial</p>
+          <p><strong>Tareas:</strong> [1] Activar bot actual · [2a] Acceso UChat + auditoría · [5a] GitHub + Render</p>
+          <p><strong>Entregables:</strong> Bot en producción · Documentación auditoría · Infraestructura lista</p>
+        </div>
+
+        <div class="timeline-item fade-in">
+          <h4>📅 Semana 2: 2–6 Junio · Ejecución Paralela</h4>
+          <p><strong>Objetivo:</strong> Dos vías simultáneas (migración + diseño)</p>
+          <p><strong>Tareas:</strong> [2b] Migración UChat · [3a] Bot genérico · [4a] Arquitectura callbots · [5b] Mejoras</p>
+          <p><strong>Entregables:</strong> Bot replicado · Spec flujo genérico · Diagrama arquitectura</p>
+        </div>
+
+        <div class="timeline-item fade-in">
+          <h4>📅 Semana 3: 9–13 Junio · Integración</h4>
+          <p><strong>Objetivo:</strong> Unir todos los threads</p>
+          <p><strong>Tareas:</strong> [3b] Conectar bot genérico · [4b] Dashboard callbots · [5b] UX refinada</p>
+          <p><strong>Entregables:</strong> Panel unificado con 3 bots · Transcripciones · UI lista para demo</p>
+        </div>
+
+        <div class="timeline-item fade-in">
+          <h4>📅 Semana 4: 16–20 Junio · Demo + Consolidación</h4>
+          <p><strong>Objetivo:</strong> QA integral, demo al cliente, infraestructura final</p>
+          <p><strong>Tareas:</strong> [✓] QA end-to-end · [✓] Demo cliente · [5c] Infraestructura 100% Datadicoco</p>
+          <p><strong>Entregables:</strong> Reporte QA · Demo exitosa · Código en producción</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="metricas">
+      <div class="container">
+        <span class="section-label">Métricas de Éxito</span>
+        <h2 class="section-title">Indicadores al Cierre (20 Junio)</h2>
+        <p class="section-subtitle">Cada métrica es verificable y alinea el proyecto con objetivos de negocio.</p>
+
+        <div class="table-container fade-in">
+          <table>
+            <thead>
+              <tr>
+                <th>Métrica</th>
+                <th>Target</th>
+                <th>Verificación</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Bots activos en plataforma</td>
+                <td>4</td>
+                <td>Dashboard muestra 4 bots con actividad</td>
+              </tr>
+              <tr>
+                <td>Transcripciones centralizadas</td>
+                <td>100% de llamadas</td>
+                <td>Historial completo con filtros</td>
+              </tr>
+              <tr>
+                <td>QA Pass Rate</td>
+                <td>≥95%</td>
+                <td>Reporte QA firmado por Daniel</td>
+              </tr>
+              <tr>
+                <td>Demo al cliente</td>
+                <td>Completada</td>
+                <td>Presentación + feedback registrado</td>
+              </tr>
+              <tr>
+                <td>Infraestructura</td>
+                <td>100% Datadicoco</td>
+                <td>Acceso plataforma original cortado</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <div class="confidential">
+      Este roadmap ha sido elaborado específicamente para Datadicoco y es de carácter confidencial.
+    </div>
+
+    <footer class="footer">
+      <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
+        <img
+          src="https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png"
+          alt="IA Operators"
+          style="height: 40px; margin-bottom: 1.25rem; display: inline-block; opacity: 0.9;"
+        />
+      </a>
+      <div style="width: 40px; height: 2px; background: var(--primary); margin: 0 auto 1rem; border-radius: 2px;"></div>
+      <p class="footer-disclaimer">
+        Elaborado por IA Operators · Luiz Fernando Brazão · Mayo 2026
+      </p>
+    </footer>
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.08 },
+      );
+      document
+        .querySelectorAll(".fade-in")
+        .forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>

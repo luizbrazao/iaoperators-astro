@@ -1,0 +1,545 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const title = "Datadicoco Roadmap - Unified Chatbot Platform";
+const description = "Real-time tracking of the Datadicoco project roadmap. Unified chatbot platform with AI. May-June 2026.";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Project",
+  name: "Datadicoco - Unified Chatbot Platform",
+  description: "Centralized management system for multiple chatbots with call transcriptions",
+  startDate: "2026-05-26",
+  endDate: "2026-06-20",
+  client: {
+    "@type": "Organization",
+    name: "Datadicoco"
+  },
+  creator: {
+    "@type": "Organization",
+    name: "IA Operators",
+    url: "https://iaoperators.com"
+  }
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  robots="index,follow"
+  jsonLd={jsonLd}
+>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .roadmap-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .roadmap-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .roadmap-header h1 {
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .roadmap-header p {
+      font-size: 1.1em;
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
+
+    .header-info {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      font-size: 0.95em;
+      color: #6b7280;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .progress-section {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+      padding: 30px;
+      border-radius: 12px;
+      margin-bottom: 40px;
+      border: 1px solid rgba(102, 126, 234, 0.2);
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e9ecef;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      width: 0%;
+      transition: width 0.3s ease;
+      border-radius: 10px;
+    }
+
+    .legend {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      border: 1px solid #e9ecef;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9em;
+      color: #4b5563;
+    }
+
+    .legend-box {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      border: 2px solid #999;
+    }
+
+    .legend-box.not-started {
+      background: #e5e7eb;
+      border-color: #9ca3af;
+    }
+
+    .legend-box.in-progress {
+      background: #dbeafe;
+      border-color: #3b82f6;
+    }
+
+    .legend-box.completed {
+      background: #d1fae5;
+      border-color: #10b981;
+    }
+
+    .weeks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .week-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .week-card:hover {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border-color: #667eea;
+    }
+
+    .week-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      font-weight: 700;
+      font-size: 1.1em;
+    }
+
+    .week-tasks {
+      padding: 20px;
+    }
+
+    .task {
+      margin-bottom: 16px;
+      padding: 12px;
+      background: #f8f9fa;
+      border-radius: 6px;
+      border-left: 4px solid #e9ecef;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .task:hover {
+      background: #f0f1f3;
+    }
+
+    .task.completed {
+      border-left-color: #10b981;
+      background: #ecfdf5;
+    }
+
+    .task.in-progress {
+      border-left-color: #3b82f6;
+      background: #eff6ff;
+    }
+
+    .task-id {
+      display: inline-block;
+      font-weight: 700;
+      color: #667eea;
+      font-size: 0.85em;
+      margin-bottom: 4px;
+    }
+
+    .task-title {
+      font-weight: 600;
+      color: #1f2937;
+      font-size: 0.95em;
+      margin-bottom: 6px;
+    }
+
+    .task-responsible {
+      font-size: 0.85em;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .task-status {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.75em;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    .status-not-started {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .status-in-progress {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .status-completed {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .dependencies {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      padding: 20px;
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      border-radius: 8px;
+      margin-bottom: 40px;
+    }
+
+    .dependency-title {
+      font-weight: 700;
+      color: #92400e;
+      font-size: 1.05em;
+    }
+
+    .dependency-item {
+      color: #78350f;
+      font-size: 0.95em;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .roadmap-header h1 {
+        font-size: 1.8em;
+      }
+
+      .header-info {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .weeks-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .roadmap-container {
+        padding: 20px;
+      }
+    }
+  </style>
+
+  <div class="roadmap-container">
+    <div class="roadmap-header">
+      <h1>🚀 Datadicoco Roadmap</h1>
+      <p>Unified Chatbot Platform</p>
+      <div class="header-info">
+        <div class="info-item">
+          <span>📅</span>
+          <span>May – June 2026</span>
+        </div>
+        <div class="info-item">
+          <span>👥</span>
+          <span>Single Client</span>
+        </div>
+        <div class="info-item">
+          <span>🎯</span>
+          <span>4 Weeks</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-label">
+        <span>Overall Project Progress</span>
+        <span id="progress-text">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-box not-started"></div>
+        <span>Not Started</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-box in-progress"></div>
+        <span>In Progress</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-box completed"></div>
+        <span>Completed</span>
+      </div>
+    </div>
+
+    <div class="weeks-grid" id="weeks-grid"></div>
+
+    <div class="dependencies">
+      <div class="dependency-title">⚠️ Open Issues</div>
+      <div class="dependency-item">
+        <strong>Automatic Email:</strong> Pending confirmation from Daniel. Should it be included in Week 1 or postponed?
+      </div>
+      <div class="dependency-item">
+        <strong>Billing:</strong> Issue invoice of €500 per platform in Week 1. 50% of monthly maintenance for client (~€90/month) starting from final delivery.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const roadmapData = {
+      weeks: [
+        {
+          week: 1,
+          dates: "May 26-30",
+          tasks: [
+            {
+              id: "[1]",
+              title: "Activate current chatbot — change phone number",
+              responsible: "Responsible: Luiz",
+              description: "Update the configured phone number and put the bot into production.",
+              dependencies: "None — immediate quick win",
+              status: "not-started"
+            },
+            {
+              id: "[2a]",
+              title: "Access to UChat + audit of bot to migrate",
+              responsible: "Responsible: Daniel (access) → Luiz (audit)",
+              description: "Daniel provides UChat access. Luiz reviews flows, integrations, and features.",
+              dependencies: "Blocks item 2b",
+              status: "not-started"
+            },
+            {
+              id: "[5a]",
+              title: "Start migration to Datadicoco server",
+              responsible: "Responsible: Luiz + Rafa — 50/50",
+              description: "Create GitHub repository, configure project in Render, transfer code ownership.",
+              dependencies: "In parallel",
+              status: "not-started"
+            }
+          ]
+        },
+        {
+          week: 2,
+          dates: "June 2-6",
+          tasks: [
+            {
+              id: "[2b]",
+              title: "Migrate bot from UChat to own platform",
+              responsible: "Responsible: Luiz — 100%",
+              description: "Replicate audited bot: flows, responses, integrations, and connections.",
+              dependencies: "Depends on [2a]",
+              status: "not-started"
+            },
+            {
+              id: "[3a]",
+              title: "Datadicoco prepares generic bot flow",
+              responsible: "Responsible: Daniel + team",
+              description: "Design the new flow (similar to existing but more generic).",
+              dependencies: "Blocks item 3b",
+              status: "not-started"
+            },
+            {
+              id: "[4a]",
+              title: "Design callbot + transcriptions integration",
+              responsible: "Responsible: Rafa + Luiz",
+              description: "Align architecture for displaying callbots and transcriptions in the panel.",
+              dependencies: "In parallel",
+              status: "not-started"
+            }
+          ]
+        },
+        {
+          week: 3,
+          dates: "June 9-13",
+          tasks: [
+            {
+              id: "[3b]",
+              title: "Connect and integrate generic bot",
+              responsible: "Responsible: Luiz — technical integrations",
+              description: "Perform all platform connections. Testing and behavior validation.",
+              dependencies: "Depends on [3a]",
+              status: "not-started"
+            },
+            {
+              id: "[4b]",
+              title: "Implement callbots and transcriptions view",
+              responsible: "Responsible: Rafa + Luiz",
+              description: "Development of callbots section in dashboard: call history, transcriptions.",
+              dependencies: "Depends on [4a]",
+              status: "not-started"
+            },
+            {
+              id: "[5b]",
+              title: "Platform improvements — iteration 1",
+              responsible: "Responsible: Luiz + Rafa — 50/50",
+              description: "UX, performance, client permission management. Prioritize per backlog.",
+              dependencies: "In parallel",
+              status: "not-started"
+            }
+          ]
+        },
+        {
+          week: 4,
+          dates: "June 16-20",
+          tasks: [
+            {
+              id: "[✓]",
+              title: "Comprehensive QA + client demo",
+              responsible: "Responsible: Daniel (presents) · Luiz (technical support)",
+              description: "End-to-end testing of 4 bots, unified panel, and transcriptions. Client demo.",
+              dependencies: "Depends on [2b], [3b], [4b]",
+              status: "not-started"
+            },
+            {
+              id: "[5c]",
+              title: "Platform 100% on Datadicoco server",
+              responsible: "Responsible: Luiz + Rafa",
+              description: "Cut access to original platform. Confirm all bots are on Datadicoco infrastructure.",
+              dependencies: "Depends on [5a] + [5b]",
+              status: "not-started"
+            }
+          ]
+        }
+      ]
+    };
+
+    // Renderizar semanas
+    const weeksGrid = document.getElementById('weeks-grid');
+    roadmapData.weeks.forEach(week => {
+      const weekCard = document.createElement('div');
+      weekCard.className = 'week-card';
+
+      let tasksHTML = '';
+      week.tasks.forEach(task => {
+        tasksHTML += `
+          <div class="task ${task.status}" onclick="toggleStatus(event)" title="Click to change status">
+            <div class="task-id">${task.id}</div>
+            <div class="task-title">${task.title}</div>
+            <div class="task-responsible">${task.responsible}</div>
+            <span class="task-status status-${task.status}">
+              ${getStatusLabel(task.status)}
+            </span>
+          </div>
+        `;
+      });
+
+      weekCard.innerHTML = `
+        <div class="week-header">Week ${week.week} — ${week.dates}</div>
+        <div class="week-tasks">
+          ${tasksHTML}
+        </div>
+      `;
+
+      weeksGrid.appendChild(weekCard);
+    });
+
+    // Función para cambiar estado
+    function toggleStatus(event) {
+      const element = event.currentTarget;
+      const statuses = ['not-started', 'in-progress', 'completed'];
+      let currentStatus = statuses.find(s => element.classList.contains(s));
+      let nextStatus = statuses[(statuses.indexOf(currentStatus) + 1) % statuses.length];
+
+      statuses.forEach(s => element.classList.remove(s));
+      element.classList.add(nextStatus);
+
+      const statusSpan = element.querySelector('.task-status');
+      statusSpan.className = `task-status status-${nextStatus}`;
+      statusSpan.textContent = getStatusLabel(nextStatus);
+
+      updateProgress();
+    }
+
+    function getStatusLabel(status) {
+      const labels = {
+        'not-started': 'Not Started',
+        'in-progress': 'In Progress',
+        'completed': 'Completed'
+      };
+      return labels[status];
+    }
+
+    // Calcular progreso
+    function updateProgress() {
+      const allTasks = document.querySelectorAll('.task');
+      const completedTasks = document.querySelectorAll('.task.completed').length;
+      const percentage = Math.round((completedTasks / allTasks.length) * 100);
+
+      document.getElementById('progress-fill').style.width = percentage + '%';
+      document.getElementById('progress-text').textContent = percentage + '%';
+    }
+
+    // Inicializar
+    updateProgress();
+  </script>
+</BaseLayout>
