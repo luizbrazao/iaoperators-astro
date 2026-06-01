@@ -1,0 +1,1789 @@
+---
+// Página de grade curricular — Desafio de 60 Dias
+---
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Grade Curricular · Desafio de 60 Dias · IA Operators</title>
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --bg-alt: #F9FAFB;
+      --surface: #FFFFFF;
+      --primary: #FF6900;
+      --primary-soft: #FFF4ED;
+      --primary-border: rgba(255, 105, 0, 0.4);
+      --text: #111827;
+      --text-muted: #6B7280;
+      --text-light: #9CA3AF;
+      --border: #E5E7EB;
+      --lab: #16A34A;
+      --lab-bg: #F0FDF4;
+      --lab-border: #86EFAC;
+      --shadow: 0 1px 4px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+    h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; line-height: 1.15; }
+    h2 { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 700; line-height: 1.2; }
+    h3 { font-size: 1.15rem; font-weight: 600; }
+    h4 { font-size: 1rem; font-weight: 600; }
+    p { color: var(--text-muted); }
+    strong { color: var(--text); }
+
+    /* NAV */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    }
+    .nav-logo { height: 40px; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text); font-size: 0.82rem; font-weight: 500; transition: color 0.2s; white-space: nowrap; }
+    .nav-links a:hover { color: var(--primary); }
+
+    /* BANNER */
+    .banner {
+      background-image: url('./propostas/banner-60-dias.jpeg');
+      background-size: cover;
+      background-position: center top;
+      width: 100%;
+      aspect-ratio: 16/5;
+      min-height: 220px;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .banner-text {
+      position: relative;
+      z-index: 1;
+      padding: 0 3rem;
+    }
+    .banner-text h2 {
+      color: white;
+      font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+    .banner-text h2 span {
+      display: block;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      font-weight: 600;
+      color: var(--primary);
+      text-shadow: none;
+      letter-spacing: 0.01em;
+      margin-bottom: 0.25rem;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 4rem 2rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-inner { max-width: 720px; margin: 0 auto; }
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    .hero h1 { color: var(--text); margin-bottom: 0.5rem; font-size: clamp(2rem, 4.5vw, 3.2rem); }
+    .hero-tagline {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+    .hero-body {
+      font-size: 0.97rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 1.25rem;
+    }
+    .hero-emphasis {
+      font-size: 1rem;
+      color: var(--text);
+      font-style: italic;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      border-left: 3px solid var(--primary);
+      padding-left: 1rem;
+    }
+    .hero-arrows {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 2rem;
+    }
+    .hero-arrows li {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .hero-arrows li::before { content: '👉'; font-size: 0.85rem; }
+    .hero-cta {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 0.85rem 2rem;
+      border-radius: 999px;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .hero-cta:hover { background: #e55e00; transform: translateY(-1px); }
+    .badge-course {
+      background: var(--primary);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* TRANSIÇÃO */
+    .transition-section { padding: 4rem 2rem; }
+    .transition-inner { max-width: 720px; margin: 0 auto; }
+    .problem-quote {
+      border-left: 4px solid var(--primary);
+      background: var(--primary-soft);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.5rem 2rem;
+      margin: 1.5rem 0;
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .problem-quote strong { color: var(--text); display: block; margin-bottom: 0.5rem; font-size: 1.05rem; }
+
+    /* BLOCOS INTRO */
+    .blocos-intro { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+    .bloco-intro-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .bloco-intro-card:hover { border-color: var(--primary-border); box-shadow: var(--shadow-md); }
+    .bloco-intro-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--primary);
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .bloco-intro-content h4 { color: var(--text); margin-bottom: 0.3rem; font-size: 1rem; }
+    .bloco-intro-content p { font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); }
+    .bloco-intro-content .check-list { list-style: none; margin-top: 0.6rem; display: flex; flex-direction: column; gap: 0.25rem; }
+    .bloco-intro-content .check-list li { font-size: 0.85rem; color: var(--text-muted); display: flex; gap: 0.5rem; }
+    .bloco-intro-content .check-list li::before { content: '✓'; color: var(--primary); font-weight: 700; flex-shrink: 0; }
+
+    /* RESULTADO */
+    .resultado-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .resultado-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--primary);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.25rem 1.25rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+    .resultado-item::before { content: '✓'; color: var(--primary); font-weight: 800; flex-shrink: 0; font-size: 1rem; }
+
+    /* CTA FINAL */
+    .cta-final {
+      background: #111827;
+      color: white;
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    .cta-final h2 { color: white; font-size: clamp(1.5rem, 3vw, 2.25rem); margin-bottom: 1rem; }
+    .cta-final p { color: rgba(255,255,255,0.65); font-size: 1rem; max-width: 560px; margin: 0 auto 0.5rem; }
+    .cta-final .cta-question { color: rgba(255,255,255,0.9); font-size: 1.05rem; font-weight: 600; margin: 1.5rem auto 2rem; max-width: 480px; line-height: 1.7; }
+    .cta-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 1rem 2.5rem;
+      border-radius: 999px;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .cta-btn:hover { background: #e55e00; transform: translateY(-2px); }
+
+    /* SECTIONS */
+    .section { padding: 4rem 2rem; }
+    .section-alt { background: var(--bg-alt); }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .section-title { color: var(--text); margin-bottom: 0.4rem; }
+    .section-subtitle { color: var(--text-muted); font-size: 0.97rem; margin-bottom: 2rem; max-width: 680px; }
+
+    /* MÉTRICAS */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .metric-card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--primary);
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+    .metric-number {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .metric-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
+
+    /* BLOCOS ACCORDION */
+    .blocos-list { display: flex; flex-direction: column; gap: 6px; margin-top: 1.5rem; }
+
+    .bloco { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); scroll-margin-top: 72px; }
+
+    .bloco-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.1rem 1.5rem;
+      background: white;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+      border: none;
+      width: 100%;
+      text-align: left;
+    }
+    .bloco-header:hover { background: var(--primary-soft); }
+    .bloco-header.open { background: var(--primary-soft); border-bottom: 1px solid var(--primary-border); }
+
+    .bloco-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--primary);
+      color: white;
+      font-size: 1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .bloco-info { flex: 1; }
+    .bloco-title { font-size: 1rem; font-weight: 700; color: var(--text); line-height: 1.3; }
+    .bloco-meta { font-size: 0.78rem; color: var(--text-muted); margin-top: 1px; }
+    .bloco-chevron { color: var(--primary); font-size: 0.75rem; transition: transform 0.2s; flex-shrink: 0; }
+    .bloco-header.open .bloco-chevron { transform: rotate(180deg); }
+
+    .bloco-body { display: none; background: white; }
+    .bloco-body.open { display: block; }
+
+    /* DIAS */
+    .dia { border-bottom: 1px solid var(--border); }
+    .dia:last-child { border-bottom: none; }
+
+    .dia-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 1.5rem 0.9rem 2rem;
+      cursor: pointer;
+      transition: background 0.12s;
+      border: none;
+      width: 100%;
+      text-align: left;
+      background: white;
+    }
+    .dia-header:hover { background: var(--bg-alt); }
+
+    .dia-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      min-width: 52px;
+      flex-shrink: 0;
+    }
+    .dia-title { flex: 1; font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+    .dia-pill {
+      font-size: 0.68rem;
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      flex-shrink: 0;
+      font-weight: 600;
+    }
+    .pill-comercial { background: #EFF6FF; color: #2563EB; }
+    .pill-tecnico { background: #FFF4ED; color: #FF6900; }
+    .pill-lab { background: var(--lab-bg); color: var(--lab); }
+    .pill-misto { background: #F5F3FF; color: #7C3AED; }
+
+    .dia-chevron { color: var(--text-light); font-size: 0.68rem; transition: transform 0.2s; flex-shrink: 0; }
+    .dia-header.open .dia-chevron { transform: rotate(180deg); color: var(--primary); }
+
+    .dia-body { display: none; padding: 0 1.5rem 1.25rem 2rem; background: white; }
+    .dia-body.open { display: block; }
+    .dia-body-inner { padding-left: calc(52px + 1rem); }
+
+    .dia-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .aulas-list { list-style: none; display: flex; flex-direction: column; gap: 0.35rem; }
+    .aula-item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .aula-item::before { content: '→'; color: var(--primary); font-weight: 700; flex-shrink: 0; }
+
+    /* LAB DAY */
+    .lab-day {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      background: var(--lab-bg);
+      border-left: 4px solid var(--lab);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 1rem 1.25rem;
+    }
+    .lab-icon { font-size: 1.4rem; flex-shrink: 0; line-height: 1; }
+    .lab-text { font-size: 0.85rem; color: #374151; line-height: 1.6; }
+    .lab-text strong { color: var(--lab); }
+
+    /* FOOTER */
+    .footer {
+      background: #111827;
+      color: var(--text-light);
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+    .footer-logo { height: 40px; margin-bottom: 1.25rem; display: inline-block; opacity: 0.9; transition: opacity 0.2s; }
+    .footer-logo:hover { opacity: 1; }
+    .footer-links { display: flex; gap: 1.75rem; justify-content: center; margin: 0.75rem 0 1.25rem; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-light); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-line { width: 40px; height: 2px; background: var(--primary); margin: 0 auto 1rem; border-radius: 2px; }
+    .footer-disclaimer { font-size: 0.78rem; color: #4B5563; }
+
+    /* FADE IN */
+    .fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .dia-body-inner { padding-left: 0; }
+    }
+
+    @media print {
+      .nav { position: static; box-shadow: none; }
+      .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .footer { background: #f3f4f6 !important; }
+      .footer * { color: #374151 !important; }
+      .fade-in { opacity: 1 !important; transform: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="nav">
+  <img src="./propostas/Logo-IAOperators.png" alt="IA Operators" class="nav-logo">
+  <ul class="nav-links">
+    <li><a href="#bloco-0">Bloco 0</a></li>
+    <li><a href="#bloco-1">Bloco 1</a></li>
+    <li><a href="#bloco-2">Bloco 2</a></li>
+    <li><a href="#bloco-3">Bloco 3</a></li>
+    <li><a href="#bloco-4">Bloco 4</a></li>
+    <li><a href="#bloco-5">Bloco 5</a></li>
+  </ul>
+</nav>
+
+<!-- BANNER -->
+<div class="banner"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">IA Operators · Desafio de 60 Dias</p>
+    <h1>Desafio de 60 Dias<br>AI Solutions Architect</h1>
+    <p class="hero-tagline">De profissional que usa IA para profissional que cria soluções com IA. Em 60 dias.</p>
+    <p class="hero-body">Sem passar meses consumindo teoria. Sem colecionar prompts que nunca saem do papel. Você vai aprender a pensar, desenhar e implementar soluções reais com Inteligência Artificial — da mesma forma que empresas estão começando a substituir tarefas inteiras por sistemas inteligentes.</p>
+    <p class="hero-emphasis">Este não é um curso sobre ferramentas. É uma transformação para se tornar um AI Solutions Architect.</p>
+    <ul class="hero-arrows">
+      <li>Da ideia à implementação.</li>
+      <li>Da curiosidade à competência.</li>
+      <li>Do "eu uso ChatGPT" ao "eu construo sistemas com IA".</li>
+    </ul>
+    <a href="#grade" class="hero-cta">QUERO VER O PLANO COMPLETO</a>
+  </div>
+</section>
+
+<!-- TRANSIÇÃO -->
+<section class="transition-section">
+  <div class="transition-inner fade-in">
+    <span class="section-label">O problema</span>
+    <h2 class="section-title">O problema não é a falta de ferramentas.<br>É a falta de método.</h2>
+    <div class="problem-quote">
+      <strong>Hoje existem centenas de ferramentas de IA.</strong>
+      ChatGPT. Claude. Perplexity. Make. n8n. Cursor. Lovable. E todos os dias surge mais uma.<br><br>
+      O resultado? A maioria das pessoas vive numa espécie de <strong>turismo tecnológico</strong>: experimenta, fica impressionada, salva um link, abandona. Repete. Mas nunca constrói nada de verdade.
+    </div>
+    <p style="font-size:0.97rem; color:var(--text-muted); line-height:1.7;">Este desafio foi criado para resolver exatamente isso. Você vai seguir um caminho estruturado durante 60 dias para desenvolver a mentalidade, as competências e os projetos que um AI Operator precisa dominar.</p>
+  </div>
+</section>
+
+<!-- O QUE ACONTECE NOS 60 DIAS -->
+<section class="section section-alt">
+  <div class="container">
+    <span class="section-label">O percurso</span>
+    <h2 class="section-title">O que acontece durante estes 60 dias?</h2>
+    <p class="section-subtitle">Não é um curso para assistir. É um percurso para executar. Cada bloco foi desenhado para criar uma evolução natural.</p>
+    <div class="blocos-intro fade-in">
+      <div class="bloco-intro-card">
+        <div class="bloco-intro-num">0</div>
+        <div class="bloco-intro-content">
+          <h4>A mudança de mentalidade</h4>
+          <p>Você deixa de ver IA como uma ferramenta isolada. E começa a enxergar sistemas. É aqui que nasce um operador.</p>
+        </div>
+      </div>
+      <div class="bloco-intro-card">
+        <div class="bloco-intro-num">1</div>
+        <div class="bloco-intro-content">
+          <h4>Fundação e Posicionamento</h4>
+          <p>Antes de construir soluções para o mercado, você precisa entender onde gerar valor.</p>
+          <ul class="check-list">
+            <li>Onde estão as oportunidades</li>
+            <li>Como identificar problemas que merecem automação</li>
+            <li>Como posicionar suas competências</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bloco-intro-card">
+        <div class="bloco-intro-num">2</div>
+        <div class="bloco-intro-content">
+          <h4>Arquitetura de Soluções</h4>
+          <p>Agora começamos a desenhar sistemas reais. Fluxos. Agentes. Automações. Processos. Tudo conectado.</p>
+        </div>
+      </div>
+      <div class="bloco-intro-card">
+        <div class="bloco-intro-num">3</div>
+        <div class="bloco-intro-content">
+          <h4>Construção</h4>
+          <p>Menos teoria. Mais implementação. Você vai transformar conceitos em soluções funcionais.</p>
+        </div>
+      </div>
+      <div class="bloco-intro-card">
+        <div class="bloco-intro-num">4</div>
+        <div class="bloco-intro-content">
+          <h4>Projetos Reais</h4>
+          <p>Porque ninguém contrata certificados. Contratam resultados. Aqui você constrói ativos que demonstram competência.</p>
+        </div>
+      </div>
+      <div class="bloco-intro-card">
+        <div class="bloco-intro-num">5</div>
+        <div class="bloco-intro-content">
+          <h4>Escala e Mercado</h4>
+          <p>O objetivo não é apenas aprender IA. É criar uma vantagem competitiva duradoura. Você termina sabendo como aplicar, apresentar e monetizar o que construiu.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTADO -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">Resultado</span>
+    <h2 class="section-title">Como você estará no Dia 60?</h2>
+    <p class="section-subtitle">Provavelmente muito diferente da pessoa que começou.</p>
+    <div class="resultado-grid fade-in">
+      <div class="resultado-item">Uma visão estratégica sobre IA</div>
+      <div class="resultado-item">Projetos implementados</div>
+      <div class="resultado-item">Processos automatizados</div>
+      <div class="resultado-item">Conhecimento aplicado</div>
+      <div class="resultado-item">Um método replicável</div>
+      <div class="resultado-item">Confiança para desenhar soluções reais</div>
+    </div>
+    <div style="max-width:620px; margin:2.5rem auto 0; text-align:center;">
+      <p style="font-size:1.05rem; color:var(--text); font-weight:600; line-height:1.7;">Mas principalmente...<br>Você deixará de ser apenas alguém que <em>usa</em> Inteligência Artificial.<br>E passará a ser alguém que <strong>cria valor com ela</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GRADE -->
+<section class="section section-alt" id="grade">
+  <div class="container">
+    <span class="section-label">Conteúdo completo</span>
+    <h2 class="section-title">Dia a dia dos 60 dias</h2>
+    <p class="section-subtitle">Clique em cada bloco para expandir os dias e aulas. 🧪 Lab Days não têm aula nova — são dias de praticar e entregar.</p>
+
+    <div class="blocos-list fade-in">
+
+      <!-- BLOCO 0 -->
+      <div class="bloco" id="bloco-0">
+        <button class="bloco-header" type="button">
+          <div class="bloco-num">0</div>
+          <div class="bloco-info">
+            <div class="bloco-title">Onboarding e Mentalidade</div>
+            <div class="bloco-meta">Dias 0–1 · 10 aulas</div>
+          </div>
+          <span class="bloco-chevron">▼</span>
+        </button>
+        <div class="bloco-body">
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 0</span>
+              <span class="dia-title">Boas-vindas e Mentalidade</span>
+              <span class="dia-pill pill-comercial">Comercial</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Configure sua mentalidade, acesse a comunidade e entenda as regras do jogo antes de começar.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Se aprende fazendo — por que a prática vem antes da teoria</li>
+                  <li class="aula-item">60 dias sem parar — comprometimento e ritmo ideal</li>
+                  <li class="aula-item">Você não está só — como usar a comunidade para acelerar</li>
+                  <li class="aula-item">Introdução às automações e IA — o panorama completo</li>
+                  <li class="aula-item">Custos de ferramentas — o que você vai precisar gastar</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 1</span>
+              <span class="dia-title">Glossários e Metodologia IA Operators</span>
+              <span class="dia-pill pill-misto">Misto</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Vocabulário mínimo e a espinha dorsal do curso explicada em 10 minutos.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Vamos dia a dia — como estruturar seu ritmo de estudo</li>
+                  <li class="aula-item">Mostre suas conquistas — o poder do progresso público</li>
+                  <li class="aula-item">Glossário de Marketing e Vendas — os termos que aparecem sempre</li>
+                  <li class="aula-item">Glossário Técnico — IA, agentes, APIs, RAG, embeddings</li>
+                  <li class="aula-item">Mentalidade IA Operator — a metodologia em 10 minutos</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- BLOCO 1 -->
+      <div class="bloco" id="bloco-1">
+        <button class="bloco-header" type="button">
+          <div class="bloco-num">1</div>
+          <div class="bloco-info">
+            <div class="bloco-title">Fundação e Posicionamento</div>
+            <div class="bloco-meta">Dias 2–11 · ~32 aulas + 1 Lab Day</div>
+          </div>
+          <span class="bloco-chevron">▼</span>
+        </button>
+        <div class="bloco-body">
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 2</span>
+              <span class="dia-title">Entendendo o mercado e seu sistema de trabalho</span>
+              <span class="dia-pill pill-comercial">Comercial</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Como PMEs funcionam e como se organizar para trabalhar com elas desde o primeiro dia.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Entenda o mercado — como PMEs tomam decisões e onde entra a IA</li>
+                  <li class="aula-item">Construa seu sistema de tarefas — produtividade real desde o dia 1</li>
+                  <li class="aula-item">Crie seu sistema no Google Drive — estrutura de pastas e docs</li>
+                  <li class="aula-item">Ativação de Ferramentas — Miro, Fathom, ChatGPT, LinkedIn</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 3</span>
+              <span class="dia-title">Setup técnico e os 3 pilares</span>
+              <span class="dia-pill pill-tecnico">Técnico</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Ambiente técnico configurado e entendimento da metodologia central: Radiografia → Roadmap → Implementação.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Introdução ao Cold Email — o canal que mais gera reuniões</li>
+                  <li class="aula-item">Setup técnico — Claude Code, Cursor, terminal e Git essencial</li>
+                  <li class="aula-item">Os 3 pilares da IA Operators — Radiografia, Roadmap, Implementação</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 4</span>
+              <span class="dia-title">Modelo de negócio e primeiros LLMs</span>
+              <span class="dia-pill pill-misto">Misto</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Defina como vai ganhar dinheiro e coloque a mão na massa com modelos de IA pela primeira vez.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Defina seu Negócio — modelo, público e proposta de valor</li>
+                  <li class="aula-item">Cold Email Parte 2 — estrutura de uma sequência eficaz</li>
+                  <li class="aula-item">ChatGPT, Claude, Gemini — quando usar cada um e por quê</li>
+                  <li class="aula-item">Hands-on: seu primeiro projeto com Claude Code</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 5</span>
+              <span class="dia-title">Nicho e mapeamento de oportunidades</span>
+              <span class="dia-pill pill-comercial">Comercial</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Escolha seu nicho de teste e aprenda a enxergar o que pode ser automatizado em qualquer empresa.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Fundamentos do nicho — por que especialização ganha</li>
+                  <li class="aula-item">Encontre seu nicho — critérios e exercício prático</li>
+                  <li class="aula-item">Nichos de IA — os mais lucrativos</li>
+                  <li class="aula-item">Framework 4×4 — como identificar dores automatizáveis</li>
+                  <li class="aula-item">Pesquisa de nicho com IA — usando Claude para mapear em escala</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 6</span>
+              <span class="dia-title">Persona e entrevistas investigativas</span>
+              <span class="dia-pill pill-comercial">Comercial</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Construa a buyer persona do seu cliente ideal e aprenda a extrair informação real em conversas.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Entenda o que você vende — posicionamento claro</li>
+                  <li class="aula-item">Construa a sua Buyer Persona — template completo</li>
+                  <li class="aula-item">Como conduzir uma entrevista de descoberta — script + template</li>
+                  <li class="aula-item">Transcrevendo e analisando conversas com IA — Fathom + Claude</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 7</span>
+              <span class="dia-title">Canvas e stack técnico mínimo</span>
+              <span class="dia-pill pill-misto">Misto</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Feche seu modelo de negócio no Canvas e domine as ferramentas que todo IA Operator precisa conhecer.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Modelo de Negócio (Canvas) — preenchimento guiado</li>
+                  <li class="aula-item">Construir uma base de dados de target</li>
+                  <li class="aula-item">O stack mínimo do IA Operator — Claude Code, n8n, Supabase, GHL</li>
+                  <li class="aula-item">Webhooks 101 — como sistemas conversam entre si</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 8</span>
+              <span class="dia-title">Oferta e catálogo de soluções</span>
+              <span class="dia-pill pill-comercial">Comercial</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Construa uma oferta que o mercado entende e um catálogo concreto do que pode vender hoje.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Construa sua Oferta Parte 1 — estrutura e diferenciação</li>
+                  <li class="aula-item">Construa sua Oferta Parte 2 — precificação e garantias</li>
+                  <li class="aula-item">Catálogo de soluções IA por área — vendas, ops, atendimento, RH, finanças</li>
+                  <li class="aula-item">5 ofertas-pacote prontas — escopo, preço e entregáveis</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 9</span>
+              <span class="dia-title">Marca pessoal, LinkedIn e GHL</span>
+              <span class="dia-pill pill-comercial">Comercial</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Perfil otimizado para atrair clientes e CRM ativo para não perder nenhuma oportunidade.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Construa sua Marca — identidade visual e mensagem</li>
+                  <li class="aula-item">Crie e otimize seu perfil LinkedIn</li>
+                  <li class="aula-item">O que é GHL — CRM para quem trabalha com IA</li>
+                  <li class="aula-item">Crie sua conta no GHL + ⚠️ alertas antes de ativar</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 10</span>
+              <span class="dia-title">Portfólio: seu primeiro caso fake-real</span>
+              <span class="dia-pill pill-tecnico">Técnico</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Crie um case de portfólio credível com Claude Code — mesmo sem um cliente real ainda.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Demo de portfólio — como construir um caso "fake-real" convincente com Claude Code</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 11</span>
+              <span class="dia-title">🧪 Lab: Revisão do Bloco 1</span>
+              <span class="dia-pill pill-lab">Lab Day</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <div class="lab-day">
+                  <span class="lab-icon">🧪</span>
+                  <span class="lab-text">Sem aula nova. <strong>Dia de executar e entregar:</strong> Nicho + Persona documentados · Oferta escrita · LinkedIn otimizado + GHL ativo · Portfólio com 1 caso publicado · Primeiras 3 mensagens de prospecção enviadas.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- BLOCO 2 -->
+      <div class="bloco" id="bloco-2">
+        <button class="bloco-header" type="button">
+          <div class="bloco-num">2</div>
+          <div class="bloco-info">
+            <div class="bloco-title">Captação e Primeiras Conversas</div>
+            <div class="bloco-meta">Dias 12–23 · ~22 aulas + 4 Lab Days</div>
+          </div>
+          <span class="bloco-chevron">▼</span>
+        </button>
+        <div class="bloco-body">
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 12</span>
+              <span class="dia-title">Prospecção e primeira automação real</span>
+              <span class="dia-pill pill-misto">Misto</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Envie suas primeiras mensagens e construa a automação de enriquecimento de leads com n8n + Claude.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Construa sua base de dados — fontes e critérios</li>
+                  <li class="aula-item">Aprenda a contactar — abordagem que gera resposta</li>
+                  <li class="aula-item">Copy efetivo para cold email — estrutura e exemplos reais</li>
+                  <li class="aula-item">Cold email com IA — personalização em escala com Claude</li>
+                  <li class="aula-item">Primeira automação real — enriquecimento de leads (n8n + Claude)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 13</span>
+              <span class="dia-title">🧪 Lab: Outreach em escala</span>
+              <span class="dia-pill pill-lab">Lab Day</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <div class="lab-day">
+                  <span class="lab-icon">🧪</span>
+                  <span class="lab-text">Sem aula nova. <strong>Dia de executar:</strong> automação de enriquecimento funcionando · +10 mensagens enviadas · print do pipeline de respostas.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 14</span>
+              <span class="dia-title">Validação, pipeline e agente de qualificação</span>
+              <span class="dia-pill pill-misto">Misto</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Escale o outreach e automatize a qualificação de leads com IA integrada ao CRM.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Valide a oferta e consiga seu primeiro cliente</li>
+                  <li class="aula-item">Sistema de vendas com IA — do lead à reunião</li>
+                  <li class="aula-item">Agente de qualificação de leads — Claude + GHL</li>
+                  <li class="aula-item">CRM com inteligência — GHL integrado com Claude via API</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 15</span>
+              <span class="dia-title">🧪 Lab: CRM e agente de qualificação</span>
+              <span class="dia-pill pill-lab">Lab Day</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <div class="lab-day">
+                  <span class="lab-icon">🧪</span>
+                  <span class="lab-text">Sem aula nova. <strong>Dia de executar:</strong> agente de qualificação configurado no GHL · primeira discovery call agendada · pipeline de vendas ativo.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 16</span>
+              <span class="dia-title">Discovery Call e Radiografia Digital</span>
+              <span class="dia-pill pill-misto">Misto</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Como conduzir reuniões de descoberta e apresentar a Radiografia Digital como serviço vendável.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Como conduzir uma reunião de descoberta — estrutura SPIN/BANT adaptada</li>
+                  <li class="aula-item">Os 5 sinais de um cliente que precisa de automação</li>
+                  <li class="aula-item">Introdução à Radiografia Digital — o que é, para que serve, como vender</li>
+                  <li class="aula-item">Hands-on: auditando seu próprio negócio</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 17</span>
+              <span class="dia-title">Inventário tecnológico do cliente</span>
+              <span class="dia-pill pill-tecnico">Técnico</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Mapeie todo o ecossistema tecnológico de uma empresa antes de propor qualquer solução.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Como mapear o ecossistema tecnológico de uma empresa</li>
+                  <li class="aula-item">Template: Inventário Digital — planilha pronta para clientes</li>
+                  <li class="aula-item">Entrevista guiada com stakeholders — script + checklist</li>
+                  <li class="aula-item">Visualizando o parque tecnológico — mapa visual em Miro</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 18</span>
+              <span class="dia-title">🧪 Lab: Inventário Digital na prática</span>
+              <span class="dia-pill pill-lab">Lab Day</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <div class="lab-day">
+                  <span class="lab-icon">🧪</span>
+                  <span class="lab-text">Sem aula nova. <strong>Dia de executar:</strong> Inventário Digital preenchido · entrevista com stakeholder simulada · mapa visual no Miro entregue.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 19</span>
+              <span class="dia-title">Custos, riscos e oportunidades</span>
+              <span class="dia-pill pill-tecnico">Técnico</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Calcule o custo real do parque tecnológico e identifique riscos invisíveis que o cliente nem sabe que tem.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Calculando o custo real — licenças, retrabalho, integrações frágeis</li>
+                  <li class="aula-item">Riscos invisíveis — bus factor, shadow IT, dependências silenciosas</li>
+                  <li class="aula-item">Mapeamento de propriedade — quem é dono de quê</li>
+                  <li class="aula-item">Caso prático: Radiografia de uma agência de marketing</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 20</span>
+              <span class="dia-title">Priorizando oportunidades de impacto</span>
+              <span class="dia-pill pill-misto">Misto</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Transforme o inventário em lista priorizada de oportunidades com ROI calculado.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Os 8 padrões de oportunidades automatizáveis — matriz visual</li>
+                  <li class="aula-item">Impacto vs Esforço — a matriz que decide o que fazer primeiro</li>
+                  <li class="aula-item">Calculando ROI de uma automação — planilha + fórmulas</li>
+                  <li class="aula-item">Hands-on: priorizando 10 oportunidades em um caso real</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 21</span>
+              <span class="dia-title">Apresentação da Radiografia ao cliente</span>
+              <span class="dia-pill pill-comercial">Comercial</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Entregue a Radiografia como deliverable profissional e conduza a reunião de devolutiva.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">A estrutura do deliverable Radiografia Digital</li>
+                  <li class="aula-item">Storytelling de auditoria — contar a verdade sem assustar</li>
+                  <li class="aula-item">Template: deck de apresentação Radiografia Digital</li>
+                  <li class="aula-item">A reunião de devolutiva — roteiro passo a passo</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dias 22–23</span>
+              <span class="dia-title">🧪 Lab: Radiografia Completa + Revisão do Bloco 2</span>
+              <span class="dia-pill pill-lab">Lab Day</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <div class="lab-day">
+                  <span class="lab-icon">🧪</span>
+                  <span class="lab-text">Sem aula nova. <strong>2 dias de execução:</strong> Radiografia completa entregue (Inventário + Custos + Matriz + Deck) · devolutiva simulada · diagnóstico comercial pessoal — mensagens enviadas, respostas recebidas, calls realizadas.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- BLOCO 3 -->
+      <div class="bloco" id="bloco-3">
+        <button class="bloco-header" type="button">
+          <div class="bloco-num">3</div>
+          <div class="bloco-info">
+            <div class="bloco-title">Roadmap + Fundamentos de Implementação</div>
+            <div class="bloco-meta">Dias 24–35 · ~22 aulas + 5 Lab Days</div>
+          </div>
+          <span class="bloco-chevron">▼</span>
+        </button>
+        <div class="bloco-body">
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 24</span>
+              <span class="dia-title">Construindo o Roadmap</span>
+              <span class="dia-pill pill-tecnico">Técnico</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Transforme a Radiografia em um plano executável que o cliente aprova e o time consegue implementar.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">De auditoria para plano — anatomia de um Roadmap IA Operators</li>
+                  <li class="aula-item">Arquitetura objetivo — desenhando o futuro do parque tecnológico</li>
+                  <li class="aula-item">Sequenciamento — o que vem antes, o que vem depois</li>
+                  <li class="aula-item">Quick wins vs. transformações estruturais</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 25</span>
+              <span class="dia-title">Estimativas e aprovação executiva</span>
+              <span class="dia-pill pill-comercial">Comercial</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Precifique cada iniciativa, calcule ROI e apresente o Roadmap de forma que o decisor diga sim.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Estimando esforço e custo de cada iniciativa</li>
+                  <li class="aula-item">Cálculo de ROI por iniciativa — planilha pronta</li>
+                  <li class="aula-item">Apresentando o Roadmap para o decisor</li>
+                  <li class="aula-item">Negociando o escopo — o que entra, o que fica para a fase 2</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 26</span>
+              <span class="dia-title">🧪 Lab: Roadmap completo simulado</span>
+              <span class="dia-pill pill-lab">Lab Day</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <div class="lab-day">
+                  <span class="lab-icon">🧪</span>
+                  <span class="lab-text">Sem aula nova. <strong>Dia de executar:</strong> Roadmap com ROI calculado · simulação de negociação de escopo · deck de apresentação entregue.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dias 27–28</span>
+              <span class="dia-title">Vibe Coding: do zero à primeira solução real</span>
+              <span class="dia-pill pill-tecnico">Técnico</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Entenda o que é vibe coding, configure o ambiente e entregue sua primeira automação ponta-a-ponta.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">O que é vibe coding — e por que mudou como construímos software</li>
+                  <li class="aula-item">Setup completo — Claude Code, Git, deploy no Cloudflare Workers</li>
+                  <li class="aula-item">Hands-on: automação completa (input → processamento → output)</li>
+                  <li class="aula-item">Boas práticas inegociáveis — tipagem, validação, idempotência</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 29</span>
+              <span class="dia-title">🧪 Lab: Vibe Coding na prática</span>
+              <span class="dia-pill pill-lab">Lab Day</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <div class="lab-day">
+                  <span class="lab-icon">🧪</span>
+                  <span class="lab-text">Sem aula nova. <strong>Dia de executar:</strong> automação construída do zero com Claude Code · deploy no Cloudflare Workers · link funcionando em produção.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 30</span>
+              <span class="dia-title">Construindo agentes com Claude</span>
+              <span class="dia-pill pill-tecnico">Técnico</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Entenda a diferença entre agente, chatbot e workflow — e crie seu primeiro agente de atendimento WhatsApp.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">O que é um agente de IA — vs. chatbot e workflow rígido</li>
+                  <li class="aula-item">Anatomia de um agente — prompt, ferramentas, memória, observabilidade</li>
+                  <li class="aula-item">Hands-on: agente de atendimento WhatsApp (Claude + Cloud API)</li>
+                  <li class="aula-item">Agente vs. workflow determinístico — quando usar cada um</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 31</span>
+              <span class="dia-title">🧪 Lab: Agente WhatsApp em produção</span>
+              <span class="dia-pill pill-lab">Lab Day</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <div class="lab-day">
+                  <span class="lab-icon">🧪</span>
+                  <span class="lab-text">Sem aula nova. <strong>Dia de executar:</strong> agente respondendo mensagens reais no WhatsApp · teste de edge cases · vídeo do agente funcionando.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 32</span>
+              <span class="dia-title">Integrações API-first</span>
+              <span class="dia-pill pill-tecnico">Técnico</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Conecte Claude com as APIs mais comuns em PMEs: Google Suite, WhatsApp e webhooks bidirecionais.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">APIs 101 — REST, autenticação, rate limits, idempotência</li>
+                  <li class="aula-item">Claude integrado com Google Sheets, Calendar e Gmail</li>
+                  <li class="aula-item">WhatsApp Cloud API — setup, templates, mensagens recebidas</li>
+                  <li class="aula-item">Webhooks bidirecionais — recebendo eventos sem se perder</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 33</span>
+              <span class="dia-title">🧪 Lab: Integrações Google Suite + WhatsApp</span>
+              <span class="dia-pill pill-lab">Lab Day</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <div class="lab-day">
+                  <span class="lab-icon">🧪</span>
+                  <span class="lab-text">Sem aula nova. <strong>Dia de executar:</strong> Claude integrado com Sheets e Gmail · webhook disparando mensagem WhatsApp · pipeline documentado.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 34</span>
+              <span class="dia-title">Estado persistente e memória</span>
+              <span class="dia-pill pill-tecnico">Técnico</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Saia do stateless — aprenda a guardar contexto entre conversas com Supabase e crie agentes com memória.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Por que estado persistente é tudo — sem ele, nada escala</li>
+                  <li class="aula-item">Supabase 101 — setup, tabelas, autenticação, Row Level Security</li>
+                  <li class="aula-item">Hands-on: agente conversacional com memória de longo prazo</li>
+                  <li class="aula-item">Convex como alternativa — quando o reativo faz diferença</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 35</span>
+              <span class="dia-title">Orquestração com n8n</span>
+              <span class="dia-pill pill-tecnico">Técnico</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Use n8n como cola entre sistemas, construa pipelines completos e faça deploy próprio em produção.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">n8n: a cola universal — quando usar e quando NÃO usar</li>
+                  <li class="aula-item">Pipeline completo — captação → qualificação → CRM → notificação</li>
+                  <li class="aula-item">n8n vs. código próprio — critério de decisão</li>
+                  <li class="aula-item">Self-hosting n8n — deploy real (Railway / Hetzner)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- BLOCO 4 -->
+      <div class="bloco" id="bloco-4">
+        <button class="bloco-header" type="button">
+          <div class="bloco-num">4</div>
+          <div class="bloco-info">
+            <div class="bloco-title">Implementação Real</div>
+            <div class="bloco-meta">Dias 36–51 · ~22 aulas + 8 Lab Days</div>
+          </div>
+          <span class="bloco-chevron">▼</span>
+        </button>
+        <div class="bloco-body">
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 36</span>
+              <span class="dia-title">🧪 Lab: n8n + Revisão técnica do Bloco 3</span>
+              <span class="dia-pill pill-lab">Lab Day</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <div class="lab-day">
+                  <span class="lab-icon">🧪</span>
+                  <span class="lab-text">Sem aula nova. <strong>Checkpoint técnico:</strong> n8n orquestrando o agente do Dia 30/31 · revisão de estado, APIs, webhooks e agentes · teste de construção sem tutorial.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 37</span>
+              <span class="dia-title">Sistemas multi-agente</span>
+              <span class="dia-pill pill-tecnico">Técnico</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Quando 1 agente não basta — aprenda a orquestrar múltiplos agentes especializados.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Quando 1 agente não basta — o caso multi-agente</li>
+                  <li class="aula-item">Padrões: orquestrador, coordenador, especialistas</li>
+                  <li class="aula-item">Hands-on: sistema com 3 agentes (vendedor + qualificador + agendador)</li>
+                  <li class="aula-item">Trade-offs — complexidade vs. capacidade</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 38</span>
+              <span class="dia-title">🧪 Lab: Multi-agente funcionando</span>
+              <span class="dia-pill pill-lab">Lab Day</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <div class="lab-day">
+                  <span class="lab-icon">🧪</span>
+                  <span class="lab-text">Sem aula nova. <strong>Dia de executar:</strong> 3 agentes colaborando · simulação de conversa completa de vendas · diagrama da arquitetura entregue.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 39</span>
+              <span class="dia-title">Observabilidade e logs</span>
+              <span class="dia-pill pill-tecnico">Técnico</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Sem observabilidade você está cego em produção — logs, traces e alertas sem complicar.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Por que sem observabilidade você está cego</li>
+                  <li class="aula-item">Logs estruturados, traces, métricas — sem complicar</li>
+                  <li class="aula-item">Dashboard de operação no Supabase + Metabase</li>
+                  <li class="aula-item">Alertas — quando o sistema te avisa que algo falhou</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 40</span>
+              <span class="dia-title">🧪 Lab: Dashboard de operação</span>
+              <span class="dia-pill pill-lab">Lab Day</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <div class="lab-day">
+                  <span class="lab-icon">🧪</span>
+                  <span class="lab-text">Sem aula nova. <strong>Dia de executar:</strong> logs estruturados no projeto · dashboard criado · alerta de erro configurado e testado.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dias 41–42</span>
+              <span class="dia-title">Caso real: Pipeline de vendas com IA</span>
+              <span class="dia-pill pill-tecnico">Técnico</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Cenário completo — agência de marketing precisando de pipeline de vendas, do diagrama ao sistema rodando.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Cenário + arquitetura completa do sistema (diagrama)</li>
+                  <li class="aula-item">Hands-on Parte 1: lead capture + qualificação automática</li>
+                  <li class="aula-item">Hands-on Parte 2: agendamento + handoff humano + CRM</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 43</span>
+              <span class="dia-title">🧪 Lab: Pipeline de vendas end-to-end</span>
+              <span class="dia-pill pill-lab">Lab Day</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <div class="lab-day">
+                  <span class="lab-icon">🧪</span>
+                  <span class="lab-text">Sem aula nova. <strong>Dia de executar:</strong> pipeline completo · simulação de lead entrando e saindo como reunião agendada · vídeo-demo entregue.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dias 44–45</span>
+              <span class="dia-title">Caso real: Atendimento WhatsApp 24/7 com RAG</span>
+              <span class="dia-pill pill-tecnico">Técnico</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Bot de atendimento para ecommerce com base de conhecimento, RAG e escalation automático para humano.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Cenário + arquitetura: bot + RAG + escalation para humano</li>
+                  <li class="aula-item">Hands-on: bot conversacional com base de conhecimento</li>
+                  <li class="aula-item">Lidando com edge cases e os limites do bot</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 46</span>
+              <span class="dia-title">🧪 Lab: Bot WhatsApp com RAG</span>
+              <span class="dia-pill pill-lab">Lab Day</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <div class="lab-day">
+                  <span class="lab-icon">🧪</span>
+                  <span class="lab-text">Sem aula nova. <strong>Dia de executar:</strong> base de conhecimento populada · bot respondendo via WhatsApp com RAG · escalation funcionando · demo entregue.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 47</span>
+              <span class="dia-title">Caso real: Automação de operações internas</span>
+              <span class="dia-pill pill-tecnico">Técnico</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Automatize operações manuais de uma empresa de serviços — pós-venda, NPS, upsell e wiki interna.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Cenário: empresa de serviços com operações manuais</li>
+                  <li class="aula-item">Mapeando o fluxo atual em Miro (antes de automatizar)</li>
+                  <li class="aula-item">Automação de pós-venda — faturamento, NPS, upsell</li>
+                  <li class="aula-item">Wiki interna com RAG — o cliente para de fazer as mesmas perguntas</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 48</span>
+              <span class="dia-title">Deploy, monitoramento e manutenção</span>
+              <span class="dia-pill pill-tecnico">Técnico</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Tire o sistema do "funciona na minha máquina" e coloque em produção de verdade.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Checklist de pré-deploy — o que verificar antes de ir ao ar</li>
+                  <li class="aula-item">Onde deployar — Vercel, Railway, Cloudflare Workers (critério)</li>
+                  <li class="aula-item">Versionamento e rollback — sem precisar virar DevOps</li>
+                  <li class="aula-item">"Acordando às 3h da manhã" — como evitar com alertas certos</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 49</span>
+              <span class="dia-title">Entrega e onboarding do cliente</span>
+              <span class="dia-pill pill-comercial">Comercial</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Como entregar de forma profissional, treinar o cliente e definir suporte pós-entrega.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Como entregar uma solução — do sistema ao usuário final</li>
+                  <li class="aula-item">Treinando o cliente — o que ele precisa saber (e o que não precisa)</li>
+                  <li class="aula-item">Documentação que sobrevive a você</li>
+                  <li class="aula-item">Suporte pós-entrega — SLA, canais, escalation, custo</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dias 50–51</span>
+              <span class="dia-title">🧪 Lab: Entrega simulada + Projeto Final</span>
+              <span class="dia-pill pill-lab">Lab Day</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <div class="lab-day">
+                  <span class="lab-icon">🧪</span>
+                  <span class="lab-text">Sem aula nova. <strong>2 dias de execução:</strong> entrega simulada do projeto mais completo · treinamento do cliente em 30 min · documentação + SLA · início do Projeto Final (Radiografia → Roadmap → Implementação em caso real).</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- BLOCO 5 -->
+      <div class="bloco" id="bloco-5">
+        <button class="bloco-header" type="button">
+          <div class="bloco-num">5</div>
+          <div class="bloco-info">
+            <div class="bloco-title">Operação, Escala e Próximos Passos</div>
+            <div class="bloco-meta">Dias 52–59 · ~12 aulas + 2 Lab Days</div>
+          </div>
+          <span class="bloco-chevron">▼</span>
+        </button>
+        <div class="bloco-body">
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 52</span>
+              <span class="dia-title">Recorrência e escalabilidade</span>
+              <span class="dia-pill pill-comercial">Comercial</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Transforme projetos únicos em receita mensal recorrente sem virar agência tradicional.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">De projeto único para retainer mensal — a transição</li>
+                  <li class="aula-item">Empacotando ofertas SaaS-like sem virar SaaS</li>
+                  <li class="aula-item">Como cobrar — hora, projeto, retainer, performance</li>
+                  <li class="aula-item">Crescendo o time — quando e como contratar</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 53</span>
+              <span class="dia-title">🧪 Lab: Oferta recorrente estruturada</span>
+              <span class="dia-pill pill-lab">Lab Day</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <div class="lab-day">
+                  <span class="lab-icon">🧪</span>
+                  <span class="lab-text">Sem aula nova. <strong>Dia de executar:</strong> proposta de retainer para 3 clientes do nicho · cálculo da receita recorrente para 6 meses · proposta pronta para enviar.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 54</span>
+              <span class="dia-title">Portfólio final e posicionamento</span>
+              <span class="dia-pill pill-comercial">Comercial</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Portfólio com cases reais que vendem por você e posicionamento claro para o próximo nível.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Construindo seu portfólio com cases reais</li>
+                  <li class="aula-item">Como apresentar resultados em vez de entregas</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 55</span>
+              <span class="dia-title">Retrospectiva dos 60 dias</span>
+              <span class="dia-pill pill-comercial">Comercial</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Reflexão estruturada — o que mudou, o que você construiu e o que muda a partir de agora.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Você completou — o que mudou em 60 dias</li>
+                  <li class="aula-item">A comunidade IA Operators — próximos passos</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 56</span>
+              <span class="dia-title">Roadmap pessoal: do dia 61 ao dia 365</span>
+              <span class="dia-pill pill-comercial">Comercial</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Plano claro para os próximos 10 meses — as 3 alavancas que definem quem cresce mais rápido.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Roadmap pessoal: do dia 61 ao dia 365</li>
+                  <li class="aula-item">As 3 alavancas para crescer mais rápido como IA Operator</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 57</span>
+              <span class="dia-title">🎓 Projeto Final — Demo Day</span>
+              <span class="dia-pill pill-lab">Lab Day</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <div class="lab-day">
+                  <span class="lab-icon">🎓</span>
+                  <span class="lab-text">Sem aula nova. <strong>Demo Day:</strong> cada aluno apresenta seu projeto final para a comunidade (5 min) · feedback de colegas e mentor · celebração das conquistas dos 60 dias.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 58</span>
+              <span class="dia-title">Tendências e o futuro do IA Operator</span>
+              <span class="dia-pill pill-misto">Misto</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">O que vem por aí e como filtrar o hype do que realmente importa para o seu negócio.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">O que vem por aí — modelos, ferramentas, mercado</li>
+                  <li class="aula-item">Como manter-se atualizado sem se perder no hype</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dia">
+            <button class="dia-header" type="button">
+              <span class="dia-tag">Dia 59</span>
+              <span class="dia-title">Encerramento oficial</span>
+              <span class="dia-pill pill-comercial">Comercial</span>
+              <span class="dia-chevron">▼</span>
+            </button>
+            <div class="dia-body">
+              <div class="dia-body-inner">
+                <p class="dia-desc">Certificação, encerramento e convite para os próximos programas da IA Operators.</p>
+                <ul class="aulas-list">
+                  <li class="aula-item">Você é um IA Operator — encerramento oficial e próximos passos</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <h2>Daqui a 60 dias, o tempo vai passar de qualquer forma.</h2>
+  <p>A pergunta é simples:</p>
+  <p class="cta-question">Quando ele passar...<br>Você ainda estará <em>consumindo conteúdo</em> sobre IA?<br>Ou estará <strong style="color:white">construindo soluções</strong> com ela?</p>
+  <a href="https://www.skool.com/ia-operators-hub-4762/about" target="_blank" rel="noopener" class="cta-btn">COMEÇAR O DESAFIO</a>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
+    <img src="https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png" alt="IA Operators" class="footer-logo">
+  </a>
+  <div class="footer-line"></div>
+  <div class="footer-links">
+    <a href="mailto:info@iaoperators.com">info@iaoperators.com</a>
+    <a href="https://iaoperators.com" target="_blank" rel="noopener">iaoperators.com</a>
+  </div>
+  <p class="footer-disclaimer">IA Operators · Luiz Brazão · 2026</p>
+</footer>
+
+<script>
+  // FADE IN
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+
+  // ACCORDION — event delegation
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+
+    const blocoHeader = target.closest('.bloco-header') as HTMLElement | null;
+    if (blocoHeader) {
+      const body = blocoHeader.nextElementSibling as HTMLElement;
+      const isOpen = blocoHeader.classList.contains('open');
+      blocoHeader.classList.toggle('open', !isOpen);
+      body.classList.toggle('open', !isOpen);
+      return;
+    }
+
+    const diaHeader = target.closest('.dia-header') as HTMLElement | null;
+    if (diaHeader) {
+      const body = diaHeader.nextElementSibling as HTMLElement;
+      const isOpen = diaHeader.classList.contains('open');
+      diaHeader.classList.toggle('open', !isOpen);
+      body.classList.toggle('open', !isOpen);
+    }
+  });
+</script>
+
+</body>
+</html>
