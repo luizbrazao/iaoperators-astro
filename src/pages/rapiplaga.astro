@@ -1,0 +1,845 @@
+---
+// Página de propuesta comercial — noindex,nofollow (nunca indexada pelo Google)
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Ecosistema Multi-Agente IA · RapiPlaga · IA Operators</title>
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --bg-alt: #F9FAFB;
+      --surface: #FFFFFF;
+      --primary: #FF6900;
+      --primary-soft: #FFF4ED;
+      --primary-border: rgba(255, 105, 0, 0.4);
+      --text: #111827;
+      --text-muted: #6B7280;
+      --text-light: #9CA3AF;
+      --border: #E5E7EB;
+      --risk: #DC2626;
+      --risk-bg: #FEF2F2;
+      --positive: #16A34A;
+      --positive-bg: #F0FDF4;
+      --shadow: 0 1px 4px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+    h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; line-height: 1.15; }
+    h2 { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 700; line-height: 1.2; }
+    h3 { font-size: 1.15rem; font-weight: 600; }
+    h4 { font-size: 1rem; font-weight: 600; }
+    p { color: var(--text-muted); }
+    strong { color: var(--text); }
+
+    /* NAV */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    }
+    .nav-logo { height: 40px; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text); font-size: 0.82rem; font-weight: 500; transition: color 0.2s; white-space: nowrap; }
+    .nav-links a:hover { color: var(--primary); }
+
+    /* HERO */
+    .hero {
+      background-image: url('/propostas/Capa-propostas.png');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 4rem 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      pointer-events: none;
+    }
+    .hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+    .hero h1 { color: white; margin-bottom: 1rem; }
+    .hero-subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.85); margin-bottom: 2.5rem; max-width: 720px; }
+    .hero-band {
+      background: rgba(0,0,0,0.2);
+      margin: 0 -2rem;
+      padding: 0.85rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+    .hero-band span { color: rgba(255,255,255,0.9); font-size: 0.875rem; }
+    .badge-proposal {
+      background: var(--primary);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* SECTIONS */
+    .section { padding: 4rem 2rem; }
+    .section-alt { background: var(--bg-alt); }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .section-title { color: var(--text); margin-bottom: 0.4rem; }
+    .section-subtitle { color: var(--text-muted); font-size: 0.97rem; margin-bottom: 2rem; max-width: 720px; }
+
+    /* RESUMEN EJECUTIVO */
+    .exec-summary {
+      border-left: 4px solid var(--primary);
+      background: var(--primary-soft);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 2rem 2.5rem;
+    }
+    .exec-quote {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.22rem;
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      line-height: 1.65;
+      border-bottom: 1px solid rgba(255,105,0,0.2);
+      padding-bottom: 1.25rem;
+    }
+    .exec-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .exec-bullets li { display: flex; align-items: flex-start; gap: 0.6rem; color: var(--text-muted); font-size: 0.95rem; }
+    .exec-bullets li::before { content: '→'; color: var(--primary); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+
+    /* CLIENTE / CONTEXTO */
+    .context-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+    .context-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.75rem;
+    }
+    .context-card h4 { color: var(--text); margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+    .context-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .context-card ul li { display: flex; gap: 0.55rem; font-size: 0.88rem; color: var(--text-muted); align-items: flex-start; }
+    .context-card ul li::before { content: '•'; color: var(--primary); font-weight: 700; flex-shrink: 0; }
+    .context-card p { font-size: 0.9rem; line-height: 1.6; }
+
+    /* RIESGOS / GAP */
+    .risk-cards { display: flex; flex-direction: column; gap: 1rem; }
+    .risk-card {
+      border-left: 4px solid var(--risk);
+      background: var(--risk-bg);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.25rem 1.75rem;
+    }
+    .risk-card h4 { color: var(--risk); margin-bottom: 0.35rem; font-size: 1rem; }
+    .risk-card p { color: #374151; font-size: 0.9rem; }
+
+    /* MÉTRICAS */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .metric-card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--primary);
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+    .metric-number {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .metric-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
+
+    /* MÓDULOS */
+    .modules-grid { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1.5rem; }
+    .module-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--primary);
+      padding: 1.75rem 2rem;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .module-card:hover { box-shadow: var(--shadow-md); }
+    .module-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .module-tag {
+      background: var(--primary);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      flex-shrink: 0;
+    }
+    .module-head h3 { color: var(--text); font-size: 1.15rem; }
+    .module-channel { font-size: 0.8rem; color: var(--text-muted); width: 100%; margin-top: -0.5rem; }
+    .module-features { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem 1.5rem; }
+    .module-features li { display: flex; gap: 0.55rem; font-size: 0.88rem; color: var(--text-muted); align-items: flex-start; }
+    .module-features li::before { content: '✓'; color: var(--positive); font-weight: 700; flex-shrink: 0; }
+
+    /* STACK */
+    .stack-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; background: white; border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); }
+    .stack-table th { text-align: left; padding: 0.8rem 1.25rem; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); background: var(--bg-alt); border-bottom: 2px solid var(--border); }
+    .stack-table td { padding: 0.8rem 1.25rem; font-size: 0.9rem; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+    .stack-table td:first-child { font-weight: 700; color: var(--text); white-space: nowrap; }
+    .stack-table tr:last-child td { border-bottom: none; }
+    .stack-table tr:hover td { background: var(--primary-soft); }
+
+    /* INVERSIÓN */
+    .investment-card {
+      background: var(--primary-soft);
+      border: 1px solid var(--primary-border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-top: 1.5rem;
+    }
+    .investment-table { width: 100%; border-collapse: collapse; margin: 1rem 0; background: white; border-radius: var(--radius-sm); overflow: hidden; }
+    .investment-table th { text-align: left; padding: 0.7rem 1rem; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); background: var(--bg-alt); border-bottom: 2px solid var(--border); }
+    .investment-table td { padding: 0.7rem 1rem; font-size: 0.9rem; border-bottom: 1px solid var(--border); color: var(--text); }
+    .investment-table tbody tr:last-child td { border-bottom: none; }
+    .investment-table tr:hover td { background: var(--primary-soft); }
+    .investment-table .row-total td { font-weight: 800; background: var(--primary-soft); color: var(--text); border-top: 2px solid var(--primary-border); }
+    .investment-table .row-total:hover td { background: var(--primary-soft); }
+
+    .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1.5rem; }
+    .summary-card { background: white; border: 1px solid var(--border); border-top: 3px solid var(--primary); border-radius: var(--radius); padding: 1.25rem 1rem; text-align: center; box-shadow: var(--shadow); }
+    .summary-card .amount { font-size: 1.6rem; font-weight: 800; color: var(--primary); line-height: 1.1; }
+    .summary-card .label { font-size: 0.76rem; color: var(--text-muted); margin-top: 0.3rem; }
+
+    .price-note { text-align: left; font-size: 0.82rem; color: var(--text-muted); margin-top: 1rem; line-height: 1.6; }
+    .payment-milestones {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+    }
+    .payment-milestone {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.5rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .payment-milestone .amount { font-weight: 700; color: var(--text); font-size: 1.1rem; }
+    .payment-milestone .label { font-size: 0.78rem; color: var(--text-muted); }
+    .payment-arrow { font-size: 1.5rem; color: var(--primary); font-weight: 700; }
+
+    /* ENTREGABLES — INCLUYE */
+    .include-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+    .include-col { border-radius: var(--radius); padding: 1.75rem; }
+    .include-col.yes { background: var(--positive-bg); border-left: 4px solid var(--positive); }
+    .include-col.alt { background: var(--primary-soft); border-left: 4px solid var(--primary); }
+    .include-col h3 { margin-bottom: 1rem; font-size: 1rem; }
+    .include-col.yes h3 { color: var(--positive); }
+    .include-col.alt h3 { color: var(--primary); }
+    .include-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .include-list li { display: flex; gap: 0.6rem; font-size: 0.88rem; align-items: flex-start; color: var(--text); }
+    .check-yes { color: var(--positive); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .check-alt { color: var(--primary); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* NOTA IA / SOBRE NOSOTROS */
+    .ia-note {
+      border-left: 4px solid var(--primary);
+      background: var(--primary-soft);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 2rem 2.5rem;
+      margin-top: 1.5rem;
+    }
+    .ia-note h3 { color: var(--text); margin-bottom: 1rem; }
+    .ia-note p { color: #374151; margin-bottom: 0.75rem; font-size: 0.95rem; line-height: 1.65; }
+    .ia-note p:last-child { margin-bottom: 0; }
+    .ia-note .conclusion { color: var(--primary); font-style: italic; font-weight: 500; }
+
+    .spec-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem 1.5rem; margin-top: 1.25rem; }
+    .spec-list li { display: flex; gap: 0.55rem; font-size: 0.9rem; color: #374151; align-items: flex-start; }
+    .spec-list li::before { content: '→'; color: var(--primary); font-weight: 700; flex-shrink: 0; }
+
+    /* PRÓXIMOS PASOS / CTA */
+    .steps-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow);
+      transition: border-color 0.2s;
+    }
+    .step-item:hover { border-color: var(--primary-border); }
+    .step-checkbox { font-size: 1.4rem; color: var(--primary); flex-shrink: 0; line-height: 1.4; }
+    .step-content h4 { color: var(--text); margin-bottom: 0.25rem; }
+    .step-content p { font-size: 0.88rem; }
+
+    .cta-card {
+      background: #111827;
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      text-align: center;
+      margin-top: 2rem;
+      color: white;
+    }
+    .cta-card h3 { color: white; font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .cta-card p { color: rgba(255,255,255,0.75); margin-bottom: 1.5rem; }
+    .cta-card .signer { color: var(--primary); font-weight: 600; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 600;
+      padding: 0.8rem 1.75rem;
+      border-radius: 999px;
+      transition: transform 0.15s, box-shadow 0.2s;
+    }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(255,105,0,0.35); }
+    .cta-btn.outline { background: transparent; border: 1px solid rgba(255,255,255,0.35); }
+    .cta-btn.outline:hover { background: rgba(255,255,255,0.08); box-shadow: none; }
+
+    .validity-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.55rem 1.5rem;
+      border-radius: 999px;
+      border: 1px solid var(--primary-border);
+      margin-top: 1.75rem;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: #111827;
+      color: var(--text-light);
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+    .footer-logo { height: 40px; margin-bottom: 1.25rem; display: inline-block; opacity: 0.9; transition: opacity 0.2s; }
+    .footer-logo:hover { opacity: 1; }
+    .footer-links { display: flex; gap: 1.75rem; justify-content: center; margin: 0.75rem 0 1.25rem; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-light); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-line { width: 40px; height: 2px; background: var(--primary); margin: 0 auto 1rem; border-radius: 2px; }
+    .footer-disclaimer { font-size: 0.78rem; color: #4B5563; }
+
+    /* FADE IN */
+    .fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .summary-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .summary-grid { grid-template-columns: 1fr; }
+      .context-grid { grid-template-columns: 1fr; }
+      .include-grid { grid-template-columns: 1fr; }
+      .module-features { grid-template-columns: 1fr; }
+      .spec-list { grid-template-columns: 1fr; }
+      .hero-band { flex-direction: column; align-items: flex-start; }
+      .payment-milestones { flex-direction: column; align-items: stretch; }
+      .payment-arrow { transform: rotate(90deg); text-align: center; }
+      .stack-table { display: block; overflow-x: auto; }
+    }
+
+    /* PRINT */
+    @media print {
+      .nav { position: static; box-shadow: none; }
+      .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .footer, .cta-card { background: #f3f4f6 !important; }
+      .footer *, .cta-card * { color: #374151 !important; }
+      .footer-logo { opacity: 1 !important; }
+      .fade-in { opacity: 1 !important; transform: none !important; }
+      .section { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="nav">
+  <img src="/propostas/Logo-IAOperators.png" alt="IA Operators" class="nav-logo">
+  <ul class="nav-links">
+    <li><a href="#contexto">Contexto</a></li>
+    <li><a href="#solucion">Solución</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#inversion">Presupuesto</a></li>
+    <li><a href="#entregables">Entregables</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#pasos">Siguientes pasos</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Ecosistema Multi-Agente IA<br>Automatización Integral</h1>
+    <p class="hero-subtitle">RapiPlaga · Control de Plagas en Málaga y la Costa del Sol — Ventas, Marketing y Supervisión 100% autónomos, ejecutados en local sobre Nvidia SPARK DGX</p>
+  </div>
+  <div class="hero-band">
+    <span>IA Operators · Luiz Brazão · Junio 2026 · v1.0</span>
+    <span class="badge-proposal">Propuesta Comercial</span>
+  </div>
+</section>
+
+<!-- RESUMEN EJECUTIVO -->
+<section class="section" id="resumen">
+  <div class="container">
+    <span class="section-label">Resumen ejecutivo</span>
+    <h2 class="section-title">Qué proponemos, y por qué ahora</h2>
+    <p class="section-subtitle">El diseño, desarrollo y despliegue de un ecosistema de agentes IA autónomo, llave en mano, que automatiza la captación, la prospección, la inteligencia competitiva y la supervisión — sin que ningún dato sensible salga del servidor local de RapiPlaga.</p>
+    <div class="exec-summary fade-in">
+      <p class="exec-quote">"Un lead que llega por WhatsApp a las 22h necesita una respuesta en segundos, no al día siguiente."</p>
+      <ul class="exec-bullets">
+        <li>5 módulos de agentes IA cubriendo atención al cliente, prospección B2B, inteligencia competitiva, supervisión y un cerebro central RAG</li>
+        <li>Procesamiento 100% local en el Nvidia SPARK DGX (128GB) — cumplimiento RGPD y filtrado Lista Robinson incluidos por diseño</li>
+        <li>Despliegue llave en mano en 4 semanas: 8.850 € de desarrollo + 900 €/mes de mantenimiento, con 30 días de garantía</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTEXTO Y ANÁLISIS DEL CLIENTE -->
+<section class="section section-alt" id="contexto">
+  <div class="container">
+    <span class="section-label">1 · Contexto y análisis del cliente</span>
+    <h2 class="section-title">Construida sobre su negocio real, no sobre una plantilla</h2>
+    <p class="section-subtitle">Antes de redactar esta propuesta analizamos el sitio web, la operación y el posicionamiento de RapiPlaga. Estos son los hallazgos relevantes.</p>
+    <div class="context-grid fade-in">
+      <div class="context-card">
+        <h4>🏢 Quiénes son</h4>
+        <p>Empresa de control de plagas con sede en Málaga, operando en toda la Costa del Sol: Marbella, Estepona, Fuengirola, Mijas, Torremolinos, Benalmádena, Sotogrande, Vélez-Málaga. Registrada en ROESBA (Nº 1324-AND-750), con más de 12 tipos de plaga cubiertos y enfoque tanto a particulares como B2B (hostelería, turismo, industria alimentaria, inmobiliarias, comunidades, sanidad).</p>
+      </div>
+      <div class="context-card">
+        <h4>📞 Cómo captan hoy</h4>
+        <ul>
+          <li>Formulario de presupuesto en la web</li>
+          <li>WhatsApp directo +34 604 88 31 80 (sin chatbot)</li>
+          <li>Teléfono fijo +34 951 25 00 52</li>
+          <li>Email info@rapiplaga.com</li>
+          <li>Facebook y páginas SEO por ciudad</li>
+        </ul>
+      </div>
+      <div class="context-card">
+        <h4>⚠️ Lo que hoy no existe</h4>
+        <ul>
+          <li>Ninguna automatización de respuestas en WhatsApp</li>
+          <li>Ningún sistema de cualificación de leads</li>
+          <li>Ningún pipeline de follow-up</li>
+          <li>Ningún agente de prospección activa</li>
+        </ul>
+        <p style="margin-top:0.75rem"><strong>Todos los contactos entrantes se gestionan manualmente.</strong></p>
+      </div>
+      <div class="context-card">
+        <h4>📈 La oportunidad</h4>
+        <p>El sector de control de plagas en España mueve ≈497 M€/año (2025) y crece al 5,6% anual hacia los 857 M€ en 2035. EXPOCIDA 2026 ya situó la IA como eje de la evolución del sector, pero la mayoría de empresas sigue operando de forma totalmente manual. RapiPlaga atiende emergencias en menos de 2h, 12h/365 — la promesa de velocidad ideal para una automatización end-to-end.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MÉTRICAS -->
+<section class="section" id="metricas">
+  <div class="container">
+    <span class="section-label">Alcance del proyecto</span>
+    <h2 class="section-title">El ecosistema en números</h2>
+    <div class="metrics-grid fade-in">
+      <div class="metric-card">
+        <div class="metric-number">5</div>
+        <div class="metric-label">Módulos de agentes IA</div>
+      </div>
+      <div class="metric-card" style="border-top-color:#2563EB">
+        <div class="metric-number" style="color:#2563EB">24/7</div>
+        <div class="metric-label">Atención automatizada en WhatsApp</div>
+      </div>
+      <div class="metric-card" style="border-top-color:#7C3AED">
+        <div class="metric-number" style="color:#7C3AED">100%</div>
+        <div class="metric-label">Procesamiento local en DGX</div>
+      </div>
+      <div class="metric-card" style="border-top-color:#059669">
+        <div class="metric-number" style="color:#059669">4</div>
+        <div class="metric-label">Semanas de desarrollo</div>
+      </div>
+      <div class="metric-card" style="border-top-color:#F59E0B">
+        <div class="metric-number" style="color:#F59E0B">2</div>
+        <div class="metric-label">Idiomas (ES + EN)</div>
+      </div>
+      <div class="metric-card" style="border-top-color:#0891B2">
+        <div class="metric-number" style="color:#0891B2">128<span style="font-size:1.2rem">GB</span></div>
+        <div class="metric-label">Memoria unificada Nvidia SPARK DGX</div>
+      </div>
+      <div class="metric-card" style="border-top-color:#DC2626">
+        <div class="metric-number" style="color:#DC2626">0</div>
+        <div class="metric-label">Datos sensibles fuera del local</div>
+      </div>
+      <div class="metric-card" style="border-top-color:#374151">
+        <div class="metric-number" style="color:#374151">30</div>
+        <div class="metric-label">Días de garantía incluidos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUCIÓN — MÓDULOS -->
+<section class="section section-alt" id="solucion">
+  <div class="container">
+    <span class="section-label">2 · Solución propuesta</span>
+    <h2 class="section-title">5 módulos · ecosistema autónomo llave en mano</h2>
+    <p class="section-subtitle">Diseño, desarrollo y despliegue ejecutados 100% en el servidor local Nvidia SPARK DGX. Ningún dato sensible de clientes abandona el entorno local.</p>
+    <div class="modules-grid fade-in">
+
+      <div class="module-card">
+        <div class="module-head">
+          <span class="module-tag">M1</span>
+          <h3>Atención al Cliente (WhatsApp AI)</h3>
+          <span class="module-channel">Canal: API Oficial de Meta (WhatsApp Business Cloud API)</span>
+        </div>
+        <ul class="module-features">
+          <li>Chatbot conversacional 24/7: responde en segundos, cualifica leads y recoge datos</li>
+          <li>Generación automática de presupuestos según tipo de plaga, superficie y zona</li>
+          <li>Validación de cliente: historial de visitas, tipo de inmueble, urgencia</li>
+          <li>Escalado inteligente a técnico humano con resumen completo del contexto</li>
+          <li>Multiidioma español e inglés (clientes internacionales en la Costa del Sol)</li>
+        </ul>
+      </div>
+
+      <div class="module-card">
+        <div class="module-head">
+          <span class="module-tag">M2</span>
+          <h3>Prospección y Ventas (Pipeline Multi-Agente)</h3>
+        </div>
+        <ul class="module-features">
+          <li><strong>Agente Scraper:</strong> extracción de leads B2B (hostelería, alojamientos, comunidades, inmobiliarias)</li>
+          <li><strong>Agente de Cumplimiento:</strong> filtrado contra Lista Robinson y verificación previa a cualquier contacto</li>
+          <li><strong>Agente Voice AI:</strong> llamadas automatizadas, gestión de objeciones y resumen post-llamada (Vapi + ElevenLabs)</li>
+          <li><strong>Agente Follow-up:</strong> envío automático de fichas técnicas y presupuestos tras cada interacción</li>
+          <li><strong>Orquestación:</strong> LangChain / CrewAI con estado persistente y registro de cada acción</li>
+        </ul>
+      </div>
+
+      <div class="module-card">
+        <div class="module-head">
+          <span class="module-tag">M3</span>
+          <h3>Inteligencia Competitiva (SEO/SEM Monitor)</h3>
+        </div>
+        <ul class="module-features">
+          <li>Monitorización del posicionamiento web de competidores en las ciudades objetivo</li>
+          <li>Detección de cambios en campañas SEM de la competencia</li>
+          <li>Alertas automáticas y recomendaciones accionables en tiempo real</li>
+          <li>Dashboard de inteligencia competitiva con histórico de variaciones</li>
+        </ul>
+      </div>
+
+      <div class="module-card">
+        <div class="module-head">
+          <span class="module-tag">M4</span>
+          <h3>Supervisión y Seguridad (Watchdog Agent)</h3>
+        </div>
+        <ul class="module-features">
+          <li>Auditoría continua: detección de alucinaciones, errores de precio o información incorrecta</li>
+          <li>Monitorización de hardware: temperatura GPU, uso de memoria, carga del DGX</li>
+          <li>Kill-switch automático ante comportamientos anómalos o caída del sistema</li>
+          <li>Alertas instantáneas por WhatsApp/email al responsable técnico</li>
+        </ul>
+      </div>
+
+      <div class="module-card">
+        <div class="module-head">
+          <span class="module-tag">M5</span>
+          <h3>Asesor Ejecutivo RAG (Cerebro Central)</h3>
+        </div>
+        <ul class="module-features">
+          <li>Agente "Asesor Ejecutivo": responde preguntas complejas del negocio en lenguaje natural</li>
+          <li>Ingesta segura de documentos internos: CSVs, Excel, PDFs, informes financieros</li>
+          <li>Procesamiento 100% local — ningún dato sensible abandona el DGX</li>
+          <li>Contextualización unificada: datos financieros, operativos y de mercado en una sola interfaz</li>
+          <li>Modelo base: Llama 3 / Qwen cuantizados, optimizados para el DGX vía vLLM</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STACK TECNOLÓGICO -->
+<section class="section" id="stack">
+  <div class="container">
+    <span class="section-label">3 · Stack tecnológico</span>
+    <h2 class="section-title">Tecnología de producción, no demos</h2>
+    <p class="section-subtitle">Cada capa elegida para fiabilidad, observabilidad y cumplimiento. Todo el procesamiento sensible corre en local sobre el DGX.</p>
+    <div class="fade-in">
+      <table class="stack-table">
+        <thead>
+          <tr><th>Capa</th><th>Tecnología y función</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Orquestación</td><td>LangChain + CrewAI — gestión de agentes, memoria y herramientas</td></tr>
+          <tr><td>Modelos LLM</td><td>Llama 3.3 70B / Qwen 2.5 72B (cuantizados Q4) vía vLLM en DGX</td></tr>
+          <tr><td>Voice AI</td><td>Vapi + ElevenLabs — llamadas de voz con voces naturales en español</td></tr>
+          <tr><td>WhatsApp</td><td>Meta Cloud API (oficial) + webhooks Node.js</td></tr>
+          <tr><td>RAG / Vectores</td><td>LangChain + ChromaDB / Weaviate — búsqueda semántica local</td></tr>
+          <tr><td>Scraping</td><td>Playwright + BeautifulSoup + proxies rotativos</td></tr>
+          <tr><td>Base de datos</td><td>PostgreSQL + Redis (caché de estado de agentes)</td></tr>
+          <tr><td>Observabilidad</td><td>LangSmith + Prometheus + Grafana — trazas, métricas, alertas</td></tr>
+          <tr><td>APIs externas</td><td>OpenAI / Anthropic (fallback cloud), ElevenLabs, Vapi</td></tr>
+          <tr><td>Infraestructura</td><td>Nvidia SPARK DGX 128GB — todo el procesamiento en local</td></tr>
+          <tr><td>Cumplimiento</td><td>Lista Robinson API + RGPD — filtrado previo a cualquier contacto</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PRESUPUESTO -->
+<section class="section section-alt" id="inversion">
+  <div class="container">
+    <span class="section-label">4 · Presupuesto</span>
+    <h2 class="section-title">Desarrollo llave en mano + mantenimiento mensual</h2>
+    <p class="section-subtitle">Dos componentes: desarrollo llave en mano (coste único) y mantenimiento continuo. El proyecto se estima en 4 semanas de desarrollo intensivo con equipo senior especializado.</p>
+    <div class="investment-card fade-in">
+      <table class="investment-table">
+        <thead>
+          <tr>
+            <th>Módulo</th>
+            <th style="text-align:right">Desarrollo</th>
+            <th style="text-align:right">Mant./mes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>M1 · WhatsApp AI + presupuestos automáticos</td><td style="text-align:right;font-weight:600">950 €</td><td style="text-align:right">180 €</td></tr>
+          <tr><td>M2 · Pipeline prospección + Voice AI</td><td style="text-align:right;font-weight:600">1.800 €</td><td style="text-align:right">180 €</td></tr>
+          <tr><td>M3 · Monitor SEO/SEM competencia</td><td style="text-align:right;font-weight:600">1.500 €</td><td style="text-align:right">180 €</td></tr>
+          <tr><td>M4 · Watchdog + Supervisión + Kill-switch</td><td style="text-align:right;font-weight:600">1.100 €</td><td style="text-align:right">180 €</td></tr>
+          <tr><td>M5 · Asesor RAG (Cerebro Central local)</td><td style="text-align:right;font-weight:600">1.500 €</td><td style="text-align:right">180 €</td></tr>
+          <tr><td>Integración, testing y despliegue en DGX</td><td style="text-align:right;font-weight:600">1.500 €</td><td style="text-align:right">—</td></tr>
+          <tr><td>Formación del equipo (sesión)</td><td style="text-align:right;font-weight:600">500 €</td><td style="text-align:right">—</td></tr>
+          <tr class="row-total"><td>TOTAL</td><td style="text-align:right">8.850 €</td><td style="text-align:right">900 €/mes</td></tr>
+        </tbody>
+      </table>
+
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="amount">8.850 €</div>
+          <div class="label">Desarrollo total</div>
+        </div>
+        <div class="summary-card">
+          <div class="amount">900 €<span style="font-size:0.9rem">/mes</span></div>
+          <div class="label">Mantenimiento mensual</div>
+        </div>
+        <div class="summary-card">
+          <div class="amount">4 sem.</div>
+          <div class="label">Duración del desarrollo</div>
+        </div>
+        <div class="summary-card">
+          <div class="amount">Inmediato</div>
+          <div class="label">Inicio posible</div>
+        </div>
+      </div>
+
+      <div class="payment-milestones">
+        <div class="payment-milestone">
+          <div class="amount">4.425 €</div>
+          <div class="label">50% al inicio del proyecto</div>
+        </div>
+        <div class="payment-arrow">→</div>
+        <div class="payment-milestone">
+          <div class="amount">4.425 €</div>
+          <div class="label">50% en la entrega</div>
+        </div>
+      </div>
+
+      <p class="price-note">
+        * Precios sin IVA. Opciones de pago fraccionado disponibles (50% inicio / 50% entrega).<br>
+        * El mantenimiento mensual incluye: soporte técnico, ajustes de prompts, actualización de scrapers, monitorización 24/7 e informes mensuales de rendimiento.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ENTREGABLES Y GARANTÍAS -->
+<section class="section" id="entregables">
+  <div class="container">
+    <span class="section-label">5 · Entregables y garantías</span>
+    <h2 class="section-title">Qué incluye cada componente</h2>
+    <div class="include-grid fade-in">
+      <div class="include-col yes">
+        <h3>✓ Incluido en el desarrollo</h3>
+        <ul class="include-list">
+          <li><span class="check-yes">✓</span> Código fuente completo y documentado del ecosistema de agentes</li>
+          <li><span class="check-yes">✓</span> Despliegue en el servidor DGX de RapiPlaga (acceso remoto acordado)</li>
+          <li><span class="check-yes">✓</span> Integración con WhatsApp Business API (Meta) y configuración del número</li>
+          <li><span class="check-yes">✓</span> Configuración de Vapi + ElevenLabs para llamadas de voz en español</li>
+          <li><span class="check-yes">✓</span> Pipeline de prospección con filtrado Lista Robinson activo</li>
+          <li><span class="check-yes">✓</span> Sistema RAG con ingesta de los documentos internos del cliente</li>
+          <li><span class="check-yes">✓</span> Dashboard de supervisión (Grafana) con métricas en tiempo real</li>
+          <li><span class="check-yes">✓</span> Sesión de formación de 4 horas para el equipo operativo</li>
+          <li><span class="check-yes">✓</span> Período de garantía post-despliegue de 30 días</li>
+        </ul>
+      </div>
+      <div class="include-col alt">
+        <h3>↻ Incluido en el mantenimiento mensual</h3>
+        <ul class="include-list">
+          <li><span class="check-alt">→</span> Soporte técnico con SLA de respuesta &lt; 4 horas en horario laboral</li>
+          <li><span class="check-alt">→</span> Actualización mensual de scrapers (adaptación a cambios de las webs fuente)</li>
+          <li><span class="check-alt">→</span> Ajuste fino de prompts y comportamiento de agentes según feedback</li>
+          <li><span class="check-alt">→</span> Monitorización proactiva del sistema y del hardware DGX</li>
+          <li><span class="check-alt">→</span> Informe mensual de métricas: leads, conversaciones, llamadas, uptime</li>
+          <li><span class="check-alt">→</span> Actualizaciones de modelos LLM cuando haya mejoras significativas</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE IA OPERATORS -->
+<section class="section section-alt" id="nosotros">
+  <div class="container">
+    <span class="section-label">6 · Sobre IA Operators</span>
+    <h2 class="section-title">Ingenieros que construyen, despliegan y mantienen</h2>
+    <div class="ia-note fade-in">
+      <h3>No hacemos demos bonitas — construimos sistemas que funcionan en producción</h3>
+      <p>IA Operators es una agencia especializada en el desarrollo de sistemas de automatización con IA aplicados a negocios reales: con estado persistente, observabilidad y tolerancia a fallos.</p>
+      <ul class="spec-list">
+        <li>Arquitectura multi-agente (LangChain, CrewAI, AutoGen, Agent SDK de Anthropic)</li>
+        <li>Integración API-first: WhatsApp Cloud API, Vapi, ElevenLabs, OpenAI, Anthropic</li>
+        <li>Voice AI para automatización de llamadas comerciales en castellano</li>
+        <li>Sistemas RAG con procesamiento 100% local para datos sensibles</li>
+        <li>Despliegue on-premise (servidores locales, GPU Nvidia)</li>
+        <li>Scraping, extracción de datos y pipelines de prospección automatizada</li>
+        <li>Observabilidad: LangSmith, Prometheus, Grafana, alertas y auditabilidad</li>
+      </ul>
+      <p class="conclusion" style="margin-top:1.25rem">→ Trabajamos con clientes que necesitan sistemas reales: no consultores que explican lo que se podría hacer, sino ingenieros que lo construyen, lo despliegan y lo mantienen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRÓXIMOS PASOS + CTA -->
+<section class="section" id="pasos">
+  <div class="container">
+    <span class="section-label">Siguientes pasos</span>
+    <h2 class="section-title">Cómo empezamos</h2>
+    <ul class="steps-list fade-in">
+      <li class="step-item">
+        <span class="step-checkbox">☐</span>
+        <div class="step-content">
+          <h4>Confirmación de la propuesta y pago del 50% inicial</h4>
+          <p>4.425 € (sin IVA) para reservar el inicio y arrancar el desarrollo intensivo de 4 semanas.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <span class="step-checkbox">☐</span>
+        <div class="step-content">
+          <h4>Acceso al DGX y briefing técnico</h4>
+          <p>Acceso remoto acordado al servidor Nvidia SPARK DGX, número de WhatsApp Business y documentos internos para la ingesta RAG.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <span class="step-checkbox">☐</span>
+        <div class="step-content">
+          <h4>Desarrollo, despliegue y formación</h4>
+          <p>Entrega del ecosistema en 4 semanas, sesión de formación de 4 horas y 30 días de garantía post-despliegue.</p>
+        </div>
+      </li>
+    </ul>
+
+    <div class="cta-card fade-in">
+      <h3>¿Hablamos?</h3>
+      <p><span class="signer">Luiz Brazão</span> — Fundador, IA Operators · Disponible para llamada o videollamada en cualquier momento.</p>
+      <div class="cta-buttons">
+        <a class="cta-btn" href="mailto:ferbrazao@gmail.com">✉ ferbrazao@gmail.com</a>
+        <a class="cta-btn outline" href="https://iaoperators.com" target="_blank" rel="noopener">iaoperators.com</a>
+      </div>
+    </div>
+
+    <div style="text-align:center">
+      <span class="validity-badge">⏱ Propuesta válida · Junio 2026 · v1.0</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
+    <img src="https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png" alt="IA Operators" class="footer-logo">
+  </a>
+  <div class="footer-line"></div>
+  <div class="footer-links">
+    <a href="mailto:info@iaoperators.com">info@iaoperators.com</a>
+    <a href="tel:+34662423523">+34 662 423 523</a>
+    <a href="https://iaoperators.com" target="_blank" rel="noopener">iaoperators.com</a>
+  </div>
+  <p class="footer-disclaimer">Elaborado por IA Operators · Luiz Brazão · Junio 2026 · Propuesta para RapiPlaga</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
