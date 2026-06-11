@@ -1,0 +1,1294 @@
+---
+// Proposta comercial Agencia Lanza — GoHighLevel · noindex,nofollow
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Configuración de Embudos y Automatizaciones en GoHighLevel · IA Operators</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --bg-alt: #f9fafb;
+        --primary: #ff6900;
+        --primary-soft: #fff4ed;
+        --primary-border: rgba(255, 105, 0, 0.4);
+        --text: #111827;
+        --text-muted: #6b7280;
+        --text-light: #9ca3af;
+        --border: #e5e7eb;
+        --positive: #16a34a;
+        --positive-bg: #f0fdf4;
+        --negative-bg: #fef2f2;
+        --negative: #dc2626;
+        --shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+        --radius: 12px;
+        --radius-sm: 8px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      h1 {
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        font-weight: 800;
+        line-height: 1.15;
+      }
+      h2 {
+        font-size: clamp(1.4rem, 2.5vw, 2rem);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      h3 {
+        font-size: 1.15rem;
+        font-weight: 600;
+      }
+      h4 {
+        font-size: 1rem;
+        font-weight: 600;
+      }
+      p {
+        color: var(--text-muted);
+      }
+      strong {
+        color: var(--text);
+      }
+
+      /* NAV */
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 56px;
+        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+      }
+      .nav-logo {
+        height: 40px;
+      }
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        list-style: none;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.82rem;
+        font-weight: 500;
+        transition: color 0.2s;
+        white-space: nowrap;
+      }
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      /* HERO */
+      .hero {
+        background-image: url("/propostas/Capa-propostas.png");
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 4rem 2rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+      .hero h1 {
+        color: white;
+        margin-bottom: 1rem;
+      }
+      .hero-subtitle {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 2.5rem;
+        max-width: 680px;
+      }
+      .hero-band {
+        background: rgba(0, 0, 0, 0.2);
+        margin: 2rem -2rem 0;
+        padding: 0.85rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .hero-band span {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.875rem;
+      }
+      .badge-proposal {
+        background: var(--primary);
+        color: white;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 0.3rem 0.9rem;
+        border-radius: 999px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      /* SECTIONS */
+      .section {
+        padding: 4rem 2rem;
+      }
+      .section-alt {
+        background: var(--bg-alt);
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .section-label {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+      .section-title {
+        color: var(--text);
+        margin-bottom: 0.4rem;
+      }
+      .section-subtitle {
+        color: var(--text-muted);
+        font-size: 0.97rem;
+        margin-bottom: 2rem;
+        max-width: 680px;
+      }
+
+      /* CALLOUT */
+      .callout {
+        border-left: 4px solid var(--primary);
+        background: var(--primary-soft);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        padding: 1.5rem 2rem;
+        margin-bottom: 2rem;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.65;
+      }
+
+      /* ARCH FLOW */
+      .arch-flow {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+      .arch-nodes {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+      }
+      .arch-node {
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .arch-node.accent {
+        background: var(--primary-soft);
+        border-color: var(--primary-border);
+        color: var(--primary);
+      }
+      .arch-arrow {
+        color: var(--text-muted);
+        font-size: 1.25rem;
+        font-weight: 700;
+      }
+      .arch-notes {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .arch-note {
+        display: flex;
+        gap: 0.6rem;
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        align-items: flex-start;
+      }
+      .arch-note strong {
+        color: var(--text);
+        flex-shrink: 0;
+      }
+      .arch-note::before {
+        content: "→";
+        color: var(--primary);
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      /* METRICS */
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .metric-card {
+        background: white;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+        border-top: 3px solid var(--primary);
+        padding: 1.5rem 1rem;
+        text-align: center;
+      }
+      .metric-number {
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: var(--primary);
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .metric-label {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        line-height: 1.4;
+      }
+
+      /* MODULE CARDS (alcance) */
+      .module-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .module-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        display: flex;
+        gap: 1.25rem;
+        align-items: flex-start;
+        transition:
+          box-shadow 0.2s,
+          border-color 0.2s;
+      }
+      .module-card:hover {
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary-border);
+      }
+      .module-num {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 3px 10px rgba(255, 105, 0, 0.3);
+      }
+      .module-body h4 {
+        color: var(--text);
+        margin-bottom: 0.35rem;
+      }
+      .module-body p {
+        font-size: 0.9rem;
+        line-height: 1.55;
+      }
+      .module-body ul {
+        list-style: none;
+        margin-top: 0.6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .module-body ul li {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        display: flex;
+        gap: 0.5rem;
+      }
+      .module-body ul li::before {
+        content: "→";
+        color: var(--primary);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      /* TIMELINE */
+      .timeline {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        position: relative;
+        margin-top: 2rem;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        top: 28px;
+        left: 56px;
+        right: 56px;
+        height: 2px;
+        background: var(--border);
+        z-index: 0;
+      }
+      .timeline-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+        padding: 0 0.5rem;
+      }
+      .timeline-node {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 14px rgba(255, 105, 0, 0.35);
+        flex-shrink: 0;
+      }
+      .timeline-node-label {
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+      .timeline-content {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1rem;
+        text-align: center;
+        width: 100%;
+      }
+      .timeline-content h4 {
+        color: var(--text);
+        font-size: 0.85rem;
+        margin-bottom: 0.3rem;
+      }
+      .timeline-content p {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        line-height: 1.45;
+      }
+      .timeline-deliverable {
+        display: inline-block;
+        background: var(--primary-soft);
+        color: var(--primary);
+        font-size: 0.68rem;
+        font-weight: 600;
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        margin-top: 0.6rem;
+      }
+
+      /* DELIVERABLES */
+      .deliverables-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+        margin-top: 1.5rem;
+      }
+      .deliverable-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        transition:
+          box-shadow 0.2s,
+          border-color 0.2s;
+      }
+      .deliverable-card:hover {
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary-border);
+      }
+      .deliverable-icon {
+        font-size: 1.75rem;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .deliverable-content h4 {
+        color: var(--text);
+        margin-bottom: 0.3rem;
+      }
+      .deliverable-content p {
+        font-size: 0.85rem;
+        line-height: 1.5;
+      }
+
+      /* INVESTMENT */
+      .price-display {
+        background: var(--primary-soft);
+        border: 1px solid var(--primary-border);
+        border-radius: var(--radius);
+        padding: 2rem;
+        text-align: center;
+        margin-top: 1.5rem;
+      }
+      .price-main {
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        font-weight: 800;
+        color: var(--primary);
+        letter-spacing: -0.03em;
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .price-sub {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+      }
+      .price-total-line {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-top: 0.5rem;
+      }
+
+      .payment-milestones {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .payment-milestone {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 1.25rem;
+        text-align: center;
+        box-shadow: var(--shadow);
+      }
+      .payment-milestone.highlight {
+        border-color: var(--primary-border);
+      }
+      .payment-milestone .pct {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+        margin-bottom: 0.4rem;
+      }
+      .payment-milestone .amount {
+        font-weight: 700;
+        font-size: 1.4rem;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.3rem;
+      }
+      .payment-milestone.highlight .amount {
+        color: var(--primary);
+      }
+      .payment-milestone .label {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        line-height: 1.4;
+      }
+
+      .tax-note {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border);
+        padding-top: 1rem;
+        margin-top: 1.5rem;
+        line-height: 1.6;
+      }
+
+      /* INCLUDE GRID */
+      .include-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+      .include-col {
+        border-radius: var(--radius);
+        padding: 1.75rem;
+      }
+      .include-col.yes {
+        background: var(--positive-bg);
+        border-left: 4px solid var(--positive);
+      }
+      .include-col.no {
+        background: var(--bg-alt);
+        border-left: 4px solid var(--text-light);
+      }
+      .include-col h3 {
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+      .include-col.yes h3 {
+        color: var(--positive);
+      }
+      .include-col.no h3 {
+        color: var(--text-muted);
+      }
+      .include-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+      }
+      .include-list li {
+        display: flex;
+        gap: 0.6rem;
+        font-size: 0.88rem;
+        align-items: flex-start;
+        color: var(--text);
+      }
+      .check-yes {
+        color: var(--positive);
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .check-no {
+        color: var(--text-light);
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+
+      /* STEPS */
+      .steps-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .step-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.25rem 1.5rem;
+        box-shadow: var(--shadow);
+        transition: border-color 0.2s;
+      }
+      .step-item:hover {
+        border-color: var(--primary-border);
+      }
+      .step-num {
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 3px 10px rgba(255, 105, 0, 0.3);
+      }
+      .step-content h4 {
+        color: var(--text);
+        margin-bottom: 0.25rem;
+      }
+      .step-content p {
+        font-size: 0.88rem;
+      }
+      .validity-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--primary-soft);
+        color: var(--primary);
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 0.55rem 1.5rem;
+        border-radius: 999px;
+        border: 1px solid var(--primary-border);
+        margin-top: 1.75rem;
+      }
+
+      /* FOOTER */
+      .footer {
+        background: #111827;
+        color: var(--text-light);
+        padding: 3rem 2rem 2rem;
+        text-align: center;
+      }
+      .footer-logo {
+        height: 40px;
+        margin-bottom: 1.25rem;
+        display: inline-block;
+        opacity: 0.9;
+        transition: opacity 0.2s;
+      }
+      .footer-logo:hover {
+        opacity: 1;
+      }
+      .footer-links {
+        display: flex;
+        gap: 1.75rem;
+        justify-content: center;
+        margin: 0.75rem 0 1.25rem;
+        flex-wrap: wrap;
+      }
+      .footer-links a {
+        color: var(--text-light);
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color 0.2s;
+      }
+      .footer-links a:hover {
+        color: var(--primary);
+      }
+      .footer-line {
+        width: 40px;
+        height: 2px;
+        background: var(--primary);
+        margin: 0 auto 1rem;
+        border-radius: 2px;
+      }
+      .footer-disclaimer {
+        font-size: 0.78rem;
+        color: #4b5563;
+      }
+
+      /* FADE IN */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(18px);
+        transition:
+          opacity 0.55s ease,
+          transform 0.55s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 960px) {
+        .metrics-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .deliverables-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .payment-milestones {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 680px) {
+        .nav-links {
+          display: none;
+        }
+        .metrics-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .deliverables-grid {
+          grid-template-columns: 1fr;
+        }
+        .include-grid {
+          grid-template-columns: 1fr;
+        }
+        .timeline {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 1.25rem;
+        }
+        .timeline::before {
+          display: none;
+        }
+        .timeline-item {
+          flex-direction: row;
+          align-items: flex-start;
+          gap: 1rem;
+          padding: 0;
+        }
+        .timeline-content {
+          text-align: left;
+          flex: 1;
+        }
+        .timeline-node {
+          margin-bottom: 0;
+        }
+        .hero-band {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .arch-nodes {
+          justify-content: flex-start;
+        }
+      }
+
+      @media print {
+        .nav {
+          position: static;
+          box-shadow: none;
+        }
+        .hero {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .footer {
+          background: #f3f4f6 !important;
+        }
+        .footer * {
+          color: #374151 !important;
+        }
+        .footer-logo {
+          opacity: 1 !important;
+        }
+        .fade-in {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+        .section {
+          padding: 2rem 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav class="nav">
+      <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
+        <img
+          src="/propostas/Logo-IAOperators.png"
+          alt="IA Operators"
+          class="nav-logo"
+        />
+      </a>
+      <ul class="nav-links">
+        <li><a href="#contexto">Contexto</a></li>
+        <li><a href="#alcance">Módulos</a></li>
+        <li><a href="#calendario">Calendario</a></li>
+        <li><a href="#entregables">Entregables</a></li>
+        <li><a href="#inversion">Inversión</a></li>
+        <li><a href="#pasos">Próximos pasos</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Configuración de Embudos<br />y Automatizaciones en GHL</h1>
+        <p class="hero-subtitle">
+          Agencia Lanza — Setup completo de GoHighLevel: funnels, workflows, integraciones y handoff en 5 días
+        </p>
+      </div>
+      <div class="hero-band">
+        <span>IA Operators · Luiz Brazão · Junio 2026</span>
+        <span class="badge-proposal">Propuesta Comercial</span>
+      </div>
+    </section>
+
+    <!-- CONTEXTO -->
+    <section class="section" id="contexto">
+      <div class="container">
+        <span class="section-label">Contexto</span>
+        <h2 class="section-title">Qué es, y qué no es, este proyecto</h2>
+        <p class="section-subtitle">
+          El trabajo es técnico y acotado: configurar GoHighLevel para que Agencia Lanza pueda captar y hacer seguimiento de leads de forma automatizada desde el primer día.
+        </p>
+
+        <div class="callout fade-in">
+          "No se diseña una estrategia de marketing ni se crean los contenidos. Se monta la infraestructura técnica dentro de GHL — funnels, pipelines, workflows y conexiones — para que esa estrategia pueda ejecutarse de forma automática."
+        </div>
+
+        <div class="arch-flow fade-in">
+          <div class="arch-nodes">
+            <div class="arch-node">Canales de entrada</div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node accent">GoHighLevel</div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node">Seguimiento automático</div>
+          </div>
+          <div class="arch-notes">
+            <div class="arch-note">
+              <strong>Canales de entrada</strong> — formularios web, Facebook Leads, Google Ads u otros puntos de captación configurados
+            </div>
+            <div class="arch-note">
+              <strong>GoHighLevel</strong> — recibe el lead, lo registra en el CRM, lo mueve por el pipeline y dispara los workflows de seguimiento automáticamente
+            </div>
+            <div class="arch-note">
+              <strong>Seguimiento automático</strong> — emails, SMS o notificaciones internas según las reglas definidas, sin intervención manual para cada lead
+            </div>
+          </div>
+        </div>
+
+        <div class="metrics-grid fade-in">
+          <div class="metric-card">
+            <div class="metric-number">5</div>
+            <div class="metric-label">Módulos de trabajo</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">5</div>
+            <div class="metric-label">Días de ejecución</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">3</div>
+            <div class="metric-label">Sprints con entrega verificable</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">0</div>
+            <div class="metric-label">Dependencias externas para arrancar</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ALCANCE -->
+    <section class="section section-alt" id="alcance">
+      <div class="container">
+        <span class="section-label">Alcance</span>
+        <h2 class="section-title">Cinco módulos de trabajo</h2>
+        <p class="section-subtitle">
+          Cada módulo tiene un entregable claro y se puede verificar de forma independiente.
+        </p>
+
+        <div class="module-list fade-in">
+          <div class="module-card">
+            <div class="module-num">1</div>
+            <div class="module-body">
+              <h4>Auditoría y Setup Inicial de GHL</h4>
+              <p>
+                Revisión del estado actual de la cuenta, configuración base y conexión de los servicios necesarios para que todo lo demás funcione correctamente.
+              </p>
+              <ul>
+                <li>Revisión de la cuenta existente o creación de subaccount</li>
+                <li>Configuración de dominio, SMTP y sender de email</li>
+                <li>Branding básico: logo, colores y datos del negocio</li>
+                <li>Verificación de integraciones activas (Twilio, Mailgun u otras)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">2</div>
+            <div class="module-body">
+              <h4>Diseño y Configuración de Embudos</h4>
+              <p>
+                Construcción de los funnels de captación dentro de GHL, con los pasos necesarios para convertir visitas en leads registrados en el CRM.
+              </p>
+              <ul>
+                <li>Landing page de captación con formulario integrado</li>
+                <li>Thank-you page o página de confirmación</li>
+                <li>Lógica de pasos del funnel (step logic y condicionales básicos)</li>
+                <li>Conexión del formulario al pipeline de CRM</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">3</div>
+            <div class="module-body">
+              <h4>Automatizaciones y Workflows</h4>
+              <p>
+                Configuración de los flujos de trabajo que se ejecutan solos cuando entra un lead: notificaciones, seguimiento y cambios de etapa en el pipeline.
+              </p>
+              <ul>
+                <li>Pipeline de CRM con etapas definidas según el proceso de venta</li>
+                <li>Workflow de bienvenida: email automático al lead al registrarse</li>
+                <li>Notificaciones internas al equipo cuando entra un lead nuevo</li>
+                <li>Reglas de seguimiento: triggers por tiempo o comportamiento</li>
+                <li>Condiciones de salida del workflow (lead cerrado, sin respuesta, etc.)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">4</div>
+            <div class="module-body">
+              <h4>Integración con Canales de Entrada</h4>
+              <p>
+                Conexión de los puntos de captación existentes con GHL para que los leads lleguen automáticamente al CRM sin intervención manual.
+              </p>
+              <ul>
+                <li>Formularios web actuales (vía webhook o script de embed)</li>
+                <li>Facebook Lead Ads si está activo (integración nativa GHL)</li>
+                <li>Google Ads si aplica (vía webhook o Zapier/Make si necesario)</li>
+                <li>Validación de que cada fuente queda etiquetada en el CRM</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">5</div>
+            <div class="module-body">
+              <h4>Testing, Handoff y Documentación</h4>
+              <p>
+                Validación completa de todos los flujos antes de la entrega, formación breve del equipo y documentación para gestión autónoma.
+              </p>
+              <ul>
+                <li>Test end-to-end de cada funnel y workflow con leads de prueba</li>
+                <li>Verificación de que los leads llegan correctamente desde cada canal</li>
+                <li>Sesión de handoff (30-45 min) para que el equipo pueda operar GHL</li>
+                <li>Documento de workflows: qué hace cada automatización y cómo editarla</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALENDARIO -->
+    <section class="section" id="calendario">
+      <div class="container">
+        <span class="section-label">Calendario</span>
+        <h2 class="section-title">5 días · 3 entregas verificables</h2>
+        <p class="section-subtitle">
+          Cada sprint produce un estado del sistema que el cliente puede revisar antes de avanzar.
+        </p>
+
+        <div class="timeline fade-in">
+          <div class="timeline-item">
+            <div class="timeline-node-label">Días 1–2</div>
+            <div class="timeline-node">1</div>
+            <div class="timeline-content">
+              <h4>Setup + Funnels</h4>
+              <p>
+                Cuenta configurada, branding aplicado, embudos construidos y conectados al CRM.
+              </p>
+              <span class="timeline-deliverable">Cuenta lista + funnels al vivo</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-node-label">Días 3–4</div>
+            <div class="timeline-node">2</div>
+            <div class="timeline-content">
+              <h4>Workflows + Integraciones</h4>
+              <p>
+                Automatizaciones activas, pipeline operativo y canales de captación conectados.
+              </p>
+              <span class="timeline-deliverable">Workflows operativos</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-node-label">Día 5</div>
+            <div class="timeline-node">3</div>
+            <div class="timeline-content">
+              <h4>Testing + Handoff</h4>
+              <p>
+                Validación end-to-end, sesión de formación y documentación entregada.
+              </p>
+              <span class="timeline-deliverable">Entrega final validada</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENTREGABLES -->
+    <section class="section section-alt" id="entregables">
+      <div class="container">
+        <span class="section-label">Entregables</span>
+        <h2 class="section-title">6 entregables verificables</h2>
+        <p class="section-subtitle">
+          Cada entregable es autónomo y verificable por el cliente de forma independiente.
+        </p>
+
+        <div class="deliverables-grid fade-in">
+          <div class="deliverable-card">
+            <div class="deliverable-icon">⚙️</div>
+            <div class="deliverable-content">
+              <h4>Cuenta GHL configurada</h4>
+              <p>
+                Setup completo: dominio, SMTP, branding y servicios conectados y verificados.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🎯</div>
+            <div class="deliverable-content">
+              <h4>Funnels de captación</h4>
+              <p>
+                Landing page + thank-you page activas y conectadas al CRM, listas para recibir tráfico.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🗂️</div>
+            <div class="deliverable-content">
+              <h4>Pipeline de CRM</h4>
+              <p>
+                Etapas definidas según el proceso de venta de la agencia, con los campos necesarios.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🤖</div>
+            <div class="deliverable-content">
+              <h4>Workflows de seguimiento</h4>
+              <p>
+                Automatizaciones activas: bienvenida, notificaciones y seguimiento por tiempo o comportamiento.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🔌</div>
+            <div class="deliverable-content">
+              <h4>Integraciones de canales</h4>
+              <p>
+                Formularios web y fuentes de pago (Facebook/Google) conectados y etiquetados en el CRM.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">📄</div>
+            <div class="deliverable-content">
+              <h4>Documentación y handoff</h4>
+              <p>
+                Guía de workflows + sesión de formación para que el equipo opere GHL de forma autónoma.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INVERSIÓN -->
+    <section class="section" id="inversion">
+      <div class="container">
+        <span class="section-label">Inversión</span>
+        <h2 class="section-title">Precio fijo · 5 días de trabajo</h2>
+        <p class="section-subtitle">
+          400 €/día × 5 días. Precio fijo: el tiempo que tome entregar correctamente los módulos acordados no genera coste adicional.
+        </p>
+
+        <div class="price-display fade-in">
+          <div class="price-main">2.000 €</div>
+          <div class="price-sub">sin IVA · precio fijo · 5 días</div>
+          <div class="price-total-line">2.420 € total con IVA (21%)</div>
+        </div>
+
+        <div class="payment-milestones fade-in">
+          <div class="payment-milestone highlight">
+            <div class="pct">Primer pago · 50%</div>
+            <div class="amount">1.210 €</div>
+            <div class="label">
+              Al inicio, tras la confirmación. Cubre setup de cuenta y construcción de funnels (Días 1–2).
+            </div>
+          </div>
+          <div class="payment-milestone">
+            <div class="pct">Pago final · 50%</div>
+            <div class="amount">1.210 €</div>
+            <div class="label">
+              Tras la entrega final validada (Día 5). Aceptado si no hay incidencias graves en 3 días naturales.
+            </div>
+          </div>
+        </div>
+
+        <div class="tax-note fade-in">
+          <strong>Nota fiscal:</strong> IVA 21% aplicable (operación entre empresas en España). Subtotal: 2.000 € + IVA 420 € = <strong>2.420 € total</strong>. Factura emitida por IA Operators · Luiz Fernando Brazão · Málaga, España. El pago final se realiza dentro de los 3 días naturales siguientes a la aceptación de la entrega.
+        </div>
+      </div>
+    </section>
+
+    <!-- INCLUYE / NO INCLUYE -->
+    <section class="section section-alt">
+      <div class="container">
+        <span class="section-label">Alcance</span>
+        <h2 class="section-title">Qué está incluido y qué no</h2>
+        <div class="include-grid fade-in">
+          <div class="include-col yes">
+            <h3>✓ Incluido</h3>
+            <ul class="include-list">
+              <li>
+                <span class="check-yes">✓</span> Setup completo de la cuenta GHL (dominio, SMTP, branding)
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Hasta 2 funnels de captación (landing + thank-you)
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Pipeline de CRM con etapas definidas
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Workflows de bienvenida, notificación y seguimiento
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Integración de hasta 3 canales de entrada
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Testing end-to-end con leads de prueba
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Sesión de handoff (30–45 min) con el equipo
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Documentación de los workflows entregada
+              </li>
+            </ul>
+          </div>
+          <div class="include-col no">
+            <h3>✗ No incluido</h3>
+            <ul class="include-list">
+              <li>
+                <span class="check-no">✗</span> Redacción de copy para emails, landing pages o secuencias
+              </li>
+              <li>
+                <span class="check-no">✗</span> Diseño gráfico o creatividades para los funnels
+              </li>
+              <li>
+                <span class="check-no">✗</span> Configuración de campañas de pago (Google Ads, Meta Ads)
+              </li>
+              <li>
+                <span class="check-no">✗</span> Funnels o workflows adicionales más allá de los acordados
+              </li>
+              <li>
+                <span class="check-no">✗</span> Mantenimiento post-entrega (contrato independiente)
+              </li>
+              <li>
+                <span class="check-no">✗</span> Licencia de GoHighLevel (coste separado, ~97–297 $/mes)
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRÓXIMOS PASOS -->
+    <section class="section" id="pasos">
+      <div class="container">
+        <span class="section-label">Próximos pasos</span>
+        <h2 class="section-title">Cómo empezamos</h2>
+        <ul class="steps-list fade-in">
+          <li class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Confirmación de la propuesta y primer pago (50%)</h4>
+              <p>
+                1.210 € (IVA incluido) para reservar las fechas de inicio. El arranque puede ser inmediato.
+              </p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Acceso a la cuenta de GoHighLevel y briefing de procesos</h4>
+              <p>
+                Credenciales de acceso a GHL, detalle del proceso de captación actual (qué canales usan, cómo gestionan los leads hoy) y cualquier asset existente (copy, formularios, flujos). Esto determina el alcance exacto del Día 1.
+              </p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Inicio del trabajo</h4>
+              <p>
+                Setup + funnels en Días 1–2, workflows + integraciones en Días 3–4, testing y handoff el Día 5. Entrega con documentación y sesión de formación incluidas.
+              </p>
+            </div>
+          </li>
+        </ul>
+        <div style="text-align:center">
+          <span class="validity-badge"
+            >⏱ Propuesta válida por 15 días · Junio 2026</span
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
+        <img
+          src="https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png"
+          alt="IA Operators"
+          class="footer-logo"
+        />
+      </a>
+      <div class="footer-line"></div>
+      <div class="footer-links">
+        <a href="mailto:info@iaoperators.com">info@iaoperators.com</a>
+        <a href="tel:+34662423523">+34 662 423 523</a>
+        <a href="https://iaoperators.com" target="_blank" rel="noopener"
+          >iaoperators.com</a
+        >
+      </div>
+      <p class="footer-disclaimer">
+        Elaborado por IA Operators · Luiz Brazão · Junio 2026
+      </p>
+    </footer>
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.08 },
+      );
+      document
+        .querySelectorAll(".fade-in")
+        .forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
