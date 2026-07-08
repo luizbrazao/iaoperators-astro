@@ -1,0 +1,731 @@
+---
+// Página de proposta comercial — noindex,nofollow (nunca indexada pelo Google)
+---
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Presença Digital + Automação com IA · Nova marca de beleza · Málaga · IA Operators</title>
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --bg-alt: #F9FAFB;
+      --surface: #FFFFFF;
+      --primary: #FF6900;
+      --primary-soft: #FFF4ED;
+      --primary-border: rgba(255, 105, 0, 0.4);
+      --text: #111827;
+      --text-muted: #6B7280;
+      --text-light: #9CA3AF;
+      --border: #E5E7EB;
+      --risk: #DC2626;
+      --risk-bg: #FEF2F2;
+      --warn: #EA580C;
+      --warn-bg: #FFF7ED;
+      --positive: #16A34A;
+      --positive-bg: #F0FDF4;
+      --shadow: 0 1px 4px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+    h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; line-height: 1.15; }
+    h2 { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 700; line-height: 1.2; }
+    h3 { font-size: 1.15rem; font-weight: 600; }
+    h4 { font-size: 1rem; font-weight: 600; }
+    p { color: var(--text-muted); }
+    strong { color: var(--text); }
+
+    /* NAV */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    }
+    .nav-logo { height: 40px; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text); font-size: 0.82rem; font-weight: 500; transition: color 0.2s; white-space: nowrap; }
+    .nav-links a:hover { color: var(--primary); }
+
+    /* HERO */
+    .hero {
+      background-image: url('/propostas/Capa-propostas.png');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 4rem 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before { content: ''; position: absolute; inset: 0; background: transparent; pointer-events: none; }
+    .hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+    .hero h1 { color: white; margin-bottom: 1rem; }
+    .hero-subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.85); margin-bottom: 2.5rem; max-width: 720px; }
+    .hero-band {
+      background: rgba(0,0,0,0.2);
+      margin: 0 -2rem;
+      padding: 0.85rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+    .hero-band span { color: rgba(255,255,255,0.9); font-size: 0.875rem; }
+    .badge-proposal {
+      background: var(--primary);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* SECTIONS */
+    .section { padding: 4rem 2rem; }
+    .section-alt { background: var(--bg-alt); }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .section-title { color: var(--text); margin-bottom: 0.4rem; }
+    .section-subtitle { color: var(--text-muted); font-size: 0.97rem; margin-bottom: 2rem; max-width: 720px; }
+
+    /* RESUMO EXECUTIVO */
+    .exec-summary {
+      border-left: 4px solid var(--primary);
+      background: var(--primary-soft);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 2rem 2.5rem;
+    }
+    .exec-quote {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.22rem;
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      line-height: 1.65;
+      border-bottom: 1px solid rgba(255,105,0,0.2);
+      padding-bottom: 1.25rem;
+    }
+    .exec-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .exec-bullets li { display: flex; align-items: flex-start; gap: 0.6rem; color: var(--text-muted); font-size: 0.95rem; }
+    .exec-bullets li::before { content: '→'; color: var(--primary); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+
+    /* DIAGNÓSTICO */
+    .risk-cards { display: flex; flex-direction: column; gap: 1rem; }
+    .risk-card {
+      border-left: 4px solid var(--risk);
+      background: var(--risk-bg);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.25rem 1.75rem;
+    }
+    .risk-card.opportunity { border-left-color: var(--positive); background: var(--positive-bg); }
+    .risk-card.opportunity h4 { color: var(--positive); }
+    .risk-card.decision { border-left-color: var(--warn); background: var(--warn-bg); }
+    .risk-card.decision h4 { color: var(--warn); }
+    .risk-card h4 { color: var(--risk); margin-bottom: 0.35rem; font-size: 1rem; }
+    .risk-card p { color: #374151; font-size: 0.9rem; }
+
+    /* MÉTRICAS */
+    .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1.5rem; }
+    .metric-card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--primary);
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+    .metric-number { font-size: 3rem; font-weight: 800; color: var(--primary); line-height: 1; margin-bottom: 0.4rem; }
+    .metric-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
+
+    /* PILARES / SERVIÇOS */
+    .pillar-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.4rem; }
+    .pillar-num {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: var(--primary); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.95rem; flex-shrink: 0;
+    }
+    .subgroup-label {
+      display: inline-block;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin: 1.75rem 0 0.9rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid var(--border);
+      width: 100%;
+    }
+    .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .service-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.4rem;
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .service-card:hover { box-shadow: var(--shadow-md); border-color: var(--primary-border); transform: translateY(-2px); }
+    .service-card.flagship { border-color: var(--primary-border); background: var(--primary-soft); }
+    .service-icon { font-size: 1.5rem; margin-bottom: 0.6rem; display: block; }
+    .service-card h4 { color: var(--text); margin-bottom: 0.35rem; font-size: 1.02rem; }
+    .service-card p { font-size: 0.86rem; line-height: 1.5; }
+    .flagship-tag {
+      display: inline-block; background: var(--primary); color: white;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.2rem 0.6rem; border-radius: 999px; margin-bottom: 0.6rem;
+    }
+
+    /* TIMELINE (FASES) */
+    .timeline { display: flex; align-items: flex-start; justify-content: space-between; position: relative; margin-top: 2rem; }
+    .timeline::before { content: ''; position: absolute; top: 28px; left: 56px; right: 56px; height: 2px; background: var(--border); z-index: 0; }
+    .timeline-item { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; padding: 0 0.5rem; }
+    .timeline-node {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--primary); color: white; font-size: 1.15rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem; box-shadow: 0 4px 14px rgba(255,105,0,0.35); flex-shrink: 0;
+    }
+    .timeline-content { background: white; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1rem; text-align: center; width: 100%; }
+    .timeline-content h4 { color: var(--text); font-size: 0.9rem; margin-bottom: 0.3rem; }
+    .timeline-content p { font-size: 0.78rem; color: var(--text-muted); line-height: 1.45; }
+    .timeline-deliverable { display: inline-block; background: var(--primary-soft); color: var(--primary); font-size: 0.68rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 999px; margin-top: 0.6rem; }
+
+    /* PORTFÓLIO */
+    .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 1.5rem; }
+    .portfolio-card {
+      background: white; border: 1px solid var(--border); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 1.5rem; display: flex; flex-direction: column;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .portfolio-card:hover { box-shadow: var(--shadow-md); border-color: var(--primary-border); }
+    .portfolio-card.highlight { border-color: var(--primary-border); }
+    .portfolio-tag { display: inline-block; font-size: 0.68rem; font-weight: 600; color: var(--primary); background: var(--primary-soft); padding: 0.2rem 0.65rem; border-radius: 999px; margin-bottom: 0.75rem; align-self: flex-start; }
+    .portfolio-card h4 { color: var(--text); margin-bottom: 0.4rem; }
+    .portfolio-card p { font-size: 0.85rem; line-height: 1.5; margin-bottom: 1rem; flex-grow: 1; }
+    .portfolio-link { font-size: 0.82rem; font-weight: 600; color: var(--primary); text-decoration: none; }
+    .portfolio-link:hover { text-decoration: underline; }
+
+    /* COMO TRABALHAMOS */
+    .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 1.5rem; }
+    .work-col { border-radius: var(--radius); padding: 1.75rem; }
+    .work-col.yes { background: var(--positive-bg); border-left: 4px solid var(--positive); }
+    .work-col.no { background: var(--bg-alt); border-left: 4px solid var(--text-light); }
+    .work-col h3 { margin-bottom: 1rem; font-size: 1rem; }
+    .work-col.yes h3 { color: var(--positive); }
+    .work-col.no h3 { color: var(--text-muted); }
+    .work-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .work-list li { display: flex; gap: 0.6rem; font-size: 0.88rem; align-items: flex-start; color: var(--text); }
+    .check-yes { color: var(--positive); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .check-no { color: var(--text-light); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* NOTA IA */
+    .ia-note { border-left: 4px solid var(--primary); background: var(--primary-soft); border-radius: 0 var(--radius) var(--radius) 0; padding: 2rem 2.5rem; margin-top: 1.5rem; }
+    .ia-note h3 { color: var(--text); margin-bottom: 1rem; }
+    .ia-note p { color: #374151; margin-bottom: 0.75rem; font-size: 0.95rem; line-height: 1.65; }
+    .ia-note p:last-child { margin-bottom: 0; }
+    .ia-note .conclusion { color: var(--primary); font-style: italic; font-weight: 500; }
+
+    /* PRÓXIMOS PASSOS */
+    .steps-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+    .step-item { display: flex; align-items: flex-start; gap: 1rem; background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; box-shadow: var(--shadow); transition: border-color 0.2s; }
+    .step-item:hover { border-color: var(--primary-border); }
+    .step-checkbox { font-size: 1.4rem; color: var(--primary); flex-shrink: 0; line-height: 1.4; }
+    .step-content h4 { color: var(--text); margin-bottom: 0.25rem; }
+    .step-content p { font-size: 0.88rem; }
+    .cta-band { text-align: center; margin-top: 2rem; }
+    .cta-button {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--primary); color: white; text-decoration: none;
+      font-size: 0.95rem; font-weight: 600; padding: 0.85rem 2rem; border-radius: 999px;
+      box-shadow: 0 4px 14px rgba(255,105,0,0.35); transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,105,0,0.45); }
+    .validity-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--primary-soft); color: var(--primary);
+      font-size: 0.85rem; font-weight: 600; padding: 0.55rem 1.5rem;
+      border-radius: 999px; border: 1px solid var(--primary-border); margin-top: 1.25rem;
+    }
+
+    /* FOOTER */
+    .footer { background: #111827; color: var(--text-light); padding: 3rem 2rem 2rem; text-align: center; }
+    .footer-logo { height: 40px; margin-bottom: 1.25rem; display: inline-block; opacity: 0.9; transition: opacity 0.2s; }
+    .footer-logo:hover { opacity: 1; }
+    .footer-links { display: flex; gap: 1.75rem; justify-content: center; margin: 0.75rem 0 1.25rem; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-light); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-line { width: 40px; height: 2px; background: var(--primary); margin: 0 auto 1rem; border-radius: 2px; }
+    .footer-disclaimer { font-size: 0.78rem; color: #4B5563; }
+
+    /* FADE IN */
+    .fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .service-grid { grid-template-columns: repeat(2, 1fr); }
+      .portfolio-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .service-grid { grid-template-columns: 1fr; }
+      .work-grid { grid-template-columns: 1fr; }
+      .timeline { flex-direction: column; align-items: stretch; gap: 1.25rem; }
+      .timeline::before { display: none; }
+      .timeline-item { flex-direction: row; align-items: flex-start; gap: 1rem; padding: 0; }
+      .timeline-content { text-align: left; flex: 1; }
+      .timeline-node { margin-bottom: 0; }
+      .hero-band { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* PRINT */
+    @media print {
+      .nav { position: static; box-shadow: none; }
+      .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .footer { background: #f3f4f6 !important; }
+      .footer * { color: #374151 !important; }
+      .footer-logo { opacity: 1 !important; }
+      .fade-in { opacity: 1 !important; transform: none !important; }
+      .section { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="nav">
+  <img src="/propostas/Logo-IAOperators.png" alt="IA Operators" class="nav-logo">
+  <ul class="nav-links">
+    <li><a href="#resumo">Resumo</a></li>
+    <li><a href="#diagnostico">Diagnóstico</a></li>
+    <li><a href="#marketing">Marketing</a></li>
+    <li><a href="#automacao">Automação IA</a></li>
+    <li><a href="#portfolio">Portfólio</a></li>
+    <li><a href="#plano">Plano</a></li>
+    <li><a href="#passos">Próximos passos</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Do zero ao topo:<br>presença digital e atendimento automatizado para a sua nova marca</h1>
+    <p class="hero-subtitle">Nova identidade com ênfase em serviços brasileiros · aquisição de clientes com marketing digital · agendamento 24/7 no WhatsApp conectado à sua agenda real.</p>
+  </div>
+  <div class="hero-band">
+    <span>IA Operators · Luiz Brazão · Julho 2026</span>
+    <span class="badge-proposal">Proposta Comercial</span>
+  </div>
+</section>
+
+<!-- RESUMO EXECUTIVO -->
+<section class="section" id="resumo">
+  <div class="container">
+    <span class="section-label">Resumo executivo</span>
+    <h2 class="section-title">O que vamos construir juntas</h2>
+    <p class="section-subtitle">Uma marca nova é uma folha em branco: dá para construir a presença digital certa desde o primeiro dia, sem herdar o passado do local.</p>
+    <div class="exec-summary fade-in">
+      <p class="exec-quote">"Não se trata só de anunciar. Trata-se de construir uma marca que aparece, atende e converte — enquanto vocês cuidam do salão."</p>
+      <ul class="exec-bullets">
+        <li>Lançar a nova marca digitalmente do zero: identidade, website e reputação própria, sem carregar o histórico da marca anterior</li>
+        <li>Trazer clientes com tráfego pago e SEO local focados no público brasileiro e nos residentes de Málaga</li>
+        <li>Atender e agendar automaticamente no WhatsApp, conectado ao sistema de reservas do salão, 24 horas por dia</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGNÓSTICO -->
+<section class="section section-alt" id="diagnostico">
+  <div class="container">
+    <span class="section-label">Ponto de partida</span>
+    <h2 class="section-title">Diagnóstico estratégico</h2>
+    <p class="section-subtitle">Antes de propor serviços, alinhamos a leitura da situação. Há uma vantagem clara e uma decisão que precisa ser tomada logo no início.</p>
+    <div class="risk-cards fade-in">
+      <div class="risk-card opportunity">
+        <h4>🟢 A reputação antiga não é de vocês — e isso é uma vantagem</h4>
+        <p>As avaliações do Google no local pertencem à marca anterior (Cocco Beauty). Vocês compraram o <strong>ponto</strong>, não o histórico. Começar com uma marca nova significa uma folha limpa: nenhuma nota antiga arrasta a percepção da nova identidade.</p>
+      </div>
+      <div class="risk-card decision">
+        <h4>🟠 Decisão crítica: herdar ou recomeçar a ficha do Google</h4>
+        <p>Renomear a ficha existente do endereço mantém a antiguidade e a localização, mas arrasta as avaliações antigas. Criar uma ficha nova zera os reviews, porém perde histórico. É uma escolha praticamente irreversível que afeta todo o SEO local — recomendamos definir isto no dia 1.</p>
+      </div>
+      <div class="risk-card">
+        <h4>🔴 Marca nova significa presença digital zero</h4>
+        <p>Sem website, sem autoridade local e sem base de seguidores, a concorrência já posicionada em Málaga leva vantagem. É preciso construir os alicerces — web, ficha, redes e conteúdo — antes de escalar a aquisição.</p>
+      </div>
+      <div class="risk-card">
+        <h4>🔴 Cada mensagem sem resposta no WhatsApp é um agendamento perdido</h4>
+        <p>Salão não tem recepção 24/7. Mensagens fora do horário, dúvidas de preço e pedidos de agendamento que demoram a ser respondidos viram receita perdida — exatamente o que a automação de atendimento resolve.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALCANCE -->
+<section class="section" id="alcance">
+  <div class="container">
+    <span class="section-label">Alcance</span>
+    <h2 class="section-title">O que colocamos à disposição</h2>
+    <div class="metrics-grid fade-in">
+      <div class="metric-card"><div class="metric-number">2</div><div class="metric-label">Pilares: Marketing + Automação IA</div></div>
+      <div class="metric-card" style="border-top-color:#2563EB"><div class="metric-number" style="color:#2563EB">3</div><div class="metric-label">Idiomas de atendimento<br>ES · PT · EN</div></div>
+      <div class="metric-card" style="border-top-color:#7C3AED"><div class="metric-number" style="color:#7C3AED">24/7</div><div class="metric-label">Atendimento e agendamento no WhatsApp</div></div>
+      <div class="metric-card" style="border-top-color:#059669"><div class="metric-number" style="color:#059669">18+</div><div class="metric-label">Serviços disponíveis, ativáveis por etapa</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PILAR 1: MARKETING DIGITAL -->
+<section class="section section-alt" id="marketing">
+  <div class="container">
+    <span class="section-label">Pilar 1</span>
+    <div class="pillar-head">
+      <span class="pillar-num">1</span>
+      <h2 class="section-title" style="margin:0">Marketing Digital &amp; Aquisição</h2>
+    </div>
+    <p class="section-subtitle">Construir a marca, colocá-la no mapa e trazer clientes de forma previsível.</p>
+
+    <span class="subgroup-label">Fundação de marca</span>
+    <div class="service-grid fade-in">
+      <div class="service-card">
+        <span class="service-icon">🌐</span>
+        <h4>Website da nova marca</h4>
+        <p>Site rápido, mobile-first e multilíngue (ES/PT), pensado para conversão e pronto para SEO desde o lançamento.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🎯</span>
+        <h4>Landing pages por serviço</h4>
+        <p>Páginas dedicadas para campanhas e promoções (ex.: alisamento brasileiro, primeira visita com desconto) que convertem melhor que a home.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">✨</span>
+        <h4>Posicionamento &amp; branding</h4>
+        <p>Apoio na construção da identidade digital da marca nova: tom de voz, mensagem central e diferencial "serviços brasileiros".</p>
+      </div>
+    </div>
+
+    <span class="subgroup-label">Aquisição paga</span>
+    <div class="service-grid fade-in">
+      <div class="service-card">
+        <span class="service-icon">📣</span>
+        <h4>Meta Ads (Instagram &amp; Facebook)</h4>
+        <p>Campanhas segmentadas ao público brasileiro e aos residentes de Málaga, com criativos e mensagens testados continuamente.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🔍</span>
+        <h4>Google Ads (Search)</h4>
+        <p>Captura de intenção de quem já procura ("peluquería brasileña Málaga", "alisado brasileño"), no momento exato da decisão.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🔁</span>
+        <h4>Retargeting</h4>
+        <p>Reimpactar quem visitou o site ou o Instagram e não agendou, com mensagens específicas para fechar a conversão.</p>
+      </div>
+    </div>
+
+    <span class="subgroup-label">Orgânico &amp; SEO local</span>
+    <div class="service-grid fade-in">
+      <div class="service-card">
+        <span class="service-icon">📍</span>
+        <h4>SEO Local + Google Business Profile</h4>
+        <p>Montar e otimizar a ficha da nova marca para aparecer no mapa e no "local pack" de Málaga — a origem de tráfego mais valiosa para um salão.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">📸</span>
+        <h4>Redes sociais &amp; conteúdo</h4>
+        <p>Calendário de publicações, criativos e conteúdo before/after para construir prova social e autoridade orgânica.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">✍️</span>
+        <h4>Copywriting</h4>
+        <p>Anúncios, bio, mensagens e e-mails alinhados ao posicionamento — a mesma voz em todos os pontos de contato.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PILAR 2: AUTOMAÇÃO & IA -->
+<section class="section" id="automacao">
+  <div class="container">
+    <span class="section-label">Pilar 2</span>
+    <div class="pillar-head">
+      <span class="pillar-num">2</span>
+      <h2 class="section-title" style="margin:0">Automação &amp; Inteligência Artificial</h2>
+    </div>
+    <p class="section-subtitle">Atender melhor, perder menos clientes e enxergar os números — sem aumentar a equipe.</p>
+
+    <span class="subgroup-label">Atendimento e agendamento</span>
+    <div class="service-grid fade-in">
+      <div class="service-card flagship">
+        <span class="flagship-tag">Carro-chefe</span>
+        <span class="service-icon">💬</span>
+        <h4>Chatbot de WhatsApp conectado ao seu sistema de reservas</h4>
+        <p>Atende, tira dúvidas e agenda 24/7 direto na sua agenda real — sem conflito de horário, com resposta em segundos e suporte multilíngue automático (ES/PT/EN).</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🤖</span>
+        <h4>Agente IA de qualificação e FAQ</h4>
+        <p>Responde na hora preços, serviços, horários e localização, e encaminha o cliente para o agendamento sem intervenção humana.</p>
+      </div>
+    </div>
+
+    <span class="subgroup-label">Retenção e receita recorrente</span>
+    <div class="service-grid fade-in">
+      <div class="service-card">
+        <span class="service-icon">⏰</span>
+        <h4>Redução de no-show</h4>
+        <p>Lembretes e confirmações automáticas antes do horário reduzem faltas e recuperam vagas ociosas na agenda.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">💫</span>
+        <h4>Reativação de clientes inativos</h4>
+        <p>Campanhas automáticas para quem não volta há X semanas, trazendo de volta clientes que já conhecem o salão.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">⭐</span>
+        <h4>Pós-atendimento &amp; geração de reviews</h4>
+        <p>Depois do serviço, o cliente recebe automaticamente o pedido de avaliação no Google e uma oferta de reagendamento — construindo a reputação da marca nova rápido.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🎁</span>
+        <h4>Programa de fidelidade automatizado</h4>
+        <p>Pontos e recompensas geridos automaticamente, incentivando a recompra sem trabalho manual da equipe.</p>
+      </div>
+    </div>
+
+    <span class="subgroup-label">Operação e dados</span>
+    <div class="service-grid fade-in">
+      <div class="service-card">
+        <span class="service-icon">🗂️</span>
+        <h4>Automação de CRM</h4>
+        <p>Leads vindos dos anúncios capturados e organizados automaticamente, sem planilhas soltas nem contatos perdidos.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">📊</span>
+        <h4>Dashboard unificado</h4>
+        <p>Receita, ocupação da agenda, custo por agendamento e ROI das campanhas num só painel — decisões baseadas em dados reais.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🔗</span>
+        <h4>Integrações sob medida</h4>
+        <p>Conectamos sistema de reservas, WhatsApp, anúncios e CRM para que a operação funcione como um fluxo único e sem retrabalho.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFÓLIO -->
+<section class="section section-alt" id="portfolio">
+  <div class="container">
+    <span class="section-label">Portfólio</span>
+    <h2 class="section-title">Já construímos isto — em produção</h2>
+    <p class="section-subtitle">Não é promessa: são sistemas reais, no ar, gerando resultado. Alguns casos do mesmo tipo de solução que propomos para vocês.</p>
+    <div class="portfolio-grid fade-in">
+      <div class="portfolio-card highlight">
+        <span class="portfolio-tag">Mesmo nicho · Salões</span>
+        <h4>ChatPlug — WhatsApp + Altegio</h4>
+        <p>Agendamento em salões e barbearias direto pelo WhatsApp, conectado à agenda real, 24/7 e multilíngue. Reservas confirmadas em segundos, sem conflitos de horário. É exatamente o tipo de chatbot que propomos ligar ao seu sistema.</p>
+        <a class="portfolio-link" href="https://iaoperators.com/es/portfolio/chatplug-whatsapp-altegio/" target="_blank" rel="noopener">Ver caso →</a>
+      </div>
+      <div class="portfolio-card">
+        <span class="portfolio-tag">Reservas · WhatsApp + n8n</span>
+        <h4>Chatbot de Reservas Turísticas</h4>
+        <p>Atendimento e reservas 24/7 com preço 100% correto e determinístico, calculado a partir de variáveis reais. Pipeline robusto de mensagens e arquitetura escalável.</p>
+        <a class="portfolio-link" href="https://iaoperators.com/es/portfolio/chatbot-reservas-turisticas-whatsapp/" target="_blank" rel="noopener">Ver caso →</a>
+      </div>
+      <div class="portfolio-card">
+        <span class="portfolio-tag">Auditoria · Multi-unidade</span>
+        <h4>Radiografia Digital — Rede Hoteleira</h4>
+        <p>Auditoria tecnológica de uma cadeia de 4 hotéis: 47 aplicações inventariadas, 23% de custo SaaS reduzível e roadmap de digitalização. Capacidade de auditar operação com várias unidades.</p>
+        <a class="portfolio-link" href="https://iaoperators.com/es/portfolio/radiografia-cadena-hotelera-menorca/" target="_blank" rel="noopener">Ver caso →</a>
+      </div>
+    </div>
+    <div class="cta-band">
+      <a class="portfolio-link" href="https://youtube.com/@iaoperators" target="_blank" rel="noopener" style="font-size:0.9rem">Mais conteúdo sobre IA no canal @iaoperators →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PLANO DE TRABALHO -->
+<section class="section" id="plano">
+  <div class="container">
+    <span class="section-label">Plano de trabalho</span>
+    <h2 class="section-title">Uma sequência lógica, em 4 fases</h2>
+    <p class="section-subtitle">Cada fase constrói a base da seguinte. Vocês escolhem o ritmo e quais serviços ativar em cada etapa.</p>
+    <div class="timeline fade-in">
+      <div class="timeline-item">
+        <div class="timeline-node">1</div>
+        <div class="timeline-content">
+          <h4>Fundação</h4>
+          <p>Decisão da ficha Google, identidade digital e chatbot de WhatsApp no ar.</p>
+          <span class="timeline-deliverable">Base pronta</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-node">2</div>
+        <div class="timeline-content">
+          <h4>Presença</h4>
+          <p>Website publicado, SEO local ativo e primeiros conteúdos nas redes.</p>
+          <span class="timeline-deliverable">Marca no mapa</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-node">3</div>
+        <div class="timeline-content">
+          <h4>Aquisição</h4>
+          <p>Campanhas Meta + Google ativas, landing pages e retargeting.</p>
+          <span class="timeline-deliverable">Clientes entrando</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-node">4</div>
+        <div class="timeline-content">
+          <h4>Escala</h4>
+          <p>Reativação, fidelidade, geração de reviews e dashboard de resultados.</p>
+          <span class="timeline-deliverable">Crescimento contínuo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO TRABALHAMOS -->
+<section class="section section-alt">
+  <div class="container">
+    <span class="section-label">Como trabalhamos</span>
+    <h2 class="section-title">Modelo flexível e modular</h2>
+    <p class="section-subtitle">Vocês não precisam contratar tudo de uma vez. Montamos o escopo por etapas, segundo prioridade e ritmo do negócio.</p>
+    <div class="work-grid fade-in">
+      <div class="work-col yes">
+        <h3>✓ O que fazemos</h3>
+        <ul class="work-list">
+          <li><span class="check-yes">✓</span> Website, landing pages e SEO local da nova marca</li>
+          <li><span class="check-yes">✓</span> Gestão de campanhas de tráfego pago (Meta + Google)</li>
+          <li><span class="check-yes">✓</span> Chatbot de WhatsApp conectado ao sistema de reservas</li>
+          <li><span class="check-yes">✓</span> Automações de retenção: no-show, reativação, fidelidade, reviews</li>
+          <li><span class="check-yes">✓</span> Integrações e dashboard de resultados</li>
+          <li><span class="check-yes">✓</span> Suporte e otimização contínua</li>
+        </ul>
+      </div>
+      <div class="work-col no">
+        <h3>○ Fora do escopo digital</h3>
+        <ul class="work-list">
+          <li><span class="check-no">○</span> Verba de mídia dos anúncios (paga diretamente às plataformas)</li>
+          <li><span class="check-no">○</span> Produção fotográfica/vídeo presencial no salão</li>
+          <li><span class="check-no">○</span> Hardware, equipamentos ou pontos físicos</li>
+          <li><span class="check-no">○</span> Operação de recepção e atendimento presencial</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOTA TÉCNICA -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">Contexto técnico</span>
+    <h2 class="section-title">Por que uma abordagem IA-first faz diferença num salão</h2>
+    <div class="ia-note fade-in">
+      <h3>Cada peça alimenta a próxima</h3>
+      <p>Um salão vive de agenda cheia e de clientes que voltam. A automação ataca os dois pontos ao mesmo tempo: o chatbot responde e agenda em segundos, a qualquer hora; os lembretes reduzem faltas; o pós-atendimento pede review e reagenda; a fidelidade traz o cliente de volta. Nenhuma dessas tarefas depende de alguém lembrar de fazer.</p>
+      <p>Do lado do marketing, tráfego pago e SEO local enchem o topo do funil, e as automações garantem que esse investimento não se perca por falta de resposta. Tudo conectado, com um dashboard mostrando o que funciona e o que ajustar.</p>
+      <p class="conclusion">→ O resultado não é "um chatbot" ou "um anúncio". É uma operação digital que trabalha 24 horas por dia enquanto a equipe cuida do que importa: o cliente na cadeira.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRÓXIMOS PASSOS -->
+<section class="section section-alt" id="passos">
+  <div class="container">
+    <span class="section-label">Próximos passos</span>
+    <h2 class="section-title">Como começamos</h2>
+    <ul class="steps-list fade-in">
+      <li class="step-item">
+        <span class="step-checkbox">☐</span>
+        <div class="step-content">
+          <h4>Conversa de alinhamento (30 min)</h4>
+          <p>Entender a visão da nova marca, prioridades e definir juntos a decisão da ficha do Google.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <span class="step-checkbox">☐</span>
+        <div class="step-content">
+          <h4>Seleção do escopo inicial</h4>
+          <p>Escolher quais serviços ativar primeiro, conforme urgência e orçamento — o modelo é modular.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <span class="step-checkbox">☐</span>
+        <div class="step-content">
+          <h4>Kickoff e mãos à obra</h4>
+          <p>Começamos pela fundação: ficha Google, identidade digital e chatbot no ar, para gerar resultado desde as primeiras semanas.</p>
+        </div>
+      </li>
+    </ul>
+    <div class="cta-band">
+      <a class="cta-button" href="https://wa.me/34662423523" target="_blank" rel="noopener">Falar com o Luiz no WhatsApp ↗</a>
+      <div><span class="validity-badge">⏱ Proposta válida por 15 dias · Julho 2026</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <a href="https://iaoperators.com/pt/" target="_blank" rel="noopener">
+    <img src="https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png" alt="IA Operators" class="footer-logo">
+  </a>
+  <div class="footer-line"></div>
+  <div class="footer-links">
+    <a href="mailto:info@iaoperators.com">info@iaoperators.com</a>
+    <a href="tel:+34662423523">+34 662 423 523</a>
+    <a href="https://iaoperators.com" target="_blank" rel="noopener">iaoperators.com</a>
+    <a href="https://youtube.com/@iaoperators" target="_blank" rel="noopener">YouTube</a>
+  </div>
+  <p class="footer-disclaimer">Elaborado por IA Operators · Luiz Brazão · Julho 2026</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
