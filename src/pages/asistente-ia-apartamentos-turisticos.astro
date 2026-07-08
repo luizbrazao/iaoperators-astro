@@ -1,0 +1,1478 @@
+---
+// Propuesta comercial — Asistente IA para gestión de apartamentos turísticos vía WhatsApp · noindex,nofollow
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Asistente IA para Apartamentos Turísticos vía WhatsApp · IA Operators</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --bg-alt: #f9fafb;
+        --primary: #ff6900;
+        --primary-soft: #fff4ed;
+        --primary-border: rgba(255, 105, 0, 0.4);
+        --text: #111827;
+        --text-muted: #6b7280;
+        --text-light: #9ca3af;
+        --border: #e5e7eb;
+        --positive: #16a34a;
+        --positive-bg: #f0fdf4;
+        --negative-bg: #fef2f2;
+        --negative: #dc2626;
+        --shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+        --radius: 12px;
+        --radius-sm: 8px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      h1 {
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        font-weight: 800;
+        line-height: 1.15;
+      }
+      h2 {
+        font-size: clamp(1.4rem, 2.5vw, 2rem);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      h3 {
+        font-size: 1.15rem;
+        font-weight: 600;
+      }
+      h4 {
+        font-size: 1rem;
+        font-weight: 600;
+      }
+      p {
+        color: var(--text-muted);
+      }
+      strong {
+        color: var(--text);
+      }
+
+      /* NAV */
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 56px;
+        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+      }
+      .nav-logo {
+        height: 40px;
+      }
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        list-style: none;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.82rem;
+        font-weight: 500;
+        transition: color 0.2s;
+        white-space: nowrap;
+      }
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      /* HERO */
+      .hero {
+        background-image: url("/propostas/Capa-propostas.png");
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 4rem 2rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+      .hero h1 {
+        color: white;
+        margin-bottom: 1rem;
+      }
+      .hero-subtitle {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 2.5rem;
+        max-width: 680px;
+      }
+      .hero-band {
+        background: rgba(0, 0, 0, 0.2);
+        margin: 2rem -2rem 0;
+        padding: 0.85rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .hero-band span {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.875rem;
+      }
+      .badge-proposal {
+        background: var(--primary);
+        color: white;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 0.3rem 0.9rem;
+        border-radius: 999px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      /* SECTIONS */
+      .section {
+        padding: 4rem 2rem;
+      }
+      .section-alt {
+        background: var(--bg-alt);
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .section-label {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+      .section-title {
+        color: var(--text);
+        margin-bottom: 0.4rem;
+      }
+      .section-subtitle {
+        color: var(--text-muted);
+        font-size: 0.97rem;
+        margin-bottom: 2rem;
+        max-width: 680px;
+      }
+
+      /* CALLOUT */
+      .callout {
+        border-left: 4px solid var(--primary);
+        background: var(--primary-soft);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        padding: 1.5rem 2rem;
+        margin-bottom: 2rem;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.65;
+      }
+
+      /* ARCH FLOW */
+      .arch-flow {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+      .arch-nodes {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+      }
+      .arch-node {
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .arch-node.accent {
+        background: var(--primary-soft);
+        border-color: var(--primary-border);
+        color: var(--primary);
+      }
+      .arch-arrow {
+        color: var(--text-muted);
+        font-size: 1.25rem;
+        font-weight: 700;
+      }
+      .arch-notes {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .arch-note {
+        display: flex;
+        gap: 0.6rem;
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        align-items: flex-start;
+      }
+      .arch-note strong {
+        color: var(--text);
+        flex-shrink: 0;
+      }
+      .arch-note::before {
+        content: "→";
+        color: var(--primary);
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      /* METRICS */
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .metric-card {
+        background: white;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+        border-top: 3px solid var(--primary);
+        padding: 1.5rem 1rem;
+        text-align: center;
+      }
+      .metric-number {
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: var(--primary);
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .metric-label {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        line-height: 1.4;
+      }
+
+      /* MODULE CARDS (alcance) */
+      .module-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .module-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        display: flex;
+        gap: 1.25rem;
+        align-items: flex-start;
+        transition:
+          box-shadow 0.2s,
+          border-color 0.2s;
+      }
+      .module-card:hover {
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary-border);
+      }
+      .module-num {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 3px 10px rgba(255, 105, 0, 0.3);
+      }
+      .module-body h4 {
+        color: var(--text);
+        margin-bottom: 0.35rem;
+      }
+      .module-body p {
+        font-size: 0.9rem;
+        line-height: 1.55;
+      }
+      .module-body ul {
+        list-style: none;
+        margin-top: 0.6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .module-body ul li {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        display: flex;
+        gap: 0.5rem;
+      }
+      .module-body ul li::before {
+        content: "→";
+        color: var(--primary);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      /* TIMELINE */
+      .timeline {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        position: relative;
+        margin-top: 2rem;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        top: 28px;
+        left: 56px;
+        right: 56px;
+        height: 2px;
+        background: var(--border);
+        z-index: 0;
+      }
+      .timeline-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+        padding: 0 0.5rem;
+      }
+      .timeline-node {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 14px rgba(255, 105, 0, 0.35);
+        flex-shrink: 0;
+      }
+      .timeline-node-label {
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+      .timeline-content {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1rem;
+        text-align: center;
+        width: 100%;
+      }
+      .timeline-content h4 {
+        color: var(--text);
+        font-size: 0.85rem;
+        margin-bottom: 0.3rem;
+      }
+      .timeline-content p {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        line-height: 1.45;
+      }
+      .timeline-deliverable {
+        display: inline-block;
+        background: var(--primary-soft);
+        color: var(--primary);
+        font-size: 0.68rem;
+        font-weight: 600;
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        margin-top: 0.6rem;
+      }
+
+      /* DELIVERABLES */
+      .deliverables-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+        margin-top: 1.5rem;
+      }
+      .deliverable-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        transition:
+          box-shadow 0.2s,
+          border-color 0.2s;
+      }
+      .deliverable-card:hover {
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary-border);
+      }
+      .deliverable-icon {
+        font-size: 1.75rem;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .deliverable-content h4 {
+        color: var(--text);
+        margin-bottom: 0.3rem;
+      }
+      .deliverable-content p {
+        font-size: 0.85rem;
+        line-height: 1.5;
+      }
+
+      /* INVESTMENT */
+      .price-display {
+        background: var(--primary-soft);
+        border: 1px solid var(--primary-border);
+        border-radius: var(--radius);
+        padding: 2rem;
+        text-align: center;
+        margin-top: 1.5rem;
+      }
+      .price-old {
+        font-size: 1.1rem;
+        color: var(--text-light);
+        text-decoration: line-through;
+        margin-bottom: 0.25rem;
+      }
+      .price-main {
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        font-weight: 800;
+        color: var(--primary);
+        letter-spacing: -0.03em;
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .price-sub {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+      }
+      .discount-badge {
+        display: inline-block;
+        background: var(--positive-bg);
+        border: 1px solid rgba(22, 163, 74, 0.3);
+        color: var(--positive);
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 0.3rem 1rem;
+        border-radius: 999px;
+      }
+
+      .payment-milestones {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .payment-milestone {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 1.25rem;
+        text-align: center;
+        box-shadow: var(--shadow);
+      }
+      .payment-milestone.highlight {
+        border-color: var(--primary-border);
+      }
+      .payment-milestone .pct {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+        margin-bottom: 0.4rem;
+      }
+      .payment-milestone .amount {
+        font-weight: 700;
+        font-size: 1.4rem;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.3rem;
+      }
+      .payment-milestone.highlight .amount {
+        color: var(--primary);
+      }
+      .payment-milestone .label {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        line-height: 1.4;
+      }
+
+      .tax-note {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border);
+        padding-top: 1rem;
+        margin-top: 1.5rem;
+        line-height: 1.6;
+      }
+
+      /* INCLUDE GRID */
+      .include-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+      .include-col {
+        border-radius: var(--radius);
+        padding: 1.75rem;
+      }
+      .include-col.yes {
+        background: var(--positive-bg);
+        border-left: 4px solid var(--positive);
+      }
+      .include-col.no {
+        background: var(--bg-alt);
+        border-left: 4px solid var(--text-light);
+      }
+      .include-col h3 {
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+      .include-col.yes h3 {
+        color: var(--positive);
+      }
+      .include-col.no h3 {
+        color: var(--text-muted);
+      }
+      .include-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+      }
+      .include-list li {
+        display: flex;
+        gap: 0.6rem;
+        font-size: 0.88rem;
+        align-items: flex-start;
+        color: var(--text);
+      }
+      .check-yes {
+        color: var(--positive);
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .check-no {
+        color: var(--text-light);
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+
+      /* STEPS */
+      .steps-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .step-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.25rem 1.5rem;
+        box-shadow: var(--shadow);
+        transition: border-color 0.2s;
+      }
+      .step-item:hover {
+        border-color: var(--primary-border);
+      }
+      .step-num {
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 3px 10px rgba(255, 105, 0, 0.3);
+      }
+      .step-content h4 {
+        color: var(--text);
+        margin-bottom: 0.25rem;
+      }
+      .step-content p {
+        font-size: 0.88rem;
+      }
+      .validity-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--primary-soft);
+        color: var(--primary);
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 0.55rem 1.5rem;
+        border-radius: 999px;
+        border: 1px solid var(--primary-border);
+        margin-top: 1.75rem;
+      }
+
+      /* FOOTER */
+      .footer {
+        background: #111827;
+        color: var(--text-light);
+        padding: 3rem 2rem 2rem;
+        text-align: center;
+      }
+      .footer-logo {
+        height: 40px;
+        margin-bottom: 1.25rem;
+        display: inline-block;
+        opacity: 0.9;
+        transition: opacity 0.2s;
+      }
+      .footer-logo:hover {
+        opacity: 1;
+      }
+      .footer-links {
+        display: flex;
+        gap: 1.75rem;
+        justify-content: center;
+        margin: 0.75rem 0 1.25rem;
+        flex-wrap: wrap;
+      }
+      .footer-links a {
+        color: var(--text-light);
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color 0.2s;
+      }
+      .footer-links a:hover {
+        color: var(--primary);
+      }
+      .footer-line {
+        width: 40px;
+        height: 2px;
+        background: var(--primary);
+        margin: 0 auto 1rem;
+        border-radius: 2px;
+      }
+      .footer-disclaimer {
+        font-size: 0.78rem;
+        color: #4b5563;
+      }
+
+      /* FADE IN */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(18px);
+        transition:
+          opacity 0.55s ease,
+          transform 0.55s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 960px) {
+        .metrics-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .deliverables-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .payment-milestones {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 680px) {
+        .nav-links {
+          display: none;
+        }
+        .metrics-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .deliverables-grid {
+          grid-template-columns: 1fr;
+        }
+        .include-grid {
+          grid-template-columns: 1fr;
+        }
+        .timeline {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 1.25rem;
+        }
+        .timeline::before {
+          display: none;
+        }
+        .timeline-item {
+          flex-direction: row;
+          align-items: flex-start;
+          gap: 1rem;
+          padding: 0;
+        }
+        .timeline-content {
+          text-align: left;
+          flex: 1;
+        }
+        .timeline-node {
+          margin-bottom: 0;
+        }
+        .hero-band {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .arch-nodes {
+          justify-content: flex-start;
+        }
+      }
+
+      @media print {
+        .nav {
+          position: static;
+          box-shadow: none;
+        }
+        .hero {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .footer {
+          background: #f3f4f6 !important;
+        }
+        .footer * {
+          color: #374151 !important;
+        }
+        .footer-logo {
+          opacity: 1 !important;
+        }
+        .fade-in {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+        .section {
+          padding: 2rem 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav class="nav">
+      <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
+        <img
+          src="/propostas/Logo-IAOperators.png"
+          alt="IA Operators"
+          class="nav-logo"
+        />
+      </a>
+      <ul class="nav-links">
+        <li><a href="#contexto">Contexto</a></li>
+        <li><a href="#alcance">Módulos</a></li>
+        <li><a href="#calendario">Calendario</a></li>
+        <li><a href="#entregables">Entregables</a></li>
+        <li><a href="#inversion">Inversión</a></li>
+        <li><a href="#pasos">Próximos pasos</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Asistente de IA para<br />Apartamentos Turísticos</h1>
+        <p class="hero-subtitle">
+          Atención automatizada por WhatsApp antes, durante y después de la
+          estancia — con recomendación de alojamientos, gestión de check-in y
+          derivación a una persona cuando hace falta.
+        </p>
+      </div>
+      <div class="hero-band">
+        <span>IA Operators · Luiz Brazão · Julio 2026</span>
+        <span class="badge-proposal">Propuesta Comercial</span>
+      </div>
+    </section>
+
+    <!-- CONTEXTO -->
+    <section class="section" id="contexto">
+      <div class="container">
+        <span class="section-label">Contexto</span>
+        <h2 class="section-title">Qué es, y qué no es, este proyecto</h2>
+        <p class="section-subtitle">
+          Un asistente conversacional que entiende lenguaje natural, consulta
+          disponibilidad real y acompaña al huésped en todo el ciclo. No
+          partimos de cero: ya hemos llevado a producción reservas por WhatsApp
+          en el sector turístico y de servicios.
+        </p>
+
+        <div class="callout fade-in">
+          "No es un bot de respuestas fijas ni un árbol de botones. Es un
+          asistente sobre WhatsApp que interpreta lo que pide el cliente,
+          consulta datos reales de apartamentos y disponibilidad, y deriva a una
+          persona cuando la situación lo requiere. Construido en Python para
+          escalar hacia PMS, Channel Manager y pagos sin reescribir la base."
+        </div>
+
+        <div class="arch-flow fade-in">
+          <div class="arch-nodes">
+            <div class="arch-node">WhatsApp Business API</div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node accent">Backend FastAPI · OpenAI</div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node">PostgreSQL</div>
+          </div>
+          <div class="arch-notes">
+            <div class="arch-note">
+              <strong>WhatsApp Business API</strong> — recibe y envía mensajes,
+              gestiona plantillas y la ventana de conversación de 24 h
+            </div>
+            <div class="arch-note">
+              <strong>Backend FastAPI + OpenAI</strong> — motor conversacional:
+              contexto, tool calling y lógica de negocio
+            </div>
+            <div class="arch-note">
+              <strong>PostgreSQL</strong> — fuente de verdad: apartamentos,
+              características, normas y disponibilidad
+            </div>
+            <div class="arch-note">
+              <strong>Derivación humana</strong> — el asistente transfiere la
+              conversación a una persona en incidencias o a petición del cliente
+            </div>
+          </div>
+        </div>
+
+        <div class="metrics-grid fade-in">
+          <div class="metric-card">
+            <div class="metric-number">8</div>
+            <div class="metric-label">Módulos de desarrollo</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">4</div>
+            <div class="metric-label">Semanas de trabajo</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">9</div>
+            <div class="metric-label">Entregables verificables</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number">24/7</div>
+            <div class="metric-label">Atención automatizada</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ALCANCE -->
+    <section class="section section-alt" id="alcance">
+      <div class="container">
+        <span class="section-label">Alcance</span>
+        <h2 class="section-title">Ocho módulos de trabajo</h2>
+        <p class="section-subtitle">
+          Cada módulo tiene un entregable claro y se puede verificar de forma
+          independiente.
+        </p>
+
+        <div class="module-list fade-in">
+          <div class="module-card">
+            <div class="module-num">1</div>
+            <div class="module-body">
+              <h4>Integración con WhatsApp Business API</h4>
+              <p>
+                Recepción y envío de mensajes sobre la Cloud API de Meta, con
+                gestión de plantillas y de la ventana de conversación de 24
+                horas.
+              </p>
+              <ul>
+                <li>Alta y verificación del número en Meta / WhatsApp Business</li>
+                <li>Webhook de entrada con validación de firma</li>
+                <li>Envío de mensajes de sesión y plantillas aprobadas</li>
+                <li>Gestión de la ventana de 24 h y estados de entrega</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">2</div>
+            <div class="module-body">
+              <h4>Motor conversacional (OpenAI + contexto)</h4>
+              <p>
+                Backend en FastAPI que orquesta el modelo de OpenAI con memoria
+                de conversación y tool calling para consultar datos reales y
+                ejecutar acciones.
+              </p>
+              <ul>
+                <li>Gestión de contexto y estado por conversación</li>
+                <li>Tool calling hacia la base de datos y acciones del sistema</li>
+                <li>Prompt de sistema y guardarraíles de comportamiento</li>
+                <li>
+                  Distinción entre cliente interesado en reservar y huésped con
+                  reserva activa
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">3</div>
+            <div class="module-body">
+              <h4>Base de datos de alojamientos y disponibilidad</h4>
+              <p>
+                Modelo de datos en PostgreSQL para apartamentos, características,
+                normas y disponibilidad, consultable por el asistente en tiempo
+                real.
+              </p>
+              <ul>
+                <li>Esquema de apartamentos, equipamiento y normas</li>
+                <li>Disponibilidad por fechas</li>
+                <li>Consultas optimizadas para el recomendador</li>
+                <li>Datos desacoplados de la lógica del agente</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">4</div>
+            <div class="module-body">
+              <h4>Recomendador de apartamentos</h4>
+              <p>
+                Traduce las necesidades expresadas en lenguaje natural en
+                filtros concretos y devuelve las mejores opciones disponibles.
+              </p>
+              <ul>
+                <li>Filtros: nº de personas, fechas, presupuesto y zona</li>
+                <li>Criterios: piscina, garaje, mascotas y demás características</li>
+                <li>Priorización de resultados según encaje</li>
+                <li>Presentación clara de cada opción dentro del chat</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">5</div>
+            <div class="module-body">
+              <h4>Información de alojamiento y preguntas frecuentes</h4>
+              <p>
+                Respuestas detalladas y consistentes sobre cada alojamiento y
+                sobre las dudas recurrentes de los huéspedes.
+              </p>
+              <ul>
+                <li>Equipamiento, servicios, capacidad y ubicación</li>
+                <li>Normas de la vivienda y horarios</li>
+                <li>FAQ: WiFi, aire acondicionado, piscina, mascotas</li>
+                <li>Respuestas ancladas en datos, sin inventar información</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">6</div>
+            <div class="module-body">
+              <h4>Ciclo pre-estancia: reservas y check-in</h4>
+              <p>
+                Acompañamiento desde la solicitud de reserva hasta la llegada
+                del huésped al alojamiento.
+              </p>
+              <ul>
+                <li>Gestión de solicitudes de reserva y derivación al equipo</li>
+                <li>Envío automático de instrucciones de llegada</li>
+                <li>
+                  Entrega/recogida de llaves: caja, oficina, anfitrión, cerradura
+                  inteligente
+                </li>
+                <li>Plazas de garaje, aparcamiento y acceso al edificio</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">7</div>
+            <div class="module-body">
+              <h4>Durante la estancia: incidencias y derivación humana</h4>
+              <p>
+                Atención durante la estancia y gestión de incidencias con
+                escalado al personal correspondiente cuando hace falta.
+              </p>
+              <ul>
+                <li>Incidencias y emergencias: llaves, averías, accesos</li>
+                <li>Derivación automática al personal correspondiente</li>
+                <li>Transferencia a un agente humano en cualquier momento</li>
+                <li>Check-out e instrucciones de salida</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="module-card">
+            <div class="module-num">8</div>
+            <div class="module-body">
+              <h4>Panel de administración</h4>
+              <p>
+                Interfaz sencilla para configurar el asistente, revisar
+                conversaciones y supervisar su funcionamiento.
+              </p>
+              <ul>
+                <li>Configuración de respuestas y parámetros</li>
+                <li>Historial y revisión de conversaciones</li>
+                <li>Marcado de casos derivados a humano</li>
+                <li>Base para futuras métricas y ampliaciones</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALENDARIO -->
+    <section class="section" id="calendario">
+      <div class="container">
+        <span class="section-label">Calendario</span>
+        <h2 class="section-title">4 semanas · 4 entregas verificables</h2>
+        <p class="section-subtitle">
+          Cada semana produce un estado del sistema que el cliente puede revisar
+          antes de avanzar.
+        </p>
+
+        <div class="timeline fade-in">
+          <div class="timeline-item">
+            <div class="timeline-node-label">Semana 1</div>
+            <div class="timeline-node">1</div>
+            <div class="timeline-content">
+              <h4>Fundación</h4>
+              <p>
+                Backend FastAPI, conexión con WhatsApp Business API y OpenAI, y
+                esquema base de PostgreSQL.
+              </p>
+              <span class="timeline-deliverable">Bot responde en WhatsApp</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-node-label">Semana 2</div>
+            <div class="timeline-node">2</div>
+            <div class="timeline-content">
+              <h4>Datos + recomendador</h4>
+              <p>
+                Base de datos de alojamientos, disponibilidad, filtros e
+                información detallada de cada apartamento.
+              </p>
+              <span class="timeline-deliverable">Recomendación operativa</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-node-label">Semana 3</div>
+            <div class="timeline-node">3</div>
+            <div class="timeline-content">
+              <h4>Ciclo de estancia</h4>
+              <p>
+                Reservas y derivación, check-in/out, llaves y accesos, FAQ e
+                incidencias con handoff a humano.
+              </p>
+              <span class="timeline-deliverable">Flujos de estancia</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-node-label">Semana 4</div>
+            <div class="timeline-node">4</div>
+            <div class="timeline-content">
+              <h4>Panel + cierre</h4>
+              <p>
+                Panel de administración, suite de tests, despliegue y
+                documentación técnica.
+              </p>
+              <span class="timeline-deliverable">Entrega final</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENTREGABLES -->
+    <section class="section section-alt" id="entregables">
+      <div class="container">
+        <span class="section-label">Entregables</span>
+        <h2 class="section-title">9 entregables verificables</h2>
+        <p class="section-subtitle">
+          Cada entregable es autónomo y verificable por el cliente de forma
+          independiente.
+        </p>
+
+        <div class="deliverables-grid fade-in">
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🔌</div>
+            <div class="deliverable-content">
+              <h4>Integración WhatsApp</h4>
+              <p>
+                Recepción y envío sobre WhatsApp Business API, con plantillas y
+                webhook validado.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🧠</div>
+            <div class="deliverable-content">
+              <h4>Motor conversacional</h4>
+              <p>
+                Backend FastAPI con OpenAI, memoria de contexto y tool calling
+                hacia datos reales.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🗄️</div>
+            <div class="deliverable-content">
+              <h4>Base de datos PostgreSQL</h4>
+              <p>
+                Modelo de apartamentos, características, normas y disponibilidad.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🎯</div>
+            <div class="deliverable-content">
+              <h4>Recomendador</h4>
+              <p>
+                Filtrado por personas, fechas, presupuesto, zona y
+                características del alojamiento.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">📋</div>
+            <div class="deliverable-content">
+              <h4>Información + FAQ</h4>
+              <p>
+                Datos de cada alojamiento y respuestas a las preguntas
+                frecuentes de los huéspedes.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🔑</div>
+            <div class="deliverable-content">
+              <h4>Check-in/out + llaves</h4>
+              <p>
+                Instrucciones de llegada, entrega de llaves, garaje y acceso al
+                edificio.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🚨</div>
+            <div class="deliverable-content">
+              <h4>Incidencias + derivación</h4>
+              <p>
+                Gestión de incidencias y transferencia a un agente humano en
+                cualquier momento.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">🖥️</div>
+            <div class="deliverable-content">
+              <h4>Panel de administración</h4>
+              <p>
+                Configuración de respuestas, revisión de conversaciones y
+                supervisión del asistente.
+              </p>
+            </div>
+          </div>
+          <div class="deliverable-card">
+            <div class="deliverable-icon">📄</div>
+            <div class="deliverable-content">
+              <h4>Tests + documentación</h4>
+              <p>
+                Suite de tests de integración, despliegue y documentación
+                técnica actualizada.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INVERSIÓN -->
+    <section class="section" id="inversion">
+      <div class="container">
+        <span class="section-label">Inversión</span>
+        <h2 class="section-title">Precio fijo · 4 semanas de trabajo</h2>
+        <p class="section-subtitle">
+          Jornada completa durante 4 semanas (20 días de trabajo). Tarifa de
+          referencia de mercado, sin sorpresas.
+        </p>
+
+        <div class="price-display fade-in">
+          <div class="price-main">8.000 €</div>
+          <div class="price-sub">sin IVA · 20 días · 400 €/día</div>
+          <span class="discount-badge"
+            >+ IVA 21% (1.680 €) · Total 9.680 € con IVA</span
+          >
+        </div>
+
+        <div class="payment-milestones fade-in">
+          <div class="payment-milestone">
+            <div class="pct">Primer pago · 30%</div>
+            <div class="amount">2.400 €</div>
+            <div class="label">
+              Al inicio, tras la firma. Reserva las fechas y arranca la Semana 1.
+            </div>
+          </div>
+          <div class="payment-milestone highlight">
+            <div class="pct">Segundo pago · 30%</div>
+            <div class="amount">2.400 €</div>
+            <div class="label">
+              Al cierre de la Semana 2, verificados el recomendador y los flujos
+              principales.
+            </div>
+          </div>
+          <div class="payment-milestone">
+            <div class="pct">Pago final · 40%</div>
+            <div class="amount">3.200 €</div>
+            <div class="label">
+              Tras la entrega. Aceptado si no hay incidencias graves en 5 días
+              naturales.
+            </div>
+          </div>
+        </div>
+
+        <div class="tax-note fade-in">
+          Precios sin IVA. Se aplica IVA del 21 % (1.680 €); el total con IVA
+          asciende a 9.680 €, al tratarse de una operación en España. El coste de
+          la WhatsApp Business API y del uso de OpenAI queda a cargo del cliente.
+          El pago final se realiza dentro de los 3 días naturales siguientes a la
+          aceptación.
+        </div>
+      </div>
+    </section>
+
+    <!-- INCLUYE / NO INCLUYE -->
+    <section class="section section-alt">
+      <div class="container">
+        <span class="section-label">Alcance</span>
+        <h2 class="section-title">Qué está incluido y qué no</h2>
+        <div class="include-grid fade-in">
+          <div class="include-col yes">
+            <h3>✓ Incluido</h3>
+            <ul class="include-list">
+              <li>
+                <span class="check-yes">✓</span> Integración con WhatsApp Business
+                API
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Motor conversacional con OpenAI y
+                gestión de contexto
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Base de datos PostgreSQL de
+                alojamientos y disponibilidad
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Recomendador por personas,
+                fechas, presupuesto, zona y características
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Información detallada y FAQ de
+                cada alojamiento
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Gestión de check-in/out, llaves y
+                accesos
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Incidencias con derivación al
+                personal correspondiente
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Transferencia a agente humano en
+                cualquier momento
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Panel de administración
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Tests de integración, despliegue
+                y documentación técnica
+              </li>
+              <li>
+                <span class="check-yes">✓</span> Código fuente propiedad del
+                cliente tras pago completo
+              </li>
+            </ul>
+          </div>
+          <div class="include-col no">
+            <h3>✗ No incluido</h3>
+            <ul class="include-list">
+              <li>
+                <span class="check-no">✗</span> Integración con PMS y Channel
+                Manager (Booking, Airbnb) — fase posterior
+              </li>
+              <li>
+                <span class="check-no">✗</span> Pasarela de pagos online — fase
+                posterior
+              </li>
+              <li>
+                <span class="check-no">✗</span> Coste de la WhatsApp Business API y
+                del uso de OpenAI
+              </li>
+              <li>
+                <span class="check-no">✗</span> Carga inicial masiva de datos de
+                apartamentos
+              </li>
+              <li>
+                <span class="check-no">✗</span> Mantenimiento post-entrega
+                (contrato independiente)
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRÓXIMOS PASOS -->
+    <section class="section" id="pasos">
+      <div class="container">
+        <span class="section-label">Próximos pasos</span>
+        <h2 class="section-title">Cómo empezamos</h2>
+        <ul class="steps-list fade-in">
+          <li class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Confirmación de la propuesta y pago del 30% inicial</h4>
+              <p>
+                2.400 € para reservar las fechas de inicio y arrancar el
+                desarrollo de la Semana 1.
+              </p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Acceso a credenciales y datos</h4>
+              <p>
+                Cuenta de WhatsApp Business / Meta, clave de API de OpenAI y
+                datos de apartamentos y disponibilidad. Determina la profundidad
+                del trabajo en la Semana 1.
+              </p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Inicio del desarrollo</h4>
+              <p>
+                El asistente queda operativo en WhatsApp en 4 semanas, con tests
+                de integración realizados y documentación técnica actualizada.
+              </p>
+            </div>
+          </li>
+        </ul>
+        <div style="text-align:center">
+          <span class="validity-badge"
+            >⏱ Propuesta válida por 15 días · Julio 2026</span
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <a href="https://iaoperators.com/es/" target="_blank" rel="noopener">
+        <img
+          src="https://framerusercontent.com/images/XwOvRWgJ6sirH2T1tQHcZMN4zXg.png"
+          alt="IA Operators"
+          class="footer-logo"
+        />
+      </a>
+      <div class="footer-line"></div>
+      <div class="footer-links">
+        <a href="mailto:info@iaoperators.com">info@iaoperators.com</a>
+        <a href="tel:+34662423523">+34 662 423 523</a>
+        <a href="https://iaoperators.com" target="_blank" rel="noopener"
+          >iaoperators.com</a
+        >
+      </div>
+      <p class="footer-disclaimer">
+        Elaborado por IA Operators · Luiz Brazão · Julio 2026
+      </p>
+    </footer>
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.08 },
+      );
+      document
+        .querySelectorAll(".fade-in")
+        .forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
