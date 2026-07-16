@@ -1,5 +1,6 @@
 ---
 title: "Generative AI: What it is, how it works and how it is revolutionizing the world"
+seoTitle: "Generative AI: what it is and how it works"
 description: "Generative AI: discover what it is, how it works and how it is transforming sectors such as marketing, medicine, software development and more."
 category: others
 date: 2025-02-28

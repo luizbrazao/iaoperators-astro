@@ -1,5 +1,6 @@
 ---
 title: "O que é uma auditoria de sistemas tecnológicos (e por que sua empresa precisa)"
+seoTitle: "O que é uma auditoria de sistemas tecnológicos"
 description: "O que é uma auditoria de sistemas tecnológicos, o que cobre e quando sua empresa precisa. Guia completo com fases, entregáveis e investimento."
 category: others
 date: 2026-04-30
@@ -48,7 +49,7 @@ E isso antes de contar o que não está registrado em lugar nenhum: o Shadow IT.
 
 Shadow IT são as ferramentas adotadas sem aprovação do departamento de TI ou sem conhecimento da direção: planilhas que substituem um CRM, apps de mensagens que carregam dados de clientes, scripts de automação que ninguém documentou.
 
-Em empresas de 100–500 pessoas, o Shadow IT representa entre 30% e 40% do total de ferramentas em uso, [segundo estimativas da Gartner](https://www.gartner.com/en/information-technology/topics/shadow-it). Não aparece em nenhuma fatura. Não tem proprietário formal. E quando a pessoa que criou sai, ninguém sabe como funciona.
+Em empresas de 100–500 pessoas, o Shadow IT representa entre 30% e 40% do total de ferramentas em uso, [segundo estimativas da Gartner](https://www.cio.com/article/234745/how-to-eliminate-enterprise-shadow-it.html). Não aparece em nenhuma fatura. Não tem proprietário formal. E quando a pessoa que criou sai, ninguém sabe como funciona.
 
 Uma auditoria de sistemas tecnológicos detecta isso e coloca no mapa.
 

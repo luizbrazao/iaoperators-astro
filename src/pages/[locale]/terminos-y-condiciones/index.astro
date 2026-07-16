@@ -36,10 +36,18 @@ function t(path: string, fallback: string = ""): string {
 }
 
 const pageTitle = `${t("terms.title", "Términos y Condiciones")} | IA Operators`;
-const canonical = `https://www.iaoperators.com/${locale}/terminos-y-condiciones/`;
+
+// meta description única por idioma (evita duplicados com la página de privacidad)
+const metaDescription =
+  ({
+    es: "Términos y condiciones de uso de los servicios de IA Operators: alcance, responsabilidades del usuario, propiedad intelectual y limitación de responsabilidad.",
+    en: "Terms and conditions for using IA Operators' services: scope, user responsibilities, intellectual property and limitation of liability.",
+    pt: "Termos e condições de uso dos serviços da IA Operators: âmbito, responsabilidades do utilizador, propriedade intelectual e limitação de responsabilidade.",
+  } as Record<string, string>)[locale] ??
+  "Términos y condiciones de uso de los servicios de IA Operators.";
 ---
 
-<BaseLayout title={pageTitle} robots="index,follow">
+<BaseLayout title={pageTitle} description={metaDescription} robots="index,follow">
   <main class="container mx-auto px-4 pt-120px pb-16 max-w-4xl">
     <h1 class="text-3xl font-bold mb-8">
       {t("terms.title", "Términos y Condiciones")}
@@ -116,8 +124,5 @@ const canonical = `https://www.iaoperators.com/${locale}/terminos-y-condiciones/
         </p>
       </div>
     </section>
-
-    <!-- Canonical opcional (se seu BaseLayout não estiver setando isso já) -->
-    <link rel="canonical" href={canonical} />
   </main>
 </BaseLayout>

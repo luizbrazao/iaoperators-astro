@@ -1,5 +1,6 @@
 ---
 title: "Cómo ARCHITECHTURES está revolucionando el diseño arquitectónico con IA"
+seoTitle: "ARCHITECHTURES: IA para el diseño arquitectónico"
 description: "ARCHITECHTURES facilita el diseño arquitectónico con inteligencia artificial, creando modelos BIM 3D en minutos y optimizando procesos repetitivos."
 category: architects
 date: 2025-02-13

@@ -1,5 +1,6 @@
 ---
 title: "Gemini 3 Flash: El modelo de inteligencia artificial rápido, eficiente y económico de Google"
+seoTitle: "Gemini 3 Flash: la IA rápida y económica de Google"
 description: "Gemini 3 Flash destaca por su velocidad y eficiencia al superar a modelos anteriores de Google. Ideal para programación y diseño, está revolucionando el mundo de la IA."
 category: tools
 date: 2025-12-25

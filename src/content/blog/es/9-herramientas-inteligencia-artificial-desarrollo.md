@@ -1,5 +1,6 @@
 ---
 title: "9 herramientas de inteligencia artificial que están transformando el desarrollo"
+seoTitle: "9 herramientas de IA que transforman el desarrollo"
 description: "Descubre cómo la IA transforma el desarrollo: 9 herramientas para simplificar el código, automatizar tareas y aumentar tu eficiencia. ¡Adéntrate en la revolución tecnológica! 🚀"
 category: tools
 date: 2025-08-02

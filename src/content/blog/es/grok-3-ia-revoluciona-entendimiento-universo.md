@@ -1,5 +1,6 @@
 ---
 title: "Grok 3: La IA que promete revolucionar nuestro entendimiento del universo"
+seoTitle: "Grok 3: la IA que quiere revolucionar el universo"
 description: "Grok 3, la avanzada inteligencia artificial de X AI, redefine el entendimiento humano y cósmico con capacidades únicas en razonamiento, programación y resolución de problemas complejos."
 category: tools
 date: 2025-02-18

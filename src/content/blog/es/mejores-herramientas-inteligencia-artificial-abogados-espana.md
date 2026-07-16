@@ -1,5 +1,6 @@
 ---
 title: "Las Mejores Herramientas de Inteligencia Artificial para Abogados en España"
+seoTitle: "Mejores herramientas de IA para abogados en España"
 description: "Inteligencia Artificial: descubre cómo herramientas como Kira System o Luminance están revolucionando despachos legales españoles, ahorrando tiempo y optimizando procesos."
 category: lawyers
 date: 2025-02-13

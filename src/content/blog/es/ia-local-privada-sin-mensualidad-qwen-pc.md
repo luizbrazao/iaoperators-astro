@@ -1,5 +1,6 @@
 ---
 title: "IA local, privada y sin mensualidad: cómo ejecutar modelos Qwen en tu PC"
+seoTitle: "IA local y privada: ejecuta Qwen en tu PC"
 description: "Aprende a ejecutar IA local con modelos Qwen para análisis documental, visión computacional y generación de código con privacidad total y coste predecible."
 category: tools
 date: 2026-03-11

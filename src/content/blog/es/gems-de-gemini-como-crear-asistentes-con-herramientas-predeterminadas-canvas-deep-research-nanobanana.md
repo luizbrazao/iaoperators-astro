@@ -1,5 +1,6 @@
 ---
 title: "GEMS de Gemini: cómo crear asistentes con herramientas predeterminadas (Canvas, Deep Research, Nanobanana)"
+seoTitle: "GEMS de Gemini: crea asistentes con Canvas y más"
 description: "GEMS de Gemini: aprende a configurar asistentes con herramientas predeterminadas (Canvas, Deep Research, Nanobanana) para ahorrar tiempo, estandarizar procesos y trabajar en equipo sin repetir instrucciones."
 category: tools
 date: 2026-01-12

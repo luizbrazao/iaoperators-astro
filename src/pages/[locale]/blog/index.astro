@@ -60,6 +60,15 @@ const t = {
   viewAll: blogDict?.viewAll ?? "Ver todos",
 };
 
+// <title> del SERP: distinto del H1 "Blog" (evita duplicado H1=title) y con
+// longitud/keywords óptimas (evita "título demasiado corto").
+const BLOG_SEO_TITLE: Record<string, string> = {
+  es: "Blog de IA, automatización y n8n para empresas | IA Operators",
+  en: "AI, automation & n8n blog for businesses | IA Operators",
+  pt: "Blog de IA, automação e n8n para empresas | IA Operators",
+};
+const pageTitle = BLOG_SEO_TITLE[locale] ?? BLOG_SEO_TITLE.es;
+
 const categoryLabel = (key: string) =>
   ((categoriesDict as any)?.[key]) ||
   ({
@@ -75,7 +84,7 @@ const categoryLabel = (key: string) =>
   key;
 ---
 
-<BaseLayout title={t.title} description={t.description}>
+<BaseLayout title={pageTitle} description={t.description}>
   <div class="bg-transparent text-white min-h-screen font-sans">
     <!-- HEADER DO BLOG -->
     <section class="pt-40 pb-10 px-4 text-center">

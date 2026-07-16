@@ -1,5 +1,6 @@
 ---
 title: "Revolución de herramientas de inteligencia artificial para simplificar tu vida"
+seoTitle: "Herramientas de IA para simplificar tu vida"
 description: "La inteligencia artificial está transformando la forma en que trabajamos y creamos. Descubre herramientas IA accesibles como Grock, Gémini y GLM 4.7 que simplifican tareas complejas."
 category: tools
 date: 2025-12-31

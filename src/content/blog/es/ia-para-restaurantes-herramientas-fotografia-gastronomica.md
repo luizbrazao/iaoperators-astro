@@ -1,5 +1,6 @@
 ---
 title: "IA para Restaurantes: Transforma tu Negocio con Herramientas Inteligentes y Fotografía Gastronómica Profesional"
+seoTitle: "IA para restaurantes: herramientas y fotografía con IA"
 description: "Descubre cómo la IA para restaurantes puede optimizar tu negocio, desde gestión de pedidos hasta fotografía gastronómica profesional con Lisa. ¡Impulsa tus ventas y destaca en redes sociales!"
 category: restaurants
 date: 2025-04-03

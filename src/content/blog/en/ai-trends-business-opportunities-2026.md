@@ -1,5 +1,6 @@
 ---
 title: "The 7 AI trends that will create the biggest business opportunities in 2026"
+seoTitle: "7 AI trends creating business opportunities in 2026"
 description: "AI agents, n8n, automation, FinOps and solution architecture. Discover the trends transforming the market and creating a new generation of professionals."
 category: others
 date: 2026-06-03

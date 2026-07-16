@@ -1,5 +1,6 @@
 ---
 title: "Errores de WhatsApp en Salones de Belleza: corrígelos con automatización de Altegio"
+seoTitle: "Errores de WhatsApp en salones de belleza: solución"
 description: "Descubre los errores más comunes en el WhatsApp de salones de belleza y cómo corregirlos con procesos, respuestas rápidas y automatización integrada a Altegio con ChatPlug."
 category: beauty-salons
 date: 2026-01-14

@@ -1,5 +1,6 @@
 ---
 title: "¿Por qué aprender a programar sigue siendo relevante en la era de la IA?"
+seoTitle: "¿Aprender a programar vale la pena en la era IA?"
 description: "Descubre por qué dominar la programación sigue siendo esencial en 2025, incluso con el auge de los modelos de lenguaje gigantes como GPT-4 y Copilot. ¡Destaca en la era de la IA!"
 category: others
 date: 2025-08-02

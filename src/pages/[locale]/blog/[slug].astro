@@ -84,7 +84,9 @@ const xDefaultUrl =
   localeAlternates.find((item) => item.lang === defaultLocale)?.href ?? canonicalFromAlternates;
 
 const title = entry.data.title;
-const pageTitle = `${title} | IA Operators`;
+// <title> del SERP: usa seoTitle (corto) si existe; si no, el título del post.
+// Sin sufijo de marca — la marca ya va en og:site_name — para no truncar en Google.
+const pageTitle = entry.data.seoTitle ?? title;
 const description = entry.data.description;
 const articleKeywords = entry.data.tags ?? [];
 const wordCount = entry.body ? entry.body.trim().split(/\s+/).filter(Boolean).length : undefined;

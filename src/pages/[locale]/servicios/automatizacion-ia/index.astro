@@ -1,0 +1,426 @@
+---
+export async function getStaticPaths() {
+  return [
+    { params: { locale: "es" } },
+    { params: { locale: "pt" } },
+    { params: { locale: "en" } },
+  ];
+}
+
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import { getLocale } from "../../../../i18n/ui";
+
+const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
+
+// Conteúdo localizado inline (self-contained). Alvo de keywords por mercado:
+// ES: automatización con inteligencia artificial / de procesos / agente de ia / agencia de ia
+// PT: automação com inteligência artificial / de processos / agentes de IA
+// EN: ai automation agency / ai automation / workflow automation / custom ai solutions / n8n
+const CONTENT: Record<string, any> = {
+  es: {
+    meta: {
+      title: "Automatización con IA para empresas | IA Operators",
+      description:
+        "Automatizamos los procesos de tu empresa con IA: agentes, flujos con n8n e integraciones API a medida. Diagnóstico, diseño e implementación real — sin humo.",
+    },
+    breadcrumb: "Automatización con IA",
+    hero: {
+      badge: "Automatización con IA",
+      title: "Automatización con inteligencia artificial para tu empresa",
+      subtitle:
+        "Convertimos procesos manuales y repetitivos en flujos automáticos con IA: agentes, integraciones API y sistemas a medida que trabajan mientras tú creces.",
+      cta: "Hablar con un especialista ↗",
+    },
+    problem: {
+      title: "Tu equipo pierde horas en tareas que una IA haría sola",
+      subtitle: "Si reconoces esto, hay margen inmediato de automatización:",
+      items: [
+        "Datos que alguien copia y pega entre aplicaciones cada día.",
+        "Respuestas y seguimientos manuales que se enfrían o se pierden.",
+        "Informes que se montan a mano en hojas de cálculo.",
+        "Procesos críticos que dependen de una sola persona.",
+        "Herramientas que no se hablan entre sí (CRM, ERP, WhatsApp, email).",
+        "Leads que llegan y nadie atiende a tiempo.",
+      ],
+    },
+    services: {
+      title: "Qué automatizamos con IA",
+      subtitle:
+        "Del proceso repetitivo al agente autónomo. Construimos lo que de verdad mueve la aguja.",
+      items: [
+        { title: "Automatización de procesos", body: "Flujos que conectan tus apps y ejecutan tareas repetitivas sin intervención: altas, validaciones, notificaciones y sincronización de datos." },
+        { title: "Agentes de IA", body: "Agentes y sistemas multi-agente que razonan, deciden y actúan sobre tus herramientas: clasifican, responden, resumen y escalan cuando hace falta." },
+        { title: "Integraciones API a medida", body: "Conectamos CRM, ERP, WhatsApp, email y cualquier SaaS con API. Arquitectura API-first, sin parches manuales." },
+        { title: "Chatbots y asistentes virtuales", body: "Asistentes en WhatsApp y web que atienden, cualifican y reservan 24/7, integrados con tu operación real." },
+        { title: "Automatización de ventas y CRM", body: "Captación, seguimiento y nurturing automáticos: el lead entra, se cualifica y llega caliente al comercial." },
+        { title: "Reporting e insights", body: "Dashboards y reportes que se actualizan solos, con la IA resumiendo lo que importa para decidir." },
+      ],
+    },
+    process: {
+      badge: "Cómo trabajamos",
+      title: "Diagnóstico, diseño y ejecución — sin hand-offs",
+      subtitle: "El mismo equipo que entiende el proceso construye la automatización. Con IA, pero sin humo.",
+      phases: [
+        { code: "01", title: "Diagnosticamos", body: "Mapeamos el proceso real, los sistemas implicados y dónde se pierde tiempo. Priorizamos por impacto vs. esfuerzo." },
+        { code: "02", title: "Diseñamos", body: "Definimos la arquitectura del flujo: qué automatizar, con qué herramientas y con qué puntos de control humano." },
+        { code: "03", title: "Construimos", body: "Implementamos con n8n, LangChain, integraciones API y sistemas a medida. Con tipado, validación e idempotencia." },
+        { code: "04", title: "Operamos y escalamos", body: "Monitorizamos, medimos resultados y ampliamos la automatización a nuevos procesos sobre una base sólida." },
+      ],
+    },
+    tech: {
+      title: "La tecnología que usamos",
+      subtitle: "LLM-first, API-first y lista para producción.",
+      items: ["n8n", "LangChain", "OpenAI / Claude", "Supabase", "WhatsApp Cloud API", "Convex", "Webhooks & APIs", "Node / TypeScript"],
+    },
+    faq: {
+      title: "Preguntas frecuentes",
+      items: [
+        { q: "¿Qué procesos puedo automatizar con IA?", a: "Casi cualquier proceso repetitivo basado en reglas o en texto: atención al cliente, cualificación de leads, entrada de datos, generación de informes, seguimiento comercial o clasificación de correos y documentos. En el diagnóstico priorizamos los de mayor impacto." },
+        { q: "¿Usáis herramientas no-code o desarrollo a medida?", a: "Lo que el problema pida. Empezamos con n8n y flujos LLM-first cuando aportan velocidad, y bajamos a código a medida (Node/TypeScript, APIs) cuando hace falta control, escala o lógica compleja. Evitamos reglas rígidas si una IA lo resuelve mejor." },
+        { q: "¿n8n, Make o Zapier?", a: "Trabajamos sobre todo con n8n por su flexibilidad, self-hosting y coste a escala. Integramos Make o Zapier si ya forman parte de tu stack. Elegimos por arquitectura, no por moda." },
+        { q: "¿Es seguro para los datos de mi empresa?", a: "Sí. Diseñamos con estado persistente controlado, permisos mínimos y, cuando el caso lo exige, modelos privados o self-hosted para que tus datos no salgan de tu entorno." },
+        { q: "¿Cuánto tarda una automatización?", a: "Un primer flujo de valor suele estar en producción en semanas, no meses. Trabajamos por fases: entregamos algo funcionando pronto y ampliamos desde ahí." },
+        { q: "¿Cómo empezamos?", a: "Una llamada de 30 minutos para entender tu proceso. Si hay encaje, te proponemos un primer caso de automatización con alcance y resultado claros." },
+      ],
+    },
+    finalCta: {
+      title: "¿Qué proceso te gustaría dejar de hacer a mano?",
+      subtitle: "Cuéntanos tu caso en una llamada de 30 minutos. Si hay margen de automatización, lo verás enseguida.",
+      cta: "Hablar con un especialista",
+    },
+  },
+
+  pt: {
+    meta: {
+      title: "Automação com IA para empresas | IA Operators",
+      description:
+        "Automatizamos os processos da sua empresa com IA: agentes, fluxos com n8n e integrações API sob medida. Diagnóstico, design e implementação real — sem enrolação.",
+    },
+    breadcrumb: "Automação com IA",
+    hero: {
+      badge: "Automação com IA",
+      title: "Automação com inteligência artificial para a sua empresa",
+      subtitle:
+        "Transformamos processos manuais e repetitivos em fluxos automáticos com IA: agentes, integrações API e sistemas sob medida que trabalham enquanto você cresce.",
+      cta: "Falar com um especialista ↗",
+    },
+    problem: {
+      title: "Sua equipe perde horas em tarefas que uma IA faria sozinha",
+      subtitle: "Se você reconhece isto, há margem imediata de automação:",
+      items: [
+        "Dados que alguém copia e cola entre aplicações todos os dias.",
+        "Respostas e follow-ups manuais que esfriam ou se perdem.",
+        "Relatórios montados à mão em planilhas.",
+        "Processos críticos que dependem de uma só pessoa.",
+        "Ferramentas que não conversam entre si (CRM, ERP, WhatsApp, e-mail).",
+        "Leads que chegam e ninguém atende a tempo.",
+      ],
+    },
+    services: {
+      title: "O que automatizamos com IA",
+      subtitle: "Do processo repetitivo ao agente autônomo. Construímos o que realmente move o ponteiro.",
+      items: [
+        { title: "Automação de processos", body: "Fluxos que conectam suas apps e executam tarefas repetitivas sem intervenção: cadastros, validações, notificações e sincronização de dados." },
+        { title: "Agentes de IA", body: "Agentes e sistemas multi-agente que raciocinam, decidem e agem sobre suas ferramentas: classificam, respondem, resumem e escalam quando preciso." },
+        { title: "Integrações API sob medida", body: "Conectamos CRM, ERP, WhatsApp, e-mail e qualquer SaaS com API. Arquitetura API-first, sem gambiarras manuais." },
+        { title: "Chatbots e assistentes virtuais", body: "Assistentes no WhatsApp e web que atendem, qualificam e agendam 24/7, integrados à sua operação real." },
+        { title: "Automação de vendas e CRM", body: "Captação, follow-up e nurturing automáticos: o lead entra, é qualificado e chega quente ao comercial." },
+        { title: "Relatórios e insights", body: "Dashboards e relatórios que se atualizam sozinhos, com a IA resumindo o que importa para decidir." },
+      ],
+    },
+    process: {
+      badge: "Como trabalhamos",
+      title: "Diagnóstico, design e execução — sem hand-offs",
+      subtitle: "A mesma equipe que entende o processo constrói a automação. Com IA, mas sem enrolação.",
+      phases: [
+        { code: "01", title: "Diagnosticamos", body: "Mapeamos o processo real, os sistemas envolvidos e onde se perde tempo. Priorizamos por impacto vs. esforço." },
+        { code: "02", title: "Desenhamos", body: "Definimos a arquitetura do fluxo: o que automatizar, com quais ferramentas e com quais pontos de controle humano." },
+        { code: "03", title: "Construímos", body: "Implementamos com n8n, LangChain, integrações API e sistemas sob medida. Com tipagem, validação e idempotência." },
+        { code: "04", title: "Operamos e escalamos", body: "Monitoramos, medimos resultados e ampliamos a automação para novos processos sobre uma base sólida." },
+      ],
+    },
+    tech: {
+      title: "A tecnologia que usamos",
+      subtitle: "LLM-first, API-first e pronta para produção.",
+      items: ["n8n", "LangChain", "OpenAI / Claude", "Supabase", "WhatsApp Cloud API", "Convex", "Webhooks & APIs", "Node / TypeScript"],
+    },
+    faq: {
+      title: "Perguntas frequentes",
+      items: [
+        { q: "Que processos posso automatizar com IA?", a: "Quase qualquer processo repetitivo baseado em regras ou texto: atendimento, qualificação de leads, entrada de dados, geração de relatórios, follow-up comercial ou classificação de e-mails e documentos. No diagnóstico priorizamos os de maior impacto." },
+        { q: "Vocês usam ferramentas no-code ou desenvolvimento sob medida?", a: "O que o problema pedir. Começamos com n8n e fluxos LLM-first quando dão velocidade, e descemos para código sob medida (Node/TypeScript, APIs) quando é preciso controle, escala ou lógica complexa. Evitamos regras rígidas se uma IA resolve melhor." },
+        { q: "n8n, Make ou Zapier?", a: "Trabalhamos principalmente com n8n pela flexibilidade, self-hosting e custo em escala. Integramos Make ou Zapier se já fazem parte do seu stack. Escolhemos por arquitetura, não por moda." },
+        { q: "É seguro para os dados da minha empresa?", a: "Sim. Projetamos com estado persistente controlado, permissões mínimas e, quando o caso exige, modelos privados ou self-hosted para que seus dados não saiam do seu ambiente." },
+        { q: "Quanto tempo leva uma automação?", a: "Um primeiro fluxo de valor costuma entrar em produção em semanas, não meses. Trabalhamos por fases: entregamos algo funcionando cedo e ampliamos a partir daí." },
+        { q: "Como começamos?", a: "Uma call de 30 minutos para entender seu processo. Se houver encaixe, propomos um primeiro caso de automação com escopo e resultado claros." },
+      ],
+    },
+    finalCta: {
+      title: "Qual processo você gostaria de parar de fazer na mão?",
+      subtitle: "Conte seu caso numa call de 30 minutos. Se houver margem de automação, você verá na hora.",
+      cta: "Falar com um especialista",
+    },
+  },
+
+  en: {
+    meta: {
+      title: "AI Automation Agency: custom AI & n8n | IA Operators",
+      description:
+        "We automate your business processes with AI: agents, n8n workflows and custom API integrations. From diagnosis to production — no hype.",
+    },
+    breadcrumb: "AI Automation",
+    hero: {
+      badge: "AI Automation",
+      title: "AI automation agency for growing businesses",
+      subtitle:
+        "We turn manual, repetitive processes into automated AI workflows: agents, custom API integrations and systems that work while you grow.",
+      cta: "Talk to a specialist ↗",
+    },
+    problem: {
+      title: "Your team wastes hours on tasks an AI could do alone",
+      subtitle: "If this sounds familiar, there's room to automate right now:",
+      items: [
+        "Data someone copies and pastes between apps every day.",
+        "Manual replies and follow-ups that go cold or get lost.",
+        "Reports built by hand in spreadsheets.",
+        "Critical processes that depend on a single person.",
+        "Tools that don't talk to each other (CRM, ERP, WhatsApp, email).",
+        "Leads that come in and no one answers in time.",
+      ],
+    },
+    services: {
+      title: "What we automate with AI",
+      subtitle: "From the repetitive task to the autonomous agent. We build what actually moves the needle.",
+      items: [
+        { title: "Process automation", body: "Workflows that connect your apps and run repetitive tasks with no manual work: onboarding, validations, notifications and data sync." },
+        { title: "AI agents", body: "Agents and multi-agent systems that reason, decide and act on your tools: classify, reply, summarize and escalate when needed." },
+        { title: "Custom API integrations", body: "We connect CRM, ERP, WhatsApp, email and any SaaS with an API. API-first architecture, no manual patches." },
+        { title: "Chatbots & virtual assistants", body: "WhatsApp and web assistants that support, qualify and book 24/7, integrated with your real operation." },
+        { title: "Sales & CRM automation", body: "Automatic capture, follow-up and nurturing: the lead comes in, gets qualified and reaches sales warm." },
+        { title: "Reporting & insights", body: "Dashboards and reports that update themselves, with AI summarizing what matters for decisions." },
+      ],
+    },
+    process: {
+      badge: "How we work",
+      title: "Diagnose, design and build — no hand-offs",
+      subtitle: "The same team that understands the process builds the automation. With AI, but no hype.",
+      phases: [
+        { code: "01", title: "We diagnose", body: "We map the real process, the systems involved and where time is lost. We prioritize by impact vs. effort." },
+        { code: "02", title: "We design", body: "We define the workflow architecture: what to automate, with which tools and where humans stay in the loop." },
+        { code: "03", title: "We build", body: "We implement with n8n, LangChain, API integrations and custom systems — typed, validated and idempotent." },
+        { code: "04", title: "We run & scale", body: "We monitor, measure results and extend automation to new processes on a solid base." },
+      ],
+    },
+    tech: {
+      title: "The tech we use",
+      subtitle: "LLM-first, API-first and production-ready.",
+      items: ["n8n", "LangChain", "OpenAI / Claude", "Supabase", "WhatsApp Cloud API", "Convex", "Webhooks & APIs", "Node / TypeScript"],
+    },
+    faq: {
+      title: "Frequently asked questions",
+      items: [
+        { q: "What processes can I automate with AI?", a: "Almost any repetitive, rule- or text-based process: customer support, lead qualification, data entry, reporting, sales follow-up or email and document classification. In the diagnosis we prioritize the highest-impact ones." },
+        { q: "Do you use no-code tools or custom development?", a: "Whatever the problem needs. We start with n8n and LLM-first flows when they add speed, and drop to custom code (Node/TypeScript, APIs) when we need control, scale or complex logic. We avoid rigid rules if an AI solves it better." },
+        { q: "n8n, Make or Zapier?", a: "We mostly work with n8n for its flexibility, self-hosting and cost at scale. We integrate Make or Zapier if they're already in your stack. We choose by architecture, not by trend." },
+        { q: "Is it secure for my company's data?", a: "Yes. We design with controlled persistent state, least-privilege access and, when the case requires it, private or self-hosted models so your data never leaves your environment." },
+        { q: "How long does an automation take?", a: "A first value-generating workflow is usually in production in weeks, not months. We work in phases: ship something working early and expand from there." },
+        { q: "How do we start?", a: "A 30-minute call to understand your process. If it's a fit, we propose a first automation case with clear scope and outcome." },
+      ],
+    },
+    finalCta: {
+      title: "Which process would you love to stop doing by hand?",
+      subtitle: "Tell us your case in a 30-minute call. If there's room to automate, you'll see it right away.",
+      cta: "Talk to a specialist",
+    },
+  },
+};
+
+const c = CONTENT[locale] ?? CONTENT.es;
+const contactHref = `/${locale}/contact/`;
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(`/${locale}/servicios/automatizacion-ia/`, site).toString();
+
+const providerSchema = {
+  "@type": ["Organization", "ProfessionalService"],
+  name: "IA Operators",
+  url: site,
+  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+};
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: c.hero.title,
+  serviceType: "AI automation and workflow automation",
+  provider: providerSchema,
+  areaServed: ["ES", "PT", "BR", "US", "GB"],
+  description: c.meta.description,
+  url: pageUrl,
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: c.breadcrumb, item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: c.faq.items.map((item: any) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+
+const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
+---
+
+<BaseLayout title={c.meta.title} description={c.meta.description} jsonLd={jsonLd}>
+  <div class="bg-transparent text-white">
+    <!-- HERO -->
+    <section class="relative px-4 pt-28 pb-20">
+      <div class="max-w-5xl mx-auto text-center">
+        <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-6">
+          {c.hero.badge}
+        </span>
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
+          {c.hero.title}
+        </h1>
+        <p class="text-lg md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto">
+          {c.hero.subtitle}
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={contactHref}
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-base hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+          >
+            {c.hero.cta}
+          </a>
+          <a
+            href="#servicios"
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-base hover:bg-orange-500/10 transition-all duration-300"
+          >
+            {c.services.title}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">{c.problem.title}</h2>
+        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">{c.problem.subtitle}</p>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {c.problem.items.map((item: string) => (
+            <li class="flex items-start gap-3 bg-[#0a0a0a] border border-white/5 rounded-2xl p-5">
+              <span class="text-orange-400 text-xl leading-none mt-0.5">✕</span>
+              <p class="text-gray-200 text-base leading-relaxed">{item}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="servicios" class="px-4 py-20">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{c.services.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{c.services.subtitle}</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {c.services.items.map((item: any, idx: number) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 font-bold text-sm">
+                  0{idx + 1}
+                </span>
+                <h3 class="text-xl font-semibold text-white">{item.title}</h3>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="px-4 py-24 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+            {c.process.badge}
+          </span>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{c.process.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{c.process.subtitle}</p>
+        </div>
+        <ol class="space-y-6 max-w-4xl mx-auto">
+          {c.process.phases.map((phase: any) => (
+            <li class="flex flex-col md:flex-row gap-6 bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8 hover:border-orange-500/20 transition-all duration-300">
+              <div class="md:w-52 shrink-0">
+                <div class="text-orange-400 text-xs font-semibold uppercase tracking-widest mb-1">{phase.code}</div>
+                <h3 class="text-xl font-bold text-white">{phase.title}</h3>
+              </div>
+              <p class="text-gray-300 leading-relaxed flex-1">{phase.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- TECH -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-3">{c.tech.title}</h2>
+        <p class="text-gray-400 mb-10 max-w-2xl mx-auto">{c.tech.subtitle}</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          {c.tech.items.map((item: string) => (
+            <span class="px-5 py-2 rounded-full bg-[#0a0a0a] border border-white/10 text-gray-200 text-sm font-medium hover:border-orange-500/30 transition-colors">
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="px-4 py-20">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">{c.faq.title}</h2>
+        <div class="space-y-3">
+          {c.faq.items.map((item: any) => (
+            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-4 hover:border-orange-500/20 transition-all duration-300">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <span class="text-white font-medium pr-4">{item.q}</span>
+                <span class="text-orange-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="text-gray-400 mt-3 leading-relaxed">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="px-4 py-24">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">{c.finalCta.title}</h2>
+        <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">{c.finalCta.subtitle}</p>
+        <a
+          href={contactHref}
+          class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+        >
+          {c.finalCta.cta} ↗
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

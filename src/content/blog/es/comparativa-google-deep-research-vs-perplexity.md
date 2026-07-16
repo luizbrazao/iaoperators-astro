@@ -1,5 +1,6 @@
 ---
 title: "Comparativa entre Google Deep Research y Perplexity: ¿Cuál es la mejor herramienta de investigación con IA?"
+seoTitle: "Google Deep Research vs Perplexity: comparativa IA"
 description: "Google Deep Research y Perplexity, dos herramientas de investigación con IA: analizamos acceso, modelos, velocidad y calidad para identificar cuál se adapta mejor a tus necesidades."
 category: tools
 date: 2025-02-13

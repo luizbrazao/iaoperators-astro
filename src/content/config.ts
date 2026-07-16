@@ -17,6 +17,9 @@ const blog = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
   schema: z.object({
     title: z.string(),
+    // Título curto y optimizado para el <title> del SERP (<=60 chars). Opcional:
+    // si no se define, se usa `title`. Evita títulos truncados en Google.
+    seoTitle: z.string().optional(),
     description: z.string(),
     category: z.enum(CATEGORY_KEYS).default("others"),
     articleSection: z.string().optional(),

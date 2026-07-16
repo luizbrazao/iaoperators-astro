@@ -1,5 +1,6 @@
 ---
 title: "Goku: Generador de vídeos open source que revoluciona la creación de contenido"
+seoTitle: "Goku: generador de vídeos IA open source"
 description: "Goku, un generador de vídeos open source, transforma texto e imágenes en contenido animado de calidad épica, ideal para marketing, branding y proyectos creativos."
 category: tools
 date: 2025-12-02

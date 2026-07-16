@@ -1,5 +1,6 @@
 ---
 title: "Cómo la Inteligencia Artificial está revolucionando el marketing gastronómico"
+seoTitle: "IA en marketing gastronómico: cómo revoluciona"
 description: "Inteligencia Artificial en marketing gastronómico: optimiza operaciones, analiza datos y mejora la experiencia del cliente en tu restaurante."
 category: restaurants
 date: 2025-02-14

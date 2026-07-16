@@ -1,5 +1,6 @@
 ---
 title: "IA Generativa: Qué es, cómo funciona y cómo está revolucionando el mundo"
+seoTitle: "IA generativa: qué es y cómo funciona"
 description: "IA Generativa: descubre qué es, cómo funciona y cómo está transformando sectores como marketing, medicina, desarrollo de software y más."
 category: others
 date: 2025-02-28

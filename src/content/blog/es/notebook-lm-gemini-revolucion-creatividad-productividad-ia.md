@@ -1,5 +1,6 @@
 ---
 title: "Notebook LM y Gemini: Revolucionando la creatividad y la productividad con IA"
+seoTitle: "NotebookLM y Gemini: creatividad y productividad IA"
 description: "Notebook LM y Gemini transforman la creatividad y productividad con IA. Desde automatización hasta desarrollo de apps, estas herramientas marcan el futuro."
 category: tools
 date: 2025-12-21

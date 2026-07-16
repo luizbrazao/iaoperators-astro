@@ -48,7 +48,7 @@ And that's before counting what isn't registered anywhere: Shadow IT.
 
 Shadow IT refers to tools adopted without IT department approval or management knowledge: spreadsheets that replace a CRM, messaging apps that carry customer data, automation scripts that nobody documented.
 
-In companies of 100–500 people, Shadow IT represents between 30% and 40% of the total tools in use, according to [Gartner estimates](https://www.gartner.com/en/information-technology/topics/shadow-it). It doesn't appear on any invoice. It has no formal owner. And when the person who created it leaves, nobody knows how it works.
+In companies of 100–500 people, Shadow IT represents between 30% and 40% of the total tools in use, according to [Gartner estimates](https://www.cio.com/article/234745/how-to-eliminate-enterprise-shadow-it.html). It doesn't appear on any invoice. It has no formal owner. And when the person who created it leaves, nobody knows how it works.
 
 A technology systems audit detects it and puts it on the map.
 

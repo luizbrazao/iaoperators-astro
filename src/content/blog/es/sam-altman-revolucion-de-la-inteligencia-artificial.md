@@ -1,5 +1,6 @@
 ---
 title: "Sam Altman y la Revolución de la Inteligencia Artificial: Impactos y Reflexiones"
+seoTitle: "Sam Altman y la revolución de la IA: impactos"
 description: "Sam Altman discute la evolución de la Inteligencia Artificial y su impacto en la sociedad. Descubre su visión sobre AGI, superinteligencia y el futuro de la humanidad en este escenario transformador."
 category: others
 date: 2025-12-02

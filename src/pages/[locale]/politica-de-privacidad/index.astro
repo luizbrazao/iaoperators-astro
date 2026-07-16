@@ -38,9 +38,18 @@ function t(path: string, fallback: string = ""): string {
 }
 
 const title = `${t("privacyPage.title", "Política de Privacidad")} | IA Operators`;
+
+// meta description única por idioma (evita duplicados com la página de términos)
+const metaDescription =
+  ({
+    es: "Política de privacidad de IA Operators: qué datos recopilamos, cómo los usamos, con quién los compartimos, cookies y tus derechos como usuario.",
+    en: "IA Operators privacy policy: what data we collect, how we use it, who we share it with, cookies and your rights as a user.",
+    pt: "Política de privacidade da IA Operators: que dados recolhemos, como os usamos, com quem os partilhamos, cookies e os seus direitos como utilizador.",
+  } as Record<string, string>)[locale] ??
+  "Política de privacidad de IA Operators.";
 ---
 
-<BaseLayout title={title} robots="index,follow">
+<BaseLayout title={title} description={metaDescription} robots="index,follow">
   <main class="container mx-auto px-4 pt-120px pb-16 max-w-4xl">
     <h1 class="text-3xl font-bold mb-8">
       {t("privacyPage.title", "Política de Privacidad")}
