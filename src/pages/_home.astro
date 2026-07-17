@@ -4,6 +4,7 @@ import { ui, getLocale } from "../i18n/ui";
 import Hero from "../sections/home/Hero.astro";
 import WhyUs from "../sections/home/WhyUs.astro";
 import Services from "../sections/home/Services.astro";
+import ServiceCatalog from "../sections/home/ServiceCatalog.astro";
 import Testimonial from "../sections/home/Testimonial.astro";
 import ClientTestimonials from "../sections/home/ClientTestimonials.astro";
 import BlogSection from "../sections/home/BlogSection.astro";
@@ -88,31 +89,23 @@ const jsonLd: any[] = [
       "@type": "OfferCatalog",
       name: "Servicios de IA Operators",
       itemListElement: [
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Radiografía Digital — Auditoría de sistemas",
-            url: new URL(`/${locale}/auditoria-de-sistemas/`, site).toString(),
-          },
+        { name: "Automatización con IA", path: "servicios/automatizacion-ia/" },
+        { name: "Chatbots", path: "servicios/chatbots/" },
+        { name: "Diseño web", path: "servicios/diseno-web/" },
+        { name: "Agencia SEO", path: "servicios/agencia-seo/" },
+        { name: "Marketing digital", path: "servicios/marketing-digital/" },
+        { name: "Agencia de IA", path: "servicios/agencia-ia/" },
+        { name: "Radiografía Digital — Auditoría de sistemas", path: "auditoria-de-sistemas/" },
+        { name: "Roadmap Tecnológico", path: "roadmap-tecnologico/" },
+        { name: "Implementación tecnológica", path: "implementacion/" },
+      ].map((s) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: s.name,
+          url: new URL(`/${locale}/${s.path}`, site).toString(),
         },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Roadmap Tecnológico",
-            url: new URL(`/${locale}/roadmap-tecnologico/`, site).toString(),
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Implementación tecnológica",
-            url: new URL(`/${locale}/implementacion/`, site).toString(),
-          },
-        },
-      ],
+      })),
     },
     sameAs: socials.map((item) => item.href),
   },
@@ -156,6 +149,7 @@ const metaDescription = meta?.description ?? "";
   <main>
     <Hero locale={locale} hero={home?.hero ?? {}} />
     <WhyUs why={home?.why ?? {}} industries={home?.industries ?? []} />
+    <ServiceCatalog locale={locale} />
     <Services services={home?.services ?? {}} />
     <Testimonial testimonial={home?.testimonial ?? {}} socials={socials} />
     <ClientTestimonials clientTestimonials={home?.clientTestimonials ?? { badge: "", title: "", items: [] }} />
