@@ -1,0 +1,424 @@
+---
+export async function getStaticPaths() {
+  return [
+    { params: { locale: "es" } },
+    { params: { locale: "pt" } },
+    { params: { locale: "en" } },
+  ];
+}
+
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import { getLocale } from "../../../../i18n/ui";
+
+const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
+
+// Alvo de keywords: ES diseño web / agencia de diseño web / desarrollo web
+// PT criação de sites / desenvolvimento web / design de sites
+// EN web design agency / web design / website development
+const CONTENT: Record<string, any> = {
+  es: {
+    meta: {
+      title: "Diseño y desarrollo web que convierte | IA Operators",
+      description:
+        "Diseño y desarrollo web para empresas: sitios rápidos, optimizados para SEO y conversión, integrados con tu CRM y automatizaciones. Sin plantillas genéricas.",
+    },
+    breadcrumb: "Diseño web",
+    hero: {
+      badge: "Diseño y desarrollo web",
+      title: "Diseño web para empresas: rápido, medible y que convierte",
+      subtitle:
+        "Diseñamos y desarrollamos webs que cargan rápido, posicionan en Google y convierten visitas en clientes — integradas con tu CRM, tus formularios y tus automatizaciones.",
+      cta: "Hablar con un especialista ↗",
+    },
+    problem: {
+      title: "Una web bonita que no convierte es solo un gasto",
+      subtitle: "Si tu web actual tiene esto, estás perdiendo clientes:",
+      items: [
+        "Carga lenta que espanta visitas antes de ver nada.",
+        "No aparece en Google: cero tráfico orgánico.",
+        "Formularios que no llegan a ningún CRM ni avisan a nadie.",
+        "Diseño de plantilla genérica, igual que el de tu competencia.",
+        "Imposible de editar sin llamar a un desarrollador.",
+        "Métricas a ciegas: no sabes qué convierte y qué no.",
+      ],
+    },
+    services: {
+      title: "Qué construimos",
+      subtitle: "Webs de ingeniería, no de plantilla. Pensadas para rendir, posicionar y convertir.",
+      items: [
+        { title: "Diseño web a medida", body: "Diseño propio alineado con tu marca y tu cliente, no una plantilla reciclada. Enfocado en la conversión." },
+        { title: "Desarrollo rápido y moderno", body: "Sitios estáticos ultra-rápidos (Astro y similares) con Core Web Vitals en verde. La velocidad es SEO y es conversión." },
+        { title: "SEO técnico de base", body: "Estructura, metadatos, schema, hreflang y sitemap correctos desde el día uno. Listo para posicionar." },
+        { title: "Integraciones y formularios", body: "Formularios que llegan a tu CRM, email o WhatsApp, con notificaciones y automatizaciones conectadas." },
+        { title: "Multilingüe e internacional", body: "Webs en varios idiomas con hreflang bien hecho, si vendes fuera de tu país." },
+        { title: "Analítica y conversión", body: "Medición desde el inicio para saber qué funciona y mejorar sobre datos, no sobre opiniones." },
+      ],
+    },
+    process: {
+      badge: "Cómo trabajamos",
+      title: "Diagnóstico, diseño y ejecución — sin hand-offs",
+      subtitle: "El mismo equipo que diseña construye e integra. Con ingeniería, sin humo.",
+      phases: [
+        { code: "01", title: "Diagnosticamos", body: "Entendemos tu negocio, tu cliente y el objetivo de la web: ¿leads, ventas, reservas, autoridad?" },
+        { code: "02", title: "Diseñamos", body: "Arquitectura, wireframes y diseño enfocados en la conversión y en la keyword objetivo de cada página." },
+        { code: "03", title: "Construimos", body: "Desarrollo rápido, SEO técnico, integraciones y automatizaciones. Con buenas prácticas de ingeniería." },
+        { code: "04", title: "Medimos y escalamos", body: "Lanzamos, medimos conversión y posicionamiento, e iteramos. La web es un activo vivo, no un folleto." },
+      ],
+    },
+    tech: {
+      title: "La tecnología que usamos",
+      subtitle: "Rápida, con SEO técnico de base y lista para integrar.",
+      items: ["Astro", "React", "Tailwind CSS", "Vercel", "SEO técnico", "n8n", "Supabase", "Node / TypeScript"],
+    },
+    faq: {
+      title: "Preguntas frecuentes",
+      items: [
+        { q: "¿Usáis plantillas o diseño a medida?", a: "Diseño a medida alineado con tu marca. Podemos partir de una base para ir más rápido, pero el resultado es tuyo, no una plantilla que comparten mil webs más." },
+        { q: "¿Por qué webs tan rápidas?", a: "Usamos generación estática (Astro y similares) y buenas prácticas de rendimiento. La velocidad mejora el SEO, la experiencia y la conversión — Google la mide en los Core Web Vitals." },
+        { q: "¿La web va a posicionar en Google?", a: "Construimos con SEO técnico correcto desde el día uno (estructura, schema, hreflang, sitemap, velocidad). Posicionar por términos competidos requiere además contenido y autoridad, que también trabajamos." },
+        { q: "¿Podré editar el contenido yo?", a: "Sí. Montamos la web para que edites textos, blog y páginas sin depender de un desarrollador para cada cambio." },
+        { q: "¿Se integra con mi CRM y mis herramientas?", a: "Sí. Conectamos formularios, reservas y datos con tu CRM, email, WhatsApp o las automatizaciones que ya usas, vía API o n8n." },
+        { q: "¿Cuánto tarda?", a: "Depende del alcance, pero una web corporativa suele estar en semanas. Trabajamos por fases con entregas visibles." },
+      ],
+    },
+    finalCta: {
+      title: "¿Tu web trabaja para ti o solo está ahí?",
+      subtitle: "En una llamada de 30 minutos revisamos tu web actual y qué haría falta para que traiga clientes.",
+      cta: "Hablar con un especialista",
+    },
+  },
+
+  pt: {
+    meta: {
+      title: "Criação de sites e desenvolvimento web | IA Operators",
+      description:
+        "Criação de sites e desenvolvimento web para empresas: rápidos, otimizados para SEO e conversão, integrados ao seu CRM e automações. Sem templates genéricos.",
+    },
+    breadcrumb: "Criação de sites",
+    hero: {
+      badge: "Design e desenvolvimento web",
+      title: "Criação de sites para empresas: rápidos, mensuráveis e que convertem",
+      subtitle:
+        "Criamos e desenvolvemos sites que carregam rápido, posicionam no Google e convertem visitas em clientes — integrados ao seu CRM, formulários e automações.",
+      cta: "Falar com um especialista ↗",
+    },
+    problem: {
+      title: "Um site bonito que não converte é só despesa",
+      subtitle: "Se o seu site atual tem isto, você está perdendo clientes:",
+      items: [
+        "Carregamento lento que espanta visitas antes de ver qualquer coisa.",
+        "Não aparece no Google: zero tráfego orgânico.",
+        "Formulários que não chegam a nenhum CRM nem avisam ninguém.",
+        "Design de template genérico, igual ao da concorrência.",
+        "Impossível editar sem chamar um desenvolvedor.",
+        "Métricas às cegas: você não sabe o que converte e o que não.",
+      ],
+    },
+    services: {
+      title: "O que construímos",
+      subtitle: "Sites de engenharia, não de template. Feitos para performar, posicionar e converter.",
+      items: [
+        { title: "Design de site sob medida", body: "Design próprio alinhado à sua marca e ao seu cliente, não um template reciclado. Focado em conversão." },
+        { title: "Desenvolvimento rápido e moderno", body: "Sites estáticos ultra-rápidos (Astro e similares) com Core Web Vitals no verde. Velocidade é SEO e é conversão." },
+        { title: "SEO técnico de base", body: "Estrutura, metadados, schema, hreflang e sitemap corretos desde o dia um. Pronto para posicionar." },
+        { title: "Integrações e formulários", body: "Formulários que chegam ao seu CRM, e-mail ou WhatsApp, com notificações e automações conectadas." },
+        { title: "Multilíngue e internacional", body: "Sites em vários idiomas com hreflang bem feito, se você vende fora do país." },
+        { title: "Analytics e conversão", body: "Medição desde o início para saber o que funciona e melhorar com dados, não com achismo." },
+      ],
+    },
+    process: {
+      badge: "Como trabalhamos",
+      title: "Diagnóstico, design e execução — sem hand-offs",
+      subtitle: "A mesma equipe que desenha constrói e integra. Com engenharia, sem enrolação.",
+      phases: [
+        { code: "01", title: "Diagnosticamos", body: "Entendemos seu negócio, seu cliente e o objetivo do site: leads, vendas, agendamentos, autoridade?" },
+        { code: "02", title: "Desenhamos", body: "Arquitetura, wireframes e design focados na conversão e na keyword-alvo de cada página." },
+        { code: "03", title: "Construímos", body: "Desenvolvimento rápido, SEO técnico, integrações e automações. Com boas práticas de engenharia." },
+        { code: "04", title: "Medimos e escalamos", body: "Lançamos, medimos conversão e posicionamento, e iteramos. O site é um ativo vivo, não um folheto." },
+      ],
+    },
+    tech: {
+      title: "A tecnologia que usamos",
+      subtitle: "Rápida, com SEO técnico de base e pronta para integrar.",
+      items: ["Astro", "React", "Tailwind CSS", "Vercel", "SEO técnico", "n8n", "Supabase", "Node / TypeScript"],
+    },
+    faq: {
+      title: "Perguntas frequentes",
+      items: [
+        { q: "Vocês usam templates ou design sob medida?", a: "Design sob medida alinhado à sua marca. Podemos partir de uma base para ir mais rápido, mas o resultado é seu, não um template compartilhado por mil sites." },
+        { q: "Por que sites tão rápidos?", a: "Usamos geração estática (Astro e similares) e boas práticas de performance. A velocidade melhora o SEO, a experiência e a conversão — o Google mede nos Core Web Vitals." },
+        { q: "O site vai posicionar no Google?", a: "Construímos com SEO técnico correto desde o dia um (estrutura, schema, hreflang, sitemap, velocidade). Posicionar em termos disputados exige também conteúdo e autoridade, que também trabalhamos." },
+        { q: "Vou conseguir editar o conteúdo?", a: "Sim. Montamos o site para você editar textos, blog e páginas sem depender de um desenvolvedor a cada mudança." },
+        { q: "Integra com meu CRM e ferramentas?", a: "Sim. Conectamos formulários, agendamentos e dados ao seu CRM, e-mail, WhatsApp ou às automações que você já usa, via API ou n8n." },
+        { q: "Quanto tempo leva?", a: "Depende do escopo, mas um site corporativo costuma ficar pronto em semanas. Trabalhamos por fases com entregas visíveis." },
+      ],
+    },
+    finalCta: {
+      title: "Seu site trabalha para você ou só está ali?",
+      subtitle: "Numa call de 30 minutos revisamos seu site atual e o que faltaria para ele trazer clientes.",
+      cta: "Falar com um especialista",
+    },
+  },
+
+  en: {
+    meta: {
+      title: "Web design agency: fast sites that convert | IA Operators",
+      description:
+        "Web design and development for businesses: fast, SEO-optimized, conversion-focused sites integrated with your CRM and automations. No generic templates.",
+    },
+    breadcrumb: "Web design",
+    hero: {
+      badge: "Web design & development",
+      title: "Web design agency: fast, measurable sites that convert",
+      subtitle:
+        "We design and build websites that load fast, rank on Google and turn visits into customers — integrated with your CRM, forms and automations.",
+      cta: "Talk to a specialist ↗",
+    },
+    problem: {
+      title: "A pretty website that doesn't convert is just a cost",
+      subtitle: "If your current site has this, you're losing customers:",
+      items: [
+        "Slow loading that scares visitors off before they see anything.",
+        "Invisible on Google: zero organic traffic.",
+        "Forms that reach no CRM and notify no one.",
+        "Generic template design, same as your competitors'.",
+        "Impossible to edit without calling a developer.",
+        "Flying blind: you don't know what converts and what doesn't.",
+      ],
+    },
+    services: {
+      title: "What we build",
+      subtitle: "Engineered websites, not templates. Built to perform, rank and convert.",
+      items: [
+        { title: "Custom web design", body: "Original design aligned with your brand and customer, not a recycled template. Conversion-focused." },
+        { title: "Fast, modern development", body: "Ultra-fast static sites (Astro and similar) with green Core Web Vitals. Speed is SEO and conversion." },
+        { title: "Technical SEO baked in", body: "Correct structure, metadata, schema, hreflang and sitemap from day one. Ready to rank." },
+        { title: "Integrations & forms", body: "Forms that reach your CRM, email or WhatsApp, with notifications and connected automations." },
+        { title: "Multilingual & international", body: "Multi-language sites with proper hreflang, if you sell beyond your country." },
+        { title: "Analytics & conversion", body: "Measurement from the start so you know what works and improve on data, not opinions." },
+      ],
+    },
+    process: {
+      badge: "How we work",
+      title: "Diagnose, design and build — no hand-offs",
+      subtitle: "The same team that designs also builds and integrates. With engineering, no hype.",
+      phases: [
+        { code: "01", title: "We diagnose", body: "We understand your business, your customer and the site's goal: leads, sales, bookings, authority?" },
+        { code: "02", title: "We design", body: "Architecture, wireframes and design focused on conversion and each page's target keyword." },
+        { code: "03", title: "We build", body: "Fast development, technical SEO, integrations and automations — with solid engineering practices." },
+        { code: "04", title: "We measure & scale", body: "We launch, measure conversion and rankings, and iterate. The site is a living asset, not a brochure." },
+      ],
+    },
+    tech: {
+      title: "The tech we use",
+      subtitle: "Fast, with technical SEO baked in and ready to integrate.",
+      items: ["Astro", "React", "Tailwind CSS", "Vercel", "Technical SEO", "n8n", "Supabase", "Node / TypeScript"],
+    },
+    faq: {
+      title: "Frequently asked questions",
+      items: [
+        { q: "Do you use templates or custom design?", a: "Custom design aligned with your brand. We may start from a base to move faster, but the result is yours — not a template shared by a thousand other sites." },
+        { q: "Why such fast websites?", a: "We use static generation (Astro and similar) and performance best practices. Speed improves SEO, experience and conversion — Google measures it in Core Web Vitals." },
+        { q: "Will the site rank on Google?", a: "We build with correct technical SEO from day one (structure, schema, hreflang, sitemap, speed). Ranking for competitive terms also needs content and authority, which we work on too." },
+        { q: "Will I be able to edit the content?", a: "Yes. We build the site so you can edit copy, blog and pages without depending on a developer for every change." },
+        { q: "Does it integrate with my CRM and tools?", a: "Yes. We connect forms, bookings and data to your CRM, email, WhatsApp or the automations you already use, via API or n8n." },
+        { q: "How long does it take?", a: "It depends on scope, but a corporate site is usually ready in weeks. We work in phases with visible deliverables." },
+      ],
+    },
+    finalCta: {
+      title: "Does your website work for you, or just sit there?",
+      subtitle: "In a 30-minute call we review your current site and what it would take to bring in customers.",
+      cta: "Talk to a specialist",
+    },
+  },
+};
+
+const c = CONTENT[locale] ?? CONTENT.es;
+const contactHref = `/${locale}/contact/`;
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(`/${locale}/servicios/diseno-web/`, site).toString();
+
+const providerSchema = {
+  "@type": ["Organization", "ProfessionalService"],
+  name: "IA Operators",
+  url: site,
+  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+};
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: c.hero.title,
+  serviceType: "Web design and development",
+  provider: providerSchema,
+  areaServed: ["ES", "PT", "BR", "US", "GB"],
+  description: c.meta.description,
+  url: pageUrl,
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: c.breadcrumb, item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: c.faq.items.map((item: any) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+
+const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
+---
+
+<BaseLayout title={c.meta.title} description={c.meta.description} jsonLd={jsonLd}>
+  <div class="bg-transparent text-white">
+    <!-- HERO -->
+    <section class="relative px-4 pt-28 pb-20">
+      <div class="max-w-5xl mx-auto text-center">
+        <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-6">
+          {c.hero.badge}
+        </span>
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
+          {c.hero.title}
+        </h1>
+        <p class="text-lg md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto">
+          {c.hero.subtitle}
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={contactHref}
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-base hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+          >
+            {c.hero.cta}
+          </a>
+          <a
+            href="#servicios"
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-base hover:bg-orange-500/10 transition-all duration-300"
+          >
+            {c.services.title}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">{c.problem.title}</h2>
+        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">{c.problem.subtitle}</p>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {c.problem.items.map((item: string) => (
+            <li class="flex items-start gap-3 bg-[#0a0a0a] border border-white/5 rounded-2xl p-5">
+              <span class="text-orange-400 text-xl leading-none mt-0.5">✕</span>
+              <p class="text-gray-200 text-base leading-relaxed">{item}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="servicios" class="px-4 py-20">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{c.services.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{c.services.subtitle}</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {c.services.items.map((item: any, idx: number) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 font-bold text-sm">
+                  0{idx + 1}
+                </span>
+                <h3 class="text-xl font-semibold text-white">{item.title}</h3>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="px-4 py-24 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+            {c.process.badge}
+          </span>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{c.process.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{c.process.subtitle}</p>
+        </div>
+        <ol class="space-y-6 max-w-4xl mx-auto">
+          {c.process.phases.map((phase: any) => (
+            <li class="flex flex-col md:flex-row gap-6 bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8 hover:border-orange-500/20 transition-all duration-300">
+              <div class="md:w-52 shrink-0">
+                <div class="text-orange-400 text-xs font-semibold uppercase tracking-widest mb-1">{phase.code}</div>
+                <h3 class="text-xl font-bold text-white">{phase.title}</h3>
+              </div>
+              <p class="text-gray-300 leading-relaxed flex-1">{phase.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- TECH -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-3">{c.tech.title}</h2>
+        <p class="text-gray-400 mb-10 max-w-2xl mx-auto">{c.tech.subtitle}</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          {c.tech.items.map((item: string) => (
+            <span class="px-5 py-2 rounded-full bg-[#0a0a0a] border border-white/10 text-gray-200 text-sm font-medium hover:border-orange-500/30 transition-colors">
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="px-4 py-20">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">{c.faq.title}</h2>
+        <div class="space-y-3">
+          {c.faq.items.map((item: any) => (
+            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-4 hover:border-orange-500/20 transition-all duration-300">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <span class="text-white font-medium pr-4">{item.q}</span>
+                <span class="text-orange-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="text-gray-400 mt-3 leading-relaxed">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="px-4 py-24">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">{c.finalCta.title}</h2>
+        <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">{c.finalCta.subtitle}</p>
+        <a
+          href={contactHref}
+          class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+        >
+          {c.finalCta.cta} ↗
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

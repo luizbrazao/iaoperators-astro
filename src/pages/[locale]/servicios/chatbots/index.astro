@@ -1,0 +1,424 @@
+---
+export async function getStaticPaths() {
+  return [
+    { params: { locale: "es" } },
+    { params: { locale: "pt" } },
+    { params: { locale: "en" } },
+  ];
+}
+
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import { getLocale } from "../../../../i18n/ui";
+
+const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
+
+// Alvo de keywords: ES chatbot para empresas / chatbot whatsapp / asistente virtual
+// PT chatbot para empresas / chatbot para whatsapp / assistente virtual
+// EN chatbot development / whatsapp chatbot / ai chatbot / virtual assistant
+const CONTENT: Record<string, any> = {
+  es: {
+    meta: {
+      title: "Chatbots para empresas y WhatsApp con IA | IA Operators",
+      description:
+        "Creamos chatbots y asistentes virtuales con IA para WhatsApp y web: atienden, cualifican y reservan 24/7, integrados con tu operación. Sin humo.",
+    },
+    breadcrumb: "Chatbots",
+    hero: {
+      badge: "Chatbots con IA",
+      title: "Chatbots para empresas que atienden, cualifican y venden",
+      subtitle:
+        "Diseñamos chatbots y asistentes virtuales con IA para WhatsApp y tu web: responden al instante, cualifican leads y reservan citas 24/7 — conectados a tu CRM y tu operación real.",
+      cta: "Hablar con un especialista ↗",
+    },
+    problem: {
+      title: "Cada mensaje sin responder es un cliente que se enfría",
+      subtitle: "Si esto te suena, un chatbot bien hecho lo resuelve:",
+      items: [
+        "Mensajes de WhatsApp que se responden tarde o se pierden.",
+        "Leads que preguntan fuera de horario y nadie contesta.",
+        "Tu equipo repitiendo las mismas respuestas todo el día.",
+        "Reservas y citas gestionadas a mano, con errores y huecos.",
+        "Sin seguimiento: el que no compra hoy, se olvida mañana.",
+        "Un bot de menús rígidos que frustra en vez de ayudar.",
+      ],
+    },
+    services: {
+      title: "Qué construimos",
+      subtitle: "Asistentes que entienden, no menús que frustran. IA de verdad, integrada con tu negocio.",
+      items: [
+        { title: "Chatbot de WhatsApp", body: "Sobre la WhatsApp Cloud API oficial: atiende, responde dudas y guía al cliente hasta la conversión, sin apps intermediarias." },
+        { title: "Asistente virtual con IA", body: "Entiende lenguaje natural (no botones rígidos), responde con tu información real y escala a una persona cuando hace falta." },
+        { title: "Cualificación de leads", body: "El bot hace las preguntas correctas, puntúa al lead y lo envía a tu CRM ya cualificado y con contexto." },
+        { title: "Reservas y citas 24/7", body: "Integrado con tu agenda o sistema de booking (tipo Altegio): el cliente reserva solo, a cualquier hora." },
+        { title: "Integración con tu stack", body: "Conectado a CRM, agenda, catálogo o ERP vía API. El bot actúa sobre tu operación real, no en una isla." },
+        { title: "Seguimiento automático", body: "Recordatorios, reactivación y nurturing por WhatsApp para que ningún lead se enfríe." },
+      ],
+    },
+    process: {
+      badge: "Cómo trabajamos",
+      title: "Diagnóstico, diseño y ejecución — sin hand-offs",
+      subtitle: "El mismo equipo que entiende tus conversaciones construye el bot. Con IA, pero sin humo.",
+      phases: [
+        { code: "01", title: "Diagnosticamos", body: "Mapeamos las conversaciones reales de tu negocio: qué preguntan, dónde se pierden clientes y qué se puede automatizar." },
+        { code: "02", title: "Diseñamos", body: "Definimos el flujo conversacional, el tono, los puntos de escalado a humano y las integraciones necesarias." },
+        { code: "03", title: "Construimos", body: "Implementamos el bot sobre la API oficial de WhatsApp, con IA (LLM) e integraciones a tu CRM y agenda." },
+        { code: "04", title: "Medimos y mejoramos", body: "Analizamos conversaciones reales, afinamos respuestas y ampliamos el bot a nuevos casos de uso." },
+      ],
+    },
+    tech: {
+      title: "La tecnología que usamos",
+      subtitle: "WhatsApp oficial, LLM-first e integrada con tu negocio.",
+      items: ["WhatsApp Cloud API", "OpenAI / Claude", "n8n", "Supabase", "LangChain", "Altegio", "Webhooks & APIs", "Node / TypeScript"],
+    },
+    faq: {
+      title: "Preguntas frecuentes",
+      items: [
+        { q: "¿En qué se diferencia de un bot de menús normal?", a: "Un bot de menús sigue botones rígidos y frustra. El nuestro usa IA (LLM): entiende lenguaje natural, responde con tu información real y sabe cuándo pasar la conversación a una persona." },
+        { q: "¿Funciona sobre WhatsApp oficial?", a: "Sí, sobre la WhatsApp Cloud API oficial de Meta. Nada de apps no oficiales que arriesgan el bloqueo de tu número." },
+        { q: "¿Puede reservar citas o gestionar agendas?", a: "Sí. Lo integramos con tu sistema de reservas o agenda (por ejemplo Altegio) para que el cliente reserve solo, 24/7, sin intervención de tu equipo." },
+        { q: "¿Se conecta con mi CRM?", a: "Sí. El bot envía los leads cualificados a tu CRM con todo el contexto de la conversación, vía API o herramientas como n8n." },
+        { q: "¿Y si el bot no sabe responder?", a: "Definimos puntos de escalado: cuando la consulta supera al bot, pasa la conversación a una persona sin fricción y con el historial completo." },
+        { q: "¿Cuánto se tarda en tenerlo funcionando?", a: "Un primer asistente en producción suele estar listo en semanas. Empezamos con el caso de mayor impacto y ampliamos por fases." },
+      ],
+    },
+    finalCta: {
+      title: "¿Cuántos clientes pierdes por no responder a tiempo?",
+      subtitle: "En una llamada de 30 minutos vemos qué parte de tu atención se puede automatizar con un chatbot con IA.",
+      cta: "Hablar con un especialista",
+    },
+  },
+
+  pt: {
+    meta: {
+      title: "Chatbots para empresas e WhatsApp com IA | IA Operators",
+      description:
+        "Criamos chatbots e assistentes virtuais com IA para WhatsApp e web: atendem, qualificam e agendam 24/7, integrados à sua operação. Sem enrolação.",
+    },
+    breadcrumb: "Chatbots",
+    hero: {
+      badge: "Chatbots com IA",
+      title: "Chatbots para empresas que atendem, qualificam e vendem",
+      subtitle:
+        "Criamos chatbots e assistentes virtuais com IA para WhatsApp e seu site: respondem na hora, qualificam leads e agendam 24/7 — conectados ao seu CRM e à operação real.",
+      cta: "Falar com um especialista ↗",
+    },
+    problem: {
+      title: "Cada mensagem sem resposta é um cliente que esfria",
+      subtitle: "Se isto te soa familiar, um chatbot bem feito resolve:",
+      items: [
+        "Mensagens de WhatsApp respondidas tarde ou perdidas.",
+        "Leads que perguntam fora do horário e ninguém responde.",
+        "Sua equipe repetindo as mesmas respostas o dia todo.",
+        "Agendamentos feitos na mão, com erros e furos.",
+        "Sem follow-up: quem não compra hoje, esquece amanhã.",
+        "Um bot de menus rígidos que irrita em vez de ajudar.",
+      ],
+    },
+    services: {
+      title: "O que construímos",
+      subtitle: "Assistentes que entendem, não menus que irritam. IA de verdade, integrada ao seu negócio.",
+      items: [
+        { title: "Chatbot de WhatsApp", body: "Sobre a WhatsApp Cloud API oficial: atende, tira dúvidas e conduz o cliente até a conversão, sem apps intermediárias." },
+        { title: "Assistente virtual com IA", body: "Entende linguagem natural (não botões rígidos), responde com a sua informação real e escala para um humano quando preciso." },
+        { title: "Qualificação de leads", body: "O bot faz as perguntas certas, pontua o lead e envia para o seu CRM já qualificado e com contexto." },
+        { title: "Agendamentos 24/7", body: "Integrado à sua agenda ou sistema de booking (tipo Altegio): o cliente agenda sozinho, a qualquer hora." },
+        { title: "Integração com seu stack", body: "Conectado a CRM, agenda, catálogo ou ERP via API. O bot age sobre a operação real, não numa ilha." },
+        { title: "Follow-up automático", body: "Lembretes, reativação e nurturing por WhatsApp para nenhum lead esfriar." },
+      ],
+    },
+    process: {
+      badge: "Como trabalhamos",
+      title: "Diagnóstico, design e execução — sem hand-offs",
+      subtitle: "A mesma equipe que entende as suas conversas constrói o bot. Com IA, mas sem enrolação.",
+      phases: [
+        { code: "01", title: "Diagnosticamos", body: "Mapeamos as conversas reais do seu negócio: o que perguntam, onde se perdem clientes e o que dá para automatizar." },
+        { code: "02", title: "Desenhamos", body: "Definimos o fluxo de conversa, o tom, os pontos de escalada para humano e as integrações necessárias." },
+        { code: "03", title: "Construímos", body: "Implementamos o bot sobre a API oficial do WhatsApp, com IA (LLM) e integrações ao seu CRM e agenda." },
+        { code: "04", title: "Medimos e melhoramos", body: "Analisamos conversas reais, ajustamos respostas e ampliamos o bot para novos casos de uso." },
+      ],
+    },
+    tech: {
+      title: "A tecnologia que usamos",
+      subtitle: "WhatsApp oficial, LLM-first e integrada ao seu negócio.",
+      items: ["WhatsApp Cloud API", "OpenAI / Claude", "n8n", "Supabase", "LangChain", "Altegio", "Webhooks & APIs", "Node / TypeScript"],
+    },
+    faq: {
+      title: "Perguntas frequentes",
+      items: [
+        { q: "Qual a diferença para um bot de menus comum?", a: "Um bot de menus segue botões rígidos e irrita. O nosso usa IA (LLM): entende linguagem natural, responde com a sua informação real e sabe quando passar a conversa para uma pessoa." },
+        { q: "Funciona no WhatsApp oficial?", a: "Sim, sobre a WhatsApp Cloud API oficial da Meta. Nada de apps não oficiais que arriscam o bloqueio do seu número." },
+        { q: "Consegue agendar ou gerenciar agenda?", a: "Sim. Integramos com o seu sistema de reservas ou agenda (por exemplo Altegio) para o cliente agendar sozinho, 24/7, sem intervenção da equipe." },
+        { q: "Conecta com meu CRM?", a: "Sim. O bot envia os leads qualificados para o seu CRM com todo o contexto da conversa, via API ou ferramentas como n8n." },
+        { q: "E se o bot não souber responder?", a: "Definimos pontos de escalada: quando a dúvida supera o bot, ele passa a conversa para uma pessoa sem fricção e com o histórico completo." },
+        { q: "Quanto tempo para colocar no ar?", a: "Um primeiro assistente em produção costuma ficar pronto em semanas. Começamos pelo caso de maior impacto e ampliamos por fases." },
+      ],
+    },
+    finalCta: {
+      title: "Quantos clientes você perde por não responder a tempo?",
+      subtitle: "Numa call de 30 minutos vemos que parte do seu atendimento dá para automatizar com um chatbot com IA.",
+      cta: "Falar com um especialista",
+    },
+  },
+
+  en: {
+    meta: {
+      title: "Chatbot development: WhatsApp & AI assistants | IA Operators",
+      description:
+        "We build AI chatbots and virtual assistants for WhatsApp and web: they answer, qualify and book 24/7, integrated with your operation. No hype.",
+    },
+    breadcrumb: "Chatbots",
+    hero: {
+      badge: "AI Chatbots",
+      title: "Chatbots that answer, qualify and book for you",
+      subtitle:
+        "We build AI chatbots and virtual assistants for WhatsApp and your website: instant replies, lead qualification and 24/7 booking — connected to your CRM and real operation.",
+      cta: "Talk to a specialist ↗",
+    },
+    problem: {
+      title: "Every unanswered message is a customer going cold",
+      subtitle: "If this sounds familiar, a well-built chatbot fixes it:",
+      items: [
+        "WhatsApp messages answered late or lost.",
+        "Leads asking after hours with no one to reply.",
+        "Your team repeating the same answers all day.",
+        "Bookings handled by hand, with errors and gaps.",
+        "No follow-up: whoever doesn't buy today forgets tomorrow.",
+        "A rigid menu bot that frustrates instead of helping.",
+      ],
+    },
+    services: {
+      title: "What we build",
+      subtitle: "Assistants that understand, not menus that frustrate. Real AI, integrated with your business.",
+      items: [
+        { title: "WhatsApp chatbot", body: "On the official WhatsApp Cloud API: answers, handles questions and guides the customer to conversion, with no third-party apps." },
+        { title: "AI virtual assistant", body: "Understands natural language (not rigid buttons), replies with your real information and escalates to a human when needed." },
+        { title: "Lead qualification", body: "The bot asks the right questions, scores the lead and sends it to your CRM already qualified and with context." },
+        { title: "24/7 booking", body: "Integrated with your calendar or booking system (like Altegio): the customer books on their own, any time." },
+        { title: "Integration with your stack", body: "Connected to CRM, calendar, catalog or ERP via API. The bot acts on your real operation, not on an island." },
+        { title: "Automatic follow-up", body: "Reminders, re-engagement and nurturing over WhatsApp so no lead goes cold." },
+      ],
+    },
+    process: {
+      badge: "How we work",
+      title: "Diagnose, design and build — no hand-offs",
+      subtitle: "The same team that understands your conversations builds the bot. With AI, but no hype.",
+      phases: [
+        { code: "01", title: "We diagnose", body: "We map your real conversations: what customers ask, where they drop off and what can be automated." },
+        { code: "02", title: "We design", body: "We define the conversation flow, tone, human-escalation points and the integrations needed." },
+        { code: "03", title: "We build", body: "We implement the bot on the official WhatsApp API, with AI (LLM) and integrations to your CRM and calendar." },
+        { code: "04", title: "We measure & improve", body: "We analyze real conversations, refine answers and extend the bot to new use cases." },
+      ],
+    },
+    tech: {
+      title: "The tech we use",
+      subtitle: "Official WhatsApp, LLM-first and integrated with your business.",
+      items: ["WhatsApp Cloud API", "OpenAI / Claude", "n8n", "Supabase", "LangChain", "Altegio", "Webhooks & APIs", "Node / TypeScript"],
+    },
+    faq: {
+      title: "Frequently asked questions",
+      items: [
+        { q: "How is this different from a normal menu bot?", a: "A menu bot follows rigid buttons and frustrates users. Ours uses AI (LLM): it understands natural language, replies with your real information and knows when to hand the conversation to a person." },
+        { q: "Does it run on official WhatsApp?", a: "Yes, on Meta's official WhatsApp Cloud API. No unofficial apps that risk getting your number banned." },
+        { q: "Can it book appointments or manage a calendar?", a: "Yes. We integrate it with your booking system or calendar (for example Altegio) so customers book on their own, 24/7, with no work for your team." },
+        { q: "Does it connect to my CRM?", a: "Yes. The bot sends qualified leads to your CRM with the full conversation context, via API or tools like n8n." },
+        { q: "What if the bot can't answer?", a: "We define escalation points: when a query is beyond the bot, it hands the conversation to a person seamlessly, with the full history." },
+        { q: "How long until it's live?", a: "A first assistant in production is usually ready in weeks. We start with the highest-impact case and expand in phases." },
+      ],
+    },
+    finalCta: {
+      title: "How many customers do you lose by not replying in time?",
+      subtitle: "In a 30-minute call we'll map which part of your support can be automated with an AI chatbot.",
+      cta: "Talk to a specialist",
+    },
+  },
+};
+
+const c = CONTENT[locale] ?? CONTENT.es;
+const contactHref = `/${locale}/contact/`;
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(`/${locale}/servicios/chatbots/`, site).toString();
+
+const providerSchema = {
+  "@type": ["Organization", "ProfessionalService"],
+  name: "IA Operators",
+  url: site,
+  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+};
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: c.hero.title,
+  serviceType: "Chatbot development and conversational AI",
+  provider: providerSchema,
+  areaServed: ["ES", "PT", "BR", "US", "GB"],
+  description: c.meta.description,
+  url: pageUrl,
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: c.breadcrumb, item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: c.faq.items.map((item: any) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+
+const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
+---
+
+<BaseLayout title={c.meta.title} description={c.meta.description} jsonLd={jsonLd}>
+  <div class="bg-transparent text-white">
+    <!-- HERO -->
+    <section class="relative px-4 pt-28 pb-20">
+      <div class="max-w-5xl mx-auto text-center">
+        <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-6">
+          {c.hero.badge}
+        </span>
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
+          {c.hero.title}
+        </h1>
+        <p class="text-lg md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto">
+          {c.hero.subtitle}
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={contactHref}
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-base hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+          >
+            {c.hero.cta}
+          </a>
+          <a
+            href="#servicios"
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-base hover:bg-orange-500/10 transition-all duration-300"
+          >
+            {c.services.title}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">{c.problem.title}</h2>
+        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">{c.problem.subtitle}</p>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {c.problem.items.map((item: string) => (
+            <li class="flex items-start gap-3 bg-[#0a0a0a] border border-white/5 rounded-2xl p-5">
+              <span class="text-orange-400 text-xl leading-none mt-0.5">✕</span>
+              <p class="text-gray-200 text-base leading-relaxed">{item}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="servicios" class="px-4 py-20">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{c.services.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{c.services.subtitle}</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {c.services.items.map((item: any, idx: number) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 font-bold text-sm">
+                  0{idx + 1}
+                </span>
+                <h3 class="text-xl font-semibold text-white">{item.title}</h3>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="px-4 py-24 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+            {c.process.badge}
+          </span>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{c.process.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{c.process.subtitle}</p>
+        </div>
+        <ol class="space-y-6 max-w-4xl mx-auto">
+          {c.process.phases.map((phase: any) => (
+            <li class="flex flex-col md:flex-row gap-6 bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8 hover:border-orange-500/20 transition-all duration-300">
+              <div class="md:w-52 shrink-0">
+                <div class="text-orange-400 text-xs font-semibold uppercase tracking-widest mb-1">{phase.code}</div>
+                <h3 class="text-xl font-bold text-white">{phase.title}</h3>
+              </div>
+              <p class="text-gray-300 leading-relaxed flex-1">{phase.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- TECH -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-3">{c.tech.title}</h2>
+        <p class="text-gray-400 mb-10 max-w-2xl mx-auto">{c.tech.subtitle}</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          {c.tech.items.map((item: string) => (
+            <span class="px-5 py-2 rounded-full bg-[#0a0a0a] border border-white/10 text-gray-200 text-sm font-medium hover:border-orange-500/30 transition-colors">
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="px-4 py-20">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">{c.faq.title}</h2>
+        <div class="space-y-3">
+          {c.faq.items.map((item: any) => (
+            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-4 hover:border-orange-500/20 transition-all duration-300">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <span class="text-white font-medium pr-4">{item.q}</span>
+                <span class="text-orange-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="text-gray-400 mt-3 leading-relaxed">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="px-4 py-24">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">{c.finalCta.title}</h2>
+        <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">{c.finalCta.subtitle}</p>
+        <a
+          href={contactHref}
+          class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+        >
+          {c.finalCta.cta} ↗
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

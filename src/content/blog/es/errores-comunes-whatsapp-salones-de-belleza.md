@@ -104,3 +104,7 @@ Si tu salón usa **Altegio**, ya tienes la pieza central de la operación: la ag
 - [Altegio: Installing Webhooks via a Private App in the Marketplace](https://alteg.io/en/support/knowledge-base/6756091544989/)
 
 - [ChatPlug – IA Operators](https://chatplug.iaoperators.com/)
+
+---
+
+¿Prefieres que lo montemos por ti? Descubre nuestro servicio de **[chatbots para empresas y WhatsApp](/es/servicios/chatbots/)**: asistentes con IA que atienden, cualifican y reservan citas 24/7, integrados con Altegio.

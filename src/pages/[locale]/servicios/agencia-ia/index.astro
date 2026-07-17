@@ -1,0 +1,424 @@
+---
+export async function getStaticPaths() {
+  return [
+    { params: { locale: "es" } },
+    { params: { locale: "pt" } },
+    { params: { locale: "en" } },
+  ];
+}
+
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import { getLocale } from "../../../../i18n/ui";
+
+const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
+
+// Alvo: ES agencia de inteligencia artificial / consultoría ia / ia para empresas
+// PT agência de inteligência artificial / consultoria de ia
+// EN ai agency / ai consulting
+const CONTENT: Record<string, any> = {
+  es: {
+    meta: {
+      title: "Agencia de inteligencia artificial para empresas | IA Operators",
+      description:
+        "Agencia de inteligencia artificial para empresas: estrategia, consultoría e implementación de IA a medida — agentes, automatización y chatbots. Sin humo.",
+    },
+    breadcrumb: "Agencia de IA",
+    hero: {
+      badge: "Agencia de IA",
+      title: "Agencia de inteligencia artificial para empresas",
+      subtitle:
+        "De la estrategia a la implementación: te ayudamos a aplicar IA donde de verdad mueve la aguja — agentes, automatización, chatbots e integraciones a medida. Con IA, pero sin humo.",
+      cta: "Hablar con un especialista ↗",
+    },
+    problem: {
+      title: "Todo el mundo habla de IA. Pocos la aplican bien.",
+      subtitle: "Si te reconoces aquí, necesitas estrategia antes que herramientas:",
+      items: [
+        "Sabes que la IA es importante, pero no por dónde empezar.",
+        "Pruebas herramientas sueltas sin impacto real en el negocio.",
+        "Miedo a invertir en IA y que quede en un experimento.",
+        "Nadie en tu equipo tiene el tiempo o el perfil técnico.",
+        "Proyectos de IA que nunca llegan a producción.",
+        "Mucho hype, pocos resultados medibles.",
+      ],
+    },
+    services: {
+      title: "Qué hacemos",
+      subtitle: "Estrategia e implementación de IA de verdad. Lo que mueve la aguja, no lo que suena bien.",
+      items: [
+        { title: "Estrategia y consultoría de IA", body: "Identificamos dónde la IA aporta valor real en tu negocio y diseñamos un roadmap priorizado por impacto." },
+        { title: "Agentes y automatización", body: "Agentes de IA y automatizaciones que ejecutan procesos reales sobre tus herramientas, no demos bonitas." },
+        { title: "Chatbots y asistentes", body: "Asistentes con IA para WhatsApp y web que atienden, cualifican y reservan, integrados con tu operación." },
+        { title: "Soluciones a medida", body: "Sistemas con IA construidos para tu caso: clasificación, generación, análisis o lo que tu negocio necesite." },
+        { title: "Integraciones API-first", body: "Conectamos la IA con tu stack (CRM, ERP, datos) para que actúe donde ya trabajas." },
+        { title: "Formación y adopción", body: "Ayudamos a tu equipo a usar la IA con criterio, para que la adopción sea real y sostenible." },
+      ],
+    },
+    process: {
+      badge: "Cómo trabajamos",
+      title: "Diagnóstico, estrategia y ejecución — sin hand-offs",
+      subtitle: "El mismo equipo que define la estrategia la construye hasta producción. Con IA, pero sin humo.",
+      phases: [
+        { code: "01", title: "Diagnosticamos", body: "Mapeamos tus procesos y datos, y dónde la IA aporta valor real. Priorizamos por impacto vs. esfuerzo." },
+        { code: "02", title: "Diseñamos la estrategia", body: "Definimos el roadmap de IA: qué construir, en qué orden y con qué retorno esperado." },
+        { code: "03", title: "Construimos", body: "Implementamos agentes, automatizaciones, chatbots e integraciones. Con ingeniería, tipado y validación." },
+        { code: "04", title: "Operamos y escalamos", body: "Medimos resultados, iteramos y ampliamos la IA a nuevos procesos sobre una base sólida." },
+      ],
+    },
+    tech: {
+      title: "La tecnología que usamos",
+      subtitle: "LLM-first, multi-agente y lista para producción.",
+      items: ["OpenAI / Claude", "LangChain", "n8n", "Supabase", "Multi-agente", "WhatsApp Cloud API", "Webhooks & APIs", "Node / TypeScript"],
+    },
+    faq: {
+      title: "Preguntas frecuentes",
+      items: [
+        { q: "¿Qué diferencia hay entre una agencia de IA y una consultora?", a: "Las consultoras entregan una presentación y se van. Nosotros diagnosticamos y después construimos: el mismo equipo que define la estrategia la implementa hasta producción." },
+        { q: "¿Por dónde se empieza con la IA?", a: "Por un diagnóstico honesto: dónde tienes procesos repetitivos, datos o atención que la IA puede mejorar. Priorizamos un primer caso de alto impacto y bajo riesgo, no un mega-proyecto." },
+        { q: "¿Necesito tener muchos datos o un equipo técnico?", a: "No necesariamente. Muchos casos de valor no requieren big data ni equipo propio: nosotros ponemos la parte técnica y trabajamos con lo que ya tienes." },
+        { q: "¿Es seguro para los datos de mi empresa?", a: "Sí. Diseñamos con permisos mínimos, estado controlado y, cuando el caso lo exige, modelos privados o self-hosted para que tus datos no salgan de tu entorno." },
+        { q: "¿Cuánto tarda en verse valor?", a: "Un primer caso en producción suele estar en semanas, no meses. Preferimos entregar algo funcionando pronto y escalar desde ahí." },
+        { q: "¿Cómo empezamos?", a: "Una llamada de 30 minutos para entender tu negocio. Si hay encaje, te proponemos un primer caso de IA con alcance y retorno claros." },
+      ],
+    },
+    finalCta: {
+      title: "¿Dónde podría la IA quitarte trabajo y traerte clientes?",
+      subtitle: "En una llamada de 30 minutos identificamos tu mejor primer caso de IA — sin humo y sin compromiso.",
+      cta: "Hablar con un especialista",
+    },
+  },
+
+  pt: {
+    meta: {
+      title: "Agência de inteligência artificial para empresas | IA Operators",
+      description:
+        "Agência de inteligência artificial para empresas: estratégia, consultoria e implementação de IA sob medida — agentes, automação e chatbots. Sem enrolação.",
+    },
+    breadcrumb: "Agência de IA",
+    hero: {
+      badge: "Agência de IA",
+      title: "Agência de inteligência artificial para empresas",
+      subtitle:
+        "Da estratégia à implementação: ajudamos você a aplicar IA onde realmente move o ponteiro — agentes, automação, chatbots e integrações sob medida. Com IA, mas sem enrolação.",
+      cta: "Falar com um especialista ↗",
+    },
+    problem: {
+      title: "Todo mundo fala de IA. Poucos aplicam bem.",
+      subtitle: "Se você se reconhece aqui, precisa de estratégia antes de ferramentas:",
+      items: [
+        "Você sabe que a IA é importante, mas não por onde começar.",
+        "Testa ferramentas soltas sem impacto real no negócio.",
+        "Medo de investir em IA e ficar só num experimento.",
+        "Ninguém no seu time tem o tempo ou o perfil técnico.",
+        "Projetos de IA que nunca chegam à produção.",
+        "Muito hype, poucos resultados mensuráveis.",
+      ],
+    },
+    services: {
+      title: "O que fazemos",
+      subtitle: "Estratégia e implementação de IA de verdade. O que move o ponteiro, não o que soa bem.",
+      items: [
+        { title: "Estratégia e consultoria de IA", body: "Identificamos onde a IA agrega valor real no seu negócio e desenhamos um roadmap priorizado por impacto." },
+        { title: "Agentes e automação", body: "Agentes de IA e automações que executam processos reais sobre suas ferramentas, não demos bonitas." },
+        { title: "Chatbots e assistentes", body: "Assistentes com IA para WhatsApp e web que atendem, qualificam e agendam, integrados à sua operação." },
+        { title: "Soluções sob medida", body: "Sistemas com IA construídos para o seu caso: classificação, geração, análise ou o que o seu negócio precisar." },
+        { title: "Integrações API-first", body: "Conectamos a IA ao seu stack (CRM, ERP, dados) para que ela aja onde você já trabalha." },
+        { title: "Treinamento e adoção", body: "Ajudamos seu time a usar a IA com critério, para que a adoção seja real e sustentável." },
+      ],
+    },
+    process: {
+      badge: "Como trabalhamos",
+      title: "Diagnóstico, estratégia e execução — sem hand-offs",
+      subtitle: "O mesmo time que define a estratégia constrói até a produção. Com IA, mas sem enrolação.",
+      phases: [
+        { code: "01", title: "Diagnosticamos", body: "Mapeamos seus processos e dados, e onde a IA agrega valor real. Priorizamos por impacto vs. esforço." },
+        { code: "02", title: "Desenhamos a estratégia", body: "Definimos o roadmap de IA: o que construir, em que ordem e com que retorno esperado." },
+        { code: "03", title: "Construímos", body: "Implementamos agentes, automações, chatbots e integrações. Com engenharia, tipagem e validação." },
+        { code: "04", title: "Operamos e escalamos", body: "Medimos resultados, iteramos e ampliamos a IA para novos processos sobre uma base sólida." },
+      ],
+    },
+    tech: {
+      title: "A tecnologia que usamos",
+      subtitle: "LLM-first, multi-agente e pronta para produção.",
+      items: ["OpenAI / Claude", "LangChain", "n8n", "Supabase", "Multi-agente", "WhatsApp Cloud API", "Webhooks & APIs", "Node / TypeScript"],
+    },
+    faq: {
+      title: "Perguntas frequentes",
+      items: [
+        { q: "Qual a diferença entre uma agência de IA e uma consultoria?", a: "As consultorias entregam uma apresentação e vão embora. Nós diagnosticamos e depois construímos: o mesmo time que define a estratégia implementa até a produção." },
+        { q: "Por onde se começa com a IA?", a: "Por um diagnóstico honesto: onde você tem processos repetitivos, dados ou atendimento que a IA pode melhorar. Priorizamos um primeiro caso de alto impacto e baixo risco, não um mega-projeto." },
+        { q: "Preciso ter muitos dados ou um time técnico?", a: "Não necessariamente. Muitos casos de valor não exigem big data nem time próprio: nós colocamos a parte técnica e trabalhamos com o que você já tem." },
+        { q: "É seguro para os dados da minha empresa?", a: "Sim. Projetamos com permissões mínimas, estado controlado e, quando o caso exige, modelos privados ou self-hosted para que seus dados não saiam do seu ambiente." },
+        { q: "Quanto tempo para ver valor?", a: "Um primeiro caso em produção costuma ficar pronto em semanas, não meses. Preferimos entregar algo funcionando cedo e escalar a partir daí." },
+        { q: "Como começamos?", a: "Uma call de 30 minutos para entender seu negócio. Se houver encaixe, propomos um primeiro caso de IA com escopo e retorno claros." },
+      ],
+    },
+    finalCta: {
+      title: "Onde a IA poderia tirar trabalho de você e trazer clientes?",
+      subtitle: "Numa call de 30 minutos identificamos seu melhor primeiro caso de IA — sem enrolação e sem compromisso.",
+      cta: "Falar com um especialista",
+    },
+  },
+
+  en: {
+    meta: {
+      title: "AI agency for businesses: strategy to build | IA Operators",
+      description:
+        "AI agency for businesses: strategy, consulting and custom AI implementation — agents, automation and chatbots. From diagnosis to production, no hype.",
+    },
+    breadcrumb: "AI agency",
+    hero: {
+      badge: "AI Agency",
+      title: "AI agency for businesses: from strategy to build",
+      subtitle:
+        "From strategy to implementation: we help you apply AI where it truly moves the needle — agents, automation, chatbots and custom integrations. With AI, but no hype.",
+      cta: "Talk to a specialist ↗",
+    },
+    problem: {
+      title: "Everyone talks about AI. Few apply it well.",
+      subtitle: "If this is you, you need strategy before tools:",
+      items: [
+        "You know AI matters, but not where to start.",
+        "You try scattered tools with no real business impact.",
+        "Afraid to invest in AI and end up with just an experiment.",
+        "No one on your team has the time or technical profile.",
+        "AI projects that never reach production.",
+        "Lots of hype, few measurable results.",
+      ],
+    },
+    services: {
+      title: "What we do",
+      subtitle: "Real AI strategy and implementation. What moves the needle, not what sounds good.",
+      items: [
+        { title: "AI strategy & consulting", body: "We identify where AI adds real value in your business and design a roadmap prioritized by impact." },
+        { title: "Agents & automation", body: "AI agents and automations that run real processes on your tools, not pretty demos." },
+        { title: "Chatbots & assistants", body: "AI assistants for WhatsApp and web that support, qualify and book, integrated with your operation." },
+        { title: "Custom solutions", body: "AI systems built for your case: classification, generation, analysis or whatever your business needs." },
+        { title: "API-first integrations", body: "We connect AI to your stack (CRM, ERP, data) so it acts where you already work." },
+        { title: "Training & adoption", body: "We help your team use AI with judgment, so adoption is real and sustainable." },
+      ],
+    },
+    process: {
+      badge: "How we work",
+      title: "Diagnose, strategy and build — no hand-offs",
+      subtitle: "The same team that defines the strategy builds it all the way to production. With AI, but no hype.",
+      phases: [
+        { code: "01", title: "We diagnose", body: "We map your processes and data, and where AI adds real value. We prioritize by impact vs. effort." },
+        { code: "02", title: "We design the strategy", body: "We define the AI roadmap: what to build, in what order and with what expected return." },
+        { code: "03", title: "We build", body: "We implement agents, automations, chatbots and integrations. With engineering, typing and validation." },
+        { code: "04", title: "We run & scale", body: "We measure results, iterate and extend AI to new processes on a solid base." },
+      ],
+    },
+    tech: {
+      title: "The tech we use",
+      subtitle: "LLM-first, multi-agent and production-ready.",
+      items: ["OpenAI / Claude", "LangChain", "n8n", "Supabase", "Multi-agent", "WhatsApp Cloud API", "Webhooks & APIs", "Node / TypeScript"],
+    },
+    faq: {
+      title: "Frequently asked questions",
+      items: [
+        { q: "What's the difference between an AI agency and a consultancy?", a: "Consultancies hand over a deck and leave. We diagnose and then build: the same team that defines the strategy implements it all the way to production." },
+        { q: "Where do you start with AI?", a: "With an honest diagnosis: where you have repetitive processes, data or support that AI can improve. We prioritize a first high-impact, low-risk case, not a mega-project." },
+        { q: "Do I need lots of data or a technical team?", a: "Not necessarily. Many valuable use cases don't require big data or an in-house team: we bring the technical side and work with what you already have." },
+        { q: "Is it secure for my company's data?", a: "Yes. We design with least-privilege access, controlled state and, when the case requires it, private or self-hosted models so your data never leaves your environment." },
+        { q: "How long until we see value?", a: "A first case in production is usually ready in weeks, not months. We prefer to ship something working early and scale from there." },
+        { q: "How do we start?", a: "A 30-minute call to understand your business. If it's a fit, we propose a first AI case with clear scope and return." },
+      ],
+    },
+    finalCta: {
+      title: "Where could AI take work off your plate and bring in customers?",
+      subtitle: "In a 30-minute call we identify your best first AI use case — no hype, no commitment.",
+      cta: "Talk to a specialist",
+    },
+  },
+};
+
+const c = CONTENT[locale] ?? CONTENT.es;
+const contactHref = `/${locale}/contact/`;
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(`/${locale}/servicios/agencia-ia/`, site).toString();
+
+const providerSchema = {
+  "@type": ["Organization", "ProfessionalService"],
+  name: "IA Operators",
+  url: site,
+  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+};
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: c.hero.title,
+  serviceType: "Artificial intelligence agency and consulting",
+  provider: providerSchema,
+  areaServed: ["ES", "PT", "BR", "US", "GB"],
+  description: c.meta.description,
+  url: pageUrl,
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: c.breadcrumb, item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: c.faq.items.map((item: any) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+
+const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
+---
+
+<BaseLayout title={c.meta.title} description={c.meta.description} jsonLd={jsonLd}>
+  <div class="bg-transparent text-white">
+    <!-- HERO -->
+    <section class="relative px-4 pt-28 pb-20">
+      <div class="max-w-5xl mx-auto text-center">
+        <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-6">
+          {c.hero.badge}
+        </span>
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
+          {c.hero.title}
+        </h1>
+        <p class="text-lg md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto">
+          {c.hero.subtitle}
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={contactHref}
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-base hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+          >
+            {c.hero.cta}
+          </a>
+          <a
+            href="#servicios"
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-base hover:bg-orange-500/10 transition-all duration-300"
+          >
+            {c.services.title}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">{c.problem.title}</h2>
+        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">{c.problem.subtitle}</p>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {c.problem.items.map((item: string) => (
+            <li class="flex items-start gap-3 bg-[#0a0a0a] border border-white/5 rounded-2xl p-5">
+              <span class="text-orange-400 text-xl leading-none mt-0.5">✕</span>
+              <p class="text-gray-200 text-base leading-relaxed">{item}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="servicios" class="px-4 py-20">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{c.services.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{c.services.subtitle}</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {c.services.items.map((item: any, idx: number) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 font-bold text-sm">
+                  0{idx + 1}
+                </span>
+                <h3 class="text-xl font-semibold text-white">{item.title}</h3>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="px-4 py-24 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+            {c.process.badge}
+          </span>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{c.process.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{c.process.subtitle}</p>
+        </div>
+        <ol class="space-y-6 max-w-4xl mx-auto">
+          {c.process.phases.map((phase: any) => (
+            <li class="flex flex-col md:flex-row gap-6 bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8 hover:border-orange-500/20 transition-all duration-300">
+              <div class="md:w-52 shrink-0">
+                <div class="text-orange-400 text-xs font-semibold uppercase tracking-widest mb-1">{phase.code}</div>
+                <h3 class="text-xl font-bold text-white">{phase.title}</h3>
+              </div>
+              <p class="text-gray-300 leading-relaxed flex-1">{phase.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- TECH -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-3">{c.tech.title}</h2>
+        <p class="text-gray-400 mb-10 max-w-2xl mx-auto">{c.tech.subtitle}</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          {c.tech.items.map((item: string) => (
+            <span class="px-5 py-2 rounded-full bg-[#0a0a0a] border border-white/10 text-gray-200 text-sm font-medium hover:border-orange-500/30 transition-colors">
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="px-4 py-20">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">{c.faq.title}</h2>
+        <div class="space-y-3">
+          {c.faq.items.map((item: any) => (
+            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-4 hover:border-orange-500/20 transition-all duration-300">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <span class="text-white font-medium pr-4">{item.q}</span>
+                <span class="text-orange-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="text-gray-400 mt-3 leading-relaxed">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="px-4 py-24">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">{c.finalCta.title}</h2>
+        <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">{c.finalCta.subtitle}</p>
+        <a
+          href={contactHref}
+          class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+        >
+          {c.finalCta.cta} ↗
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

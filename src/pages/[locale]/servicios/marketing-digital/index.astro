@@ -1,0 +1,424 @@
+---
+export async function getStaticPaths() {
+  return [
+    { params: { locale: "es" } },
+    { params: { locale: "pt" } },
+    { params: { locale: "en" } },
+  ];
+}
+
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import { getLocale } from "../../../../i18n/ui";
+
+const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
+
+// Alvo: ES agencia de marketing digital / marketing digital
+// PT agência de marketing digital / marketing digital
+// EN digital marketing agency
+const CONTENT: Record<string, any> = {
+  es: {
+    meta: {
+      title: "Agencia de marketing digital orientada a datos | IA Operators",
+      description:
+        "Agencia de marketing digital para empresas: estrategia, SEO, contenido, ads y automatización con IA. Orientada a leads y ventas, medible y sin humo.",
+    },
+    breadcrumb: "Marketing digital",
+    hero: {
+      badge: "Marketing digital",
+      title: "Agencia de marketing digital orientada a resultados",
+      subtitle:
+        "Estrategia, captación y conversión en un solo equipo: SEO, contenido, ads y automatización con IA — todo medido por leads y ventas, no por 'me gusta'.",
+      cta: "Hablar con un especialista ↗",
+    },
+    problem: {
+      title: "Marketing que no se mide es dinero que no se controla",
+      subtitle: "Si te pasa esto, tu marketing no está trabajando:",
+      items: [
+        "Inviertes en anuncios sin saber qué te trae clientes.",
+        "Publicas en redes sin una estrategia detrás.",
+        "Los leads llegan y se pierden por falta de seguimiento.",
+        "Cada canal por su lado, sin una visión de embudo.",
+        "Agencias que entregan informes bonitos y cero ventas.",
+        "No sabes tu coste por lead ni tu retorno real.",
+      ],
+    },
+    services: {
+      title: "Qué hacemos",
+      subtitle: "Marketing de embudo completo, con datos y automatización. De la estrategia a la venta.",
+      items: [
+        { title: "Estrategia y embudo", body: "Definimos objetivos, público y el embudo completo: qué canal para qué etapa, con metas y presupuesto claros." },
+        { title: "SEO y contenido", body: "Posicionamiento orgánico y contenido por intención de búsqueda para captar sin depender solo de anuncios." },
+        { title: "Publicidad (ads)", body: "Campañas en Google y Meta orientadas a coste por lead y retorno, no a impresiones vacías." },
+        { title: "Automatización de marketing", body: "Captación, nurturing y seguimiento automáticos con IA y n8n: ningún lead se enfría." },
+        { title: "CRM e integración", body: "Conectamos todos los canales a tu CRM para tener una única visión del lead al cliente." },
+        { title: "Analítica y optimización", body: "Medición de coste por lead, conversión y ROI. Mejoramos sobre datos, no sobre opiniones." },
+      ],
+    },
+    process: {
+      badge: "Cómo trabajamos",
+      title: "Estrategia, ejecución y medición — sin hand-offs",
+      subtitle: "El mismo equipo que idea la estrategia la implementa y la mide. Con IA, pero sin humo.",
+      phases: [
+        { code: "01", title: "Diagnosticamos", body: "Analizamos tu situación, tus canales y tu embudo actual. Detectamos fugas y oportunidades." },
+        { code: "02", title: "Diseñamos la estrategia", body: "Definimos canales, mensajes, presupuesto y metas medibles por etapa del embudo." },
+        { code: "03", title: "Ejecutamos", body: "SEO, contenido, ads y automatización — integrados y conectados a tu CRM. Con IA donde aporta." },
+        { code: "04", title: "Medimos y escalamos", body: "Seguimos coste por lead, conversión y ROI, y doblamos inversión en lo que funciona." },
+      ],
+    },
+    tech: {
+      title: "Con qué trabajamos",
+      subtitle: "Canales, automatización y datos, integrados.",
+      items: ["SEO", "Google Ads", "Meta Ads", "n8n", "CRM / GoHighLevel", "Email / Klaviyo", "Analytics", "IA / LLM"],
+    },
+    faq: {
+      title: "Preguntas frecuentes",
+      items: [
+        { q: "¿Trabajáis todos los canales o solo uno?", a: "Trabajamos el embudo completo (SEO, contenido, ads, email, automatización), pero priorizamos según tu negocio y presupuesto. No tiene sentido dispersar: empezamos por donde hay más retorno." },
+        { q: "¿En qué se diferencia de otra agencia de marketing?", a: "Somos una agencia técnica: integramos, automatizamos con IA y medimos por leads y ventas, no por métricas de vanidad. El mismo equipo que idea la estrategia la implementa y la conecta a tu CRM." },
+        { q: "¿Gestionáis el presupuesto de publicidad?", a: "Sí. Definimos y gestionamos las campañas orientadas a coste por lead y retorno, con reporting transparente de en qué se gasta y qué devuelve." },
+        { q: "¿Cómo usáis la IA en marketing?", a: "Para automatizar captación y seguimiento, cualificar leads, generar y personalizar contenido, y analizar resultados más rápido. Siempre con criterio, no por moda." },
+        { q: "¿Cómo medís el éxito?", a: "Por coste por lead, leads cualificados, conversiones y ROI. Informes claros orientados a negocio." },
+        { q: "¿Cómo empezamos?", a: "Una llamada de 30 minutos para entender tu situación. Si hay encaje, te proponemos una estrategia con canales, prioridades y metas." },
+      ],
+    },
+    finalCta: {
+      title: "¿Tu marketing trae clientes o solo gasta presupuesto?",
+      subtitle: "En una llamada de 30 minutos revisamos tus canales y dónde está tu mayor oportunidad de crecimiento.",
+      cta: "Hablar con un especialista",
+    },
+  },
+
+  pt: {
+    meta: {
+      title: "Agência de marketing digital orientada a dados | IA Operators",
+      description:
+        "Agência de marketing digital para empresas: estratégia, SEO, conteúdo, ads e automação com IA. Orientada a leads e vendas, mensurável e sem enrolação.",
+    },
+    breadcrumb: "Marketing digital",
+    hero: {
+      badge: "Marketing digital",
+      title: "Agência de marketing digital orientada a resultados",
+      subtitle:
+        "Estratégia, captação e conversão num só time: SEO, conteúdo, ads e automação com IA — tudo medido por leads e vendas, não por 'curtidas'.",
+      cta: "Falar com um especialista ↗",
+    },
+    problem: {
+      title: "Marketing que não se mede é dinheiro que não se controla",
+      subtitle: "Se isto acontece com você, seu marketing não está trabalhando:",
+      items: [
+        "Você investe em anúncios sem saber o que traz clientes.",
+        "Publica nas redes sem uma estratégia por trás.",
+        "Os leads chegam e se perdem por falta de follow-up.",
+        "Cada canal por conta própria, sem visão de funil.",
+        "Agências que entregam relatórios bonitos e zero vendas.",
+        "Você não sabe seu custo por lead nem seu retorno real.",
+      ],
+    },
+    services: {
+      title: "O que fazemos",
+      subtitle: "Marketing de funil completo, com dados e automação. Da estratégia à venda.",
+      items: [
+        { title: "Estratégia e funil", body: "Definimos objetivos, público e o funil completo: qual canal para cada etapa, com metas e orçamento claros." },
+        { title: "SEO e conteúdo", body: "Posicionamento orgânico e conteúdo por intenção de busca para captar sem depender só de anúncios." },
+        { title: "Publicidade (ads)", body: "Campanhas no Google e Meta orientadas a custo por lead e retorno, não a impressões vazias." },
+        { title: "Automação de marketing", body: "Captação, nurturing e follow-up automáticos com IA e n8n: nenhum lead esfria." },
+        { title: "CRM e integração", body: "Conectamos todos os canais ao seu CRM para ter uma única visão do lead ao cliente." },
+        { title: "Analytics e otimização", body: "Medição de custo por lead, conversão e ROI. Melhoramos com dados, não com achismo." },
+      ],
+    },
+    process: {
+      badge: "Como trabalhamos",
+      title: "Estratégia, execução e medição — sem hand-offs",
+      subtitle: "O mesmo time que cria a estratégia implementa e mede. Com IA, mas sem enrolação.",
+      phases: [
+        { code: "01", title: "Diagnosticamos", body: "Analisamos sua situação, seus canais e seu funil atual. Detectamos vazamentos e oportunidades." },
+        { code: "02", title: "Desenhamos a estratégia", body: "Definimos canais, mensagens, orçamento e metas mensuráveis por etapa do funil." },
+        { code: "03", title: "Executamos", body: "SEO, conteúdo, ads e automação — integrados e conectados ao seu CRM. Com IA onde agrega." },
+        { code: "04", title: "Medimos e escalamos", body: "Acompanhamos custo por lead, conversão e ROI, e dobramos o investimento no que funciona." },
+      ],
+    },
+    tech: {
+      title: "Com o que trabalhamos",
+      subtitle: "Canais, automação e dados, integrados.",
+      items: ["SEO", "Google Ads", "Meta Ads", "n8n", "CRM / GoHighLevel", "Email / Klaviyo", "Analytics", "IA / LLM"],
+    },
+    faq: {
+      title: "Perguntas frequentes",
+      items: [
+        { q: "Vocês trabalham todos os canais ou só um?", a: "Trabalhamos o funil completo (SEO, conteúdo, ads, e-mail, automação), mas priorizamos conforme o seu negócio e orçamento. Não adianta dispersar: começamos por onde há mais retorno." },
+        { q: "Qual a diferença para outra agência de marketing?", a: "Somos uma agência técnica: integramos, automatizamos com IA e medimos por leads e vendas, não por métricas de vaidade. O mesmo time que cria a estratégia implementa e conecta ao seu CRM." },
+        { q: "Vocês gerenciam o orçamento de anúncios?", a: "Sim. Definimos e gerenciamos as campanhas orientadas a custo por lead e retorno, com relatórios transparentes do que se gasta e do que retorna." },
+        { q: "Como usam a IA no marketing?", a: "Para automatizar captação e follow-up, qualificar leads, gerar e personalizar conteúdo, e analisar resultados mais rápido. Sempre com critério, não por moda." },
+        { q: "Como medem o sucesso?", a: "Por custo por lead, leads qualificados, conversões e ROI. Relatórios claros orientados a negócio." },
+        { q: "Como começamos?", a: "Uma call de 30 minutos para entender sua situação. Se houver encaixe, propomos uma estratégia com canais, prioridades e metas." },
+      ],
+    },
+    finalCta: {
+      title: "Seu marketing traz clientes ou só gasta orçamento?",
+      subtitle: "Numa call de 30 minutos revisamos seus canais e onde está sua maior oportunidade de crescimento.",
+      cta: "Falar com um especialista",
+    },
+  },
+
+  en: {
+    meta: {
+      title: "Digital marketing agency, data-driven | IA Operators",
+      description:
+        "Digital marketing agency for businesses: strategy, SEO, content, ads and AI automation. Focused on leads and sales, measurable, no hype.",
+    },
+    breadcrumb: "Digital marketing",
+    hero: {
+      badge: "Digital marketing",
+      title: "Digital marketing agency focused on results",
+      subtitle:
+        "Strategy, acquisition and conversion in one team: SEO, content, ads and AI automation — all measured by leads and sales, not by likes.",
+      cta: "Talk to a specialist ↗",
+    },
+    problem: {
+      title: "Marketing you don't measure is money you don't control",
+      subtitle: "If this is you, your marketing isn't working:",
+      items: [
+        "You spend on ads without knowing what brings customers.",
+        "You post on social with no strategy behind it.",
+        "Leads come in and get lost with no follow-up.",
+        "Every channel on its own, with no funnel view.",
+        "Agencies that deliver pretty reports and zero sales.",
+        "You don't know your cost per lead or real return.",
+      ],
+    },
+    services: {
+      title: "What we do",
+      subtitle: "Full-funnel marketing, with data and automation. From strategy to sale.",
+      items: [
+        { title: "Strategy & funnel", body: "We define goals, audience and the full funnel: which channel for each stage, with clear targets and budget." },
+        { title: "SEO & content", body: "Organic rankings and intent-driven content to acquire without relying only on ads." },
+        { title: "Advertising (ads)", body: "Google and Meta campaigns focused on cost per lead and return, not empty impressions." },
+        { title: "Marketing automation", body: "Automatic acquisition, nurturing and follow-up with AI and n8n: no lead goes cold." },
+        { title: "CRM & integration", body: "We connect every channel to your CRM for a single view from lead to customer." },
+        { title: "Analytics & optimization", body: "Cost per lead, conversion and ROI tracking. We improve on data, not opinions." },
+      ],
+    },
+    process: {
+      badge: "How we work",
+      title: "Strategy, execution and measurement — no hand-offs",
+      subtitle: "The same team that designs the strategy implements and measures it. With AI, but no hype.",
+      phases: [
+        { code: "01", title: "We diagnose", body: "We analyze your situation, channels and current funnel. We spot leaks and opportunities." },
+        { code: "02", title: "We design the strategy", body: "We define channels, messaging, budget and measurable targets per funnel stage." },
+        { code: "03", title: "We execute", body: "SEO, content, ads and automation — integrated and connected to your CRM. With AI where it helps." },
+        { code: "04", title: "We measure & scale", body: "We track cost per lead, conversion and ROI, and double down on what works." },
+      ],
+    },
+    tech: {
+      title: "What we work with",
+      subtitle: "Channels, automation and data, integrated.",
+      items: ["SEO", "Google Ads", "Meta Ads", "n8n", "CRM / GoHighLevel", "Email / Klaviyo", "Analytics", "AI / LLM"],
+    },
+    faq: {
+      title: "Frequently asked questions",
+      items: [
+        { q: "Do you work all channels or just one?", a: "We work the full funnel (SEO, content, ads, email, automation), but we prioritize based on your business and budget. Spreading thin doesn't work: we start where the return is highest." },
+        { q: "How is this different from another marketing agency?", a: "We're a technical agency: we integrate, automate with AI and measure by leads and sales, not vanity metrics. The same team that designs the strategy implements it and connects it to your CRM." },
+        { q: "Do you manage the ad budget?", a: "Yes. We define and manage campaigns focused on cost per lead and return, with transparent reporting of what's spent and what it returns." },
+        { q: "How do you use AI in marketing?", a: "To automate acquisition and follow-up, qualify leads, generate and personalize content, and analyze results faster. Always with judgment, not for hype." },
+        { q: "How do you measure success?", a: "By cost per lead, qualified leads, conversions and ROI. Clear, business-focused reports." },
+        { q: "How do we start?", a: "A 30-minute call to understand your situation. If it's a fit, we propose a strategy with channels, priorities and targets." },
+      ],
+    },
+    finalCta: {
+      title: "Does your marketing bring customers, or just spend budget?",
+      subtitle: "In a 30-minute call we review your channels and where your biggest growth opportunity is.",
+      cta: "Talk to a specialist",
+    },
+  },
+};
+
+const c = CONTENT[locale] ?? CONTENT.es;
+const contactHref = `/${locale}/contact/`;
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(`/${locale}/servicios/marketing-digital/`, site).toString();
+
+const providerSchema = {
+  "@type": ["Organization", "ProfessionalService"],
+  name: "IA Operators",
+  url: site,
+  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+};
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: c.hero.title,
+  serviceType: "Digital marketing agency",
+  provider: providerSchema,
+  areaServed: ["ES", "PT", "BR", "US", "GB"],
+  description: c.meta.description,
+  url: pageUrl,
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: c.breadcrumb, item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: c.faq.items.map((item: any) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+
+const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
+---
+
+<BaseLayout title={c.meta.title} description={c.meta.description} jsonLd={jsonLd}>
+  <div class="bg-transparent text-white">
+    <!-- HERO -->
+    <section class="relative px-4 pt-28 pb-20">
+      <div class="max-w-5xl mx-auto text-center">
+        <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-6">
+          {c.hero.badge}
+        </span>
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
+          {c.hero.title}
+        </h1>
+        <p class="text-lg md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto">
+          {c.hero.subtitle}
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={contactHref}
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-base hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+          >
+            {c.hero.cta}
+          </a>
+          <a
+            href="#servicios"
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-base hover:bg-orange-500/10 transition-all duration-300"
+          >
+            {c.services.title}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">{c.problem.title}</h2>
+        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">{c.problem.subtitle}</p>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {c.problem.items.map((item: string) => (
+            <li class="flex items-start gap-3 bg-[#0a0a0a] border border-white/5 rounded-2xl p-5">
+              <span class="text-orange-400 text-xl leading-none mt-0.5">✕</span>
+              <p class="text-gray-200 text-base leading-relaxed">{item}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="servicios" class="px-4 py-20">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{c.services.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{c.services.subtitle}</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {c.services.items.map((item: any, idx: number) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 font-bold text-sm">
+                  0{idx + 1}
+                </span>
+                <h3 class="text-xl font-semibold text-white">{item.title}</h3>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="px-4 py-24 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+            {c.process.badge}
+          </span>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{c.process.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{c.process.subtitle}</p>
+        </div>
+        <ol class="space-y-6 max-w-4xl mx-auto">
+          {c.process.phases.map((phase: any) => (
+            <li class="flex flex-col md:flex-row gap-6 bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8 hover:border-orange-500/20 transition-all duration-300">
+              <div class="md:w-52 shrink-0">
+                <div class="text-orange-400 text-xs font-semibold uppercase tracking-widest mb-1">{phase.code}</div>
+                <h3 class="text-xl font-bold text-white">{phase.title}</h3>
+              </div>
+              <p class="text-gray-300 leading-relaxed flex-1">{phase.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- TECH -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-3">{c.tech.title}</h2>
+        <p class="text-gray-400 mb-10 max-w-2xl mx-auto">{c.tech.subtitle}</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          {c.tech.items.map((item: string) => (
+            <span class="px-5 py-2 rounded-full bg-[#0a0a0a] border border-white/10 text-gray-200 text-sm font-medium hover:border-orange-500/30 transition-colors">
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="px-4 py-20">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">{c.faq.title}</h2>
+        <div class="space-y-3">
+          {c.faq.items.map((item: any) => (
+            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-4 hover:border-orange-500/20 transition-all duration-300">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <span class="text-white font-medium pr-4">{item.q}</span>
+                <span class="text-orange-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="text-gray-400 mt-3 leading-relaxed">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="px-4 py-24">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">{c.finalCta.title}</h2>
+        <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">{c.finalCta.subtitle}</p>
+        <a
+          href={contactHref}
+          class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+        >
+          {c.finalCta.cta} ↗
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

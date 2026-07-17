@@ -1,0 +1,424 @@
+---
+export async function getStaticPaths() {
+  return [
+    { params: { locale: "es" } },
+    { params: { locale: "pt" } },
+    { params: { locale: "en" } },
+  ];
+}
+
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import { getLocale } from "../../../../i18n/ui";
+
+const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
+
+// Alvo: ES agencia seo / posicionamiento web / consultoría seo
+// PT agência de seo / consultoria seo / otimização de sites
+// EN seo agency / seo services
+const CONTENT: Record<string, any> = {
+  es: {
+    meta: {
+      title: "Agencia SEO: posicionamiento web y AI Search | IA Operators",
+      description:
+        "Agencia SEO para empresas: posicionamiento en Google y en buscadores con IA (ChatGPT, Perplexity). SEO técnico, contenido y autoridad, medido y sin humo.",
+    },
+    breadcrumb: "Agencia SEO",
+    hero: {
+      badge: "Agencia SEO",
+      title: "Agencia SEO: posicionamiento en Google y en la búsqueda con IA",
+      subtitle:
+        "Te posicionamos donde tus clientes buscan hoy — Google y buscadores con IA (ChatGPT, Perplexity, AI Overviews) — con SEO técnico, contenido y autoridad. Medible, sin trucos.",
+      cta: "Hablar con un especialista ↗",
+    },
+    problem: {
+      title: "Si no apareces cuando te buscan, no existes",
+      subtitle: "Estos síntomas te están costando clientes:",
+      items: [
+        "Tu web no aparece en la primera página de Google.",
+        "Inviertes en anuncios porque el orgánico no llega.",
+        "No sabes por qué keywords deberías posicionar.",
+        "La competencia te adelanta en Google y no sabes por qué.",
+        "Cero visibilidad en ChatGPT, Perplexity o los resúmenes con IA.",
+        "Informes de SEO llenos de humo y sin resultados de negocio.",
+      ],
+    },
+    services: {
+      title: "Qué hacemos",
+      subtitle: "SEO de ingeniería: técnico, de contenido y de autoridad. Medido por leads, no por vanity metrics.",
+      items: [
+        { title: "Auditoría y SEO técnico", body: "Arreglamos lo que frena tu posicionamiento: velocidad, indexación, estructura, schema, hreflang y errores de rastreo." },
+        { title: "Investigación de keywords", body: "Encontramos las búsquedas con intención comercial y volumen real, por dónde puedes ganar ahora y qué priorizar." },
+        { title: "Contenido que posiciona", body: "Estrategia y creación de contenido optimizado por intención de búsqueda, no relleno. Enfocado a convertir." },
+        { title: "Link building y autoridad", body: "Construimos autoridad con enlaces de calidad y digital PR — el factor que separa la página 1 de la página 5." },
+        { title: "AI Search (GEO)", body: "Optimizamos para que te citen ChatGPT, Perplexity y los AI Overviews de Google: contenido citable, datos y llms.txt." },
+        { title: "Medición y reporting real", body: "Seguimiento de posiciones, tráfico y conversiones. Informes claros orientados a negocio, no a métricas vacías." },
+      ],
+    },
+    process: {
+      badge: "Cómo trabajamos",
+      title: "Auditamos, priorizamos y ejecutamos — con datos",
+      subtitle: "SEO sostenible, sin trucos ni riesgos de penalización. Con IA, pero sin humo.",
+      phases: [
+        { code: "01", title: "Auditamos", body: "Analizamos tu SEO técnico, tus posiciones actuales y a tu competencia. Detectamos lo que frena y lo que puedes ganar." },
+        { code: "02", title: "Priorizamos", body: "Definimos keywords objetivo y un roadmap por impacto vs. esfuerzo: quick wins primero, apuestas de autoridad después." },
+        { code: "03", title: "Ejecutamos", body: "SEO técnico, contenido, enlaces y optimización para AI Search. Con buenas prácticas, sin riesgos de penalización." },
+        { code: "04", title: "Medimos y escalamos", body: "Seguimos posiciones y conversiones, y doblamos esfuerzo en lo que funciona. El SEO es un activo que compone." },
+      ],
+    },
+    tech: {
+      title: "Con qué trabajamos",
+      subtitle: "SEO técnico, contenido y visibilidad en buscadores con IA.",
+      items: ["SEO técnico", "Semrush", "Google Search Console", "Schema / JSON-LD", "AI Search / GEO", "Contenido", "Analytics", "Core Web Vitals"],
+    },
+    faq: {
+      title: "Preguntas frecuentes",
+      items: [
+        { q: "¿En cuánto tiempo se ven resultados?", a: "El SEO compone con el tiempo. Los quick wins técnicos y de keywords de baja competencia pueden verse en semanas; posicionar por términos disputados suele llevar meses. Somos honestos con los plazos desde el inicio." },
+        { q: "¿Qué es eso de AI Search o GEO?", a: "Cada vez más gente busca en ChatGPT, Perplexity o los resúmenes con IA de Google en vez de hacer clic en resultados. Optimizamos tu contenido para que esos sistemas te citen: información citable, datos propios, estructura y llms.txt." },
+        { q: "¿Hacéis SEO con trucos o black-hat?", a: "No. Solo técnicas sostenibles y alineadas con las guías de Google. Los trucos dan un pico y luego una penalización — no construyen un activo." },
+        { q: "¿Trabajáis el contenido o solo lo técnico?", a: "Ambos. El SEO técnico quita los frenos, pero sin contenido optimizado por intención y sin autoridad no se posiciona en términos competidos. Cubrimos las tres capas." },
+        { q: "¿Cómo medís el éxito?", a: "Por posiciones, tráfico orgánico cualificado y, sobre todo, leads y conversiones. Nada de informes llenos de métricas que no mueven el negocio." },
+        { q: "¿Cómo empezamos?", a: "Una llamada de 30 minutos + una auditoría inicial de tu SEO. Si hay encaje, te proponemos un plan con keywords objetivo y prioridades." },
+      ],
+    },
+    finalCta: {
+      title: "¿Cuántos clientes te está costando no posicionar?",
+      subtitle: "En una llamada de 30 minutos revisamos tu situación y dónde tienes las mayores oportunidades de SEO.",
+      cta: "Hablar con un especialista",
+    },
+  },
+
+  pt: {
+    meta: {
+      title: "Agência de SEO: posicionamento e AI Search | IA Operators",
+      description:
+        "Agência de SEO para empresas: posicionamento no Google e em buscadores com IA (ChatGPT, Perplexity). SEO técnico, conteúdo e autoridade, mensurável e sem enrolação.",
+    },
+    breadcrumb: "Agência de SEO",
+    hero: {
+      badge: "Agência de SEO",
+      title: "Agência de SEO: posicionamento no Google e na busca com IA",
+      subtitle:
+        "Posicionamos você onde seus clientes buscam hoje — Google e buscadores com IA (ChatGPT, Perplexity, AI Overviews) — com SEO técnico, conteúdo e autoridade. Mensurável, sem truques.",
+      cta: "Falar com um especialista ↗",
+    },
+    problem: {
+      title: "Se você não aparece quando te buscam, você não existe",
+      subtitle: "Estes sintomas estão te custando clientes:",
+      items: [
+        "Seu site não aparece na primeira página do Google.",
+        "Você investe em anúncios porque o orgânico não chega.",
+        "Você não sabe por quais keywords deveria posicionar.",
+        "A concorrência te ultrapassa no Google e você não sabe por quê.",
+        "Zero visibilidade no ChatGPT, Perplexity ou nos resumos com IA.",
+        "Relatórios de SEO cheios de enrolação e sem resultado de negócio.",
+      ],
+    },
+    services: {
+      title: "O que fazemos",
+      subtitle: "SEO de engenharia: técnico, de conteúdo e de autoridade. Medido por leads, não por vanity metrics.",
+      items: [
+        { title: "Auditoria e SEO técnico", body: "Corrigimos o que trava o seu posicionamento: velocidade, indexação, estrutura, schema, hreflang e erros de rastreamento." },
+        { title: "Pesquisa de keywords", body: "Encontramos as buscas com intenção comercial e volume real, onde você pode ganhar agora e o que priorizar." },
+        { title: "Conteúdo que posiciona", body: "Estratégia e criação de conteúdo otimizado por intenção de busca, não enchimento. Focado em converter." },
+        { title: "Link building e autoridade", body: "Construímos autoridade com links de qualidade e digital PR — o fator que separa a página 1 da página 5." },
+        { title: "AI Search (GEO)", body: "Otimizamos para você ser citado pelo ChatGPT, Perplexity e pelos AI Overviews do Google: conteúdo citável, dados e llms.txt." },
+        { title: "Medição e reporting real", body: "Acompanhamento de posições, tráfego e conversões. Relatórios claros orientados a negócio, não a métricas vazias." },
+      ],
+    },
+    process: {
+      badge: "Como trabalhamos",
+      title: "Auditamos, priorizamos e executamos — com dados",
+      subtitle: "SEO sustentável, sem truques nem riscos de penalização. Com IA, mas sem enrolação.",
+      phases: [
+        { code: "01", title: "Auditamos", body: "Analisamos seu SEO técnico, suas posições atuais e a concorrência. Detectamos o que trava e o que dá para ganhar." },
+        { code: "02", title: "Priorizamos", body: "Definimos keywords-alvo e um roadmap por impacto vs. esforço: quick wins primeiro, apostas de autoridade depois." },
+        { code: "03", title: "Executamos", body: "SEO técnico, conteúdo, links e otimização para AI Search. Com boas práticas, sem riscos de penalização." },
+        { code: "04", title: "Medimos e escalamos", body: "Acompanhamos posições e conversões, e dobramos o esforço no que funciona. O SEO é um ativo que compõe." },
+      ],
+    },
+    tech: {
+      title: "Com o que trabalhamos",
+      subtitle: "SEO técnico, conteúdo e visibilidade em buscadores com IA.",
+      items: ["SEO técnico", "Semrush", "Google Search Console", "Schema / JSON-LD", "AI Search / GEO", "Conteúdo", "Analytics", "Core Web Vitals"],
+    },
+    faq: {
+      title: "Perguntas frequentes",
+      items: [
+        { q: "Em quanto tempo se veem resultados?", a: "O SEO compõe com o tempo. Os quick wins técnicos e de keywords de baixa concorrência podem aparecer em semanas; posicionar em termos disputados costuma levar meses. Somos honestos com os prazos desde o início." },
+        { q: "O que é AI Search ou GEO?", a: "Cada vez mais gente busca no ChatGPT, Perplexity ou nos resumos com IA do Google em vez de clicar nos resultados. Otimizamos seu conteúdo para que esses sistemas te citem: informação citável, dados próprios, estrutura e llms.txt." },
+        { q: "Vocês fazem SEO com truques ou black-hat?", a: "Não. Só técnicas sustentáveis e alinhadas às diretrizes do Google. Truques dão um pico e depois uma penalização — não constroem um ativo." },
+        { q: "Trabalham o conteúdo ou só o técnico?", a: "Ambos. O SEO técnico tira os freios, mas sem conteúdo otimizado por intenção e sem autoridade não se posiciona em termos competidos. Cobrimos as três camadas." },
+        { q: "Como medem o sucesso?", a: "Por posições, tráfego orgânico qualificado e, acima de tudo, leads e conversões. Nada de relatórios cheios de métricas que não movem o negócio." },
+        { q: "Como começamos?", a: "Uma call de 30 minutos + uma auditoria inicial do seu SEO. Se houver encaixe, propomos um plano com keywords-alvo e prioridades." },
+      ],
+    },
+    finalCta: {
+      title: "Quantos clientes está te custando não posicionar?",
+      subtitle: "Numa call de 30 minutos revisamos sua situação e onde estão as maiores oportunidades de SEO.",
+      cta: "Falar com um especialista",
+    },
+  },
+
+  en: {
+    meta: {
+      title: "SEO agency: rankings and AI Search visibility | IA Operators",
+      description:
+        "SEO agency for businesses: rankings on Google and AI search engines (ChatGPT, Perplexity). Technical SEO, content and authority — measurable, no hype.",
+    },
+    breadcrumb: "SEO agency",
+    hero: {
+      badge: "SEO Agency",
+      title: "SEO agency: rankings on Google and in AI search",
+      subtitle:
+        "We get you found where your customers search today — Google and AI engines (ChatGPT, Perplexity, AI Overviews) — with technical SEO, content and authority. Measurable, no tricks.",
+      cta: "Talk to a specialist ↗",
+    },
+    problem: {
+      title: "If you don't show up when they search, you don't exist",
+      subtitle: "These symptoms are costing you customers:",
+      items: [
+        "Your site isn't on Google's first page.",
+        "You pay for ads because organic doesn't deliver.",
+        "You don't know which keywords you should rank for.",
+        "Competitors outrank you and you don't know why.",
+        "Zero visibility in ChatGPT, Perplexity or AI summaries.",
+        "SEO reports full of fluff and no business results.",
+      ],
+    },
+    services: {
+      title: "What we do",
+      subtitle: "Engineered SEO: technical, content and authority. Measured by leads, not vanity metrics.",
+      items: [
+        { title: "Audit & technical SEO", body: "We fix what holds back your rankings: speed, indexing, structure, schema, hreflang and crawl errors." },
+        { title: "Keyword research", body: "We find the searches with commercial intent and real volume, where you can win now and what to prioritize." },
+        { title: "Content that ranks", body: "Strategy and creation of content optimized by search intent, not filler. Built to convert." },
+        { title: "Link building & authority", body: "We build authority with quality links and digital PR — the factor that separates page 1 from page 5." },
+        { title: "AI Search (GEO)", body: "We optimize so ChatGPT, Perplexity and Google's AI Overviews cite you: citable content, data and llms.txt." },
+        { title: "Real measurement & reporting", body: "Tracking of rankings, traffic and conversions. Clear, business-focused reports, not empty metrics." },
+      ],
+    },
+    process: {
+      badge: "How we work",
+      title: "Audit, prioritize and execute — with data",
+      subtitle: "Sustainable SEO, no tricks or penalty risk. With AI, but no hype.",
+      phases: [
+        { code: "01", title: "We audit", body: "We analyze your technical SEO, current rankings and competitors. We spot what holds you back and what you can win." },
+        { code: "02", title: "We prioritize", body: "We define target keywords and a roadmap by impact vs. effort: quick wins first, authority bets next." },
+        { code: "03", title: "We execute", body: "Technical SEO, content, links and AI Search optimization. With best practices, no penalty risk." },
+        { code: "04", title: "We measure & scale", body: "We track rankings and conversions, and double down on what works. SEO is an asset that compounds." },
+      ],
+    },
+    tech: {
+      title: "What we work with",
+      subtitle: "Technical SEO, content and visibility in AI search engines.",
+      items: ["Technical SEO", "Semrush", "Google Search Console", "Schema / JSON-LD", "AI Search / GEO", "Content", "Analytics", "Core Web Vitals"],
+    },
+    faq: {
+      title: "Frequently asked questions",
+      items: [
+        { q: "How long until I see results?", a: "SEO compounds over time. Technical quick wins and low-competition keywords can show in weeks; ranking for competitive terms usually takes months. We're honest about timelines from the start." },
+        { q: "What is AI Search or GEO?", a: "More and more people search on ChatGPT, Perplexity or Google's AI summaries instead of clicking results. We optimize your content so those systems cite you: citable information, first-party data, structure and llms.txt." },
+        { q: "Do you use tricks or black-hat SEO?", a: "No. Only sustainable techniques aligned with Google's guidelines. Tricks give a spike and then a penalty — they don't build an asset." },
+        { q: "Do you handle content or just the technical side?", a: "Both. Technical SEO removes the brakes, but without intent-optimized content and authority you won't rank for competitive terms. We cover all three layers." },
+        { q: "How do you measure success?", a: "By rankings, qualified organic traffic and, above all, leads and conversions. No reports full of metrics that don't move the business." },
+        { q: "How do we start?", a: "A 30-minute call plus an initial SEO audit. If it's a fit, we propose a plan with target keywords and priorities." },
+      ],
+    },
+    finalCta: {
+      title: "How many customers is not ranking costing you?",
+      subtitle: "In a 30-minute call we review your situation and where your biggest SEO opportunities are.",
+      cta: "Talk to a specialist",
+    },
+  },
+};
+
+const c = CONTENT[locale] ?? CONTENT.es;
+const contactHref = `/${locale}/contact/`;
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(`/${locale}/servicios/agencia-seo/`, site).toString();
+
+const providerSchema = {
+  "@type": ["Organization", "ProfessionalService"],
+  name: "IA Operators",
+  url: site,
+  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+};
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: c.hero.title,
+  serviceType: "SEO agency and search engine optimization",
+  provider: providerSchema,
+  areaServed: ["ES", "PT", "BR", "US", "GB"],
+  description: c.meta.description,
+  url: pageUrl,
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: c.breadcrumb, item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: c.faq.items.map((item: any) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+
+const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
+---
+
+<BaseLayout title={c.meta.title} description={c.meta.description} jsonLd={jsonLd}>
+  <div class="bg-transparent text-white">
+    <!-- HERO -->
+    <section class="relative px-4 pt-28 pb-20">
+      <div class="max-w-5xl mx-auto text-center">
+        <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-6">
+          {c.hero.badge}
+        </span>
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
+          {c.hero.title}
+        </h1>
+        <p class="text-lg md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto">
+          {c.hero.subtitle}
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={contactHref}
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-base hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+          >
+            {c.hero.cta}
+          </a>
+          <a
+            href="#servicios"
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-base hover:bg-orange-500/10 transition-all duration-300"
+          >
+            {c.services.title}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">{c.problem.title}</h2>
+        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">{c.problem.subtitle}</p>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {c.problem.items.map((item: string) => (
+            <li class="flex items-start gap-3 bg-[#0a0a0a] border border-white/5 rounded-2xl p-5">
+              <span class="text-orange-400 text-xl leading-none mt-0.5">✕</span>
+              <p class="text-gray-200 text-base leading-relaxed">{item}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="servicios" class="px-4 py-20">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{c.services.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{c.services.subtitle}</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {c.services.items.map((item: any, idx: number) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 font-bold text-sm">
+                  0{idx + 1}
+                </span>
+                <h3 class="text-xl font-semibold text-white">{item.title}</h3>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="px-4 py-24 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+            {c.process.badge}
+          </span>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{c.process.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{c.process.subtitle}</p>
+        </div>
+        <ol class="space-y-6 max-w-4xl mx-auto">
+          {c.process.phases.map((phase: any) => (
+            <li class="flex flex-col md:flex-row gap-6 bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8 hover:border-orange-500/20 transition-all duration-300">
+              <div class="md:w-52 shrink-0">
+                <div class="text-orange-400 text-xs font-semibold uppercase tracking-widest mb-1">{phase.code}</div>
+                <h3 class="text-xl font-bold text-white">{phase.title}</h3>
+              </div>
+              <p class="text-gray-300 leading-relaxed flex-1">{phase.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- TECH -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-3">{c.tech.title}</h2>
+        <p class="text-gray-400 mb-10 max-w-2xl mx-auto">{c.tech.subtitle}</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          {c.tech.items.map((item: string) => (
+            <span class="px-5 py-2 rounded-full bg-[#0a0a0a] border border-white/10 text-gray-200 text-sm font-medium hover:border-orange-500/30 transition-colors">
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="px-4 py-20">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">{c.faq.title}</h2>
+        <div class="space-y-3">
+          {c.faq.items.map((item: any) => (
+            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-4 hover:border-orange-500/20 transition-all duration-300">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <span class="text-white font-medium pr-4">{item.q}</span>
+                <span class="text-orange-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="text-gray-400 mt-3 leading-relaxed">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="px-4 py-24">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">{c.finalCta.title}</h2>
+        <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">{c.finalCta.subtitle}</p>
+        <a
+          href={contactHref}
+          class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+        >
+          {c.finalCta.cta} ↗
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

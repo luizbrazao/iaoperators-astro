@@ -14,8 +14,58 @@ const nav =
   (dict as any)?.home?.nav ??
   {};
 
+// Rótulos localizados da nova landing de serviço (fallback se não houver no i18n nav)
+const AUTOMATION_NAV: Record<string, { label: string; desc: string }> = {
+  es: { label: "Automatización con IA", desc: "Agentes, procesos y n8n a medida" },
+  pt: { label: "Automação com IA", desc: "Agentes, processos e n8n sob medida" },
+  en: { label: "AI Automation", desc: "Agents, processes and custom n8n" },
+};
+const automationNav = AUTOMATION_NAV[locale] ?? AUTOMATION_NAV.es;
+const CHATBOTS_NAV: Record<string, { label: string; desc: string }> = {
+  es: { label: "Chatbots con IA", desc: "WhatsApp, asistentes y reservas 24/7" },
+  pt: { label: "Chatbots com IA", desc: "WhatsApp, assistentes e agendamentos 24/7" },
+  en: { label: "AI Chatbots", desc: "WhatsApp, assistants and 24/7 booking" },
+};
+const chatbotsNav = CHATBOTS_NAV[locale] ?? CHATBOTS_NAV.es;
+const WEB_NAV: Record<string, { label: string; desc: string }> = {
+  es: { label: "Diseño web", desc: "Sitios rápidos, SEO y conversión" },
+  pt: { label: "Criação de sites", desc: "Sites rápidos, SEO e conversão" },
+  en: { label: "Web design", desc: "Fast sites, SEO and conversion" },
+};
+const webNav = WEB_NAV[locale] ?? WEB_NAV.es;
+const SEO_NAV: Record<string, { label: string; desc: string }> = {
+  es: { label: "Agencia SEO", desc: "Posicionamiento y AI Search" },
+  pt: { label: "Agência de SEO", desc: "Posicionamento e AI Search" },
+  en: { label: "SEO agency", desc: "Rankings and AI Search" },
+};
+const seoNav = SEO_NAV[locale] ?? SEO_NAV.es;
+const MARKETING_NAV: Record<string, { label: string; desc: string }> = {
+  es: { label: "Marketing digital", desc: "Estrategia, ads y automatización" },
+  pt: { label: "Marketing digital", desc: "Estratégia, ads e automação" },
+  en: { label: "Digital marketing", desc: "Strategy, ads and automation" },
+};
+const marketingNav = MARKETING_NAV[locale] ?? MARKETING_NAV.es;
+const IA_NAV: Record<string, { label: string; desc: string }> = {
+  es: { label: "Agencia de IA", desc: "Estrategia e implementación de IA" },
+  pt: { label: "Agência de IA", desc: "Estratégia e implementação de IA" },
+  en: { label: "AI agency", desc: "AI strategy and implementation" },
+};
+const iaNav = IA_NAV[locale] ?? IA_NAV.es;
+
 const labels = {
   services: nav?.services ?? "Services",
+  automation: nav?.automation ?? automationNav.label,
+  automationDescription: nav?.automationDescription ?? automationNav.desc,
+  chatbots: nav?.chatbots ?? chatbotsNav.label,
+  chatbotsDescription: nav?.chatbotsDescription ?? chatbotsNav.desc,
+  web: nav?.web ?? webNav.label,
+  webDescription: nav?.webDescription ?? webNav.desc,
+  seo: nav?.seo ?? seoNav.label,
+  seoDescription: nav?.seoDescription ?? seoNav.desc,
+  marketing: nav?.marketing ?? marketingNav.label,
+  marketingDescription: nav?.marketingDescription ?? marketingNav.desc,
+  ia: nav?.ia ?? iaNav.label,
+  iaDescription: nav?.iaDescription ?? iaNav.desc,
   audit: nav?.audit ?? "Audit",
   auditDescription: nav?.auditDescription ?? "",
   roadmap: nav?.roadmap ?? "Roadmap",
@@ -35,6 +85,12 @@ const withLocale = (path: string) => `/${locale}/${path}`.replace(/\/+$/, "/");
 // Links (mantém os do header antigo)
 const links = {
   home: `/${locale}/`,
+  automation: withLocale("servicios/automatizacion-ia/"),
+  chatbots: withLocale("servicios/chatbots/"),
+  web: withLocale("servicios/diseno-web/"),
+  seo: withLocale("servicios/agencia-seo/"),
+  marketing: withLocale("servicios/marketing-digital/"),
+  ia: withLocale("servicios/agencia-ia/"),
   audit: withLocale("auditoria-de-sistemas/"),
   roadmap: withLocale("roadmap-tecnologico/"),
   implementation: withLocale("implementacion/"),
@@ -47,6 +103,12 @@ const links = {
 };
 
 const mobileLinks = [
+  { key: "automation", href: links.automation, external: false },
+  { key: "chatbots", href: links.chatbots, external: false },
+  { key: "web", href: links.web, external: false },
+  { key: "seo", href: links.seo, external: false },
+  { key: "marketing", href: links.marketing, external: false },
+  { key: "ia", href: links.ia, external: false },
   { key: "audit", href: links.audit, external: false },
   { key: "roadmap", href: links.roadmap, external: false },
   { key: "implementation", href: links.implementation, external: false },
@@ -125,13 +187,115 @@ const mobileLinks = [
               "
             >
               <a
-                href={links.audit}
+                href={links.automation}
                 class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
                 role="menuitem"
                 data-close-services
               >
                 <div class="flex items-center gap-2 text-white font-semibold">
                   <span class="text-orange-400">01</span>
+                  {labels.automation}
+                </div>
+                {labels.automationDescription && (
+                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
+                    {labels.automationDescription}
+                  </p>
+                )}
+              </a>
+
+              <a
+                href={links.chatbots}
+                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
+                role="menuitem"
+                data-close-services
+              >
+                <div class="flex items-center gap-2 text-white font-semibold">
+                  <span class="text-orange-400">02</span>
+                  {labels.chatbots}
+                </div>
+                {labels.chatbotsDescription && (
+                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
+                    {labels.chatbotsDescription}
+                  </p>
+                )}
+              </a>
+
+              <a
+                href={links.web}
+                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
+                role="menuitem"
+                data-close-services
+              >
+                <div class="flex items-center gap-2 text-white font-semibold">
+                  <span class="text-orange-400">03</span>
+                  {labels.web}
+                </div>
+                {labels.webDescription && (
+                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
+                    {labels.webDescription}
+                  </p>
+                )}
+              </a>
+
+              <a
+                href={links.seo}
+                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
+                role="menuitem"
+                data-close-services
+              >
+                <div class="flex items-center gap-2 text-white font-semibold">
+                  <span class="text-orange-400">04</span>
+                  {labels.seo}
+                </div>
+                {labels.seoDescription && (
+                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
+                    {labels.seoDescription}
+                  </p>
+                )}
+              </a>
+
+              <a
+                href={links.marketing}
+                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
+                role="menuitem"
+                data-close-services
+              >
+                <div class="flex items-center gap-2 text-white font-semibold">
+                  <span class="text-orange-400">05</span>
+                  {labels.marketing}
+                </div>
+                {labels.marketingDescription && (
+                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
+                    {labels.marketingDescription}
+                  </p>
+                )}
+              </a>
+
+              <a
+                href={links.ia}
+                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
+                role="menuitem"
+                data-close-services
+              >
+                <div class="flex items-center gap-2 text-white font-semibold">
+                  <span class="text-orange-400">06</span>
+                  {labels.ia}
+                </div>
+                {labels.iaDescription && (
+                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
+                    {labels.iaDescription}
+                  </p>
+                )}
+              </a>
+
+              <a
+                href={links.audit}
+                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
+                role="menuitem"
+                data-close-services
+              >
+                <div class="flex items-center gap-2 text-white font-semibold">
+                  <span class="text-orange-400">07</span>
                   {labels.audit}
                 </div>
                 {labels.auditDescription && (
@@ -148,7 +312,7 @@ const mobileLinks = [
                 data-close-services
               >
                 <div class="flex items-center gap-2 text-white font-semibold">
-                  <span class="text-orange-400">02</span>
+                  <span class="text-orange-400">08</span>
                   {labels.roadmap}
                 </div>
                 {labels.roadmapDescription && (
@@ -165,7 +329,7 @@ const mobileLinks = [
                 data-close-services
               >
                 <div class="flex items-center gap-2 text-white font-semibold">
-                  <span class="text-orange-400">03</span>
+                  <span class="text-orange-400">09</span>
                   {labels.implementation}
                 </div>
                 {labels.implementationDescription && (
