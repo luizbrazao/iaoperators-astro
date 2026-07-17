@@ -31,7 +31,7 @@ faq:
     a: "No. En producción, el mejor resultado suele ser híbrido: local para datos sensibles y tareas repetitivas; cloud para tareas complejas o picos de demanda."
 ---
 
-# IA local, privada y sin mensualidad: cómo ejecutar modelos Qwen en tu PC
+## IA local, privada y sin mensualidad: cómo ejecutar modelos Qwen en tu PC
 
 Te voy a contar algo que hace apenas un año habría sonado bastante extraño.
 
@@ -65,7 +65,7 @@ En lugar de enviar todo a APIs externas, puedes ejecutar parte del pipeline en t
 
 ---
 
-# Por qué Qwen local ya es viable
+## Por qué Qwen local ya es viable
 
 Durante mucho tiempo, ejecutar modelos localmente tenía un problema bastante evidente:
 
@@ -105,7 +105,7 @@ Y ahí es donde Qwen empieza a brillar.
 
 ---
 
-# Requisitos mínimos: RAM, VRAM y tipo de carga
+## Requisitos mínimos: RAM, VRAM y tipo de carga
 
 Antes de instalar nada, te voy a dar el consejo más importante de todo el artículo.
 
@@ -146,7 +146,7 @@ Tu yo del futuro te lo va a agradecer.
 
 ---
 
-# Qué modelo Qwen elegir según tu entorno
+## Qué modelo Qwen elegir según tu entorno
 
 Cuando alguien empieza con modelos locales suele cometer el mismo error.
 
@@ -193,7 +193,7 @@ Eso es lo que impacta la operación.
 
 ---
 
-# LM Studio vs Ollama: cuándo usar cada uno
+## LM Studio vs Ollama: cuándo usar cada uno
 
 Aquí suele surgir una pregunta muy común:
 
@@ -235,7 +235,7 @@ Ollama para producción.
 
 ---
 
-# Paso a paso en LM Studio (sin hype)
+## Paso a paso en LM Studio (sin hype)
 
 Instalar un modelo local puede sonar intimidante, pero en realidad el proceso es bastante directo.
 
@@ -252,7 +252,7 @@ Esto último es especialmente importante si el resultado del modelo afecta proce
 
 ---
 
-# Casos de uso con retorno directo
+## Casos de uso con retorno directo
 
 Aquí es donde la IA local deja de ser interesante…  
 y empieza a ser útil.
@@ -320,7 +320,7 @@ De esta forma obtienes **informes estructurados y auditables**.
 
 ---
 
-# Errores comunes al ejecutar LLM local en PC
+## Errores comunes al ejecutar LLM local en PC
 
 Después de varias pruebas, hay errores que aparecen una y otra vez.
 
@@ -335,7 +335,7 @@ Los modelos locales funcionan mejor cuando forman parte de una arquitectura bien
 
 ---
 
-# Arquitectura recomendada: local + cloud
+## Arquitectura recomendada: local + cloud
 
 La arquitectura que mejor funciona en producción no es una guerra entre:
 
@@ -363,7 +363,7 @@ Cada capa hace lo que mejor sabe hacer.
 
 ---
 
-# Conclusión
+## Conclusión
 
 La IA local ya no es un experimento.
 
@@ -388,7 +388,7 @@ sino en **ejecutar el modelo correcto en el lugar correcto**.
 
 ---
 
-# ¿Quieres implementarlo en tu operación?
+## ¿Quieres implementarlo en tu operación?
 
 IA Operators diseña e implementa arquitecturas híbridas (local + cloud) para automatización, análisis documental y agentes de IA.
 
