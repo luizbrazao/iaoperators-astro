@@ -1,0 +1,22 @@
+# IA Operators
+
+> Agencia de inteligencia artificial y marketing digital para empresas. Diagnosticamos, priorizamos y construimos: automatización con IA, chatbots, desarrollo web, SEO y marketing digital — de la estrategia a producción, sin humo.
+
+IA Operators ayuda a empresas medianas a aplicar inteligencia artificial y marketing digital donde de verdad mueve la aguja. El mismo equipo que diagnostica el problema construye la solución, sin hand-offs. Con base en Málaga (España); trabaja en español, portugués e inglés.
+
+## Servicios
+- [Automatización con IA](https://iaoperators.com/es/servicios/automatizacion-ia/): agentes de IA, automatización de procesos e integraciones API con n8n.
+- [Chatbots](https://iaoperators.com/es/servicios/chatbots/): chatbots y asistentes virtuales con IA para WhatsApp y web, integrados con Altegio y CRM.
+- [Diseño web](https://iaoperators.com/es/servicios/diseno-web/): diseño y desarrollo web rápido (Astro), con SEO técnico y foco en conversión.
+- [Agencia SEO](https://iaoperators.com/es/servicios/agencia-seo/): posicionamiento en Google y en buscadores con IA (AI Search / GEO).
+- [Marketing digital](https://iaoperators.com/es/servicios/marketing-digital/): estrategia, SEO, ads y automatización orientados a leads y ventas.
+- [Agencia de IA](https://iaoperators.com/es/servicios/agencia-ia/): estrategia, consultoría e implementación de IA a medida.
+- [Auditoría de sistemas (Radiografía Digital)](https://iaoperators.com/es/auditoria-de-sistemas/): inventario y diagnóstico del parque tecnológico.
+- [Roadmap tecnológico](https://iaoperators.com/es/roadmap-tecnologico/): plan de evolución del stack tecnológico.
+
+## Recursos
+- [Blog](https://iaoperators.com/es/blog/): artículos sobre IA, automatización, n8n y tecnología aplicada a empresas.
+- [Contacto](https://iaoperators.com/es/contact/): llamada de 30 minutos con un especialista.
+
+## Idiomas
+Contenido disponible en español (/es/), portugués (/pt/) e inglés (/en/), con hreflang.
