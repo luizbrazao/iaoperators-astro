@@ -46,13 +46,13 @@ export default function WorkflowCycle() {
 
               <Icon
                 className={`w-5 h-5 ${
-                  isActive ? "text-orange-400" : "text-gray-500"
+                  isActive ? "text-orange-400" : "text-gray-400"
                 }`}
               />
 
               <span
                 className={`font-medium text-sm ${
-                  isActive ? "text-white" : "text-gray-500"
+                  isActive ? "text-white" : "text-gray-400"
                 }`}
               >
                 {step.label}

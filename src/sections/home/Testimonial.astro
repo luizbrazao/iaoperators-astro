@@ -15,9 +15,9 @@ const { testimonial, socials } = Astro.props as {
 const PARTNER_LOGOS = [
   { src: "/images/champions.png", alt: "Champions", href: "https://champions.men/" },
   { src: "https://ia-operators.s3.eu-north-1.amazonaws.com/IA+Operators+Website/logoAmericanasBranco.svg", alt: "Americanas" },
-  { src: "https://ia-operators.s3.eu-north-1.amazonaws.com/IA+Operators+Website/logoRocket.png", alt: "Rocket Internet" },
-  { src: "https://ia-operators.s3.eu-north-1.amazonaws.com/IA+Operators+Website/logoWalmart.png", alt: "Walmart" },
-  { src: "https://ia-operators.s3.eu-north-1.amazonaws.com/IA+Operators+Website/logoHavas.png", alt: "Havas" }
+  { src: "/logos/logoRocket.webp", alt: "Rocket Internet", width: 420, height: 96 },
+  { src: "/logos/logoWalmart.webp", alt: "Walmart", width: 285, height: 96 },
+  { src: "/logos/logoHavas.webp", alt: "Havas", width: 405, height: 96 }
 ];
 
 const PARTNER_LOGOS_REPEATED = [
@@ -81,7 +81,7 @@ const PARTNER_LOGOS_REPEATED = [
   </div>
 
   <div class="max-w-4xl mx-auto mt-16 text-center">
-    <p class="text-gray-500 mb-8 text-sm uppercase tracking-widest">
+    <p class="text-gray-400 mb-8 text-sm uppercase tracking-widest">
       {testimonial.trustedBy}
     </p>
 
@@ -94,6 +94,8 @@ const PARTNER_LOGOS_REPEATED = [
                 <img
                   src={logo.src}
                   alt={logo.alt}
+                  width={logo.width}
+                  height={logo.height}
                   class="h-10 md:h-12 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
                   loading="lazy"
                   decoding="async"
@@ -103,6 +105,8 @@ const PARTNER_LOGOS_REPEATED = [
               <img
                 src={logo.src}
                 alt={logo.alt}
+                width={logo.width}
+                height={logo.height}
                 class="h-10 md:h-12 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
                 loading="lazy"
                 decoding="async"

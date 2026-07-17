@@ -203,19 +203,19 @@ const portfolioSlugJsonLd: any[] = [
 
         <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-4xl">
           <div class="rounded-xl border border-white/10 bg-[#0A0A0A] p-4">
-            <div class="text-xs uppercase tracking-wider font-bold text-gray-500 mb-1">
+            <div class="text-xs uppercase tracking-wider font-bold text-gray-400 mb-1">
               {tx("portfolio:actions.challenge", "Challenge")}
             </div>
             <p class="text-sm text-gray-300 line-clamp-2">{t(project.problemKey)}</p>
           </div>
           <div class="rounded-xl border border-white/10 bg-[#0A0A0A] p-4">
-            <div class="text-xs uppercase tracking-wider font-bold text-gray-500 mb-1">
+            <div class="text-xs uppercase tracking-wider font-bold text-gray-400 mb-1">
               {t("portfolio:actions.impact")}
             </div>
             <p class="text-sm text-gray-100 line-clamp-2">{t(project.impactKey)}</p>
           </div>
           <div class="rounded-xl border border-white/10 bg-[#0A0A0A] p-4">
-            <div class="text-xs uppercase tracking-wider font-bold text-gray-500 mb-1">
+            <div class="text-xs uppercase tracking-wider font-bold text-gray-400 mb-1">
               {project.signalKey ? t(project.signalKey) : tx("portfolio:proof.liveProjects", "Signal")}
             </div>
             <p class="text-sm text-gray-100">
@@ -284,7 +284,7 @@ const portfolioSlugJsonLd: any[] = [
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
                 <div>
-                  <span class="text-gray-500 text-xs uppercase font-bold tracking-wider block mb-1">{t("portfolio:actions.impact")}</span>
+                  <span class="text-gray-400 text-xs uppercase font-bold tracking-wider block mb-1">{t("portfolio:actions.impact")}</span>
                   <p class="text-white text-base font-medium">{t(project.impactKey)}</p>
                 </div>
               </div>
