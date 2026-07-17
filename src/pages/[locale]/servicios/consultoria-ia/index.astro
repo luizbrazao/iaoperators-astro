@@ -1,0 +1,397 @@
+---
+export async function getStaticPaths() {
+  return [
+    { params: { locale: "es" } },
+    { params: { locale: "pt" } },
+    { params: { locale: "en" } },
+  ];
+}
+
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import { getLocale } from "../../../../i18n/ui";
+
+const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
+
+// Alvo: ES consultoría de inteligencia artificial / consultor de ia / consultoría ia
+// PT consultoria de inteligência artificial / consultor de ia
+// EN ai consulting / ai consultant
+const CONTENT: Record<string, any> = {
+  es: {
+    meta: {
+      title: "Consultoría de IA para empresas | IA Operators",
+      description:
+        "Consultoría de inteligencia artificial para empresas: diagnóstico, estrategia y roadmap de IA — y la construimos, no solo un informe. Habla con un consultor de IA.",
+    },
+    breadcrumb: "Consultoría de IA",
+    hero: {
+      badge: "Consultoría de IA",
+      title: "Consultoría de inteligencia artificial para empresas",
+      subtitle:
+        "Un consultor de IA que no se queda en el PowerPoint: diagnosticamos dónde la IA mueve la aguja, diseñamos el roadmap y lo construimos hasta producción. Con IA, pero sin humo.",
+      cta: "Hablar con un consultor ↗",
+    },
+    problem: {
+      title: "Sabes que necesitas IA, pero no por dónde empezar",
+      subtitle: "Si te reconoces aquí, necesitas una consultoría honesta antes que herramientas:",
+      items: [
+        "No sabes qué automatizar primero ni qué dará más retorno.",
+        "Miedo a invertir en IA y que quede en un experimento caro.",
+        "Recibes propuestas llenas de hype y promesas sin números.",
+        "Consultoras que entregan un informe bonito y desaparecen.",
+        "Nadie en tu equipo tiene el tiempo o el perfil para decidir.",
+        "Proyectos de IA que nunca llegan a producción.",
+      ],
+    },
+    services: {
+      title: "Qué incluye la consultoría",
+      subtitle: "Estrategia de IA aterrizada en decisiones, no en diapositivas.",
+      items: [
+        { title: "Diagnóstico de oportunidades", body: "Mapeamos tus procesos, datos y atención para encontrar dónde la IA aporta valor real." },
+        { title: "Roadmap priorizado", body: "Un plan de IA ordenado por impacto vs. esfuerzo: qué construir, en qué orden y con qué retorno." },
+        { title: "Auditoría de datos y procesos", body: "Revisamos si tus datos y flujos están listos para IA — y qué falta para que lo estén." },
+        { title: "Build vs. buy", body: "Te decimos honestamente qué construir a medida, qué comprar y qué no hacer todavía." },
+        { title: "Caso de negocio y ROI", body: "Estimamos coste, retorno y riesgo de cada iniciativa para que decidas con números." },
+        { title: "De la estrategia a producción", body: "No nos quedamos en el informe: podemos implementar el roadmap hasta dejarlo funcionando." },
+      ],
+    },
+    process: {
+      badge: "Cómo trabajamos",
+      title: "Diagnóstico, estrategia y ejecución — sin hand-offs",
+      subtitle: "El mismo equipo que define la estrategia la construye. Con IA, pero sin humo.",
+      phases: [
+        { code: "01", title: "Diagnosticamos", body: "Entendemos tu negocio, tus procesos y tus datos. Dónde duele y dónde la IA puede ayudar de verdad." },
+        { code: "02", title: "Priorizamos", body: "Construimos el roadmap: iniciativas ordenadas por impacto, esfuerzo y retorno esperado." },
+        { code: "03", title: "Construimos", body: "Aquí está la diferencia: implementamos el primer caso hasta producción, no lo dejamos en un PDF." },
+        { code: "04", title: "Medimos y escalamos", body: "Medimos resultados reales, iteramos y ampliamos la IA a nuevos procesos." },
+      ],
+    },
+    tech: {
+      title: "La tecnología que usamos",
+      subtitle: "LLM-first, multi-agente y lista para producción.",
+      items: ["OpenAI / Claude", "LangChain", "n8n", "Supabase", "Multi-agente", "WhatsApp Cloud API", "Webhooks & APIs", "Node / TypeScript"],
+    },
+    faq: {
+      title: "Preguntas frecuentes",
+      items: [
+        { q: "¿En qué se diferencia una consultoría de IA de una agencia de IA?", a: "Una consultoría clásica te dice qué hacer y se va. Nosotros diagnosticamos, priorizamos y además construimos: el mismo equipo que define la estrategia la lleva a producción. Lo explicamos en detalle en <a href='/es/blog/que-es-una-agencia-de-ia/' class='text-orange-400 hover:underline'>qué es una agencia de IA</a>." },
+        { q: "¿Solo entregáis estrategia o también implementáis?", a: "Las dos cosas. La consultoría termina en un roadmap accionable, y podemos ejecutarlo nosotros mismos — agentes, automatización e integraciones. Mira nuestro servicio de <a href='/es/servicios/agencia-ia/' class='text-orange-400 hover:underline'>agencia de IA</a>." },
+        { q: "¿Cuánto cuesta una consultoría de IA?", a: "Depende del alcance: un diagnóstico acotado, un roadmap completo o un acompañamiento continuo. Lo importante no es el precio por hora, sino evitar invertir meses en el proyecto equivocado. Un diagnóstico inicial suele estar en días." },
+        { q: "¿Por dónde se empieza?", a: "Por un diagnóstico honesto: dónde tienes procesos repetitivos, datos o atención que la IA puede mejorar. Priorizamos un primer caso de alto impacto y bajo riesgo, no un mega-proyecto." },
+        { q: "¿Necesito muchos datos o un equipo técnico?", a: "No necesariamente. Muchos casos de valor no requieren big data ni equipo propio: nosotros ponemos la parte técnica y trabajamos con lo que ya tienes." },
+        { q: "¿Cuánto se tarda en ver valor?", a: "Un diagnóstico inicial en días; un primer caso en producción en semanas, no meses. Preferimos entregar algo funcionando pronto y escalar desde ahí." },
+      ],
+    },
+    finalCta: {
+      title: "¿Por dónde debería empezar tu empresa con la IA?",
+      subtitle: "En una llamada de 30 minutos, un consultor de IA te dice dónde está tu mejor primer caso — sin humo y sin compromiso.",
+      cta: "Hablar con un consultor",
+    },
+  },
+
+  pt: {
+    meta: {
+      title: "Consultoria de IA para empresas | IA Operators",
+      description:
+        "Consultoria de inteligência artificial para empresas: diagnóstico, estratégia e roadmap de IA — e a gente constrói, não só um relatório. Fale com um consultor de IA.",
+    },
+    breadcrumb: "Consultoria de IA",
+    hero: {
+      badge: "Consultoria de IA",
+      title: "Consultoria de inteligência artificial para empresas",
+      subtitle:
+        "Um consultor de IA que não fica no PowerPoint: diagnosticamos onde a IA move o ponteiro, desenhamos o roadmap e construímos até a produção. Com IA, mas sem enrolação.",
+      cta: "Falar com um consultor ↗",
+    },
+    problem: {
+      title: "Você sabe que precisa de IA, mas não por onde começar",
+      subtitle: "Se você se reconhece aqui, precisa de uma consultoria honesta antes de ferramentas:",
+      items: [
+        "Não sabe o que automatizar primeiro nem o que dará mais retorno.",
+        "Medo de investir em IA e ficar só num experimento caro.",
+        "Recebe propostas cheias de hype e promessas sem números.",
+        "Consultorias que entregam um relatório bonito e somem.",
+        "Ninguém no seu time tem o tempo ou o perfil para decidir.",
+        "Projetos de IA que nunca chegam à produção.",
+      ],
+    },
+    services: {
+      title: "O que inclui a consultoria",
+      subtitle: "Estratégia de IA aterrissada em decisões, não em slides.",
+      items: [
+        { title: "Diagnóstico de oportunidades", body: "Mapeamos seus processos, dados e atendimento para achar onde a IA agrega valor real." },
+        { title: "Roadmap priorizado", body: "Um plano de IA ordenado por impacto vs. esforço: o que construir, em que ordem e com que retorno." },
+        { title: "Auditoria de dados e processos", body: "Verificamos se seus dados e fluxos estão prontos para IA — e o que falta para estarem." },
+        { title: "Build vs. buy", body: "Falamos honestamente o que construir sob medida, o que comprar e o que ainda não fazer." },
+        { title: "Caso de negócio e ROI", body: "Estimamos custo, retorno e risco de cada iniciativa para você decidir com números." },
+        { title: "Da estratégia à produção", body: "Não paramos no relatório: podemos implementar o roadmap até deixar funcionando." },
+      ],
+    },
+    process: {
+      badge: "Como trabalhamos",
+      title: "Diagnóstico, estratégia e execução — sem hand-offs",
+      subtitle: "O mesmo time que define a estratégia constrói. Com IA, mas sem enrolação.",
+      phases: [
+        { code: "01", title: "Diagnosticamos", body: "Entendemos seu negócio, seus processos e seus dados. Onde dói e onde a IA pode ajudar de verdade." },
+        { code: "02", title: "Priorizamos", body: "Construímos o roadmap: iniciativas ordenadas por impacto, esforço e retorno esperado." },
+        { code: "03", title: "Construímos", body: "Aqui está a diferença: implementamos o primeiro caso até a produção, não deixamos num PDF." },
+        { code: "04", title: "Medimos e escalamos", body: "Medimos resultados reais, iteramos e ampliamos a IA para novos processos." },
+      ],
+    },
+    tech: {
+      title: "A tecnologia que usamos",
+      subtitle: "LLM-first, multi-agente e pronta para produção.",
+      items: ["OpenAI / Claude", "LangChain", "n8n", "Supabase", "Multi-agente", "WhatsApp Cloud API", "Webhooks & APIs", "Node / TypeScript"],
+    },
+    faq: {
+      title: "Perguntas frequentes",
+      items: [
+        { q: "Qual a diferença entre uma consultoria de IA e uma agência de IA?", a: "Uma consultoria clássica te diz o que fazer e vai embora. Nós diagnosticamos, priorizamos e ainda construímos: o mesmo time que define a estratégia leva até a produção. Explicamos em detalhe em <a href='/pt/blog/o-que-e-uma-agencia-de-ia/' class='text-orange-400 hover:underline'>o que é uma agência de IA</a>." },
+        { q: "Vocês só entregam estratégia ou também implementam?", a: "As duas coisas. A consultoria termina num roadmap acionável, e podemos executá-lo nós mesmos — agentes, automação e integrações. Veja nosso serviço de <a href='/pt/servicios/agencia-ia/' class='text-orange-400 hover:underline'>agência de IA</a>." },
+        { q: "Quanto custa uma consultoria de IA?", a: "Depende do escopo: um diagnóstico pontual, um roadmap completo ou um acompanhamento contínuo. O importante não é o preço por hora, e sim evitar investir meses no projeto errado. Um diagnóstico inicial costuma ficar pronto em dias." },
+        { q: "Por onde se começa?", a: "Por um diagnóstico honesto: onde você tem processos repetitivos, dados ou atendimento que a IA pode melhorar. Priorizamos um primeiro caso de alto impacto e baixo risco, não um mega-projeto." },
+        { q: "Preciso ter muitos dados ou um time técnico?", a: "Não necessariamente. Muitos casos de valor não exigem big data nem time próprio: nós colocamos a parte técnica e trabalhamos com o que você já tem." },
+        { q: "Quanto tempo para ver valor?", a: "Um diagnóstico inicial em dias; um primeiro caso em produção em semanas, não meses. Preferimos entregar algo funcionando cedo e escalar a partir daí." },
+      ],
+    },
+    finalCta: {
+      title: "Por onde sua empresa deveria começar com IA?",
+      subtitle: "Numa call de 30 minutos, um consultor de IA te diz onde está seu melhor primeiro caso — sem enrolação e sem compromisso.",
+      cta: "Falar com um consultor",
+    },
+  },
+
+  en: {
+    meta: {
+      title: "AI consulting for businesses | IA Operators",
+      description:
+        "AI consulting for businesses: diagnosis, strategy and an AI roadmap — and we build it, not just a report. Talk to an AI consultant.",
+    },
+    breadcrumb: "AI consulting",
+    hero: {
+      badge: "AI Consulting",
+      title: "AI consulting for businesses",
+      subtitle:
+        "An AI consultant that doesn't stop at the slide deck: we diagnose where AI moves the needle, design the roadmap, and build it to production. With AI, but no hype.",
+      cta: "Talk to a consultant ↗",
+    },
+    problem: {
+      title: "You know you need AI, but not where to start",
+      subtitle: "If this is you, you need honest consulting before tools:",
+      items: [
+        "You don't know what to automate first or what will pay off most.",
+        "Afraid to invest in AI and end up with an expensive experiment.",
+        "You get proposals full of hype and promises with no numbers.",
+        "Consultancies that hand over a nice report and disappear.",
+        "No one on your team has the time or profile to decide.",
+        "AI projects that never reach production.",
+      ],
+    },
+    services: {
+      title: "What consulting includes",
+      subtitle: "AI strategy grounded in decisions, not slides.",
+      items: [
+        { title: "Opportunity assessment", body: "We map your processes, data and support to find where AI adds real value." },
+        { title: "Prioritized roadmap", body: "An AI plan ordered by impact vs. effort: what to build, in what order, and with what return." },
+        { title: "Data & process audit", body: "We check whether your data and flows are ready for AI — and what's missing if they're not." },
+        { title: "Build vs. buy", body: "We tell you honestly what to build custom, what to buy, and what not to do yet." },
+        { title: "Business case & ROI", body: "We estimate cost, return and risk for each initiative so you decide with numbers." },
+        { title: "From strategy to production", body: "We don't stop at the report: we can implement the roadmap all the way to running." },
+      ],
+    },
+    process: {
+      badge: "How we work",
+      title: "Diagnose, strategy and build — no hand-offs",
+      subtitle: "The same team that defines the strategy builds it. With AI, but no hype.",
+      phases: [
+        { code: "01", title: "We diagnose", body: "We understand your business, processes and data. Where it hurts and where AI can genuinely help." },
+        { code: "02", title: "We prioritize", body: "We build the roadmap: initiatives ordered by impact, effort and expected return." },
+        { code: "03", title: "We build", body: "Here's the difference: we implement the first case to production, not leave it in a PDF." },
+        { code: "04", title: "We measure & scale", body: "We measure real results, iterate and extend AI to new processes." },
+      ],
+    },
+    tech: {
+      title: "The tech we use",
+      subtitle: "LLM-first, multi-agent and production-ready.",
+      items: ["OpenAI / Claude", "LangChain", "n8n", "Supabase", "Multi-agent", "WhatsApp Cloud API", "Webhooks & APIs", "Node / TypeScript"],
+    },
+    faq: {
+      title: "Frequently asked questions",
+      items: [
+        { q: "How is AI consulting different from an AI agency?", a: "A classic consultancy tells you what to do and leaves. We diagnose, prioritize and also build: the same team that defines the strategy takes it to production. We explain it in detail in <a href='/en/blog/what-is-an-ai-agency/' class='text-orange-400 hover:underline'>what is an AI agency</a>." },
+        { q: "Do you only deliver strategy or also implement?", a: "Both. Consulting ends in an actionable roadmap, and we can execute it ourselves — agents, automation and integrations. See our <a href='/en/servicios/agencia-ia/' class='text-orange-400 hover:underline'>AI agency</a> service." },
+        { q: "How much does AI consulting cost?", a: "It depends on scope: a focused diagnosis, a full roadmap, or ongoing guidance. What matters isn't the hourly rate — it's avoiding months invested in the wrong project. An initial diagnosis is usually ready in days." },
+        { q: "Where do you start?", a: "With an honest diagnosis: where you have repetitive processes, data or support that AI can improve. We prioritize a first high-impact, low-risk case, not a mega-project." },
+        { q: "Do I need lots of data or a technical team?", a: "Not necessarily. Many valuable use cases don't require big data or an in-house team: we bring the technical side and work with what you already have." },
+        { q: "How long until we see value?", a: "An initial diagnosis in days; a first case in production in weeks, not months. We prefer to ship something working early and scale from there." },
+      ],
+    },
+    finalCta: {
+      title: "Where should your company start with AI?",
+      subtitle: "In a 30-minute call, an AI consultant tells you where your best first use case is — no hype, no commitment.",
+      cta: "Talk to a consultant",
+    },
+  },
+};
+
+const c = CONTENT[locale] ?? CONTENT.es;
+const contactHref = `/${locale}/contact/`;
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(`/${locale}/servicios/consultoria-ia/`, site).toString();
+
+const providerSchema = {
+  "@type": ["Organization", "ProfessionalService"],
+  name: "IA Operators",
+  url: site,
+  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+};
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: c.hero.title,
+  serviceType: "Artificial intelligence consulting",
+  provider: providerSchema,
+  areaServed: ["ES", "PT", "BR", "US", "GB"],
+  description: c.meta.description,
+  url: pageUrl,
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: c.breadcrumb, item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: c.faq.items.map((item: any) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a.replace(/<[^>]+>/g, "") },
+  })),
+};
+
+const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
+---
+
+<BaseLayout title={c.meta.title} description={c.meta.description} jsonLd={jsonLd}>
+  <div class="bg-transparent text-white">
+    <!-- HERO -->
+    <section class="relative px-4 pt-28 pb-20">
+      <div class="max-w-5xl mx-auto text-center">
+        <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-6">{c.hero.badge}</span>
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">{c.hero.title}</h1>
+        <p class="text-lg md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto">{c.hero.subtitle}</p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a href={contactHref} class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-base hover:bg-orange-400 hover:scale-105 transition-all duration-300">{c.hero.cta}</a>
+          <a href="#servicios" class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-base hover:bg-orange-500/10 transition-all duration-300">{c.services.title}</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">{c.problem.title}</h2>
+        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">{c.problem.subtitle}</p>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {c.problem.items.map((item: string) => (
+            <li class="flex items-start gap-3 bg-[#0a0a0a] border border-white/5 rounded-2xl p-5">
+              <span class="text-orange-400 text-xl leading-none mt-0.5">✕</span>
+              <p class="text-gray-200 text-base leading-relaxed">{item}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="servicios" class="px-4 py-20">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{c.services.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{c.services.subtitle}</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {c.services.items.map((item: any, idx: number) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 font-bold text-sm">0{idx + 1}</span>
+                <h3 class="text-xl font-semibold text-white">{item.title}</h3>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="px-4 py-24 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">{c.process.badge}</span>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{c.process.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{c.process.subtitle}</p>
+        </div>
+        <ol class="space-y-6 max-w-4xl mx-auto">
+          {c.process.phases.map((phase: any) => (
+            <li class="flex flex-col md:flex-row gap-6 bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8 hover:border-orange-500/20 transition-all duration-300">
+              <div class="md:w-52 shrink-0">
+                <div class="text-orange-400 text-xs font-semibold uppercase tracking-widest mb-1">{phase.code}</div>
+                <h3 class="text-xl font-bold text-white">{phase.title}</h3>
+              </div>
+              <p class="text-gray-300 leading-relaxed flex-1">{phase.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- TECH -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-3">{c.tech.title}</h2>
+        <p class="text-gray-400 mb-10 max-w-2xl mx-auto">{c.tech.subtitle}</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          {c.tech.items.map((item: string) => (
+            <span class="px-5 py-2 rounded-full bg-[#0a0a0a] border border-white/10 text-gray-200 text-sm font-medium hover:border-orange-500/30 transition-colors">{item}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="px-4 py-20">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">{c.faq.title}</h2>
+        <div class="space-y-3">
+          {c.faq.items.map((item: any) => (
+            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-4 hover:border-orange-500/20 transition-all duration-300">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <span class="text-white font-medium pr-4">{item.q}</span>
+                <span class="text-orange-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="text-gray-400 mt-3 leading-relaxed" set:html={item.a}></p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="px-4 py-24">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">{c.finalCta.title}</h2>
+        <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">{c.finalCta.subtitle}</p>
+        <a href={contactHref} class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300">{c.finalCta.cta} ↗</a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

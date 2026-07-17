@@ -52,6 +52,13 @@ const IA_NAV: Record<string, { label: string; desc: string }> = {
 };
 const iaNav = IA_NAV[locale] ?? IA_NAV.es;
 
+const CONSULTORIA_NAV: Record<string, { label: string; desc: string }> = {
+  es: { label: "Consultoría de IA", desc: "Diagnóstico, estrategia y roadmap de IA" },
+  pt: { label: "Consultoria de IA", desc: "Diagnóstico, estratégia e roadmap de IA" },
+  en: { label: "AI consulting", desc: "Diagnosis, strategy and AI roadmap" },
+};
+const consultoriaNav = CONSULTORIA_NAV[locale] ?? CONSULTORIA_NAV.es;
+
 const labels = {
   services: nav?.services ?? "Services",
   automation: nav?.automation ?? automationNav.label,
@@ -66,6 +73,8 @@ const labels = {
   marketingDescription: nav?.marketingDescription ?? marketingNav.desc,
   ia: nav?.ia ?? iaNav.label,
   iaDescription: nav?.iaDescription ?? iaNav.desc,
+  consultoria: nav?.consultoria ?? consultoriaNav.label,
+  consultoriaDescription: nav?.consultoriaDescription ?? consultoriaNav.desc,
   audit: nav?.audit ?? "Audit",
   auditDescription: nav?.auditDescription ?? "",
   roadmap: nav?.roadmap ?? "Roadmap",
@@ -91,6 +100,7 @@ const links = {
   seo: withLocale("servicios/agencia-seo/"),
   marketing: withLocale("servicios/marketing-digital/"),
   ia: withLocale("servicios/agencia-ia/"),
+  consultoria: withLocale("servicios/consultoria-ia/"),
   audit: withLocale("auditoria-de-sistemas/"),
   roadmap: withLocale("roadmap-tecnologico/"),
   implementation: withLocale("implementacion/"),
@@ -109,6 +119,7 @@ const mobileLinks = [
   { key: "seo", href: links.seo, external: false },
   { key: "marketing", href: links.marketing, external: false },
   { key: "ia", href: links.ia, external: false },
+  { key: "consultoria", href: links.consultoria, external: false },
   { key: "audit", href: links.audit, external: false },
   { key: "roadmap", href: links.roadmap, external: false },
   { key: "implementation", href: links.implementation, external: false },
@@ -284,6 +295,23 @@ const mobileLinks = [
                 {labels.iaDescription && (
                   <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
                     {labels.iaDescription}
+                  </p>
+                )}
+              </a>
+
+              <a
+                href={links.consultoria}
+                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
+                role="menuitem"
+                data-close-services
+              >
+                <div class="flex items-center gap-2 text-white font-semibold">
+                  <span class="text-orange-400">07</span>
+                  {labels.consultoria}
+                </div>
+                {labels.consultoriaDescription && (
+                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
+                    {labels.consultoriaDescription}
                   </p>
                 )}
               </a>
