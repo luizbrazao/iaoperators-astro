@@ -407,6 +407,21 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
       </div>
     </section>
 
+    {locale === "es" && (
+      <section class="px-4 py-16 bg-white/[0.02] border-y border-white/5">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-2xl md:text-3xl font-bold mb-3">Agencia de IA por ciudades</h2>
+          <p class="text-gray-400 mb-8 max-w-2xl mx-auto">¿Buscas una agencia de IA cerca de ti? Trabajamos con empresas de toda España.</p>
+          <div class="flex flex-wrap items-center justify-center gap-3">
+            <a href="/es/agencia-de-ia/madrid/" class="px-5 py-2 rounded-full bg-[#0a0a0a] border border-white/10 text-gray-200 text-sm font-medium hover:border-orange-500/30 transition-colors">IA en Madrid</a>
+            <a href="/es/agencia-de-ia/barcelona/" class="px-5 py-2 rounded-full bg-[#0a0a0a] border border-white/10 text-gray-200 text-sm font-medium hover:border-orange-500/30 transition-colors">IA en Barcelona</a>
+            <a href="/es/agencia-de-ia/valencia/" class="px-5 py-2 rounded-full bg-[#0a0a0a] border border-white/10 text-gray-200 text-sm font-medium hover:border-orange-500/30 transition-colors">IA en Valencia</a>
+            <a href="/es/agencia-de-ia/" class="px-5 py-2 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-sm font-medium hover:bg-orange-500/20 transition-colors">Ver todas ↗</a>
+          </div>
+        </div>
+      </section>
+    )}
+
     <!-- FINAL CTA -->
     <section class="px-4 py-24">
       <div class="max-w-3xl mx-auto text-center">

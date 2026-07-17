@@ -1,0 +1,202 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getLocale } from "../../../i18n/ui";
+import { CIUDADES, CIUDAD_SLUGS, SHARED } from "../../../data/ciudades-ia";
+
+// Solo ES: la intención de búsqueda local es en español. Añadir ciudad = añadir entrada en ciudades-ia.ts.
+export async function getStaticPaths() {
+  return CIUDAD_SLUGS.map((ciudad) => ({ params: { locale: "es", ciudad } }));
+}
+
+const locale = getLocale((Astro.params.locale as string) ?? "es");
+const ciudad = Astro.params.ciudad as string;
+const city = CIUDADES[ciudad] ?? CIUDADES.madrid;
+const s = SHARED;
+
+const contactHref = `/${locale}/contact/`;
+const serviceHref = `/${locale}/servicios/agencia-ia/`;
+const pilarHref = `/${locale}/blog/que-es-una-agencia-de-ia/`;
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(`/${locale}/agencia-de-ia/${ciudad}/`, site).toString();
+
+// hreflang solo ES (no existen versiones pt/en de esta página)
+const alternates = [{ lang: "es", href: pageUrl }];
+
+const faqItems = [...city.faqLocal, ...s.genericFaq];
+
+const providerSchema = {
+  "@type": ["Organization", "ProfessionalService"],
+  name: "IA Operators",
+  url: site,
+  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+  areaServed: { "@type": "City", name: city.name },
+};
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: city.heroTitle,
+  serviceType: "Artificial intelligence agency and automation",
+  provider: providerSchema,
+  areaServed: { "@type": "City", name: city.name },
+  description: city.meta.description,
+  url: pageUrl,
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: s.labels.breadcrumbBase, item: `${site}/${locale}/servicios/agencia-ia/` },
+    { "@type": "ListItem", position: 3, name: city.name, item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item: any) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+
+const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
+---
+
+<BaseLayout title={city.meta.title} description={city.meta.description} jsonLd={jsonLd} alternates={alternates}>
+  <div class="bg-transparent text-white">
+    <!-- HERO -->
+    <section class="relative px-4 pt-28 pb-16">
+      <div class="max-w-5xl mx-auto text-center">
+        <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-6">
+          Agencia de IA · {city.name}
+        </span>
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">{city.heroTitle}</h1>
+        <p class="text-lg md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto">{city.heroSubtitle}</p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a href={contactHref} class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-base hover:bg-orange-400 hover:scale-105 transition-all duration-300">
+            {s.labels.heroCta}
+          </a>
+          <a href="#servicios" class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-base hover:bg-orange-500/10 transition-all duration-300">
+            {s.labels.servicesAnchor}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTRO -->
+    <section class="px-4 pb-8">
+      <div class="max-w-3xl mx-auto space-y-5">
+        {city.intro.map((p: string) => <p class="text-gray-300 text-lg leading-relaxed">{p}</p>)}
+        <p class="text-gray-400 text-base leading-relaxed">
+          ¿No tienes claro qué es una agencia de IA o cómo elegir una? Te lo explicamos en esta <a href={pilarHref} class="text-orange-400 hover:underline">guía práctica</a>, y aquí puedes ver nuestro servicio general de <a href={serviceHref} class="text-orange-400 hover:underline">agencia de IA</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTORES (único por ciudad) -->
+    <section class="px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">{city.sectorsTitle}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {city.sectors.map((item: any) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
+              <h3 class="text-xl font-semibold text-white mb-3">{item.title}</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICIOS (compartido) -->
+    <section id="servicios" class="px-4 py-16 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{s.services.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{s.services.subtitle}</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {s.services.items.map((item: any, idx: number) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
+              <div class="flex items-center gap-3 mb-3">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 font-bold text-sm">0{idx + 1}</span>
+                <h3 class="text-xl font-semibold text-white">{item.title}</h3>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESO (compartido) -->
+    <section class="px-4 py-20">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-14">
+          <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">{s.process.badge}</span>
+          <h2 class="text-3xl md:text-4xl font-bold">{s.process.title}</h2>
+        </div>
+        <ol class="space-y-6 max-w-4xl mx-auto">
+          {s.process.phases.map((phase: any) => (
+            <li class="flex flex-col md:flex-row gap-6 bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8 hover:border-orange-500/20 transition-all duration-300">
+              <div class="md:w-52 shrink-0">
+                <div class="text-orange-400 text-xs font-semibold uppercase tracking-widest mb-1">{phase.code}</div>
+                <h3 class="text-xl font-bold text-white">{phase.title}</h3>
+              </div>
+              <p class="text-gray-300 leading-relaxed flex-1">{phase.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- ÁNGULO LOCAL (único) + TECH -->
+    <section class="px-4 py-16 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">{city.localAngle.title}</h2>
+        <p class="text-gray-300 text-lg leading-relaxed mb-10">{city.localAngle.body}</p>
+        <p class="text-gray-400 text-sm mb-4">{s.tech.title}:</p>
+        <div class="flex flex-wrap gap-3">
+          {s.tech.items.map((item: string) => (
+            <span class="px-5 py-2 rounded-full bg-[#0a0a0a] border border-white/10 text-gray-200 text-sm font-medium hover:border-orange-500/30 transition-colors">{item}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ (local + genérica) -->
+    <section class="px-4 py-20">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Preguntas frecuentes</h2>
+        <div class="space-y-3">
+          {faqItems.map((item: any) => (
+            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-4 hover:border-orange-500/20 transition-all duration-300">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <span class="text-white font-medium pr-4">{item.q}</span>
+                <span class="text-orange-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="text-gray-400 mt-3 leading-relaxed">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="px-4 py-24">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">¿Dónde podría la IA quitarte trabajo en {city.name}?</h2>
+        <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">En una llamada de 30 minutos identificamos tu mejor primer caso de IA — sin humo y sin compromiso.</p>
+        <a href={contactHref} class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300">
+          {s.finalCta.cta} ↗
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
