@@ -26,6 +26,7 @@ const blog = defineCollection({
     articleSection: z.string().optional(),
     date: z.coerce.date(),
     image: z.string().optional(),
+    cover: z.string().optional(),
     imageSchema: z.array(z.string()).optional(),
     imageWidth: z.number().optional(),
     imageHeight: z.number().optional(),

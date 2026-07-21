@@ -42,11 +42,14 @@ const isProd = publicSiteEnv
   ? publicSiteEnv === "production"
   : Boolean(import.meta.env.PROD);
 
-const effectiveRobots = robots
+const baseRobots = robots
   ? isProd && robots.includes("noindex")
     ? "index,follow"
     : robots
-  : undefined;
+  : "index, follow";
+const effectiveRobots = baseRobots.includes("noindex")
+  ? baseRobots
+  : `${baseRobots}, max-image-preview:large`;
 
 const locale = getLocale(Astro.currentLocale);
 const defaultLocale = "es";

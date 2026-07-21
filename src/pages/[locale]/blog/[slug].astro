@@ -138,8 +138,8 @@ function toIsoWithOffset(date: Date, offsetMinutes: number): string {
   return iso.replace("Z", `${sign}${hh}:${mm}`);
 }
 
-const ogPublishedTime = toIsoWithOffset(parsedDate, 60);
-const ogModifiedTime = toIsoWithOffset(updatedAt ?? parsedDate, 60);
+const ogPublishedTime = parsedDate.toISOString();
+const ogModifiedTime = (updatedAt ?? parsedDate).toISOString();
 
 // ─── Structured data (JSON-LD) ─────────────────────────────────────────────
 
@@ -246,7 +246,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
   </div>
 
   <div class="pt-32 pb-20 px-4">
-    <article class="max-w-4xl mx-auto" itemscope itemtype="https://schema.org/BlogPosting">
+    <article class="max-w-4xl mx-auto">
 
       <!-- Visible breadcrumb nav -->
       <nav aria-label="Breadcrumb" class="mb-8 text-sm text-gray-400">
@@ -270,7 +270,6 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
         </div>
 
         <h1
-          itemprop="headline"
           class="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-8 text-white"
         >
           {title}
@@ -290,7 +289,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
                 stroke-linejoin="round"
               />
             </svg>
-            <time itemprop="datePublished" datetime={parsedDate.toISOString()}>{formattedDate}</time>
+            <time datetime={parsedDate.toISOString()}>{formattedDate}</time>
           </div>
 
           {updatedAt && (
@@ -300,7 +299,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
                 <path d="M1 20v-6h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <time itemprop="dateModified" datetime={updatedAt.toISOString()}>
+              <time datetime={updatedAt.toISOString()}>
                 {blogPostDict?.updatedLabel ?? "Actualizado"}: {updatedAt.toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })}
               </time>
             </div>
@@ -345,7 +344,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
       {entry.data.image && (
         <div class="mb-12 relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl aspect-video">
           <img
-            src={entry.data.image}
+            src={entry.data.cover ?? entry.data.image}
             srcset={entry.data.imageSrcset}
             sizes={entry.data.imageSizes ?? "(max-width: 768px) 100vw, 896px"}
             width={entry.data.imageWidth}
@@ -355,7 +354,6 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
             fetchpriority="high"
             decoding="async"
             class="w-full h-full object-cover"
-            itemprop="image"
           />
           <div class="absolute inset-0 bg-linear-to-t from-[#050505] via-transparent to-transparent opacity-60" />
         </div>
@@ -364,7 +362,6 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
       <!-- Article body (Markdown rendered) -->
       <div
         class="px-2 md:px-8"
-        itemprop="articleBody"
       >
         <div
           class="

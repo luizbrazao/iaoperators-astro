@@ -7,14 +7,15 @@ articleSection: "AI Privacy & Governance"
 date: 2026-07-21T09:00:00+02:00
 updatedAt: 2026-07-21T19:40:00+02:00
 image: /images/blog/pagas-ia-dos-veces-segunda-factura.png
+cover: /images/blog/pagas-ia-dos-veces-segunda-factura-16x9.png
 imageSchema:
   - /images/blog/pagas-ia-dos-veces-segunda-factura-16x9.png
   - /images/blog/pagas-ia-dos-veces-segunda-factura-4x3.png
   - /images/blog/pagas-ia-dos-veces-segunda-factura-1x1.png
 imageWidth: 1200
-imageHeight: 630
+imageHeight: 675
 imageSizes: "(max-width: 768px) 100vw, 896px"
-imageSrcset: "/images/blog/pagas-ia-dos-veces-segunda-factura-640.png 640w, /images/blog/pagas-ia-dos-veces-segunda-factura-960.png 960w, /images/blog/pagas-ia-dos-veces-segunda-factura.png 1200w"
+imageSrcset: "/images/blog/pagas-ia-dos-veces-segunda-factura-16x9-640.png 640w, /images/blog/pagas-ia-dos-veces-segunda-factura-16x9-960.png 960w, /images/blog/pagas-ia-dos-veces-segunda-factura-16x9.png 1200w"
 imageAlt: "Two AI invoices: one paid in money and one paid with the company's knowledge"
 tags:
   - AI privacy for business
