@@ -139,7 +139,7 @@ function toIsoWithOffset(date: Date, offsetMinutes: number): string {
 }
 
 const ogPublishedTime = toIsoWithOffset(parsedDate, 60);
-const ogModifiedTime = toIsoWithOffset(parsedDate, 60);
+const ogModifiedTime = toIsoWithOffset(updatedAt ?? parsedDate, 60);
 
 // ─── Structured data (JSON-LD) ─────────────────────────────────────────────
 
@@ -321,7 +321,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
           </div>
 
           <!-- Author -->
-          <div class="flex items-center gap-2" itemprop="author" itemscope itemtype="https://schema.org/Organization">
+          <div class="flex items-center gap-2">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="text-orange-500">
               <path
                 d="M20 21a8 8 0 10-16 0"
@@ -336,7 +336,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
                 stroke-linecap="round"
               />
             </svg>
-            <span itemprop="name">{entry.data.author ?? "IA Operators"}</span>
+            <span>{entry.data.author ?? "IA Operators"}</span>
           </div>
         </div>
       </header>
@@ -346,6 +346,10 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
         <div class="mb-12 relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl aspect-video">
           <img
             src={entry.data.image}
+            srcset={entry.data.imageSrcset}
+            sizes={entry.data.imageSizes ?? "(max-width: 768px) 100vw, 896px"}
+            width={entry.data.imageWidth}
+            height={entry.data.imageHeight}
             alt={entry.data.imageAlt ?? title}
             loading="eager"
             fetchpriority="high"
@@ -480,7 +484,9 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
         />
         <div>
           <p class="font-semibold text-white text-sm mb-0.5">
-            {entry.data.author ?? "Luiz Brazão"}
+            {entry.data.authorUrl
+              ? <a href={entry.data.authorUrl} class="hover:text-orange-400 transition-colors">{entry.data.author ?? "Luiz Brazão"}</a>
+              : (entry.data.author ?? "Luiz Brazão")}
           </p>
           <p class="text-orange-400 text-xs mb-2">
             {locale === "pt" ? "Fundador, IA Operators" : locale === "en" ? "Founder, IA Operators" : "Fundador, IA Operators"}

@@ -4,13 +4,17 @@ seoTitle: "AI privacy: protect your company's know-how"
 description: "Learn what data you share when using AI, when running it locally makes sense, and how to build a hybrid flow to protect your company's know-how."
 category: privacy
 articleSection: "AI Privacy & Governance"
-date: 2026-07-21
-updatedAt: 2026-07-21
+date: 2026-07-21T09:00:00+02:00
+updatedAt: 2026-07-21T19:40:00+02:00
 image: /images/blog/pagas-ia-dos-veces-segunda-factura.png
 imageSchema:
-  - /images/blog/pagas-ia-dos-veces-segunda-factura.png
+  - /images/blog/pagas-ia-dos-veces-segunda-factura-16x9.png
   - /images/blog/pagas-ia-dos-veces-segunda-factura-4x3.png
   - /images/blog/pagas-ia-dos-veces-segunda-factura-1x1.png
+imageWidth: 1200
+imageHeight: 630
+imageSizes: "(max-width: 768px) 100vw, 896px"
+imageSrcset: "/images/blog/pagas-ia-dos-veces-segunda-factura-640.png 640w, /images/blog/pagas-ia-dos-veces-segunda-factura-960.png 960w, /images/blog/pagas-ia-dos-veces-segunda-factura.png 1200w"
 imageAlt: "Two AI invoices: one paid in money and one paid with the company's knowledge"
 tags:
   - AI privacy for business
@@ -25,7 +29,7 @@ locale: en
 translationKey: pay-ai-twice
 author: "Luiz Fernando Brazão"
 authorTitle: "Founder of IA Operators"
-authorUrl: "https://iaoperators.com/en/"
+authorUrl: "https://iaoperators.com/en/autores/luiz-fernando-brazao/"
 authorSameAs:
   - "https://www.linkedin.com/in/ferbrazao/"
 faqSchema: false
@@ -43,6 +47,8 @@ Every time you use AI, two bills arrive. One you see: the subscription. The othe
 
 > **In 30 seconds:** not every AI tool uses your data the same way. The real risk shows up when you share documents, operational context and internal criteria without knowing the provider's terms. The safest strategy isn't to abandon the cloud, but to split the tasks: sensitive data local or anonymized; complex, non-confidential tasks on remote services; and your working memory under the company's control.
 
+<nav aria-label="Table of contents">
+
 **In this article**
 
 1. [What the second AI bill is](#la-segunda-factura)
@@ -51,6 +57,8 @@ Every time you use AI, two bills arrive. One you see: the subscription. The othe
 4. [When local AI makes sense](#ia-local)
 5. [How to build a hybrid flow](#flujo-hibrido)
 6. [Checklist to protect your company](#checklist)
+
+</nav>
 
 Satya Nadella, CEO of Microsoft, called this problem the "Reverse Information Paradox": a company pays for access to intelligence and, at the same time, may reveal proprietary knowledge through the prompts, tools, evaluations and corrections needed to make the model useful. The thesis was laid out by Nadella in an [essay published on X](https://x.com/i/article/2076319195718090753) and later analyzed by [TechRadar](https://www.techradar.com/pro/you-essentially-pay-for-intelligence-twice-once-with-money-and-again-with-something-even-more-valuable-microsoft-ceo-satya-nadella-warns-ai-users-not-to-give-away-too-much).
 
@@ -197,8 +205,8 @@ Don't turn the table into an absolute rule: settings and contract still matter. 
 ## Facts that help you decide now
 
 - The "paying twice" warning and the case for control, portability and retaining what's yours come from Microsoft's own CEO, as reported by TechRadar. Use it as a criterion when choosing a provider.
-- If you want an online assistant without giving up privacy, <a href="https://pr.tn/ref/ZB65FBGN" rel="sponsored nofollow" target="_blank">Proton's Lumo</a> uses zero-access encryption, stores no chat logs and doesn't train its models on your data; the Lumo 2.0 update added reasoning, persistent memory, image and cited-search capabilities while keeping the privacy focus.
-- The open ecosystem is competitive: in 2026, Chinese models overtook American ones in real usage on OpenRouter, a sign that cost and practical performance are shifting.
+- If you want an online assistant without giving up privacy, <a href="https://pr.tn/ref/ZB65FBGN" rel="sponsored nofollow" target="_blank">Proton's Lumo</a> uses zero-access encryption, stores no chat logs and doesn't train its models on your data; the [Lumo 2.0 update](https://proton.me/blog/lumo-2) added reasoning, persistent memory, image and cited-search capabilities while keeping the privacy focus.
+- The open ecosystem is competitive: in 2026, Chinese models overtook American ones in share of tokens processed on [OpenRouter](https://openrouter.ai/blog/insights/deepseek-v4-adoption/) in early June. It's a meaningful adoption signal within the platform, but it doesn't represent the entire AI market on its own.
 
 These figures aren't telling you to "swap everything." They reinforce one line: keep your power to choose, keep your memory with you, and have a plan B that doesn't depend on a single company.
 

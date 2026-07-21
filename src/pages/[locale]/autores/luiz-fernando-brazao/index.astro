@@ -1,0 +1,264 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import { getLocale, type Locale } from "../../../../i18n/ui";
+
+export async function getStaticPaths() {
+  return [{ params: { locale: "es" } }, { params: { locale: "pt" } }, { params: { locale: "en" } }];
+}
+
+const { locale: localeParam } = Astro.params;
+const locale = getLocale(localeParam as string);
+const defaultLocale: Locale = "es";
+
+const site = (Astro.site?.toString() ?? "https://iaoperators.com").replace(/\/$/, "");
+const AUTHOR_PATH = "autores/luiz-fernando-brazao";
+
+// hreflang alternates (self in each locale)
+const alternates = (["es", "pt", "en"] as const).map((lang) => ({
+  lang,
+  href: `${site}/${lang}/${AUTHOR_PATH}/`,
+}));
+const canonicalUrl = `${site}/${locale}/${AUTHOR_PATH}/`;
+const xDefaultUrl = `${site}/${defaultLocale}/${AUTHOR_PATH}/`;
+
+// ─── Author identity ─────────────────────────────────────────────────────────
+const NAME = "Luiz Fernando Brazão";
+const PHOTO = "https://framerusercontent.com/images/F57rOWtJqaFD6Xm3xWmqp6bM.png";
+const SAME_AS = ["https://www.linkedin.com/in/ferbrazao/"];
+
+const T = {
+  es: {
+    role: "Fundador de IA Operators",
+    seoTitle: "Luiz Fernando Brazão — Fundador de IA Operators",
+    metaDesc:
+      "Luiz Fernando Brazão, fundador de IA Operators. Ingeniería de IA aplicada a negocios: automatización, arquitectura de sistemas multiagente e integración API-first.",
+    intro:
+      "Ingeniero de automatización y fundador de IA Operators. Trabaja con IA aplicada a negocios reales: bots de WhatsApp, automatización de CRM, flujos de reserva, sistemas multiagente y arquitecturas API-first.",
+    expTitle: "Experiencia",
+    exp: [
+      "Años liderando equipos técnicos en empresas medianas y grandes.",
+      "Diseño e implementación de sistemas multiagente y orquestación de tareas con LLM.",
+      "Automatización de procesos con n8n, Supabase, Convex y la WhatsApp Cloud API.",
+      "Despliegues reales en producción: estado persistente, observabilidad e idempotencia.",
+    ],
+    focusTitle: "Áreas de foco",
+    focus: [
+      "Arquitectura de IA (LLM-first) para empresas",
+      "Automatización e integración de sistemas",
+      "Privacidad, gobernanza y soberanía de datos",
+      "SaaS y soluciones a medida para clientes",
+    ],
+    articlesTitle: "Artículos publicados",
+    editorialTitle: "Metodología editorial",
+    editorial:
+      "Los artículos priorizan fuentes primarias y documentación oficial, distinguen hechos de opinión y evitan afirmaciones absolutas cuando el tema depende del producto, el plan o la configuración. Cuando hay enlaces de afiliación, se declaran de forma explícita.",
+    linkedin: "LinkedIn",
+    readMore: "Leer artículo",
+    home: "Inicio",
+  },
+  pt: {
+    role: "Fundador da IA Operators",
+    seoTitle: "Luiz Fernando Brazão — Fundador da IA Operators",
+    metaDesc:
+      "Luiz Fernando Brazão, fundador da IA Operators. Engenharia de IA aplicada a negócios: automação, arquitetura de sistemas multiagente e integração API-first.",
+    intro:
+      "Engenheiro de automação e fundador da IA Operators. Trabalha com IA aplicada a negócios reais: bots de WhatsApp, automação de CRM, fluxos de reserva, sistemas multiagente e arquiteturas API-first.",
+    expTitle: "Experiência",
+    exp: [
+      "Anos liderando equipes técnicas em empresas de médio e grande porte.",
+      "Desenho e implementação de sistemas multiagente e orquestração de tarefas com LLM.",
+      "Automação de processos com n8n, Supabase, Convex e a WhatsApp Cloud API.",
+      "Deploys reais em produção: estado persistente, observabilidade e idempotência.",
+    ],
+    focusTitle: "Áreas de foco",
+    focus: [
+      "Arquitetura de IA (LLM-first) para empresas",
+      "Automação e integração de sistemas",
+      "Privacidade, governança e soberania de dados",
+      "SaaS e soluções sob medida para clientes",
+    ],
+    articlesTitle: "Artigos publicados",
+    editorialTitle: "Metodologia editorial",
+    editorial:
+      "Os artigos priorizam fontes primárias e documentação oficial, distinguem fatos de opinião e evitam afirmações absolutas quando o tema depende do produto, do plano ou da configuração. Quando há links de afiliação, eles são declarados de forma explícita.",
+    linkedin: "LinkedIn",
+    readMore: "Ler artigo",
+    home: "Início",
+  },
+  en: {
+    role: "Founder of IA Operators",
+    seoTitle: "Luiz Fernando Brazão — Founder of IA Operators",
+    metaDesc:
+      "Luiz Fernando Brazão, founder of IA Operators. AI engineering applied to real business: automation, multi-agent system architecture and API-first integration.",
+    intro:
+      "Automation engineer and founder of IA Operators. Works on AI applied to real business: WhatsApp bots, CRM automation, booking flows, multi-agent systems and API-first architectures.",
+    expTitle: "Experience",
+    exp: [
+      "Years leading technical teams across mid-size and large companies.",
+      "Design and implementation of multi-agent systems and LLM task orchestration.",
+      "Process automation with n8n, Supabase, Convex and the WhatsApp Cloud API.",
+      "Real production deployments: persistent state, observability and idempotency.",
+    ],
+    focusTitle: "Focus areas",
+    focus: [
+      "AI architecture (LLM-first) for business",
+      "Automation and systems integration",
+      "Privacy, governance and data sovereignty",
+      "SaaS and custom solutions for clients",
+    ],
+    articlesTitle: "Published articles",
+    editorialTitle: "Editorial methodology",
+    editorial:
+      "Articles prioritize primary sources and official documentation, separate fact from opinion, and avoid absolute claims when the topic depends on the product, plan or settings. Where affiliate links appear, they are disclosed explicitly.",
+    linkedin: "LinkedIn",
+    readMore: "Read article",
+    home: "Home",
+  },
+}[locale];
+
+// ─── Articles by this author (same locale) ───────────────────────────────────
+const pool = await getCollection(
+  "blog",
+  ({ id, data }) =>
+    id.startsWith(`${locale}/`) &&
+    !data.draft &&
+    typeof data.author === "string" &&
+    data.author.includes("Braz"),
+);
+const articles = pool
+  .sort((a, b) => +b.data.date - +a.data.date)
+  .slice(0, 9)
+  .map((p) => ({
+    title: p.data.title,
+    href: `/${locale}/blog/${p.id.replace(`${locale}/`, "").replace(/\.(md|mdx)$/, "")}/`,
+    description: p.data.description,
+  }));
+
+// ─── JSON-LD: ProfilePage + Person ───────────────────────────────────────────
+const person = {
+  "@type": "Person",
+  name: NAME,
+  jobTitle: T.role,
+  url: canonicalUrl,
+  image: PHOTO,
+  description: T.intro,
+  worksFor: { "@type": "Organization", name: "IA Operators", url: `${site}/${locale}/` },
+  sameAs: SAME_AS,
+};
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    inLanguage: locale,
+    mainEntity: person,
+    mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: T.home, item: `${site}/${locale}/` },
+      { "@type": "ListItem", position: 2, name: NAME, item: canonicalUrl },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={T.seoTitle}
+  description={T.metaDesc}
+  canonicalUrl={canonicalUrl}
+  alternates={alternates}
+  xDefaultUrl={xDefaultUrl}
+  jsonLd={jsonLd}
+  ogImage={PHOTO}
+  ogImageAlt={NAME}
+  ogType="profile"
+>
+  <div class="pt-32 pb-20 px-4">
+    <div class="max-w-4xl mx-auto">
+      <!-- Breadcrumb -->
+      <nav aria-label="Breadcrumb" class="mb-8 text-sm text-gray-400">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href={`/${locale}/`} class="hover:text-orange-400 transition-colors">{T.home}</a></li>
+          <li class="text-gray-700">/</li>
+          <li class="text-gray-400" aria-current="page">{NAME}</li>
+        </ol>
+      </nav>
+
+      <!-- Profile header -->
+      <header class="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-12">
+        <img
+          src={PHOTO}
+          alt={NAME}
+          width="112"
+          height="112"
+          class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border border-white/10 shrink-0"
+          loading="eager"
+          decoding="async"
+        />
+        <div>
+          <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight">{NAME}</h1>
+          <p class="text-orange-400 font-medium mt-1">{T.role}</p>
+          <a
+            href={SAME_AS[0]}
+            target="_blank"
+            rel="me noopener noreferrer"
+            class="inline-flex items-center gap-1.5 mt-3 text-sm text-orange-400 hover:text-orange-300 transition-colors"
+          >
+            {T.linkedin} ↗
+          </a>
+        </div>
+      </header>
+
+      <!-- Intro -->
+      <p class="text-lg text-gray-300 leading-relaxed mb-12 max-w-3xl">{T.intro}</p>
+
+      <!-- Experience + Focus -->
+      <div class="grid md:grid-cols-2 gap-8 mb-16">
+        <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/5">
+          <h2 class="text-xl font-bold text-white mb-4 border-l-4 border-orange-500 pl-3">{T.expTitle}</h2>
+          <ul class="space-y-3 text-gray-300 text-sm leading-relaxed">
+            {T.exp.map((item) => (
+              <li class="flex gap-2"><span class="text-orange-500 mt-0.5">▹</span><span>{item}</span></li>
+            ))}
+          </ul>
+        </div>
+        <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/5">
+          <h2 class="text-xl font-bold text-white mb-4 border-l-4 border-orange-500 pl-3">{T.focusTitle}</h2>
+          <ul class="space-y-3 text-gray-300 text-sm leading-relaxed">
+            {T.focus.map((item) => (
+              <li class="flex gap-2"><span class="text-orange-500 mt-0.5">▹</span><span>{item}</span></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Articles -->
+      {articles.length > 0 && (
+        <section class="mb-16">
+          <h2 class="text-2xl font-bold text-white mb-8 border-l-4 border-orange-500 pl-4">{T.articlesTitle}</h2>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {articles.map((a) => (
+              <a
+                href={a.href}
+                class="group flex flex-col p-5 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-orange-500/30 transition-all"
+              >
+                <h3 class="text-white font-semibold leading-snug mb-2 group-hover:text-orange-300 transition-colors">{a.title}</h3>
+                <p class="text-gray-400 text-sm leading-relaxed line-clamp-3">{a.description}</p>
+                <span class="mt-4 text-orange-400 text-xs font-semibold">{T.readMore} →</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Editorial methodology -->
+      <section class="p-6 rounded-2xl bg-white/[0.03] border border-white/5">
+        <h2 class="text-xl font-bold text-white mb-3 border-l-4 border-orange-500 pl-3">{T.editorialTitle}</h2>
+        <p class="text-gray-300 text-sm leading-relaxed max-w-3xl">{T.editorial}</p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
