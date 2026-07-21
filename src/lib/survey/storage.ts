@@ -1,6 +1,7 @@
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import type {
   ReviewStatus,
   SurveyEmailRecord,
@@ -10,27 +11,85 @@ import type {
   SurveySubmissionInput,
 } from "./types";
 import { SURVEY_SLUG, SURVEY_TITLE, SURVEY_VERSION } from "./types";
-import { answerSignature, safeJsonParse, sha256 } from "./utils";
+import { answerSignature, safeJsonParse } from "./utils";
 import { deriveQualityFlags } from "./validation";
 
 const LOCAL_ROOT =
   import.meta.env.SURVEY_LOCAL_STORAGE_DIR || join(process.cwd(), "work", "survey-data", SURVEY_SLUG);
 
-const AIRTABLE_API_KEY = import.meta.env.AIRTABLE_API_KEY;
-const AIRTABLE_BASE_ID = import.meta.env.AIRTABLE_BASE_ID;
-const AIRTABLE_RESPONSES_TABLE = import.meta.env.SURVEY_AIRTABLE_RESPONSES_TABLE;
-const AIRTABLE_EMAILS_TABLE = import.meta.env.SURVEY_AIRTABLE_EMAILS_TABLE;
+const SUPABASE_URL = import.meta.env.SUPABASE_URL;
+const SUPABASE_SERVICE_ROLE_KEY = import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
 const STORAGE_DRIVER =
   import.meta.env.SURVEY_STORAGE_DRIVER ||
-  (AIRTABLE_API_KEY && AIRTABLE_BASE_ID && AIRTABLE_RESPONSES_TABLE && AIRTABLE_EMAILS_TABLE
-    ? "airtable"
-    : "local");
+  (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY ? "supabase" : "local");
+const RESPONSES_TABLE = import.meta.env.SURVEY_SUPABASE_RESPONSES_TABLE || "survey_responses";
+const EMAILS_TABLE = import.meta.env.SURVEY_SUPABASE_EMAILS_TABLE || "survey_response_emails";
 
 const RESPONSES_DIR = join(LOCAL_ROOT, "responses");
 const EMAILS_DIR = join(LOCAL_ROOT, "emails");
 
+let supabaseAdminClient: SupabaseClient | null = null;
+
+type SurveyResponseRow = {
+  response_id: string;
+  slug: string;
+  title: string;
+  questionnaire_version: string;
+  status: string;
+  locale: string;
+  questionnaire_language: string;
+  created_at: string;
+  updated_at: string;
+  started_at: string;
+  submitted_at: string | null;
+  abandoned_at: string | null;
+  completion_step: number;
+  total_steps: number;
+  answers: Record<string, unknown>;
+  consent: Record<string, unknown>;
+  optional_email_provided: boolean;
+  quality_flags: Array<Record<string, unknown>>;
+  review_status: string;
+  review_notes: string[];
+  fingerprint_hash: string;
+  answer_signature: string;
+  landing_path: string;
+  referrer: string;
+  origin_label: string;
+  utm_source: string;
+  utm_medium: string;
+  utm_campaign: string;
+  utm_term: string;
+  utm_content: string;
+  user_agent_hash: string;
+  device_category: string;
+  duration_ms: number;
+};
+
 function nowIso() {
   return new Date().toISOString();
+}
+
+function getStorageMode() {
+  return STORAGE_DRIVER === "supabase" ? "supabase" : "local";
+}
+
+function getSupabaseAdminClient() {
+  if (supabaseAdminClient) return supabaseAdminClient;
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+    throw new Error("Supabase is not configured. Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY.");
+  }
+
+  supabaseAdminClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+    auth: { autoRefreshToken: false, persistSession: false },
+    global: {
+      headers: {
+        "X-Client-Info": "iaoperators-survey-server",
+      },
+    },
+  });
+
+  return supabaseAdminClient;
 }
 
 async function ensureLocalDir(path: string) {
@@ -56,40 +115,7 @@ function getEmailPath(responseId: string) {
   return join(EMAILS_DIR, `${responseId}.json`);
 }
 
-function getAirtableHeaders() {
-  return {
-    Authorization: `Bearer ${AIRTABLE_API_KEY}`,
-    "Content-Type": "application/json",
-  };
-}
-
-async function airtableRequest(path: string, init?: RequestInit) {
-  const baseUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}`;
-  const response = await fetch(`${baseUrl}${path}`, {
-    ...init,
-    headers: {
-      ...getAirtableHeaders(),
-      ...(init?.headers ?? {}),
-    },
-  });
-
-  if (!response.ok) {
-    const text = await response.text().catch(() => "");
-    throw new Error(`Airtable request failed (${response.status}): ${text}`);
-  }
-
-  return response;
-}
-
-function serializeFlags(record: SurveyRecord) {
-  return JSON.stringify(record.qualityFlags);
-}
-
-function serializeNotes(notes: string[]) {
-  return JSON.stringify(notes);
-}
-
-function responseToAirtableFields(record: SurveyRecord) {
+function responseToRow(record: SurveyRecord): SurveyResponseRow {
   return {
     response_id: record.responseId,
     slug: record.slug,
@@ -101,15 +127,16 @@ function responseToAirtableFields(record: SurveyRecord) {
     created_at: record.createdAt,
     updated_at: record.updatedAt,
     started_at: record.startedAt,
-    submitted_at: record.submittedAt ?? "",
-    abandoned_at: record.abandonedAt ?? "",
+    submitted_at: record.submittedAt ?? null,
+    abandoned_at: record.abandonedAt ?? null,
     completion_step: record.completionStep,
     total_steps: record.totalSteps,
-    duration_ms: record.durationMs,
-    optional_email_provided: record.optionalEmailProvided ? "yes" : "no",
+    answers: record.answers,
+    consent: record.consent as unknown as Record<string, unknown>,
+    optional_email_provided: record.optionalEmailProvided,
+    quality_flags: record.qualityFlags as unknown as Array<Record<string, unknown>>,
     review_status: record.reviewStatus,
-    review_notes_json: serializeNotes(record.reviewNotes),
-    quality_flags_json: serializeFlags(record),
+    review_notes: record.reviewNotes,
     fingerprint_hash: record.fingerprintHash,
     answer_signature: record.answerSignature,
     landing_path: record.source.landingPath,
@@ -122,90 +149,56 @@ function responseToAirtableFields(record: SurveyRecord) {
     utm_content: record.source.utms.content,
     user_agent_hash: record.source.userAgentHash,
     device_category: record.source.deviceCategory,
-    professional_role: Array.isArray(record.answers.professional_role)
-      ? record.answers.professional_role.join(", ")
-      : record.answers.professional_role ?? "",
-    company_size: Array.isArray(record.answers.company_size)
-      ? record.answers.company_size.join(", ")
-      : record.answers.company_size ?? "",
-    sector: Array.isArray(record.answers.sector) ? record.answers.sector.join(", ") : record.answers.sector ?? "",
-    country_region: Array.isArray(record.answers.country_region)
-      ? record.answers.country_region.join(", ")
-      : record.answers.country_region ?? "",
-    ai_usage_frequency: Array.isArray(record.answers.ai_usage_frequency)
-      ? record.answers.ai_usage_frequency.join(", ")
-      : record.answers.ai_usage_frequency ?? "",
-    work_account_usage: Array.isArray(record.answers.work_account_usage)
-      ? record.answers.work_account_usage.join(", ")
-      : record.answers.work_account_usage ?? "",
-    supplier_dependency_resilience: Array.isArray(record.answers.supplier_dependency_resilience)
-      ? record.answers.supplier_dependency_resilience.join(", ")
-      : record.answers.supplier_dependency_resilience ?? "",
-    risk_perception: Array.isArray(record.answers.risk_perception)
-      ? record.answers.risk_perception.join(", ")
-      : record.answers.risk_perception ?? "",
-    responses_json: JSON.stringify(record.answers),
-    consent_json: JSON.stringify(record.consent),
+    duration_ms: record.durationMs,
   };
 }
 
-function emailToAirtableFields(record: SurveyEmailRecord) {
+function rowToRecord(row: SurveyResponseRow): SurveyRecord {
   return {
-    response_id: record.responseId,
-    email: record.email,
-    created_at: record.createdAt,
-    locale: record.locale,
-    questionnaire_version: record.questionnaireVersion,
-    email_marketing_accepted: record.emailMarketingAccepted ? "yes" : "no",
-  };
-}
-
-function airtableFieldsToRecord(fields: Record<string, unknown>): SurveyRecord {
-  return {
-    responseId: String(fields.response_id ?? ""),
+    responseId: row.response_id,
     slug: SURVEY_SLUG,
     title: SURVEY_TITLE,
-    questionnaireVersion: SURVEY_VERSION,
-    status: String(fields.status ?? "started") as SurveyRecord["status"],
-    locale: String(fields.locale ?? "es"),
-    questionnaireLanguage: String(fields.questionnaire_language ?? "es-ES"),
-    createdAt: String(fields.created_at ?? nowIso()),
-    updatedAt: String(fields.updated_at ?? nowIso()),
-    startedAt: String(fields.started_at ?? nowIso()),
-    submittedAt: String(fields.submitted_at ?? "") || undefined,
-    abandonedAt: String(fields.abandoned_at ?? "") || undefined,
-    completionStep: Number(fields.completion_step ?? 0),
-    totalSteps: Number(fields.total_steps ?? 12),
-    answers: safeJsonParse(String(fields.responses_json ?? "{}"), {}),
-    consent: safeJsonParse(String(fields.consent_json ?? "{}"), {
-      accepted: false,
-      confidentialityNoticeAccepted: false,
-      aggregateUseAccepted: false,
-      deletionRightsRead: false,
-      emailMarketingAccepted: false,
-    }),
-    optionalEmailProvided: String(fields.optional_email_provided ?? "no") === "yes",
-    qualityFlags: safeJsonParse(String(fields.quality_flags_json ?? "[]"), []),
-    reviewStatus: String(fields.review_status ?? "clean") as ReviewStatus,
-    reviewNotes: safeJsonParse(String(fields.review_notes_json ?? "[]"), []),
-    fingerprintHash: String(fields.fingerprint_hash ?? ""),
-    answerSignature: String(fields.answer_signature ?? ""),
-    source: {
-      landingPath: String(fields.landing_path ?? ""),
-      referrer: String(fields.referrer ?? ""),
-      originLabel: String(fields.origin_label ?? "direct"),
-      utms: {
-        source: String(fields.utm_source ?? ""),
-        medium: String(fields.utm_medium ?? ""),
-        campaign: String(fields.utm_campaign ?? ""),
-        term: String(fields.utm_term ?? ""),
-        content: String(fields.utm_content ?? ""),
-      },
-      userAgentHash: String(fields.user_agent_hash ?? ""),
-      deviceCategory: String(fields.device_category ?? "unknown") as SurveyRecord["source"]["deviceCategory"],
-      locale: String(fields.locale ?? "es"),
+    questionnaireVersion: row.questionnaire_version as typeof SURVEY_VERSION,
+    status: row.status as SurveyRecord["status"],
+    locale: row.locale,
+    questionnaireLanguage: row.questionnaire_language,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+    startedAt: row.started_at,
+    submittedAt: row.submitted_at ?? undefined,
+    abandonedAt: row.abandoned_at ?? undefined,
+    completionStep: row.completion_step,
+    totalSteps: row.total_steps,
+    answers: (row.answers ?? {}) as SurveyRecord["answers"],
+    consent: {
+      accepted: Boolean((row.consent ?? {}).accepted),
+      confidentialityNoticeAccepted: Boolean((row.consent ?? {}).confidentialityNoticeAccepted),
+      aggregateUseAccepted: Boolean((row.consent ?? {}).aggregateUseAccepted),
+      deletionRightsRead: Boolean((row.consent ?? {}).deletionRightsRead),
+      emailMarketingAccepted: Boolean((row.consent ?? {}).emailMarketingAccepted),
     },
-    durationMs: Number(fields.duration_ms ?? 0),
+    optionalEmailProvided: Boolean(row.optional_email_provided),
+    qualityFlags: Array.isArray(row.quality_flags) ? (row.quality_flags as SurveyRecord["qualityFlags"]) : [],
+    reviewStatus: row.review_status as ReviewStatus,
+    reviewNotes: Array.isArray(row.review_notes) ? row.review_notes : [],
+    fingerprintHash: row.fingerprint_hash,
+    answerSignature: row.answer_signature ?? "",
+    source: {
+      landingPath: row.landing_path ?? "",
+      referrer: row.referrer ?? "",
+      utms: {
+        source: row.utm_source ?? "",
+        medium: row.utm_medium ?? "",
+        campaign: row.utm_campaign ?? "",
+        term: row.utm_term ?? "",
+        content: row.utm_content ?? "",
+      },
+      locale: row.locale ?? "es",
+      originLabel: row.origin_label ?? "direct",
+      userAgentHash: row.user_agent_hash ?? "",
+      deviceCategory: (row.device_category ?? "unknown") as SurveyRecord["source"]["deviceCategory"],
+    },
+    durationMs: row.duration_ms ?? 0,
   };
 }
 
@@ -220,35 +213,8 @@ async function localListRecords() {
   return records.filter(Boolean).sort((a, b) => b.startedAt.localeCompare(a.startedAt));
 }
 
-async function airtableListRecords() {
-  const records: SurveyRecord[] = [];
-  let offset = "";
-
-  do {
-    const query = new URLSearchParams({ pageSize: "100" });
-    if (offset) query.set("offset", offset);
-    const response = await airtableRequest(`/${encodeURIComponent(AIRTABLE_RESPONSES_TABLE)}?${query.toString()}`);
-    const payload = (await response.json()) as {
-      records: Array<{ fields: Record<string, unknown> }>;
-      offset?: string;
-    };
-    records.push(...payload.records.map((record) => airtableFieldsToRecord(record.fields)));
-    offset = payload.offset ?? "";
-  } while (offset);
-
-  return records.sort((a, b) => b.startedAt.localeCompare(a.startedAt));
-}
-
 async function localGetRecord(responseId: string) {
   return readJson<SurveyRecord | null>(getResponsePath(responseId), null);
-}
-
-async function airtableGetRecord(responseId: string) {
-  const formula = encodeURIComponent(`{response_id}="${responseId}"`);
-  const response = await airtableRequest(`/${encodeURIComponent(AIRTABLE_RESPONSES_TABLE)}?filterByFormula=${formula}`);
-  const payload = (await response.json()) as { records: Array<{ fields: Record<string, unknown> }> };
-  if (!payload.records[0]) return null;
-  return airtableFieldsToRecord(payload.records[0].fields);
 }
 
 async function localUpsertRecord(record: SurveyRecord) {
@@ -256,73 +222,114 @@ async function localUpsertRecord(record: SurveyRecord) {
   return record;
 }
 
-async function airtableUpsertRecord(record: SurveyRecord) {
-  const existing = await airtableGetRecord(record.responseId);
-  const fields = responseToAirtableFields(record);
-  if (existing) {
-    const formula = encodeURIComponent(`{response_id}="${record.responseId}"`);
-    const lookup = await airtableRequest(`/${encodeURIComponent(AIRTABLE_RESPONSES_TABLE)}?filterByFormula=${formula}`);
-    const payload = (await lookup.json()) as { records: Array<{ id: string }> };
-    const recordId = payload.records[0]?.id;
-    if (!recordId) throw new Error(`Unable to update Airtable record ${record.responseId}`);
-    await airtableRequest(`/${encodeURIComponent(AIRTABLE_RESPONSES_TABLE)}/${recordId}`, {
-      method: "PATCH",
-      body: JSON.stringify({ fields }),
-    });
-    return record;
-  }
-
-  await airtableRequest(`/${encodeURIComponent(AIRTABLE_RESPONSES_TABLE)}`, {
-    method: "POST",
-    body: JSON.stringify({ fields }),
-  });
-
-  return record;
-}
-
 async function localSaveEmail(record: SurveyEmailRecord) {
   await writeJson(getEmailPath(record.responseId), record);
 }
 
-async function airtableSaveEmail(record: SurveyEmailRecord) {
-  const formula = encodeURIComponent(`{response_id}="${record.responseId}"`);
-  const lookup = await airtableRequest(`/${encodeURIComponent(AIRTABLE_EMAILS_TABLE)}?filterByFormula=${formula}`);
-  const payload = (await lookup.json()) as { records: Array<{ id: string }> };
-  const existingId = payload.records[0]?.id;
-  const fields = emailToAirtableFields(record);
-
-  if (existingId) {
-    await airtableRequest(`/${encodeURIComponent(AIRTABLE_EMAILS_TABLE)}/${existingId}`, {
-      method: "PATCH",
-      body: JSON.stringify({ fields }),
-    });
-    return;
-  }
-
-  await airtableRequest(`/${encodeURIComponent(AIRTABLE_EMAILS_TABLE)}`, {
-    method: "POST",
-    body: JSON.stringify({ fields }),
-  });
+async function localCountDuplicates(responseId: string, fingerprintHash: string, startedAt: string) {
+  const allRecords = await localListRecords();
+  return allRecords.some(
+    (record) =>
+      record.responseId !== responseId &&
+      record.fingerprintHash === fingerprintHash &&
+      Math.abs(Date.parse(record.startedAt) - Date.parse(startedAt)) < 1000 * 60 * 60 * 24,
+  );
 }
 
-function getStorageMode() {
-  return STORAGE_DRIVER === "airtable" ? "airtable" : "local";
+async function supabaseListRecords(filters?: {
+  status?: string;
+  reviewStatus?: string;
+  version?: string;
+  campaign?: string;
+}) {
+  let query = getSupabaseAdminClient()
+    .from(RESPONSES_TABLE)
+    .select("*")
+    .order("started_at", { ascending: false });
+
+  if (filters?.status) query = query.eq("status", filters.status);
+  if (filters?.reviewStatus) query = query.eq("review_status", filters.reviewStatus);
+  if (filters?.version) query = query.eq("questionnaire_version", filters.version);
+  if (filters?.campaign) query = query.eq("utm_campaign", filters.campaign);
+
+  const { data, error } = await query;
+  if (error) throw error;
+  return (data ?? []).map((row) => rowToRecord(row as SurveyResponseRow));
+}
+
+async function supabaseGetRecord(responseId: string) {
+  const { data, error } = await getSupabaseAdminClient()
+    .from(RESPONSES_TABLE)
+    .select("*")
+    .eq("response_id", responseId)
+    .maybeSingle();
+
+  if (error) throw error;
+  return data ? rowToRecord(data as SurveyResponseRow) : null;
+}
+
+async function supabaseUpsertRecord(record: SurveyRecord) {
+  const row = responseToRow(record);
+  const { error } = await getSupabaseAdminClient()
+    .from(RESPONSES_TABLE)
+    .upsert(row, { onConflict: "response_id" });
+
+  if (error) throw error;
+  return record;
+}
+
+async function supabaseSaveEmail(record: SurveyEmailRecord) {
+  const { error } = await getSupabaseAdminClient().from(EMAILS_TABLE).upsert(
+    {
+      response_id: record.responseId,
+      email: record.email,
+      created_at: record.createdAt,
+      locale: record.locale,
+      questionnaire_version: record.questionnaireVersion,
+      email_marketing_accepted: record.emailMarketingAccepted,
+    },
+    { onConflict: "response_id" },
+  );
+
+  if (error) throw error;
+}
+
+async function supabaseCountDuplicates(responseId: string, fingerprintHash: string, startedAt: string) {
+  const since = new Date(Date.parse(startedAt) - 1000 * 60 * 60 * 24).toISOString();
+  const until = new Date(Date.parse(startedAt) + 1000 * 60 * 60 * 24).toISOString();
+
+  const { count, error } = await getSupabaseAdminClient()
+    .from(RESPONSES_TABLE)
+    .select("response_id", { count: "exact", head: true })
+    .eq("fingerprint_hash", fingerprintHash)
+    .neq("response_id", responseId)
+    .gte("started_at", since)
+    .lte("started_at", until);
+
+  if (error) throw error;
+  return Boolean(count && count > 0);
 }
 
 async function listAllRecords() {
-  return getStorageMode() === "airtable" ? airtableListRecords() : localListRecords();
+  return getStorageMode() === "supabase" ? supabaseListRecords() : localListRecords();
 }
 
 async function getRecord(responseId: string) {
-  return getStorageMode() === "airtable" ? airtableGetRecord(responseId) : localGetRecord(responseId);
+  return getStorageMode() === "supabase" ? supabaseGetRecord(responseId) : localGetRecord(responseId);
 }
 
 async function upsertRecord(record: SurveyRecord) {
-  return getStorageMode() === "airtable" ? airtableUpsertRecord(record) : localUpsertRecord(record);
+  return getStorageMode() === "supabase" ? supabaseUpsertRecord(record) : localUpsertRecord(record);
 }
 
 async function saveEmail(record: SurveyEmailRecord) {
-  return getStorageMode() === "airtable" ? airtableSaveEmail(record) : localSaveEmail(record);
+  return getStorageMode() === "supabase" ? supabaseSaveEmail(record) : localSaveEmail(record);
+}
+
+async function hasPotentialDuplicate(responseId: string, fingerprintHash: string, startedAt: string) {
+  return getStorageMode() === "supabase"
+    ? supabaseCountDuplicates(responseId, fingerprintHash, startedAt)
+    : localCountDuplicates(responseId, fingerprintHash, startedAt);
 }
 
 export async function createSurveySession(input: SurveySessionCreateInput) {
@@ -397,13 +404,10 @@ export async function finalizeSurveySubmission(input: SurveySubmissionInput) {
   const existing = await getRecord(input.responseId);
   if (!existing) throw new Error("Survey session not found.");
 
-  const allRecords = await listAllRecords();
-  const possibleDuplicate = allRecords.some(
-    (record) =>
-      record.responseId !== input.responseId &&
-      record.fingerprintHash &&
-      record.fingerprintHash === input.fingerprintHash &&
-      Math.abs(Date.parse(record.startedAt) - Date.parse(existing.startedAt)) < 1000 * 60 * 60 * 24,
+  const possibleDuplicate = await hasPotentialDuplicate(
+    input.responseId,
+    input.fingerprintHash,
+    existing.startedAt,
   );
 
   const baseFlags = deriveQualityFlags({
@@ -467,19 +471,22 @@ export async function listSurveyRecords(filters?: {
   version?: string;
   campaign?: string;
 }) {
-  const records = await listAllRecords();
-  return records.filter((record) => {
-    if (filters?.status && record.status !== filters.status) return false;
-    if (filters?.reviewStatus && record.reviewStatus !== filters.reviewStatus) return false;
-    if (filters?.version && record.questionnaireVersion !== filters.version) return false;
-    if (filters?.campaign && record.source.utms.campaign !== filters.campaign) return false;
-    return true;
+  return getStorageMode() === "supabase" ? supabaseListRecords(filters) : localListRecords().then((records) => {
+    return records.filter((record) => {
+      if (filters?.status && record.status !== filters.status) return false;
+      if (filters?.reviewStatus && record.reviewStatus !== filters.reviewStatus) return false;
+      if (filters?.version && record.questionnaireVersion !== filters.version) return false;
+      if (filters?.campaign && record.source.utms.campaign !== filters.campaign) return false;
+      return true;
+    });
   });
 }
 
 export async function getSurveySummary() {
   const records = await listAllRecords();
-  const started = records.filter((record) => record.status === "started" || record.status === "abandoned" || record.status === "completed").length;
+  const started = records.filter(
+    (record) => record.status === "started" || record.status === "abandoned" || record.status === "completed",
+  ).length;
   const completed = records.filter((record) => record.status === "completed").length;
   const abandoned = records.filter((record) => record.status === "abandoned").length;
   const needsReview = records.filter((record) => record.reviewStatus === "needs_review").length;
@@ -510,6 +517,8 @@ export function getSurveyStorageConfig() {
   return {
     storageDriver: getStorageMode(),
     localRoot: LOCAL_ROOT,
-    hasAirtableConfig: Boolean(AIRTABLE_API_KEY && AIRTABLE_BASE_ID && AIRTABLE_RESPONSES_TABLE && AIRTABLE_EMAILS_TABLE),
+    hasSupabaseConfig: Boolean(SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY),
+    responsesTable: RESPONSES_TABLE,
+    emailsTable: EMAILS_TABLE,
   };
 }

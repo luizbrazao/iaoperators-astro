@@ -41,8 +41,8 @@ Ruta de agradecimiento:
 ### Variables de entorno de la encuesta
 
 ```bash
-# Driver: "local" para desarrollo, "airtable" para producción si ya existen las tablas
-SURVEY_STORAGE_DRIVER=local
+# Driver: "local" para desarrollo, "supabase" para producción
+SURVEY_STORAGE_DRIVER=supabase
 
 # Seguridad y control
 SURVEY_FINGERPRINT_SALT=change-me
@@ -52,17 +52,24 @@ SURVEY_ADMIN_PASSWORD=change-me
 # Fallback local
 SURVEY_LOCAL_STORAGE_DIR=./work/survey-data/segunda-factura-ia-2026
 
-# Producción con Airtable
-AIRTABLE_API_KEY=
-AIRTABLE_BASE_ID=
-SURVEY_AIRTABLE_RESPONSES_TABLE=survey_responses
-SURVEY_AIRTABLE_EMAILS_TABLE=survey_emails
+# Producción con Supabase
+SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+SURVEY_SUPABASE_RESPONSES_TABLE=survey_responses
+SURVEY_SUPABASE_EMAILS_TABLE=survey_response_emails
 ```
 
 ### Backend de almacenamiento
 
 - `local`: guarda JSON en `work/survey-data/segunda-factura-ia-2026/` para desarrollo y pruebas locales.
-- `airtable`: usa dos tablas separadas para respuestas y emails opcionales.
+- `supabase`: usa dos tablas separadas en Postgres para respuestas y emails opcionales.
+
+### Migraciones
+
+- SQL de creación de tablas:
+  - `supabase/migrations/20260721233500_create_survey_segunda_factura_ia.sql`
+- Aplicar con tu flujo habitual de Supabase CLI o desde el panel SQL.
+- El backend de la encuesta usa `SUPABASE_SERVICE_ROLE_KEY` solo en endpoints server-side. No se expone al cliente.
 
 ### Exportaciones
 

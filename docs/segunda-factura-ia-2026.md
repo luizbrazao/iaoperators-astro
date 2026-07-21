@@ -288,39 +288,56 @@ Campos:
 
 ### Producción recomendada
 
-- `SURVEY_STORAGE_DRIVER=airtable`
-- Tabla 1: `survey_responses`
-- Tabla 2: `survey_emails`
+- `SURVEY_STORAGE_DRIVER=supabase`
+- Tabla 1: `public.survey_responses`
+- Tabla 2: `public.survey_response_emails`
+- Variables necesarias:
+  - `SUPABASE_URL`
+  - `SUPABASE_SERVICE_ROLE_KEY`
+  - `SURVEY_SUPABASE_RESPONSES_TABLE` opcional
+  - `SURVEY_SUPABASE_EMAILS_TABLE` opcional
 
-Campos mínimos recomendados en Airtable:
+Migración versionada en el repo:
+
+- `supabase/migrations/20260721233500_create_survey_segunda_factura_ia.sql`
+
+Campos principales en `survey_responses`:
 
 - `response_id`
-- `status`
-- `review_status`
+- `slug`
+- `title`
 - `questionnaire_version`
+- `status`
 - `locale`
+- `questionnaire_language`
+- `created_at`
+- `updated_at`
 - `started_at`
 - `submitted_at`
-- `duration_ms`
+- `abandoned_at`
+- `completion_step`
+- `total_steps`
+- `answers` jsonb
+- `consent` jsonb
+- `optional_email_provided`
+- `quality_flags` jsonb
+- `review_status`
+- `review_notes` jsonb
+- `fingerprint_hash`
+- `answer_signature`
+- `landing_path`
+- `referrer`
+- `origin_label`
 - `utm_source`
 - `utm_medium`
 - `utm_campaign`
 - `utm_term`
 - `utm_content`
-- `professional_role`
-- `company_size`
-- `sector`
-- `country_region`
-- `ai_usage_frequency`
-- `work_account_usage`
-- `supplier_dependency_resilience`
-- `risk_perception`
-- `responses_json`
-- `consent_json`
-- `quality_flags_json`
-- `review_notes_json`
+- `user_agent_hash`
+- `device_category`
+- `duration_ms`
 
-Para `survey_emails`:
+Campos principales en `survey_response_emails`:
 
 - `response_id`
 - `email`
@@ -328,6 +345,13 @@ Para `survey_emails`:
 - `locale`
 - `questionnaire_version`
 - `email_marketing_accepted`
+
+Notas de seguridad:
+
+- ambas tablas tienen RLS habilitado;
+- no se crean políticas públicas;
+- el acceso operativo actual se hace desde el backend con `service role`;
+- el email opcional vive en una tabla separada de las respuestas conductuales.
 
 ## 10. Analytics
 
@@ -377,8 +401,8 @@ npm run dev
 
 ### Producción
 
-1. Configurar variables `SURVEY_*` y, si se usará Airtable, también `AIRTABLE_*`.
-2. Verificar que las tablas de Airtable existan con los campos mínimos.
+1. Configurar variables `SURVEY_*`, `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY`.
+2. Aplicar la migración SQL en Supabase.
 3. Configurar `SURVEY_ADMIN_USER` y `SURVEY_ADMIN_PASSWORD`.
 4. Ejecutar `npm run build`.
 5. Publicar en Vercel.
@@ -413,7 +437,7 @@ Si se cambia estructura de preguntas:
 - No hay CAPTCHA ni proveedor antifraude dedicado en esta fase.
 - La calidad de la muestra dependerá del canal de captación.
 - El modo `local` no es persistente para producción serverless.
-- El driver Airtable requiere tablas preconfiguradas.
+- El driver Supabase requiere proyecto, credenciales server-side y migración aplicada.
 - La encuesta está diseñada como exploratoria; no debe presentarse como representativa del tejido empresarial español sin validación adicional.
 
 ## 16. Próximos pasos recomendados
