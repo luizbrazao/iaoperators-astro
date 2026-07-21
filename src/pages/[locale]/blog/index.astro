@@ -26,7 +26,7 @@ const categoriesDict = (dict as any)?.categories ?? {};
 const withLocale = (path: string) => `/${locale}/${path}`.replace(/\/+$/, "/");
 
 // ===== Categorias (igual ao projeto antigo)
-const CATEGORY_KEYS = ["all", "tools", "lawyers", "architects", "accounting", "restaurants", "beauty-salons", "others"] as const;
+const CATEGORY_KEYS = ["all", "tools", "lawyers", "architects", "accounting", "restaurants", "beauty-salons", "privacy", "others"] as const;
 
 function normalizeCategoryId(raw?: string | null) {
   const v = (raw ?? "").toLowerCase().trim();
@@ -39,6 +39,7 @@ function normalizeCategoryId(raw?: string | null) {
   if (v === "ia para contabilidad" || v === "ai for accounting" || v === "ia para contabilidade") return "accounting";
   if (v === "ia para restaurantes" || v === "ai for restaurants") return "restaurants";
   if (v === "ia para salones de belleza" || v === "ia para salões de beleza" || v === "ai for beauty salons") return "beauty-salons";
+  if (v === "privacidad y gobernanza de ia" || v === "privacidade e governança de ia" || v === "ai privacy & governance") return "privacy";
   if (v === "otros" || v === "others" || v === "outros") return "others";
 
   return "others";

@@ -107,9 +107,9 @@ const updatedAt = entry.data.updatedAt;
 
 // ─── Category labels ─────────────────────────────────────────────────────────
 const CATEGORY_LABELS: Record<string, Record<string, string>> = {
-  es: { tools: "Herramientas", lawyers: "IA para abogados", architects: "IA para arquitectos", accounting: "IA para contabilidad", restaurants: "IA para restaurantes", "beauty-salons": "IA para salones", others: "Blog" },
-  pt: { tools: "Ferramentas", lawyers: "IA para advogados", architects: "IA para arquitetos", accounting: "IA para contabilidade", restaurants: "IA para restaurantes", "beauty-salons": "IA para salões", others: "Blog" },
-  en: { tools: "Tools", lawyers: "AI for Lawyers", architects: "AI for Architects", accounting: "AI for Accounting", restaurants: "AI for Restaurants", "beauty-salons": "AI for Beauty", others: "Blog" },
+  es: { tools: "Herramientas", lawyers: "IA para abogados", architects: "IA para arquitectos", accounting: "IA para contabilidad", restaurants: "IA para restaurantes", "beauty-salons": "IA para salones", privacy: "Privacidad y gobernanza de IA", others: "Blog" },
+  pt: { tools: "Ferramentas", lawyers: "IA para advogados", architects: "IA para arquitetos", accounting: "IA para contabilidade", restaurants: "IA para restaurantes", "beauty-salons": "IA para salões", privacy: "Privacidade e governança de IA", others: "Blog" },
+  en: { tools: "Tools", lawyers: "AI for Lawyers", architects: "AI for Architects", accounting: "AI for Accounting", restaurants: "AI for Restaurants", "beauty-salons": "AI for Beauty", privacy: "AI Privacy & Governance", others: "Blog" },
 };
 const categoryLabel = CATEGORY_LABELS[locale]?.[entry.data.category] ?? entry.data.category;
 
@@ -147,7 +147,7 @@ const faqItems = entry.data.faq ?? [];
 
 const isPersonAuthor = entry.data.author && entry.data.author !== "IA Operators";
 const authorSchema = isPersonAuthor
-  ? { "@type": "Person", name: entry.data.author, jobTitle: entry.data.authorTitle ?? "Fundador, IA Operators", url: site }
+  ? { "@type": "Person", name: entry.data.author, jobTitle: entry.data.authorTitle ?? "Fundador, IA Operators", url: entry.data.authorUrl ?? site, ...(entry.data.authorSameAs?.length ? { sameAs: entry.data.authorSameAs } : {}) }
   : { "@type": "Organization", name: "IA Operators", url: site };
 
 const blogPostingJsonLd = {
@@ -162,7 +162,11 @@ const blogPostingJsonLd = {
     "@type": "WebPage",
     "@id": canonicalFromAlternates,
   },
-  image: entry.data.image ? [new URL(entry.data.image, site).toString()] : undefined,
+  image: entry.data.imageSchema?.length
+    ? entry.data.imageSchema.map((u) => new URL(u, site).toString())
+    : entry.data.image
+      ? [new URL(entry.data.image, site).toString()]
+      : undefined,
   articleSection: entry.data.articleSection,
   keywords: articleKeywords.length ? articleKeywords.join(", ") : undefined,
   wordCount,
@@ -189,7 +193,7 @@ const breadcrumbJsonLd = {
 };
 
 const faqJsonLd =
-  faqItems.length > 0
+  faqItems.length > 0 && entry.data.faqSchema !== false
     ? {
         "@context": "https://schema.org",
         "@type": "FAQPage",

@@ -8,6 +8,7 @@ export const CATEGORY_KEYS = [
   "accounting",
   "restaurants",
   "beauty-salons",
+  "privacy",
   "others",
 ] as const;
 
@@ -25,6 +26,7 @@ const blog = defineCollection({
     articleSection: z.string().optional(),
     date: z.coerce.date(),
     image: z.string().optional(),
+    imageSchema: z.array(z.string()).optional(),
     imageAlt: z.string().optional(),
     tags: z.array(z.string()).optional(),
     locale: z.enum(["es", "pt", "en"]),
@@ -32,10 +34,13 @@ const blog = defineCollection({
     draft: z.boolean().default(false),
     author: z.string().default("IA Operators"),
     authorTitle: z.string().optional(),
+    authorUrl: z.string().optional(),
+    authorSameAs: z.array(z.string()).optional(),
     updatedAt: z.coerce.date().optional(),
     faq: z
       .array(z.object({ q: z.string(), a: z.string() }))
       .optional(),
+    faqSchema: z.boolean().default(true),
   }),
 });
 
