@@ -55,6 +55,7 @@ SURVEY_LOCAL_STORAGE_DIR=./work/survey-data/segunda-factura-ia-2026
 # Producción con Supabase
 SUPABASE_URL=
 SUPABASE_SERVICE_ROLE_KEY=
+SUPABASE_ACCESS_TOKEN=
 SURVEY_SUPABASE_RESPONSES_TABLE=survey_responses
 SURVEY_SUPABASE_EMAILS_TABLE=survey_response_emails
 ```
@@ -70,6 +71,27 @@ SURVEY_SUPABASE_EMAILS_TABLE=survey_response_emails
   - `supabase/migrations/20260721233500_create_survey_segunda_factura_ia.sql`
 - Aplicar con tu flujo habitual de Supabase CLI o desde el panel SQL.
 - El backend de la encuesta usa `SUPABASE_SERVICE_ROLE_KEY` solo en endpoints server-side. No se expone al cliente.
+- Si vas a operar con Supabase CLI/Management API, usa además `SUPABASE_ACCESS_TOKEN`.
+
+### Validación rápida
+
+```bash
+npm run survey:check-supabase
+```
+
+Este script valida acceso server-side a:
+
+- `survey_responses`
+- `survey_response_emails`
+
+### Flujo recomendado con Supabase CLI
+
+```bash
+supabase link --project-ref <tu-project-ref>
+supabase db query --linked --file supabase/migrations/20260721233500_create_survey_segunda_factura_ia.sql
+supabase db query --linked "NOTIFY pgrst, 'reload schema';"
+npm run survey:check-supabase
+```
 
 ### Exportaciones
 

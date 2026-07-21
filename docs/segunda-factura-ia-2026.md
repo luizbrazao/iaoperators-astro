@@ -294,6 +294,7 @@ Campos:
 - Variables necesarias:
   - `SUPABASE_URL`
   - `SUPABASE_SERVICE_ROLE_KEY`
+  - `SUPABASE_ACCESS_TOKEN` si se va a operar por CLI/Management API
   - `SURVEY_SUPABASE_RESPONSES_TABLE` opcional
   - `SURVEY_SUPABASE_EMAILS_TABLE` opcional
 
@@ -352,6 +353,7 @@ Notas de seguridad:
 - no se crean políticas públicas;
 - el acceso operativo actual se hace desde el backend con `service role`;
 - el email opcional vive en una tabla separada de las respuestas conductuales.
+- para operaciones CLI, el token de cuenta es `SUPABASE_ACCESS_TOKEN`; no sustituye a `SUPABASE_SERVICE_ROLE_KEY`.
 
 ## 10. Analytics
 
@@ -402,11 +404,24 @@ npm run dev
 ### Producción
 
 1. Configurar variables `SURVEY_*`, `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY`.
-2. Aplicar la migración SQL en Supabase.
-3. Configurar `SURVEY_ADMIN_USER` y `SURVEY_ADMIN_PASSWORD`.
-4. Ejecutar `npm run build`.
-5. Publicar en Vercel.
-6. Probar:
+2. Si se va a operar por CLI, configurar también `SUPABASE_ACCESS_TOKEN`.
+3. Aplicar la migración SQL en Supabase.
+4. Recargar schema cache con:
+
+```sql
+NOTIFY pgrst, 'reload schema';
+```
+
+5. Validar acceso con:
+
+```bash
+npm run survey:check-supabase
+```
+
+6. Configurar `SURVEY_ADMIN_USER` y `SURVEY_ADMIN_PASSWORD`.
+7. Ejecutar `npm run build`.
+8. Publicar en Vercel.
+9. Probar:
    - carga de `/es/estudio/segunda-factura-ia/encuesta/`
    - envío completo
    - creación de registro
@@ -446,3 +461,13 @@ Si se cambia estructura de preguntas:
 - Incorporar un mecanismo antifraude más fuerte si aumenta el volumen.
 - Definir una taxonomía editorial para publicar hallazgos parciales cuando exista muestra suficiente.
 - Preparar la calculadora de riesgo y el estudio público final, sin adelantarlos en esta fase.
+
+## 17. Verificación operativa realizada
+
+Estado validado en el proyecto remoto de Supabase:
+
+- migración ejecutada;
+- schema cache de PostgREST recargado;
+- inserción y borrado directo en `survey_responses`;
+- inserción y borrado directo en `survey_response_emails`;
+- smoke test del flujo server-side `createSurveySession` → `finalizeSurveySubmission` con `storageDriver = "supabase"`.
