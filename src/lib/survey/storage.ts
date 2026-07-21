@@ -14,16 +14,26 @@ import { SURVEY_SLUG, SURVEY_TITLE, SURVEY_VERSION } from "./types";
 import { answerSignature, safeJsonParse } from "./utils";
 import { deriveQualityFlags } from "./validation";
 
-const LOCAL_ROOT =
-  import.meta.env.SURVEY_LOCAL_STORAGE_DIR || join(process.cwd(), "work", "survey-data", SURVEY_SLUG);
+function readEnv(name: string) {
+  const importMetaEnv =
+    typeof import.meta !== "undefined" &&
+    typeof import.meta.env !== "undefined" &&
+    import.meta.env
+      ? (import.meta.env as Record<string, string | undefined>)
+      : undefined;
+  return importMetaEnv?.[name] ?? process.env[name];
+}
 
-const SUPABASE_URL = import.meta.env.SUPABASE_URL;
-const SUPABASE_SERVICE_ROLE_KEY = import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
+const LOCAL_ROOT =
+  readEnv("SURVEY_LOCAL_STORAGE_DIR") || join(process.cwd(), "work", "survey-data", SURVEY_SLUG);
+
+const SUPABASE_URL = readEnv("SUPABASE_URL");
+const SUPABASE_SERVICE_ROLE_KEY = readEnv("SUPABASE_SERVICE_ROLE_KEY");
 const STORAGE_DRIVER =
-  import.meta.env.SURVEY_STORAGE_DRIVER ||
+  readEnv("SURVEY_STORAGE_DRIVER") ||
   (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY ? "supabase" : "local");
-const RESPONSES_TABLE = import.meta.env.SURVEY_SUPABASE_RESPONSES_TABLE || "survey_responses";
-const EMAILS_TABLE = import.meta.env.SURVEY_SUPABASE_EMAILS_TABLE || "survey_response_emails";
+const RESPONSES_TABLE = readEnv("SURVEY_SUPABASE_RESPONSES_TABLE") || "survey_responses";
+const EMAILS_TABLE = readEnv("SURVEY_SUPABASE_EMAILS_TABLE") || "survey_response_emails";
 
 const RESPONSES_DIR = join(LOCAL_ROOT, "responses");
 const EMAILS_DIR = join(LOCAL_ROOT, "emails");
