@@ -140,7 +140,7 @@ What matters is reducing excessive dependency. That's controllable today, withou
 
 If you want the conveniences of an online assistant but don't want to pay the second bill with your data, you can already choose differently.
 
-Proton, known for Proton Mail and Proton VPN, launched <a href="https://pr.tn/ref/ZB65FBGN" rel="sponsored nofollow" target="_blank">Lumo</a>, a privacy-focused AI assistant. (Disclosure: this is a referral link. We may receive a benefit if you sign up through it, at no additional cost to you.) According to its [official security model](https://proton.me/lumo/security), the company keeps no logs of conversations and doesn't use the content to train its models. Saved history is protected with zero-access encryption. During response generation, however, the message must be temporarily decrypted on Proton's servers to be processed by the model; after that, the server keeps no permanent plaintext copy.
+Proton, known for Proton Mail and Proton VPN, launched <a href="https://pr.tn/ref/ZB65FBGN" rel="sponsored nofollow noopener noreferrer" target="_blank">Lumo</a>, a privacy-focused AI assistant. (Disclosure: this is a referral link. We may receive a benefit if you sign up through it, at no additional cost to you.) According to its [official security model](https://proton.me/lumo/security), the company keeps no logs of conversations and doesn't use the content to train its models. Saved history is protected with zero-access encryption. During response generation, however, the message must be temporarily decrypted on Proton's servers to be processed by the model; after that, the server keeps no permanent plaintext copy.
 
 Why does this matter here? Because it strikes at the heart of the second bill: reducing the leak of your judgment and your context when you need to run something off your machine.
 
@@ -206,7 +206,7 @@ Don't turn the table into an absolute rule: settings and contract still matter. 
 ## Facts that help you decide now
 
 - The "paying twice" warning and the case for control, portability and retaining what's yours come from Microsoft's own CEO, as reported by TechRadar. Use it as a criterion when choosing a provider.
-- If you want an online assistant without giving up privacy, <a href="https://pr.tn/ref/ZB65FBGN" rel="sponsored nofollow" target="_blank">Proton's Lumo</a> uses zero-access encryption, stores no chat logs and doesn't train its models on your data; the [Lumo 2.0 update](https://proton.me/blog/lumo-2) added reasoning, persistent memory, image and cited-search capabilities while keeping the privacy focus.
+- If you want an online assistant without giving up privacy, <a href="https://pr.tn/ref/ZB65FBGN" rel="sponsored nofollow noopener noreferrer" target="_blank">Proton's Lumo</a> uses zero-access encryption, stores no chat logs and doesn't train its models on your data; the [Lumo 2.0 update](https://proton.me/blog/lumo-2) added reasoning, persistent memory, image and cited-search capabilities while keeping the privacy focus.
 - The open ecosystem is competitive: in 2026, Chinese models overtook American ones in share of tokens processed on [OpenRouter](https://openrouter.ai/blog/insights/deepseek-v4-adoption/) in early June. It's a meaningful adoption signal within the platform, but it doesn't represent the entire AI market on its own.
 
 These figures aren't telling you to "swap everything." They reinforce one line: keep your power to choose, keep your memory with you, and have a plan B that doesn't depend on a single company.
