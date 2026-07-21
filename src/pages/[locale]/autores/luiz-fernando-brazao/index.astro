@@ -126,14 +126,18 @@ const pool = await getCollection(
     typeof data.author === "string" &&
     data.author.includes("Braz"),
 );
+const localePrefix = `${locale}/`;
 const articles = pool
   .sort((a, b) => +b.data.date - +a.data.date)
   .slice(0, 9)
-  .map((p) => ({
-    title: p.data.title,
-    href: `/${locale}/blog/${p.id.replace(`${locale}/`, "").replace(/\.(md|mdx)$/, "")}/`,
-    description: p.data.description,
-  }));
+  .map((p) => {
+    const slug = p.id.replace(localePrefix, "").replace(/\.(md|mdx)$/, "");
+    return {
+      title: p.data.title,
+      href: `/${locale}/blog/${slug}/`,
+      description: p.data.description,
+    };
+  });
 
 // ─── JSON-LD: ProfilePage + Person ───────────────────────────────────────────
 const person = {
