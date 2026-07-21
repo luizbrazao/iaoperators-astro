@@ -10,6 +10,12 @@ export interface BlogOGProps {
   categoryLabel: string;
 }
 
+export interface SurveyOGProps {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+}
+
 // ─── Font loading (from bundled files — no network dependency) ────────────────
 // process.cwd() is always the project root during `astro build`
 
@@ -343,6 +349,179 @@ export function createDefaultOGElement(): React.ReactElement {
             fontSize: "18px",
             fontFamily: "Inter",
             fontWeight: 600,
+          }}
+        >
+          iaoperators.com
+        </span>
+      </div>
+    </div>
+  );
+}
+
+export function createSurveyOGElement({
+  eyebrow,
+  title,
+  subtitle,
+}: SurveyOGProps): React.ReactElement {
+  return (
+    <div
+      style={{
+        width: "1200px",
+        height: "630px",
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "#090909",
+        padding: "64px",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          inset: "0",
+          background:
+            "radial-gradient(circle at 15% 85%, rgba(255,105,0,0.28) 0%, transparent 34%), radial-gradient(circle at 82% 18%, rgba(255,180,0,0.12) 0%, transparent 24%)",
+          display: "flex",
+        }}
+      />
+
+      <div
+        style={{
+          position: "absolute",
+          inset: "28px",
+          borderRadius: "28px",
+          border: "1px solid rgba(255,255,255,0.08)",
+          display: "flex",
+        }}
+      />
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          position: "relative",
+          marginBottom: "42px",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div
+            style={{
+              width: "12px",
+              height: "12px",
+              borderRadius: "999px",
+              backgroundColor: "#FF6900",
+              display: "flex",
+            }}
+          />
+          <span
+            style={{
+              color: "white",
+              fontSize: "24px",
+              fontWeight: 700,
+              fontFamily: "Inter",
+            }}
+          >
+            IA Operators
+          </span>
+        </div>
+
+        <span
+          style={{
+            color: "#fbbf24",
+            fontSize: "14px",
+            fontWeight: 600,
+            fontFamily: "Inter",
+            letterSpacing: "1.1px",
+            textTransform: "uppercase",
+            border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: "999px",
+            padding: "8px 18px",
+            display: "flex",
+          }}
+        >
+          {eyebrow}
+        </span>
+      </div>
+
+      <div
+        style={{
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          gap: "22px",
+          maxWidth: "900px",
+          marginTop: "20px",
+        }}
+      >
+        <span
+          style={{
+            color: "#FF6900",
+            fontSize: "20px",
+            fontWeight: 600,
+            fontFamily: "Inter",
+            letterSpacing: "0.8px",
+            textTransform: "uppercase",
+          }}
+        >
+          Encuesta
+        </span>
+        <span
+          style={{
+            color: "white",
+            fontSize: "64px",
+            lineHeight: 1.03,
+            fontWeight: 700,
+            fontFamily: "Inter",
+            letterSpacing: "-2.2px",
+            display: "flex",
+          }}
+        >
+          {title}
+        </span>
+        <span
+          style={{
+            color: "#cbd5e1",
+            fontSize: "25px",
+            lineHeight: 1.35,
+            fontFamily: "Inter",
+            maxWidth: "820px",
+            display: "flex",
+          }}
+        >
+          {subtitle}
+        </span>
+      </div>
+
+      <div
+        style={{
+          position: "relative",
+          marginTop: "auto",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          borderTop: "1px solid rgba(255,255,255,0.08)",
+          paddingTop: "24px",
+        }}
+      >
+        <span
+          style={{
+            color: "#94a3b8",
+            fontSize: "18px",
+            fontFamily: "Inter",
+            display: "flex",
+          }}
+        >
+          Uso de IA, gobernanza y dependencia de proveedores
+        </span>
+        <span
+          style={{
+            color: "#FF6900",
+            fontSize: "18px",
+            fontFamily: "Inter",
+            fontWeight: 600,
+            display: "flex",
           }}
         >
           iaoperators.com

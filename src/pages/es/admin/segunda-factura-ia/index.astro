@@ -1,0 +1,247 @@
+---
+export const prerender = false;
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getSurveySummary } from "@/lib/survey/storage";
+
+const status = Astro.url.searchParams.get("status") ?? "";
+const review = Astro.url.searchParams.get("review") ?? "";
+const version = Astro.url.searchParams.get("version") ?? "";
+const campaign = Astro.url.searchParams.get("campaign") ?? "";
+
+const summary = await getSurveySummary();
+const records = summary.records.filter((record) => {
+  if (status && record.status !== status) return false;
+  if (review && record.reviewStatus !== review) return false;
+  if (version && record.questionnaireVersion !== version) return false;
+  if (campaign && record.source.utms.campaign !== campaign) return false;
+  return true;
+});
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const canonical = new URL("/es/admin/segunda-factura-ia/", site).toString();
+---
+
+<BaseLayout
+  title="Admin encuesta | La Segunda Factura de la IA 2026"
+  description="Área interna de seguimiento de respuestas de la encuesta."
+  canonicalUrl={canonical}
+  alternates={[{ lang: "es", href: canonical }]}
+  xDefaultUrl={canonical}
+  robots="noindex,nofollow"
+>
+  <section class="px-4 pt-28 pb-16 text-white">
+    <div class="mx-auto max-w-7xl space-y-8">
+      <header class="space-y-3">
+        <span class="inline-flex rounded-full border border-orange-500/25 bg-orange-500/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.28em] text-orange-300">
+          Admin interna
+        </span>
+        <h1 class="text-4xl font-semibold">Encuesta · La Segunda Factura de la IA 2026</h1>
+        <p class="max-w-3xl text-white/68">
+          Seguimiento operativo de respuestas, calidad de datos, campañas y exportaciones.
+        </p>
+      </header>
+
+      <div class="grid gap-4 md:grid-cols-4">
+        <article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+          <p class="text-xs uppercase tracking-[0.24em] text-white/45">Sesiones iniciadas</p>
+          <p class="mt-3 text-3xl font-semibold">{summary.started}</p>
+        </article>
+        <article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+          <p class="text-xs uppercase tracking-[0.24em] text-white/45">Completadas</p>
+          <p class="mt-3 text-3xl font-semibold">{summary.completed}</p>
+        </article>
+        <article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+          <p class="text-xs uppercase tracking-[0.24em] text-white/45">Tasa de finalización</p>
+          <p class="mt-3 text-3xl font-semibold">{summary.completionRate}%</p>
+        </article>
+        <article class="rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+          <p class="text-xs uppercase tracking-[0.24em] text-white/45">Pendientes de revisión</p>
+          <p class="mt-3 text-3xl font-semibold">{summary.needsReview}</p>
+        </article>
+      </div>
+
+      <div class="rounded-[28px] border border-white/10 bg-white/[0.03] p-6">
+        <form class="grid gap-4 md:grid-cols-5">
+          <label class="space-y-2 text-sm">
+            <span class="text-white/58">Estado</span>
+            <select name="status" class="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white">
+              <option value="">Todos</option>
+              <option value="started" selected={status === "started"}>started</option>
+              <option value="abandoned" selected={status === "abandoned"}>abandoned</option>
+              <option value="completed" selected={status === "completed"}>completed</option>
+            </select>
+          </label>
+          <label class="space-y-2 text-sm">
+            <span class="text-white/58">Revisión</span>
+            <select name="review" class="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white">
+              <option value="">Todas</option>
+              <option value="clean" selected={review === "clean"}>clean</option>
+              <option value="needs_review" selected={review === "needs_review"}>needs_review</option>
+              <option value="reviewed" selected={review === "reviewed"}>reviewed</option>
+            </select>
+          </label>
+          <label class="space-y-2 text-sm">
+            <span class="text-white/58">Versión</span>
+            <input
+              name="version"
+              value={version}
+              placeholder="2026-07-v1"
+              class="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white"
+            />
+          </label>
+          <label class="space-y-2 text-sm">
+            <span class="text-white/58">Campaña</span>
+            <input
+              name="campaign"
+              value={campaign}
+              placeholder="launch_linkedin"
+              class="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white"
+            />
+          </label>
+          <div class="flex items-end">
+            <button
+              type="submit"
+              class="w-full rounded-full bg-linear-to-r from-orange-500 to-amber-300 px-5 py-3 text-sm font-semibold text-black transition hover:brightness-110"
+            >
+              Filtrar
+            </button>
+          </div>
+        </form>
+
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a
+            href={`/api/survey/segunda-factura-ia/export.csv?status=${status}&review=${review}&version=${version}&campaign=${campaign}`}
+            class="rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-white/82 transition hover:border-white/35"
+          >
+            Exportar CSV completo
+          </a>
+          <a
+            href={`/api/survey/segunda-factura-ia/export.csv?anon=1&status=${status}&review=${review}&version=${version}&campaign=${campaign}`}
+            class="rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-white/82 transition hover:border-white/35"
+          >
+            Exportar CSV anonimizado
+          </a>
+          <span class="rounded-full border border-white/10 px-4 py-2 text-sm text-white/58">
+            Driver de almacenamiento: {summary.storageDriver}
+          </span>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        {records.map((record) => (
+          <article class="rounded-[28px] border border-white/10 bg-white/[0.03] p-5">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+              <div class="space-y-2">
+                <div class="flex flex-wrap gap-2 text-xs uppercase tracking-[0.18em] text-white/45">
+                  <span>{record.status}</span>
+                  <span>·</span>
+                  <span>{record.reviewStatus}</span>
+                  <span>·</span>
+                  <span>{record.questionnaireVersion}</span>
+                </div>
+                <h2 class="font-semibold text-white">{record.responseId}</h2>
+                <p class="text-sm text-white/62">
+                  Inicio: {record.startedAt} · Envío: {record.submittedAt ?? "—"} · Campaña: {record.source.utms.campaign || "(sin campaña)"}
+                </p>
+              </div>
+
+              <form class="review-form flex flex-wrap gap-2" data-response-id={record.responseId}>
+                <select
+                  name="reviewStatus"
+                  class="rounded-full border border-white/12 bg-black/30 px-4 py-2 text-sm text-white"
+                >
+                  <option value="clean" selected={record.reviewStatus === "clean"}>clean</option>
+                  <option value="needs_review" selected={record.reviewStatus === "needs_review"}>needs_review</option>
+                  <option value="reviewed" selected={record.reviewStatus === "reviewed"}>reviewed</option>
+                </select>
+                <input
+                  name="note"
+                  placeholder="Nota de revisión"
+                  class="rounded-full border border-white/12 bg-black/30 px-4 py-2 text-sm text-white"
+                />
+                <button
+                  type="submit"
+                  class="rounded-full bg-white px-4 py-2 text-sm font-semibold text-black transition hover:bg-orange-500"
+                >
+                  Guardar
+                </button>
+              </form>
+            </div>
+
+            <div class="mt-4 grid gap-3 md:grid-cols-4 text-sm">
+              <div class="rounded-2xl border border-white/8 bg-black/20 p-4">
+                <p class="text-white/45">Perfil</p>
+                <p class="mt-1 text-white/88">{String(record.answers.professional_role ?? "—")}</p>
+              </div>
+              <div class="rounded-2xl border border-white/8 bg-black/20 p-4">
+                <p class="text-white/45">Empresa</p>
+                <p class="mt-1 text-white/88">{String(record.answers.company_size ?? "—")}</p>
+              </div>
+              <div class="rounded-2xl border border-white/8 bg-black/20 p-4">
+                <p class="text-white/45">Frecuencia IA</p>
+                <p class="mt-1 text-white/88">{String(record.answers.ai_usage_frequency ?? "—")}</p>
+              </div>
+              <div class="rounded-2xl border border-white/8 bg-black/20 p-4">
+                <p class="text-white/45">Riesgo percibido</p>
+                <p class="mt-1 text-white/88">{String(record.answers.risk_perception ?? "—")}</p>
+              </div>
+            </div>
+
+            <div class="mt-4 rounded-2xl border border-white/8 bg-black/20 p-4 text-sm text-white/72">
+              <p class="font-medium text-white">Flags de calidad</p>
+              <p class="mt-2">
+                {record.qualityFlags.length > 0
+                  ? record.qualityFlags.map((flag) => `${flag.code} (${flag.severity})`).join(", ")
+                  : "Sin flags automáticos."}
+              </p>
+              {record.reviewNotes.length > 0 && (
+                <>
+                  <p class="mt-4 font-medium text-white">Notas de revisión</p>
+                  <ul class="mt-2 space-y-1">
+                    {record.reviewNotes.map((note) => (
+                      <li>{note}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+
+            <details class="mt-4 rounded-2xl border border-white/8 bg-black/20 p-4 text-sm text-white/72">
+              <summary class="font-medium text-white">Ver respuestas y metadatos</summary>
+              <pre class="mt-4 overflow-x-auto whitespace-pre-wrap text-xs text-white/62">{JSON.stringify(record, null, 2)}</pre>
+            </details>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll(".review-form").forEach((form) => {
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const current = event.currentTarget;
+        const responseId = current.getAttribute("data-response-id");
+        const formData = new FormData(current);
+
+        const response = await fetch("/api/survey/segunda-factura-ia/review", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            responseId,
+            reviewStatus: formData.get("reviewStatus"),
+            note: formData.get("note"),
+          }),
+        });
+
+        if (response.ok) {
+          window.location.reload();
+          return;
+        }
+
+        alert("No se pudo actualizar la revisión.");
+      });
+    });
+  </script>
+</BaseLayout>

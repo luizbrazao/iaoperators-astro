@@ -1,43 +1,78 @@
-# Astro Starter Kit: Minimal
+# IA Operators · Astro Site
 
-```sh
-npm create astro@latest -- --template minimal
+Sitio web de IA Operators construido con Astro 5, React islands, Tailwind CSS v4 y despliegue en Vercel.
+
+## Comandos
+
+```bash
+npm run dev
+npm run build
+npm run preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Stack
 
-## 🚀 Project Structure
+- Astro 5 con rutas estáticas y endpoints `prerender = false` para funciones serverless.
+- React 19 para formularios e interacciones.
+- Tailwind CSS v4 para estilos.
+- Vercel para hosting.
+- GTM ya integrado mediante consentimiento de cookies.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Encuesta “La Segunda Factura de la IA 2026”
+
+Ruta pública:
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+/es/estudio/segunda-factura-ia/encuesta/
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Ruta de agradecimiento:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```text
+/es/estudio/segunda-factura-ia/encuesta/gracias/
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+Área admin:
 
-## 🧞 Commands
+```text
+/es/admin/segunda-factura-ia/
+```
 
-All commands are run from the root of the project, from a terminal:
+### Variables de entorno de la encuesta
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```bash
+# Driver: "local" para desarrollo, "airtable" para producción si ya existen las tablas
+SURVEY_STORAGE_DRIVER=local
 
-## 👀 Want to learn more?
+# Seguridad y control
+SURVEY_FINGERPRINT_SALT=change-me
+SURVEY_ADMIN_USER=admin
+SURVEY_ADMIN_PASSWORD=change-me
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+# Fallback local
+SURVEY_LOCAL_STORAGE_DIR=./work/survey-data/segunda-factura-ia-2026
+
+# Producción con Airtable
+AIRTABLE_API_KEY=
+AIRTABLE_BASE_ID=
+SURVEY_AIRTABLE_RESPONSES_TABLE=survey_responses
+SURVEY_AIRTABLE_EMAILS_TABLE=survey_emails
+```
+
+### Backend de almacenamiento
+
+- `local`: guarda JSON en `work/survey-data/segunda-factura-ia-2026/` para desarrollo y pruebas locales.
+- `airtable`: usa dos tablas separadas para respuestas y emails opcionales.
+
+### Exportaciones
+
+- CSV completo:
+  - `/api/survey/segunda-factura-ia/export.csv`
+- CSV anonimizado:
+  - `/api/survey/segunda-factura-ia/export.csv?anon=1`
+
+Ambos endpoints requieren autenticación básica cuando `SURVEY_ADMIN_USER` y `SURVEY_ADMIN_PASSWORD` están configurados.
+
+## Documentación adicional
+
+- [Encuesta La Segunda Factura de la IA 2026](./docs/segunda-factura-ia-2026.md)
