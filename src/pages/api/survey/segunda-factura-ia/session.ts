@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { createSurveySession, updateSurveySession } from "@/lib/survey/storage";
+import { createSurveySession, isSurveyStorageError, updateSurveySession } from "@/lib/survey/storage";
 import { hashUserAgent, createFingerprintHash, detectDeviceCategory, normalizeUtms } from "@/lib/survey/utils";
 import { deriveQualityFlags, sanitizeAnswers } from "@/lib/survey/validation";
 import { json } from "@/lib/survey/admin";
@@ -21,6 +21,22 @@ function getRequestContext(request: Request, clientAddress: string | undefined, 
     }),
     utms: normalizeUtms(url),
   };
+}
+
+function handleSurveySessionError(error: unknown, fallbackMessage: string) {
+  if (isSurveyStorageError(error)) {
+    console.error("[survey/session] storage configuration failed", error);
+    return json(
+      {
+        error: "La encuesta no está disponible temporalmente por una incidencia de configuración.",
+        code: error.code,
+      },
+      error.statusCode,
+    );
+  }
+
+  console.error("[survey/session] request failed", error);
+  return json({ error: fallbackMessage }, 500);
 }
 
 export const POST: APIRoute = async ({ request, clientAddress, url }) => {
@@ -49,8 +65,7 @@ export const POST: APIRoute = async ({ request, clientAddress, url }) => {
       storageDriver: "ready",
     });
   } catch (error) {
-    console.error("[survey/session] create failed", error);
-    return json({ error: "No se pudo iniciar la encuesta." }, 500);
+    return handleSurveySessionError(error, "No se pudo iniciar la encuesta.");
   }
 };
 
@@ -91,7 +106,6 @@ export const PATCH: APIRoute = async ({ request, clientAddress, url }) => {
 
     return json({ ok: true, status: updated.status });
   } catch (error) {
-    console.error("[survey/session] update failed", error);
-    return json({ error: "No se pudo actualizar la sesión." }, 500);
+    return handleSurveySessionError(error, "No se pudo actualizar la sesión.");
   }
 };

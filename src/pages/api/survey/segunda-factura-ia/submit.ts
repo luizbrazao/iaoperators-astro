@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { finalizeSurveySubmission } from "@/lib/survey/storage";
+import { finalizeSurveySubmission, isSurveyStorageError } from "@/lib/survey/storage";
 import { json } from "@/lib/survey/admin";
 import { sanitizeAnswers, validateConsent } from "@/lib/survey/validation";
 import { createFingerprintHash } from "@/lib/survey/utils";
@@ -8,6 +8,22 @@ export const prerender = false;
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function handleSurveySubmitError(error: unknown) {
+  if (isSurveyStorageError(error)) {
+    console.error("[survey/submit] storage configuration failed", error);
+    return json(
+      {
+        error: "La encuesta no está disponible temporalmente por una incidencia de configuración.",
+        code: error.code,
+      },
+      error.statusCode,
+    );
+  }
+
+  console.error("[survey/submit] request failed", error);
+  return json({ error: "No se pudo enviar la encuesta." }, 500);
 }
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
@@ -62,7 +78,6 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
     return json({ ok: true, responseId: record.responseId, reviewStatus: record.reviewStatus });
   } catch (error) {
-    console.error("[survey/submit] failed", error);
-    return json({ error: "No se pudo enviar la encuesta." }, 500);
+    return handleSurveySubmitError(error);
   }
 };

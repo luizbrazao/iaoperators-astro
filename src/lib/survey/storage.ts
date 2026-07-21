@@ -40,6 +40,22 @@ const EMAILS_DIR = join(LOCAL_ROOT, "emails");
 
 let supabaseAdminClient: SupabaseClient | null = null;
 
+export class SurveyStorageError extends Error {
+  code: string;
+  statusCode: number;
+
+  constructor(message: string, options?: { code?: string; statusCode?: number; cause?: unknown }) {
+    super(message, options?.cause ? { cause: options.cause } : undefined);
+    this.name = "SurveyStorageError";
+    this.code = options?.code ?? "survey_storage_error";
+    this.statusCode = options?.statusCode ?? 500;
+  }
+}
+
+export function isSurveyStorageError(error: unknown): error is SurveyStorageError {
+  return error instanceof SurveyStorageError;
+}
+
 type SurveyResponseRow = {
   response_id: string;
   slug: string;
@@ -80,14 +96,46 @@ function nowIso() {
   return new Date().toISOString();
 }
 
+function isHostedRuntime() {
+  const vercel = readEnv("VERCEL");
+  const vercelUrl = readEnv("VERCEL_URL");
+  const vercelEnv = readEnv("VERCEL_ENV");
+
+  return vercel === "1" || Boolean(vercelUrl) || vercelEnv === "production" || vercelEnv === "preview";
+}
+
+function assertStorageReady(mode: "supabase" | "local") {
+  if (mode === "supabase") {
+    if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+      throw new SurveyStorageError(
+        "Survey storage is configured for Supabase, but SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY is missing.",
+        { code: "survey_storage_misconfigured", statusCode: 503 },
+      );
+    }
+    return;
+  }
+
+  if (isHostedRuntime()) {
+    throw new SurveyStorageError(
+      "Local survey storage is disabled on hosted runtimes. Configure Supabase and redeploy the project.",
+      { code: "survey_storage_misconfigured", statusCode: 503 },
+    );
+  }
+}
+
 function getStorageMode() {
-  return STORAGE_DRIVER === "supabase" ? "supabase" : "local";
+  const mode = STORAGE_DRIVER === "supabase" ? "supabase" : "local";
+  assertStorageReady(mode);
+  return mode;
 }
 
 function getSupabaseAdminClient() {
   if (supabaseAdminClient) return supabaseAdminClient;
   if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-    throw new Error("Supabase is not configured. Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY.");
+    throw new SurveyStorageError(
+      "Supabase is not configured. Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY.",
+      { code: "survey_storage_misconfigured", statusCode: 503 },
+    );
   }
 
   supabaseAdminClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
