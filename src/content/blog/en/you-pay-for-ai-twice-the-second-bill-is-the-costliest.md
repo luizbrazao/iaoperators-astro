@@ -77,6 +77,15 @@ This doesn't work the same across every service. The rules depend on the product
 
 That's the core of Nadella's warning: with AI, the one at risk of giving away knowledge is not the one selling the model, it's the one buying the service and having to feed it to make it work well.
 
+<div class="not-prose my-10">
+  <a href="/en/estudio/segunda-factura-ia/encuesta/" class="group block rounded-3xl border border-orange-500/25 bg-gradient-to-br from-orange-500/10 to-transparent p-6 md:p-8 no-underline transition hover:border-orange-500/50">
+    <p class="mb-2 text-xs font-semibold uppercase tracking-widest text-orange-400">Study in progress · 3 min · anonymous</p>
+    <h3 class="mb-2 text-xl font-bold leading-tight text-white md:text-2xl">And in your company? Help us measure it</h3>
+    <p class="mb-4 text-sm leading-relaxed text-gray-300 md:text-base">We're measuring exactly this — the second bill of AI — with a 3-minute anonymous survey: real AI use at work, what information flows through these tools and what controls exist. No sign-up and no confidential data required.</p>
+    <span class="inline-flex items-center gap-2 rounded-full bg-orange-500 px-5 py-2.5 text-sm font-semibold text-black transition group-hover:bg-orange-400">Take the survey →</span>
+  </a>
+</div>
+
 <h2 id="datos-en-riesgo">How we classify data in IA Operators projects</h2>
 
 Before connecting any model, at [IA Operators](https://iaoperators.com/en/) we start from a simple idea: not all data deserves the same treatment. Most know-how leaks don't come from a sophisticated attack, but from sending "out" something that should have stayed in. So the first step isn't picking a tool: it's classifying the information and deciding its route.

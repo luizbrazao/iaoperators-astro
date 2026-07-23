@@ -77,6 +77,15 @@ Isso não acontece da mesma forma em todos os serviços. As regras dependem do p
 
 Esse é o ponto central do alerta de Nadella: com IA, quem corre o risco de doar conhecimento não é quem vende o modelo, é quem compra o serviço e precisa alimentá-lo para funcionar bem.
 
+<div class="not-prose my-10">
+  <a href="/pt/estudio/segunda-factura-ia/encuesta/" class="group block rounded-3xl border border-orange-500/25 bg-gradient-to-br from-orange-500/10 to-transparent p-6 md:p-8 no-underline transition hover:border-orange-500/50">
+    <p class="mb-2 text-xs font-semibold uppercase tracking-widest text-orange-400">Estudo em andamento · 3 min · anônimo</p>
+    <h3 class="mb-2 text-xl font-bold leading-tight text-white md:text-2xl">E na sua empresa? Ajude a medir isso</h3>
+    <p class="mb-4 text-sm leading-relaxed text-gray-300 md:text-base">Estamos medindo exatamente isto — a segunda fatura da IA — com uma pesquisa anônima de 3 minutos: uso real de IA no trabalho, que informação circula por essas ferramentas e que controles existem. Sem cadastro e sem pedir dados confidenciais.</p>
+    <span class="inline-flex items-center gap-2 rounded-full bg-orange-500 px-5 py-2.5 text-sm font-semibold text-black transition group-hover:bg-orange-400">Participar da pesquisa →</span>
+  </a>
+</div>
+
 <h2 id="datos-en-riesgo">Como classificamos os dados nos projetos da IA Operators</h2>
 
 Antes de conectar qualquer modelo, na [IA Operators](https://iaoperators.com/pt/) partimos de uma ideia simples: nem todo dado merece o mesmo tratamento. A maioria dos vazamentos de know-how não vem de um ataque sofisticado, e sim de mandar "para fora" algo que deveria ter ficado dentro. Por isso, o primeiro passo não é escolher ferramenta: é classificar a informação e decidir a rota dela.

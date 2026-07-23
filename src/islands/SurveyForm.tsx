@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { surveyQuestions, totalSurveyQuestions } from "@/lib/survey/questions";
 import type { SurveyAnswers, SurveyConsentPayload, SurveyQuestionDefinition } from "@/lib/survey/types";
+import { getLocalizedQuestions, normalizeSurveyLang, surveyUi } from "@/lib/survey/i18n";
 
 type Props = {
   locale?: string;
@@ -9,7 +9,7 @@ type Props = {
 
 type ConsentState = SurveyConsentPayload;
 
-const FINAL_STEP_INDEX = totalSurveyQuestions;
+const SURVEY_SLUG = "segunda-factura-ia-2026";
 
 function pushAnalytics(event: string, payload: Record<string, unknown> = {}) {
   if (typeof window === "undefined") return;
@@ -46,12 +46,13 @@ function isExclusive(question: SurveyQuestionDefinition, value: string) {
   return question.options.find((option) => option.value === value)?.exclusive === true;
 }
 
-function stepLabel(index: number) {
-  if (index === FINAL_STEP_INDEX) return "Privacidad y envío";
-  return `Pregunta ${index + 1}`;
-}
-
 export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
+  const lang = normalizeSurveyLang(locale);
+  const t = surveyUi[lang];
+  const questions = useMemo(() => getLocalizedQuestions(lang), [lang]);
+  const totalQuestions = questions.length;
+  const finalStepIndex = totalQuestions;
+
   const [started, setStarted] = useState(false);
   const [responseId, setResponseId] = useState("");
   const [currentStep, setCurrentStep] = useState(0);
@@ -66,21 +67,26 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
   const completedRef = useRef(false);
   const utms = useMemo(() => readUtms(), []);
 
-  const activeQuestion = surveyQuestions[currentStep];
+  const activeQuestion = questions[currentStep];
   const progressCurrent = started ? currentStep + 1 : 0;
-  const progressTotal = totalSurveyQuestions + 1;
+  const progressTotal = totalQuestions + 1;
   const progressPercent = started ? Math.min(100, Math.round((progressCurrent / progressTotal) * 100)) : 0;
+
+  function stepLabel(index: number) {
+    if (index === finalStepIndex) return t.steps.privacyLabel;
+    return t.steps.questionLabel(index);
+  }
 
   useEffect(() => {
     pushAnalytics("survey_view", {
-      survey_slug: "segunda-factura-ia-2026",
-      locale,
+      survey_slug: SURVEY_SLUG,
+      locale: lang,
       page_path: window.location.pathname,
       utm_source: utms.source,
       utm_campaign: utms.campaign,
       device_width: window.innerWidth,
     });
-  }, [locale, utms.campaign, utms.source]);
+  }, [lang, utms.campaign, utms.source]);
 
   useEffect(() => {
     const onBeforeUnload = () => {
@@ -96,7 +102,7 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
 
       navigator.sendBeacon("/api/survey/segunda-factura-ia/session", payload);
       pushAnalytics("survey_abandon", {
-        survey_slug: "segunda-factura-ia-2026",
+        survey_slug: SURVEY_SLUG,
         response_id: responseId,
         last_step: currentStep,
       });
@@ -113,7 +119,7 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        locale,
+        locale: lang,
         landingPath: window.location.pathname,
         referrer: document.referrer || "",
       }),
@@ -121,7 +127,7 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
 
     const payload = await res.json().catch(() => null);
     if (!res.ok || !payload?.responseId) {
-      throw new Error(payload?.error || "No se pudo iniciar la encuesta.");
+      throw new Error(payload?.error || t.errors.start);
     }
 
     setResponseId(payload.responseId);
@@ -129,9 +135,9 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
   }
 
   function validateCurrentStep() {
-    if (currentStep === FINAL_STEP_INDEX) {
+    if (currentStep === finalStepIndex) {
       if (!consent.accepted || !consent.aggregateUseAccepted || !consent.confidentialityNoticeAccepted || !consent.deletionRightsRead) {
-        return "Debes revisar y aceptar las condiciones obligatorias antes de enviar.";
+        return t.validation.consent;
       }
       return "";
     }
@@ -142,13 +148,13 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
 
     if (question.type === "multi") {
       if (!Array.isArray(value) || value.length === 0) {
-        return "Selecciona al menos una opción para continuar.";
+        return t.validation.multi;
       }
       return "";
     }
 
     if (typeof value !== "string" || !value) {
-      return "Selecciona una opción para continuar.";
+      return t.validation.single;
     }
 
     return "";
@@ -181,14 +187,14 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
       startedAtRef.current = Date.now();
       setStarted(true);
       pushAnalytics("survey_start", {
-        survey_slug: "segunda-factura-ia-2026",
+        survey_slug: SURVEY_SLUG,
         response_id: id,
-        locale,
+        locale: lang,
         utm_source: utms.source,
         utm_campaign: utms.campaign,
       });
     } catch (err) {
-      setSessionError(err instanceof Error ? err.message : "No se pudo iniciar la encuesta.");
+      setSessionError(err instanceof Error ? err.message : t.errors.start);
     } finally {
       setLoading(false);
     }
@@ -205,7 +211,7 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
     try {
       const id = await ensureSession();
       if (!startedAtRef.current) startedAtRef.current = Date.now();
-      const question = surveyQuestions[currentStep];
+      const question = questions[currentStep];
       const partialAnswers = question ? { [question.id]: answers[question.id] } : {};
       const nextStep = currentStep + 1;
 
@@ -213,13 +219,13 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
       setCurrentStep(nextStep);
 
       pushAnalytics("survey_step_advance", {
-        survey_slug: "segunda-factura-ia-2026",
+        survey_slug: SURVEY_SLUG,
         response_id: id,
         step_index: currentStep + 1,
         step_name: question?.id || "consent",
       });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "No se pudo guardar tu avance.");
+      setError(err instanceof Error ? err.message : t.errors.save);
     } finally {
       setLoading(false);
     }
@@ -258,7 +264,7 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
     setValidationError(errorText);
     if (errorText) return;
     if (!responseId) {
-      setError("La sesión no está preparada. Vuelve a intentarlo.");
+      setError(t.errors.sessionNotReady);
       return;
     }
 
@@ -276,19 +282,19 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
           email,
           website: "",
           durationMs: startedAtRef.current ? Date.now() - startedAtRef.current : 0,
-          completionStep: FINAL_STEP_INDEX + 1,
+          completionStep: finalStepIndex + 1,
         }),
       });
 
       const payload = await res.json().catch(() => null);
       if (!res.ok) {
         const details = Array.isArray(payload?.details) ? ` ${payload.details.join(" ")}` : "";
-        throw new Error((payload?.error || "No se pudo enviar la encuesta.") + details);
+        throw new Error((payload?.error || t.errors.submit) + details);
       }
 
       completedRef.current = true;
       pushAnalytics("survey_complete", {
-        survey_slug: "segunda-factura-ia-2026",
+        survey_slug: SURVEY_SLUG,
         response_id: responseId,
         review_status: payload?.reviewStatus || "clean",
         utm_source: utms.source,
@@ -297,7 +303,7 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
 
       window.location.assign(thankYouPath);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "No se pudo enviar la encuesta.");
+      setError(err instanceof Error ? err.message : t.errors.submit);
     } finally {
       setLoading(false);
     }
@@ -360,85 +366,54 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
       <div className="space-y-6">
         <header className="space-y-2">
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-400">
-            {stepLabel(FINAL_STEP_INDEX)}
+            {stepLabel(finalStepIndex)}
           </p>
           <h2 className="text-2xl md:text-3xl font-semibold text-white leading-tight">
-            Revisión final, privacidad y envío
+            {t.consent.title}
           </h2>
           <p className="text-sm md:text-base text-white/65">
-            Las respuestas se analizarán de forma agregada. No publiques ni pegues datos confidenciales,
-            nombres de clientes, contratos completos ni documentos internos identificables.
+            {t.consent.intro}
           </p>
         </header>
 
         <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-4 text-sm text-white/78">
+          <p>{t.consent.purpose}</p>
+          <p>{t.consent.resultsUse}</p>
           <p>
-            Finalidad: entender cómo empresas y profesionales usan IA en el trabajo y qué prácticas de
-            gobernanza, control y dependencia tecnológica existen hoy.
-          </p>
-          <p>
-            Uso de resultados: los resultados podrán publicarse únicamente de forma agregada. Ninguna
-            respuesta individual se publicará como tal.
-          </p>
-          <p>
-            Eliminación de datos: si decides dejar un email, podrás solicitar la eliminación escribiendo a{" "}
+            {t.consent.deletionPre}
             <a href="mailto:info@iaoperators.com" className="text-orange-400 underline">
               info@iaoperators.com
             </a>
-            .
+            {t.consent.deletionPost}
           </p>
-          <p>
-            Email opcional: si lo facilitas, se almacenará por separado de las respuestas comportamentales
-            siempre que el backend de producción esté configurado con el driver recomendado.
-          </p>
+          <p>{t.consent.emailStorage}</p>
         </div>
 
         <label className="block">
           <span className="mb-2 block text-sm font-medium text-white/88">
-            Email opcional para recibir el estudio cuando esté listo
+            {t.consent.emailLabel}
           </span>
           <input
             type="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            placeholder="tu@empresa.com"
+            placeholder={t.consent.emailPlaceholder}
             className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none transition focus:border-orange-500"
           />
           <span className="mt-2 block text-xs text-white/50">
-            Este campo no es obligatorio. Puedes responder sin identificarte.
+            {t.consent.emailHint}
           </span>
         </label>
 
         <div className="space-y-3">
-          {[
-            {
-              key: "accepted",
-              label: "Acepto enviar esta respuesta para fines de investigación exploratoria.",
-            },
-            {
-              key: "aggregateUseAccepted",
-              label: "Entiendo que los resultados se utilizarán solo de forma agregada.",
-            },
-            {
-              key: "confidentialityNoticeAccepted",
-              label: "Confirmo que no he incluido ni incluiré datos confidenciales o secretos empresariales.",
-            },
-            {
-              key: "deletionRightsRead",
-              label: "He leído cómo solicitar la eliminación de mis datos en caso de haber facilitado un identificador.",
-            },
-            {
-              key: "emailMarketingAccepted",
-              label: "Acepto recibir por email novedades relacionadas con este estudio (opcional).",
-            },
-          ].map((item) => (
+          {t.consent.items.map((item) => (
             <label
               key={item.key}
               className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-white/85"
             >
               <input
                 type="checkbox"
-                checked={Boolean(consent[item.key as keyof ConsentState])}
+                checked={Boolean(consent[item.key])}
                 onChange={(event) =>
                   setConsent((current) => ({
                     ...current,
@@ -460,19 +435,18 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
       <aside className="rounded-[28px] border border-white/10 bg-linear-to-br from-white/[0.07] to-white/[0.02] p-6 md:p-7">
         <div className="space-y-5">
           <span className="inline-flex rounded-full border border-orange-500/30 bg-orange-500/12 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-orange-300">
-            Investigación propietaria
+            {t.aside.badge}
           </span>
           <div className="space-y-3">
-            <h2 className="text-2xl font-semibold text-white">Encuesta de 3 minutos</h2>
+            <h2 className="text-2xl font-semibold text-white">{t.aside.title}</h2>
             <p className="text-sm leading-relaxed text-white/68">
-              Diseñada para medir adopción, gobernanza, prácticas de control y dependencia de proveedores de
-              IA en equipos reales.
+              {t.aside.description}
             </p>
           </div>
 
           <div className="rounded-2xl border border-white/8 bg-black/25 p-4">
             <div className="mb-2 flex items-center justify-between text-xs uppercase tracking-[0.18em] text-white/45">
-              <span>Progreso</span>
+              <span>{t.aside.progress}</span>
               <span>
                 {started ? `${Math.min(progressCurrent, progressTotal)}/${progressTotal}` : `0/${progressTotal}`}
               </span>
@@ -487,16 +461,16 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
 
           <dl className="grid gap-3 text-sm">
             <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
-              <dt className="text-white/50">Qué vas a responder</dt>
-              <dd className="mt-1 text-white/88">12 preguntas cerradas, sin respuestas abiertas obligatorias.</dd>
+              <dt className="text-white/50">{t.aside.whatAnswerLabel}</dt>
+              <dd className="mt-1 text-white/88">{t.aside.whatAnswerValue}</dd>
             </div>
             <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
-              <dt className="text-white/50">Qué no debes compartir</dt>
-              <dd className="mt-1 text-white/88">Nombres de clientes, contratos completos, credenciales o secretos internos.</dd>
+              <dt className="text-white/50">{t.aside.whatNotShareLabel}</dt>
+              <dd className="mt-1 text-white/88">{t.aside.whatNotShareValue}</dd>
             </div>
             <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
-              <dt className="text-white/50">Cómo se usarán los datos</dt>
-              <dd className="mt-1 text-white/88">Solo para análisis agregado, control de calidad y futura publicación del estudio.</dd>
+              <dt className="text-white/50">{t.aside.howDataLabel}</dt>
+              <dd className="mt-1 text-white/88">{t.aside.howDataValue}</dd>
             </div>
           </dl>
 
@@ -507,7 +481,7 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
               disabled={loading}
               className="w-full rounded-full bg-linear-to-r from-orange-500 to-amber-300 px-5 py-3 text-sm font-semibold text-black transition hover:brightness-110 disabled:opacity-60"
             >
-              {loading ? "Preparando encuesta..." : "Empezar encuesta"}
+              {loading ? t.aside.preparing : t.aside.startButton}
             </button>
           )}
 
@@ -520,30 +494,25 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
           <div className="space-y-6">
             <div className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-400">
-                Antes de empezar
+                {t.intro.eyebrow}
               </p>
               <h2 className="text-3xl font-semibold text-white">
-                Queremos medir la segunda factura de la IA: la exposición invisible.
+                {t.intro.title}
               </h2>
               <p className="text-base leading-relaxed text-white/68">
-                Esta encuesta exploratoria analiza cómo se usa la IA en el trabajo, qué información circula por
-                esas herramientas y hasta qué punto existen controles reales. No hace falta registrarse.
+                {t.intro.text}
               </p>
             </div>
 
             <ul className="grid gap-3 text-sm text-white/82">
-              {[
-                "Acepta respuestas de empresas, autónomos, consultores y equipos internos.",
-                "Está pensada para España, pero admite respuestas de otros mercados para comparación.",
-                "Permite segmentar por perfil, tamaño de organización, sector, región y madurez de gobernanza.",
-              ].map((item) => (
+              {t.intro.bullets.map((item) => (
                 <li key={item} className="rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3">
                   {item}
                 </li>
               ))}
             </ul>
           </div>
-        ) : currentStep < FINAL_STEP_INDEX ? (
+        ) : currentStep < finalStepIndex ? (
           renderQuestion(activeQuestion)
         ) : (
           renderConsentStep()
@@ -560,17 +529,17 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
               disabled={loading || currentStep === 0}
               className="rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-white/82 transition hover:border-white/35 disabled:opacity-40"
             >
-              Volver
+              {t.nav.back}
             </button>
 
-            {currentStep < FINAL_STEP_INDEX ? (
+            {currentStep < finalStepIndex ? (
               <button
                 type="button"
                 onClick={handleNext}
                 disabled={loading}
                 className="rounded-full bg-linear-to-r from-orange-500 to-amber-300 px-5 py-3 text-sm font-semibold text-black transition hover:brightness-110 disabled:opacity-60"
               >
-                {loading ? "Guardando..." : "Siguiente"}
+                {loading ? t.nav.saving : t.nav.next}
               </button>
             ) : (
               <button
@@ -579,7 +548,7 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
                 disabled={loading}
                 className="rounded-full bg-linear-to-r from-orange-500 to-amber-300 px-5 py-3 text-sm font-semibold text-black transition hover:brightness-110 disabled:opacity-60"
               >
-                {loading ? "Enviando..." : "Enviar encuesta"}
+                {loading ? t.nav.sending : t.nav.submit}
               </button>
             )}
           </div>

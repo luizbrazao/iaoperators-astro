@@ -3,19 +3,19 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import SurveyForm from "@/islands/SurveyForm";
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
-const canonical = new URL("/es/estudio/segunda-factura-ia/encuesta/", site).toString();
-const ogImage = "/og/es/segunda-factura-ia-encuesta.png";
+const canonical = new URL("/en/estudio/segunda-factura-ia/encuesta/", site).toString();
+const ogImage = "/og/en/segunda-factura-ia-encuesta.png";
 
 const alternates = [
-  { lang: "es", href: canonical },
-  { lang: "en", href: new URL("/en/estudio/segunda-factura-ia/encuesta/", site).toString() },
+  { lang: "es", href: new URL("/es/estudio/segunda-factura-ia/encuesta/", site).toString() },
+  { lang: "en", href: canonical },
   { lang: "pt", href: new URL("/pt/estudio/segunda-factura-ia/encuesta/", site).toString() },
 ];
-const xDefault = canonical;
+const xDefault = new URL("/es/estudio/segunda-factura-ia/encuesta/", site).toString();
 
-const pageTitle = "Encuesta | La Segunda Factura de la IA 2026";
+const pageTitle = "Survey | The Second Bill of AI 2026";
 const pageDescription =
-  "Participa en la encuesta exploratoria de IA Operators sobre uso de IA en el trabajo, exposición de información interna, gobernanza y dependencia de proveedores.";
+  "Take part in IA Operators' exploratory survey on AI use at work, exposure of internal information, governance and vendor dependency.";
 
 const breadcrumbJsonLd = {
   "@context": "https://schema.org",
@@ -25,13 +25,13 @@ const breadcrumbJsonLd = {
       "@type": "ListItem",
       position: 1,
       name: "IA Operators",
-      item: `${site}/es/`,
+      item: `${site}/en/`,
     },
     {
       "@type": "ListItem",
       position: 2,
-      name: "Estudio",
-      item: `${site}/es/estudio/segunda-factura-ia/encuesta/`,
+      name: "Study",
+      item: `${site}/en/estudio/segunda-factura-ia/encuesta/`,
     },
   ],
 };
@@ -42,11 +42,11 @@ const pageJsonLd = {
   name: pageTitle,
   description: pageDescription,
   url: canonical,
-  inLanguage: "es-ES",
+  inLanguage: "en-US",
   isPartOf: {
     "@type": "WebSite",
     name: "IA Operators",
-    url: `${site}/es/`,
+    url: `${site}/en/`,
   },
 };
 ---
@@ -58,7 +58,7 @@ const pageJsonLd = {
   alternates={alternates}
   xDefaultUrl={xDefault}
   ogImage={ogImage}
-  ogImageAlt="Encuesta La Segunda Factura de la IA 2026"
+  ogImageAlt="The Second Bill of AI 2026 survey"
   jsonLd={[pageJsonLd, breadcrumbJsonLd]}
 >
   <div class="min-h-screen bg-transparent text-white">
@@ -67,24 +67,24 @@ const pageJsonLd = {
         <div class="grid gap-10 xl:grid-cols-[1.1fr_0.9fr] xl:items-end">
           <div class="space-y-6">
             <span class="inline-flex rounded-full border border-orange-500/25 bg-orange-500/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.28em] text-orange-300">
-              Estudio exploratorio 2026
+              Exploratory study 2026
             </span>
             <div class="space-y-4">
               <h1 class="max-w-4xl text-4xl font-semibold leading-tight md:text-6xl md:leading-none">
-                La Segunda Factura de la IA 2026
+                The Second Bill of AI 2026
               </h1>
               <p class="max-w-3xl text-lg leading-relaxed text-white/72 md:text-xl">
-                Una encuesta breve para entender cómo empresas y profesionales están usando IA en el trabajo, qué controles existen y dónde aparecen los riesgos menos visibles: cuentas personales, documentos internos, dependencia de un único proveedor y Shadow AI.
+                A short survey to understand how companies and professionals are using AI at work, what controls exist and where the least visible risks appear: personal accounts, internal documents, dependency on a single vendor and Shadow AI.
               </p>
             </div>
           </div>
 
           <div class="rounded-[28px] border border-white/10 bg-linear-to-br from-white/[0.08] to-white/[0.02] p-6">
-            <p class="text-xs font-semibold uppercase tracking-[0.24em] text-white/45">Qué obtendremos con esta fase</p>
+            <p class="text-xs font-semibold uppercase tracking-[0.24em] text-white/45">What this phase will give us</p>
             <ul class="mt-4 space-y-3 text-sm leading-relaxed text-white/78">
-              <li class="rounded-2xl border border-white/8 bg-black/20 px-4 py-3">Datos sobre adopción real de IA en el trabajo.</li>
-              <li class="rounded-2xl border border-white/8 bg-black/20 px-4 py-3">Indicadores sobre uso de cuentas personales, exposición documental y prácticas de anonimización.</li>
-              <li class="rounded-2xl border border-white/8 bg-black/20 px-4 py-3">Una base metodológica para el estudio público posterior, sin publicar conclusiones antes de recoger muestra suficiente.</li>
+              <li class="rounded-2xl border border-white/8 bg-black/20 px-4 py-3">Data on real-world AI adoption at work.</li>
+              <li class="rounded-2xl border border-white/8 bg-black/20 px-4 py-3">Indicators on personal-account use, document exposure and anonymization practices.</li>
+              <li class="rounded-2xl border border-white/8 bg-black/20 px-4 py-3">A methodological baseline for the later public study, without publishing conclusions before collecting a sufficient sample.</li>
             </ul>
           </div>
         </div>
@@ -93,28 +93,28 @@ const pageJsonLd = {
 
     <section class="px-4 pb-12">
       <div class="mx-auto max-w-6xl">
-        <SurveyForm client:load locale="es" thankYouPath="/es/estudio/segunda-factura-ia/encuesta/gracias/" />
+        <SurveyForm client:load locale="en" thankYouPath="/en/estudio/segunda-factura-ia/encuesta/gracias/" />
       </div>
     </section>
 
     <section class="px-4 pb-20">
       <div class="mx-auto grid max-w-6xl gap-6 lg:grid-cols-3">
         <article class="rounded-[24px] border border-white/10 bg-white/[0.03] p-6">
-          <h2 class="text-lg font-semibold text-white">Neutralidad metodológica</h2>
+          <h2 class="text-lg font-semibold text-white">Methodological neutrality</h2>
           <p class="mt-3 text-sm leading-relaxed text-white/68">
-            Las preguntas están formuladas en lenguaje neutral, con opciones equilibradas y con “No lo sé” cuando corresponde. La encuesta no solicita secretos empresariales ni ejemplos identificables.
+            Questions are written in neutral language, with balanced options and an “I don't know” choice where relevant. The survey does not request trade secrets or identifiable examples.
           </p>
         </article>
         <article class="rounded-[24px] border border-white/10 bg-white/[0.03] p-6">
-          <h2 class="text-lg font-semibold text-white">Privacidad y tratamiento</h2>
+          <h2 class="text-lg font-semibold text-white">Privacy and processing</h2>
           <p class="mt-3 text-sm leading-relaxed text-white/68">
-            El email es opcional. Cuando se aporta, debe almacenarse separado de las respuestas comportamentales. Las respuestas individuales no se publicarán de forma aislada.
+            The email is optional. When provided, it must be stored separately from the behavioral responses. Individual responses will not be published in isolation.
           </p>
         </article>
         <article class="rounded-[24px] border border-white/10 bg-white/[0.03] p-6">
-          <h2 class="text-lg font-semibold text-white">Uso previsto</h2>
+          <h2 class="text-lg font-semibold text-white">Intended use</h2>
           <p class="mt-3 text-sm leading-relaxed text-white/68">
-            Esta fase sirve para validar hipótesis, detectar segmentos relevantes y preparar un estudio público con datos originales, no para afirmar que representa a todas las empresas españolas.
+            This phase serves to validate hypotheses, detect relevant segments and prepare a public study with original data — not to claim it represents every company.
           </p>
         </article>
       </div>
