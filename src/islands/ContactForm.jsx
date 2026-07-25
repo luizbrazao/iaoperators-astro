@@ -93,6 +93,9 @@ export default function ContactForm({ locale: localeProp = "es" }) {
       const payload = await safeReadResponse(res);
 
       if (res.ok) {
+        // Conversão: sinaliza o lead ao GTM (gatilho Custom Event -> tag GA4 generate_lead)
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: "generate_lead", lead_source: "Formulario_Contato" });
         setSuccess(true);
         form.reset();
         return;
