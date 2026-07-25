@@ -84,6 +84,7 @@ export default function CookieBanner({ forceOpen = false, onClose } = {}) {
     setReady(true);
     const consent = readConsent();
     if (consent === null) setOpen(true);
+    else if (consent === "accepted") loadGTM(); // visitantes recorrentes já consentidos
   }, []);
 
   /* Forçar abertura (opcional) */
