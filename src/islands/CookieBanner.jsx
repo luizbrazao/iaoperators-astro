@@ -34,7 +34,8 @@ function loadGTM() {
   const id =
     window.__GTM_ID__ ||
     import.meta.env.PUBLIC_GTM_ID ||
-    import.meta.env.VITE_GTM_ID;
+    import.meta.env.VITE_GTM_ID ||
+    "GTM-572KJ7HZ"; // fallback público: container GTM da IA Operators (ID de container é público)
 
   if (!id) return;
 
