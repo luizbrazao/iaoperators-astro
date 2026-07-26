@@ -29,7 +29,7 @@ const labels = {
   blog: nav?.blog ?? "Blog",
   contact: nav?.contact ?? "Contact",
   // ES-only: landing regulatoria (Ley 10/2025). No se traduce porque la obligación es española.
-  cumplimiento: "Ley 10/2025",
+  cumplimiento: "Cumplimiento",
 };
 
 const withLocale = (path: string) => `/${locale}/${path}`.replace(/\/+$/, "/");
@@ -41,7 +41,7 @@ const links = {
   portfolio: withLocale("portfolio/"),
   blog: withLocale("blog/"),
   contact: withLocale("contact/"),
-  cumplimiento: "/es/cumplimiento/ley-atencion-al-cliente/",
+  cumplimiento: "/es/cumplimiento/",
   community: "https://www.skool.com/ia-operators-hub-9023/about",
   youtube: "https://www.youtube.com/@IAOperators",
 };

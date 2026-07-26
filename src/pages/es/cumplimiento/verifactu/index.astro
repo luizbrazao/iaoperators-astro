@@ -1,0 +1,389 @@
+---
+// Pilar de la Frente B — Verifactu. ES-only (obligación española).
+// Ángulo: la SERP está copada por vendors de software de facturación cuya
+// respuesta a todo es "migra a mi programa". El hueco es el que NO puede migrar.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import {
+  NORMA,
+  DISCLAIMER,
+  EXCLUSIONES,
+  REQUISITOS,
+  SANCIONES,
+  SHARED,
+  CASO_SLUGS,
+  CASOS,
+} from "@/data/verifactu";
+
+const locale = "es";
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const base = `/${locale}/cumplimiento/verifactu/`;
+const pageUrl = new URL(base, site).toString();
+const contactHref = `/${locale}/contact/`;
+const sacHref = `/${locale}/cumplimiento/ley-atencion-al-cliente/`;
+
+const deadline = new Date(`${NORMA.fechaSociedades}T00:00:00+01:00`);
+const diasRestantes = Math.max(
+  0,
+  Math.ceil((deadline.getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
+);
+
+const casos = CASO_SLUGS.map((slug) => ({ slug, ...CASOS[slug] }));
+
+const meta = {
+  title: "Verifactu para ERP, TPV y software propio | IA Operators",
+  description:
+    "Integramos Verifactu en el sistema que ya usas: registros encadenados, remisión a la AEAT, QR y declaración responsable. Para quien no puede migrar de software.",
+};
+
+const providerSchema = {
+  "@type": ["Organization", "ProfessionalService"],
+  name: "IA Operators",
+  url: site,
+  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+};
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Integración de Verifactu en sistemas de facturación propios y legados",
+  serviceType: "Tax compliance systems integration",
+  provider: providerSchema,
+  areaServed: "ES",
+  description: meta.description,
+  url: pageUrl,
+  inLanguage: "es-ES",
+  about: {
+    "@type": "Legislation",
+    name: NORMA.nombre,
+    legislationIdentifier: "BOE-A-2023-24840",
+    legislationJurisdiction: "ES",
+    url: NORMA.boeUrl,
+  },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: "Verifactu", item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: SHARED.faq.items.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  jsonLd={[serviceJsonLd, breadcrumbJsonLd, faqJsonLd]}
+>
+  <div class="bg-transparent text-white">
+    <!-- HERO -->
+    <section class="relative px-4 pt-28 pb-16">
+      <div class="max-w-5xl mx-auto text-center">
+        <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-6">
+          Verifactu · {NORMA.fechaSociedadesLegible} sociedades · {NORMA.fechaRestoLegible} autónomos
+        </span>
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
+          Verifactu sin cambiar el software que hace funcionar tu negocio
+        </h1>
+        <p class="text-lg md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto">
+          Todo el mercado te dice que migres a su programa de facturación. Nosotros integramos el
+          cumplimiento en tu ERP, tu TPV o tu e-commerce actual.
+        </p>
+
+        <div class="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-[#0a0a0a] border border-orange-500/20 mb-10">
+          <span
+            id="vf-countdown"
+            data-deadline={NORMA.fechaSociedades}
+            class="text-3xl md:text-4xl font-bold text-orange-400 tabular-nums"
+          >
+            {diasRestantes}
+          </span>
+          <span class="text-left text-sm text-gray-400 leading-tight">
+            días para el<br />1 de enero de 2027
+          </span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={contactHref}
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-base hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+          >
+            Auditoría de tu sistema ↗
+          </a>
+          <a
+            href="#casos"
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-base hover:bg-orange-500/10 transition-all duration-300"
+          >
+            Ver mi caso ↓
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ¿TE APLICA? -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">Primero: ¿te aplica?</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">
+            Hay tres situaciones en las que el reglamento no te alcanza. Preferimos decírtelo antes
+            que venderte un proyecto que no necesitas.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {EXCLUSIONES.map((item) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6">
+              <div class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3">
+                Quedas fuera si
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-2">{item.title}</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+        <p class="text-center text-sm text-gray-400 mt-8 max-w-2xl mx-auto leading-relaxed">
+          Si no estás en ninguno de esos tres casos y emites facturas desde un sistema informático,
+          la obligación llega el <strong class="text-white">{NORMA.fechaSociedadesLegible}</strong>
+          si tributas por el Impuesto sobre Sociedades, y el
+          <strong class="text-white">{NORMA.fechaRestoLegible}</strong> en el resto de casos.
+        </p>
+      </div>
+    </section>
+
+    <!-- DE LA NORMA AL SISTEMA -->
+    <section class="px-4 py-24 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-14">
+          <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+            El núcleo del proyecto
+          </span>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">De la norma al sistema</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">
+            Cada exigencia del reglamento se traduce en una pieza de software. Y cada pieza tiene una
+            trampa que solo aparece cuando el sistema ya está en producción.
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          {REQUISITOS.map((r, idx) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8 hover:border-orange-500/20 transition-all duration-300">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+                <div>
+                  <div class="flex items-center gap-3 mb-3">
+                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-orange-500/10 text-orange-400 font-bold text-xs shrink-0">
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
+                    <span class="text-xs font-semibold uppercase tracking-widest text-gray-500">
+                      Lo que exige la norma
+                    </span>
+                  </div>
+                  <p class="text-white text-base leading-relaxed">{r.norma}</p>
+                </div>
+                <div class="md:border-l md:border-white/5 md:pl-10">
+                  <div class="text-xs font-semibold uppercase tracking-widest text-orange-400 mb-3">
+                    Lo que hay que construir
+                  </div>
+                  <p class="text-gray-300 text-base leading-relaxed mb-3">{r.sistema}</p>
+                  <p class="text-gray-500 text-sm leading-relaxed italic">{r.trampa}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p class="text-center text-xs text-gray-500 mt-8">
+          Requisitos contrastados con la
+          <a
+            href={NORMA.aeatUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-gray-400 underline hover:text-orange-400 transition-colors"
+          >
+            documentación de la AEAT
+          </a>
+          y el texto del {NORMA.nombre}.
+        </p>
+      </div>
+    </section>
+
+    <!-- CASOS -->
+    <section id="casos" class="px-4 py-20 scroll-mt-24">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">¿Cuál es tu caso?</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">
+            Cuatro situaciones donde migrar a un software estándar sale más caro que integrar el
+            cumplimiento en lo que ya tienes.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {casos.map((caso) => (
+            <a
+              href={`${base}${caso.slug}/`}
+              class="group bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 hover:border-orange-500/30 transition-all duration-300"
+            >
+              <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-orange-400 transition-colors">
+                {caso.nombreCorto}
+              </h3>
+              <p class="text-gray-400 text-sm leading-relaxed mb-4">{caso.intro}</p>
+              <span class="text-orange-400 text-sm">Ver este caso →</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ARQUITECTURA -->
+    <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{SHARED.arquitectura.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{SHARED.arquitectura.subtitle}</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {SHARED.arquitectura.items.map((item, idx) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 font-bold text-sm">
+                  {String(idx + 1).padStart(2, "0")}
+                </span>
+                <h3 class="text-lg font-semibold text-white">{item.title}</h3>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESO -->
+    <section class="px-4 py-24">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+            {SHARED.proceso.badge}
+          </span>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{SHARED.proceso.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{SHARED.proceso.subtitle}</p>
+        </div>
+        <ol class="space-y-6 max-w-4xl mx-auto">
+          {SHARED.proceso.phases.map((phase) => (
+            <li class="flex flex-col md:flex-row gap-6 bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8 hover:border-orange-500/20 transition-all duration-300">
+              <div class="md:w-56 shrink-0">
+                <div class="text-orange-400 text-xs font-semibold uppercase tracking-widest mb-1">
+                  {phase.code} · {phase.plazo}
+                </div>
+                <h3 class="text-xl font-bold text-white">{phase.title}</h3>
+              </div>
+              <p class="text-gray-300 leading-relaxed flex-1">{phase.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- SANCIONES + PRECIO -->
+    <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+          {SHARED.precio.items.map((item) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-8 flex flex-col">
+              <h3 class="text-lg font-semibold text-white mb-2">{item.title}</h3>
+              <div class="text-2xl font-bold text-orange-400 mb-4">{item.precio}</div>
+              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="max-w-3xl mx-auto text-center">
+          <p class="text-xs uppercase tracking-widest text-gray-500 mb-4">
+            Lo que hay al otro lado
+          </p>
+          <div class="flex flex-col sm:flex-row justify-center gap-4">
+            {SANCIONES.map((s) => (
+              <div class="flex-1 bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-5">
+                <div class="text-xl font-bold text-white mb-1">{s.importe}</div>
+                <div class="text-gray-500 text-xs leading-relaxed">{s.quien}</div>
+              </div>
+            ))}
+          </div>
+          <p class="text-xs text-gray-600 mt-4 leading-relaxed">
+            Régimen del artículo 201 bis de la Ley General Tributaria. Su aplicación a un caso
+            concreto corresponde a tu asesoría.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="px-4 py-20">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">{SHARED.faq.title}</h2>
+        <div class="space-y-3">
+          {SHARED.faq.items.map((item) => (
+            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-4 hover:border-orange-500/20 transition-all duration-300">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <span class="text-white font-medium pr-4">{item.q}</span>
+                <span class="text-orange-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="text-gray-400 mt-3 leading-relaxed">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="px-4 py-24">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">
+          Empieza por saber qué hay que tocar
+        </h2>
+        <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
+          La auditoría del sistema de facturación dura entre tres y cinco días y sale con el alcance
+          y el precio cerrados. Si resulta que no te aplica, te lo decimos ahí.
+        </p>
+        <a
+          href={contactHref}
+          class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+        >
+          Hablar con un especialista ↗
+        </a>
+
+        <p class="text-sm text-gray-500 mt-10">
+          ¿Buscabas la otra obligación con plazo?
+          <a href={sacHref} class="text-orange-400 underline hover:text-orange-300">
+            Ley 10/2025 de atención a la clientela
+          </a>
+        </p>
+
+        <p class="text-xs text-gray-600 mt-8 max-w-2xl mx-auto leading-relaxed">{DISCLAIMER}</p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    var el = document.getElementById("vf-countdown");
+    if (!el) return;
+    var deadline = new Date(el.getAttribute("data-deadline") + "T00:00:00+01:00").getTime();
+    el.textContent = String(Math.max(0, Math.ceil((deadline - Date.now()) / 86400000)));
+  })();
+</script>

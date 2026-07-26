@@ -1,0 +1,177 @@
+---
+// Hub del silo regulatorio. Se crea ahora, con dos pilares: con uno solo habría
+// sido contenido delgado. ES-only, como todo el silo.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { LEY } from "@/data/sectores-sac";
+import { NORMA } from "@/data/verifactu";
+
+const locale = "es";
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(`/${locale}/cumplimiento/`, site).toString();
+const contactHref = `/${locale}/contact/`;
+
+const dias = (iso: string) =>
+  Math.max(0, Math.ceil((new Date(`${iso}T00:00:00+01:00`).getTime() - Date.now()) / 86_400_000));
+
+const frentes = [
+  {
+    href: `/${locale}/cumplimiento/ley-atencion-al-cliente/`,
+    badge: "Ley 10/2025",
+    title: "Servicio de atención a la clientela",
+    plazo: LEY.plazoAdaptacionLegible,
+    dias: dias(LEY.plazoAdaptacion),
+    quien:
+      "Servicios básicos de interés general sin umbral de tamaño, y el resto de empresas que superen 250 personas, 50 M€ de facturación o 43 M€ de balance.",
+    que:
+      "SLA de atención medibles, clave identificativa, gestión del plazo de 15 días hábiles, trazabilidad y evidencia para la auditoría anual acreditada por ENAC.",
+    cta: "Ver la Ley 10/2025",
+    extra: { label: "Test de cumplimiento · 2 min", href: `/${locale}/cumplimiento/ley-atencion-al-cliente/test/` },
+  },
+  {
+    href: `/${locale}/cumplimiento/verifactu/`,
+    badge: "Verifactu",
+    title: "Sistemas informáticos de facturación",
+    plazo: `${NORMA.fechaSociedadesLegible} · ${NORMA.fechaRestoLegible}`,
+    dias: dias(NORMA.fechaSociedades),
+    quien:
+      "Quien emite facturas desde un sistema informático y no está en el SII ni tributa en territorio foral. Sociedades primero, resto de obligados después.",
+    que:
+      "Registros de alta y anulación encadenados por huella, remisión a la AEAT, QR verificable, registro inalterable y declaración responsable del sistema.",
+    cta: "Ver Verifactu",
+    extra: null,
+  },
+];
+
+const meta = {
+  title: "Cumplimiento normativo: Ley 10/2025 y Verifactu | IA Operators",
+  description:
+    "Implementación técnica de las dos obligaciones españolas con plazo: atención a la clientela (Ley 10/2025) y sistemas de facturación (Verifactu). Sistemas, no informes.",
+};
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: meta.title,
+    description: meta.description,
+    url: pageUrl,
+    inLanguage: "es-ES",
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: frentes.map((f, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: f.title,
+        url: new URL(f.href, site).toString(),
+      })),
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
+      { "@type": "ListItem", position: 2, name: "Cumplimiento normativo", item: pageUrl },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  jsonLd={jsonLd}
+>
+  <div class="bg-transparent text-white">
+    <section class="px-4 pt-28 pb-14">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
+          Cumplimiento normativo, construido
+        </h1>
+        <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+          Dos obligaciones españolas con fecha y sanción. Los despachos te explican qué dicen.
+          Nosotros construimos el sistema que las cumple y que puede demostrarlo.
+        </p>
+      </div>
+    </section>
+
+    <section class="px-4 pb-20">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {frentes.map((f) => (
+          <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 md:p-9 flex flex-col hover:border-orange-500/30 transition-all duration-300">
+            <div class="flex items-center justify-between gap-4 mb-5">
+              <span class="inline-block px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 text-xs font-semibold">
+                {f.badge}
+              </span>
+              <span class="text-right">
+                <span class="block text-2xl font-bold text-orange-400 tabular-nums leading-none">
+                  {f.dias}
+                </span>
+                <span class="block text-[10px] uppercase tracking-widest text-gray-500 mt-1">
+                  días
+                </span>
+              </span>
+            </div>
+
+            <h2 class="text-2xl font-semibold text-white mb-2">{f.title}</h2>
+            <p class="text-xs text-gray-500 mb-6">Plazo: {f.plazo}</p>
+
+            <div class="mb-4">
+              <div class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-2">
+                A quién aplica
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">{f.quien}</p>
+            </div>
+
+            <div class="mb-8 flex-1">
+              <div class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-2">
+                Qué hay que construir
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">{f.que}</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+              <a
+                href={f.href}
+                class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-orange-500 text-black font-medium text-sm hover:bg-orange-400 transition-all duration-300"
+              >
+                {f.cta} ↗
+              </a>
+              {f.extra && (
+                <a
+                  href={f.extra.href}
+                  class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-sm hover:bg-orange-500/10 transition-all duration-300"
+                >
+                  {f.extra.label}
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="px-4 pb-24">
+      <div class="max-w-3xl mx-auto text-center">
+        <p class="text-gray-400 mb-8">
+          ¿No sabes cuál de las dos te alcanza? En una llamada de 30 minutos lo aclaramos y salimos
+          con el alcance de lo que haya que hacer.
+        </p>
+        <a
+          href={contactHref}
+          class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+        >
+          Hablar con un especialista ↗
+        </a>
+        <p class="text-xs text-gray-600 mt-10 max-w-2xl mx-auto leading-relaxed">
+          Información técnica sobre implementación de sistemas. No constituye asesoramiento jurídico
+          ni fiscal.
+        </p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
