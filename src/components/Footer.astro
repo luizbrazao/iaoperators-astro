@@ -11,6 +11,8 @@ const footer = (dict as any)?.footer ?? (dict as any)?.common?.footer ?? {};
 const withLocale = (path: string) => `/${locale}/${path}`.replace(/\/+$/, "/");
 
 const year = new Date().getFullYear();
+const servicesLabel =
+  locale === "pt" ? "Serviços" : locale === "en" ? "Services" : "Servicios";
 
 // textos com fallback (pra não quebrar se faltar chave)
 const t = {
@@ -87,6 +89,8 @@ const links = {
     <!-- Navegação de serviços e páginas -->
     <nav aria-label="Site links" class="w-full py-8 border-b border-white/5">
       <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm">
+        <a href={withLocale("servicios/")} class="text-gray-400 hover:text-orange-400 transition-colors">{servicesLabel}</a>
+        <span class="text-white/15 select-none">·</span>
         <a href={withLocale("auditoria-de-sistemas/")} class="text-gray-400 hover:text-orange-400 transition-colors">Radiografía Digital</a>
         <span class="text-white/15 select-none">·</span>
         <a href={withLocale("roadmap-tecnologico/")} class="text-gray-400 hover:text-orange-400 transition-colors">Roadmap Tecnológico</a>

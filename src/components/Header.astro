@@ -1,6 +1,7 @@
 ---
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import { getLocale, ui } from "../i18n/ui";
+import { getServiceGroups, hubCtaLabel, SERVICE_HUB_PATH } from "@/data/servicios";
 
 type Props = { languageLinks?: Array<{ locale: string; href: string }> };
 const { languageLinks } = Astro.props as Props;
@@ -14,73 +15,13 @@ const nav =
   (dict as any)?.home?.nav ??
   {};
 
-// Rótulos localizados da nova landing de serviço (fallback se não houver no i18n nav)
-const AUTOMATION_NAV: Record<string, { label: string; desc: string }> = {
-  es: { label: "Automatización con IA", desc: "Agentes, procesos y n8n a medida" },
-  pt: { label: "Automação com IA", desc: "Agentes, processos e n8n sob medida" },
-  en: { label: "AI Automation", desc: "Agents, processes and custom n8n" },
-};
-const automationNav = AUTOMATION_NAV[locale] ?? AUTOMATION_NAV.es;
-const CHATBOTS_NAV: Record<string, { label: string; desc: string }> = {
-  es: { label: "Chatbots con IA", desc: "WhatsApp, asistentes y reservas 24/7" },
-  pt: { label: "Chatbots com IA", desc: "WhatsApp, assistentes e agendamentos 24/7" },
-  en: { label: "AI Chatbots", desc: "WhatsApp, assistants and 24/7 booking" },
-};
-const chatbotsNav = CHATBOTS_NAV[locale] ?? CHATBOTS_NAV.es;
-const WEB_NAV: Record<string, { label: string; desc: string }> = {
-  es: { label: "Diseño web", desc: "Sitios rápidos, SEO y conversión" },
-  pt: { label: "Criação de sites", desc: "Sites rápidos, SEO e conversão" },
-  en: { label: "Web design", desc: "Fast sites, SEO and conversion" },
-};
-const webNav = WEB_NAV[locale] ?? WEB_NAV.es;
-const SEO_NAV: Record<string, { label: string; desc: string }> = {
-  es: { label: "Agencia SEO", desc: "Posicionamiento y AI Search" },
-  pt: { label: "Agência de SEO", desc: "Posicionamento e AI Search" },
-  en: { label: "SEO agency", desc: "Rankings and AI Search" },
-};
-const seoNav = SEO_NAV[locale] ?? SEO_NAV.es;
-const MARKETING_NAV: Record<string, { label: string; desc: string }> = {
-  es: { label: "Marketing digital", desc: "Estrategia, ads y automatización" },
-  pt: { label: "Marketing digital", desc: "Estratégia, ads e automação" },
-  en: { label: "Digital marketing", desc: "Strategy, ads and automation" },
-};
-const marketingNav = MARKETING_NAV[locale] ?? MARKETING_NAV.es;
-const IA_NAV: Record<string, { label: string; desc: string }> = {
-  es: { label: "Agencia de IA", desc: "Estrategia e implementación de IA" },
-  pt: { label: "Agência de IA", desc: "Estratégia e implementação de IA" },
-  en: { label: "AI agency", desc: "AI strategy and implementation" },
-};
-const iaNav = IA_NAV[locale] ?? IA_NAV.es;
-
-const CONSULTORIA_NAV: Record<string, { label: string; desc: string }> = {
-  es: { label: "Consultoría de IA", desc: "Diagnóstico, estrategia y roadmap de IA" },
-  pt: { label: "Consultoria de IA", desc: "Diagnóstico, estratégia e roadmap de IA" },
-  en: { label: "AI consulting", desc: "Diagnosis, strategy and AI roadmap" },
-};
-const consultoriaNav = CONSULTORIA_NAV[locale] ?? CONSULTORIA_NAV.es;
+// Catálogo de servicios: fuente única en src/data/servicios.ts.
+const serviceGroups = getServiceGroups(locale);
+const serviceItems = serviceGroups.flatMap((g) => g.items);
+const hubCta = hubCtaLabel(locale);
 
 const labels = {
   services: nav?.services ?? "Services",
-  automation: nav?.automation ?? automationNav.label,
-  automationDescription: nav?.automationDescription ?? automationNav.desc,
-  chatbots: nav?.chatbots ?? chatbotsNav.label,
-  chatbotsDescription: nav?.chatbotsDescription ?? chatbotsNav.desc,
-  web: nav?.web ?? webNav.label,
-  webDescription: nav?.webDescription ?? webNav.desc,
-  seo: nav?.seo ?? seoNav.label,
-  seoDescription: nav?.seoDescription ?? seoNav.desc,
-  marketing: nav?.marketing ?? marketingNav.label,
-  marketingDescription: nav?.marketingDescription ?? marketingNav.desc,
-  ia: nav?.ia ?? iaNav.label,
-  iaDescription: nav?.iaDescription ?? iaNav.desc,
-  consultoria: nav?.consultoria ?? consultoriaNav.label,
-  consultoriaDescription: nav?.consultoriaDescription ?? consultoriaNav.desc,
-  audit: nav?.audit ?? "Audit",
-  auditDescription: nav?.auditDescription ?? "",
-  roadmap: nav?.roadmap ?? "Roadmap",
-  roadmapDescription: nav?.roadmapDescription ?? "",
-  implementation: nav?.implementation ?? "Implementation",
-  implementationDescription: nav?.implementationDescription ?? "",
   methodology: nav?.methodology ?? "Methodology",
   portfolio: nav?.portfolio ?? "Portfolio",
   community: nav?.community ?? "Community",
@@ -93,19 +34,9 @@ const labels = {
 
 const withLocale = (path: string) => `/${locale}/${path}`.replace(/\/+$/, "/");
 
-// Links (mantém os do header antigo)
 const links = {
   home: `/${locale}/`,
-  automation: withLocale("servicios/automatizacion-ia/"),
-  chatbots: withLocale("servicios/chatbots/"),
-  web: withLocale("servicios/diseno-web/"),
-  seo: withLocale("servicios/agencia-seo/"),
-  marketing: withLocale("servicios/marketing-digital/"),
-  ia: withLocale("servicios/agencia-ia/"),
-  consultoria: withLocale("servicios/consultoria-ia/"),
-  audit: withLocale("auditoria-de-sistemas/"),
-  roadmap: withLocale("roadmap-tecnologico/"),
-  implementation: withLocale("implementacion/"),
+  servicesHub: withLocale(SERVICE_HUB_PATH),
   methodology: withLocale("metodologia/"),
   portfolio: withLocale("portfolio/"),
   blog: withLocale("blog/"),
@@ -115,25 +46,19 @@ const links = {
   youtube: "https://www.youtube.com/@IAOperators",
 };
 
+// El menú móvil NO repite los diez servicios: lleva al hub. Los enlaces
+// individuales siguen en el HTML (panel de escritorio), así que el rastreo
+// no pierde nada y el móvil deja de ser una lista interminable.
 const mobileLinks = [
-  { key: "automation", href: links.automation, external: false },
-  { key: "chatbots", href: links.chatbots, external: false },
-  { key: "web", href: links.web, external: false },
-  { key: "seo", href: links.seo, external: false },
-  { key: "marketing", href: links.marketing, external: false },
-  { key: "ia", href: links.ia, external: false },
-  { key: "consultoria", href: links.consultoria, external: false },
-  { key: "audit", href: links.audit, external: false },
-  { key: "roadmap", href: links.roadmap, external: false },
-  { key: "implementation", href: links.implementation, external: false },
+  { key: "servicesHub", href: links.servicesHub, label: hubCta, external: false },
   ...(locale === "es"
-    ? [{ key: "cumplimiento", href: links.cumplimiento, external: false }]
+    ? [{ key: "cumplimiento", href: links.cumplimiento, label: labels.cumplimiento, external: false }]
     : []),
-  { key: "methodology", href: links.methodology, external: false },
-  { key: "portfolio", href: links.portfolio, external: false },
-  { key: "community", href: links.community, external: true },
-  { key: "youtube", href: links.youtube, external: true },
-  { key: "blog", href: links.blog, external: false },
+  { key: "methodology", href: links.methodology, label: labels.methodology, external: false },
+  { key: "portfolio", href: links.portfolio, label: labels.portfolio, external: false },
+  { key: "community", href: links.community, label: labels.community, external: true },
+  { key: "youtube", href: links.youtube, label: labels.youtube, external: true },
+  { key: "blog", href: links.blog, label: labels.blog, external: false },
 ];
 ---
 
@@ -186,191 +111,52 @@ const mobileLinks = [
 
           <div
             id="servicesMenu"
-            class="
-              hidden absolute left-1/2 -translate-x-1/2 top-full pt-3
-              z-50
-            "
+            class="hidden absolute left-1/2 -translate-x-1/2 top-full pt-3 z-50"
             role="menu"
           >
             <div
               class="
-                w-[360px]
-                rounded-2xl
-                border border-white/10
-                bg-[#0a0a0a]/95
-                backdrop-blur-xl
+                w-[min(92vw,660px)]
+                rounded-2xl border border-white/10
+                bg-[#0a0a0a]/95 backdrop-blur-xl
                 shadow-[0_20px_60px_rgba(0,0,0,0.7)]
-                p-2
+                p-3
               "
             >
-              <a
-                href={links.automation}
-                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
-                role="menuitem"
-                data-close-services
-              >
-                <div class="flex items-center gap-2 text-white font-semibold">
-                  <span class="text-orange-400">01</span>
-                  {labels.automation}
-                </div>
-                {labels.automationDescription && (
-                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
-                    {labels.automationDescription}
-                  </p>
-                )}
-              </a>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-2">
+                {serviceGroups.map((group) => (
+                  <div>
+                    <p class="px-3 pt-1 pb-2 text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+                      {group.title}
+                    </p>
+                    {group.items.map((item) => (
+                      <a
+                        href={item.href}
+                        class="block rounded-xl px-3 py-2.5 hover:bg-white/5 transition group"
+                        role="menuitem"
+                        data-close-services
+                      >
+                        <div class="flex items-center gap-2 text-white text-sm font-semibold">
+                          <span class="text-orange-400 text-xs tabular-nums">{item.num}</span>
+                          {item.label}
+                        </div>
+                        <p class="text-xs text-gray-400 mt-0.5 group-hover:text-gray-300">
+                          {item.desc}
+                        </p>
+                      </a>
+                    ))}
+                  </div>
+                ))}
+              </div>
 
               <a
-                href={links.chatbots}
-                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
+                href={links.servicesHub}
+                class="mt-3 flex items-center justify-between rounded-xl px-3 py-2.5 bg-white/[0.03] hover:bg-white/[0.07] transition"
                 role="menuitem"
                 data-close-services
               >
-                <div class="flex items-center gap-2 text-white font-semibold">
-                  <span class="text-orange-400">02</span>
-                  {labels.chatbots}
-                </div>
-                {labels.chatbotsDescription && (
-                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
-                    {labels.chatbotsDescription}
-                  </p>
-                )}
-              </a>
-
-              <a
-                href={links.web}
-                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
-                role="menuitem"
-                data-close-services
-              >
-                <div class="flex items-center gap-2 text-white font-semibold">
-                  <span class="text-orange-400">03</span>
-                  {labels.web}
-                </div>
-                {labels.webDescription && (
-                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
-                    {labels.webDescription}
-                  </p>
-                )}
-              </a>
-
-              <a
-                href={links.seo}
-                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
-                role="menuitem"
-                data-close-services
-              >
-                <div class="flex items-center gap-2 text-white font-semibold">
-                  <span class="text-orange-400">04</span>
-                  {labels.seo}
-                </div>
-                {labels.seoDescription && (
-                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
-                    {labels.seoDescription}
-                  </p>
-                )}
-              </a>
-
-              <a
-                href={links.marketing}
-                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
-                role="menuitem"
-                data-close-services
-              >
-                <div class="flex items-center gap-2 text-white font-semibold">
-                  <span class="text-orange-400">05</span>
-                  {labels.marketing}
-                </div>
-                {labels.marketingDescription && (
-                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
-                    {labels.marketingDescription}
-                  </p>
-                )}
-              </a>
-
-              <a
-                href={links.ia}
-                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
-                role="menuitem"
-                data-close-services
-              >
-                <div class="flex items-center gap-2 text-white font-semibold">
-                  <span class="text-orange-400">06</span>
-                  {labels.ia}
-                </div>
-                {labels.iaDescription && (
-                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
-                    {labels.iaDescription}
-                  </p>
-                )}
-              </a>
-
-              <a
-                href={links.consultoria}
-                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
-                role="menuitem"
-                data-close-services
-              >
-                <div class="flex items-center gap-2 text-white font-semibold">
-                  <span class="text-orange-400">07</span>
-                  {labels.consultoria}
-                </div>
-                {labels.consultoriaDescription && (
-                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
-                    {labels.consultoriaDescription}
-                  </p>
-                )}
-              </a>
-
-              <a
-                href={links.audit}
-                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
-                role="menuitem"
-                data-close-services
-              >
-                <div class="flex items-center gap-2 text-white font-semibold">
-                  <span class="text-orange-400">07</span>
-                  {labels.audit}
-                </div>
-                {labels.auditDescription && (
-                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
-                    {labels.auditDescription}
-                  </p>
-                )}
-              </a>
-
-              <a
-                href={links.roadmap}
-                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
-                role="menuitem"
-                data-close-services
-              >
-                <div class="flex items-center gap-2 text-white font-semibold">
-                  <span class="text-orange-400">08</span>
-                  {labels.roadmap}
-                </div>
-                {labels.roadmapDescription && (
-                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
-                    {labels.roadmapDescription}
-                  </p>
-                )}
-              </a>
-
-              <a
-                href={links.implementation}
-                class="block rounded-xl px-4 py-3 hover:bg-white/5 transition group"
-                role="menuitem"
-                data-close-services
-              >
-                <div class="flex items-center gap-2 text-white font-semibold">
-                  <span class="text-orange-400">09</span>
-                  {labels.implementation}
-                </div>
-                {labels.implementationDescription && (
-                  <p class="text-xs text-gray-400 mt-1 group-hover:text-gray-300">
-                    {labels.implementationDescription}
-                  </p>
-                )}
+                <span class="text-sm text-white font-medium">{hubCta}</span>
+                <span class="text-orange-400">→</span>
               </a>
             </div>
           </div>
@@ -509,7 +295,7 @@ const mobileLinks = [
               class="block px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition font-medium"
               data-close-menu
             >
-              {(labels as any)[item.key] ?? item.key}
+              {item.label}
             </a>
           ))}
 
