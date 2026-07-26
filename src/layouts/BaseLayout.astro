@@ -11,8 +11,12 @@ type Props = {
   canonicalUrl?: string;
   alternates?: Array<{ lang: string; href: string }>;
   xDefaultUrl?: string;
+  /** Título para og:title / twitter:title. Por defecto usa `title`. */
+  ogTitle?: string;
   ogImage?: string;
   ogImageAlt?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
   ogType?: "website" | "article";
   ogPublishedTime?: string;
   ogModifiedTime?: string;
@@ -27,8 +31,11 @@ const {
   canonicalUrl,
   alternates: alternatesOverride,
   xDefaultUrl,
+  ogTitle,
   ogImage = "/og.png",
   ogImageAlt,
+  ogImageWidth = 1200,
+  ogImageHeight = 630,
   ogType = "website",
   ogPublishedTime,
   ogModifiedTime,
@@ -79,6 +86,7 @@ const ogImageUrl = ogImage.startsWith("http")
   ? ogImage
   : new URL(ogImage, site).toString();
 const effectiveOgImageAlt = (ogImageAlt && ogImageAlt.trim()) || title;
+const effectiveOgTitle = (ogTitle && ogTitle.trim()) || title;
 
 const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
@@ -142,17 +150,17 @@ const ogLocale = OG_LOCALE_MAP[locale] ?? locale;
         <meta property="article:modified_time" content={ogModifiedTime} />
       )
     }
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={effectiveOgTitle} />
     <meta property="og:description" content={effectiveDescription} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:alt" content={effectiveOgImageAlt} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image:width" content={String(ogImageWidth)} />
+    <meta property="og:image:height" content={String(ogImageHeight)} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
+    <meta name="twitter:title" content={effectiveOgTitle} />
     <meta name="twitter:description" content={effectiveDescription} />
     <meta name="twitter:image" content={ogImageUrl} />
     <meta name="twitter:image:alt" content={effectiveOgImageAlt} />

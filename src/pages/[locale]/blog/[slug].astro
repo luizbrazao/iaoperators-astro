@@ -44,7 +44,7 @@ const { Content } = await render(entry);
 
 // ─── Related posts (mismo locale, prioriza misma categoría) ──────────────────
 const relatedPool = await getCollection("blog", ({ id, data }) => id.startsWith(`${locale}/`) && !data.draft);
-const relSlug = (p) => p.id.replace(`${locale}/`, "").replace(/\.(md|mdx)$/, "");
+const relSlug = (p: { id: string }) => p.id.replace(`${locale}/`, "").replace(/\.(md|mdx)$/, "");
 const relSame = relatedPool.filter((p) => p.id !== entry.id && p.data.category === entry.data.category);
 const relOther = relatedPool.filter((p) => p.id !== entry.id && p.data.category !== entry.data.category);
 const relatedPosts = [...relSame, ...relOther].slice(0, 3).map((p) => ({
@@ -145,6 +145,12 @@ const ogModifiedTime = (updatedAt ?? parsedDate).toISOString();
 
 const faqItems = entry.data.faq ?? [];
 
+const BLOG_NAME: Record<Locale, string> = {
+  es: "Blog de IA Operators",
+  pt: "Blog da IA Operators",
+  en: "IA Operators Blog",
+};
+
 const isPersonAuthor = entry.data.author && entry.data.author !== "IA Operators";
 const authorSchema = isPersonAuthor
   ? { "@type": "Person", name: entry.data.author, jobTitle: entry.data.authorTitle ?? "Fundador, IA Operators", url: entry.data.authorUrl ?? site, ...(entry.data.authorSameAs?.length ? { sameAs: entry.data.authorSameAs } : {}) }
@@ -170,6 +176,19 @@ const blogPostingJsonLd = {
   articleSection: entry.data.articleSection,
   keywords: articleKeywords.length ? articleKeywords.join(", ") : undefined,
   wordCount,
+  isPartOf: {
+    "@type": "Blog",
+    name: BLOG_NAME[locale] ?? BLOG_NAME.es,
+    url: `${site}/${locale}/blog/`,
+  },
+  ...(entry.data.about?.length
+    ? {
+        about: entry.data.about.map((item) => ({
+          "@type": item.type,
+          name: item.name,
+        })),
+      }
+    : {}),
   author: authorSchema,
   publisher: {
     "@type": "Organization",
@@ -221,8 +240,11 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
   alternates={localeAlternates}
   xDefaultUrl={xDefaultUrl}
   jsonLd={jsonLd}
-  ogImage={entry.data.image ?? `/og/${locale}/${slug}.png`}
+  ogTitle={entry.data.ogTitle ?? pageTitle}
+  ogImage={entry.data.ogImage ?? entry.data.image ?? `/og/${locale}/${slug}.png`}
   ogImageAlt={entry.data.imageAlt ?? title}
+  ogImageWidth={entry.data.ogImageWidth}
+  ogImageHeight={entry.data.ogImageHeight}
   ogType="article"
   ogPublishedTime={ogPublishedTime}
   ogModifiedTime={ogModifiedTime}
@@ -337,7 +359,17 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
                 stroke-linecap="round"
               />
             </svg>
-            <span>{entry.data.author ?? "IA Operators"}</span>
+            {entry.data.authorUrl ? (
+              <a
+                href={entry.data.authorUrl}
+                rel="author"
+                class="hover:text-orange-400 transition-colors"
+              >
+                {entry.data.author ?? "IA Operators"}
+              </a>
+            ) : (
+              <span>{entry.data.author ?? "IA Operators"}</span>
+            )}
           </div>
         </div>
       </header>
@@ -345,18 +377,34 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
       <!-- Cover image -->
       {entry.data.image && (
         <div class="mb-12 relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl aspect-video">
-          <img
-            src={entry.data.cover ?? entry.data.image}
-            srcset={entry.data.imageSrcset}
-            sizes={entry.data.imageSizes ?? "(max-width: 768px) 100vw, 896px"}
-            width={entry.data.imageWidth}
-            height={entry.data.imageHeight}
-            alt={entry.data.imageAlt ?? title}
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-            class="w-full h-full object-cover"
-          />
+          <picture>
+            {entry.data.imageSrcsetAvif && (
+              <source
+                type="image/avif"
+                srcset={entry.data.imageSrcsetAvif}
+                sizes={entry.data.imageSizes ?? "(max-width: 768px) 100vw, 896px"}
+              />
+            )}
+            {entry.data.imageSrcsetWebp && (
+              <source
+                type="image/webp"
+                srcset={entry.data.imageSrcsetWebp}
+                sizes={entry.data.imageSizes ?? "(max-width: 768px) 100vw, 896px"}
+              />
+            )}
+            <img
+              src={entry.data.cover ?? entry.data.image}
+              srcset={entry.data.imageSrcset}
+              sizes={entry.data.imageSizes ?? "(max-width: 768px) 100vw, 896px"}
+              width={entry.data.imageWidth}
+              height={entry.data.imageHeight}
+              alt={entry.data.imageAlt ?? title}
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              class="w-full h-full object-cover"
+            />
+          </picture>
           <div class="absolute inset-0 bg-linear-to-t from-[#050505] via-transparent to-transparent opacity-60" />
         </div>
       )}
@@ -484,18 +532,18 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
         <div>
           <p class="font-semibold text-white text-sm mb-0.5">
             {entry.data.authorUrl
-              ? <a href={entry.data.authorUrl} class="hover:text-orange-400 transition-colors">{entry.data.author ?? "Luiz Brazão"}</a>
+              ? <a href={entry.data.authorUrl} rel="author" class="hover:text-orange-400 transition-colors">{entry.data.author ?? "Luiz Brazão"}</a>
               : (entry.data.author ?? "Luiz Brazão")}
           </p>
           <p class="text-orange-400 text-xs mb-2">
-            {locale === "pt" ? "Fundador, IA Operators" : locale === "en" ? "Founder, IA Operators" : "Fundador, IA Operators"}
+            {entry.data.authorTitle ?? (locale === "pt" ? "Fundador, IA Operators" : locale === "en" ? "Founder, IA Operators" : "Fundador, IA Operators")}
           </p>
           <p class="text-gray-400 text-sm leading-relaxed">
-            {locale === "pt"
+            {entry.data.authorBio ?? (locale === "pt"
               ? "Anos liderando equipes em empresas de médio e grande porte. Criou a IA Operators para diagnosticar ecossistemas tecnológicos, priorizar o que move o ponteiro e construir soluções — sem hand-offs entre quem pensa e quem executa."
               : locale === "en"
               ? "Years leading teams across mid-size and large companies. Founded IA Operators to diagnose technology ecosystems, prioritize what moves the needle, and build solutions — no hand-offs between those who think and those who build."
-              : "Años liderando equipos en empresas medianas y grandes. Creó IA Operators para diagnosticar ecosistemas tecnológicos, priorizar lo que mueve la aguja y construir soluciones — sin hand-offs entre quien piensa y quien ejecuta."}
+              : "Años liderando equipos en empresas medianas y grandes. Creó IA Operators para diagnosticar ecosistemas tecnológicos, priorizar lo que mueve la aguja y construir soluciones — sin hand-offs entre quien piensa y quien ejecuta.")}
           </p>
           <a
             href="https://www.linkedin.com/in/ferbrazao/"

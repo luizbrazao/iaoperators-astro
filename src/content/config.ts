@@ -22,6 +22,10 @@ const blog = defineCollection({
     // si no se define, se usa `title`. Evita títulos truncados en Google.
     seoTitle: z.string().optional(),
     description: z.string(),
+    // Título para compartir en redes (og:title / twitter:title). Opcional: si no
+    // se define se usa `seoTitle` y, en su defecto, `title`. Permite un gancho
+    // social distinto del <title> del SERP sin tocar el H1.
+    ogTitle: z.string().optional(),
     category: z.enum(CATEGORY_KEYS).default("others"),
     articleSection: z.string().optional(),
     date: z.coerce.date(),
@@ -31,8 +35,31 @@ const blog = defineCollection({
     imageWidth: z.number().optional(),
     imageHeight: z.number().optional(),
     imageSrcset: z.string().optional(),
+    // Srcsets en formatos modernos. Si se definen, la portada se sirve dentro de
+    // un <picture> con AVIF → WebP → PNG/JPEG. Si no, se mantiene el <img> simple.
+    imageSrcsetAvif: z.string().optional(),
+    imageSrcsetWebp: z.string().optional(),
     imageSizes: z.string().optional(),
     imageAlt: z.string().optional(),
+    // Imagen dedicada 1200x630 para Open Graph. Si no existe, se usa `image` y,
+    // en su defecto, la tarjeta OG generada en /og/{locale}/{slug}.png.
+    ogImage: z.string().optional(),
+    ogImageWidth: z.number().optional(),
+    ogImageHeight: z.number().optional(),
+    // Entidades principales del artículo, para schema.org `about`.
+    about: z
+      .array(
+        z.object({
+          type: z
+            .enum(["Thing", "Organization", "Person", "Place", "SoftwareApplication"])
+            .default("Thing"),
+          name: z.string(),
+        }),
+      )
+      .optional(),
+    // Bio del autor mostrada al final del artículo. Si no se define, se usa el
+    // texto por defecto del layout.
+    authorBio: z.string().optional(),
     tags: z.array(z.string()).optional(),
     locale: z.enum(["es", "pt", "en"]),
     translationKey: z.string().optional(),
