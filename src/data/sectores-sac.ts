@@ -286,6 +286,8 @@ export const SECTORES: Record<
     metaDescription: string;
     h1: string;
     intro: string;
+    /** Escena operativa concreta donde el SLA se rompe en este sector. */
+    escenario: string;
     alcance: string;
     especificos: { title: string; body: string }[];
     faq: { q: string; a: string }[];
@@ -300,6 +302,8 @@ export const SECTORES: Record<
     h1: "Ley 10/2025 en suministro de agua, gas y electricidad",
     intro:
       "El suministro es el sector donde la norma aprieta más: obligación con independencia del tamaño, atención 24 horas los 365 días para comunicar incidencias y un plazo de 2 horas para las que afectan a la continuidad del servicio.",
+    escenario:
+      "Un corte de suministro en un barrio a las 22:40. En diez minutos entran trescientas llamadas y ochenta mensajes por canales digitales, todos sobre la misma incidencia. La norma no hace descuentos por volumen: el reloj de las 2 horas corre desde el primer aviso y cada persona que contacta tiene derecho a su clave de seguimiento.",
     alcance:
       "Obligadas todas las empresas de suministro y distribución, sin umbral de tamaño (art. 2.1.a).",
     especificos: [
@@ -321,6 +325,14 @@ export const SECTORES: Record<
         q: "¿La obligación aplica también a comercializadoras pequeñas?",
         a: "Sí. En los servicios básicos de interés general la obligación no depende del número de personas trabajadoras ni de la facturación: aplica por la actividad.",
       },
+      {
+        q: "¿El aviso de una incidencia cuenta como reclamación?",
+        a: "Son cosas distintas y con relojes distintos: una interrupción de suministro entra por el plazo de 2 horas, mientras que una queja formal se resuelve en el plazo general de 15 días hábiles. Por eso la clasificación tiene que ocurrir en la entrada y no cuando alguien revisa la bandeja: si el sistema mete todo en la misma cola, el plazo corto se incumple sin que nadie se entere.",
+      },
+      {
+        q: "¿Cómo se demuestra el plazo de 2 horas ante el auditor?",
+        a: "Con sello temporal de entrada y de resolución sobre el mismo identificador, más el registro de la activación de guardia. Sin esos tres datos enlazados, lo que hay es una afirmación, no una evidencia.",
+      },
     ],
   },
 
@@ -333,6 +345,8 @@ export const SECTORES: Record<
     h1: "Ley 10/2025 en transporte de viajeros",
     intro:
       "En transporte la dificultad no es el volumen medio, son los picos: una incidencia operativa concentra miles de contactos en horas, justo cuando el SLA del 95 % en menos de 3 minutos se mide igual que un día normal.",
+    escenario:
+      "Una cancelación por meteorología a las 6:30 de la mañana. El pico de contactos se concentra en noventa minutos y multiplica por veinte el volumen de un día normal. La media del 95 % en menos de tres minutos se sigue midiendo igual ese día que cualquier otro.",
     alcance:
       "Obligadas las empresas de transporte aéreo de pasajeros, ferroviario, marítimo o por vías navegables y de viajeros en autobús o autocar, sin umbral de tamaño (art. 2.1.b).",
     especificos: [
@@ -354,6 +368,14 @@ export const SECTORES: Record<
         q: "¿Se solapa con los derechos del pasajero de la normativa europea?",
         a: "Conviven. La Ley 10/2025 fija cómo se atiende y en qué plazos se responde; la normativa sectorial fija qué compensación corresponde. El sistema de registro debe cubrir ambas.",
       },
+      {
+        q: "¿La media del 95 % se calcula por día, por mes o por año?",
+        a: "La norma habla de media sin fijar el periodo de cálculo, así que lo prudente es conservar la serie con granularidad suficiente para poder reconstruir cualquier ventana que pida el auditor. Guardar solo el agregado mensual deja sin defensa ante una pregunta por trimestre o por campaña.",
+      },
+      {
+        q: "¿Podemos absorber el pico con un bot?",
+        a: "Para lo repetitivo e informativo, sí, y es justo lo que hace sostenible la media en un día de incidencia masiva. Pero la norma prohíbe atender exclusivamente con sistemas automáticos y obliga a dar atención personalizada a quien la pida: el bot necesita una salida a persona explícita y registrada, no un menú del que no se sale.",
+      },
     ],
   },
 
@@ -366,6 +388,8 @@ export const SECTORES: Record<
     h1: "Ley 10/2025 en servicios postales",
     intro:
       "El sector postal ya trabaja con trazabilidad de envíos, pero la norma exige trazabilidad de la gestión de atención — que es otra cosa y casi nunca está construida.",
+    escenario:
+      "Un envío marcado como entregado que el destinatario dice no haber recibido. La gestión pasa por la delegación de reparto, vuelve a atención central y acaba en reclamación formal. Si cada salto genera su propio identificador, la trazabilidad que pide la ley sencillamente no existe.",
     alcance: "Obligados todos los operadores de servicios postales, sin umbral de tamaño (art. 2.1.c).",
     especificos: [
       {
@@ -386,6 +410,14 @@ export const SECTORES: Record<
         q: "¿El número de seguimiento sirve como clave identificativa?",
         a: "No. Identifica el envío, no la gestión de atención. La norma pide una clave de la interacción, que puede referenciar al envío pero no confundirse con él.",
       },
+      {
+        q: "¿Aplica a delegaciones y franquiciados?",
+        a: "La obligación es del operador que presta el servicio, con independencia de quién resuelva materialmente la incidencia. Si parte de la gestión ocurre en una oficina franquiciada y ese paso no llega al registro central, la evidencia queda incompleta justo en el tramo que el auditor va a mirar.",
+      },
+      {
+        q: "¿Y las empresas de paquetería que no prestan servicio postal universal?",
+        a: "El art. 2.1.c habla de servicios postales sin más matices, así que el encaje de una actividad concreta de mensajería o paquetería conviene confirmarlo con tu asesoría antes de decidir. Nosotros implementamos; la calificación jurídica de la actividad no nos corresponde.",
+      },
     ],
   },
 
@@ -398,6 +430,8 @@ export const SECTORES: Record<
     h1: "Ley 10/2025 en servicios de comunicaciones electrónicas",
     intro:
       "Telecomunicaciones es el sector con más historia de regulación de atención al cliente, y también donde más se nota la deuda técnica: capas de CRM, centralita y portales de autoservicio que nunca compartieron un identificador común.",
+    escenario:
+      "Un cliente reclama una factura, le atienden en el canal comercial, le derivan a soporte técnico y termina en el portal de autoservicio. Tres sistemas, tres identificadores y un plazo de quince días hábiles que nadie está contando de punta a punta.",
     alcance:
       "Obligados los servicios de comunicaciones electrónicas, incluidos los telefónicos, que se rigen además por su normativa sectorial y en particular por la Ley 11/2022, General de Telecomunicaciones (art. 2.1.d).",
     especificos: [
@@ -419,6 +453,14 @@ export const SECTORES: Record<
         q: "Si el contact center está externalizado, ¿quién responde?",
         a: "La obligación es de la empresa que presta el servicio. Por eso conviene medir el SLA y guardar la evidencia en sistemas propios, no depender del reporte del proveedor.",
       },
+      {
+        q: "¿La Ley 11/2022 no cubría ya esto?",
+        a: "La normativa sectorial sigue vigente y la Ley 10/2025 se suma a ella: el art. 2.1.d lo dice expresamente. En la práctica hay que satisfacer las dos sin duplicar registros ni dejar que dos plazos distintos convivan sobre el mismo expediente sin que nadie sepa cuál manda.",
+      },
+      {
+        q: "¿Hay que unificar el CRM comercial con el de soporte?",
+        a: "No necesariamente. Lo que hay que unificar es el identificador y el reloj: la clave identificativa debe sobrevivir al salto entre sistemas y el plazo debe contarse sobre el expediente completo. Eso se resuelve con una capa de correlación por API, que es mucho más barato y menos arriesgado que una migración de plataforma a pocos meses del plazo.",
+      },
     ],
   },
 
@@ -431,6 +473,8 @@ export const SECTORES: Record<
     h1: "Ley 10/2025 en servicios financieros",
     intro:
       "El sector financiero ya tiene servicio de atención al cliente regulado y departamento de reclamaciones. Lo que cambia es el estándar operativo: tiempos medibles, clave identificativa por interacción y evidencia exportable para una auditoría acreditada.",
+    escenario:
+      "Una reclamación por un cargo indebido entra por el chat de la app. Puede resolverse como incidencia ordinaria dentro del plazo de cinco días o escalar al servicio de atención al cliente regulado, con su procedimiento y su plazo propios. Clasificarla mal en la entrada estropea los dos relojes a la vez.",
     alcance:
       "Obligados los servicios financieros, que se rigen además por su normativa sectorial y en particular por la Ley 44/2002 de Medidas de Reforma del Sistema Financiero (art. 2.1.e).",
     especificos: [
@@ -451,6 +495,14 @@ export const SECTORES: Record<
       {
         q: "¿Sustituye al servicio de atención al cliente regulado?",
         a: "No, se suma. La normativa sectorial sigue vigente; la Ley 10/2025 añade estándares medibles de atención, trazabilidad y auditoría anual que hay que cumplir además.",
+      },
+      {
+        q: "¿Podemos dar clave de seguimiento sin exponer datos del cliente?",
+        a: "Sí, y es la forma correcta de hacerlo: la clave debe ser una referencia opaca, que no revele nada por sí misma, y la consulta del estado debe exigir verificación en el canal. Así se cumple el derecho de seguimiento sin convertir el identificador en un vector de acceso a información de la cuenta.",
+      },
+      {
+        q: "¿Cuánto tiempo hay que conservar la evidencia?",
+        a: "Aquí conviven la trazabilidad que pide esta ley, las obligaciones sectoriales de conservación y el principio de limitación del plazo del RGPD. La política de retención se define caso por caso con tu asesoría; nosotros la implementamos en el sistema, con borrado y exportación automatizados según lo que se acuerde.",
       },
     ],
   },

@@ -10,7 +10,8 @@ const locale = "es";
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const pageUrl = new URL(`/${locale}/cumplimiento/ley-atencion-al-cliente/`, site).toString();
 const contactHref = `/${locale}/contact/`;
-const testHref = `/${locale}/cumplimiento/ley-atencion-al-cliente/test/`;
+const base = `/${locale}/cumplimiento/ley-atencion-al-cliente/`;
+const testHref = `${base}test/`;
 
 // Cuenta atrás: valor calculado en build + corrección en cliente (script inline abajo),
 // para que no quede obsoleto si pasan semanas entre despliegues.
@@ -26,7 +27,7 @@ const meta = {
     "Implementamos el sistema que cumple la Ley 10/2025 antes del 28 de diciembre de 2026: SLA de atención medibles, clave identificativa, trazabilidad y evidencia para la auditoría ENAC.",
 };
 
-const sectoresList = SECTOR_SLUGS.map((slug) => SECTORES[slug]);
+const sectoresList = SECTOR_SLUGS.map((slug) => ({ slug, ...SECTORES[slug] }));
 
 const providerSchema = {
   "@type": ["Organization", "ProfessionalService"],
@@ -154,14 +155,26 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
               personas empleen o cuánto facturen. Aplica por la actividad que prestan en territorio
               español (art. 2.1).
             </p>
-            <ul class="space-y-3">
+            <ul class="space-y-2">
               {sectoresList.map((sector) => (
-                <li class="flex items-start gap-3">
-                  <span class="text-orange-400 leading-none mt-1">▪</span>
-                  <span class="text-gray-200 text-sm leading-relaxed">{sector.nombre}</span>
+                <li>
+                  <a
+                    href={`${base}${sector.slug}/`}
+                    class="flex items-start gap-3 rounded-xl -mx-2 px-2 py-2 hover:bg-white/[0.03] transition-colors group"
+                  >
+                    <span class="text-orange-400 leading-none mt-1">▪</span>
+                    <span class="text-gray-200 text-sm leading-relaxed group-hover:text-white">
+                      {sector.nombre}
+                      <span class="text-gray-600 group-hover:text-orange-400 transition-colors"> ↗</span>
+                    </span>
+                  </a>
                 </li>
               ))}
             </ul>
+            <p class="text-xs text-gray-500 mt-4 leading-relaxed">
+              Cada sector tiene su página con lo que cambia en su caso: plazos propios, escenarios
+              de pico y la evidencia concreta que le van a pedir.
+            </p>
           </div>
 
           <!-- Vía 2: umbrales -->

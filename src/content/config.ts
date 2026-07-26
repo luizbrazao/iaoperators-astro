@@ -9,6 +9,7 @@ export const CATEGORY_KEYS = [
   "restaurants",
   "beauty-salons",
   "privacy",
+  "compliance",
   "others",
 ] as const;
 

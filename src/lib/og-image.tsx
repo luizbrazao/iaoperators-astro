@@ -49,6 +49,7 @@ export const CATEGORY_LABELS: Record<string, Record<string, string>> = {
     accounting: "IA para contabilidad",
     restaurants: "IA para restaurantes",
     "beauty-salons": "IA para salones",
+    compliance: "Cumplimiento normativo",
     others: "Blog",
   },
   pt: {

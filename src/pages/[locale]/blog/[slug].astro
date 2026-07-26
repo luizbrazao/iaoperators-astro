@@ -107,9 +107,9 @@ const updatedAt = entry.data.updatedAt;
 
 // ─── Category labels ─────────────────────────────────────────────────────────
 const CATEGORY_LABELS: Record<string, Record<string, string>> = {
-  es: { tools: "Herramientas", lawyers: "IA para abogados", architects: "IA para arquitectos", accounting: "IA para contabilidad", restaurants: "IA para restaurantes", "beauty-salons": "IA para salones", privacy: "Privacidad y gobernanza de IA", others: "Blog" },
-  pt: { tools: "Ferramentas", lawyers: "IA para advogados", architects: "IA para arquitetos", accounting: "IA para contabilidade", restaurants: "IA para restaurantes", "beauty-salons": "IA para salões", privacy: "Privacidade e governança de IA", others: "Blog" },
-  en: { tools: "Tools", lawyers: "AI for Lawyers", architects: "AI for Architects", accounting: "AI for Accounting", restaurants: "AI for Restaurants", "beauty-salons": "AI for Beauty", privacy: "AI Privacy & Governance", others: "Blog" },
+  es: { tools: "Herramientas", lawyers: "IA para abogados", architects: "IA para arquitectos", accounting: "IA para contabilidad", restaurants: "IA para restaurantes", "beauty-salons": "IA para salones", privacy: "Privacidad y gobernanza de IA", compliance: "Cumplimiento normativo", others: "Blog" },
+  pt: { tools: "Ferramentas", lawyers: "IA para advogados", architects: "IA para arquitetos", accounting: "IA para contabilidade", restaurants: "IA para restaurantes", "beauty-salons": "IA para salões", privacy: "Privacidade e governança de IA", compliance: "Compliance normativo", others: "Blog" },
+  en: { tools: "Tools", lawyers: "AI for Lawyers", architects: "AI for Architects", accounting: "AI for Accounting", restaurants: "AI for Restaurants", "beauty-salons": "AI for Beauty", privacy: "AI Privacy & Governance", compliance: "Regulatory compliance", others: "Blog" },
 };
 const categoryLabel = CATEGORY_LABELS[locale]?.[entry.data.category] ?? entry.data.category;
 
