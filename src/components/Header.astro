@@ -87,6 +87,8 @@ const labels = {
   youtube: nav?.youtube ?? "YouTube",
   blog: nav?.blog ?? "Blog",
   contact: nav?.contact ?? "Contact",
+  // ES-only: landing regulatoria (Ley 10/2025). No se traduce porque la obligación es española.
+  cumplimiento: "Ley 10/2025",
 };
 
 const withLocale = (path: string) => `/${locale}/${path}`.replace(/\/+$/, "/");
@@ -108,6 +110,7 @@ const links = {
   portfolio: withLocale("portfolio/"),
   blog: withLocale("blog/"),
   contact: withLocale("contact/"),
+  cumplimiento: "/es/cumplimiento/ley-atencion-al-cliente/",
   community: "https://www.skool.com/ia-operators-hub-9023/about",
   youtube: "https://www.youtube.com/@IAOperators",
 };
@@ -123,6 +126,9 @@ const mobileLinks = [
   { key: "audit", href: links.audit, external: false },
   { key: "roadmap", href: links.roadmap, external: false },
   { key: "implementation", href: links.implementation, external: false },
+  ...(locale === "es"
+    ? [{ key: "cumplimiento", href: links.cumplimiento, external: false }]
+    : []),
   { key: "methodology", href: links.methodology, external: false },
   { key: "portfolio", href: links.portfolio, external: false },
   { key: "community", href: links.community, external: true },
@@ -369,6 +375,12 @@ const mobileLinks = [
             </div>
           </div>
         </div>
+
+        {locale === "es" && (
+          <a href={links.cumplimiento} class="hover:text-white transition-colors whitespace-nowrap">
+            {labels.cumplimiento}
+          </a>
+        )}
 
         <a href={links.methodology} class="hover:text-white transition-colors">
           {labels.methodology}

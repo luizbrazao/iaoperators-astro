@@ -7,7 +7,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "survey:check-supabase": "tsx scripts/check-survey-supabase.ts"
+    "survey:check-supabase": "tsx scripts/check-survey-supabase.ts",
+    "assessment:check-supabase": "tsx scripts/check-assessment-supabase.ts",
+    "assessment:test-scoring": "tsx scripts/test-scoring-sac.ts"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",

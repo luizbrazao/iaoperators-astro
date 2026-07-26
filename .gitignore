@@ -24,3 +24,7 @@ pnpm-debug.log*
 .idea/
 .vercel
 .env*.local
+
+# lixo local
+.claude/
+_to_delete/

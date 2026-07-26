@@ -1,0 +1,409 @@
+---
+// Landing pilar — Frente A: cumplimiento de la Ley 10/2025 de atención a la clientela.
+// ES-only a propósito: la obligación es española. Por eso vive fuera de src/pages/[locale]/
+// y fuerza los alternates de hreflang para no emitir /pt/ y /en/ inexistentes.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { LEY, DISCLAIMER, UMBRALES, OBLIGACIONES, SHARED, SECTOR_SLUGS, SECTORES } from "@/data/sectores-sac";
+
+const locale = "es";
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(`/${locale}/cumplimiento/ley-atencion-al-cliente/`, site).toString();
+const contactHref = `/${locale}/contact/`;
+const testHref = `/${locale}/cumplimiento/ley-atencion-al-cliente/test/`;
+
+// Cuenta atrás: valor calculado en build + corrección en cliente (script inline abajo),
+// para que no quede obsoleto si pasan semanas entre despliegues.
+const deadline = new Date(`${LEY.plazoAdaptacion}T00:00:00+01:00`);
+const diasRestantes = Math.max(
+  0,
+  Math.ceil((deadline.getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
+);
+
+const meta = {
+  title: "Ley 10/2025 de atención a la clientela: implementación técnica | IA Operators",
+  description:
+    "Implementamos el sistema que cumple la Ley 10/2025 antes del 28 de diciembre de 2026: SLA de atención medibles, clave identificativa, trazabilidad y evidencia para la auditoría ENAC.",
+};
+
+const sectoresList = SECTOR_SLUGS.map((slug) => SECTORES[slug]);
+
+const providerSchema = {
+  "@type": ["Organization", "ProfessionalService"],
+  name: "IA Operators",
+  url: site,
+  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+};
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Implementación técnica del cumplimiento de la Ley 10/2025 de atención a la clientela",
+  serviceType: "Regulatory compliance systems integration",
+  provider: providerSchema,
+  areaServed: "ES",
+  description: meta.description,
+  url: pageUrl,
+  inLanguage: "es-ES",
+  about: {
+    "@type": "Legislation",
+    name: LEY.nombre,
+    legislationIdentifier: LEY.boeId,
+    legislationJurisdiction: "ES",
+    url: LEY.boeUrl,
+  },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: "Ley de atención a la clientela", item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: SHARED.faq.items.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+
+const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  ogImage="/og/es/ley-atencion-al-cliente.png"
+  ogImageAlt="Ley 10/2025 de servicios de atención a la clientela — implementación técnica"
+  jsonLd={jsonLd}
+>
+  <div class="bg-transparent text-white">
+    <!-- HERO -->
+    <section class="relative px-4 pt-28 pb-16">
+      <div class="max-w-5xl mx-auto text-center">
+        <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-6">
+          {LEY.nombreCorto} · Plazo: {LEY.plazoAdaptacionLegible}
+        </span>
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
+          El 28 de diciembre de 2026 tu atención a la clientela tiene que cumplir la Ley 10/2025
+        </h1>
+        <p class="text-lg md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto">
+          Los despachos te explican lo que dice la norma. Nosotros construimos el sistema que la
+          cumple — y que puede demostrarlo ante una auditoría acreditada por ENAC.
+        </p>
+
+        <div class="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-[#0a0a0a] border border-orange-500/20 mb-10">
+          <span
+            id="sac-countdown"
+            data-deadline={LEY.plazoAdaptacion}
+            class="text-3xl md:text-4xl font-bold text-orange-400 tabular-nums"
+          >
+            {diasRestantes}
+          </span>
+          <span class="text-left text-sm text-gray-400 leading-tight">
+            días para<br />el fin del plazo
+          </span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={testHref}
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-base hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+          >
+            Test de cumplimiento · 2 min ↗
+          </a>
+          <a
+            href={contactHref}
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-base hover:bg-orange-500/10 transition-all duration-300"
+          >
+            Diagnóstico de brecha ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ¿ESTÁS OBLIGADO? -->
+    <section id="obligado" class="px-4 py-20 scroll-mt-24">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">¿Está tu empresa obligada?</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">
+            La ley distingue dos vías de entrada. Basta con encajar en una de ellas.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Vía 1: sectores básicos -->
+          <div class="bg-[#0a0a0a] border border-orange-500/20 rounded-3xl p-8">
+            <span class="inline-block px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 text-xs font-semibold mb-4">
+              Vía 1 · Por actividad
+            </span>
+            <h3 class="text-2xl font-semibold mb-3">Servicios básicos de interés general</h3>
+            <p class="text-gray-400 text-sm leading-relaxed mb-6">
+              Obligados <strong class="text-white">sin umbral de tamaño</strong>: da igual cuántas
+              personas empleen o cuánto facturen. Aplica por la actividad que prestan en territorio
+              español (art. 2.1).
+            </p>
+            <ul class="space-y-3">
+              {sectoresList.map((sector) => (
+                <li class="flex items-start gap-3">
+                  <span class="text-orange-400 leading-none mt-1">▪</span>
+                  <span class="text-gray-200 text-sm leading-relaxed">{sector.nombre}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Vía 2: umbrales -->
+          <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-8">
+            <span class="inline-block px-3 py-1 rounded-full bg-white/10 text-gray-300 text-xs font-semibold mb-4">
+              Vía 2 · Por tamaño
+            </span>
+            <h3 class="text-2xl font-semibold mb-3">Resto de sectores</h3>
+            <p class="text-gray-400 text-sm leading-relaxed mb-6">
+              Empresas y <strong class="text-white">grupos de sociedades</strong> que vendan bienes o
+              presten servicios distintos de los básicos, si superan{" "}
+              <strong class="text-white">alguno</strong> de estos umbrales — son alternativos, no
+              acumulativos (art. 2.2).
+            </p>
+            <ul class="space-y-3">
+              {UMBRALES.map((u) => (
+                <li class="flex items-baseline gap-3 bg-white/[0.02] border border-white/5 rounded-2xl px-4 py-3">
+                  <span class="text-orange-400 font-bold text-lg tabular-nums shrink-0">{u.valor}</span>
+                  <span class="text-gray-300 text-sm">{u.unidad}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="text-xs text-gray-500 mt-5 leading-relaxed">
+              El cómputo se hace también a nivel de grupo. Si tu matriz consolida por encima del
+              umbral, la filial entra.
+            </p>
+          </div>
+        </div>
+
+        <div class="text-center mt-10">
+          <a
+            href={testHref}
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-base hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+          >
+            Comprobarlo en 2 minutos ↗
+          </a>
+          <p class="text-xs text-gray-500 mt-3">
+            Ocho preguntas. Resultado inmediato, sin dejar email.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DE LA LEY AL SISTEMA -->
+    <section class="px-4 py-24 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-14">
+          <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+            El núcleo del proyecto
+          </span>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">De la ley al sistema</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">
+            Cada obligación de la norma es, en la práctica, un requisito de arquitectura. Esto es lo
+            que hay que construir para cumplir cada una — y para poder demostrarlo.
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          {OBLIGACIONES.map((o, idx) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8 hover:border-orange-500/20 transition-all duration-300">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+                <div>
+                  <div class="flex items-center gap-3 mb-3">
+                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-orange-500/10 text-orange-400 font-bold text-xs shrink-0">
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
+                    <span class="text-xs font-semibold uppercase tracking-widest text-gray-500">
+                      Lo que exige la ley {o.articulo ? `· ${o.articulo}` : ""}
+                    </span>
+                  </div>
+                  <p class="text-white text-base leading-relaxed">{o.ley}</p>
+                </div>
+                <div class="md:border-l md:border-white/5 md:pl-10">
+                  <div class="text-xs font-semibold uppercase tracking-widest text-orange-400 mb-3">
+                    Lo que hay que construir
+                  </div>
+                  <p class="text-gray-300 text-base leading-relaxed mb-3">{o.sistema}</p>
+                  <p class="text-gray-500 text-sm leading-relaxed italic">{o.riesgo}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p class="text-center text-xs text-gray-500 mt-8">
+          Referencias verificadas en el{" "}
+          <a
+            href={LEY.boeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-gray-400 underline hover:text-orange-400 transition-colors"
+          >
+            texto consolidado del BOE ({LEY.boeId})
+          </a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ARQUITECTURA -->
+    <section class="px-4 py-20">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{SHARED.arquitectura.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{SHARED.arquitectura.subtitle}</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {SHARED.arquitectura.items.map((item, idx) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 font-bold text-sm">
+                  0{idx + 1}
+                </span>
+                <h3 class="text-lg font-semibold text-white">{item.title}</h3>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESO -->
+    <section class="px-4 py-24 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+            {SHARED.proceso.badge}
+          </span>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{SHARED.proceso.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{SHARED.proceso.subtitle}</p>
+        </div>
+        <ol class="space-y-6 max-w-4xl mx-auto">
+          {SHARED.proceso.phases.map((phase) => (
+            <li class="flex flex-col md:flex-row gap-6 bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8 hover:border-orange-500/20 transition-all duration-300">
+              <div class="md:w-56 shrink-0">
+                <div class="text-orange-400 text-xs font-semibold uppercase tracking-widest mb-1">
+                  {phase.code} · {phase.plazo}
+                </div>
+                <h3 class="text-xl font-bold text-white">{phase.title}</h3>
+              </div>
+              <p class="text-gray-300 leading-relaxed flex-1">{phase.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- PRECIO -->
+    <section class="px-4 py-20">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">{SHARED.precio.title}</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">{SHARED.precio.subtitle}</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {SHARED.precio.items.map((item) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-8 flex flex-col hover:border-orange-500/30 transition-all duration-300">
+              <h3 class="text-lg font-semibold text-white mb-2">{item.title}</h3>
+              <div class="text-2xl font-bold text-orange-400 mb-4">{item.precio}</div>
+              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+        <p class="text-center text-xs text-gray-500 mt-6">
+          Precios orientativos sin IVA. El alcance definitivo sale del diagnóstico de brecha.
+        </p>
+      </div>
+    </section>
+
+    <!-- POR QUÉ NOSOTROS -->
+    <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">{SHARED.porQue.title}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {SHARED.porQue.items.map((item) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6">
+              <h3 class="text-lg font-semibold text-white mb-2">{item.title}</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="px-4 py-20">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">{SHARED.faq.title}</h2>
+        <div class="space-y-3">
+          {SHARED.faq.items.map((item) => (
+            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-4 hover:border-orange-500/20 transition-all duration-300">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <span class="text-white font-medium pr-4">{item.q}</span>
+                <span class="text-orange-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="text-gray-400 mt-3 leading-relaxed">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="px-4 py-24">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">
+          Quedan <span class="text-orange-400 tabular-nums" data-countdown-mirror>{diasRestantes}</span> días
+        </h2>
+        <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
+          Una llamada de 30 minutos para ver tus canales y tus tiempos actuales. Si hay encaje,
+          salimos con el diagnóstico de brecha acotado y con precio cerrado.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={contactHref}
+            class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+          >
+            Hablar con un especialista ↗
+          </a>
+          <a
+            href={testHref}
+            class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-lg hover:bg-orange-500/10 transition-all duration-300"
+          >
+            Hacer el test antes
+          </a>
+        </div>
+        <p class="text-xs text-gray-500 mt-10 max-w-2xl mx-auto leading-relaxed">
+          {DISCLAIMER}
+        </p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    var el = document.getElementById("sac-countdown");
+    if (!el) return;
+    var deadline = new Date(el.getAttribute("data-deadline") + "T00:00:00+01:00").getTime();
+    var days = Math.max(0, Math.ceil((deadline - Date.now()) / 86400000));
+    el.textContent = String(days);
+    var mirrors = document.querySelectorAll("[data-countdown-mirror]");
+    for (var i = 0; i < mirrors.length; i++) mirrors[i].textContent = String(days);
+  })();
+</script>

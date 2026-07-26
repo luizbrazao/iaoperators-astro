@@ -5,6 +5,7 @@ import Hero from "../sections/home/Hero.astro";
 import WhyUs from "../sections/home/WhyUs.astro";
 import Services from "../sections/home/Services.astro";
 import ServiceCatalog from "../sections/home/ServiceCatalog.astro";
+import ComplianceBanner from "../sections/home/ComplianceBanner.astro";
 import Testimonial from "../sections/home/Testimonial.astro";
 import ClientTestimonials from "../sections/home/ClientTestimonials.astro";
 import BlogSection from "../sections/home/BlogSection.astro";
@@ -148,6 +149,7 @@ const metaDescription = meta?.description ?? "";
 <BaseLayout title={metaTitle} description={metaDescription} jsonLd={jsonLd}>
   <main>
     <Hero locale={locale} hero={home?.hero ?? {}} />
+    {locale === "es" && <ComplianceBanner />}
     <WhyUs why={home?.why ?? {}} industries={home?.industries ?? []} />
     <ServiceCatalog locale={locale} />
     <Services services={home?.services ?? {}} />

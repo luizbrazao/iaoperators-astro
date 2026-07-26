@@ -1,0 +1,116 @@
+---
+// Test de cumplimiento de la Ley 10/2025 — ES-only, indexable.
+// El resultado se calcula en el servidor y se pinta en la misma página (la island
+// cambia de vista): evita una página /resultado/ vacía para el crawler y evita
+// pasar el estado por URL.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AssessmentSAC from "@/islands/AssessmentSAC";
+import { LEY } from "@/data/sectores-sac";
+
+const locale = "es";
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pillarUrl = new URL(`/${locale}/cumplimiento/ley-atencion-al-cliente/`, site).toString();
+const pageUrl = new URL(`/${locale}/cumplimiento/ley-atencion-al-cliente/test/`, site).toString();
+
+const deadline = new Date(`${LEY.plazoAdaptacion}T00:00:00+01:00`);
+const diasRestantes = Math.max(
+  0,
+  Math.ceil((deadline.getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
+);
+
+const meta = {
+  title: "Test de cumplimiento de la Ley 10/2025 en 2 minutos | IA Operators",
+  description:
+    "Comprueba si tu empresa está obligada por la Ley 10/2025 de atención a la clientela y qué brechas tienes por obligación. 8 preguntas, resultado inmediato, sin dar email.",
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: "Ley de atención a la clientela", item: pillarUrl },
+    { "@type": "ListItem", position: 3, name: "Test de cumplimiento", item: pageUrl },
+  ],
+};
+
+const webPageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: meta.title,
+  description: meta.description,
+  url: pageUrl,
+  inLanguage: "es-ES",
+  isPartOf: { "@type": "WebSite", name: "IA Operators", url: site },
+  about: {
+    "@type": "Legislation",
+    name: LEY.nombre,
+    legislationIdentifier: LEY.boeId,
+    legislationJurisdiction: "ES",
+    url: LEY.boeUrl,
+  },
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  ogImage="/og/es/ley-atencion-al-cliente.png"
+  ogImageAlt="Test de cumplimiento de la Ley 10/2025"
+  jsonLd={[breadcrumbJsonLd, webPageJsonLd]}
+>
+  <div class="bg-transparent text-white">
+    <section class="px-4 pt-28 pb-10">
+      <div class="max-w-3xl mx-auto text-center">
+        <a
+          href={pillarUrl}
+          class="inline-block text-xs text-gray-500 hover:text-orange-400 transition-colors mb-6"
+        >
+          ← Ley 10/2025 de atención a la clientela
+        </a>
+        <h1 class="text-3xl md:text-5xl font-medium tracking-tight leading-tight mb-5">
+          ¿Cumple tu atención a la clientela la Ley 10/2025?
+        </h1>
+        <p class="text-lg text-gray-300 mb-6">
+          Ocho preguntas. Te decimos si estás obligado, qué exige la norma en tu caso y dónde
+          está tu brecha, obligación por obligación. Quedan
+          <span class="text-orange-400 font-semibold tabular-nums">{diasRestantes}</span> días de plazo.
+        </p>
+      </div>
+    </section>
+
+    <section class="px-4 pb-16">
+      <AssessmentSAC client:load />
+    </section>
+
+    <section class="px-4 pb-24">
+      <div class="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-[#0a0a0a] border border-white/5 rounded-2xl p-5">
+          <h2 class="text-sm font-semibold text-white mb-2">Reglas, no adivinanzas</h2>
+          <p class="text-gray-400 text-xs leading-relaxed">
+            El resultado sale de reglas deterministas sobre el texto publicado en el BOE. La misma
+            respuesta da siempre el mismo veredicto, y cada brecha indica de qué pregunta sale.
+          </p>
+        </div>
+        <div class="bg-[#0a0a0a] border border-white/5 rounded-2xl p-5">
+          <h2 class="text-sm font-semibold text-white mb-2">Sin muro de email</h2>
+          <p class="text-gray-400 text-xs leading-relaxed">
+            Ves el resultado completo sin dejar datos. El email solo es necesario si quieres el
+            informe ampliado con el checklist de evidencias.
+          </p>
+        </div>
+        <div class="bg-[#0a0a0a] border border-white/5 rounded-2xl p-5">
+          <h2 class="text-sm font-semibold text-white mb-2">No es asesoramiento jurídico</h2>
+          <p class="text-gray-400 text-xs leading-relaxed">
+            Somos ingeniería: traducimos el requisito en sistema. La interpretación legal del
+            alcance corresponde a tu asesoría o despacho.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

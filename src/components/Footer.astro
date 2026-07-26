@@ -94,6 +94,12 @@ const links = {
         <a href={withLocale("implementacion/")} class="text-gray-400 hover:text-orange-400 transition-colors">Implementación</a>
         <span class="text-white/15 select-none">·</span>
         <a href={withLocale("metodologia/")} class="text-gray-400 hover:text-orange-400 transition-colors">Metodología</a>
+        {locale === "es" && (
+          <Fragment>
+            <span class="text-white/15 select-none">·</span>
+            <a href="/es/cumplimiento/ley-atencion-al-cliente/" class="text-gray-400 hover:text-orange-400 transition-colors">Ley 10/2025</a>
+          </Fragment>
+        )}
         <span class="text-white/15 hidden md:inline select-none">—</span>
         <a href={withLocale("portfolio/")} class="text-gray-400 hover:text-orange-400 transition-colors">Portfolio</a>
         <span class="text-white/15 select-none">·</span>
