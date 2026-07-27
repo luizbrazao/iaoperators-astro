@@ -37,6 +37,46 @@ function t(path: string, fallback: string = ""): string {
 
 const pageTitle = `${t("terms.title", "Términos y Condiciones")} | IA Operators`;
 
+// Datos identificativos del titular (LSSI-CE art. 10) — razón social visible
+// para la verificación de empresa en Meta Business y otros validadores.
+const legal = {
+  name: "Luiz Fernando Costa Brazao",
+  taxId: "Y8219331L",
+  city: "Málaga, España",
+  email: "info@iaoperators.com",
+  brand: "IA Operators",
+};
+
+const LEGAL_LABELS_ES = {
+  heading: "Titular del sitio web",
+  name: "Razón social",
+  taxId: "NIF/CIF",
+  brand: "Nombre comercial",
+  city: "Domicilio fiscal",
+  email: "Correo electrónico",
+};
+
+const legalLabels =
+  ({
+    es: LEGAL_LABELS_ES,
+    en: {
+      heading: "Website owner",
+      name: "Legal name",
+      taxId: "Tax ID (NIF/CIF)",
+      brand: "Trade name",
+      city: "Registered address",
+      email: "Email",
+    },
+    pt: {
+      heading: "Titular do site",
+      name: "Razão social",
+      taxId: "NIF/CIF",
+      brand: "Nome comercial",
+      city: "Domicílio fiscal",
+      email: "E-mail",
+    },
+  } as Record<string, typeof LEGAL_LABELS_ES>)[locale] ?? LEGAL_LABELS_ES;
+
 // meta description única por idioma (evita duplicados com la página de privacidad)
 const metaDescription =
   ({
@@ -52,6 +92,34 @@ const metaDescription =
     <h1 class="text-3xl font-bold mb-8">
       {t("terms.title", "Términos y Condiciones")}
     </h1>
+
+    <section
+      class="mb-10 rounded-lg border border-white/10 bg-white/5 p-6"
+      itemscope
+      itemtype="https://schema.org/Organization"
+    >
+      <h2 class="text-xl font-semibold mb-4">{legalLabels.heading}</h2>
+      <dl class="grid gap-x-6 gap-y-2 sm:grid-cols-[max-content_1fr] text-sm">
+        <dt class="text-muted-foreground">{legalLabels.name}</dt>
+        <dd class="font-medium" itemprop="legalName">{legal.name}</dd>
+
+        <dt class="text-muted-foreground">{legalLabels.taxId}</dt>
+        <dd class="font-medium" itemprop="taxID">{legal.taxId}</dd>
+
+        <dt class="text-muted-foreground">{legalLabels.brand}</dt>
+        <dd class="font-medium" itemprop="name">{legal.brand}</dd>
+
+        <dt class="text-muted-foreground">{legalLabels.city}</dt>
+        <dd class="font-medium" itemprop="address">{legal.city}</dd>
+
+        <dt class="text-muted-foreground">{legalLabels.email}</dt>
+        <dd class="font-medium">
+          <a href={`mailto:${legal.email}`} class="underline hover:text-orange-400" itemprop="email">
+            {legal.email}
+          </a>
+        </dd>
+      </dl>
+    </section>
 
     <p class="mb-6 text-muted-foreground">
       {t("terms.intro", "")}
