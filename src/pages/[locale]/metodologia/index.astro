@@ -9,6 +9,7 @@ export async function getStaticPaths() {
 
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getLocale, ui } from "../../../i18n/ui";
+import { organizationNode, ORG_REF } from "@/data/identidad";
 
 const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
 const dict = (ui as any)?.[locale] ?? {};
@@ -40,18 +41,14 @@ const aboutJsonLd = {
     name: "IA Operators",
     url: site,
   },
+  about: ORG_REF,
 };
 
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": ["Organization", "ProfessionalService"],
-  name: "IA Operators",
-  url: site,
-  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+// Mismo @id que la home y que /[locale]/sobre/: una entidad, no tres nodos.
+const organizationJsonLd = organizationNode({
+  locale,
   description: meta?.description,
-  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
-  areaServed: ["ES", "PT", "BR"],
-};
+});
 
 const breadcrumbJsonLd = {
   "@context": "https://schema.org",

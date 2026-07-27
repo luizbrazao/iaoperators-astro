@@ -23,9 +23,11 @@ const t = {
   terms: footer?.terms ?? "Terms",
   privacy: footer?.privacy ?? "Privacy",
   top: footer?.top ?? "Top",
+  about: footer?.about ?? "About",
 };
 
 const links = {
+  about: withLocale("sobre/"),
   contact: withLocale("contact/"),
   terms: withLocale("terminos-y-condiciones/"),
   privacy: withLocale("politica-de-privacidad/"),
@@ -105,6 +107,8 @@ const links = {
           </Fragment>
         )}
         <span class="text-white/15 hidden md:inline select-none">—</span>
+        <a href={links.about} class="text-gray-400 hover:text-orange-400 transition-colors">{t.about}</a>
+        <span class="text-white/15 select-none">·</span>
         <a href={withLocale("portfolio/")} class="text-gray-400 hover:text-orange-400 transition-colors">Portfolio</a>
         <span class="text-white/15 select-none">·</span>
         <a href={links.blog} class="text-gray-400 hover:text-orange-400 transition-colors">Blog</a>

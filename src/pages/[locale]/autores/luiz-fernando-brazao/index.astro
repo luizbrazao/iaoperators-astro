@@ -2,6 +2,12 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
 import { getLocale, type Locale } from "../../../../i18n/ui";
+import {
+  PERSON_NAME,
+  PERSON_PHOTO,
+  SAME_AS,
+  personNode,
+} from "@/data/identidad";
 
 export async function getStaticPaths() {
   return [{ params: { locale: "es" } }, { params: { locale: "pt" } }, { params: { locale: "en" } }];
@@ -23,9 +29,12 @@ const canonicalUrl = `${site}/${locale}/${AUTHOR_PATH}/`;
 const xDefaultUrl = `${site}/${defaultLocale}/${AUTHOR_PATH}/`;
 
 // ─── Author identity ─────────────────────────────────────────────────────────
-const NAME = "Luiz Fernando Brazão";
-const PHOTO = "https://framerusercontent.com/images/F57rOWtJqaFD6Xm3xWmqp6bM.png";
-const SAME_AS = ["https://www.linkedin.com/in/ferbrazao/"];
+// Nombre, foto y perfiles vienen de src/data/identidad.ts: son los mismos que
+// usa la entidad Organization en /[locale]/sobre/. Antes `sameAs` aqui tenia
+// un solo perfil (LinkedIn) frente a los cuatro del footer.
+const NAME = PERSON_NAME;
+const PHOTO = PERSON_PHOTO;
+const LINKEDIN_URL = SAME_AS[0];
 
 const T = {
   es: {
@@ -34,7 +43,7 @@ const T = {
     metaDesc:
       "Luiz Fernando Brazão, fundador de IA Operators. Ingeniería de IA aplicada a negocios: automatización, arquitectura de sistemas multiagente e integración API-first.",
     intro:
-      "Ingeniero de automatización y fundador de IA Operators. Trabaja con IA aplicada a negocios reales: bots de WhatsApp, automatización de CRM, flujos de reserva, sistemas multiagente y arquitecturas API-first.",
+      "Ingeniero de automatización y fundador de IA Operators, con base en Málaga (España). Trabaja con IA aplicada a negocios reales: bots de WhatsApp, automatización de CRM, flujos de reserva, sistemas multiagente y arquitecturas API-first.",
     expTitle: "Experiencia",
     exp: [
       "Años liderando equipos técnicos en empresas medianas y grandes.",
@@ -63,7 +72,7 @@ const T = {
     metaDesc:
       "Luiz Fernando Brazão, fundador da IA Operators. Engenharia de IA aplicada a negócios: automação, arquitetura de sistemas multiagente e integração API-first.",
     intro:
-      "Engenheiro de automação e fundador da IA Operators. Trabalha com IA aplicada a negócios reais: bots de WhatsApp, automação de CRM, fluxos de reserva, sistemas multiagente e arquiteturas API-first.",
+      "Engenheiro de automação e fundador da IA Operators, com base em Málaga (Espanha). Trabalha com IA aplicada a negócios reais: bots de WhatsApp, automação de CRM, fluxos de reserva, sistemas multiagente e arquiteturas API-first.",
     expTitle: "Experiência",
     exp: [
       "Anos liderando equipes técnicas em empresas de médio e grande porte.",
@@ -92,7 +101,7 @@ const T = {
     metaDesc:
       "Luiz Fernando Brazão, founder of IA Operators. AI engineering applied to real business: automation, multi-agent system architecture and API-first integration.",
     intro:
-      "Automation engineer and founder of IA Operators. Works on AI applied to real business: WhatsApp bots, CRM automation, booking flows, multi-agent systems and API-first architectures.",
+      "Automation engineer and founder of IA Operators, based in Málaga, Spain. Works on AI applied to real business: WhatsApp bots, CRM automation, booking flows, multi-agent systems and API-first architectures.",
     expTitle: "Experience",
     exp: [
       "Years leading technical teams across mid-size and large companies.",
@@ -140,16 +149,15 @@ const articles = pool
   });
 
 // ─── JSON-LD: ProfilePage + Person ───────────────────────────────────────────
-const person = {
-  "@type": "Person",
-  name: NAME,
+// `worksFor` apunta al @id de la Organization descrita en /[locale]/sobre/,
+// que a su vez declara a esta Person como `founder`. Sin el @id, `worksFor`
+// referenciaba la organizacion solo por nombre y el ciclo no cerraba.
+const person = personNode({
+  locale,
   jobTitle: T.role,
   url: canonicalUrl,
-  image: PHOTO,
   description: T.intro,
-  worksFor: { "@type": "Organization", name: "IA Operators", url: `${site}/${locale}/` },
-  sameAs: SAME_AS,
-};
+});
 const jsonLd = [
   {
     "@context": "https://schema.org",
@@ -206,7 +214,7 @@ const jsonLd = [
           <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight">{NAME}</h1>
           <p class="text-orange-400 font-medium mt-1">{T.role}</p>
           <a
-            href={SAME_AS[0]}
+            href={LINKEDIN_URL}
             target="_blank"
             rel="me noopener noreferrer"
             class="inline-flex items-center gap-1.5 mt-3 text-sm text-orange-400 hover:text-orange-300 transition-colors"

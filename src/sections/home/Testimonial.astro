@@ -2,14 +2,21 @@
 ---
 import { SOCIAL_ICONS } from "../../components/social-icons";
 
-const { testimonial, socials } = Astro.props as {
+const { testimonial, socials, ctaHref } = Astro.props as {
   testimonial: {
     title: string;
     trustedBy: string;
     paragraphs?: string[];
+    /** Rotulo del enlace a /[locale]/sobre/. La narrativa larga vive alli,
+     *  no aqui: este bloque convierte y no debe volver a contar la historia. */
+    cta?: string;
   };
   socials?: { label?: string; href: string }[];
+  ctaHref?: string;
 };
+
+const ctaLabel = testimonial?.cta;
+const showCta = Boolean(ctaLabel && ctaHref);
 
 
 const PARTNER_LOGOS = [
@@ -58,6 +65,15 @@ const PARTNER_LOGOS_REPEATED = [
           <p>{text}</p>
         ))}
       </div>
+
+      {showCta && (
+        <a
+          href={ctaHref}
+          class="inline-flex items-center gap-1.5 mt-6 text-sm font-semibold text-orange-400 hover:text-orange-300 transition-colors"
+        >
+          {ctaLabel} →
+        </a>
+      )}
 
       <div class="flex gap-4 mt-8">
         {(socials ?? []).map((s: { label?: string; href: string }) => {

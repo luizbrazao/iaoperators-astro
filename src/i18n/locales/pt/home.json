@@ -1,154 +1,151 @@
 {
-    "meta": {
-        "title": "IA Operators | Agência de IA e marketing digital",
-        "description": "Agência de inteligência artificial e marketing digital: automação, chatbots, criação de sites, SEO e auditoria tecnológica. Da estratégia à produção, sem enrolação."
+  "meta": {
+    "title": "IA Operators | Agência de IA e marketing digital",
+    "description": "Agência de inteligência artificial e marketing digital: automação, chatbots, criação de sites, SEO e auditoria tecnológica. Da estratégia à produção, sem enrolação."
+  },
+  "hero": {
+    "titleHighlight": "Automatizamos, posicionamos",
+    "titleHighlightMobile": "Automatizamos, posicionamos",
+    "titleRest": "e fazemos crescer sua empresa com IA.",
+    "subtitle": "Agência de IA e marketing digital: automação, chatbots, criação de sites, SEO e auditoria tecnológica. Diagnosticamos e construímos — sem hand-offs, sem enrolação.",
+    "cta": "Falar com um especialista ↗",
+    "tech": "Trabalhamos com a tecnologia que você já usa"
+  },
+  "why": {
+    "badge": "O problema",
+    "title": "Sua empresa tem mais tecnologia\ndo que realmente controla",
+    "subtitle": "Licenças que ninguém usa, integrações sustentadas no braço, processos que dependem de uma única pessoa. Resolvemos com diagnóstico rigoroso e implementação real."
+  },
+  "industries": [
+    {
+      "title": "Hotelaria",
+      "description": "PMS, motores de reserva, channel managers, CRMs e SaaS dispersos. Mapeamos integrações críticas e eliminamos pontos de falha manuais."
     },
-    "hero": {
-        "titleHighlight": "Automatizamos, posicionamos",
-        "titleHighlightMobile": "Automatizamos, posicionamos",
-        "titleRest": "e fazemos crescer sua empresa com IA.",
-        "subtitle": "Agência de IA e marketing digital: automação, chatbots, criação de sites, SEO e auditoria tecnológica. Diagnosticamos e construímos — sem hand-offs, sem enrolação.",
-        "cta": "Falar com um especialista ↗",
-        "tech": "Trabalhamos com a tecnologia que você já usa"
+    {
+      "title": "Saúde e clínicas",
+      "description": "HIS, agendas, faturamento e compliance. Auditamos riscos operacionais e conectamos sistemas sem quebrar o que já funciona."
     },
-    "why": {
-        "badge": "O problema",
-        "title": "Sua empresa tem mais tecnologia\ndo que realmente controla",
-        "subtitle": "Licenças que ninguém usa, integrações sustentadas no braço, processos que dependem de uma única pessoa. Resolvemos com diagnóstico rigoroso e implementação real."
+    {
+      "title": "Serviços profissionais",
+      "description": "Escritórios jurídicos, contábeis e consultorias. Documentamos processos críticos e reduzimos a dependência de pessoas-chave."
     },
-    "industries": [
-        {
-            "title": "Hotelaria",
-            "description": "PMS, motores de reserva, channel managers, CRMs e SaaS dispersos. Mapeamos integrações críticas e eliminamos pontos de falha manuais."
-        },
-        {
-            "title": "Saúde e clínicas",
-            "description": "HIS, agendas, faturamento e compliance. Auditamos riscos operacionais e conectamos sistemas sem quebrar o que já funciona."
-        },
-        {
-            "title": "Serviços profissionais",
-            "description": "Escritórios jurídicos, contábeis e consultorias. Documentamos processos críticos e reduzimos a dependência de pessoas-chave."
-        },
-        {
-            "title": "Varejo omnicanal",
-            "description": "ERPs, e-commerce, marketplaces e logística. Identificamos custos ocultos e desenhamos arquiteturas de dados limpas."
-        },
-        {
-            "title": "Imobiliárias",
-            "description": "CRMs, portais, contratos e assinatura digital. Mapeamos o fluxo do lead ao fechamento e automatizamos o repetível."
-        },
-        {
-            "title": "Manufatura mid-market",
-            "description": "ERPs, MES, sensores e relatórios operacionais. Auditamos integrações e construímos dashboards e automações sob medida."
-        }
-    ],
-    "services": {
-        "badge": "Como trabalhamos",
-        "title": "Diagnóstico, prioridade\ne execução — sem hand-offs",
-        "subtitle": "O mesmo time que mapeia o problema constrói a solução. Sem relatórios que ninguém implementa.",
-        "steps": [
-            {
-                "title": "1. Diagnosticamos",
-                "body": "Inventário completo de aplicações, licenças, integrações, dependências e Shadow IT. Identificamos custos ocultos, riscos operacionais e pontos de falha."
-            },
-            {
-                "title": "2. Priorizamos",
-                "body": "Roadmap com impacto real: o que consolidar, o que automatizar, o que construir e em que ordem. Estimativas de ROI e plano faseado, sem teoria nem vendor lock-in."
-            },
-            {
-                "title": "3. Construímos",
-                "body": "Executamos o que o roadmap prescreve: automações com IA (n8n, LangChain, multi-agent), integrações API-first, dashboards operacionais e sistemas sob medida."
-            }
-        ]
+    {
+      "title": "Varejo omnicanal",
+      "description": "ERPs, e-commerce, marketplaces e logística. Identificamos custos ocultos e desenhamos arquiteturas de dados limpas."
     },
-    "testimonial": {
-        "title": "Olá, eu sou Luiz Brazão 👋",
-        "paragraphs": [
-            "Passei anos liderando times em empresas grandes, pequenas e médias, com marcas conhecidas e outras nem tanto.",
-            "E quer saber? Sempre batia na mesma parede:\nnão era falta de gente brilhante. Era falta de clareza sobre o que a empresa tinha de fato em cima da mesa.",
-            "Aplicações que ninguém sabia se usava, integrações que alguém remendava no braço toda semana, decisões refeitas como um eterno déjà vu.\nPor um tempo, só organizar um pouco já resolvia.\nHoje não resolve mais.",
-            "Porque o mercado tá correndo.\nE se você tenta colocar IA em cima de um ecossistema que ninguém controla, a única coisa que escala é o caos.",
-            "Foi por isso que nasceu a IA Operators: para diagnosticar o parque tecnológico de empresas de médio porte, priorizar o que realmente move o ponteiro e construir as soluções — sem hand-offs entre quem pensa e quem executa.",
-            "Com IA. Mas sem fumaça.",
-            "Porque IA não é mágica, é estratégia.\nE antes de automatizar, alguém precisa saber exatamente o que tem na mesa.",
-            "Bora começar por aí?"
-        ],
-        "trustedBy": "Empresas que confiaram em nosso trabalho"
+    {
+      "title": "Imobiliárias",
+      "description": "CRMs, portais, contratos e assinatura digital. Mapeamos o fluxo do lead ao fechamento e automatizamos o repetível."
     },
-    "clientTestimonials": {
-        "badge": "Depoimentos",
-        "title": "O que dizem quem trabalhou conosco",
-        "items": [
-            {
-                "name": "Marco Toscano",
-                "photo": "/images/marco-toscano.jpeg",
-                "link": "https://marcotoscano.de/",
-                "paragraphs": [
-                    "Tive a oportunidade de trabalhar com Luiz no desenvolvimento de uma aplicação personalizada de automação com IA para um dos meus negócios.",
-                    "Luiz trouxe sólidos conhecimentos técnicos, uma mentalidade orientada para soluções e muita flexibilidade ao longo do projeto. O escopo envolveu vários requisitos complexos, incluindo lógica de fluxos de trabalho e integração com sistemas externos.",
-                    "O que mais apreciei foi a sua capacidade de trabalhar em meio a incertezas técnicas, adaptar-se a requisitos em constante mudança e continuar aprimorando a solução por meio de testes e iteração. Ele também foi proativo na identificação de desafios técnicos, na explicação das opções possíveis e na busca de caminhos práticos para avançar.",
-                    "Recomendo Luiz a qualquer pessoa que procure um desenvolvedor capaz de construir sistemas de automação personalizados, conectar diferentes plataformas e trabalhar com lógica de fluxos de trabalho complexa com uma abordagem prática e comprometida."
-                ]
-            }
-        ]
-    },
-    "blogSection": {
-        "badge": "Blog",
-        "title": "Últimas publicações",
-        "subtitle": "Auditoria, automação e arquitetura tecnológica para empresas que já não cabem nas próprias ferramentas.",
-        "posts": [
-            {
-                "category": "Ferramentas",
-                "title": "Manus: A Revolução da IA",
-                "date": "10 mar 2025"
-            },
-            {
-                "category": "IA para restaurantes",
-                "title": "IA para Restaurantes & Foto",
-                "date": "4 mar 2025"
-            },
-            {
-                "category": "Notícias",
-                "title": "GPT-4.5: O Futuro da OpenAI",
-                "date": "28 fev 2025"
-            }
-        ]
-    },
-    "faq": {
-        "title": "Perguntas frequentes",
-        "items": [
-            {
-                "q": "O que a IA Operators faz exatamente?",
-                "a": "Somos uma agência de IA e marketing digital. Diagnosticamos e construímos: automação com IA, chatbots, criação de sites, SEO, marketing digital e auditoria tecnológica (Radiografia Digital). O mesmo time que define a estratégia implementa até a produção, sem hand-offs."
-            },
-            {
-                "q": "Qual a diferença entre vocês e uma consultoria ou agência de IA?",
-                "a": "Consultorias entregam apresentações e somem; agências de IA constroem o que você pedir sem diagnóstico prévio. Nós somos o mesmo time que mapeia o problema real e depois constrói."
-            },
-            {
-                "q": "O que é a Radiografia Digital?",
-                "a": "É nosso serviço de entrada: mapeamos todas as aplicações, licenças, integrações, dependências e Shadow IT da sua empresa. Entregamos inventário mestre, matriz de licenças, mapa de integrações, análise de risco e um relatório executivo com recomendações priorizadas."
-            },
-            {
-                "q": "Para que tipo de empresa isso é pensado?",
-                "a": "Empresas de 50–500 pessoas que cresceram acumulando ferramentas sem arquitetura planejada. Setores: hotelaria, saúde, serviços profissionais, varejo, imobiliário, manufatura mid-market."
-            },
-            {
-                "q": "Quanto custa uma Radiografia Digital?",
-                "a": "A partir de €4.500 + impostos. Inclui inventário, mapa de integrações, análise de risco e recomendações priorizadas."
-            },
-            {
-                "q": "E se depois da auditoria a gente quiser executar?",
-                "a": "É o caminho mais comum. A auditoria evolui para um Roadmap Tecnológico (4–6 semanas) e/ou Implementação: automações, integrações e sistemas sob medida. Trabalhamos por projeto fechado ou retainer mensal."
-            },
-            {
-                "q": "Vocês mexem na infraestrutura que já temos?",
-                "a": "Não quebramos o que funciona. Documentamos primeiro, integramos depois. As recomendações sempre são priorizadas por impacto vs. risco."
-            },
-            {
-                "q": "Como começamos?",
-                "a": "Uma call de 30 minutos para entender o contexto. Se houver fit, enviamos uma proposta fechada de Radiografia Digital."
-            }
-        ]
+    {
+      "title": "Manufatura mid-market",
+      "description": "ERPs, MES, sensores e relatórios operacionais. Auditamos integrações e construímos dashboards e automações sob medida."
     }
+  ],
+  "services": {
+    "badge": "Como trabalhamos",
+    "title": "Diagnóstico, prioridade\ne execução — sem hand-offs",
+    "subtitle": "O mesmo time que mapeia o problema constrói a solução. Sem relatórios que ninguém implementa.",
+    "steps": [
+      {
+        "title": "1. Diagnosticamos",
+        "body": "Inventário completo de aplicações, licenças, integrações, dependências e Shadow IT. Identificamos custos ocultos, riscos operacionais e pontos de falha."
+      },
+      {
+        "title": "2. Priorizamos",
+        "body": "Roadmap com impacto real: o que consolidar, o que automatizar, o que construir e em que ordem. Estimativas de ROI e plano faseado, sem teoria nem vendor lock-in."
+      },
+      {
+        "title": "3. Construímos",
+        "body": "Executamos o que o roadmap prescreve: automações com IA (n8n, LangChain, multi-agent), integrações API-first, dashboards operacionais e sistemas sob medida."
+      }
+    ]
+  },
+  "testimonial": {
+    "title": "Olá, eu sou Luiz Brazão 👋",
+    "paragraphs": [
+      "Passei anos liderando equipes técnicas em empresas de todos os tamanhos, com logos que você conhece e outros nem tanto. Sempre esbarrava no mesmo muro: não faltava gente brilhante, faltava um mapa confiável do que já estava montado.",
+      "Aplicações que ninguém sabia se eram usadas. Integrações remendadas à mão toda semana. Decisões que voltavam como déjà vu. Por um tempo, organizar um pouco bastava. Hoje não basta mais.",
+      "Se você automatiza com IA sobre um ecossistema que ninguém controla, a única coisa que escala é o caos. Foi por isso que montei a IA Operators: primeiro entender, depois priorizar, e construir sem hand-offs entre quem pensa e quem executa.",
+      "Com IA. Mas sem fumaça. Começamos por aí?"
+    ],
+    "trustedBy": "Empresas que confiaram em nosso trabalho",
+    "cta": "Conheça a IA Operators"
+  },
+  "clientTestimonials": {
+    "badge": "Depoimentos",
+    "title": "O que dizem quem trabalhou conosco",
+    "items": [
+      {
+        "name": "Marco Toscano",
+        "photo": "/images/marco-toscano.jpeg",
+        "link": "https://marcotoscano.de/",
+        "paragraphs": [
+          "Tive a oportunidade de trabalhar com Luiz no desenvolvimento de uma aplicação personalizada de automação com IA para um dos meus negócios.",
+          "Luiz trouxe sólidos conhecimentos técnicos, uma mentalidade orientada para soluções e muita flexibilidade ao longo do projeto. O escopo envolveu vários requisitos complexos, incluindo lógica de fluxos de trabalho e integração com sistemas externos.",
+          "O que mais apreciei foi a sua capacidade de trabalhar em meio a incertezas técnicas, adaptar-se a requisitos em constante mudança e continuar aprimorando a solução por meio de testes e iteração. Ele também foi proativo na identificação de desafios técnicos, na explicação das opções possíveis e na busca de caminhos práticos para avançar.",
+          "Recomendo Luiz a qualquer pessoa que procure um desenvolvedor capaz de construir sistemas de automação personalizados, conectar diferentes plataformas e trabalhar com lógica de fluxos de trabalho complexa com uma abordagem prática e comprometida."
+        ]
+      }
+    ]
+  },
+  "blogSection": {
+    "badge": "Blog",
+    "title": "Últimas publicações",
+    "subtitle": "Auditoria, automação e arquitetura tecnológica para empresas que já não cabem nas próprias ferramentas.",
+    "posts": [
+      {
+        "category": "Ferramentas",
+        "title": "Manus: A Revolução da IA",
+        "date": "10 mar 2025"
+      },
+      {
+        "category": "IA para restaurantes",
+        "title": "IA para Restaurantes & Foto",
+        "date": "4 mar 2025"
+      },
+      {
+        "category": "Notícias",
+        "title": "GPT-4.5: O Futuro da OpenAI",
+        "date": "28 fev 2025"
+      }
+    ]
+  },
+  "faq": {
+    "title": "Perguntas frequentes",
+    "items": [
+      {
+        "q": "O que a IA Operators faz exatamente?",
+        "a": "Somos uma agência de IA e marketing digital. Diagnosticamos e construímos: automação com IA, chatbots, criação de sites, SEO, marketing digital e auditoria tecnológica (Radiografia Digital). O mesmo time que define a estratégia implementa até a produção, sem hand-offs."
+      },
+      {
+        "q": "Qual a diferença entre vocês e uma consultoria ou agência de IA?",
+        "a": "Consultorias entregam apresentações e somem; agências de IA constroem o que você pedir sem diagnóstico prévio. Nós somos o mesmo time que mapeia o problema real e depois constrói."
+      },
+      {
+        "q": "O que é a Radiografia Digital?",
+        "a": "É nosso serviço de entrada: mapeamos todas as aplicações, licenças, integrações, dependências e Shadow IT da sua empresa. Entregamos inventário mestre, matriz de licenças, mapa de integrações, análise de risco e um relatório executivo com recomendações priorizadas."
+      },
+      {
+        "q": "Para que tipo de empresa isso é pensado?",
+        "a": "Empresas de 50–500 pessoas que cresceram acumulando ferramentas sem arquitetura planejada. Setores: hotelaria, saúde, serviços profissionais, varejo, imobiliário, manufatura mid-market."
+      },
+      {
+        "q": "Quanto custa uma Radiografia Digital?",
+        "a": "A partir de €4.500 + impostos. Inclui inventário, mapa de integrações, análise de risco e recomendações priorizadas."
+      },
+      {
+        "q": "E se depois da auditoria a gente quiser executar?",
+        "a": "É o caminho mais comum. A auditoria evolui para um Roadmap Tecnológico (4–6 semanas) e/ou Implementação: automações, integrações e sistemas sob medida. Trabalhamos por projeto fechado ou retainer mensal."
+      },
+      {
+        "q": "Vocês mexem na infraestrutura que já temos?",
+        "a": "Não quebramos o que funciona. Documentamos primeiro, integramos depois. As recomendações sempre são priorizadas por impacto vs. risco."
+      },
+      {
+        "q": "Como começamos?",
+        "a": "Uma call de 30 minutos para entender o contexto. Se houver fit, enviamos uma proposta fechada de Radiografia Digital."
+      }
+    ]
+  }
 }

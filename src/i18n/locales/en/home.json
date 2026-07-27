@@ -1,154 +1,151 @@
 {
-    "meta": {
-        "title": "IA Operators | AI & digital marketing agency",
-        "description": "AI and digital marketing agency: automation, chatbots, web design, SEO and tech audits. From strategy to production, no hype."
+  "meta": {
+    "title": "IA Operators | AI & digital marketing agency",
+    "description": "AI and digital marketing agency: automation, chatbots, web design, SEO and tech audits. From strategy to production, no hype."
+  },
+  "hero": {
+    "titleHighlight": "We automate, rank and grow",
+    "titleHighlightMobile": "We automate, rank and grow",
+    "titleRest": "your business with AI.",
+    "subtitle": "AI and digital marketing agency: automation, chatbots, web design, SEO and tech audits. We diagnose and build — no hand-offs, no hype.",
+    "cta": "Talk to a specialist ↗",
+    "tech": "We work with the stack you already use"
+  },
+  "why": {
+    "badge": "The problem",
+    "title": "Your company has more technology\nthan it actually controls",
+    "subtitle": "Licenses no one uses, integrations held together by hand, processes that depend on a single person. We solve it with rigorous diagnostics and real implementation."
+  },
+  "industries": [
+    {
+      "title": "Hospitality",
+      "description": "PMS, booking engines, channel managers, CRMs, and scattered SaaS. We map critical integrations and remove manual points of failure."
     },
-    "hero": {
-        "titleHighlight": "We automate, rank and grow",
-        "titleHighlightMobile": "We automate, rank and grow",
-        "titleRest": "your business with AI.",
-        "subtitle": "AI and digital marketing agency: automation, chatbots, web design, SEO and tech audits. We diagnose and build — no hand-offs, no hype.",
-        "cta": "Talk to a specialist ↗",
-        "tech": "We work with the stack you already use"
+    {
+      "title": "Healthcare and clinics",
+      "description": "HIS, scheduling, billing, and compliance. We audit operational risks and connect systems without breaking what already works."
     },
-    "why": {
-        "badge": "The problem",
-        "title": "Your company has more technology\nthan it actually controls",
-        "subtitle": "Licenses no one uses, integrations held together by hand, processes that depend on a single person. We solve it with rigorous diagnostics and real implementation."
+    {
+      "title": "Professional services",
+      "description": "Legal, accounting, and consulting firms. We document critical processes and reduce dependence on key individuals."
     },
-    "industries": [
-        {
-            "title": "Hospitality",
-            "description": "PMS, booking engines, channel managers, CRMs, and scattered SaaS. We map critical integrations and remove manual points of failure."
-        },
-        {
-            "title": "Healthcare and clinics",
-            "description": "HIS, scheduling, billing, and compliance. We audit operational risks and connect systems without breaking what already works."
-        },
-        {
-            "title": "Professional services",
-            "description": "Legal, accounting, and consulting firms. We document critical processes and reduce dependence on key individuals."
-        },
-        {
-            "title": "Omnichannel retail",
-            "description": "ERPs, e-commerce, marketplaces, and logistics. We surface hidden costs and design clean data architectures."
-        },
-        {
-            "title": "Real estate",
-            "description": "CRMs, portals, contracts, and digital signatures. We map the lead-to-close flow and automate what's repeatable."
-        },
-        {
-            "title": "Mid-market manufacturing",
-            "description": "ERPs, MES, sensors, and operational reporting. We audit integrations and build custom dashboards and automations."
-        }
-    ],
-    "services": {
-        "badge": "How we work",
-        "title": "Diagnose, prioritize,\nbuild — no hand-offs",
-        "subtitle": "Same team that maps the problem builds the solution. No reports nobody implements.",
-        "steps": [
-            {
-                "title": "1. Diagnose",
-                "body": "Full inventory of applications, licenses, integrations, dependencies, and Shadow IT. We surface hidden costs, operational risks, and failure points."
-            },
-            {
-                "title": "2. Prioritize",
-                "body": "Real-impact roadmap: what to consolidate, automate, and build — and in what order. ROI estimates and a phased plan, no theory, no vendor lock-in."
-            },
-            {
-                "title": "3. Build",
-                "body": "We execute what the roadmap prescribes: AI automations (n8n, LangChain, multi-agent), API-first integrations, operational dashboards, and custom systems."
-            }
-        ]
+    {
+      "title": "Omnichannel retail",
+      "description": "ERPs, e-commerce, marketplaces, and logistics. We surface hidden costs and design clean data architectures."
     },
-    "testimonial": {
-        "title": "Hi, I'm Luiz Brazão 👋",
-        "paragraphs": [
-            "I spent years leading teams in big, small, and medium-sized companies — some with names you'd recognize, and others you wouldn't.",
-            "And you know what? I kept hitting the same wall:\nit wasn't a lack of brilliant people. It was a lack of clarity about what the company actually had on its plate.",
-            "Apps no one knew were still in use, integrations someone patched by hand every week, decisions getting remade like a weekly déjà vu.\nFor a while, just tidying things up was enough.\nNot anymore.",
-            "Because the market moves fast.\nAnd if you try to layer AI on top of a stack nobody controls, the only thing that scales is the chaos.",
-            "That's why IA Operators exists: to diagnose the technology stack of mid-sized companies, prioritize what really moves the needle, and build the solutions — with no hand-offs between who thinks and who executes.",
-            "With AI. But no smoke and mirrors.",
-            "Because AI isn't magic — it's strategy.\nAnd before you automate, someone needs to know exactly what's on the table.",
-            "Shall we start there?"
-        ],
-        "trustedBy": "Companies that trusted our work"
+    {
+      "title": "Real estate",
+      "description": "CRMs, portals, contracts, and digital signatures. We map the lead-to-close flow and automate what's repeatable."
     },
-    "clientTestimonials": {
-        "badge": "Testimonials",
-        "title": "What people who worked with us say",
-        "items": [
-            {
-                "name": "Marco Toscano",
-                "photo": "/images/marco-toscano.jpeg",
-                "link": "https://marcotoscano.de/",
-                "paragraphs": [
-                    "I had the opportunity to work with Luiz on the development of a custom AI automation application for one of my businesses.",
-                    "Luiz brought solid technical knowledge, a solution-oriented mindset, and a lot of flexibility throughout the project. The scope involved several complex requirements, including workflow logic and integration with external systems.",
-                    "What I appreciated most was his ability to work through technical uncertainty, adapt to changing requirements, and keep improving the solution through testing and iteration. He was also proactive in identifying technical challenges, explaining possible options, and finding practical ways forward.",
-                    "I would recommend Luiz to anyone looking for a developer who can build custom automation systems, connect different platforms, and work on complex workflow logic with a hands-on and committed approach."
-                ]
-            }
-        ]
-    },
-    "blogSection": {
-        "badge": "Blog",
-        "title": "Latest posts",
-        "subtitle": "Audit, automation, and technology architecture for companies that have outgrown their own tools.",
-        "posts": [
-            {
-                "category": "Tools",
-                "title": "Manus: The AI Revolution",
-                "date": "Mar 10, 2025"
-            },
-            {
-                "category": "AI for restaurants",
-                "title": "AI for Restaurants & Photography",
-                "date": "Mar 4, 2025"
-            },
-            {
-                "category": "News",
-                "title": "GPT-4.5: The Future of OpenAI",
-                "date": "Feb 28, 2025"
-            }
-        ]
-    },
-    "faq": {
-        "title": "Frequently asked questions",
-        "items": [
-            {
-                "q": "What does IA Operators actually do?",
-                "a": "We're an AI and digital marketing agency. We diagnose and build: AI automation, chatbots, web design, SEO, digital marketing and tech audits (Digital X-Ray). The same team that defines the strategy implements it all the way to production, no hand-offs."
-            },
-            {
-                "q": "How are you different from a consultancy or an AI agency?",
-                "a": "Consultancies deliver slide decks and disappear; AI agencies build whatever you ask without prior diagnostics. We're the same team that maps the real problem and then builds it."
-            },
-            {
-                "q": "What is the Digital X-Ray?",
-                "a": "Our entry-level service: we map every application, license, integration, dependency, and Shadow IT in your company. Deliverables: master inventory, license matrix, integration map, risk analysis, and an executive report with prioritized recommendations."
-            },
-            {
-                "q": "Who is this for?",
-                "a": "Companies of 50–500 people that have grown by accumulating tools without a planned architecture. Sectors: hospitality, healthcare, professional services, retail, real estate, mid-market manufacturing."
-            },
-            {
-                "q": "How much does the Digital X-Ray cost?",
-                "a": "From €4,500 + VAT, fixed-scope 3-week project. Includes inventory, integration map, risk analysis, and prioritized recommendations."
-            },
-            {
-                "q": "What if we want to execute after the audit?",
-                "a": "It's the usual path. The audit leads into a Technology Roadmap (4–6 weeks) and/or Implementation: automations, integrations, and custom systems. Fixed-scope projects or monthly retainer."
-            },
-            {
-                "q": "Will you touch the infrastructure we already have?",
-                "a": "We don't break what works. We document first, integrate after. Recommendations are always prioritized by impact vs. risk."
-            },
-            {
-                "q": "How do we get started?",
-                "a": "A 30-minute call to understand the context. If there's a fit, we send a fixed-scope Digital X-Ray proposal."
-            }
-        ]
+    {
+      "title": "Mid-market manufacturing",
+      "description": "ERPs, MES, sensors, and operational reporting. We audit integrations and build custom dashboards and automations."
     }
+  ],
+  "services": {
+    "badge": "How we work",
+    "title": "Diagnose, prioritize,\nbuild — no hand-offs",
+    "subtitle": "Same team that maps the problem builds the solution. No reports nobody implements.",
+    "steps": [
+      {
+        "title": "1. Diagnose",
+        "body": "Full inventory of applications, licenses, integrations, dependencies, and Shadow IT. We surface hidden costs, operational risks, and failure points."
+      },
+      {
+        "title": "2. Prioritize",
+        "body": "Real-impact roadmap: what to consolidate, automate, and build — and in what order. ROI estimates and a phased plan, no theory, no vendor lock-in."
+      },
+      {
+        "title": "3. Build",
+        "body": "We execute what the roadmap prescribes: AI automations (n8n, LangChain, multi-agent), API-first integrations, operational dashboards, and custom systems."
+      }
+    ]
+  },
+  "testimonial": {
+    "title": "Hi, I'm Luiz Brazão 👋",
+    "paragraphs": [
+      "I spent years leading technical teams at companies of every size — some logos you know, some you don't. I kept hitting the same wall: there was never a shortage of brilliant people, only of a reliable map of what was already in place.",
+      "Apps nobody could confirm were still in use. Integrations patched by hand every week. Decisions coming back around like déjà vu. For a while, tidying up a little was enough. Not anymore.",
+      "Automate with AI on top of an ecosystem nobody controls and the only thing you scale is the mess. That's why I started IA Operators: understand first, prioritise second, and build with no hand-offs between whoever thinks and whoever ships.",
+      "With AI. Without the smoke. Shall we start there?"
+    ],
+    "trustedBy": "Companies that trusted our work",
+    "cta": "Get to know IA Operators"
+  },
+  "clientTestimonials": {
+    "badge": "Testimonials",
+    "title": "What people who worked with us say",
+    "items": [
+      {
+        "name": "Marco Toscano",
+        "photo": "/images/marco-toscano.jpeg",
+        "link": "https://marcotoscano.de/",
+        "paragraphs": [
+          "I had the opportunity to work with Luiz on the development of a custom AI automation application for one of my businesses.",
+          "Luiz brought solid technical knowledge, a solution-oriented mindset, and a lot of flexibility throughout the project. The scope involved several complex requirements, including workflow logic and integration with external systems.",
+          "What I appreciated most was his ability to work through technical uncertainty, adapt to changing requirements, and keep improving the solution through testing and iteration. He was also proactive in identifying technical challenges, explaining possible options, and finding practical ways forward.",
+          "I would recommend Luiz to anyone looking for a developer who can build custom automation systems, connect different platforms, and work on complex workflow logic with a hands-on and committed approach."
+        ]
+      }
+    ]
+  },
+  "blogSection": {
+    "badge": "Blog",
+    "title": "Latest posts",
+    "subtitle": "Audit, automation, and technology architecture for companies that have outgrown their own tools.",
+    "posts": [
+      {
+        "category": "Tools",
+        "title": "Manus: The AI Revolution",
+        "date": "Mar 10, 2025"
+      },
+      {
+        "category": "AI for restaurants",
+        "title": "AI for Restaurants & Photography",
+        "date": "Mar 4, 2025"
+      },
+      {
+        "category": "News",
+        "title": "GPT-4.5: The Future of OpenAI",
+        "date": "Feb 28, 2025"
+      }
+    ]
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "items": [
+      {
+        "q": "What does IA Operators actually do?",
+        "a": "We're an AI and digital marketing agency. We diagnose and build: AI automation, chatbots, web design, SEO, digital marketing and tech audits (Digital X-Ray). The same team that defines the strategy implements it all the way to production, no hand-offs."
+      },
+      {
+        "q": "How are you different from a consultancy or an AI agency?",
+        "a": "Consultancies deliver slide decks and disappear; AI agencies build whatever you ask without prior diagnostics. We're the same team that maps the real problem and then builds it."
+      },
+      {
+        "q": "What is the Digital X-Ray?",
+        "a": "Our entry-level service: we map every application, license, integration, dependency, and Shadow IT in your company. Deliverables: master inventory, license matrix, integration map, risk analysis, and an executive report with prioritized recommendations."
+      },
+      {
+        "q": "Who is this for?",
+        "a": "Companies of 50–500 people that have grown by accumulating tools without a planned architecture. Sectors: hospitality, healthcare, professional services, retail, real estate, mid-market manufacturing."
+      },
+      {
+        "q": "How much does the Digital X-Ray cost?",
+        "a": "From €4,500 + VAT, fixed-scope 3-week project. Includes inventory, integration map, risk analysis, and prioritized recommendations."
+      },
+      {
+        "q": "What if we want to execute after the audit?",
+        "a": "It's the usual path. The audit leads into a Technology Roadmap (4–6 weeks) and/or Implementation: automations, integrations, and custom systems. Fixed-scope projects or monthly retainer."
+      },
+      {
+        "q": "Will you touch the infrastructure we already have?",
+        "a": "We don't break what works. We document first, integrate after. Recommendations are always prioritized by impact vs. risk."
+      },
+      {
+        "q": "How do we get started?",
+        "a": "A 30-minute call to understand the context. If there's a fit, we send a fixed-scope Digital X-Ray proposal."
+      }
+    ]
+  }
 }

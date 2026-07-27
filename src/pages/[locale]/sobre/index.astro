@@ -1,0 +1,479 @@
+---
+// Página de entidad de la EMPRESA (Organization).
+//
+// Deliberadamente separada de /[locale]/autores/luiz-fernando-brazao/, que es
+// la entidad Person y sostiene el E-E-A-T del blog. Aquí se responde "¿puedo
+// confiar en esta empresa?"; allí, "¿quién escribió esto?". Ambas comparten
+// grafo a través de los `@id` de src/data/identidad.ts: esta página declara
+// `founder` y la de autor declara `worksFor`.
+//
+// El contenido es inline (no i18n/locales/*.json) siguiendo la convención de
+// las páginas construidas desde julio de 2026: página de autor, las siete
+// landings de servicio y todo el silo /es/cumplimiento/.
+
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getLocale, locales } from "../../../i18n/ui";
+import Reconocimientos from "@/components/Reconocimientos.astro";
+import {
+  ORG_ID,
+  ORG_NAME,
+  WEBSITE_REF,
+  CONTACT,
+  FOUNDING_DATE,
+  PERSON_NAME,
+  aboutUrl,
+  authorUrl,
+  localeUrl,
+  organizationNode,
+  type Loc,
+} from "@/data/identidad";
+
+export const getStaticPaths = () => locales.map((locale) => ({ params: { locale } }));
+
+const locale = getLocale(Astro.params.locale);
+const loc: Loc = locale;
+
+const canonicalUrl = aboutUrl(locale);
+const alternates = locales.map((lang) => ({ lang, href: aboutUrl(lang) }));
+const xDefaultUrl = aboutUrl("es");
+
+const withLocale = (path: string) => `/${locale}/${path}`.replace(/\/+$/, "/");
+
+const links = {
+  methodology: withLocale("metodologia/"),
+  portfolio: withLocale("portfolio/"),
+  author: withLocale("autores/luiz-fernando-brazao/"),
+  terms: withLocale("terminos-y-condiciones/"),
+  services: withLocale("servicios/"),
+  contact: withLocale("contact/"),
+};
+
+// ─── Contenido ───────────────────────────────────────────────────────────────
+// Regla dura: ninguna frase de aquí se repite en el bloque de la home
+// (home.json → testimonial) ni en /metodologia ni en la página de autor.
+
+type Section = { title: string; paragraphs: string[] };
+type OutLink = { title: string; text: string; cta: string; href: string };
+type Fact = { label: string; value: string };
+
+interface Content {
+  seoTitle: string;
+  metaDesc: string;
+  breadcrumbHome: string;
+  breadcrumbCurrent: string;
+  h1: string;
+  lead: string;
+  sections: Section[];
+  factsTitle: string;
+  facts: Fact[];
+  outLinksTitle: string;
+  outLinks: OutLink[];
+  legalTitle: string;
+  legalText: string;
+  legalCta: string;
+  legalContact: string;
+  ctaTitle: string;
+  ctaText: string;
+  ctaButton: string;
+}
+
+const CONTENT: Record<Loc, Content> = {
+  es: {
+    seoTitle: "Sobre IA Operators — agencia de IA y automatización en Málaga",
+    metaDesc:
+      "Qué es IA Operators, cuándo nació, qué problema resuelve y a qué tipo de empresa sirve. Agencia de inteligencia artificial y automatización con base en Málaga, España.",
+    breadcrumbHome: "Inicio",
+    breadcrumbCurrent: "Sobre IA Operators",
+    h1: "Sobre IA Operators",
+    lead: "Agencia de inteligencia artificial y automatización con base en Málaga. Diseñamos, integramos y mantenemos los sistemas que sostienen la operación de un negocio — y nos quedamos hasta que corren en producción.",
+    sections: [
+      {
+        title: "Qué es IA Operators",
+        paragraphs: [
+          "IA Operators nació en 2023 como el vehículo para un tipo de trabajo que no encajaba ni en la consultoría clásica ni en el desarrollo por horas: entrar en una empresa que ya funciona, entender qué sistemas tiene realmente encima y construir la capa que falta para que deje de depender de personas moviendo datos de un sitio a otro.",
+          "No revendemos licencias ni intermediamos software de terceros. Construimos sobre herramientas auditables que el cliente puede llegar a operar por su cuenta: n8n, Supabase, la WhatsApp Cloud API, integraciones API-first y modelos de lenguaje orquestados como agentes, no como chatbots decorativos.",
+          "La actividad está registrada en España como autónomo, sin sociedad interpuesta. No es un detalle administrativo: significa que quien firma la propuesta es quien escribe el código, y que entre el diagnóstico y la ejecución no hay una capa comercial que traduzca mal el encargo.",
+        ],
+      },
+      {
+        title: "El encargo típico",
+        paragraphs: [
+          "Casi ningún proyecto empieza con «queremos IA». Empieza con un cuello de botella concreto y medible: un canal de WhatsApp que se desborda, un equipo que dedica horas a copiar datos entre dos herramientas que no se hablan, un ERP que ignora la web, un proceso que solo una persona sabe ejecutar y que se detiene cuando esa persona se va de vacaciones.",
+          "Ese es el punto de entrada, y el orden de trabajo es siempre el mismo: medir el proceso antes de automatizarlo, decidir qué se automatiza y qué conviene dejar en manos de una persona, y dejarlo corriendo en producción con estado persistente, reintentos, trazabilidad y alguien pendiente de que siga funcionando el mes siguiente.",
+        ],
+      },
+      {
+        title: "A qué empresas servimos",
+        paragraphs: [
+          "Trabajamos con negocios que ya tienen operación, clientes y datos — no con ideas en fase de validación. El rango va desde la empresa local cuyo volumen de contactos ya no cabe en un móvil, hasta la mediana con varios sistemas heredados y nadie que tenga el mapa completo.",
+          "No hay restricción de sector: hemos trabajado con hostelería, turismo, salud y estética, servicios profesionales, comercio y software. Lo que sí condiciona el encaje es otra cosa — que exista un proceso repetible consumiendo tiempo de personas, y alguien dentro con autoridad para cambiarlo.",
+        ],
+      },
+    ],
+    factsTitle: "Datos de la empresa",
+    facts: [
+      { label: "Fundada", value: FOUNDING_DATE },
+      { label: "Base", value: "Málaga, España" },
+      { label: "Forma jurídica", value: "Autónomo registrado en España" },
+      { label: "Idiomas de trabajo", value: "Español · Portugués · Inglés" },
+      { label: "Ámbito", value: "España, Portugal y Brasil" },
+      { label: "Contacto", value: `${CONTACT.email} · ${CONTACT.phoneDisplay}` },
+    ],
+    outLinksTitle: "Seguir por aquí",
+    outLinks: [
+      {
+        title: "Metodología",
+        text: "Cómo entramos en un proyecto, qué medimos, en qué orden y qué se entrega en cada fase. Está escrito y es público.",
+        cta: "Ver la metodología",
+        href: "",
+      },
+      {
+        title: "Casos",
+        text: "Proyectos con contexto, decisiones técnicas y resultado — incluidos los que obligaron a cambiar de enfoque a mitad de camino.",
+        cta: "Ver el portfolio",
+        href: "",
+      },
+      {
+        title: PERSON_NAME,
+        text: "Ingeniero de automatización y fundador. Trayectoria, áreas de foco y los artículos que firma en el blog.",
+        cta: "Ver el perfil",
+        href: "",
+      },
+    ],
+    legalTitle: "Datos identificativos",
+    legalText:
+      "La razón social, el NIF, el domicilio fiscal y el correo de contacto — la información exigida por el artículo 10 de la LSSI-CE — se publican en un único lugar del sitio para que no se desincronicen.",
+    legalCta: "Ver los datos identificativos",
+    legalContact: "Para cualquier otro asunto",
+    ctaTitle: "¿Hablamos de tu operación?",
+    ctaText:
+      "Cuenta el proceso que hoy te consume tiempo. Si no es un caso para nosotros, lo decimos en la primera conversación.",
+    ctaButton: "Escribir a IA Operators",
+  },
+  pt: {
+    seoTitle: "Sobre a IA Operators — agência de IA e automação em Málaga",
+    metaDesc:
+      "O que é a IA Operators, quando nasceu, que problema resolve e que tipo de empresa atende. Agência de inteligência artificial e automação com base em Málaga, Espanha.",
+    breadcrumbHome: "Início",
+    breadcrumbCurrent: "Sobre a IA Operators",
+    h1: "Sobre a IA Operators",
+    lead: "Agência de inteligência artificial e automação com base em Málaga. Desenhamos, integramos e mantemos os sistemas que sustentam a operação de um negócio — e ficamos até rodarem em produção.",
+    sections: [
+      {
+        title: "O que é a IA Operators",
+        paragraphs: [
+          "A IA Operators nasceu em 2023 como o veículo para um tipo de trabalho que não cabia nem na consultoria clássica nem no desenvolvimento por hora: entrar numa empresa que já funciona, entender que sistemas ela realmente tem em cima e construir a camada que falta para deixar de depender de pessoas movendo dados de um lugar para outro.",
+          "Não revendemos licenças nem intermediamos software de terceiros. Construímos sobre ferramentas auditáveis que o cliente pode chegar a operar sozinho: n8n, Supabase, a WhatsApp Cloud API, integrações API-first e modelos de linguagem orquestrados como agentes, não como chatbots decorativos.",
+          "A atividade está registrada na Espanha como autónomo, sem sociedade interposta. Não é um detalhe administrativo: significa que quem assina a proposta é quem escreve o código, e que entre o diagnóstico e a execução não há uma camada comercial traduzindo mal o pedido.",
+        ],
+      },
+      {
+        title: "O pedido típico",
+        paragraphs: [
+          "Quase nenhum projeto começa com «queremos IA». Começa com um gargalo concreto e mensurável: um canal de WhatsApp que transborda, uma equipe que gasta horas copiando dados entre duas ferramentas que não se falam, um ERP que ignora o site, um processo que só uma pessoa sabe executar e que para quando essa pessoa sai de férias.",
+          "Esse é o ponto de entrada, e a ordem de trabalho é sempre a mesma: medir o processo antes de automatizá-lo, decidir o que se automatiza e o que convém deixar com uma pessoa, e deixá-lo rodando em produção com estado persistente, retentativas, rastreabilidade e alguém atento para que continue funcionando no mês seguinte.",
+        ],
+      },
+      {
+        title: "Que empresas atendemos",
+        paragraphs: [
+          "Trabalhamos com negócios que já têm operação, clientes e dados — não com ideias em fase de validação. A faixa vai da empresa local cujo volume de contatos já não cabe num celular até a média com vários sistemas herdados e ninguém com o mapa completo.",
+          "Não há restrição de setor: já trabalhamos com hotelaria, turismo, saúde e estética, serviços profissionais, comércio e software. O que condiciona o encaixe é outra coisa — que exista um processo repetível consumindo tempo de pessoas, e alguém dentro com autoridade para mudá-lo.",
+        ],
+      },
+    ],
+    factsTitle: "Dados da empresa",
+    facts: [
+      { label: "Fundada", value: FOUNDING_DATE },
+      { label: "Base", value: "Málaga, Espanha" },
+      { label: "Forma jurídica", value: "Autónomo registrado na Espanha" },
+      { label: "Idiomas de trabalho", value: "Espanhol · Português · Inglês" },
+      { label: "Âmbito", value: "Espanha, Portugal e Brasil" },
+      { label: "Contato", value: `${CONTACT.email} · ${CONTACT.phoneDisplay}` },
+    ],
+    outLinksTitle: "Continuar por aqui",
+    outLinks: [
+      {
+        title: "Metodologia",
+        text: "Como entramos num projeto, o que medimos, em que ordem e o que é entregue em cada fase. Está escrito e é público.",
+        cta: "Ver a metodologia",
+        href: "",
+      },
+      {
+        title: "Casos",
+        text: "Projetos com contexto, decisões técnicas e resultado — inclusive os que obrigaram a mudar de abordagem no meio do caminho.",
+        cta: "Ver o portfólio",
+        href: "",
+      },
+      {
+        title: PERSON_NAME,
+        text: "Engenheiro de automação e fundador. Trajetória, áreas de foco e os artigos que assina no blog.",
+        cta: "Ver o perfil",
+        href: "",
+      },
+    ],
+    legalTitle: "Dados identificativos",
+    legalText:
+      "A razão social, o NIF, o domicílio fiscal e o e-mail de contato — a informação exigida pelo artigo 10 da LSSI-CE — são publicados num único lugar do site para que não se dessincronizem.",
+    legalCta: "Ver os dados identificativos",
+    legalContact: "Para qualquer outro assunto",
+    ctaTitle: "Vamos falar da sua operação?",
+    ctaText:
+      "Conte o processo que hoje consome o seu tempo. Se não for um caso para nós, dizemos na primeira conversa.",
+    ctaButton: "Escrever para a IA Operators",
+  },
+  en: {
+    seoTitle: "About IA Operators — AI and automation agency in Málaga",
+    metaDesc:
+      "What IA Operators is, when it started, the problem it solves and the kind of company it serves. Artificial intelligence and automation agency based in Málaga, Spain.",
+    breadcrumbHome: "Home",
+    breadcrumbCurrent: "About IA Operators",
+    h1: "About IA Operators",
+    lead: "Artificial intelligence and automation agency based in Málaga. We design, integrate and maintain the systems a business runs on — and we stay until they run in production.",
+    sections: [
+      {
+        title: "What IA Operators is",
+        paragraphs: [
+          "IA Operators started in 2023 as the vehicle for work that fit neither classic consulting nor development by the hour: walking into a company that already works, understanding which systems it actually carries, and building the missing layer so it stops depending on people moving data from one place to another.",
+          "We don't resell licences or broker third-party software. We build on auditable tools the client can eventually operate alone: n8n, Supabase, the WhatsApp Cloud API, API-first integrations and language models orchestrated as agents rather than decorative chatbots.",
+          "The business is registered in Spain as a sole trader, with no intermediate company. That isn't an administrative footnote: whoever signs the proposal is whoever writes the code, and there is no commercial layer mistranslating the brief between diagnosis and delivery.",
+        ],
+      },
+      {
+        title: "The typical engagement",
+        paragraphs: [
+          "Almost no project starts with “we want AI”. It starts with a concrete, measurable bottleneck: a WhatsApp channel that overflows, a team spending hours copying data between two tools that don't talk, an ERP that ignores the website, a process only one person knows how to run — and that stops when that person goes on holiday.",
+          "That's the entry point, and the order of work never changes: measure the process before automating it, decide what gets automated and what is better left to a human, and leave it running in production with persistent state, retries, traceability and someone watching that it still works next month.",
+        ],
+      },
+      {
+        title: "Who we work with",
+        paragraphs: [
+          "We work with businesses that already have operations, customers and data — not with ideas still being validated. The range runs from the local company whose contact volume no longer fits on a phone, to the mid-size firm with several legacy systems and nobody holding the full map.",
+          "There is no sector restriction: we have worked across hospitality, tourism, health and aesthetics, professional services, retail and software. What does decide the fit is something else — a repeatable process currently consuming people's time, and someone inside with the authority to change it.",
+        ],
+      },
+    ],
+    factsTitle: "Company details",
+    facts: [
+      { label: "Founded", value: FOUNDING_DATE },
+      { label: "Based in", value: "Málaga, Spain" },
+      { label: "Legal form", value: "Sole trader registered in Spain" },
+      { label: "Working languages", value: "Spanish · Portuguese · English" },
+      { label: "Coverage", value: "Spain, Portugal and Brazil" },
+      { label: "Contact", value: `${CONTACT.email} · ${CONTACT.phoneDisplay}` },
+    ],
+    outLinksTitle: "Where to go next",
+    outLinks: [
+      {
+        title: "Methodology",
+        text: "How we enter a project, what we measure, in what order, and what ships in each phase. It's written down and public.",
+        cta: "See the methodology",
+        href: "",
+      },
+      {
+        title: "Case studies",
+        text: "Projects with context, technical decisions and outcome — including the ones that forced a change of approach midway.",
+        cta: "See the portfolio",
+        href: "",
+      },
+      {
+        title: PERSON_NAME,
+        text: "Automation engineer and founder. Background, focus areas and the articles he signs on the blog.",
+        cta: "See the profile",
+        href: "",
+      },
+    ],
+    legalTitle: "Legal identification",
+    legalText:
+      "The legal name, tax ID, registered address and contact email — the information required by article 10 of the Spanish LSSI-CE — are published in a single place on the site so they never drift out of sync.",
+    legalCta: "See the legal details",
+    legalContact: "For anything else",
+    ctaTitle: "Want to talk about your operation?",
+    ctaText:
+      "Describe the process eating your time today. If it isn't a fit for us, we'll say so in the first conversation.",
+    ctaButton: "Email IA Operators",
+  },
+};
+
+const C = CONTENT[loc];
+
+// Los hrefs dependen del idioma, así que se inyectan aquí y no en el diccionario.
+const outLinks: OutLink[] = [
+  { ...C.outLinks[0], href: links.methodology },
+  { ...C.outLinks[1], href: links.portfolio },
+  { ...C.outLinks[2], href: links.author },
+];
+
+// ─── JSON-LD ─────────────────────────────────────────────────────────────────
+// Esta es LA página de la entidad Organization: es la única que emite
+// `mainEntityOfPage`. El resto del sitio emite el mismo `@id` sin reclamarlo.
+
+const pageId = `${canonicalUrl}#webpage`;
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "@id": pageId,
+    url: canonicalUrl,
+    name: C.seoTitle,
+    description: C.metaDesc,
+    inLanguage: locale,
+    isPartOf: WEBSITE_REF,
+    about: { "@id": ORG_ID },
+    mainEntity: { "@id": ORG_ID },
+  },
+  organizationNode({
+    locale,
+    description: C.metaDesc,
+    mainEntityOfPage: canonicalUrl,
+  }),
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: C.breadcrumbHome,
+        item: localeUrl(locale),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: C.breadcrumbCurrent,
+        item: canonicalUrl,
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={`${C.seoTitle} | ${ORG_NAME}`}
+  ogTitle={C.h1}
+  description={C.metaDesc}
+  canonicalUrl={canonicalUrl}
+  alternates={alternates}
+  xDefaultUrl={xDefaultUrl}
+  jsonLd={jsonLd}
+>
+  <div class="pt-32 pb-20 px-4">
+    <div class="max-w-4xl mx-auto">
+      <!-- Breadcrumb -->
+      <nav aria-label="Breadcrumb" class="mb-8 text-sm text-gray-400">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li>
+            <a href={`/${locale}/`} class="hover:text-orange-400 transition-colors">
+              {C.breadcrumbHome}
+            </a>
+          </li>
+          <li class="text-gray-700">/</li>
+          <li class="text-gray-400" aria-current="page">{C.breadcrumbCurrent}</li>
+        </ol>
+      </nav>
+
+      <!-- Encabezado -->
+      <header class="mb-14">
+        <h1 class="text-3xl md:text-5xl font-bold text-white leading-tight">
+          {C.h1}
+        </h1>
+        <p class="text-lg text-gray-300 leading-relaxed mt-5 max-w-3xl">{C.lead}</p>
+      </header>
+
+      <!-- Secciones narrativas -->
+      {C.sections.map((section) => (
+        <section class="mb-14">
+          <h2 class="text-2xl font-bold text-white mb-5 border-l-4 border-orange-500 pl-4">
+            {section.title}
+          </h2>
+          <div class="space-y-4 text-gray-300 leading-relaxed max-w-3xl">
+            {section.paragraphs.map((text) => (
+              <p>{text}</p>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <!-- Ficha de datos -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-bold text-white mb-6 border-l-4 border-orange-500 pl-4">
+          {C.factsTitle}
+        </h2>
+        <dl class="grid sm:grid-cols-2 gap-px rounded-2xl overflow-hidden bg-white/5 border border-white/5">
+          {C.facts.map((fact) => (
+            <div class="bg-[#0a0a0a] p-5">
+              <dt class="text-xs uppercase tracking-widest text-gray-500 mb-1.5">
+                {fact.label}
+              </dt>
+              <dd class="text-white text-sm font-medium">{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <!-- Enlaces de salida -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-bold text-white mb-6 border-l-4 border-orange-500 pl-4">
+          {C.outLinksTitle}
+        </h2>
+        <div class="grid sm:grid-cols-3 gap-5">
+          {outLinks.map((item) => (
+            <a
+              href={item.href}
+              class="group flex flex-col p-5 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-orange-500/30 transition-all"
+            >
+              <h3 class="text-white font-semibold leading-snug mb-2 group-hover:text-orange-300 transition-colors">
+                {item.title}
+              </h3>
+              <p class="text-gray-400 text-sm leading-relaxed grow">{item.text}</p>
+              <span class="mt-4 text-orange-400 text-xs font-semibold">
+                {item.cta} →
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <!-- Identificación legal: se enlaza, no se duplica -->
+      <section class="mb-16 p-6 rounded-2xl bg-white/[0.03] border border-white/5">
+        <h2 class="text-xl font-bold text-white mb-3 border-l-4 border-orange-500 pl-3">
+          {C.legalTitle}
+        </h2>
+        <p class="text-gray-300 text-sm leading-relaxed max-w-3xl">{C.legalText}</p>
+        <a
+          href={links.terms}
+          class="inline-flex items-center gap-1.5 mt-4 text-sm text-orange-400 hover:text-orange-300 transition-colors font-semibold"
+        >
+          {C.legalCta} →
+        </a>
+        <p class="text-gray-400 text-sm mt-4">
+          {C.legalContact}:{" "}
+          <a href={`mailto:${CONTACT.email}`} class="underline hover:text-orange-400">
+            {CONTACT.email}
+          </a>{" "}
+          ·{" "}
+          <a href={`tel:${CONTACT.phone}`} class="underline hover:text-orange-400">
+            {CONTACT.phoneDisplay}
+          </a>
+        </p>
+      </section>
+
+      <!-- Reconocimientos: sólo en esta página -->
+      <Reconocimientos locale={locale} />
+
+      <!-- CTA final -->
+      <section class="p-8 rounded-3xl bg-linear-to-b from-white/[0.06] to-transparent border border-white/10 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">{C.ctaTitle}</h2>
+        <p class="text-gray-400 leading-relaxed max-w-2xl mx-auto">{C.ctaText}</p>
+        <a
+          href={links.contact}
+          class="inline-block mt-6 px-6 py-3 rounded-full bg-orange-500 text-white font-semibold hover:bg-orange-400 transition-colors"
+        >
+          {C.ctaButton}
+        </a>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

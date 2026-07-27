@@ -11,8 +11,14 @@ import ClientTestimonials from "../sections/home/ClientTestimonials.astro";
 import BlogSection from "../sections/home/BlogSection.astro";
 import FAQ from "../sections/home/FAQ.astro";
 import { fetchBlogPosts } from "../lib/blog";
+import { getServices } from "@/data/servicios";
+import {
+  SOCIAL_PROFILES,
+  WEBSITE_ID,
+  ORG_REF,
+  organizationNode,
+} from "@/data/identidad";
 
-type Social = { label: string; href: string };
 type FaqItem = { q: string; a: string };
 
 const locale = getLocale(Astro.currentLocale);
@@ -32,12 +38,10 @@ const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const posts = await fetchBlogPosts(locale);
 const latestPosts = (posts ?? []).slice(0, 3);
 
-// Socials
-const socials: Social[] = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/ferbrazao/" },
-  { label: "Instagram", href: "https://www.instagram.com/iaoperators" },
-  { label: "YouTube", href: "https://www.youtube.com/@iaoperators" },
-];
+// Socials: fuente unica en src/data/identidad.ts. Antes esta lista tenia tres
+// perfiles (sin X) y usaba @iaoperators en minuscula, mientras el Footer tenia
+// cuatro con @IAOperators: dos `sameAs` distintos para la misma entidad.
+const socials = [...SOCIAL_PROFILES];
 
 // Guards (evita undefined em cascata)
 const home = (dict as any)?.home ?? {};
@@ -49,72 +53,43 @@ const meta = home?.meta ?? {};
 const faq = home?.faq ?? { items: [] };
 const faqItems: FaqItem[] = Array.isArray(faq?.items) ? (faq.items as FaqItem[]) : [];
 
-// JSON-LD: Organization + WebSite; FAQPage só se tiver itens
+// JSON-LD: Organization + WebSite; FAQPage solo si hay items.
+//
+// El nodo Organization se construye en src/data/identidad.ts para que su @id
+// sea el mismo aqui, en /[locale]/sobre/ y en /[locale]/metodologia/: tres
+// emisiones, una sola entidad. Sin @id eran tres nodos sueltos.
+//
+// El catalogo de ofertas se deriva de src/data/servicios.ts (fuente unica del
+// menu, del hub y del footer). Antes estaba escrito a mano aqui, en espanol
+// para los tres idiomas, y le faltaba consultoria-ia.
+const OFFER_CATALOG = {
+  "@type": "OfferCatalog",
+  name: "Servicios de IA Operators",
+  itemListElement: getServices(locale).map((service) => ({
+    "@type": "Offer",
+    itemOffered: {
+      "@type": "Service",
+      name: service.label,
+      url: new URL(service.href, site).toString(),
+    },
+  })),
+};
+
 const jsonLd: any[] = [
-  {
-    "@context": "https://schema.org",
-    "@type": ["Organization", "ProfessionalService"],
-    name: "IA Operators",
-    url: site,
-    logo: {
-      "@type": "ImageObject",
-      url: `${site}/favicon-32x32.png`,
-    },
-    description: "Auditoría, roadmap e implementación tecnológica para empresas medianas. Diagnóstico riguroso, priorización y ejecución sin hand-offs.",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Málaga",
-      addressCountry: "ES",
-    },
-    areaServed: ["ES", "PT", "BR"],
-    founder: {
-      "@type": "Person",
-      name: "Luiz Brazão",
-      jobTitle: "Fundador",
-      url: site,
-    },
-    knowsAbout: [
-      "Technology audit",
-      "Digital transformation",
-      "AI automation",
-      "Systems integration",
-      "Technology roadmap",
-      "Mid-market technology consulting",
-      "SaaS management",
-      "Shadow IT",
-      "n8n",
-      "LangChain",
-      "API integration",
-    ],
-    hasOfferCatalog: {
-      "@type": "OfferCatalog",
-      name: "Servicios de IA Operators",
-      itemListElement: [
-        { name: "Automatización con IA", path: "servicios/automatizacion-ia/" },
-        { name: "Chatbots", path: "servicios/chatbots/" },
-        { name: "Diseño web", path: "servicios/diseno-web/" },
-        { name: "Agencia SEO", path: "servicios/agencia-seo/" },
-        { name: "Marketing digital", path: "servicios/marketing-digital/" },
-        { name: "Agencia de IA", path: "servicios/agencia-ia/" },
-        { name: "Radiografía Digital — Auditoría de sistemas", path: "auditoria-de-sistemas/" },
-        { name: "Roadmap Tecnológico", path: "roadmap-tecnologico/" },
-        { name: "Implementación tecnológica", path: "implementacion/" },
-      ].map((s) => ({
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: s.name,
-          url: new URL(`/${locale}/${s.path}`, site).toString(),
-        },
-      })),
-    },
-    sameAs: socials.map((item) => item.href),
-  },
+  organizationNode({
+    locale,
+    description:
+      "Auditoria, roadmap e implementacion tecnologica para empresas medianas. Diagnostico riguroso, priorizacion y ejecucion sin hand-offs.",
+    extra: { hasOfferCatalog: OFFER_CATALOG },
+  }),
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": WEBSITE_ID,
     name: "IA Operators",
     url: site,
+    inLanguage: locale,
+    publisher: ORG_REF,
     potentialAction: {
       "@type": "SearchAction",
       target: {
@@ -153,7 +128,7 @@ const metaDescription = meta?.description ?? "";
     <WhyUs why={home?.why ?? {}} industries={home?.industries ?? []} />
     <ServiceCatalog locale={locale} />
     <Services services={home?.services ?? {}} />
-    <Testimonial testimonial={home?.testimonial ?? {}} socials={socials} />
+    <Testimonial testimonial={home?.testimonial ?? {}} socials={socials} ctaHref={`/${locale}/sobre/`} />
     <ClientTestimonials clientTestimonials={home?.clientTestimonials ?? { badge: "", title: "", items: [] }} />
     <BlogSection blogSection={home?.blogSection ?? {}} posts={latestPosts} locale={locale} />
     <FAQ faq={faq ?? { items: [] }} />
