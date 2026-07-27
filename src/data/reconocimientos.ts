@@ -15,9 +15,10 @@ export interface Reconocimiento {
   /** Texto del enlace. Es la marca del directorio, tal cual. */
   anchor: string;
   href: string;
-  /** `sponsored` para listados pagados o intercambiados; `ugc` para perfiles
-   *  creados por terceros; omitir el valor no es una opción. */
-  rel: string;
+  /** Opcional. `sponsored` para listados pagados o intercambiados, `ugc` para
+   *  perfiles creados por terceros. Si se omite, no se emite el atributo y el
+   *  enlace transmite autoridad hacia el destino. */
+  rel?: string;
   caption: Record<Loc, string>;
 }
 
@@ -26,7 +27,6 @@ export const RECONOCIMIENTOS: Reconocimiento[] = [
     key: "designrush",
     anchor: "Designrush",
     href: "https://www.designrush.com/agency/digital-marketing/es",
-    rel: "sponsored noopener",
     caption: {
       es: "Listados entre las agencias de marketing digital en España",
       pt: "Listados entre as agências de marketing digital em Espanha",

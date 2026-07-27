@@ -30,7 +30,7 @@ const copy = RECONOCIMIENTOS_COPY[loc];
           <a
             href={item.href}
             target="_blank"
-            rel={item.rel}
+            rel={item.rel || undefined}
             class="text-orange-400 hover:text-orange-300 font-semibold transition-colors"
           >
             {item.anchor} ↗
