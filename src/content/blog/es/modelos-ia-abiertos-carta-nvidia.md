@@ -18,7 +18,7 @@ imageSizes: "(max-width: 768px) 100vw, 896px"
 imageSrcset: "/images/blog/modelos-ia-abiertos-16x9-640.png 640w, /images/blog/modelos-ia-abiertos-16x9-960.png 960w, /images/blog/modelos-ia-abiertos-16x9.png 1200w"
 imageSrcsetAvif: "/images/blog/modelos-ia-abiertos-16x9-640.avif 640w, /images/blog/modelos-ia-abiertos-16x9-960.avif 960w, /images/blog/modelos-ia-abiertos-16x9.avif 1200w"
 imageSrcsetWebp: "/images/blog/modelos-ia-abiertos-16x9-640.webp 640w, /images/blog/modelos-ia-abiertos-16x9-960.webp 960w, /images/blog/modelos-ia-abiertos-16x9.webp 1200w"
-imageAlt: "Equipo directivo reunido ante un portátil que muestra un aviso de acceso restringido y condiciones actualizadas de un proveedor de IA"
+imageAlt: "Ejecutivo mostrando la carta firmada por Microsoft, Meta y Nvidia ante un equipo directivo, junto a un portátil con un aviso de acceso restringido"
 ogImage: /images/blog/modelos-ia-abiertos-og.png
 ogImageWidth: 1200
 ogImageHeight: 630

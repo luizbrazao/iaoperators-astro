@@ -18,7 +18,7 @@ imageSizes: "(max-width: 768px) 100vw, 896px"
 imageSrcset: "/images/blog/modelos-ia-abiertos-16x9-640.png 640w, /images/blog/modelos-ia-abiertos-16x9-960.png 960w, /images/blog/modelos-ia-abiertos-16x9.png 1200w"
 imageSrcsetAvif: "/images/blog/modelos-ia-abiertos-16x9-640.avif 640w, /images/blog/modelos-ia-abiertos-16x9-960.avif 960w, /images/blog/modelos-ia-abiertos-16x9.avif 1200w"
 imageSrcsetWebp: "/images/blog/modelos-ia-abiertos-16x9-640.webp 640w, /images/blog/modelos-ia-abiertos-16x9-960.webp 960w, /images/blog/modelos-ia-abiertos-16x9.webp 1200w"
-imageAlt: "Executive team gathered around a laptop showing a restricted access notice and updated terms from an AI provider"
+imageAlt: "Executive holding up the letter signed by Microsoft, Meta and Nvidia in front of a leadership team, next to a laptop showing a restricted access notice"
 ogImage: /images/blog/modelos-ia-abiertos-og.png
 ogImageWidth: 1200
 ogImageHeight: 630
