@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import { fileURLToPath } from "node:url";
 import vercel from "@astrojs/vercel";
+import rehypeExternalLinks from "./src/lib/rehype-external-links.mjs";
 
 export default defineConfig({
   site: "https://iaoperators.com",
@@ -37,6 +38,18 @@ export default defineConfig({
     }),
     react(),
   ],
+
+  // Enlaces externos del Markdown: nueva pestaña + rel seguro, sin nofollow.
+  markdown: {
+    rehypePlugins: [rehypeExternalLinks],
+  },
+
+  // Dominios remotos autorizados para el pipeline de imágenes de Astro
+  // (astro:assets). Solo se optimizan las portadas con `optimizeImage: true`
+  // en el frontmatter; el resto de posts sigue sirviendo la URL original.
+  image: {
+    domains: ["scribos.s3.us-east-1.amazonaws.com"],
+  },
 
   vite: {
     plugins: [tailwindcss()],

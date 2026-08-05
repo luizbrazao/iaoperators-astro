@@ -155,4 +155,34 @@
   summary {
     cursor: var(--cursor-pointer);
   }
+
+  /* Foco visível para navegação por teclado (não afeta o clique do mouse) */
+  a:focus-visible,
+  button:focus-visible,
+  summary:focus-visible,
+  [role="button"]:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid #ff6900;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Ancoragem do índice: compensa o header fixo ao saltar para um heading */
+  :target {
+    scroll-margin-top: 8rem;
+  }
+}
+
+/* Respeita a preferência do sistema por menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

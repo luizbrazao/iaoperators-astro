@@ -1,16 +1,15 @@
 ---
-title: "How to use Codex: 15 tips to go from vibe coding to verifiable work"
-seoTitle: "How to use Codex: 15 tips for real results"
-ogTitle: "How to use Codex without wrecking production"
+title: "How to use Codex: 15 tips for real results"
 description: "Learn how to use Codex from OpenAI with 15 practical tips to write code, automate tasks, work with local files and execute changes safely and under control."
 category: tools
-articleSection: "AI Agents & Automation"
+articleSection: "AI Tools"
 date: 2026-08-05T19:18:00+02:00
 image: https://scribos.s3.us-east-1.amazonaws.com/workspaces/2/articles/7/cover/1785958349-938e0c31c666.png
 cover: https://scribos.s3.us-east-1.amazonaws.com/workspaces/2/articles/7/cover/1785958349-938e0c31c666.png
 imageSchema:
   - https://scribos.s3.us-east-1.amazonaws.com/workspaces/2/articles/7/cover/1785958349-938e0c31c666.png
-imageAlt: "Developer reviewing on screen the changes proposed by an AI agent before approving them"
+imageAlt: "Developer reviewing the changes Codex proposed before approving them"
+optimizeImage: true
 ogImage: /og/en/how-to-use-codex-tips.png
 ogImageWidth: 1200
 ogImageHeight: 630
@@ -33,6 +32,10 @@ tags:
   - Codex Goal mode
   - vibe coding
 locale: en
+related:
+  - 9-herramientas-inteligencia-artificial-desarrollo
+  - aprender-a-programar-en-la-era-de-la-ia
+  - fin-desarrollo-software-ia
 translationKey: como-usar-codex
 author: "Luiz Fernando Brazão"
 authorTitle: "Founder of IA Operators"
@@ -42,6 +45,10 @@ authorSameAs:
 authorBio: "Luiz Fernando Brazão is the founder of IA Operators and works on agent architecture, enterprise automation, systems integration and shipping artificial intelligence to production."
 faqSchema: true
 draft: false
+ctaTitle: "Want to deploy AI agents without losing control over data, permissions and results?"
+ctaText: "We analyze your processes, systems and risks, design the flow and build the automation inside your current environment."
+ctaPrimaryLabel: "Request an automation audit"
+ctaPrimaryHref: "/en/auditoria-de-sistemas/"
 faq:
   - q: "What is OpenAI Codex?"
     a: "Codex is OpenAI's agent specialized in programming and technical work. It can write and debug code, run commands and tests, review changes, work with repositories and use extra tools depending on the environment and the permissions available."
@@ -71,11 +78,25 @@ This guide gives you 15 practical tips to move from *vibe coding* — asking for
 
 > **Update note — August 2026:** available features can vary depending on your plan, operating system, region, workspace permissions and app version.
 
+## In this guide
+
+- [What Codex is and what it is for](#what-codex-is-and-what-it-is-for)
+- [Before you start: choose where to use Codex](#before-you-start-choose-where-to-use-codex)
+- [How to get started with Codex in 5 minutes](#how-to-get-started-with-codex-in-5-minutes)
+- [The 15 tips](#how-to-use-codex-to-get-real-work-done)
+- [Practical example](#practical-example)
+- [Security](#security-the-rules-that-should-accompany-every-prompt)
+- [Common mistakes](#common-mistakes-when-using-codex)
+- [Prompt template](#a-prompt-template-for-using-codex)
+- [Checklist](#checklist-to-start-today)
+- [Frequently asked questions](#preguntas-frecuentes)
+- [Official sources](#official-sources)
+
 ## What Codex is and what it is for
 
 Codex is OpenAI's agent specialized in software development and technical work. It can write and debug code, run tests and commands, review changes, work with repositories and operate on local folders when you grant it permission.
 
-OpenAI currently separates three main experiences:
+OpenAI [currently separates three main experiences](https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex):
 
 - **Chat:** for questions, search, ideas and conversational help.
 - **Work:** for research, analysis and deliverables such as documents, spreadsheets, presentations, reports or Sites.
@@ -89,13 +110,29 @@ If you are still mapping the landscape of [AI tools for development](/en/blog/9-
 
 Codex can be used from several surfaces:
 
-- The ChatGPT desktop app for macOS or Windows.
+- [The ChatGPT desktop app for macOS or Windows](https://openai.com/index/introducing-the-codex-app/).
 - An extension for development environments.
 - Codex CLI from the terminal.
 - Supported cloud environments.
 - Remote access to certain sessions from the mobile app.
 
 The right choice depends on the job. Use the **desktop app** when you need to combine code, local files, terminal, browser and applications. Use the **IDE extension** when you want to review changes inside your editor. Pick the **CLI** if you prefer working from the terminal or want Codex inside an existing technical workflow.
+
+## How to get started with Codex in 5 minutes
+
+If you have never used Codex, this is the shortest path to a first result you can review:
+
+1. **Open Codex in whatever environment you have available:** desktop app, IDE extension, CLI or cloud.
+2. **Select a folder or connect the repository** you are going to work on, and only that one.
+3. **Give it the project context and the source of truth:** what it does, which file wins when there are contradictions and which documentation is current.
+4. **Send a first small, verifiable task**, with a success condition you can check.
+5. **Review the plan, the diff and the tests before approving** any change.
+
+A good first prompt:
+
+> We are working on a React and Node.js application. Fix the bug that lets a user create two bookings by double-clicking. Do not change the design or the database schema. First analyze the cause and present a plan. Do not modify anything until I approve the plan.
+
+Pick a first task that is small, reversible and objectively verifiable: that way you can check the result in minutes and, if it goes wrong, undo it without consequences.
 
 With that out of the way, here are the 15 tips.
 
@@ -203,7 +240,7 @@ Browsing should not replace reasoning over the context you already provided.
 
 ### 6. Use Computer Use with minimum permissions
 
-Codex can operate applications through Computer Use: looking at interfaces, clicking, typing and working with tools that have no decent API.
+Codex can operate applications through [Computer Use](https://openai.com/index/codex-for-almost-everything/): looking at interfaces, clicking, typing and working with tools that have no decent API.
 
 That is useful for testing a UI, performing actions in an internal app, checking a signup flow, comparing visual behavior before and after a change, working with legacy systems or automating tasks in tools with no integration.
 
@@ -251,7 +288,7 @@ A good rhythm is: **use voice to set up and steer; use text to authorize and clo
 
 ### 9. Choose between Sol, Terra and Luna based on the task
 
-Codex currently offers three main models in the GPT-5.6 family:
+Codex currently offers [three main models in the GPT-5.6 family](https://help.openai.com/en/articles/20001325-a-preview-of-gpt-56-sol-terra-and-luna):
 
 - **Sol:** for complex, ambiguous or high-value work.
 - **Terra:** for everyday tasks that need solid reasoning and tool use.
@@ -269,7 +306,7 @@ Use the lowest level of reasoning that produces a reliable result. More reasonin
 
 ### 10. Turn repetitive processes into Skills
 
-Skills are reusable flows that teach ChatGPT or Codex to do a task consistently. A Skill can contain instructions, examples, scripts, templates, quality criteria, reference material and a fixed sequence of steps.
+[Skills](https://help.openai.com/en/articles/20001066-skills-in-chatgpt) are reusable flows that teach ChatGPT or Codex to do a task consistently. A Skill can contain instructions, examples, scripts, templates, quality criteria, reference material and a fixed sequence of steps.
 
 Once installed, the system can pick it up automatically when it is relevant, or you can ask for it explicitly.
 
@@ -292,7 +329,7 @@ A well-designed Skill turns tacit expertise into a reusable process.
 
 Before asking Codex to open an app and click around, check whether there is a plugin, an official integration, an API, an MCP server, a specific Skill or a command line tool.
 
-Plugins can bundle Skills, apps, templates and integrations so Codex gets context and can act inside supported tools. OpenAI has expanded the catalogue of plugins available for development and productivity services.
+[Plugins can bundle Skills, apps, templates and integrations](https://help.openai.com/en/articles/20001256) so Codex gets context and can act inside supported tools. OpenAI has expanded the catalogue of plugins available for development and productivity services.
 
 Recommended order:
 
@@ -307,7 +344,7 @@ When no suitable integration exists, use Computer Use with intermediate checks a
 
 ### 12. Schedule automations that deliver auditable output
 
-Codex can run recurring work through Automations: triaging unlabelled issues, analyzing CI failures, preparing a pull request summary, checking outdated documentation, reviewing dependencies, analyzing logs, continuing a long-running task or following up on project conversations.
+Codex can [run recurring work through Automations](https://openai.com/codex/): triaging unlabelled issues, analyzing CI failures, preparing a pull request summary, checking outdated documentation, reviewing dependencies, analyzing logs, continuing a long-running task or following up on project conversations.
 
 Automations can reuse existing threads, keep context and pick work back up over time.
 
@@ -321,7 +358,7 @@ An automation that does work without producing a verifiable record turns into a 
 
 ### 13. Use Goal mode for durable, verifiable objectives
 
-Goal mode is built for work that a single action cannot finish. It lets you set a durable objective and define success criteria so Codex keeps pushing the result forward.
+[Goal mode](https://developers.openai.com/cookbook/examples/codex/using_goals_in_codex) is built for work that a single action cannot finish. It lets you set a durable objective and define success criteria so Codex keeps pushing the result forward.
 
 It suits goals like raising test coverage, cutting build errors, completing a migration, keeping documentation in sync, improving a metric over time or closing a defined list of issues.
 
@@ -343,7 +380,7 @@ Goal mode does not remove supervision. The longer the agent can work, the more i
 
 ### 14. Understand the difference between local, remote and cloud work
 
-This distinction prevents a lot of permission and expectation problems.
+This distinction prevents a lot of permission and expectation problems, and it depends on [which Codex client you are using](https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan).
 
 **Local work.** Codex accesses a folder or environment on your computer. Useful when it needs local files, installed tools, a specific dev environment, services that only run on your network or desktop applications. Grant access only to the folders it needs.
 
@@ -369,11 +406,29 @@ You can use this prompt:
 
 > Close the task with a short report. Include what you changed, what you did not change, how you validated the result, outstanding risks and the exact steps for someone else to continue.
 
-When the result needs to be shared visually, you can also use ChatGPT Sites to build a page, a lightweight app, a dashboard or a prototype. Sites can be used from Work on the web and from Work or Codex in the desktop app, where it is available for your plan, region and workspace.
+When the result needs to be shared visually, you can also use [ChatGPT Sites](https://help.openai.com/en/articles/20001339-creating-and-managing-chatgpt-sites) to build a page, a lightweight app, a dashboard or a prototype. Sites can be used from Work on the web and from Work or Codex in the desktop app, where it is available for your plan, region and workspace.
 
 Do not auto-publish a sensitive result. Check the files included, personal data, keys or secrets, access permissions, visibility, domain and the deployed version.
 
 Delivering is not just finishing execution. It is leaving the result ready for review, approval or use.
+
+## Practical example
+
+> This block is a **demonstrative scenario**, not a real client case. It includes no metrics, timings or measured results: it is here to show how the pieces above fit together in a single task.
+
+**Context.** A booking application in React and Node.js. The business rules live in `/docs/booking-rules.md`. An impatient user clicks the confirm button twice and two bookings are created.
+
+**Task.** Fix the duplication without touching the database schema or the design.
+
+**Prompt.**
+
+> Use `/docs/booking-rules.md` as the source of truth. Fix the bug that allows two bookings to be created when the user clicks the confirm button twice. You may change the frontend, the API and the related tests; do not change the database schema or the visual design. Before editing, present a plan with the likely cause, the affected files and the validation strategy.
+
+**Expected scope.** The confirm button component, the booking creation handler in the API and the associated tests.
+
+**Validation.** Protection on both frontend and backend, tests passing and one explicit check: two requests with the same idempotency identifier must not create a second booking.
+
+**A limit worth anticipating.** Blocking the button on the frontend looks like enough until a repeated request arrives from another client. The protection that counts is the one on the server; the browser one only improves the experience.
 
 ## Security: the rules that should accompany every prompt
 
@@ -469,12 +524,12 @@ Start with a small result. Define what finished means. Allow only what is necess
 
 Want to apply AI agents to real processes in your company? At **IA Operators** we analyze processes, tools, data and risks before automating anything. We design systems that do not just answer: they execute, integrate with your existing stack and produce measurable results. Start with a [systems and automation audit](/en/auditoria-de-sistemas/) or take a look at our [AI automation service](/en/servicios/automatizacion-ia/).
 
-### Official sources
+## Official sources
 
-- OpenAI — Codex in ChatGPT.
-- OpenAI Help Center — ChatGPT Work and Codex.
-- OpenAI Developers — Recommended models for Codex.
-- OpenAI Help Center — Skills in ChatGPT.
-- OpenAI — Introducing the Codex app.
-- OpenAI — Codex for almost everything.
-- OpenAI Help Center — ChatGPT Sites.
+- [OpenAI — Codex in ChatGPT](https://openai.com/codex/)
+- [OpenAI Help Center — ChatGPT Work and Codex](https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex)
+- [OpenAI Developers — Recommended models for Codex](https://developers.openai.com/codex/models)
+- [OpenAI Help Center — Skills in ChatGPT](https://help.openai.com/en/articles/20001066-skills-in-chatgpt)
+- [OpenAI — Introducing the Codex app](https://openai.com/index/introducing-the-codex-app/)
+- [OpenAI — Codex for (almost) everything](https://openai.com/index/codex-for-almost-everything/)
+- [OpenAI Help Center — Creating and managing ChatGPT Sites](https://help.openai.com/en/articles/20001339-creating-and-managing-chatgpt-sites)

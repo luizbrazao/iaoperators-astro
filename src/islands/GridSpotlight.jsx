@@ -21,10 +21,16 @@ export default function GridSpotlight({ children }) {
           0% { background-position: 0px 0px; }
           100% { background-position: 40px 40px; }
         }
+        @media (prefers-reduced-motion: reduce) {
+          .grid-spotlight-layer {
+            animation: none !important;
+            -webkit-animation: none !important;
+          }
+        }
       `}</style>
 
       <div
-        className="pointer-events-none absolute inset-0 h-full w-full"
+        className="grid-spotlight-layer pointer-events-none absolute inset-0 h-full w-full"
         style={{
           backgroundImage: `
             linear-gradient(to right, rgba(255, 255, 255, 0.35) 1px, transparent 1px),

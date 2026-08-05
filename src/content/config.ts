@@ -42,6 +42,11 @@ const blog = defineCollection({
     imageSrcsetWebp: z.string().optional(),
     imageSizes: z.string().optional(),
     imageAlt: z.string().optional(),
+    // Pasa la portada por el pipeline de imágenes de Astro (astro:assets):
+    // genera AVIF/WebP en 480/768/1200 y las sirve desde nuestro dominio.
+    // Requiere que el host remoto esté autorizado en `image.domains`
+    // (astro.config.mjs). Por defecto `false`: la portada se sirve tal cual.
+    optimizeImage: z.boolean().default(false),
     // Imagen dedicada 1200x630 para Open Graph. Si no existe, se usa `image` y,
     // en su defecto, la tarjeta OG generada en /og/{locale}/{slug}.png.
     ogImage: z.string().optional(),
@@ -63,6 +68,11 @@ const blog = defineCollection({
     authorBio: z.string().optional(),
     tags: z.array(z.string()).optional(),
     locale: z.enum(["es", "pt", "en"]),
+    // Posts relacionados elegidos a mano (slugs del mismo idioma, sin barras).
+    // Se muestran primero; el resto de huecos se completa por relevancia.
+    // Un slug inexistente rompe el build a propósito, para no publicar enlaces
+    // internos rotos.
+    related: z.array(z.string()).optional(),
     translationKey: z.string().optional(),
     draft: z.boolean().default(false),
     author: z.string().default("IA Operators"),
@@ -74,6 +84,14 @@ const blog = defineCollection({
       .array(z.object({ q: z.string(), a: z.string() }))
       .optional(),
     faqSchema: z.boolean().default(true),
+    // Bloque CTA al final del post. Sin estos campos se usa el CTA genérico
+    // del template; definirlos permite alinear la llamada a la acción con el
+    // tema del artículo sin tocar el resto del blog.
+    ctaTitle: z.string().optional(),
+    ctaText: z.string().optional(),
+    ctaPrimaryLabel: z.string().optional(),
+    // Ruta interna (p. ej. "/es/auditoria-de-sistemas/"). Debe existir.
+    ctaPrimaryHref: z.string().optional(),
   }),
 });
 

@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
+import { Picture } from "astro:assets";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { ui, getLocale, type Locale } from "../../../i18n/ui";
 import { fetchBlogEntry } from "../../../lib/blog";
@@ -42,16 +43,50 @@ if (!entry) {
 
 const { Content } = await render(entry);
 
-// ─── Related posts (mismo locale, prioriza misma categoría) ──────────────────
+// ─── Related posts ───────────────────────────────────────────────────────────
+// Relevancia semántica: tags compartidos > misma categoría > recencia.
+// Antes se listaban los primeros posts de la categoría en orden de fichero,
+// lo que daba resultados casi aleatorios en categorías grandes como `tools`.
 const relatedPool = await getCollection("blog", ({ id, data }) => id.startsWith(`${locale}/`) && !data.draft);
 const relSlug = (p: { id: string }) => p.id.replace(`${locale}/`, "").replace(/\.(md|mdx)$/, "");
-const relSame = relatedPool.filter((p) => p.id !== entry.id && p.data.category === entry.data.category);
-const relOther = relatedPool.filter((p) => p.id !== entry.id && p.data.category !== entry.data.category);
-const relatedPosts = [...relSame, ...relOther].slice(0, 3).map((p) => ({
-  title: p.data.title,
-  href: `/${locale}/blog/${relSlug(p)}/`,
-  description: p.data.description,
-}));
+const normalizeTag = (tag: string) => tag.toLowerCase().trim();
+const currentTags = new Set((entry.data.tags ?? []).map(normalizeTag));
+const relatedScore = (p: (typeof relatedPool)[number]) => {
+  const shared = (p.data.tags ?? []).filter((tag) => currentTags.has(normalizeTag(tag))).length;
+  const sameCategory = p.data.category === entry.data.category ? 1 : 0;
+  return shared * 3 + sameCategory * 2;
+};
+const relatedRanked = relatedPool
+  .filter((p) => p.id !== entry.id)
+  .map((p) => ({ post: p, score: relatedScore(p) }))
+  .sort(
+    (a, b) =>
+      b.score - a.score ||
+      b.post.data.date.getTime() - a.post.data.date.getTime(),
+  );
+// Selección manual (frontmatter `related`) primero; el resto de huecos se
+// completa por relevancia y, si no la hay, por lo más reciente del idioma, para
+// no dejar ningún post sin enlaces internos.
+const manualRelated = (entry.data.related ?? []).map((wanted) => {
+  const match = relatedPool.find((p) => relSlug(p) === wanted);
+  if (!match) {
+    throw new Error(
+      `[blog] related: no existe "${wanted}" en ${locale}/ (referenciado desde ${entry.id})`,
+    );
+  }
+  return match;
+});
+const manualIds = new Set(manualRelated.map((p) => p.id));
+const relatedPosts = [
+  ...manualRelated,
+  ...relatedRanked.map(({ post }) => post).filter((p) => !manualIds.has(p.id)),
+]
+  .slice(0, 3)
+  .map((p) => ({
+    title: p.data.title,
+    href: `/${locale}/blog/${relSlug(p)}/`,
+    description: p.data.description,
+  }));
 const relatedLabel = locale === "en" ? "Related posts" : "Posts relacionados";
 
 
@@ -228,6 +263,47 @@ const faqJsonLd =
 
 const jsonLd = [blogPostingJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [])];
 
+// ─── CTA final ───────────────────────────────────────────────────────────────
+// Copy por defecto (genérico, igual que antes) con override por frontmatter
+// para alinear la llamada a la acción con el tema del artículo.
+const DEFAULT_CTA: Record<Locale, { title: string; text: string; label: string; href: string }> = {
+  es: {
+    title: "¿Listo para actuar?",
+    text: "Diagnóstico, priorización y ejecución — sin hand-offs. El mismo equipo que mapea el problema construye la solución.",
+    label: "Hablar con un especialista",
+    href: `/${locale}/contact/`,
+  },
+  pt: {
+    title: "Pronto para agir?",
+    text: "Diagnóstico, priorização e execução — sem hand-offs. O mesmo time que mapeia o problema constrói a solução.",
+    label: "Falar com um especialista",
+    href: `/${locale}/contact/`,
+  },
+  en: {
+    title: "Ready to act?",
+    text: "Diagnosis, prioritization and execution — no hand-offs. The same team that maps the problem builds the solution.",
+    label: "Talk to a specialist",
+    href: `/${locale}/contact/`,
+  },
+};
+const ctaDefaults = DEFAULT_CTA[locale] ?? DEFAULT_CTA.es;
+const ctaTitle = entry.data.ctaTitle ?? ctaDefaults.title;
+const ctaText = entry.data.ctaText ?? ctaDefaults.text;
+const ctaPrimaryLabel = entry.data.ctaPrimaryLabel ?? ctaDefaults.label;
+const ctaPrimaryHref = entry.data.ctaPrimaryHref ?? ctaDefaults.href;
+
+// Enlaces secundarios: se omite el que ya es la acción principal para no
+// competir con ella ni duplicar destino.
+const ctaSecondaryLinks = [
+  { href: `/${locale}/contact/`, label: ctaDefaults.label },
+  { href: `/${locale}/auditoria-de-sistemas/`, label: "Radiografía Digital" },
+  { href: `/${locale}/roadmap-tecnologico/`, label: "Roadmap Tecnológico" },
+  {
+    href: `/${locale}/implementacion/`,
+    label: locale === "pt" ? "Implementação" : locale === "en" ? "Implementation" : "Implementación",
+  },
+].filter((link) => link.href !== ctaPrimaryHref);
+
 // Share URLs
 const shareLinkedIn = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonicalFromAlternates)}`;
 const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(canonicalFromAlternates)}`;
@@ -375,7 +451,26 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
       </header>
 
       <!-- Cover image -->
-      {entry.data.image && (
+      {entry.data.image && entry.data.optimizeImage && (
+        <div class="mb-12 relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl aspect-video">
+          <Picture
+            src={entry.data.image}
+            widths={[480, 768, 1200]}
+            sizes={entry.data.imageSizes ?? "(max-width: 768px) 100vw, 896px"}
+            formats={["avif", "webp"]}
+            fallbackFormat="png"
+            inferSize={true}
+            alt={entry.data.imageAlt ?? title}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute inset-0 bg-linear-to-t from-[#050505] via-transparent to-transparent opacity-60" />
+        </div>
+      )}
+
+      {entry.data.image && !entry.data.optimizeImage && (
         <div class="mb-12 relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl aspect-video">
           <picture>
             {entry.data.imageSrcsetAvif && (
@@ -417,6 +512,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
           class="
             prose prose-invert prose-lg max-w-none
             prose-headings:text-white prose-headings:font-bold prose-headings:leading-tight
+            prose-headings:scroll-mt-32
             prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:border-l-4 prose-h2:border-orange-500 prose-h2:pl-4
             prose-h3:text-2xl prose-h3:text-orange-100/90 prose-h3:mt-8
             prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-6
@@ -438,7 +534,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
       <!-- FAQ section (typed frontmatter array) -->
       {faqItems.length > 0 && (
         <div class="px-2 md:px-8 mt-16">
-          <h2 class="text-2xl font-bold text-white mb-8 border-l-4 border-orange-500 pl-4">
+          <h2 id="preguntas-frecuentes" class="scroll-mt-32 text-2xl font-bold text-white mb-8 border-l-4 border-orange-500 pl-4">
             {blogPostDict?.faqTitle ?? "Preguntas frecuentes"}
           </h2>
           <div class="space-y-4">
@@ -476,45 +572,31 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
         <p class="text-xs font-semibold uppercase tracking-widest text-orange-400 mb-3">
           {locale === "pt" ? "Próximos passos" : locale === "en" ? "Next steps" : "Próximos pasos"}
         </p>
-        <h3 class="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight">
-          {locale === "pt"
-            ? "Pronto para agir?"
-            : locale === "en"
-            ? "Ready to act?"
-            : "¿Listo para actuar?"}
-        </h3>
+        <!--
+          Bloque comercial, no editorial: el titular es un <p> destacado y no un
+          heading, para no colgar una sección vacía debajo del H2 del FAQ.
+        -->
+        <p class="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight">
+          {ctaTitle}
+        </p>
         <p class="text-gray-400 mb-6 max-w-xl">
-          {locale === "pt"
-            ? "Diagnóstico, priorização e execução — sem hand-offs. O mesmo time que mapeia o problema constrói a solução."
-            : locale === "en"
-            ? "Diagnosis, prioritization and execution — no hand-offs. The same team that maps the problem builds the solution."
-            : "Diagnóstico, priorización y ejecución — sin hand-offs. El mismo equipo que mapea el problema construye la solución."}
+          {ctaText}
         </p>
         <div class="flex flex-wrap gap-3">
           <a
-            href={`/${locale}/contact/`}
+            href={ctaPrimaryHref}
             class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-orange-500 text-black font-semibold text-sm hover:bg-orange-400 transition-all hover:scale-105"
           >
-            {locale === "pt" ? "Falar com um especialista" : locale === "en" ? "Talk to a specialist" : "Hablar con un especialista"} ↗
+            {ctaPrimaryLabel} ↗
           </a>
-          <a
-            href={`/${locale}/auditoria-de-sistemas/`}
-            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-gray-300 font-medium text-sm hover:border-orange-500/30 hover:text-white transition-all"
-          >
-            Radiografía Digital
-          </a>
-          <a
-            href={`/${locale}/roadmap-tecnologico/`}
-            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-gray-300 font-medium text-sm hover:border-orange-500/30 hover:text-white transition-all"
-          >
-            Roadmap Tecnológico
-          </a>
-          <a
-            href={`/${locale}/implementacion/`}
-            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-gray-300 font-medium text-sm hover:border-orange-500/30 hover:text-white transition-all"
-          >
-            {locale === "pt" ? "Implementação" : locale === "en" ? "Implementation" : "Implementación"}
-          </a>
+          {ctaSecondaryLinks.map((link) => (
+            <a
+              href={link.href}
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-gray-300 font-medium text-sm hover:border-orange-500/30 hover:text-white transition-all"
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
       </div>
 
@@ -566,6 +648,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
             type="button"
             class="p-3 rounded-full bg-[#151515] hover:bg-orange-500 hover:text-white transition-all text-gray-400"
             title={blogPostDict?.copyLink ?? "Copiar link"}
+            aria-label={blogPostDict?.copyLink ?? "Copiar link"}
             data-copy-link={canonicalFromAlternates}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
