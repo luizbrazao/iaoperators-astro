@@ -26,7 +26,13 @@ export const PERSON_REF = { "@id": PERSON_ID } as const;
 export const WEBSITE_REF = { "@id": WEBSITE_ID } as const;
 
 export const ORG_NAME = "IA Operators";
-export const ORG_LOGO = `${SITE}/favicon-32x32.png`;
+/**
+ * Logo del Organization schema. Google exige un logotipo rastreable e indexable
+ * de al menos 112 x 112 px; el favicon de 32 x 32 no cumple la especificación.
+ * https://developers.google.com/search/docs/appearance/structured-data/organization
+ */
+export const ORG_LOGO = `${SITE}/android-chrome-512x512.png`;
+export const ORG_LOGO_SIZE = 512;
 
 export const PERSON_NAME = "Luiz Fernando Brazão";
 export const PERSON_SHORT_NAME = "Luiz Brazão";
@@ -184,7 +190,12 @@ export function organizationNode(
     legalName: LEGAL.legalName,
     taxID: LEGAL.taxId,
     url: SITE,
-    logo: { "@type": "ImageObject", url: ORG_LOGO },
+    logo: {
+      "@type": "ImageObject",
+      url: ORG_LOGO,
+      width: ORG_LOGO_SIZE,
+      height: ORG_LOGO_SIZE,
+    },
     image: ORG_LOGO,
     foundingDate: FOUNDING_DATE,
     founder: founderRef(locale),

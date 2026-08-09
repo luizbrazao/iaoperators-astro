@@ -6,6 +6,33 @@ import { fileURLToPath } from "node:url";
 import vercel from "@astrojs/vercel";
 import rehypeExternalLinks from "./src/lib/rehype-external-links.mjs";
 
+/**
+ * Rutas excluidas del sitemap por declarar `noindex`.
+ * Mantener sincronizado con los `robots="noindex..."` y los
+ * `<meta name="robots" content="noindex...">` de `src/pages`.
+ */
+const NOINDEX_PATHS = [
+  // Panel interno
+  "/es/admin/",
+  // Páginas de "gracias" de la encuesta Segunda Factura IA
+  "/estudio/segunda-factura-ia/encuesta/gracias/",
+  // Propuestas comerciales privadas
+  "/marfa-fase-2/",
+  "/propuesta-kpmg/",
+  "/propuesta-automatizacion-ia/",
+  "/es/proposta-technical-partner/",
+  "/pablo-tovar/",
+  "/sandra-g-design/",
+  "/salones-lume/",
+  "/salao-malaga/",
+  "/rapiplaga/",
+  "/recepcionista-virtual/",
+  "/asistente-ia-apartamentos-turisticos/",
+  "/roadmap-datadicoco/",
+  "/agencia-lanza-ghl/",
+  "/desafio-de-60-dias/",
+];
+
 export default defineConfig({
   site: "https://iaoperators.com",
 
@@ -16,6 +43,12 @@ export default defineConfig({
 
   integrations: [
     sitemap({
+      // Páginas con `noindex` (propuestas privadas, panel de administración y
+      // páginas de "gracias" de las encuestas) no deben aparecer en el sitemap:
+      // enviar a Google una URL que luego le pedimos no indexar es una señal
+      // contradictoria. La lista se corresponde una a una con los archivos de
+      // `src/pages` que declaran `noindex`.
+      filter: (page) => !NOINDEX_PATHS.some((path) => page.includes(path)),
       serialize(item) {
         const knownDates = {
           // Menorca hotel chain
@@ -69,6 +102,15 @@ export default defineConfig({
   redirects: {
     "/": "/es/",
     "/sitemap.xml": "/sitemap-index.xml",
+
+    // Canibalización: /es/agencia-de-ia/ y /es/servicios/agencia-ia/ competían
+    // por la misma keyword ("agencia de ia" / "agencia de inteligencia
+    // artificial") con dos URLs distintas, ambas enlazadas desde el menú.
+    // El índice de ciudades desaparece — las tres ciudades ya están listadas
+    // dentro de la propia landing de servicio — y las páginas locales
+    // /es/agencia-de-ia/{ciudad}/ se mantienen, porque su intención de
+    // búsqueda sí es distinta.
+    "/es/agencia-de-ia/": { status: 301, destination: "/es/servicios/agencia-ia/" },
     // Portfolio slug redirects (old → new localized slugs)
     "/en/portfolio/radiografia-cadena-hotelera-menorca/": "/en/portfolio/hotel-chain-digital-audit-menorca/",
     "/pt/portfolio/radiografia-cadena-hotelera-menorca/": "/pt/portfolio/radiografia-rede-hoteleira-menorca/",

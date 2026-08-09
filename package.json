@@ -4,7 +4,9 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "npm run check:keywords && astro build",
+    "build:only": "astro build",
+    "check:keywords": "node scripts/check-keywords.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "survey:check-supabase": "tsx scripts/check-survey-supabase.ts",

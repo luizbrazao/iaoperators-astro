@@ -44,16 +44,19 @@ const {
   jsonLd,
 } = Astro.props;
 
-const publicSiteEnv = import.meta.env.PUBLIC_SITE_ENV;
-const isProd = publicSiteEnv
-  ? publicSiteEnv === "production"
-  : Boolean(import.meta.env.PROD);
-
-const baseRobots = robots
-  ? isProd && robots.includes("noindex")
-    ? "index,follow"
-    : robots
-  : "index, follow";
+// Se respeta siempre lo que pida la página: si declara `noindex`, se queda en
+// `noindex`.
+//
+// La lógica anterior dependía de PUBLIC_SITE_ENV y hacía justo lo contrario:
+// convertía `noindex` en `index,follow` cuando detectaba producción, dejando
+// indexables el panel de administración y las páginas de "gracias" de las
+// encuestas. Se elimina esa condición en vez de invertirla: la variable no
+// estaba definida en ningún .env del repo, así que condicionar la indexación
+// del sitio entero a su valor era un punto de fallo silencioso.
+//
+// Los despliegues de preview de Vercel ya llegan con `X-Robots-Tag: noindex`
+// desde la plataforma, así que no hacen falta salvaguardas aquí.
+const baseRobots = robots ?? "index, follow";
 const effectiveRobots = baseRobots.includes("noindex")
   ? baseRobots
   : `${baseRobots}, max-image-preview:large`;
