@@ -11,6 +11,7 @@
 // src/data/keywords-primarias.ts).
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import RelatedCases from "@/components/RelatedCases.astro";
 
 const locale = "es";
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
@@ -222,6 +223,10 @@ const jsonLd = [
         </a>
       </div>
     </section>
+
+    <!-- Prueba contextual: los casos que respaldan esta página.
+         La lista sale de `provesFor` en src/data/projects.ts, no de aquí. -->
+    <RelatedCases path="integracion/" locale={locale} />
 
     <!-- CTA final -->
     <section class="px-4 py-20">

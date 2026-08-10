@@ -1,0 +1,127 @@
+---
+// Prueba contextual: los casos del portfolio aparecen dentro de la página que
+// resuelve esa intención, no solo en /portfolio/.
+//
+// El vínculo es bidireccional y tiene una sola fuente de verdad:
+//   caso → servicio   `Project.relatedServiceHref`
+//   servicio → casos  `Project.provesFor`, que lee este componente
+//
+// Por qué importa más allá de la conversión: Google infiere la jerarquía del
+// sitio sobre todo por los enlaces internos. Un caso que solo cuelga de
+// /portfolio/ no aporta autoridad a la landing que queremos posicionar, y una
+// landing sin prueba obliga al visitante a salir a buscarla.
+
+import { projects, type Project } from "@/data/projects";
+import { createT } from "@/i18n/t";
+
+type Props = {
+  /** Ruta sin locale ni barra inicial, p. ej. "servicios/agencia-seo/". */
+  path: string;
+  locale: string;
+  /** Máximo de casos a mostrar. Por defecto todos los que coincidan. */
+  limit?: number;
+};
+
+const { path, locale, limit } = Astro.props as Props;
+
+const t = await createT(locale, { namespaces: ["projects"] });
+
+const L = {
+  es: {
+    badge: "Prueba",
+    title: "Cómo se ve esto en producción",
+    subtitle: "Casos reales, con el enlace al sitio en vivo cuando el cliente lo permite.",
+    cta: "Ver el caso completo",
+    all: "Ver todos los casos",
+  },
+  pt: {
+    badge: "Prova",
+    title: "Como isso fica em produção",
+    subtitle: "Casos reais, com link para o site no ar quando o cliente permite.",
+    cta: "Ver o caso completo",
+    all: "Ver todos os casos",
+  },
+  en: {
+    badge: "Proof",
+    title: "What this looks like in production",
+    subtitle: "Real projects, linked to the live site where the client allows it.",
+    cta: "Read the full case",
+    all: "See all cases",
+  },
+} as const;
+
+const tx = (L as any)[locale] ?? L.es;
+
+const norm = (p: string) => `/${p}`.replace(/\/{2,}/g, "/").replace(/\/?$/, "/");
+const target = norm(path);
+
+const localeKey = (["es", "pt", "en"] as const).includes(locale as any)
+  ? (locale as "es" | "pt" | "en")
+  : "es";
+
+let matches: Project[] = projects.filter((p) =>
+  (p.provesFor ?? []).some((entry) => norm(entry) === target),
+);
+if (limit) matches = matches.slice(0, limit);
+---
+
+{matches.length > 0 && (
+  <section class="px-4 py-20">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+          {tx.badge}
+        </span>
+        <h2 class="text-3xl md:text-4xl font-bold mb-3">{tx.title}</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">{tx.subtitle}</p>
+      </div>
+
+      <!-- Con un solo caso, la rejilla de dos columnas dejaba media fila vacía. -->
+      <div
+        class={`grid gap-6 ${
+          matches.length === 1 ? "grid-cols-1 max-w-2xl mx-auto" : "grid-cols-1 md:grid-cols-2"
+        }`}
+      >
+        {matches.map((project) => {
+          const href = `/${localeKey}/portfolio/${project.slugs[localeKey]}/`;
+          const metric = project.metrics?.[0];
+          return (
+            <a
+              href={href}
+              class="group flex flex-col rounded-3xl border border-white/10 bg-[#0A0A0A] p-7 hover:border-orange-500/40 transition-colors"
+            >
+              <span class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3">
+                {project.categoryKey ? t(project.categoryKey) : project.category}
+              </span>
+              <h3 class="text-xl font-semibold text-white mb-3 leading-snug">
+                {t(project.titleKey)}
+              </h3>
+              <p class="text-gray-400 text-sm leading-relaxed mb-5 flex-1">
+                {t(project.taglineKey)}
+              </p>
+
+              {metric && (
+                <p class="mb-5 flex items-baseline gap-2">
+                  <span class="text-2xl font-bold text-white tabular-nums">{metric.value}</span>
+                  <span class="text-xs text-gray-500 uppercase tracking-wider">
+                    {t(metric.labelKey)}
+                  </span>
+                </p>
+              )}
+
+              <span class="text-orange-400 font-medium text-sm group-hover:underline">
+                {tx.cta} →
+              </span>
+            </a>
+          );
+        })}
+      </div>
+
+      <p class="text-center mt-10">
+        <a href={`/${localeKey}/portfolio/`} class="text-gray-400 hover:text-orange-400 text-sm transition-colors">
+          {tx.all} →
+        </a>
+      </p>
+    </div>
+  </section>
+)}

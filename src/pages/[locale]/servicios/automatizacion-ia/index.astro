@@ -9,6 +9,7 @@ export async function getStaticPaths() {
 
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
 import { getLocale } from "../../../../i18n/ui";
+import RelatedCases from "@/components/RelatedCases.astro";
 
 const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
 
@@ -390,6 +391,10 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
         </div>
       </div>
     </section>
+
+    <!-- Prueba contextual: los casos que respaldan esta página.
+         La lista sale de `provesFor` en src/data/projects.ts, no de aquí. -->
+    <RelatedCases path="servicios/automatizacion-ia/" locale={locale} />
 
     <!-- FAQ -->
     <section class="px-4 py-20">

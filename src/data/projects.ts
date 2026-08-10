@@ -70,6 +70,17 @@ export type Project = {
      */
     webVitalsKey?: string;
 
+    /**
+     * Páginas para las que este caso funciona como prueba. Rutas sin locale ni
+     * barra inicial, p. ej. "servicios/agencia-seo/".
+     *
+     * Es el lado inverso de `relatedServiceHref`: el caso apunta a su servicio,
+     * y el servicio recupera sus casos leyendo esta lista desde
+     * `RelatedCases.astro`. Una sola fuente de verdad para el enlace en ambas
+     * direcciones, en vez de listas duplicadas en cada landing.
+     */
+    provesFor?: string[];
+
     problemKey: string;
     contextKey?: string;
     engineeringIntroKey: string;
@@ -112,6 +123,11 @@ export const projects: Project[] = [
             en: "hotel-chain-digital-audit-menorca",
             pt: "radiografia-rede-hoteleira-menorca",
         },
+
+        provesFor: [
+            "auditoria-de-sistemas/",
+            "integracion/",
+        ],
         publishedAt: "2025-04-10",
 
         category: "Auditoría tecnológica / Hotelería",
@@ -288,6 +304,12 @@ export const projects: Project[] = [
             en: "chatplug-whatsapp-altegio",
             pt: "chatplug-whatsapp-altegio",
         },
+
+        provesFor: [
+            "servicios/chatbots/",
+            "servicios/automatizacion-ia/",
+            "integracion/whatsapp-business-api/",
+        ],
         publishedAt: "2025-03-01",
 
         category: "SaaS / CRM Integration",
@@ -428,6 +450,11 @@ export const projects: Project[] = [
             en: "tourism-booking-chatbot-whatsapp",
             pt: "chatbot-reservas-turisticas-whatsapp",
         },
+
+        provesFor: [
+            "servicios/chatbots/",
+            "servicios/automatizacion-ia/",
+        ],
         publishedAt: "2025-02-15",
 
         category: "Automação de Reservas / WhatsApp",
@@ -560,6 +587,11 @@ export const projects: Project[] = [
             en: "propiziare-immigra-web-seo",
             pt: "propiziare-immigra-web-seo",
         },
+
+        provesFor: [
+            "servicios/agencia-seo/",
+            "servicios/diseno-web/",
+        ],
         publishedAt: "2026-08-10",
 
         category: "Web + SEO técnico / Asesoría de inmigración",
