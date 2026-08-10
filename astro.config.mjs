@@ -105,10 +105,14 @@ export default defineConfig({
 
     // Árbol de blog sin prefijo de idioma. `src/pages/blog.astro` generaba
     // /blog/ con el mismo contenido que /es/blog/: dos árboles para la misma
-    // página, ambas indexables. Se elimina la ruta y se manda todo al hub
-    // editorial en ES, que es donde vive el contenido y los enlaces internos.
+    // página, ambas indexables. Se elimina la ruta y se manda el índice al hub
+    // editorial en ES.
+    //
+    // El comodín de nivel post (/blog/<slug>) NO va aquí: en `output: "static"`
+    // Astro trata la clave dinámica como una ruta más y exige un getStaticPaths
+    // que no existe (falla el build). Vive en `vercel.json`, en la capa de
+    // redirects de la plataforma, que es donde corresponde.
     "/blog/": "/es/blog/",
-    "/blog/[...slug]": "/es/blog/[...slug]",
 
     // Portfolio slug redirects (old → new localized slugs)
     "/en/portfolio/radiografia-cadena-hotelera-menorca/": "/en/portfolio/hotel-chain-digital-audit-menorca/",
