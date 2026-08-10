@@ -272,6 +272,11 @@ export const CASOS: Record<CasoSlug, CasoIntegracion> = {
         label: "Integración de ERP",
         body: "El otro extremo de la ficha de cliente, y el que manda en los datos fiscales.",
       },
+      {
+        href: "/es/blog/por-que-tu-equipo-no-usa-el-crm/",
+        label: "Por qué nadie lo usa",
+        body: "La adopción no es un problema de formación: es que quien teclea el dato no es quien lo aprovecha.",
+      },
     ],
     faq: [
       {
