@@ -9,6 +9,10 @@
  *
  * Avisa (sin fallar) si:
  *   4. Una ruta declarada ya no existe en `src/pages`.
+ *   5. Dos primarias son semánticamente muy próximas (p. ej. "agencia de ia" y
+ *      "agencia de inteligencia artificial"). No falla: decidir si son la misma
+ *      intención exige mirar la SERP y el Search Console, y eso no lo hace un
+ *      script. El aviso solo marca el par para revisión humana.
  *
  * Uso: `npm run check:keywords`
  */
@@ -82,6 +86,56 @@ for (const e of entries) {
       errors.push(
         `"${sec}" es primaria de ${owner[0]} y secundaria de ${e.path}.\n` +
           `    Quítala de las secundarias o cambia la primaria de una de las dos.`,
+      );
+    }
+  }
+}
+
+// --- 3-bis. Primarias semánticamente próximas (aviso) --------------------
+// Regla: se avisa cuando dos primarias son casi el mismo concepto SIN que una
+// contenga a la otra. La contención estricta ("ley de atención al cliente" vs
+// "ley atención al cliente energía", o "agencia de ia" vs "agencia de ia madrid")
+// es la relación normal pilar→hijo y no se avisa.
+const STOPWORDS = new Set(["de", "del", "la", "el", "los", "las", "para", "con", "en", "y", "a", "al", "un", "una"]);
+const SINONIMOS = [
+  [/\bias?\b/g, "inteligencia artificial"],
+  [/\bai\b/g, "inteligencia artificial"],
+  [/\bpymes?\b/g, "pyme"],
+  [/\bempresas\b/g, "empresa"],
+  [/\bsistemas\b/g, "sistema"],
+  [/\bagencias\b/g, "agencia"],
+];
+
+function tokens(kw) {
+  let s = normalize(kw);
+  for (const [re, to] of SINONIMOS) s = s.replace(re, to);
+  return new Set(s.split(" ").filter((w) => w && !STOPWORDS.has(w)));
+}
+
+function jaccard(a, b) {
+  const inter = [...a].filter((x) => b.has(x)).length;
+  const union = new Set([...a, ...b]).size;
+  return union === 0 ? 0 : inter / union;
+}
+
+// 0.8 deja fuera a los hermanos que solo se diferencian por un calificador
+// ("... energía" vs "... telecomunicaciones", "... madrid" vs "... barcelona":
+// Jaccard 0,6) y conserva los pares que son el mismo concepto escrito de dos
+// formas ("agencia de ia" vs "agencia de inteligencia artificial": 1,0).
+const SIMILARITY_THRESHOLD = 0.8;
+for (let i = 0; i < entries.length; i++) {
+  for (let j = i + 1; j < entries.length; j++) {
+    const a = tokens(entries[i].primaria);
+    const b = tokens(entries[j].primaria);
+    const subsetAB = [...a].every((x) => b.has(x)) && a.size < b.size;
+    const subsetBA = [...b].every((x) => a.has(x)) && b.size < a.size;
+    if (subsetAB || subsetBA) continue; // relación pilar→hijo, esperada
+    if (jaccard(a, b) >= SIMILARITY_THRESHOLD) {
+      warnings.push(
+        `Primarias muy próximas — revisar si son la misma intención:\n` +
+          `      "${entries[i].primaria}"  →  ${entries[i].path}\n` +
+          `      "${entries[j].primaria}"  →  ${entries[j].path}\n` +
+          `      Comprobar solapamiento de queries en Search Console y de SERP antes de consolidar.`,
       );
     }
   }

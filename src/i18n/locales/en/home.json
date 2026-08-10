@@ -1,13 +1,12 @@
 {
   "meta": {
-    "title": "IA Operators | AI & digital marketing agency",
-    "description": "AI and digital marketing agency: automation, chatbots, web design, SEO and tech audits. From strategy to production, no hype."
+    "title": "IA Operators | Systems integration & AI automation",
+    "description": "We integrate ERP, POS, e-commerce and CRM with AI on top of the systems you already use. From strategy to production."
   },
   "hero": {
-    "titleHighlight": "We automate, rank and grow",
-    "titleHighlightMobile": "We automate, rank and grow",
-    "titleRest": "your business with AI.",
-    "subtitle": "AI and digital marketing agency: automation, chatbots, web design, SEO and tech audits. We diagnose and build — no hand-offs, no hype.",
+    "titleHighlight": "We connect and automate",
+    "titleRest": "the systems your business already runs.",
+    "subtitle": "Systems integration and automation for business: ERP, POS, e-commerce, CRM and WhatsApp — with AI where it pays off. From strategy to production, no hand-offs.",
     "cta": "Talk to a specialist ↗",
     "tech": "We work with the stack you already use"
   },

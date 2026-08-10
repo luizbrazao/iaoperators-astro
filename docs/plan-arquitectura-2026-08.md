@@ -3,6 +3,7 @@
 **Base:** estudo de palavras-chave no Google Ads Keyword Planner (09/ago/2026), conta España, período jul/2025–jun/2026.
 **Escopo:** ES prioritário, EN e PT secundários. Inclui o silo `/es/cumplimiento/` já construído.
 **Substitui:** a direção estratégica proposta na auditoria SEO anexa (ver §1.3 — a auditoria acerta o diagnóstico e erra o eixo).
+**Revisão 2 (09/ago/2026):** incorpora a contra-auditoria e os dados reais do Search Console. Mudanças materiais em §0.2 (cumplimiento vira *wedge*, não núcleo), §5.1 (redirects), §7 (regras de linking e de conteúdo único), §10 (Sprint 0 obrigatório) e §11 (baseline real). O que mudou e por quê está listado em §13.
 
 ---
 
@@ -13,8 +14,16 @@ Três decisões, nesta ordem de importância:
 **1. O eixo semântico do site é *integração e cumprimento normativo*, não "agencia de IA" nem "auditoría tecnológica".**
 Verifactu sozinho tem **10.000–100.000 buscas/mês** em Espanha. Todo o vocabulário de "auditoría tecnológica / roadmap tecnológico" que hoje ocupa a home, o menu e quatro páginas do site (`auditoria-de-sistemas`, `roadmap-tecnologico`, `implementacion`, `metodologia`) tem demanda **residual** (a auditoria SEMrush de julho mediu ~20 buscas/mês). O site está gastando sua área mais valiosa numa intenção de busca que quase ninguém procura.
 
-**2. O silo `/es/cumplimiento/` deixa de ser um anexo e passa a ser o núcleo do site.**
+**2. O silo `/es/cumplimiento/` deixa de ser um anexo e passa a ser o *wedge* de aquisição — não o núcleo permanente da marca.**
 Hoje ele está enterrado abaixo de dez landings de serviço. Os dois pilares regulatórios (Verifactu e Ley 10/2025) são as únicas páginas do site que combinam demanda mensurável, prazo legal com sanção, e uma SERP onde **ninguém vende a implementação técnica**. É a única vantagem assimétrica defensável com 36 domínios de referência.
+
+Mas a força deles — a urgência — vem com uma data de validade. Verifactu obriga em 1/1/2027 e 1/7/2027; a Ley 10/2025 em 28/12/2026. Depois do pico, a demanda migra de "como me adapto" para manutenção. Por isso a hierarquia correta é:
+
+- **Core evergreen da marca:** integración + automatización de sistemas.
+- **Wedge de aquisição 2026–2027:** cumplimiento.
+- **Catálogo de cobertura:** agencia/servicios.
+
+A diferença é sutil e importante: em 2028 ninguém — nem o Google, nem um cliente — deve interpretar a IA Operators como um portal de legislação empresarial.
 
 **3. `/pt/` não recebe o catálogo de serviços.**
 Medido no Planner com localização Portugal: das 100 ideias extraídas (de 213 retornadas), **4 linhas — 3 termos distintos** — chegam a 100 buscas/mês. `automação de processos`, `chatbot para empresas`, `integração de sistemas`, `consultoria de inteligência artificial` estão todas na faixa 10–100. Traduzir dez landings para PT é criar dez páginas *thin* que competem entre si por zero tráfego.
@@ -49,6 +58,9 @@ Sementes por lote:
 - **A conta Google Ads está cancelada / sem forma de pagamento válida.** Nesse estado o Planner devolve **faixas** (`100 – 1 mil`), não números exatos. Todos os volumes abaixo são faixas. Para números exatos é preciso reativar a conta com uma campanha ativa — mesmo com orçamento mínimo.
 - **Ahrefs devolveu `Insufficient plan`** em Keywords Explorer, Site Explorer e nos endpoints de Search Console. **Semrush está sem API units.** Portanto **não há KD (dificuldade) nem volume exato neste estudo**. A priorização abaixo usa como *proxy* de dificuldade comercial o **nível de concorrência paga** e a **faixa de lance de topo de página**, mais os achados de SERP já verificados em sessões anteriores.
 - Volume de busca **não é demanda de compra**. O caso mais claro está no §2.1: `verifactu` tem volume enorme, mas o miolo do cluster é gente procurando *programa de facturación gratis*. O dinheiro está na cauda.
+- **`Competition` e `Top of page bid` do Keyword Planner medem o leilão de anúncios, não o SEO.** `Competition` é o número relativo de anunciantes disputando a keyword; o lance de topo é o que anunciantes historicamente pagaram para aparecer entre os anúncios. Nada disso mede dificuldade orgânica, ticket médio ou taxa de conversão. Neste documento CPC alto é lido como **indício de intenção comercial e de disposição a pagar pelo clique** — uma hipótese comercial, não uma premissa arquitetônica. Onde o plano diz "motor de ticket", leia "hipótese de maior valor por lead, a validar em vendas reais".
+- **Somar variantes próximas superestima a demanda.** O Planner reporta a média mensal da keyword **e de suas close variants**; portanto `ley atención al cliente` e `ley atencion al cliente` quase certamente reportam a mesma demanda duas vezes. Nenhum agregado de cluster neste documento deve ser somado.
+- **`+∞` e `+900%` não são medidas de precisão.** Onde o Planner devolve `+∞`, leia **"demanda emergente sem base comparável no período anterior"**. `+900%` é o teto da escala do Planner, não uma taxa exata.
 
 Notação de faixas usada nas tabelas:
 
@@ -110,7 +122,7 @@ Isso valida o timing registrado nas instruções do projeto: estamos no vale, o 
 | `nueva ley de servicios de atención al cliente` | **b** | — | — | — |
 | `ley de servicios de atención al cliente` | **b** | — | — | — |
 
-**Leitura.** Sete variantes na faixa 100–1K cada. O cluster agregado está plausivelmente entre **1.000 e 3.000 buscas/mês** e cresceu ~10× em doze meses. Concorrência paga baixa: os escritórios de advocacia que dominam a SERP não anunciam. A cauda adjacente (`call center para empresas`, `contact center empresas`, `call center omnicanal`, `call center automatizado`, `telemarketing empresas`) está toda na faixa **b**, mas é o vocabulário de quem já entendeu que precisa resolver o problema.
+**Leitura.** Sete variantes na faixa 100–1K cada, todas com crescimento no teto da escala. **Não somo essas faixas:** o Planner agrupa close variants, então as grafias equivalentes provavelmente reportam a mesma demanda repetida. O que se pode afirmar é: *várias formas de consulta desse cluster estão na faixa 100–1K/mês e a demanda cresceu fortemente em doze meses*. O tamanho agregado não é determinável a partir destas faixas. Concorrência paga baixa: os escritórios de advocacia que dominam a SERP não anunciam. A cauda adjacente (`call center para empresas`, `contact center empresas`, `call center omnicanal`, `call center automatizado`, `telemarketing empresas`) está toda na faixa **b**, mas é o vocabulário de quem já entendeu que precisa resolver o problema.
 
 ### 2.3 Cluster INTEGRAÇÃO / ERP / sistemas — o melhor CPC do mercado ES
 
@@ -245,7 +257,7 @@ Inventário real do repositório (`src/pages`), 74 arquivos de rota. O que impor
 | Cluster | Demanda medida | Páginas dedicadas hoje |
 |---|---|---|
 | Verifactu / facturación | **10K–100K/mês** | 1 pilar + 4 casos (`/es/cumplimiento/verifactu/`) |
-| Ley 10/2025 | ~1–3K/mês agregado, +900% | 1 pilar + 5 setoriais + 1 teste |
+| Ley 10/2025 | várias variantes em 100–1K, crescimento no teto da escala | 1 pilar + 5 setoriais + 1 teste |
 | Agência (SEO/web/marketing) | 1K–10K por termo; 10K–100K em `marketing digital` | 3 landings + hub |
 | IA / automação | 100–1K nos termos comerciais (`agencia de ia`, `ia para empresas`); 1K–10K em `agente(s) de ia`, `whatsapp business api`, `centralita virtual`; 10K–100K em `n8n`/`zapier` (intenção de ferramenta) | 4 landings + 3 programáticas de cidade |
 | **Auditoría / roadmap / implementación** | **~20/mês** | **4 páginas + a home inteira + item de menu próprio** |
@@ -311,7 +323,7 @@ O site passa a ter **três silos com funções distintas**, não dez ofertas equ
 │   │   ├── sanciones/                        ← NOVO  ★   (art. 201 bis LGT)
 │   │   └── test/                             ← NOVO  ★★  (teste "¿te aplica Verifactu?")
 │   │
-│   ├── ley-atencion-al-cliente/              ← PILAR ★★  (~1–3K/mês, +900% YoY)
+│   ├── ley-atencion-al-cliente/              ← PILAR ★★  (variantes em 100–1K, crescimento no teto)
 │   │   ├── (index)                           ← já existe
 │   │   ├── energia-agua-gas/                 ← já existe
 │   │   ├── transporte-viajeros/              ← já existe
@@ -320,13 +332,13 @@ O site passa a ter **três silos com funções distintas**, não dez ofertas equ
 │   │   ├── servicios-financieros/            ← já existe
 │   │   ├── test/                             ← já existe
 │   │   ├── plazos-y-sla/                     ← NOVO  ★★ (3 min, 15 días, 2h, 5 días)
-│   │   └── auditoria-enac/                   ← NOVO  ★  (a auditoria anual)
+│   │   └── auditoria-acreditada/             ← NOVO  ★  (auditoria por entidade acreditada pela ENAC)
 │   │
-│   └── factura-electronica-b2b/              ← NOVO  ★★ PILAR 3 (Crea y Crece, out/2027)
+│   └── factura-electronica-b2b/              ← NOVO  ★★ PILAR 3 (RD 238/2026, prazo aberto)
 │       ├── (index)
 │       └── formatos/                         ← Facturae / UBL / conversão
 │
-├── integracion/                              ← SILO 2  ★★ NOVO (substitui o trio atual)
+├── integracion/                              ← SILO 2  ★★ (hub MVP antecipado ao Sprint A; filhos e 301 no Sprint C)
 │   ├── (hub)                                 ← NOVO
 │   ├── erp/                                  ← NOVO ★★ (`integracion erp` c, CPC €15,81)
 │   ├── api-y-webhooks/                       ← NOVO ★  (`integración de api`)
@@ -340,8 +352,8 @@ O site passa a ter **três silos com funções distintas**, não dez ofertas equ
 │   ├── automatizacion-ia/                    ← já existe
 │   ├── agentes-de-ia/                        ← NOVO ★★ (`agentes de ia` d, +900% YoY)
 │   ├── chatbots/                             ← já existe
-│   ├── agencia-ia/                           ← já existe  ← recebe o 301 de /agencia-de-ia/
-│   ├── consultoria-ia/                       ← FUNDIR em agencia-ia/  (ver §5)
+│   ├── agencia-ia/                           ← já existe (consolidação com /agencia-de-ia/: PENDENTE, §5.1-bis)
+│   ├── consultoria-ia/                       ← já existe — MANTER (fusão cancelada pela SERP, §3.1)
 │   ├── agencia-seo/                          ← já existe
 │   ├── diseno-web/                           ← já existe
 │   └── marketing-digital/                    ← já existe
@@ -385,15 +397,43 @@ Regra: EN recebe **três** landings comerciais no total (duas do silo de serviç
 
 | Origem | Destino | Tipo | Motivo |
 |---|---|---|---|
-| `/es/agencia-de-ia/` (index) | `/es/servicios/agencia-ia/` | **301** | Canibalização direta. Um cluster, um URL. Manter as rotas `/es/agencia-de-ia/{ciudad}/` (intenção local é distinta) e **reapontar o breadcrumb delas para `/es/servicios/agencia-ia/`**, para que nenhum link interno aponte para uma URL que redireciona. As versões `/en/` e `/pt/` dessa rota redirecionam para a home do próprio locale. |
+| `/es/agencia-de-ia/` (index) | — | **REVERTIDO** | O 301 chegou a ser implementado e foi **desfeito em 09/ago/2026** depois do Sprint 0. O Search Console mostra que quem serve o cluster é `/es/agencia-de-ia/` (**505 impressões/90 dias**), não `/es/servicios/agencia-ia/` (**7**). O diagnóstico de canibalização continua correto — as duas páginas disputam as mesmas queries —, mas a **direção** do redirect estava invertida. Decisão adiada para o Sprint 0.1 (ver §5.1-bis). |
 | ~~`/{locale}/servicios/consultoria-ia/`~~ | — | **cancelado** | A hipótese de canibalização **não se confirmou na SERP** (ver §3.1). As duas páginas ficam. O que fazer em vez de fundir: **acentuar a diferença** — `consultoria-ia` fala a linguagem corporativa que a SERP dela mostra (governança, riscos, arquitetura-alvo), `agencia-ia` fala a linguagem de execução. |
-| `/es/roadmap-tecnologico/` | `/es/integracion/` (hub) | **301** | Demanda residual. O conteúdo vira uma seção "Del diagnóstico al roadmap" no hub. |
-| `/es/implementacion/` | `/es/integracion/` (hub) | **301** | Idem. |
-| `/es/metodologia/` | `/es/sobre/` | **301** | Conteúdo de processo, não alvo de busca. Destino único e definido: a página institucional. |
-| `/es/auditoria-de-sistemas/` | `/es/integracion/auditoria-de-sistemas/` | **301** | Mantém a página (é a "Radiografía Digital", ativo de outbound), mas dentro do silo certo. |
-| `/en/…` e `/pt/…` das quatro rotas acima | `/en/` e `/pt/` (home do respectivo locale) | **301** | O silo `/integracion/` só existe em ES. Redirect **dentro do mesmo locale** — nunca cross-locale, que quebraria hreflang e a expectativa do usuário. |
+| `/es/roadmap-tecnologico/` | `/es/integracion/` (hub) | **301, após Sprint 0** | Demanda de mercado residual, mas o GSC mostra **23 impressões/90d** e, sobretudo, o post `/es/blog/que-es-un-roadmap-tecnologico/` tem **1.124 impressões** — a 3ª página mais visível do site. O redirect só se faz se o hub absorver o conteúdo **e** o post-âncora passar a apontar para ele. |
+| `/es/implementacion/` | `/es/integracion/` (hub) | **301, após Sprint 0** | Idem. |
+| `/es/metodologia/` | `/es/sobre/` | **301, após Sprint 0** | ~22 impressões somando es/en/pt. Conteúdo de processo. |
+| `/es/auditoria-de-sistemas/` | `/es/integracion/auditoria-de-sistemas/` | **301, após Sprint 0** | Mantém a página (é a "Radiografía Digital", ativo de outbound), mas dentro do silo certo. Atenção: o post `/es/blog/auditoria-de-sistemas-tecnologicos/` tem **512 impressões** e precisa continuar apontando para o destino certo. |
+| `/en/…` e `/pt/…` das rotas acima | **decidir uma a uma** | — | **Não redirecionar em bloco para a home.** O Google trata redirect em massa para um destino irrelevante como *soft 404*. Para cada URL: (A) redirecionar para a página semanticamente mais próxima — p. ex. `/en/roadmap-tecnologico/` → `/en/services/system-integration/` quando esta existir; (B) **410** se o conteúdo deixou de existir sem substituto; ou (C) manter uma versão consolidada. Enquanto `/en/services/` não existir, **manter as páginas EN/PT como estão**. |
 
 > ⚠️ **Não apagar conteúdo.** Todo o texto de auditoría/roadmap/implementación é bom material de venda; ele migra para dentro do hub `/integracion/` e das páginas de destino. O que muda é que deixa de ocupar URL e menu próprios.
+
+### 5.1-bis Decisão pendente: qual URL fica com o cluster "agencia de IA"
+
+Evidência do Sprint 0 (GSC, 90 dias, 09/ago/2026):
+
+| URL | Impressões | Cliques | Posição média |
+|---|---|---|---|
+| `/es/agencia-de-ia/` | **505** | 0 | **77,9** |
+| `/es/agencia-de-ia/valencia/` | 114 | 0 | — |
+| `/es/agencia-de-ia/barcelona/` | 15 | 0 | — |
+| `/es/servicios/agencia-ia/` | **7** | 0 | — |
+| `/pt/servicios/agencia-ia/` | 10 | 0 | — |
+
+Queries servidas por `/es/agencia-de-ia/`: `agencia de ia` (146) · `agencia de inteligencia artificial` (119) · `agencia ia` (51) · `agencia con ia` (43) · `agencias ia` (39) · `agencia de asistentes de inteligencia artificial` (35) · `agencia de ia en españa` (20).
+
+Queries de `/es/servicios/agencia-ia/`: `agencia con ia` (4) · `agencia ia` (2) · `consultoría agentes ia` (1).
+
+**A canibalização está confirmada no nível da query, não por inferência:** `agencia con ia` e `agencia ia` aparecem nas *duas* URLs. O Google está dividindo as mesmas consultas entre elas. Isso é evidência mais forte do que a heurística de sobreposição de SERP.
+
+**O que os dados NÃO dizem.** Não sabemos *por que* o Google prefere `/es/agencia-de-ia/`. Pode ser idade da URL, conteúdo, links internos, backlinks ou histórico — o slug de correspondência exata é só uma hipótese entre várias. Registrar a preferência é legítimo; explicá-la, não.
+
+**O que os dados dizem com clareza:** posição 77,9 e **zero cliques nas duas**. Não existe ativo de SEO a preservar aqui. Existe um candidato que o Google está testando.
+
+**Decisão e critério.** Nenhum redirect agora. E quando a decisão chegar, o critério **não** é "qual das duas ganhou 505 impressões" — é:
+
+> **Qual das duas páginas conseguimos transformar na melhor resposta para "agencia de IA / agencia de inteligencia artificial"?**
+
+A preferência atual do Google é um desempate, não o critério. A ordem correta é: escolher qual fica → reescrever para valer → medir 60 dias → então redirecionar a outra. Consolidar duas páginas fracas produz uma página fraca.
 
 ### 5.2 Desindexar (manter no ar, tirar do índice e do menu)
 
@@ -404,9 +444,9 @@ Regra: EN recebe **três** landings comerciais no total (duas do silo de serviç
 
 | Elemento | Hoje | Proposto |
 |---|---|---|
-| **Intenção primária** | "agencia de IA y marketing digital" (genérico) + "auditoría tecnológica" (sem demanda) | **Entidade + ponte.** A home não persegue um head term; ela consolida a entidade `IA Operators` e distribui autoridade para os três silos. |
+| **Intenção primária** | "agencia de IA y marketing digital" (genérico) + "auditoría tecnológica" (sem demanda) | **Categoria ampla + entidade.** A home sinaliza uma categoria comercial — *integración y automatización de sistemas para empresas* — sem disputar nenhuma keyword que já seja primária de uma página filha. Não é "sem alvo"; é um alvo de categoria, um nível acima dos filhos. |
 | **Keyword de apoio** | — | `ia para empresas` (c, CPC €17,70) e `inteligencia artificial para empresas` (c). **Não** `integración de sistemas` nem `automatización de procesos` — essas são primárias de páginas filhas (regra 1 do §7). |
-| **Title** | `IA Operators \| Agencia de IA y marketing digital` | `IA Operators \| Automatización, integración de sistemas y cumplimiento normativo` |
+| **Title** | `IA Operators \| Agencia de IA y marketing digital` | `IA Operators \| Integración y automatización de sistemas con IA` — **sem cumplimiento**: o title diz o que a marca é de forma permanente (core evergreen); a cláusula regulatória vive no H1, que é trocável quando a onda passar. Decisão aprovada em 10/ago/2026; detalhe em `docs/home-propuesta-2026-08.md`. |
 | **H1** | `Automatizamos, posicionamos y hacemos crecer tu empresa con IA.` (duplicado no DOM) | `Conectamos y automatizamos los sistemas que tu empresa ya tiene — y los ponemos en regla.` (**texto único**, quebra visual só por CSS) |
 | **Meta description** | genérica | `Integramos ERP, TPV, e-commerce y CRM con IA, y adaptamos tus sistemas a Verifactu y a la Ley 10/2025. Implementación técnica, no asesoría.` |
 | **Ordem das seções** | hero → Ley 10/2025 → parque tecnológico → auditoría → servicios → implementación | hero → problema (parque tecnológico) → **os 3 silos como três portas** → metodología → casos → especialista → FAQ → CTA |
@@ -421,7 +461,7 @@ Isto atende à crítica central da auditoria (a home é temáticamente dispersa)
 | Home | ✅ | ✅ | ✅ |
 | Silo cumplimiento | ✅ | ❌ | ❌ |
 | Silo integración | ✅ | parcial — 1 página (`/en/services/system-integration/`) | ❌ |
-| Silo servicios (catálogo) | ✅ | parcial — 2 páginas (`ai-automation-agency`, `custom-ai-development`); o resto do catálogo **não** se traduz | **congelar** — não criar novas; avaliar `noindex` nas existentes se ficarem sem impressões em 6 meses |
+| Silo servicios (catálogo) | ✅ | parcial — 2 páginas (`ai-automation-agency`, `custom-ai-development`); o resto do catálogo **não** se traduz | **congelar** — não criar novas. Revisão em 6 meses pela pergunta **"esta página tem função real para quem chega de PT/BR?"**, não por contagem de impressões (ver §11) |
 | Programáticas de cidade | ✅ | ❌ | ❌ |
 | Blog | ✅ | ✅ | ✅ (mantém — é o ativo de autoridade PT/BR) |
 | Institucional | ✅ | ✅ | ✅ |
@@ -448,7 +488,7 @@ Legenda de prioridade: **P0** = fazer antes de tudo · **P1** = próximo trimest
 | `/es/cumplimiento/verifactu/api/` | `api verifactu` | **c** (Alta) | `api aeat verifactu`, `web service verifactu` | Transacional | Técnica | `API Verifactu: integración con la AEAT paso a paso` | `Conectar tu sistema a la API de Verifactu` | **P0** |
 | `/es/cumplimiento/verifactu/integracion/` | `integrar verifactu` | **b** (+∞) | `adaptar software a verifactu`, `conector verifactu` | Transacional | Serviço | `Integrar Verifactu en tu ERP, TPV o e-commerce` | `Integramos Verifactu en el sistema que ya usas` | **P0** |
 | `/es/cumplimiento/verifactu/plazos/` | `verifactu obligatorio` | **b** ᵉ | `verifactu cuando entra en vigor`, `verifactu 2027`, `verifactu autónomos` | Informacional | Referência | `Plazos de Verifactu: 1/1/2027 y 1/7/2027` | `Cuándo te obliga Verifactu` | **P0** |
-| `/es/cumplimiento/verifactu/homologacion/` | `homologacion verifactu` | **b** (+∞) | `declaración responsable verifactu`, `software homologado` | Informacional→Comercial | Referência | `Homologación y declaración responsable en Verifactu` | `Quién firma la declaración responsable` | P1 |
+| `/es/cumplimiento/verifactu/homologacion/` | `homologacion verifactu` | **b** (emergente) | `declaración responsable verifactu`, `software homologado verifactu` | Informacional→Comercial | Referência **que corrige a premissa** | `¿Existe homologación Verifactu? Certificación y declaración responsable` | `Verifactu no se "homologa" ante la AEAT: así funciona la declaración responsable` | P1 |
 | `/es/cumplimiento/verifactu/sanciones/` | `sanciones verifactu` | **b** ᵉ | `multa verifactu`, `art 201 bis` | Informacional | Referência | `Sanciones de Verifactu: 50.000 € y 150.000 €` | `El régimen sancionador, en concreto` | P1 |
 | `/es/cumplimiento/verifactu/test/` | — | — | — | Conversão | Ferramenta | `Test: ¿te obliga Verifactu y qué te falta?` | `Comprueba en 2 minutos si tu sistema cumple` | **P0** |
 | `…/verifactu/erp-a-medida/` | `verifactu erp` | **b** (Alta) | `erp a medida verifactu` | Transacional | Caso | *(existe — revisar title para incluir `verifactu erp`)* | — | **P0** |
@@ -457,10 +497,10 @@ Legenda de prioridade: **P0** = fazer antes de tudo · **P1** = próximo trimest
 | `…/verifactu/software-vertical/` | `verifactu software vertical` | **b** ᵉ | — | Transacional | Caso | *(existe)* | — | P2 |
 | `/es/cumplimiento/ley-atencion-al-cliente/` | `ley de atención al cliente` | **c** (+900%) | `ley atención al cliente`, `nueva ley de atención al cliente`, `ley 10/2025`, `ley de atención a la clientela` | Informacional→Comercial | Pilar | `Ley 10/2025 de atención al cliente: qué exige y cómo cumplirla` | `La ley de atención al cliente, traducida a sistemas` | **P0** |
 | `…/ley-atencion-al-cliente/plazos-y-sla/` | `sla atención al cliente` | **b** ᵉ | `3 minutos atención al cliente`, `15 días reclamaciones` | Informacional | Referência | `Los SLA de la Ley 10/2025: 3 min, 15 días, 2 h` | `Cada plazo de la ley, y qué sistema lo garantiza` | **P0** |
-| `…/ley-atencion-al-cliente/auditoria-enac/` | `auditoría atención al cliente` | **b** ᵉ | `entidad acreditada enac` | Informacional | Referência | `La auditoría anual ENAC de la Ley 10/2025` | `Qué te va a pedir el auditor` | P1 |
+| `…/ley-atencion-al-cliente/auditoria-acreditada/` | `auditoría atención al cliente` | **b** ᵉ | `entidad acreditada enac` | Informacional | Referência | `Auditoría de la Ley 10/2025: requisitos y acreditación ENAC` | `La audita una empresa acreditada por ENAC, no la ENAC` | P1 |
 | `…/ley-atencion-al-cliente/{5 setores}/` | `ley atención al cliente {sector}` (5 primárias distintas: `… energía`, `… transporte de viajeros`, `… servicios postales`, `… telecomunicaciones`, `… servicios financieros`) | **b** ᵉ | — | Comercial | Setorial | *(existem)* | — | mantido |
 | `…/ley-atencion-al-cliente/test/` | — | — | — | Conversão | Ferramenta | *(existe)* | — | mantido |
-| `/es/cumplimiento/factura-electronica-b2b/` | `factura electronica obligatoria` | **d** | `crea y crece`, `factura electrónica b2b`, `ley 18/2022` | Informacional→Comercial | Pilar | `Factura electrónica B2B obligatoria: plazos y formato` | `La factura electrónica B2B, sin cambiar de ERP` | P1 |
+| `/es/cumplimiento/factura-electronica-b2b/` | `factura electronica obligatoria` | **d** | `crea y crece`, `factura electrónica b2b`, `rd 238/2026` | Informacional→Comercial | Pilar | `Factura electrónica B2B obligatoria: qué exige el RD 238/2026` | `La factura electrónica B2B, sin cambiar de ERP` | P1 |
 | `…/factura-electronica-b2b/formatos/` | `facturae` | **b** ᵉ | `ubl`, `formato factura electrónica` | Informacional | Referência | `Facturae, UBL y los formatos admitidos` | `Qué formato tienes que emitir` | P2 |
 
 ### 6.2 Silo 2 — Integración y automatización (ES; 3 páginas também em EN)
@@ -484,7 +524,8 @@ Legenda de prioridade: **P0** = fazer antes de tudo · **P1** = próximo trimest
 | `/es/servicios/agentes-de-ia/` | `agentes de ia` | **d** (+900%) | €8,23 | Comercial | **Criar** | **P0** |
 | `/es/servicios/automatizacion-ia/` | `automatización de procesos` | **c** | €5,02 | Comercial | Manter; adicionar `automatización inteligente`, `rpa` | — |
 | `/es/servicios/chatbots/` | `chatbot para empresas` | **c** | €17,29 | Comercial | Manter | — |
-| `/es/servicios/agencia-ia/` | `agencia de inteligencia artificial` | **c** | €4,50 | Comercial | Manter + absorver `consultoria-ia` + receber 301 de `/agencia-de-ia/` | **P0** |
+| `/es/servicios/agencia-ia/` | `agencia de inteligencia artificial` | **c** | €4,50 | Comercial | Manter; consolidação com `/es/agencia-de-ia/` **pendente** de reescrita + 60 dias de medição (§5.1-bis) | P1 |
+| `/es/servicios/consultoria-ia/` | `consultoría inteligencia artificial` | **c** | €6,08 | Comercial | Manter como URL independente (fusão cancelada pela SERP, §3.1); acentuar a linguagem corporativa que a SERP dela mostra | P2 |
 | `/es/servicios/agencia-seo/` | `agencia seo` | **d** | €8,28 | Comercial | Manter | — |
 | `/es/servicios/diseno-web/` | `diseño web` | **d** | €4,99 | Comercial | Manter | — |
 | `/es/servicios/marketing-digital/` | `marketing digital` | **e** | €8,65 | Comercial | Manter; ceder `posicionamiento web` para `agencia-seo` | — |
@@ -495,7 +536,7 @@ Legenda de prioridade: **P0** = fazer antes de tudo · **P1** = próximo trimest
 
 | URL | KW primária | Faixa | Intenção | Papel | Prio |
 |---|---|---|---|---|---|
-| `/es/` (home) | — (entidade, sem head term próprio) | — | Navegacional / marca | Consolida a entidade e distribui autoridade aos 3 silos. Detalhe em §5.3. | **P0** |
+| `/es/` (home) | categoria ampla: *integración y automatización de sistemas* (sem disputar primárias dos filhos) | — | Marca + categoria | Consolida a entidade e distribui autoridade aos 3 silos. GSC: 69 impressões/90d, todas de marca — reescrever não tem risco de perda. Detalhe em §5.3. | **P0** |
 | `/en/` (home) | `ai automation agency` (compartilhada com a landing; a home cede o alvo e mantém intenção de marca) | **d** | Navegacional / marca | Reposicionar copy para "AI automation & systems integration" | P1 |
 | `/pt/` (home) | — | — | Navegacional / marca | Cartão de entidade. Sem alvo de busca. | P2 |
 | `/es/agencia-de-ia/madrid/` | `agencia de ia madrid` | **b** ᵉ | Comercial local | Manter; régua ≥30% único (§7.3) | mantido |
@@ -525,25 +566,30 @@ O blog não persegue conversão; alimenta autoridade e links internos. Prioridad
 
 Estas regras entram como convenção do repositório, para que a próxima página não recrie o problema:
 
-1. **Uma keyword primária, um URL.** A keyword primária de cada página é declarada num campo do arquivo de dados (`src/data/*.ts`) e não pode se repetir. Um script de verificação no CI falha se houver duplicata.
-2. **Se duas páginas compartilham a SERP, é uma página.** Critério prático: se os 10 primeiros resultados coincidem em ≥6 posições entre duas keywords, elas pertencem à mesma página. **A régua vale nos dois sentidos** — foi ela que salvou `consultoria-ia` de uma fusão desnecessária (§3.1). Medir antes de fundir.
-3. **Conteúdo único mínimo por página nova:** **≥40%** para páginas de silo geradas a partir de um template (setoriais da Ley 10/2025, casos de Verifactu — a régua já aplicada, medida em 47–51%); **≥30%** para as programáticas locais `/agencia-de-ia/{ciudad}/`, onde o template é mais rígido por natureza e a régua vigente já é essa. Sem matéria própria acima do limiar, não se cria a página — vira seção.
+1. **Uma keyword primária, um URL.** A keyword primária de cada página é declarada em `src/data/keywords-primarias.ts` e não pode se repetir. O gate de CI (`npm run check:keywords`, ligado ao `build`) tem dois níveis:
+   - **Duplicata exata → falha o build.** Proteção contra erro editorial.
+   - **Similaridade alta → aviso.** Pares como `agencia de ia` / `agencia de inteligencia artificial` são marcados para revisão humana, mas não bloqueiam. Decidir se duas keywords são a mesma intenção exige olhar SERP e Search Console — um script não faz essa análise, e forçá-lo a decidir produziria consolidações erradas como a de §5.1-bis. Hierarquia pilar→filho (`ley atención al cliente` vs `… energía`) e irmãos que só diferem no qualificador (`… madrid` vs `… barcelona`) não geram aviso.
+2. **Se duas páginas compartilham a SERP, é uma página.** Critério prático: se os 10 primeiros resultados coincidem em ≥6 posições entre duas keywords, elas pertencem à mesma página. **A régua vale nos dois sentidos** — foi ela que salvou `consultoria-ia` de uma fusão desnecessária (§3.1). Medir antes de fundir. E a SERP é só metade: o **Search Console decide a direção** do redirect (§5.1-bis).
+3. **Conteúdo único: percentual é QA interno, não critério de SEO.** O Google não define percentual mínimo de originalidade; o critério dele é se a página oferece **valor substancial próprio**. Os limiares internos (≥40% em páginas de template de silo, ≥30% nas programáticas locais) continuam como *checklist de revisão*, mas **não decidem** se a página existe. O teste que decide é substantivo:
+   - Página de template de silo: *o que esta página responde que o pilar não responde?*
+   - Programática local: ***por que alguém de Madrid deveria preferir esta página à nacional?*** Precisa haver matéria local real — casos, clientes, disponibilidade, contexto regional, prova. Trocar a cidade e reescrever alguns parágrafos é exatamente o padrão que o Google classifica como **doorway**. Se a resposta for só "porque a keyword tem a cidade", a página não deve existir.
 4. **Regra do menu:** um cluster aparece no menu uma vez. Se está no hub `/servicios/`, não aparece também na raiz.
 5. **Cauda longa é seção, não página — salvo se tiver página de referência própria.** `qué es verifactu` e `reglamento verifactu` são H2 dentro do pilar. `verifactu 2027` e `verifactu autónomos` **são** secundárias legítimas de `/verifactu/plazos/`, porque essa página existe justamente para responder "quando" — o que o pilar não faz em profundidade. A regra é: só ganha URL própria a cauda que tem uma **pergunta distinta** por trás, não a que é sinônimo do head.
 6. **Title do pilar leva o head term nu.** Os filhos levam head term + modificador. Nunca dois titles com o mesmo termo nu.
+7. **Âncoras são descritivas, não exatas.** O Google pede texto de âncora descritivo, conciso e relevante para origem e destino — não correspondência exata. `consulta nuestra guía para integrar Verifactu en un ERP` é melhor que repetir `integrar verifactu` toda vez. Variedade natural; nada disso entra no CI.
 
 ---
 
 ## 8. Linking interno
 
-**Regra de silo (fluxo descendente e lateral, nunca cruzado entre silos exceto pela home e pelo blog):**
+**Os silos organizam a hierarquia, não proíbem links.** O Google entende a estrutura do site pelas relações entre páginas e recomenda linkar conteúdo relevante em contexto. **Cross-silo é permitido sempre que houver relação semântica e utilidade para o leitor** — quem lê `/es/integracion/whatsapp-business-api/` e vai encontrar a aplicação regulatória em `/es/cumplimiento/ley-atencion-al-cliente/` deve ter esse link. O que as regras abaixo garantem é o *mínimo* de estrutura, não um teto:
 
 - **Home** → 3 cards de silo (`/es/cumplimiento/`, `/es/integracion/`, `/es/servicios/`) + 2 links diretos para os pilares `verifactu` e `ley-atencion-al-cliente`.
-- **Hub de silo** → todos os seus filhos, com âncora = keyword primária do filho.
+- **Hub de silo** → todos os seus filhos, com âncora descritiva e semanticamente clara; a keyword primária pode aparecer naturalmente, mas não é obrigatória.
 - **Pilar** → seus próprios filhos (casos, setoriais, referências, teste) + 1 link lateral ao hub do silo.
 - **Filho** → volta ao pilar (breadcrumb + link in-content) + 1–2 irmãos relevantes.
-- **Cruzamento controlado:** `/es/cumplimiento/verifactu/integracion/` → `/es/integracion/erp/` (a ponte natural entre cumprimento e ticket maior). Este é o único cruzamento inter-silo permitido em landings.
-- **Blog** → sempre ao menos 1 link in-content para o pilar do silo correspondente, com âncora exata da keyword primária.
+- **Cruzamento entre silos:** livre quando ajudar o leitor. A ponte mais importante — e que deve existir sempre — é `/es/cumplimiento/verifactu/integracion/` → `/es/integracion/erp/`, que leva do gatilho regulatório ao serviço de ticket maior.
+- **Blog** → sempre ao menos 1 link in-content para o pilar do silo correspondente, com âncora descritiva (não exata).
 
 **Dívidas de linking já identificadas em memória e que este plano absorve:**
 - Faltam links in-content do blog para `diseno-web`, `agencia-seo`, `marketing-digital`, `agencia-ia` (faltam posts-âncora).
@@ -572,10 +618,43 @@ Estas não são arquitetura, mas devem entrar no mesmo ciclo porque tocam os mes
 
 ## 10. Sequenciamento
 
+### Sprint 0 — Evidência antes de qualquer mudança de URL ★ BLOQUEANTE
+**Nenhum 301, nenhuma fusão e nenhuma desindexação antes disto.** Uma página com demanda de mercado residual pode estar capturando cauda longa que o Keyword Planner não mostra — e a direção de um redirect só se decide com dados de quem já ranqueia.
+
+Para cada URL candidata a mover, fundir ou desindexar, extrair do Search Console:
+0.1 Queries, impressões, cliques e posição média (12–16 meses quando houver histórico).
+0.2 Quais URLs concorrem pela mesma query.
+0.3 Estado de indexação e canonical efetivo (Inspeção de URL).
+0.4 Backlinks relevantes apontando para a URL.
+0.5 Só então decidir: consolidar, reescrever, manter ou remover — **e em que direção**.
+
+> **Executado em 09/ago/2026** para as URLs candidatas (§5.1-bis e §10-bis). Resultado imediato: um redirect já implementado teve de ser revertido, porque a direção estava invertida. **Falta ainda:** backlinks por URL, canonical efetivo (Inspeção de URL) e histórico de 12–16 meses. Isso deve estar feito antes do Sprint C.
+
+#### 10-bis. Resultado do Sprint 0 (GSC, 90 dias, 09/ago/2026)
+
+| URL | Impressões | Cliques | Queries que captura | Leitura |
+|---|---|---|---|---|
+| `/es/` (home) | 69 | **0** | `ia operator` (11) · `operator ia` (10) · `operadores ia` (2) · `operator` (2) · `operaitor`, `operator lt`, `aioperator` (1 cada) · **`orquestadores de ia`** (1) | **Só marca.** Zero pegada semântica não-branded em 90 dias. O title atual não comprou nenhuma visibilidade fora do nome. Reescrever Title/H1 **não tem risco de perda** — não há o que preservar. |
+| `/es/agencia-de-ia/` | 505 | 0 | `agencia de ia` (146) · `agencia de inteligencia artificial` (119) · `agencia ia` (51) · `agencia con ia` (43) · `agencias ia` (39) · `agencia de asistentes de inteligencia artificial` (35) · `agencia de ia en españa` (20) | Candidato em teste, posição 77,9. |
+| `/es/servicios/agencia-ia/` | 7 | 0 | `agencia con ia` (4) · `agencia ia` (2) · `consultoría agentes ia` (1) | **Divide queries com a de cima** → canibalização confirmada. |
+| `/es/roadmap-tecnologico/` | 17 | 0 | `roadmap tecnológico empresa` (15) · `roadmap tecnologico` (2) | Residual. |
+| `/es/blog/que-es-un-roadmap-tecnologico/` | **1.124** | 1 | — | **A intenção "roadmap tecnológico" é informacional, não de landing comercial.** O post funciona; a landing não. |
+| `/es/auditoria-de-sistemas/` | **0** | 0 | **Nenhum dado** | Não tem pegada orgânica nenhuma. Mover é indolor. |
+| `/es/blog/auditoria-de-sistemas-tecnologicos/` | 512 | 1 | — | Mesmo padrão do roadmap: o valor está no post. |
+| `/es/metodologia/` | 8 | 0 | — | Residual. |
+| `/es/servicios/consultoria-ia/` | ~0 | 0 | não aparece | Sem pegada. A decisão de mantê-la (§3.1) se apoia na SERP, não no GSC. |
+
+**Padrão que emerge e que muda o desenho:** nos dois temas em que existe post e landing, quem tem visibilidade é o **post** (1.124 e 512) e não a landing (17 e 0). Isso valida em campo a separação do plano entre intenção informacional e intenção comercial. O fluxo correto é:
+
+> **post informacional forte → hub `/es/integracion/` → página de serviço**
+
+E não tentar transformar `roadmap tecnológico` numa landing pesquisável. **Antes de qualquer 301**, os links in-content desses dois posts precisam ser reapontados para o destino final, senão a migração corta o único caminho que hoje funciona.
+
 ### Sprint A — Fundação e desbloqueio (semana 1)
 1. Correções técnicas #1, #7, #8 (as três de prioridade 🔴).
-2. Redirect 301 `/es/agencia-de-ia/` → `/es/servicios/agencia-ia/` (o de `consultoria-ia` foi cancelado pela verificação de SERP, ver §3.1).
-3. Nova home: title, H1 (texto único), meta description, reordenação em 3 portas de silo.
+2. ~~Redirect 301 `/es/agencia-de-ia/`~~ — **revertido em 09/ago/2026**; a decisão passa para depois da reescrita (§5.1-bis). O de `consultoria-ia` já tinha sido cancelado pela verificação de SERP (§3.1).
+3. Nova home (copy aprovado em 10/ago/2026): title `IA Operators | Integración y automatización de sistemas con IA`, H1 com a cláusula "— y los ponemos en regla" (texto único no DOM, com o subtítulo ancorando "en regla" em Verifactu + Ley 10/2025), meta terminando em "De la estrategia a producción.", 3 portas, caso quantitativo (1–2 h → ~3 min por solicitação, ~80/semana em pico).
+3-bis. **Hub MVP `/es/integracion/` antecipado para o Sprint A** — só o hub, sem filhos e sem redirects, para a porta 1 da home nascer apontando ao destino definitivo. O Sprint C completa filhos e 301 sem trocar o destino da home.
 4. Script de verificação de keyword primária duplicada no CI.
 
 ### Sprint B — Silo Verifactu (semanas 2–4) ★ maior retorno
@@ -594,7 +673,7 @@ Estas não são arquitetura, mas devem entrar no mesmo ciclo porque tocam os mes
 
 ### Sprint D — P1 e higiene técnica (semanas 7–9)
 13. `/es/cumplimiento/verifactu/homologacion/` e `/es/cumplimiento/verifactu/sanciones/`.
-14. `/es/cumplimiento/ley-atencion-al-cliente/auditoria-enac/`.
+14. `/es/cumplimiento/ley-atencion-al-cliente/auditoria-acreditada/`.
 15. Mover `auditoria-de-sistemas` para dentro do silo com 301.
 16. Casos `tpv-multitienda` e `ecommerce-propio` revisados.
 17. Os 2 posts-âncora pendentes do Sprint 3 da Ley 10/2025.
@@ -615,15 +694,16 @@ Estas não são arquitetura, mas devem entrar no mesmo ciclo porque tocam os mes
 
 | Métrica | Baseline (jul/2026) | Meta 6 meses | Onde medir |
 |---|---|---|---|
-| Impressões orgânicas do silo `/es/cumplimiento/` | a **medir na UI do Search Console** (a API está bloqueada, a interface não) | > 5.000/mês aos 6 meses | Search Console → filtro por prefixo `/es/cumplimiento/` |
+| Impressões orgânicas do silo `/es/cumplimiento/` | **~65/90 dias** (medido 09/ago/2026: `verifactu/tpv-multitienda` 52, `verifactu/erp-a-medida` 7, `ley-atencion-al-cliente` 4, +1 clique) | > 1.500/mês aos 6 meses | Search Console → filtro por prefixo `/es/cumplimiento/` |
 | Posição média de `verifactu` + cauda de integração | não ranqueia | top 20 na cauda (`api verifactu`, `integrar verifactu`) | Search Console |
 | Leads qualificados/mês dos testes (SAC + Verifactu) | 0 | ≥ 8 | Supabase `assessment_responses` |
 | Taxa de conclusão dos testes | — | > 45% | evento `assessment_completed` |
 | Domínios de referência | 36 (medido em jul/2026 via SEMrush) | ≥ 60 | SEMrush/Ahrefs quando houver plano; enquanto isso, contagem manual da campanha de diretórios |
-| Páginas com ≥1 impressão/mês | a medir | > 70% do índice | Search Console (UI) |
+| Páginas com ≥1 impressão/mês | **121 URLs com impressão em 90 dias** (medido 09/ago/2026) | > 180 | Search Console (UI) |
+| Total do site (90 dias) | **75 cliques · 16,8 mil impressões · CTR 0,4% · posição média 18,8** | CTR > 1% | Search Console (UI) |
 
 **Critérios de decisão (gatilhos, não opiniões):**
-- Se em **6 meses** as landings PT de serviço seguirem com 0 impressões → `noindex` nelas e concentrar `/pt/` no blog.
+- Em **6 meses**, revisar as landings PT de serviço pela pergunta **"esta página tem função real para quem chega de PT/BR?"**. Se tiver (é destino de campanha, de link, de proposta), fica indexável mesmo gerando pouco. Se for tradução *thin* sem função → **consolidar, melhorar ou remover**. `noindex` automático por baixa impressão não é o instrumento certo: ele só esconde o problema.
 - Se `api verifactu` + `integrar verifactu` não entrarem no top 30 em **4 meses** com o conteúdo publicado → o gargalo é autoridade, não conteúdo; realocar esforço para link building.
 - Se o silo `/es/servicios/` (agência) seguir sem impressões relevantes em **9 meses** → considerar consolidar as 3 landings de agência numa só.
 
@@ -634,7 +714,37 @@ Estas não são arquitetura, mas devem entrar no mesmo ciclo porque tocam os mes
 Registro honesto do que falta medir antes de considerar o plano fechado:
 
 1. **Volumes exatos e KD.** Todas as faixas acima vêm de uma conta Google Ads inativa. Reativar a conta com campanha mínima destrava números exatos; um plano Ahrefs ou units Semrush destrava KD, tráfego potencial e *parent topic*.
-2. **Search Console.** Nenhum dado real de impressões/consultas do próprio site entrou neste estudo (o endpoint via Ahrefs está bloqueado; **a interface do Search Console continua acessível e deveria ser a primeira coisa a olhar antes do Sprint A**). É a fonte que diria quais páginas já têm impressão e onde há canibalização *real* em vez de teórica.
+2. ~~**Search Console.**~~ **Resolvido em 09/ago/2026.** A API via Ahrefs continua bloqueada, mas a interface está acessível e foi de onde saiu o Sprint 0. Falta ainda: histórico de 12–16 meses, backlinks por URL e canonical efetivo das URLs candidatas a redirect. É a fonte que diria quais páginas já têm impressão e onde há canibalização *real* em vez de teórica.
 3. **SERP das novas keywords.** As SERPs de Ley 10/2025 e Verifactu já foram inspecionadas em sessões anteriores (escritórios de advocacia e vendors de software, respectivamente). As de `integracion erp`, `crm para empresas` e `agentes de ia` **não** foram — antes de escrever essas landings vale olhar quem ocupa o top 10.
 4. **Core Web Vitals reais.** Continua sem medição, como a própria auditoria reconhece.
 5. **Canibalização com o subdomínio** `chatplug.iaoperators.com` — outro projeto, fora do repo, mas compartilha domínio raiz e vocabulário de chatbot/WhatsApp.
+
+---
+
+## 13. O que mudou na revisão 2 (09/ago/2026)
+
+Consolidação da contra-auditoria recebida e dos dados do Search Console. Aceito, com o motivo:
+
+| # | Mudança | Motivo |
+|---|---|---|
+| 1 | **Sprint 0 vira bloqueante** e vem antes de qualquer 301 | O plano dizia no §12 que faltava o Search Console e mesmo assim sequenciava redirects no Sprint A. Contradição interna. E a evidência provou o ponto: o primeiro 301 estava na direção errada. |
+| 2 | **Redirect `/es/agencia-de-ia/` revertido** | GSC: 505 impressões nessa URL contra 7 na de destino. Diagnóstico certo, direção errada. |
+| 3 | **Cumplimiento passa de "núcleo" a "wedge de aquisição"**; integración vira o core evergreen | Verifactu e Ley 10/2025 têm data de validade (2026–2027). A marca não pode ficar ancorada num pico regulatório. |
+| 4 | **Peso do Keyword Planner reduzido** | `Competition` e `top of page bid` medem o leilão de anúncios, não dificuldade orgânica nem ticket. Passam a ser hipótese comercial. |
+| 5 | **Agregado de 1–3K/mês da Ley 10/2025 removido** | O Planner agrupa close variants; somar grafias equivalentes conta a mesma demanda duas vezes. |
+| 6 | **`+∞` e `+900%` reformulados** | São teto de escala e ausência de base comparável, não medidas exatas. |
+| 7 | **Home ganha alvo de categoria** | "Sem head term" era rigidez desnecessária e contradizia o próprio title proposto. |
+| 8 | **Cross-silo liberado no linking** | O Google entende relações entre páginas, não organogramas. A regra anterior era folclore de SEO. |
+| 9 | **Âncora exata deixa de ser obrigatória** | O Google pede âncora descritiva e relevante, não correspondência exata. |
+| 10 | **Redirects EN/PT em bloco para a home removidos** | Risco de *soft 404*. Decisão passa a ser por página: equivalente semântico, 410, ou manter. |
+| 11 | **`noindex` por baixa impressão substituído** | O critério passa a ser função para o usuário, não contagem. |
+| 12 | **30%/40% de conteúdo único vira QA interno** | O Google não define percentual. O teste real nas páginas de cidade é o de *doorway*: por que alguém de Madrid preferiria esta página à nacional? |
+| 13 | **"out/2027" da factura B2B removido** | O RD 238/2026 difere a aplicação efetiva a 12/24 meses **contados da entrada em vigor de uma ordem ministerial** ainda não publicada. Não há data fixa. Esta correção também vale para o briefing do projeto, que trazia 1/out/2027 e 1/out/2028. |
+| 14 | **`/verifactu/homologacion/` reenquadrada** | Não existe homologação prévia pela AEAT: quem certifica é o produtor do software, via declaración responsable. A página passa a corrigir a premissa da busca. |
+| 15 | **`/auditoria-enac/` renomeada para `/auditoria-acreditada/`** | A ENAC acredita a entidade auditora; não realiza a auditoria. |
+
+Mantido apesar da crítica:
+
+- **A tese central** (cumplimiento → aquisição, integração → ticket, serviços → cobertura) e a árvore de URLs, preservadas em ~90%.
+- **CPC como sinal**, não como prova. Continua sendo a melhor evidência disponível de intenção comercial enquanto não houver KD nem dados de conversão — desde que lida como hipótese.
+- **O gate de CI anti-canibalização.** Não impõe âncora nem percentual de texto; só verifica que duas rotas não declaram a mesma keyword primária. Essa parte não é folclore, é higiene.

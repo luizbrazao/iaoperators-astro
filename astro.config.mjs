@@ -103,14 +103,6 @@ export default defineConfig({
     "/": "/es/",
     "/sitemap.xml": "/sitemap-index.xml",
 
-    // Canibalización: /es/agencia-de-ia/ y /es/servicios/agencia-ia/ competían
-    // por la misma keyword ("agencia de ia" / "agencia de inteligencia
-    // artificial") con dos URLs distintas, ambas enlazadas desde el menú.
-    // El índice de ciudades desaparece — las tres ciudades ya están listadas
-    // dentro de la propia landing de servicio — y las páginas locales
-    // /es/agencia-de-ia/{ciudad}/ se mantienen, porque su intención de
-    // búsqueda sí es distinta.
-    "/es/agencia-de-ia/": { status: 301, destination: "/es/servicios/agencia-ia/" },
     // Portfolio slug redirects (old → new localized slugs)
     "/en/portfolio/radiografia-cadena-hotelera-menorca/": "/en/portfolio/hotel-chain-digital-audit-menorca/",
     "/pt/portfolio/radiografia-cadena-hotelera-menorca/": "/pt/portfolio/radiografia-rede-hoteleira-menorca/",

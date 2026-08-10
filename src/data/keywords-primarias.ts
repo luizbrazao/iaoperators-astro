@@ -146,8 +146,17 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
   },
 
   // ---------------------------------------------------------------- SILO 2
-  // El hub /integracion/ y sus hijos llegan en el Sprint C. `auditoria-de-sistemas`
-  // sigue por ahora en la raíz; se moverá dentro del silo con su 301.
+  // El hub MVP existe desde el Sprint A (destino de la puerta 1 de la home);
+  // los hijos y los 301 llegan en el Sprint C. `auditoria-de-sistemas` sigue
+  // por ahora en la raíz; se moverá dentro del silo con su 301.
+  {
+    path: "integracion/",
+    locales: ["es"],
+    silo: "integracion",
+    primaria: "integración de sistemas",
+    secundarias: ["integración y automatización de sistemas", "integración de aplicaciones"],
+    faixa: "c",
+  },
   {
     path: "auditoria-de-sistemas/",
     locales: ["es", "en", "pt"],
@@ -200,11 +209,29 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     faixa: "c",
   },
   {
+    // ⚠️ CONFLICTO PENDIENTE DE DECISIÓN (Sprint 0, 09/ago/2026).
+    // Search Console (90 días) muestra que Google sirve /es/agencia-de-ia/ —
+    // no esta página — para todo el clúster: "agencia de ia" (146 impresiones),
+    // "agencia de inteligencia artificial" (119), "agencia ia" (51),
+    // "agencia con ia" (43). Esta URL tiene 7 impresiones; la otra, 505.
+    // Ambas en posición media 77,9 y 0 clics, así que no hay tráfico en juego,
+    // pero sí una señal clara de qué URL asocia Google al clúster.
+    // Las primarias se mantienen separadas para no bloquear el build mientras
+    // se decide la consolidación. NO es una separación real de intención.
     path: "servicios/agencia-ia/",
     locales: ["es", "en", "pt"],
     silo: "servicios",
     primaria: "agencia de inteligencia artificial",
-    secundarias: ["agencia de ia", "agencia inteligencia artificial"],
+    secundarias: ["agencia inteligencia artificial"],
+    faixa: "c",
+  },
+  {
+    // Ver nota en servicios/agencia-ia/. Esta es la URL que Google sirve hoy.
+    path: "agencia-de-ia/",
+    locales: ["es"],
+    silo: "local",
+    primaria: "agencia de ia",
+    secundarias: ["agencia ia", "agencias ia", "agencia con ia", "agencia de ia en españa"],
     faixa: "c",
   },
   {

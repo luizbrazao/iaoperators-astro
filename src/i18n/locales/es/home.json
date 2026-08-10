@@ -1,13 +1,12 @@
 {
   "meta": {
-    "title": "IA Operators | Agencia de IA y marketing digital",
-    "description": "Agencia de inteligencia artificial y marketing digital: automatización, chatbots, desarrollo web, SEO y auditoría tecnológica. De la estrategia a producción, sin humo."
+    "title": "IA Operators | Integración y automatización de sistemas con IA",
+    "description": "Integramos ERP, TPV, e-commerce y CRM con IA sobre los sistemas que ya usas. Los adaptamos a Verifactu y a la Ley 10/2025. De la estrategia a producción."
   },
   "hero": {
-    "titleHighlight": "Automatizamos, posicionamos",
-    "titleHighlightMobile": "Automatizamos, posicionamos",
-    "titleRest": "y hacemos crecer tu empresa con IA.",
-    "subtitle": "Agencia de IA y marketing digital: automatización, chatbots, desarrollo web, SEO y auditoría tecnológica. Diagnosticamos y construimos — sin hand-offs, sin humo.",
+    "titleHighlight": "Conectamos y automatizamos",
+    "titleRest": "los sistemas que tu empresa ya tiene — y los ponemos en regla.",
+    "subtitle": "Integración y automatización de sistemas para empresas: ERP, TPV, e-commerce, CRM y WhatsApp — con IA donde aporta. Y la adaptación a las obligaciones que te aplican, Verifactu y la Ley 10/2025, sin cambiar de software.",
     "cta": "Hablar con un especialista ↗",
     "tech": "Trabajamos con la tecnología que ya usas"
   },

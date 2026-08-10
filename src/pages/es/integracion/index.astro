@@ -1,0 +1,227 @@
+---
+// Hub del silo 2 — Integración y automatización de sistemas (core evergreen).
+//
+// Versión MVP creada en el Sprint A para que la puerta 1 de la home nazca
+// apuntando a su destino definitivo (docs/plan-arquitectura-2026-08.md, §5.3
+// y §10). El Sprint C añade los hijos (/erp/, /crm/, /whatsapp-business-api/,
+// /api-y-webhooks/, /sistemas-legados/) y ejecuta los 301 de roadmap,
+// implementación y metodología — sin volver a cambiar el destino de la home.
+// ES-only: la keyword primaria es "integración de sistemas" (ver
+// src/data/keywords-primarias.ts).
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const locale = "es";
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(`/${locale}/integracion/`, site).toString();
+const contactHref = `/${locale}/contact/`;
+const auditHref = `/${locale}/auditoria-de-sistemas/`;
+
+const meta = {
+  title: "Integración y automatización de sistemas para empresas | IA Operators",
+  description:
+    "Conectamos ERP, TPV, e-commerce, CRM y WhatsApp sobre los sistemas que ya usas, con IA donde aporta. Diagnóstico, prioridad e implementación — de la estrategia a producción.",
+};
+
+const problemas = [
+  {
+    title: "Sistemas que no se hablan",
+    body: "El ERP en un sitio, el TPV en otro, el e-commerce por su cuenta y el CRM al margen. Cada isla obliga a copiar datos a mano y multiplica los errores.",
+  },
+  {
+    title: "Trabajo manual que no escala",
+    body: "Pedidos que se transcriben, facturas que se reconcilian a ojo, partes que se pasan por WhatsApp. Horas de trabajo cualificado gastadas en mover información.",
+  },
+  {
+    title: "Más tecnología de la que se controla",
+    body: "Licencias duplicadas, herramientas que nadie recuerda haber contratado, integraciones frágiles que dependen de una persona. El parque crece; el control, no.",
+  },
+];
+
+const metodo = [
+  {
+    step: "01",
+    title: "Diagnóstico",
+    body: "Inventariamos sistemas, flujos de datos y dependencias reales. Qué existe, qué se usa, qué se rompe y por dónde se escapa el tiempo.",
+  },
+  {
+    step: "02",
+    title: "Prioridad",
+    body: "Ordenamos por impacto y esfuerzo: qué integración elimina más trabajo manual con menos riesgo. Un plan corto, no un informe de cien páginas.",
+  },
+  {
+    step: "03",
+    title: "Implementación",
+    body: "El mismo equipo que diagnostica construye: conectores, automatizaciones y paneles en producción, con pruebas y mantenimiento. Sin hand-offs.",
+  },
+];
+
+const capacidades = [
+  { title: "ERP", body: "Conectamos tu ERP —propio o de mercado— con el resto del negocio: pedidos, stock, facturación y reporting." },
+  { title: "APIs y webhooks", body: "Integraciones a medida entre aplicaciones, con colas, reintentos e idempotencia. Lo que no tiene API, lo resolvemos igual." },
+  { title: "CRM y ventas", body: "Leads que entran solos, datos que no se pierden y seguimiento automatizado desde el primer contacto." },
+  { title: "WhatsApp Business API", body: "Atención, notificaciones y flujos de venta sobre el canal donde ya están tus clientes." },
+  { title: "Automatización con IA", body: "Agentes y flujos que clasifican, extraen y estructuran información donde antes había trabajo manual." },
+  { title: "Sistemas legados", body: "Modernizamos sin reemplazar: el sistema que funciona se queda; lo que falta se construye alrededor." },
+];
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Integración y automatización de sistemas",
+    serviceType: "Systems integration and business automation",
+    provider: {
+      "@type": ["Organization", "ProfessionalService"],
+      name: "IA Operators",
+      url: site,
+      address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+    },
+    areaServed: ["ES"],
+    description: meta.description,
+    url: pageUrl,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
+      { "@type": "ListItem", position: 2, name: "Integración y automatización", item: pageUrl },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  jsonLd={jsonLd}
+>
+  <div class="bg-transparent text-white">
+    <!-- Hero -->
+    <section class="px-4 pt-28 pb-14">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
+          Integración y automatización de sistemas <span class="text-orange-500">para empresas</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-10">
+          Conectamos ERP, TPV, e-commerce, CRM y WhatsApp sobre los sistemas que ya usas,
+          con IA donde aporta. De la estrategia a producción, con el mismo equipo.
+        </p>
+        <a
+          href={contactHref}
+          class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-black text-orange-500 border border-orange-500/30 font-medium text-lg hover:bg-orange-500/10 hover:scale-105 transition-all duration-300"
+        >
+          Hablar con un especialista ↗
+        </a>
+      </div>
+    </section>
+
+    <!-- Problema -->
+    <section class="px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-center mb-4">
+          Tu empresa tiene más tecnología de la que realmente controla
+        </h2>
+        <p class="text-gray-400 text-center max-w-2xl mx-auto mb-12">
+          El problema casi nunca es que falte una herramienta. Es que las que hay no trabajan juntas.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {problemas.map((p) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7">
+              <h3 class="text-lg font-semibold mb-3">{p.title}</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">{p.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Método -->
+    <section class="px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-center mb-12">
+          Diagnóstico, prioridad e implementación — sin hand-offs
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {metodo.map((m) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 hover:border-orange-500/30 transition-all duration-300">
+              <span class="block text-orange-500 font-bold text-sm mb-4 tabular-nums">{m.step}</span>
+              <h3 class="text-lg font-semibold mb-3">{m.title}</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">{m.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Capacidades -->
+    <section class="px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-center mb-12">
+          Qué integramos y automatizamos
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {capacidades.map((c) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 hover:border-orange-500/30 transition-all duration-300">
+              <h3 class="text-base font-semibold mb-2">{c.title}</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">{c.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Caso -->
+    <section class="px-4 py-16">
+      <div class="max-w-4xl mx-auto bg-[#0a0a0a] border border-orange-500/20 rounded-3xl p-8 md:p-10 text-center">
+        <span class="inline-block px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 text-xs font-semibold mb-6">
+          Caso real
+        </span>
+        <p class="text-3xl md:text-4xl font-medium tracking-tight mb-4">
+          De 1–2 horas a <span class="text-orange-500">~3 minutos</span> por solicitud
+        </p>
+        <p class="text-gray-400 max-w-2xl mx-auto">
+          Para una empresa de sourcing de automóviles, automatizamos la clasificación y
+          estructuración de las solicitudes entrantes: hasta ~80 solicitudes semanales
+          procesadas en picos de demanda, sin ampliar el equipo.
+        </p>
+      </div>
+    </section>
+
+    <!-- Radiografía Digital como puerta de entrada -->
+    <section class="px-4 py-16">
+      <div class="max-w-4xl mx-auto bg-[#0a0a0a] border border-white/5 rounded-3xl p-8 md:p-10">
+        <h2 class="text-2xl md:text-3xl font-medium tracking-tight mb-4">
+          ¿No sabes por dónde empezar? Empieza por la Radiografía Digital
+        </h2>
+        <p class="text-gray-400 mb-6">
+          Antes de integrar nada, hay que saber qué existe. La Radiografía Digital es
+          nuestra auditoría de sistemas: inventario completo del parque tecnológico,
+          flujos de datos, dependencias y un plan priorizado de qué conectar primero.
+        </p>
+        <a href={auditHref} class="inline-flex items-center gap-2 text-orange-400 font-medium hover:underline">
+          Conoce la Radiografía Digital →
+        </a>
+      </div>
+    </section>
+
+    <!-- CTA final -->
+    <section class="px-4 py-20">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight mb-6">
+          Cuéntanos qué sistemas usas. Te decimos qué conectar primero.
+        </h2>
+        <a
+          href={contactHref}
+          class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+        >
+          Hablar con un especialista ↗
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,93 @@
+---
+// Las tres puertas de la home — la traducción visual de la arquitectura del
+// plan (docs/plan-arquitectura-2026-08.md, §5.3): integración como core
+// evergreen primero; cumplimiento como wedge de adquisición 2026–2027 con más
+// peso visual, pero en segundo lugar de la jerarquía; servicios como catálogo.
+//
+// Sustituye al antiguo ComplianceBanner, que ocupaba el espacio bajo el hero
+// con una sola intención (Ley 10/2025) antes de que la home consolidara la
+// suya. La cuenta atrás de la Ley vive ahora dentro de la puerta 2.
+//
+// ES-only: la puerta 1 apunta a /es/integracion/ y la 2 a /es/cumplimiento/,
+// silos que no existen en EN/PT.
+import { LEY } from "@/data/sectores-sac";
+
+const deadline = new Date(`${LEY.plazoAdaptacion}T00:00:00+01:00`);
+const diasRestantes = Math.max(
+  0,
+  Math.ceil((deadline.getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
+);
+
+const doors = [
+  {
+    href: "/es/integracion/",
+    badge: "Core",
+    title: "Integración y automatización",
+    body: "El sistema que ya tienes, conectado y automatizado: ERP, TPV, e-commerce, CRM y WhatsApp — con IA donde aporta.",
+    cta: "Ver integración →",
+    highlight: false,
+  },
+  {
+    href: "/es/cumplimiento/",
+    badge: "Con plazo legal",
+    title: "Cumplimiento normativo",
+    body: "Verifactu y la Ley 10/2025 sin cambiar de software. Adaptamos lo que ya usas y dejamos la evidencia lista para la auditoría.",
+    cta: "Ver cumplimiento →",
+    highlight: true,
+  },
+  {
+    href: "/es/servicios/",
+    badge: "Catálogo",
+    title: "Servicios de agencia",
+    body: "Web, SEO, contenido, chatbots y agentes de IA. Las capacidades que usamos en cada implementación, también como servicio.",
+    cta: "Ver servicios →",
+    highlight: false,
+  },
+];
+---
+
+<section class="px-4 py-14">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {doors.map((door) => (
+        <a
+          href={door.href}
+          class={`group flex flex-col rounded-3xl p-7 md:p-8 bg-[#0a0a0a] transition-all duration-300 ${
+            door.highlight
+              ? "border border-orange-500/40 hover:border-orange-500/70"
+              : "border border-white/5 hover:border-orange-500/30"
+          }`}
+        >
+          <span class="inline-block self-start px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 text-xs font-semibold mb-4">
+            {door.badge}
+          </span>
+          <h2 class="text-xl md:text-2xl font-semibold text-white mb-3">{door.title}</h2>
+          <p class="text-gray-400 text-sm md:text-base leading-relaxed mb-5 flex-1">{door.body}</p>
+          {door.highlight && (
+            <p class="text-xs text-gray-500 mb-4">
+              Ley 10/2025:{" "}
+              <span
+                class="text-orange-400 font-semibold tabular-nums"
+                data-home-countdown
+                data-deadline={LEY.plazoAdaptacion}
+              >
+                {diasRestantes}
+              </span>{" "}
+              días de plazo · Verifactu: 2027
+            </p>
+          )}
+          <span class="text-orange-400 font-medium text-sm group-hover:underline">{door.cta}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    var el = document.querySelector("[data-home-countdown]");
+    if (!el) return;
+    var deadline = new Date(el.getAttribute("data-deadline") + "T00:00:00+01:00").getTime();
+    el.textContent = String(Math.max(0, Math.ceil((deadline - Date.now()) / 86400000)));
+  })();
+</script>

@@ -5,7 +5,7 @@ import Hero from "../sections/home/Hero.astro";
 import WhyUs from "../sections/home/WhyUs.astro";
 import Services from "../sections/home/Services.astro";
 import ServiceCatalog from "../sections/home/ServiceCatalog.astro";
-import ComplianceBanner from "../sections/home/ComplianceBanner.astro";
+import SiloDoors from "../sections/home/SiloDoors.astro";
 import Testimonial from "../sections/home/Testimonial.astro";
 import ClientTestimonials from "../sections/home/ClientTestimonials.astro";
 import BlogSection from "../sections/home/BlogSection.astro";
@@ -79,9 +79,13 @@ const jsonLd: any[] = [
   organizationNode({
     locale,
     description:
-      "Auditoria, roadmap e implementacion tecnologica para empresas medianas. Diagnostico riguroso, priorizacion y ejecucion sin hand-offs.",
+      "Integración y automatización de sistemas con IA para empresas: ERP, TPV, e-commerce, CRM y WhatsApp, y adaptación a Verifactu y a la Ley 10/2025. De la estrategia a producción, sin hand-offs.",
     extra: { hasOfferCatalog: OFFER_CATALOG },
   }),
+  // Sin potentialAction/SearchAction: la URL plantilla estaba malformada
+  // (doble barra + {locale} sin sustituir apuntando a un filtro de categoría,
+  // no a una búsqueda) y Google retiró el Sitelinks Search Box en nov/2024,
+  // así que el marcado ya no producía nada.
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -90,14 +94,6 @@ const jsonLd: any[] = [
     url: site,
     inLanguage: locale,
     publisher: ORG_REF,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${site}/{locale}/blog/?cat={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
   },
 ];
 
@@ -121,16 +117,16 @@ const metaTitle = meta?.title ?? "IA Operators";
 const metaDescription = meta?.description ?? "";
 ---
 
+<!-- Sin <main> propio: BaseLayout ya envuelve el slot en <main>, y el
+     anidamiento producía dos <main> en el DOM (hallazgo de la auditoría). -->
 <BaseLayout title={metaTitle} description={metaDescription} jsonLd={jsonLd}>
-  <main>
     <Hero locale={locale} hero={home?.hero ?? {}} />
-    {locale === "es" && <ComplianceBanner />}
     <WhyUs why={home?.why ?? {}} industries={home?.industries ?? []} />
+    {locale === "es" && <SiloDoors />}
     <ServiceCatalog locale={locale} />
     <Services services={home?.services ?? {}} />
     <Testimonial testimonial={home?.testimonial ?? {}} socials={socials} ctaHref={`/${locale}/sobre/`} />
     <ClientTestimonials clientTestimonials={home?.clientTestimonials ?? { badge: "", title: "", items: [] }} />
     <BlogSection blogSection={home?.blogSection ?? {}} posts={latestPosts} locale={locale} />
     <FAQ faq={faq ?? { items: [] }} />
-  </main>
 </BaseLayout>
