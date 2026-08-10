@@ -191,6 +191,55 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     secundarias: ["integración y automatización de sistemas", "integración de aplicaciones"],
     faixa: "c",
   },
+  // Hijos del hub (Sprint C). Los sirve src/pages/es/integracion/[caso].astro
+  // sobre src/data/integracion.ts; los slugs de ambos ficheros deben coincidir.
+  {
+    path: "integracion/erp/",
+    locales: ["es"],
+    silo: "integracion",
+    primaria: "integración erp",
+    secundarias: ["conectar erp", "integrar erp con ecommerce", "erp para pymes"],
+    faixa: "c",
+    estimada: true,
+  },
+  {
+    path: "integracion/crm/",
+    locales: ["es"],
+    silo: "integracion",
+    primaria: "crm para empresas",
+    secundarias: ["automatizar crm", "integrar crm con erp", "crm pymes"],
+    faixa: "c",
+    estimada: true,
+  },
+  {
+    path: "integracion/whatsapp-business-api/",
+    locales: ["es"],
+    silo: "integracion",
+    primaria: "whatsapp business api",
+    secundarias: ["api de whatsapp business", "automatizar whatsapp", "integrar whatsapp con crm"],
+    faixa: "d",
+  },
+  {
+    path: "integracion/api-y-webhooks/",
+    locales: ["es"],
+    silo: "integracion",
+    primaria: "integración de api",
+    secundarias: ["webhooks", "conectar aplicaciones por api", "integración por api"],
+    faixa: "b",
+    estimada: true,
+  },
+  {
+    // El plan cita esta ruta dos veces con primarias distintas (§4 la lista como
+    // "integración de sistemas", §6 como "software a medida"). Vale §6: repetir
+    // la primaria del hub la canibalizaría, que es justo lo que el registro evita.
+    path: "integracion/sistemas-legados/",
+    locales: ["es"],
+    silo: "integracion",
+    primaria: "software a medida",
+    secundarias: ["modernizar sistema legado", "integrar software antiguo", "desarrollo a medida"],
+    faixa: "c",
+    estimada: true,
+  },
   {
     path: "auditoria-de-sistemas/",
     locales: ["es", "en", "pt"],

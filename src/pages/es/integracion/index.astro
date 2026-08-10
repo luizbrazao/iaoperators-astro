@@ -1,11 +1,12 @@
 ---
 // Hub del silo 2 — Integración y automatización de sistemas (core evergreen).
 //
-// Versión MVP creada en el Sprint A para que la puerta 1 de la home nazca
-// apuntando a su destino definitivo (docs/plan-arquitectura-2026-08.md, §5.3
-// y §10). El Sprint C añade los hijos (/erp/, /crm/, /whatsapp-business-api/,
-// /api-y-webhooks/, /sistemas-legados/) y ejecuta los 301 de roadmap,
-// implementación y metodología — sin volver a cambiar el destino de la home.
+// Creado en el Sprint A para que la puerta 1 de la home naciera apuntando a su
+// destino definitivo (docs/plan-arquitectura-2026-08.md, §5.3 y §10). El Sprint C
+// añadió los cinco hijos (/erp/, /crm/, /whatsapp-business-api/, /api-y-webhooks/
+// y /sistemas-legados/), servidos por src/pages/es/integracion/[caso].astro sobre
+// src/data/integracion.ts. Quedan pendientes los 301 de roadmap, implementación y
+// metodología — sin volver a cambiar el destino de la home.
 // ES-only: la keyword primaria es "integración de sistemas" (ver
 // src/data/keywords-primarias.ts).
 
@@ -56,13 +57,16 @@ const metodo = [
   },
 ];
 
+// Cada capacidad con página propia enlaza a ella. La que todavía no la tiene
+// —automatización con IA— apunta a su página de servicio, para que ninguna
+// tarjeta sea un callejón sin salida.
 const capacidades = [
-  { title: "ERP", body: "Conectamos tu ERP —propio o de mercado— con el resto del negocio: pedidos, stock, facturación y reporting." },
-  { title: "APIs y webhooks", body: "Integraciones a medida entre aplicaciones, con colas, reintentos e idempotencia. Lo que no tiene API, lo resolvemos igual." },
-  { title: "CRM y ventas", body: "Leads que entran solos, datos que no se pierden y seguimiento automatizado desde el primer contacto." },
-  { title: "WhatsApp Business API", body: "Atención, notificaciones y flujos de venta sobre el canal donde ya están tus clientes." },
-  { title: "Automatización con IA", body: "Agentes y flujos que clasifican, extraen y estructuran información donde antes había trabajo manual." },
-  { title: "Sistemas legados", body: "Modernizamos sin reemplazar: el sistema que funciona se queda; lo que falta se construye alrededor." },
+  { title: "ERP", href: `/${locale}/integracion/erp/`, body: "Conectamos tu ERP —propio o de mercado— con el resto del negocio: pedidos, stock, facturación y reporting." },
+  { title: "APIs y webhooks", href: `/${locale}/integracion/api-y-webhooks/`, body: "Integraciones a medida entre aplicaciones, con colas, reintentos e idempotencia. Lo que no tiene API, lo resolvemos igual." },
+  { title: "CRM y ventas", href: `/${locale}/integracion/crm/`, body: "Leads que entran solos, datos que no se pierden y seguimiento automatizado desde el primer contacto." },
+  { title: "WhatsApp Business API", href: `/${locale}/integracion/whatsapp-business-api/`, body: "Atención, notificaciones y flujos de venta sobre el canal donde ya están tus clientes." },
+  { title: "Automatización con IA", href: `/${locale}/servicios/automatizacion-ia/`, body: "Agentes y flujos que clasifican, extraen y estructuran información donde antes había trabajo manual." },
+  { title: "Sistemas legados", href: `/${locale}/integracion/sistemas-legados/`, body: "Modernizamos sin reemplazar: el sistema que funciona se queda; lo que falta se construye alrededor." },
 ];
 
 const jsonLd = [
@@ -161,15 +165,25 @@ const jsonLd = [
     <!-- Capacidades -->
     <section class="px-4 py-16">
       <div class="max-w-6xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-center mb-4">
           Qué integramos y automatizamos
         </h2>
+        <p class="text-gray-400 text-center max-w-2xl mx-auto mb-12 leading-relaxed">
+          Cada bloque tiene su propia página con los flujos concretos que hay que resolver y dónde
+          se rompen habitualmente.
+        </p>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {capacidades.map((c) => (
-            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 hover:border-orange-500/30 transition-all duration-300">
+            <a
+              href={c.href}
+              class="group bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 hover:border-orange-500/30 transition-all duration-300"
+            >
               <h3 class="text-base font-semibold mb-2">{c.title}</h3>
               <p class="text-gray-400 text-sm leading-relaxed">{c.body}</p>
-            </div>
+              <span class="inline-block text-orange-400 text-sm mt-4 group-hover:translate-x-1 transition-transform">
+                Ver cómo lo hacemos →
+              </span>
+            </a>
           ))}
         </div>
       </div>

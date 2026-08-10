@@ -234,15 +234,20 @@ function discoverRoutes(dir) {
  * portfolio), cuyos detalles no persiguen keyword propia en el registro.
  */
 function expandDynamic(route) {
-  const sources = {
-    "[sector]": ["sectores-sac.ts", "SECTOR_SLUGS"],
-    "[caso]": ["verifactu.ts", "CASO_SLUGS"],
-    "[ciudad]": ["ciudades-ia.ts", "CIUDAD_SLUGS"],
-  };
-  const param = Object.keys(sources).find((p) => route.includes(p));
-  if (!param) return null;
+  // Se indexa por RUTA, no por nombre de parámetro: dos silos distintos usan
+  // "[caso]" y con un mapa por parámetro el segundo heredaba los slugs del
+  // primero, generando rutas inexistentes y falsos "sin declarar".
+  const sources = [
+    ["cumplimiento/ley-atencion-al-cliente/[sector]", "sectores-sac.ts", "SECTOR_SLUGS"],
+    ["cumplimiento/verifactu/[caso]", "verifactu.ts", "CASO_SLUGS"],
+    ["integracion/[caso]", "integracion.ts", "CASO_SLUGS"],
+    ["[ciudad]", "ciudades-ia.ts", "CIUDAD_SLUGS"],
+  ];
+  const entry = sources.find(([match]) => route.includes(match));
+  if (!entry) return null;
 
-  const [file, constName] = sources[param];
+  const [match, file, constName] = entry;
+  const param = match.slice(match.indexOf("["));
   let slugs = [];
   try {
     const src = readFileSync(join(ROOT, "src", "data", file), "utf8");
