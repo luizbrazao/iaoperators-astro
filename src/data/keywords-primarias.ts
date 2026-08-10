@@ -194,6 +194,12 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
   // Hijos del hub (Sprint C). Los sirve src/pages/es/integracion/[caso].astro
   // sobre src/data/integracion.ts; los slugs de ambos ficheros deben coincidir.
   {
+    // SERP inspeccionada 10/ago/2026 (google.es): informativa de arriba abajo —
+    // IBM, SAP, OpenText, AtroCore y blogs de agencias respondiendo "¿qué es la
+    // integración ERP?", con "Más preguntas" en el primer bloque. La primaria se
+    // mantiene porque es el término que describe el servicio y no hay variante
+    // comercial con demanda, pero esta landing NO va a rankear por ella: la
+    // entrada orgánica de este clúster tiene que venir de un post. Ver §12.
     path: "integracion/erp/",
     locales: ["es"],
     silo: "integracion",
@@ -203,11 +209,17 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     estimada: true,
   },
   {
+    // CORREGIDA 10/ago/2026 tras inspeccionar la SERP. La primaria era
+    // "crm para empresas", que el plan (§6.2) daba por comercial. No lo es: la
+    // SERP la sirven comparativas de producto —"Los mejores 6 CRM", HubSpot,
+    // Cyberclick, Salesforce, Zoho, Ringover—. Es una query de quien va a
+    // COMPRAR un CRM, y nosotros no vendemos CRM: los integramos. Aunque
+    // rankeáramos, el tráfico sería de la intención equivocada.
     path: "integracion/crm/",
     locales: ["es"],
     silo: "integracion",
-    primaria: "crm para empresas",
-    secundarias: ["automatizar crm", "integrar crm con erp", "crm pymes"],
+    primaria: "integrar crm con erp",
+    secundarias: ["automatizar crm", "integración de crm", "sincronizar crm y erp"],
     faixa: "c",
     estimada: true,
   },

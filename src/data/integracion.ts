@@ -203,9 +203,12 @@ export const CASOS: Record<CasoSlug, CasoIntegracion> = {
   crm: {
     nombre: "Equipos comerciales con CRM",
     nombreCorto: "CRM",
-    metaTitle: "Integración y automatización de CRM para empresas",
+    // El título ya no dice "CRM para empresas": esa query la sirven comparativas
+    // de producto ("los mejores CRM") y es de quien va a comprar un CRM, no de
+    // quien quiere integrar el que ya tiene. Ver src/data/keywords-primarias.ts.
+    metaTitle: "Integración de CRM: conectarlo con tu ERP",
     metaDescription:
-      "Leads que entran solos y sin duplicados, actividad registrada sin teclear y sincronización con el ERP. Automatizamos el CRM que ya usas, sea cual sea.",
+      "Leads que entran solos y sin duplicados, actividad registrada sin teclear y sincronización con el ERP sin bucles. Automatizamos el CRM que ya usas, sea cual sea.",
     h1: "Integración y automatización de CRM",
     intro:
       "Un CRM no falla por falta de funciones. Falla porque mantenerlo al día es trabajo manual, y el trabajo manual solo se hace cuando alguien mira. La integración consiste en quitar del medio a la persona que teclea.",

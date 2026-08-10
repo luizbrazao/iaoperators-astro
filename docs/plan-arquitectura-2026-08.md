@@ -509,10 +509,28 @@ Legenda de prioridade: **P0** = fazer antes de tudo · **P1** = próximo trimest
 |---|---|---|---|---|---|---|---|
 | `/es/integracion/` | `integración de sistemas` | **c** | €5,93 | `integración de aplicaciones`, `sistema integral de gestion` | Comercial | `Integración de sistemas para empresas \| IA Operators` | **P0** |
 | `/es/integracion/erp/` | `integracion erp` | **c** | €15,81 | `erp para pymes`, `soluciones erp`, `conectar erp` | Comercial | `Integración de ERP: conectar tu ERP con lo demás` | **P0** |
-| `/es/integracion/crm/` | `crm para empresas` | **c** | €28,67 | `crm pymes`, `crm para inmobiliarias` | Comercial | `Integración y automatización de CRM` | P1 |
+| `/es/integracion/crm/` | ~~`crm para empresas`~~ → **`integrar crm con erp`** | **c** | €28,67 | `automatizar crm`, `integración de crm`, `sincronizar crm y erp` | **Não é comercial** — ver nota abaixo | `Integración de CRM: conectarlo con tu ERP` | P1 |
 | `/es/integracion/whatsapp-business-api/` | `whatsapp business api` | **d** | €15,28 | `api de whatsapp business`, `automatizar whatsapp` | Comercial | `WhatsApp Business API: integración y automatización` | **P0** |
 | `/es/integracion/api-y-webhooks/` | `integración de api` | **b** | — | `webhooks`, `conectar aplicaciones por api` | Comercial | `Integraciones por API y webhooks a medida` | P1 |
 | `/es/integracion/sistemas-legados/` | `software a medida` | **c** | €8,31 | `modernizar sistema legado`, `desarrollo a medida` | Comercial | `Integrar sistemas legados sin reemplazarlos` | P2 |
+
+> ### ⚠️ Correção estrutural após inspeção de SERP (10/ago/2026)
+>
+> O §12 pedia olhar as SERPs de `integracion erp`, `crm para empresas` e `agentes de ia` antes de escrever essas landings. Foram olhadas as três (google.es, `gl=es`), mais `agentes de ia para empresas` e `integrar crm con erp`. O resultado não corrige uma keyword: corrige uma **premissa do plano**.
+>
+> | Query | Quem ocupa o top 10 | Intenção real |
+> |---|---|---|
+> | `integracion erp` | IBM, SAP, OpenText, AtroCore, blogs de agências + bloco «Más preguntas» no topo | Informativa |
+> | `crm para empresas` | «Los mejores 6 CRM», HubSpot, Cyberclick, Salesforce, Zoho, Ringover | Comparação de produto — **de quem vai comprar um CRM** |
+> | `integrar crm con erp` | EY, Pipedrive, IBM, Sage, Alumio + blogs de integradores espanhóis | Informativa |
+> | `agentes de ia` | Google Cloud, IBM, Salesforce, AWS, Xataka | Informativa |
+> | `agentes de ia para empresas` | Softeng, PotenzzIA, SDi convivendo com gigantes | **Comercial** — a única das cinco |
+>
+> **A premissa que cai:** o plano classificou estas keywords como «Comercial» a partir do CPC do Keyword Planner. O CPC mede o leilão de anúncios, não o que o Google decide servir organicamente — é exatamente o erro que já tinha sido corrigido no §1 e que voltou pela porta de trás no §6.2. Nesta vertical, as *head terms* são servidas por conteúdo explicativo (fabricantes e blogs) ou por comparativos de produto; a intenção comercial só aparece na cauda com modificador.
+>
+> **O que isto significa para as cinco filhas do hub:** elas continuam a fazer sentido — são **ativos de venda**, dão profundidade ao silo e são o destino natural dos links internos —, mas **não são ativos de ranking** e não devem ser avaliadas como tal. A entrada orgânica deste silo tem de vir de **posts**, como já acontece de forma medida em roadmap (1.124 vs 17) e auditoria (512 vs 0), e como se montou de propósito no clúster Verifactu.
+>
+> **Sprint D passa a ser de conteúdo, não de landings:** um post por filha, atacando a query informativa que a SERP realmente serve, cada um alimentando a sua landing com âncora descritiva. É a mesma jogada do clúster Verifactu, que foi desenhada assim por acaso feliz e agora tem justificação medida.
 | `/es/integracion/auditoria-de-sistemas/` | `auditoría informática` | **b** ᵉ | — (não medido; o termo vizinho `auditoria seguridad informatica` é **c** a €10,41 e `auditoria ciberseguridad` **c** a €48,07) | `radiografía digital`, `auditoría de sistemas`, `auditoria seguridad informatica` | Comercial | `Auditoría de sistemas (Radiografía Digital)` | P1 (mover) |
 | `/en/services/system-integration/` | `system integration` | **d** | €20,75 | `system integration services`, `crm integration` | Comercial | `System Integration Services \| IA Operators` | P1 |
 
