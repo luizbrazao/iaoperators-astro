@@ -30,6 +30,16 @@ export const NORMA = {
   fechaSociedadesLegible: "1 de enero de 2027",
   fechaResto: "2027-07-01",
   fechaRestoLegible: "1 de julio de 2027",
+  // La especificación técnica (formato de los registros, servicio de remisión)
+  // no vive en el RD sino en la orden de desarrollo, citada por la propia sede
+  // electrónica de la AEAT. Los detalles de campos y endpoints se toman de ahí:
+  // no los reproducimos de memoria en ninguna landing.
+  ordenTecnica: "Orden HAC/1177/2024",
+  // Obligación de los fabricantes/productores de software, anterior a la de los
+  // usuarios: desde el 29 de julio de 2025 los sistemas comercializados deben
+  // ofrecerse ya conformes.
+  fechaFabricantes: "2025-07-29",
+  fechaFabricantesLegible: "29 de julio de 2025",
 };
 
 export const DISCLAIMER =
@@ -240,7 +250,7 @@ export const SHARED = {
       },
       {
         q: "¿Esto es lo mismo que la factura electrónica obligatoria?",
-        a: "No. Verifactu nace de la Ley Antifraude y regula cómo tu sistema registra y comunica las facturas. La factura electrónica B2B obligatoria viene de la Ley 18/2022 Crea y Crece, persigue la morosidad y su reglamento aún no está publicado de forma definitiva. Son dos proyectos distintos con calendarios distintos, aunque conviene diseñar pensando en los dos.",
+        a: "No. Verifactu nace de la Ley Antifraude y regula cómo tu sistema registra y comunica las facturas. La factura electrónica B2B obligatoria viene de la Ley 18/2022 Crea y Crece y persigue la morosidad. Su reglamento ya está publicado —el Real Decreto 238/2026—, pero la aplicación efectiva queda diferida: 12 meses para quien facture más de 8 M€ y 24 meses para el resto, contados desde la entrada en vigor de una orden ministerial de desarrollo que todavía no se ha publicado. Es decir: la obligación está regulada, la fecha concreta aún no. Son dos proyectos distintos con calendarios distintos, aunque conviene diseñar pensando en los dos.",
       },
       {
         q: "¿Cuánto se tarda en tener el conector en producción?",
@@ -281,7 +291,7 @@ export const CASOS: Record<
   "erp-a-medida": {
     nombre: "ERP propio o muy adaptado",
     nombreCorto: "ERP a medida",
-    metaTitle: "Verifactu para ERP a medida: integración sin migrar",
+    metaTitle: "Verifactu ERP: integrarlo en tu ERP a medida sin migrar",
     metaDescription:
       "Adaptamos tu ERP propio o customizado a Verifactu: registros encadenados, remisión a la AEAT, QR y declaración responsable. Sin migrar de sistema.",
     h1: "Verifactu para un ERP propio o muy adaptado",
@@ -316,7 +326,7 @@ export const CASOS: Record<
   "tpv-multitienda": {
     nombre: "TPV multi-tienda o con varios puntos de cobro",
     nombreCorto: "TPV multi-tienda",
-    metaTitle: "Verifactu en TPV multi-tienda: cadena, QR y offline",
+    metaTitle: "Verifactu TPV: cadena, QR y funcionamiento offline",
     metaDescription:
       "Verifactu para TPV con varias cajas o tiendas: estrategia de series, cadena de huellas, QR en ticket térmico y funcionamiento sin conexión.",
     h1: "Verifactu en TPV multi-tienda",
@@ -351,7 +361,7 @@ export const CASOS: Record<
   "ecommerce-propio": {
     nombre: "E-commerce propio o headless",
     nombreCorto: "E-commerce propio",
-    metaTitle: "Verifactu para e-commerce propio: facturación conforme",
+    metaTitle: "Verifactu e-commerce: facturación conforme en tienda propia",
     metaDescription:
       "Verifactu en tiendas online propias o headless: registro en el momento de la factura, anulaciones por devolución, QR en el PDF y cola de envío.",
     h1: "Verifactu para un e-commerce propio",

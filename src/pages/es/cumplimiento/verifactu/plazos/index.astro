@@ -1,0 +1,284 @@
+---
+// Referencia de plazos de Verifactu. ES-only.
+// Keyword primaria: "verifactu obligatorio" (secundarias: cuándo entra en vigor,
+// verifactu 2027, verifactu autónomos). Intención informacional pura: la página
+// responde "cuándo" con precisión y deriva al pilar para el "cómo".
+//
+// Regla de esta página: NINGUNA fecha se escribe a mano. Todas salen de NORMA
+// en src/data/verifactu.ts, que es donde están las fuentes verificadas.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { NORMA, DISCLAIMER, EXCLUSIONES } from "@/data/verifactu";
+
+const locale = "es";
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const base = `/${locale}/cumplimiento/verifactu/`;
+const pillarUrl = new URL(base, site).toString();
+const pageUrl = new URL(`${base}plazos/`, site).toString();
+const contactHref = `/${locale}/contact/`;
+
+const dias = (iso: string) =>
+  Math.max(0, Math.ceil((new Date(`${iso}T00:00:00+01:00`).getTime() - Date.now()) / 86_400_000));
+
+const hitos = [
+  {
+    fecha: NORMA.fechaFabricantesLegible,
+    iso: NORMA.fechaFabricantes,
+    quien: "Productores y comercializadores de software",
+    que: "Los sistemas de facturación que se ofrezcan en el mercado deben poder funcionar ya de forma conforme. Es la fecha que casi nadie recuerda, y la que explica por qué tu proveedor lleva meses hablándote de esto.",
+    pasado: true,
+  },
+  {
+    fecha: NORMA.fechaSociedadesLegible,
+    iso: NORMA.fechaSociedades,
+    quien: "Contribuyentes del Impuesto sobre Sociedades",
+    que: "Sociedades mercantiles y demás sujetos pasivos del Impuesto sobre Sociedades. Si tu empresa es una S.L. o una S.A., esta es tu fecha.",
+    pasado: false,
+  },
+  {
+    fecha: NORMA.fechaRestoLegible,
+    iso: NORMA.fechaResto,
+    quien: "El resto de obligados tributarios",
+    que: "Autónomos y demás contribuyentes que no tributan por el Impuesto sobre Sociedades. Seis meses más de margen, no una exención.",
+    pasado: false,
+  },
+];
+
+const meta = {
+  title: "¿Cuándo es obligatorio Verifactu? Plazos de 2027 | IA Operators",
+  description: `Verifactu es obligatorio el ${NORMA.fechaSociedadesLegible} para contribuyentes del Impuesto sobre Sociedades y el ${NORMA.fechaRestoLegible} para el resto, incluidos autónomos. Quién queda excluido y qué hacer con el margen que queda.`,
+};
+
+const faq = [
+  {
+    q: "¿Cuándo es obligatorio Verifactu exactamente?",
+    a: `El ${NORMA.fechaSociedadesLegible} para los contribuyentes del Impuesto sobre Sociedades y el ${NORMA.fechaRestoLegible} para el resto de obligados tributarios, autónomos incluidos. Las fechas vigentes son las que fijó el ${NORMA.aplazamiento}.`,
+  },
+  {
+    q: "¿Verifactu se ha aplazado otra vez?",
+    a: `El calendario ya se ha movido dos veces, la última con el ${NORMA.aplazamiento}. Eso no convierte un tercer aplazamiento en algo con lo que se pueda contar: planificar sobre una prórroga que no existe es la forma más cara de llegar tarde, porque el trabajo real —auditar series, decidir modalidad, construir y probar— no se comprime.`,
+  },
+  {
+    q: "Soy autónomo, ¿me aplica y desde cuándo?",
+    a: `Sí, salvo que estés en alguno de los supuestos de exclusión. Tu fecha es el ${NORMA.fechaRestoLegible}. Si emites facturas con un programa informático —aunque sea una hoja de cálculo con macros o un software vertical de tu sector—, ese sistema tiene que cumplir.`,
+  },
+  {
+    q: "¿Qué pasa si llego tarde?",
+    a: "El régimen sancionador del artículo 201 bis de la Ley General Tributaria prevé 50.000 € por ejercicio para quien usa sistemas no conformes y 150.000 € por ejercicio para quien los produce o comercializa. La calificación de tu caso concreto corresponde a tu asesoría.",
+  },
+  {
+    q: "¿Cuánto tiempo necesito para estar listo?",
+    a: "Entre cuatro y siete semanas de proyecto contando la auditoría del sistema, según cuántos puntos de emisión tengas y qué casuística de series, rectificativas y anulaciones haya que cubrir. Lo que alarga los proyectos casi nunca es el envío a la AEAT: es descubrir tarde cómo factura realmente la empresa.",
+  },
+];
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: meta.title,
+    description: meta.description,
+    url: pageUrl,
+    inLanguage: "es-ES",
+    about: {
+      "@type": "Legislation",
+      name: NORMA.nombre,
+      legislationIdentifier: "BOE-A-2023-24840",
+      legislationJurisdiction: "ES",
+      url: NORMA.boeUrl,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
+      { "@type": "ListItem", position: 2, name: "Verifactu", item: pillarUrl },
+      { "@type": "ListItem", position: 3, name: "Plazos", item: pageUrl },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  jsonLd={jsonLd}
+>
+  <div class="bg-transparent text-white">
+    <!-- Hero -->
+    <section class="px-4 pt-28 pb-14">
+      <div class="max-w-4xl mx-auto">
+        <nav class="text-sm text-gray-500 mb-6">
+          <a href={base} class="hover:text-orange-400">Verifactu</a>
+          <span class="mx-2">/</span>
+          <span class="text-gray-400">Plazos</span>
+        </nav>
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
+          Cuándo te obliga <span class="text-orange-500">Verifactu</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-300 mb-8">
+          Dos fechas, según cómo tribute tu empresa. Y una tercera, ya pasada, que explica
+          por qué tu proveedor de software lleva meses insistiendo.
+        </p>
+        <div class="inline-flex items-baseline gap-3 rounded-2xl border border-orange-500/20 bg-[#0a0a0a] px-6 py-4">
+          <span
+            class="text-3xl md:text-4xl font-bold text-orange-400 tabular-nums"
+            data-plazo-countdown
+            data-deadline={NORMA.fechaSociedades}
+          >
+            {dias(NORMA.fechaSociedades)}
+          </span>
+          <span class="text-sm text-gray-400">días hasta la primera fecha</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Línea de tiempo -->
+    <section class="px-4 py-16">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-10">Las tres fechas</h2>
+        <ol class="space-y-5">
+          {hitos.map((h) => (
+            <li
+              class={`rounded-3xl border p-7 md:p-8 ${
+                h.pasado
+                  ? "border-white/5 bg-[#0a0a0a] opacity-70"
+                  : "border-orange-500/20 bg-[#0a0a0a]"
+              }`}
+            >
+              <div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-2 mb-3">
+                <span class={`text-xl font-bold ${h.pasado ? "text-gray-400" : "text-orange-400"}`}>
+                  {h.fecha}
+                </span>
+                <span class="text-xs uppercase tracking-widest text-gray-500">
+                  {h.pasado ? "Ya en vigor" : `Faltan ${dias(h.iso)} días`}
+                </span>
+              </div>
+              <h3 class="text-lg font-semibold mb-2">{h.quien}</h3>
+              <p class="text-gray-400 leading-relaxed">{h.que}</p>
+            </li>
+          ))}
+        </ol>
+        <p class="text-sm text-gray-500 mt-6">
+          Fechas vigentes tras el {NORMA.aplazamiento}. Norma de referencia:{" "}
+          <a href={NORMA.boeUrl} rel="noopener" class="text-orange-400 hover:underline">
+            {NORMA.nombre}
+          </a>{" "}
+          · Especificación técnica: {NORMA.ordenTecnica}.
+        </p>
+      </div>
+    </section>
+
+    <!-- Exclusiones -->
+    <section class="px-4 py-16 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">A quién no le aplica</h2>
+        <p class="text-gray-400 mb-10">
+          Decir a quién no le hace falta ahorra tiempo a todos. Si estás en uno de estos tres
+          supuestos, puedes dejar de leer.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {EXCLUSIONES.map((e) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7">
+              <h3 class="text-base font-semibold mb-3">{e.title}</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">{e.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Qué hacer con el margen -->
+    <section class="px-4 py-16">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Qué hacer con el margen que queda</h2>
+        <p class="text-gray-400 leading-relaxed mb-6">
+          El error de cálculo habitual es tratar esto como una actualización de software que se
+          instala el mes anterior. El trabajo que consume el calendario no es enviar registros a
+          la AEAT: es descubrir cuántos sitios de tu empresa emiten factura, con qué series, y
+          qué pasa con las anulaciones y las rectificativas que nadie documentó nunca.
+        </p>
+        <p class="text-gray-400 leading-relaxed mb-8">
+          Ese inventario es también lo que decide si te conviene la modalidad VERI*FACTU —remisión
+          inmediata— o un sistema no verificable con firma, registro de eventos y gestión de
+          alarmas. No es una preferencia: depende de si tus puntos de emisión tienen conectividad
+          fiable.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a
+            href={base}
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/30 font-medium hover:bg-orange-500/20 transition-all duration-300"
+          >
+            Cómo se implementa →
+          </a>
+          <a
+            href={`${base}api/`}
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/10 text-gray-200 font-medium hover:border-orange-500/30 transition-all duration-300"
+          >
+            La integración con la API de la AEAT →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="px-4 py-16 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-10">Preguntas frecuentes</h2>
+        <div class="space-y-4">
+          {faq.map((item) => (
+            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-6">
+              <summary class="cursor-pointer font-semibold text-white list-none flex justify-between items-center gap-4">
+                {item.q}
+                <span class="text-orange-500 group-open:rotate-45 transition-transform shrink-0">+</span>
+              </summary>
+              <p class="text-gray-400 mt-4 leading-relaxed">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="px-4 py-20">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">
+          ¿Tu sistema llega a tiempo?
+        </h2>
+        <p class="text-gray-400 mb-8">
+          En una llamada corta te decimos si te aplica, qué modalidad te encaja y qué hay que
+          construir. Si estás en el SII o tributas en territorio foral, te lo decimos ahí mismo.
+        </p>
+        <a
+          href={contactHref}
+          class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+        >
+          Hablar con un especialista ↗
+        </a>
+        <p class="text-xs text-gray-600 mt-10 max-w-2xl mx-auto leading-relaxed">{DISCLAIMER}</p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    var el = document.querySelector("[data-plazo-countdown]");
+    if (!el) return;
+    var deadline = new Date(el.getAttribute("data-deadline") + "T00:00:00+01:00").getTime();
+    el.textContent = String(Math.max(0, Math.ceil((deadline - Date.now()) / 86400000)));
+  })();
+</script>

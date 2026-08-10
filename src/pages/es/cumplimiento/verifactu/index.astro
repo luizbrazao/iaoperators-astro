@@ -115,7 +115,7 @@ const faqJsonLd = {
             {diasRestantes}
           </span>
           <span class="text-left text-sm text-gray-400 leading-tight">
-            días para el<br />1 de enero de 2027
+            días para el<br />{NORMA.fechaSociedadesLegible}
           </span>
         </div>
 
@@ -133,6 +133,41 @@ const faqJsonLd = {
             Ver mi caso ↓
           </a>
         </div>
+      </div>
+    </section>
+
+    <!-- SUBPÁGINAS DEL PILAR -->
+    <!-- Enlaces internos hub→hijos con ancla descriptiva (no exacta): el plan
+         §7.7 y §8 piden texto de enlace claro, no correspondencia literal. -->
+    <section class="px-4 pb-4">
+      <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
+        <a
+          href={`${base}plazos/`}
+          class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-5 hover:border-orange-500/30 transition-all duration-300"
+        >
+          <h2 class="text-base font-semibold mb-1 group-hover:text-orange-400 transition-colors">
+            Cuándo te obliga
+          </h2>
+          <p class="text-gray-400 text-sm">Las dos fechas de 2027 y a quién no le aplica.</p>
+        </a>
+        <a
+          href={`${base}integracion/`}
+          class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-5 hover:border-orange-500/30 transition-all duration-300"
+        >
+          <h2 class="text-base font-semibold mb-1 group-hover:text-orange-400 transition-colors">
+            Cómo es el proyecto
+          </h2>
+          <p class="text-gray-400 text-sm">Vías de integración, fases, entregables y precio.</p>
+        </a>
+        <a
+          href={`${base}api/`}
+          class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-5 hover:border-orange-500/30 transition-all duration-300"
+        >
+          <h2 class="text-base font-semibold mb-1 group-hover:text-orange-400 transition-colors">
+            El detalle técnico
+          </h2>
+          <p class="text-gray-400 text-sm">Arquitectura de la conexión con el servicio de la AEAT.</p>
+        </a>
       </div>
     </section>
 

@@ -1,0 +1,303 @@
+---
+// Página técnica de la Frente B. ES-only.
+// Keyword primaria: "api verifactu" (100–1K/mes, competencia ALTA en Ads,
+// puja de hasta 12 € — el término con comprador más claro de todo el clúster).
+// Intención: técnica/transaccional. Quien busca esto es un CTO, un jefe de
+// desarrollo o un integrador que ya sabe qué es Verifactu y quiere saber cómo
+// se conecta sin romper la facturación.
+//
+// REGLA DE HONESTIDAD TÉCNICA: no se reproducen de memoria nombres de
+// endpoints, WSDL, campos ni códigos de error. Esa especificación vive en la
+// orden de desarrollo y en la documentación técnica de la AEAT, y aquí se
+// enlaza en vez de inventarse. Lo que sí aportamos —y es el diferencial frente
+// a los vendors— es la arquitectura de la integración.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { NORMA, DISCLAIMER } from "@/data/verifactu";
+
+const locale = "es";
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const base = `/${locale}/cumplimiento/verifactu/`;
+const pillarUrl = new URL(base, site).toString();
+const pageUrl = new URL(`${base}api/`, site).toString();
+const contactHref = `/${locale}/contact/`;
+
+const meta = {
+  title: "API de Verifactu: cómo conectar tu sistema con la AEAT | IA Operators",
+  description:
+    "Qué exige la integración con el servicio de remisión de la AEAT: cadena de huellas, cola con reintento e idempotencia, estados por registro y pruebas. Arquitectura real, no teoría.",
+};
+
+const capas = [
+  {
+    n: "01",
+    title: "Generación del registro",
+    body: "El registro de alta se crea en el mismo acto de emisión de la factura, no después. La regla que rompe más implementaciones: no puede existir una factura emitida sin su registro asociado. Un proceso nocturno que recorre la tabla de facturas y genera registros a posteriori no cumple.",
+    trampa: "Si tu sistema permite emitir por varias vías (módulo de ventas, TPV, API de terceros), cada vía necesita pasar por el mismo punto de generación.",
+  },
+  {
+    n: "02",
+    title: "Cadena de huellas",
+    body: "Cada registro incorpora la huella del anterior. El cálculo es determinista y el eslabón se almacena: un hueco en la cadena es detectable y no se puede rellenar más tarde. Antes de escribir código hay que decidir la estrategia de series, porque la cadena se define por serie y punto de emisión.",
+    trampa: "Varias cajas facturando en paralelo contra una única cadena es una condición de carrera esperando a ocurrir. La decisión de series es de arquitectura, no de configuración.",
+  },
+  {
+    n: "03",
+    title: "Envío a la AEAT",
+    body: "En modalidad VERI*FACTU los registros se remiten de forma inmediata. «Inmediata» no significa síncrona dentro de la transacción de venta: significa que el registro sale en cuanto está disponible, a través de una cola con reintento espaciado, idempotencia por registro y control de estado individual.",
+    trampa: "Un envío síncrono acoplado a la emisión convierte cualquier incidencia de la AEAT o de tu conexión en una caída de tu facturación. Es el error de diseño más caro de los que vemos.",
+  },
+  {
+    n: "04",
+    title: "Estado y reconciliación",
+    body: "Cada registro necesita un estado observable —pendiente, enviado, aceptado, rechazado— y un panel donde alguien de administración pueda ver qué falta sin abrir la base de datos. Los rechazos hay que reconciliarlos, no reintentarlos a ciegas.",
+    trampa: "Reintentar un registro rechazado por contenido, en vez de corregirlo, genera ruido indefinido contra la AEAT y esconde el problema real.",
+  },
+  {
+    n: "05",
+    title: "QR y mención en la factura",
+    body: "El QR verificable y la mención «VERI*FACTU» o «Factura verificable» tienen que aparecer en todas las plantillas de salida: PDF, impresión térmica de TPV, email y portal de cliente. Cada plantilla es un punto de fallo distinto.",
+    trampa: "El ticket de 58 mm de una impresora térmica es donde más veces se rompe el QR: entra, pero deja de ser legible.",
+  },
+  {
+    n: "06",
+    title: "Registro inalterable y exportación",
+    body: "La evidencia se guarda en almacenamiento append-only, separado de las tablas que el ERP edita a diario, con retención y exportación en formato legible por la Administración.",
+    trampa: "Un registro que vive en la misma tabla que tu aplicación actualiza no es inalterable, por mucho que nadie lo toque en la práctica.",
+  },
+];
+
+const decisiones = [
+  {
+    title: "¿VERI*FACTU o sistema no verificable?",
+    body: "La modalidad VERI*FACTU remite en el momento y, a cambio, te ahorra las exigencias locales de firma electrónica, registro de eventos, verificación de integridad y gestión de alarmas. El sistema no verificable te libera de la remisión inmediata pero te carga todo eso. Se decide por conectividad real de tus puntos de emisión, no por preferencia.",
+  },
+  {
+    title: "¿Dónde vive el conector?",
+    body: "Como módulo dentro de tu sistema, o como servicio externo al que tu sistema llama. La segunda opción aísla el cumplimiento de tus despliegues y facilita el mantenimiento normativo, pero exige que tu sistema tenga un punto de enganche fiable.",
+  },
+  {
+    title: "¿Qué vía de integración expone tu sistema?",
+    body: "API, webhooks, eventos o acceso a base de datos, por ese orden de preferencia. Si tu ERP es una caja negra sin ningún punto de enganche, la conversación cambia y hay que valorar otras opciones. Eso se resuelve en la auditoría, antes de comprometer alcance.",
+  },
+  {
+    title: "¿Quién firma la declaración responsable?",
+    body: "La emite el productor del sistema informático. Si tu software es propio o a medida para uso interno, ese productor eres tú: la responsabilidad de certificar la conformidad se queda de tu lado. Nosotros construimos el sistema y documentamos la conformidad; la firma es tuya.",
+  },
+];
+
+const faq = [
+  {
+    q: "¿Existe una API pública de Verifactu?",
+    a: `La AEAT publica el servicio de remisión de los registros de facturación junto con su especificación técnica. El formato de los registros, el detalle de los campos y las condiciones del servicio están en la orden de desarrollo (${NORMA.ordenTecnica}) y en la documentación técnica de la sede electrónica, que es la fuente que hay que seguir: cualquier resumen de terceros —este incluido— envejece con cada actualización.`,
+  },
+  {
+    q: "¿Puedo integrar Verifactu sin cambiar de software de facturación?",
+    a: "Sí, y es exactamente el trabajo que hacemos. El conector se acopla a tu sistema actual: no lo sustituye, lo hace conforme. Lo que decide la viabilidad no es la marca del ERP sino si expone una vía de integración razonable.",
+  },
+  {
+    q: "¿Qué pasa si la AEAT no responde o se cae la conexión?",
+    a: "La facturación no puede pararse por eso. El diseño correcto encola los registros, reintenta con espaciado creciente y los envía cuando el servicio se restablece, manteniendo el estado de cada uno. Por eso el envío nunca debe ir acoplado a la transacción de venta.",
+  },
+  {
+    q: "¿Se puede probar antes de ir a producción?",
+    a: "El plan de pruebas es parte del proyecto: se valida la generación de registros, la integridad de la cadena, el comportamiento ante caídas y la casuística de anulaciones y rectificativas antes de tocar producción. El entorno concreto y sus condiciones se toman de la documentación técnica vigente de la AEAT.",
+  },
+  {
+    q: "¿Cuánto tarda una integración por API?",
+    a: "Entre cuatro y siete semanas contando la auditoría del sistema, según el número de puntos de emisión y la complejidad de series y rectificativas. Lo que alarga los proyectos casi nunca es el envío: son las anulaciones, las rectificativas y los flujos de venta que nadie documentó.",
+  },
+];
+
+const providerSchema = {
+  "@type": ["Organization", "ProfessionalService"],
+  name: "IA Operators",
+  url: site,
+  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+};
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Integración con la API de Verifactu de la AEAT",
+    serviceType: "Tax compliance API integration",
+    provider: providerSchema,
+    areaServed: "ES",
+    description: meta.description,
+    url: pageUrl,
+    inLanguage: "es-ES",
+    about: {
+      "@type": "Legislation",
+      name: NORMA.nombre,
+      legislationIdentifier: "BOE-A-2023-24840",
+      legislationJurisdiction: "ES",
+      url: NORMA.boeUrl,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
+      { "@type": "ListItem", position: 2, name: "Verifactu", item: pillarUrl },
+      { "@type": "ListItem", position: 3, name: "API", item: pageUrl },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  jsonLd={jsonLd}
+>
+  <div class="bg-transparent text-white">
+    <!-- Hero -->
+    <section class="px-4 pt-28 pb-14">
+      <div class="max-w-4xl mx-auto">
+        <nav class="text-sm text-gray-500 mb-6">
+          <a href={base} class="hover:text-orange-400">Verifactu</a>
+          <span class="mx-2">/</span>
+          <span class="text-gray-400">API</span>
+        </nav>
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
+          Conectar tu sistema a la <span class="text-orange-500">API de Verifactu</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-300 mb-4">
+          La parte difícil no es enviar el registro. Es que la facturación siga funcionando
+          cuando el envío falla, que la cadena de huellas no se rompa con varios puntos de
+          emisión y que alguien pueda ver el estado sin abrir la base de datos.
+        </p>
+        <p class="text-sm text-gray-500">
+          Esta página describe la arquitectura de la integración. La especificación técnica
+          —campos, formato y condiciones del servicio— está en {NORMA.ordenTecnica} y en la{" "}
+          <a href={NORMA.aeatUrl} rel="noopener" class="text-orange-400 hover:underline">
+            documentación técnica de la AEAT
+          </a>, que es la fuente que seguimos.
+        </p>
+      </div>
+    </section>
+
+    <!-- Las seis capas -->
+    <section class="px-4 py-16 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Qué hay que construir, capa por capa</h2>
+        <p class="text-gray-400 mb-12 max-w-3xl">
+          Cada capa lleva asociada la trampa que hemos visto romper implementaciones reales.
+        </p>
+        <div class="space-y-5">
+          {capas.map((c) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 md:p-8">
+              <div class="flex items-baseline gap-4 mb-3">
+                <span class="text-orange-500 font-bold text-sm tabular-nums shrink-0">{c.n}</span>
+                <h3 class="text-lg md:text-xl font-semibold">{c.title}</h3>
+              </div>
+              <p class="text-gray-400 leading-relaxed mb-4 md:pl-10">{c.body}</p>
+              <p class="text-sm text-orange-300/80 leading-relaxed md:pl-10 border-l-2 border-orange-500/20 pl-4">
+                <span class="font-semibold">Dónde se rompe:</span> {c.trampa}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Decisiones de arquitectura -->
+    <section class="px-4 py-16">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Las cuatro decisiones que hay que tomar antes</h2>
+        <p class="text-gray-400 mb-12 max-w-3xl">
+          Ninguna se resuelve leyendo el reglamento: dependen de cómo factura tu empresa.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {decisiones.map((d) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 hover:border-orange-500/30 transition-all duration-300">
+              <h3 class="text-base md:text-lg font-semibold mb-3">{d.title}</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">{d.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Enlace lateral al silo de integración -->
+    <section class="px-4 py-16 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-medium tracking-tight mb-4">
+          Casi nunca es solo Verifactu
+        </h2>
+        <p class="text-gray-400 leading-relaxed mb-6">
+          Cuando abrimos un sistema de facturación para acoplarle el conector, aparece el resto:
+          el ERP que no habla con el e-commerce, el TPV que exporta a mano, el CRM que vive
+          aparte. El proyecto de cumplimiento suele ser la primera vez que alguien mapea de
+          verdad cómo se mueven los datos.
+        </p>
+        <a
+          href={`/${locale}/integracion/`}
+          class="inline-flex items-center gap-2 text-orange-400 font-medium hover:underline"
+        >
+          Cómo integramos y automatizamos sistemas →
+        </a>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="px-4 py-16">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-10">Preguntas frecuentes</h2>
+        <div class="space-y-4">
+          {faq.map((item) => (
+            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-6">
+              <summary class="cursor-pointer font-semibold text-white list-none flex justify-between items-center gap-4">
+                {item.q}
+                <span class="text-orange-500 group-open:rotate-45 transition-transform shrink-0">+</span>
+              </summary>
+              <p class="text-gray-400 mt-4 leading-relaxed">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="px-4 py-20">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">
+          Cuéntanos cómo factura tu sistema
+        </h2>
+        <p class="text-gray-400 mb-8">
+          Empezamos por la auditoría: puntos de emisión, series, rectificativas y dónde vive hoy
+          cada dato. De ahí sale el alcance cerrado y la modalidad recomendada.
+        </p>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <a
+            href={contactHref}
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+          >
+            Hablar con un especialista ↗
+          </a>
+          <a
+            href={`${base}integracion/`}
+            class="inline-flex items-center gap-2 px-8 py-3 rounded-full border border-white/10 text-gray-200 font-medium text-lg hover:border-orange-500/30 transition-all duration-300"
+          >
+            Cómo es el proyecto →
+          </a>
+        </div>
+        <p class="text-xs text-gray-600 mt-10 max-w-2xl mx-auto leading-relaxed">{DISCLAIMER}</p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
