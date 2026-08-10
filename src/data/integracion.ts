@@ -447,6 +447,11 @@ export const CASOS: Record<CasoSlug, CasoIntegracion> = {
         label: "Integración de ERP",
         body: "El destino más habitual de estos conectores.",
       },
+      {
+        href: "/es/blog/webhook-vs-api-diferencia/",
+        label: "Webhook o API, y qué pasa después",
+        body: "La diferencia en una frase y los cinco supuestos falsos que rompen integraciones en producción.",
+      },
     ],
     faq: [
       {
