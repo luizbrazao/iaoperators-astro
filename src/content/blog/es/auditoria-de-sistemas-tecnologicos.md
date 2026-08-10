@@ -18,6 +18,14 @@ tags:
   - transformación digital
   - empresas medianas
   - Shadow IT
+related:
+  - que-es-un-roadmap-tecnologico
+  - que-es-una-agencia-de-ia
+  - n8n-vs-zapier-vs-make-empresas
+ctaTitle: "¿Sabes cuántas aplicaciones activas tiene tu empresa?"
+ctaText: "Si la respuesta es «unas cuantas», ese es exactamente el problema. La auditoría empieza por ponerle número, coste y propietario a cada una."
+ctaPrimaryLabel: "Ver el servicio de auditoría de sistemas"
+ctaPrimaryHref: "/es/auditoria-de-sistemas/"
 faq:
   - q: "¿Qué incluye una auditoría de sistemas tecnológicos?"
     a: "Incluye un inventario de todas las aplicaciones activas, análisis de licencias y costes reales, mapa de integraciones entre sistemas, identificación de Shadow IT y análisis de riesgos operativos. El resultado es una fotografía completa y accionable del parque tecnológico."
@@ -51,7 +59,7 @@ El Shadow IT son las herramientas adoptadas sin aprobación del departamento de 
 
 En empresas de 100–500 personas, el Shadow IT representa entre el 30% y el 40% del total de herramientas en uso, [según estimaciones de Gartner](https://www.cio.com/article/234745/how-to-eliminate-enterprise-shadow-it.html). No aparece en ninguna factura. No tiene propietario formal. Y cuando la persona que lo creó se va, nadie sabe cómo funciona.
 
-Una auditoría de sistemas lo detecta y lo pone en el mapa.
+Una auditoría de sistemas lo detecta y lo pone en el mapa. Es también donde suelen aparecer las automatizaciones sin dueño: scripts y flujos que alguien montó, que siguen corriendo y que nadie sabe mantener.
 
 ## Qué cubre una auditoría de sistemas tecnológicos
 
@@ -100,6 +108,8 @@ El entregable final no es una lista de problemas — es un plan de decisiones. Q
 
 **Cuando procesos críticos dependen de una sola persona.** Si hay algo que solo sabe hacer una persona de tu equipo y esa persona no está mañana, tienes un riesgo operativo activo.
 
+Si tu caso encaja en varios de esos puntos, así es como [abordamos una auditoría de sistemas](/es/auditoria-de-sistemas/) de principio a fin.
+
 ## Cómo se hace: las fases del proceso
 
 ### Fase 0 — Kick-off (días 1–2)
@@ -131,6 +141,10 @@ Presentación de conclusiones a C-level o comité de transformación. Los entreg
 
 El error más común en este tipo de proyectos es contratar a consultores que entregan un documento de 80 páginas y desaparecen. El equipo lo archiva. Nadie lo implementa. Seis meses después, la situación es exactamente la misma.
 
-Una auditoría de sistemas bien hecha no termina en una presentación — termina en un conjunto de decisiones concretas que el equipo puede ejecutar. Qué cancelar este mes. Qué renegociar antes de la próxima renovación. Qué integrar en el próximo sprint. Qué documentar antes de que la persona que lo sabe se vaya.
+Una auditoría de sistemas bien hecha no termina en una presentación — termina en un conjunto de decisiones concretas que el equipo puede ejecutar. Qué cancelar este mes. Qué renegociar antes de la próxima renovación. Qué [integrar](/es/integracion/) en el próximo sprint. Qué documentar antes de que la persona que lo sabe se vaya.
 
 La claridad sobre qué tienes es el primer paso de cualquier transformación real.
+
+---
+
+**Lo que viene después.** La auditoría responde a «qué tengo»; no responde a «qué hago primero». Esa segunda pregunta se contesta con un [roadmap tecnológico](/es/blog/que-es-un-roadmap-tecnologico/), que ordena las iniciativas por impacto y esfuerzo. Y cuando el diagnóstico concluye —como pasa la mayoría de las veces— que los sistemas correctos existen pero no se hablan entre ellos, el trabajo siguiente no es comprar software: es [conectar lo que ya tienes](/es/integracion/).

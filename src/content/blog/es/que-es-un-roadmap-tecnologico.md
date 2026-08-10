@@ -16,6 +16,14 @@ tags:
   - arquitectura empresarial
   - empresas medianas
   - ROI tecnológico
+related:
+  - auditoria-de-sistemas-tecnologicos
+  - que-es-una-agencia-de-ia
+  - n8n-vs-zapier-vs-make-empresas
+ctaTitle: "¿Necesitas el roadmap o ya sabes qué construir?"
+ctaText: "Si hay varios proyectos en cola y ningún criterio para ordenarlos, el roadmap es el paso previo. Si el criterio ya lo tienes, se va directo a implementación."
+ctaPrimaryLabel: "Ver el servicio de roadmap tecnológico"
+ctaPrimaryHref: "/es/roadmap-tecnologico/"
 faq:
   - q: "¿Qué es un roadmap tecnológico?"
     a: "Un roadmap tecnológico es un plan faseado que define qué sistemas construir, comprar, integrar o consolidar en el ecosistema digital de una empresa, con criterios de priorización basados en impacto de negocio, esfuerzo de implementación y ROI estimado. Es la traducción de la visión de negocio en una hoja de ruta tecnológica accionable."
@@ -49,7 +57,7 @@ El punto de llegada: cómo debería verse el ecosistema tecnológico de la empre
 
 ### 2. Diagnóstico del estado actual
 
-Si la empresa ya hizo una auditoría de sistemas, este apartado es la base. Si no, se construye aquí: qué existe, qué funciona, qué está roto, qué representa un riesgo inmediato.
+Si la empresa ya hizo una [auditoría de sistemas](/es/blog/auditoria-de-sistemas-tecnologicos/), este apartado es la base. Si no, se construye aquí: qué existe, qué funciona, qué está roto, qué representa un riesgo inmediato.
 
 ### 3. Análisis make / buy / consolidate
 
@@ -60,9 +68,9 @@ Para cada iniciativa identificada, se evalúa:
 | **Comprar** (buy) | Existe una solución de mercado que cubre el 80%+ del requisito a coste razonable |
 | **Construir** (make) | El requisito es suficientemente diferenciador como para que construirlo a medida genere ventaja competitiva |
 | **Consolidar** | Hay dos o más herramientas haciendo lo mismo y se puede eliminar redundancia |
-| **Integrar** | Los sistemas son correctos pero no están conectados — el valor está en el dato, no en la herramienta |
+| **Integrar** | Los sistemas son correctos pero no están conectados — el valor está en el dato, no en la herramienta. Es el escenario más frecuente, y el que cubrimos en [integración de sistemas](/es/integracion/) |
 
-Este análisis es el corazón del roadmap. Es donde se evitan las decisiones caras: comprar una plataforma enorme cuando habría bastado con conectar las que ya existen, o construir algo a medida cuando existe un SaaS que lo resuelve por 200 € al mes.
+Este análisis es el corazón del roadmap. Es donde se evitan las decisiones caras: comprar una plataforma enorme cuando habría bastado con [conectar las que ya existen](/es/integracion/), o construir algo a medida cuando existe un SaaS que lo resuelve por 200 € al mes.
 
 ### 4. Iniciativas priorizadas por impacto y esfuerzo
 
@@ -93,7 +101,7 @@ Esta conversación necesita a las personas de negocio, no solo al equipo de IT.
 
 ### Paso 2 — Fotografiar el estado actual
 
-Si existe una auditoría de sistemas previa, se toma como base. Si no, se construye una versión simplificada: inventario de sistemas críticos, mapa de integraciones principales y análisis de riesgos inmediatos.
+Si existe una auditoría previa, se toma como base — es exactamente el entregable del [servicio de auditoría de sistemas](/es/auditoria-de-sistemas/). Si no, se construye una versión simplificada: inventario de sistemas críticos, mapa de integraciones principales y análisis de riesgos inmediatos.
 
 ### Paso 3 — Definir la arquitectura objetivo
 
@@ -130,10 +138,14 @@ Hacer el roadmap antes de ejecutar tiene sentido cuando:
 - Hay dependencias entre proyectos: construir A sin haber resuelto B va a generar trabajo duplicado
 - El equipo de IT y el equipo de negocio no están alineados en las prioridades
 
-En empresas con menos de 15 sistemas y un problema muy concreto y acotado, puede no hacer falta un roadmap completo — basta con ir directamente a implementación. Pero a partir de cierta complejidad, ejecutar sin roadmap es más caro que el coste del roadmap.
+En empresas con menos de 15 sistemas y un problema muy concreto y acotado, puede no hacer falta un roadmap completo — basta con ir directamente a implementación. Pero a partir de cierta complejidad, ejecutar sin roadmap sale más caro que [hacerlo](/es/roadmap-tecnologico/).
 
 ## El roadmap como herramienta de alineación interna
 
 Una consecuencia no obvia del proceso de crear un roadmap es que alinea a los stakeholders internos. El proceso de definir prioridades obliga a conversaciones que muchas organizaciones nunca tienen: ¿qué importa más, crecer en nuevos mercados o consolidar la operación actual? ¿El equipo de ventas o el de operaciones tiene prioridad en la siguiente inversión tecnológica?
 
 El roadmap hace visible lo que antes era implícito. Y eso, por sí solo, ya tiene valor.
+
+---
+
+**Si estás en el paso previo**, la [auditoría de sistemas tecnológicos](/es/blog/auditoria-de-sistemas-tecnologicos/) explica cómo se construye la fotografía del estado actual que el roadmap necesita como punto de partida. **Si el diagnóstico ya lo tienes** y lo que falta es ejecutar, la mayoría de las iniciativas que salen priorizadas acaban siendo de [conexión entre sistemas que ya existen](/es/integracion/), no de compra de software nuevo.
