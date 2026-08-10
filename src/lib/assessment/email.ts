@@ -117,7 +117,27 @@ function gapsTableHtml(result: AssessmentResult) {
     .join("");
 }
 
-export function buildProspectEmail(result: AssessmentResult) {
+/**
+ * Textos de marca del informe. Los valores por defecto son los del test de la
+ * Ley 10/2025, que fue el primero: así los correos existentes no cambian ni una
+ * coma al añadir el test de Verifactu.
+ */
+export interface AssessmentBrand {
+  /** Nombre corto de la norma, para asuntos y cabeceras. */
+  norma: string;
+  /** Etiqueta del informe en la cabecera del correo. */
+  cabecera: string;
+  /** Frase de origen del resultado en el pie. */
+  origen: string;
+}
+
+export const DEFAULT_BRAND: AssessmentBrand = {
+  norma: "Ley 10/2025",
+  cabecera: "Ley 10/2025 · Informe de cumplimiento",
+  origen: "Resultado generado por reglas deterministas sobre el texto de la Ley 10/2025",
+};
+
+export function buildProspectEmail(result: AssessmentResult, brand: AssessmentBrand = DEFAULT_BRAND) {
   const prioridades = result.prioridades
     .map(
       (p, i) =>
@@ -127,7 +147,7 @@ export function buildProspectEmail(result: AssessmentResult) {
 
   const subject =
     result.obligado === "no"
-      ? "Tu resultado del test de la Ley 10/2025"
+      ? `Tu resultado del test de ${brand.norma}`
       : `Tu informe de cumplimiento — quedan ${result.diasRestantes} días`;
 
   const html = `<!doctype html>
@@ -136,7 +156,7 @@ export function buildProspectEmail(result: AssessmentResult) {
     <div style="background:#ffffff;border-radius:16px;padding:32px;">
 
       <div style="font-size:12px;font-weight:700;color:#ea580c;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">
-        Ley 10/2025 · Informe de cumplimiento
+        ${escapeHtml(brand.cabecera)}
       </div>
 
       <h1 style="margin:0 0 16px;font-size:24px;line-height:1.3;color:#111827;">
@@ -182,7 +202,7 @@ export function buildProspectEmail(result: AssessmentResult) {
       <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0;" />
 
       <p style="margin:0 0 8px;color:#9ca3af;font-size:12px;line-height:1.6;">
-        Resultado generado por reglas deterministas sobre el texto de la Ley 10/2025
+        ${escapeHtml(brand.origen)}
         (BOE-A-2025-26698), motor ${escapeHtml(result.engineVersion)}. Información técnica sobre
         implementación de sistemas: no constituye asesoramiento jurídico.
       </p>
@@ -203,10 +223,12 @@ export function buildInternalEmail(input: {
   responseId: string;
   utmSource?: string;
   utmCampaign?: string;
+  brand?: AssessmentBrand;
 }) {
   const { email, result, answers, responseId } = input;
+  const brand = input.brand ?? DEFAULT_BRAND;
 
-  const subject = `[Test Ley 10/2025] ${result.obligado.toUpperCase()} · ${result.riskLevel} · ${result.sectorLabel} — ${email}`;
+  const subject = `[Test ${brand.norma}] ${result.obligado.toUpperCase()} · ${result.riskLevel} · ${result.sectorLabel} — ${email}`;
 
   const answerRows = Object.entries(answers)
     .map(
@@ -224,7 +246,7 @@ export function buildInternalEmail(input: {
 
   const html = `<!doctype html>
 <html lang="es"><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;padding:24px;">
-  <h2 style="margin:0 0 4px;">Lead del test de la Ley 10/2025</h2>
+  <h2 style="margin:0 0 4px;">Lead del test de ${escapeHtml(brand.norma)}</h2>
   <p style="margin:0 0 20px;color:#4b5563;">${escapeHtml(result.titular)}</p>
 
   <table style="border-collapse:collapse;margin-bottom:24px;">
@@ -295,10 +317,12 @@ export async function sendAssessmentEmails(input: {
   responseId: string;
   utmSource?: string;
   utmCampaign?: string;
+  brand?: AssessmentBrand;
 }): Promise<{ internal: boolean; prospect: boolean }> {
   const internalTo = readEnv("CONTACT_TO_EMAIL") || "info@iaoperators.com";
-  const internal = buildInternalEmail(input);
-  const prospect = buildProspectEmail(input.result);
+  const brand = input.brand ?? DEFAULT_BRAND;
+  const internal = buildInternalEmail({ ...input, brand });
+  const prospect = buildProspectEmail(input.result, brand);
 
   const [internalResult, prospectResult] = await Promise.allSettled([
     sendViaResend({

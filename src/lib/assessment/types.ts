@@ -11,7 +11,7 @@
 // Este módulo nace parametrizado por `assessmentKey` para que el test de Verifactu
 // (Frente B) no requiera duplicar nada de la capa de persistencia.
 
-export type AssessmentKey = "sac-ley-10-2025";
+export type AssessmentKey = "sac-ley-10-2025" | "verifactu-rrsif";
 
 export type QuestionType = "single" | "multi";
 
@@ -55,6 +55,12 @@ export interface AssessmentResult {
   obligado: ObligadoVerdict;
   /** Base legal del veredicto, citable por el usuario ante su asesoría. */
   motivo: string;
+  /**
+   * Perfil detectado que se muestra como chip en el informe. En el test de la
+   * Ley 10/2025 es el sector de actividad; en el de Verifactu, el tipo de
+   * sistema de facturación (ERP a medida, TPV multi-tienda, e-commerce…).
+   * El nombre del campo se mantiene para no romper las filas ya guardadas.
+   */
   sector: string;
   sectorLabel: string;
   gaps: GapEvaluation[];

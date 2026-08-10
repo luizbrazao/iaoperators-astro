@@ -1,0 +1,131 @@
+---
+// Test de Verifactu — ES-only, indexable.
+// Mismo patrón que el test de la Ley 10/2025: el resultado se calcula en el
+// servidor y la island cambia de vista en la misma página, sin /resultado/ vacía
+// para el crawler y sin estado en la URL.
+//
+// La island es genérica desde que existen dos tests: se le pasan el cuestionario,
+// los endpoints y la nota legal (ver src/islands/Assessment.tsx).
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Assessment from "@/islands/Assessment";
+import { QUESTIONS } from "@/lib/assessment/verifactu/questions";
+import { NORMA, DISCLAIMER } from "@/data/verifactu";
+
+const locale = "es";
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const base = `/${locale}/cumplimiento/verifactu/`;
+const pillarUrl = new URL(base, site).toString();
+const pageUrl = new URL(`${base}test/`, site).toString();
+
+const diasRestantes = Math.max(
+  0,
+  Math.ceil(
+    (new Date(`${NORMA.fechaSociedades}T00:00:00+01:00`).getTime() - Date.now()) / 86_400_000,
+  ),
+);
+
+const meta = {
+  title: "Test de Verifactu: ¿te aplica y qué te falta? | IA Operators",
+  description:
+    "Ocho preguntas para saber si Verifactu te obliga, en qué fecha, y qué le falta a tu sistema de facturación obligación por obligación. Resultado inmediato, sin dar email.",
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: "Verifactu", item: pillarUrl },
+    { "@type": "ListItem", position: 3, name: "Test", item: pageUrl },
+  ],
+};
+
+const webPageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: meta.title,
+  description: meta.description,
+  url: pageUrl,
+  inLanguage: "es-ES",
+  isPartOf: { "@type": "WebSite", name: "IA Operators", url: site },
+  about: {
+    "@type": "Legislation",
+    name: NORMA.nombre,
+    legislationIdentifier: "BOE-A-2023-24840",
+    legislationJurisdiction: "ES",
+    url: NORMA.boeUrl,
+  },
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  jsonLd={[breadcrumbJsonLd, webPageJsonLd]}
+>
+  <div class="bg-transparent text-white">
+    <section class="px-4 pt-28 pb-10">
+      <div class="max-w-3xl mx-auto text-center">
+        <a
+          href={pillarUrl}
+          class="inline-block text-xs text-gray-500 hover:text-orange-400 transition-colors mb-6"
+        >
+          ← Verifactu
+        </a>
+        <h1 class="text-3xl md:text-5xl font-medium tracking-tight leading-tight mb-5">
+          ¿Te obliga Verifactu y qué le falta a tu sistema?
+        </h1>
+        <p class="text-lg text-gray-300 mb-6">
+          Ocho preguntas. Empezamos por si te aplica —hay dos supuestos que te dejan fuera— y
+          seguimos con lo que exige el reglamento, obligación por obligación. Quedan
+          <span class="text-orange-400 font-semibold tabular-nums">{diasRestantes}</span> días
+          para la primera fecha.
+        </p>
+      </div>
+    </section>
+
+    <section class="px-4 pb-16">
+      <Assessment
+        client:load
+        questions={QUESTIONS}
+        submitEndpoint="/api/assessment/verifactu/submit"
+        leadEndpoint="/api/assessment/verifactu/lead"
+        legalNote="Resultado orientativo generado por reglas deterministas sobre el Real Decreto 1007/2023 y su calendario vigente"
+      />
+    </section>
+
+    <section class="px-4 pb-24">
+      <div class="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-[#0a0a0a] border border-white/5 rounded-2xl p-5">
+          <h2 class="text-sm font-semibold text-white mb-2">Te decimos si NO te aplica</h2>
+          <p class="text-gray-400 text-xs leading-relaxed">
+            Si estás en el SII o tributas en territorio foral, el test termina ahí y no hay
+            proyecto. Un diagnóstico que siempre concluye «necesitas ayuda» no es un diagnóstico.
+          </p>
+        </div>
+        <div class="bg-[#0a0a0a] border border-white/5 rounded-2xl p-5">
+          <h2 class="text-sm font-semibold text-white mb-2">Reglas, no adivinanzas</h2>
+          <p class="text-gray-400 text-xs leading-relaxed">
+            El resultado sale de reglas deterministas sobre el reglamento y su calendario. La
+            misma respuesta da siempre el mismo veredicto, y cada brecha indica de qué pregunta
+            sale.
+          </p>
+        </div>
+        <div class="bg-[#0a0a0a] border border-white/5 rounded-2xl p-5">
+          <h2 class="text-sm font-semibold text-white mb-2">Sin muro de email</h2>
+          <p class="text-gray-400 text-xs leading-relaxed">
+            Ves el resultado completo sin dejar datos. El email solo hace falta si quieres el
+            informe ampliado por correo.
+          </p>
+        </div>
+      </div>
+      <p class="text-xs text-gray-600 mt-8 max-w-3xl mx-auto text-center leading-relaxed">
+        {DISCLAIMER}
+      </p>
+    </section>
+  </div>
+</BaseLayout>

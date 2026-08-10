@@ -76,6 +76,15 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     estimada: true,
   },
   {
+    path: "cumplimiento/verifactu/test/",
+    locales: ["es"],
+    silo: "cumplimiento",
+    primaria: "test verifactu",
+    secundarias: ["verifactu me aplica", "comprobar verifactu"],
+    faixa: "b",
+    estimada: true,
+  },
+  {
     path: "cumplimiento/verifactu/erp-a-medida/",
     locales: ["es"],
     silo: "cumplimiento",

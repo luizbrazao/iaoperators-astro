@@ -1,5 +1,4 @@
-// Validación del test de la Ley 10/2025: ata la capa genérica a este cuestionario.
-// La lógica vive en ../validation.ts — aquí solo se fija el conjunto de preguntas.
+// Validación del test de Verifactu: ata la capa genérica a este cuestionario.
 
 import { sanitizeAnswersWith } from "../validation";
 import { QUESTIONS } from "./questions";

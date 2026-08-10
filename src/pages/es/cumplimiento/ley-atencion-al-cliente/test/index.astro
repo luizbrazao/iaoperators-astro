@@ -5,7 +5,7 @@
 // pasar el estado por URL.
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import AssessmentSAC from "@/islands/AssessmentSAC";
+import Assessment from "@/islands/Assessment";
 import { LEY } from "@/data/sectores-sac";
 
 const locale = "es";
@@ -84,7 +84,7 @@ const webPageJsonLd = {
     </section>
 
     <section class="px-4 pb-16">
-      <AssessmentSAC client:load />
+      <Assessment client:load />
     </section>
 
     <section class="px-4 pb-24">

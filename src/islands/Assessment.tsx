@@ -1,9 +1,26 @@
+// Island genérica de assessment. Antes era AssessmentSAC y tenía el cuestionario
+// y los endpoints de la Ley 10/2025 incrustados; al llegar el test de Verifactu
+// se parametrizó por props en vez de duplicar 400 líneas de UI, estados de envío
+// y captación de lead. Los defaults son los del test de la Ley 10/2025, así que
+// <Assessment /> sin props se comporta exactamente como antes.
 import { useMemo, useRef, useState, type FormEvent } from "react";
-import { QUESTIONS, TOTAL_STEPS } from "@/lib/assessment/sac/questions";
-import type { AssessmentResult, GapState } from "@/lib/assessment/types";
+import { QUESTIONS as SAC_QUESTIONS } from "@/lib/assessment/sac/questions";
+import type { AssessmentQuestion, AssessmentResult, GapState } from "@/lib/assessment/types";
 
-const SUBMIT_ENDPOINT = "/api/assessment/ley-atencion-cliente/submit";
-const LEAD_ENDPOINT = "/api/assessment/ley-atencion-cliente/lead";
+const SAC_DEFAULTS = {
+  submitEndpoint: "/api/assessment/ley-atencion-cliente/submit",
+  leadEndpoint: "/api/assessment/ley-atencion-cliente/lead",
+  legalNote:
+    "Resultado orientativo generado por reglas deterministas sobre el texto de la Ley 10/2025",
+} as const;
+
+export interface AssessmentProps {
+  questions?: AssessmentQuestion[];
+  submitEndpoint?: string;
+  leadEndpoint?: string;
+  /** Frase que precede a "(motor X). Información técnica: no constituye…". */
+  legalNote?: string;
+}
 
 type Answers = Record<string, string | string[]>;
 
@@ -34,7 +51,15 @@ function pushDataLayer(payload: Record<string, unknown>) {
   w.dataLayer.push(payload);
 }
 
-export default function AssessmentSAC() {
+export default function Assessment({
+  questions = SAC_QUESTIONS,
+  submitEndpoint = SAC_DEFAULTS.submitEndpoint,
+  leadEndpoint = SAC_DEFAULTS.leadEndpoint,
+  legalNote = SAC_DEFAULTS.legalNote,
+}: AssessmentProps = {}) {
+  const QUESTIONS = questions;
+  const TOTAL_STEPS = questions.length;
+
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
   const [sending, setSending] = useState(false);
@@ -92,7 +117,7 @@ export default function AssessmentSAC() {
     setSending(true);
     setError(null);
     try {
-      const res = await fetch(SUBMIT_ENDPOINT, {
+      const res = await fetch(submitEndpoint, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -134,7 +159,7 @@ export default function AssessmentSAC() {
     }
     setLeadSending(true);
     try {
-      const res = await fetch(LEAD_ENDPOINT, {
+      const res = await fetch(leadEndpoint, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -311,9 +336,8 @@ export default function AssessmentSAC() {
           )}
 
           <p className="text-xs text-gray-600 mt-8 leading-relaxed">
-            Resultado orientativo generado por reglas deterministas sobre el texto de la Ley
-            10/2025 (motor {result.engineVersion}). Información técnica: no constituye asesoramiento
-            jurídico.
+            {legalNote} (motor {result.engineVersion}). Información técnica: no constituye
+            asesoramiento jurídico ni fiscal.
           </p>
         </div>
 
