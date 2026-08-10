@@ -10,6 +10,7 @@ export async function getStaticPaths() {
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getLocale, ui } from "../../../i18n/ui";
 import { fetchBlogPosts } from "../../../lib/blog";
+import { SITE, ORG_REF, WEBSITE_REF } from "@/data/identidad";
 
 const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
 
@@ -60,7 +61,53 @@ const t = {
   readMore: blogDict?.readMore ?? "Read more",
   empty: blogDict?.empty ?? "Nenhum post encontrado.",
   viewAll: blogDict?.viewAll ?? "Ver todos",
+  // Párrafo visible bajo el H1. Se separa de `description` porque esa cadena
+  // alimenta la meta description, que necesita ~150 caracteres, mientras el
+  // párrafo necesita espacio para decir algo. EN y PT no definen `intro` y
+  // caen en `description`, exactamente como antes de este cambio.
+  intro: blogDict?.intro ?? blogDict?.description ?? "Artigos e guias práticos.",
 };
+
+// ===== JSON-LD (solo ES) =====
+//
+// El índice del blog era el único hub del sitio sin datos estructurados,
+// mientras /es/servicios/ y /es/cumplimiento/ ya emiten CollectionPage.
+// Aquí el tipo correcto no es CollectionPage sino `Blog`: los 57 artículos ya
+// declaran `isPartOf: { "@type": "Blog", url: ".../es/blog/" }`, así que esta
+// URL solo estaba afirmando ser una página cualquiera mientras cada post decía
+// pertenecer a un Blog que no se declaraba en ningún sitio. El nodo cierra ese
+// hueco y reutiliza el nombre exacto que emiten los posts.
+//
+// No se listan los 57 artículos: ninguna página del proyecto enumera su
+// colección completa en el schema, y `blogPost` con 57 entradas sería inventar
+// un patrón nuevo para repetir lo que ya está en el HTML y en el sitemap.
+//
+// ES-only a propósito: esta tarea reposiciona /es/blog/. EN y PT reciben
+// `undefined` y su HTML no cambia.
+const blogJsonLd =
+  locale === "es"
+    ? [
+        {
+          "@context": "https://schema.org",
+          "@type": "Blog",
+          "@id": `${SITE}/es/blog/#blog`,
+          name: "Blog de IA Operators",
+          url: `${SITE}/es/blog/`,
+          description: t.description,
+          inLanguage: "es",
+          publisher: ORG_REF,
+          isPartOf: WEBSITE_REF,
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Inicio", item: `${SITE}/es/` },
+            { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE}/es/blog/` },
+          ],
+        },
+      ]
+    : undefined;
 
 // <title> del SERP: distinto del H1 "Blog" (evita duplicado H1=title) y con
 // longitud/keywords óptimas (evita "título demasiado corto").
@@ -86,7 +133,7 @@ const categoryLabel = (key: string) =>
   key;
 ---
 
-<BaseLayout title={pageTitle} description={t.description}>
+<BaseLayout title={pageTitle} description={t.description} jsonLd={blogJsonLd}>
   <div class="bg-transparent text-white min-h-screen font-sans">
     <!-- HEADER DO BLOG -->
     <section class="pt-40 pb-10 px-4 text-center">
@@ -100,7 +147,7 @@ const categoryLabel = (key: string) =>
         </h1>
 
         <p class="text-gray-400 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
-          {t.description}
+          {t.intro}
         </p>
       </div>
     </section>
