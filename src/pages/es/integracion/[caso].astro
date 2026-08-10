@@ -214,7 +214,11 @@ const faqJsonLd = {
         <p class="text-gray-400 text-center mb-10 max-w-2xl mx-auto">
           Lo que suele venir antes o después, con el motivo por el que lo enlazamos.
         </p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div
+          class={`grid grid-cols-1 gap-5 ${
+            c.puentes.length === 4 ? "md:grid-cols-2 lg:grid-cols-4" : "md:grid-cols-3"
+          }`}
+        >
           {c.puentes.map((p) => (
             <a
               href={p.href}

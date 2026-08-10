@@ -179,6 +179,11 @@ export const CASOS: Record<CasoSlug, CasoIntegracion> = {
         label: "Sistemas legados",
         body: "Si el ERP no expone API y solo hay acceso a la base de datos, el patrón cambia.",
       },
+      {
+        href: "/es/blog/como-integrar-un-erp-metodos/",
+        label: "Los cuatro métodos, explicados",
+        body: "API, eventos, base de datos o ficheros: cuál te toca según lo que tu ERP expone, y qué se rompe en cada uno.",
+      },
     ],
     faq: [
       {
