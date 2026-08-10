@@ -1,0 +1,98 @@
+---
+// El pilar de arquitectura tecnológica, visible desde dentro de sus tres páginas.
+//
+// Radiografía Digital, Roadmap tecnológico e Implementación existían como tres
+// servicios sueltos: cada uno explicaba lo suyo y, como mucho, enlazaba al
+// siguiente en una frase perdida. Para un visitante eran tres cosas que comprar;
+// para Google, tres páginas sin relación declarada.
+//
+// Este bloque las presenta como lo que son —una secuencia de tres pasos— y crea
+// el enlace recíproco entre las tres desde un solo sitio. No cambia ninguna URL
+// ni ningún H1: es la capa de arquitectura de información que faltaba encima de
+// unas páginas que ya estaban bien.
+//
+// Trilingüe, porque las tres páginas existen en los tres idiomas.
+import { getArquitectura, ARQUITECTURA_TITLE, type Loc } from "@/data/servicios";
+
+type Props = {
+  /** Paso en el que estamos: "audit" | "roadmap" | "implementation". */
+  current: string;
+  locale: string;
+};
+
+const { current, locale } = Astro.props as Props;
+
+const loc: Loc = locale === "pt" || locale === "en" ? locale : "es";
+const pasos = getArquitectura(locale);
+
+const COPY: Record<Loc, { badge: string; title: string; subtitle: string; here: string }> = {
+  es: {
+    badge: "Pilar",
+    title: ARQUITECTURA_TITLE.es,
+    subtitle:
+      "Tres pasos y un solo equipo: entendemos lo que tienes, definimos qué debería cambiar y lo construimos. Puedes entrar por cualquiera de los tres, pero este es el orden que evita construir sobre supuestos.",
+    here: "Estás aquí",
+  },
+  pt: {
+    badge: "Pilar",
+    title: ARQUITECTURA_TITLE.pt,
+    subtitle:
+      "Três passos e uma só equipe: entendemos o que você tem, definimos o que deveria mudar e construímos. Dá para entrar por qualquer um dos três, mas esta é a ordem que evita construir sobre suposições.",
+    here: "Você está aqui",
+  },
+  en: {
+    badge: "Pillar",
+    title: ARQUITECTURA_TITLE.en,
+    subtitle:
+      "Three steps, one team: we understand what you have, define what should change, and build it. You can start at any of the three, but this order is the one that avoids building on assumptions.",
+    here: "You are here",
+  },
+};
+
+const c = COPY[loc];
+---
+
+<section class="px-4 py-20">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+        {c.badge}
+      </span>
+      <h2 class="text-3xl md:text-4xl font-bold mb-3 text-white">{c.title}</h2>
+      <p class="text-gray-400 max-w-2xl mx-auto">{c.subtitle}</p>
+    </div>
+
+    <ol class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {pasos.map((paso) => {
+        const isCurrent = paso.key === current;
+        return (
+          <li>
+            <a
+              href={paso.href}
+              aria-current={isCurrent ? "page" : undefined}
+              class={`group flex h-full flex-col rounded-3xl p-7 transition-all duration-300 ${
+                isCurrent
+                  ? "bg-orange-500/[0.07] border border-orange-500/40"
+                  : "bg-[#0a0a0a] border border-white/5 hover:border-orange-500/30"
+              }`}
+            >
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-orange-400 font-bold text-sm tabular-nums">{paso.num}</span>
+                {isCurrent && (
+                  <span class="text-[10px] uppercase tracking-widest text-orange-400/80 font-semibold">
+                    {c.here}
+                  </span>
+                )}
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-1 group-hover:text-orange-400 transition-colors">
+                {paso.label}
+              </h3>
+              <p class="text-orange-400/90 text-sm font-medium mb-3">{paso.promesa}</p>
+              <p class="text-gray-400 text-sm leading-relaxed flex-1">{paso.desc}</p>
+            </a>
+          </li>
+        );
+      })}
+    </ol>
+  </div>
+</section>

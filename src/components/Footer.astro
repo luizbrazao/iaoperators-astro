@@ -1,6 +1,8 @@
 ---
 import { getLocale, ui } from "../i18n/ui";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
+import { getServiceGroups, getArquitectura, SERVICE_HUB_PATH, hubCtaLabel } from "@/data/servicios";
+import { getPilaresEs } from "@/data/navegacion";
 
 type Props = { languageLinks?: Array<{ locale: string; href: string }> };
 const { languageLinks } = Astro.props as Props;
@@ -8,9 +10,11 @@ const locale = getLocale(Astro.currentLocale);
 const dict = (ui as any)?.[locale] ?? (ui as any)?.es ?? (ui as any)?.en ?? (ui as any)?.pt ?? {};
 
 const footer = (dict as any)?.footer ?? (dict as any)?.common?.footer ?? {};
+const nav = (dict as any)?.nav ?? (dict as any)?.common?.nav ?? {};
 const withLocale = (path: string) => `/${locale}/${path}`.replace(/\/+$/, "/");
 
 const year = new Date().getFullYear();
+const isEs = locale === "es";
 const servicesLabel =
   locale === "pt" ? "Serviços" : locale === "en" ? "Services" : "Servicios";
 
@@ -32,7 +36,60 @@ const links = {
   terms: withLocale("terminos-y-condiciones/"),
   privacy: withLocale("politica-de-privacidad/"),
   blog: withLocale("blog/"),
+  portfolio: withLocale("portfolio/"),
+  servicesHub: withLocale(SERVICE_HUB_PATH),
 };
+
+// ===== Footer ES: cuatro columnas que reproducen la arquitectura nueva =====
+//
+// El footer es el único sitio del sitio donde conviven, en todas las páginas,
+// los tres pilares y el catálogo completo. Por eso aquí sí se listan las ocho
+// landings de servicio: salieron de la barra superior en ES, pero no pueden
+// perder el enlace sitewide, que es lo que las sostiene en el índice.
+const pilares = isEs ? getPilaresEs() : [];
+const integracionPilar = pilares.find((p) => p.key === "integracion");
+const arquitecturaPasos = isEs ? getArquitectura(locale) : [];
+
+const otrosServicios = isEs
+  ? getServiceGroups(locale)
+      .filter((g) => g.key !== "arquitectura")
+      .flatMap((g) => g.items)
+  : [];
+
+const columnasEs = isEs
+  ? [
+      {
+        title: "Soluciones",
+        items: [
+          { label: "Integración de sistemas", href: "/es/integracion/" },
+          { label: "Cumplimiento tecnológico", href: "/es/cumplimiento/" },
+          ...arquitecturaPasos.map((paso) => ({ label: paso.label, href: paso.href })),
+        ],
+      },
+      {
+        title: "Integraciones",
+        items: (integracionPilar?.children ?? []).filter(
+          (child) => child.href !== "/es/integracion/",
+        ),
+      },
+      {
+        title: "Empresa",
+        items: [
+          { label: nav?.portfolio ?? "Casos", href: links.portfolio },
+          { label: t.about, href: links.about },
+          { label: "Blog", href: links.blog },
+          { label: t.cta, href: links.contact },
+        ],
+      },
+      {
+        title: "Otros servicios",
+        items: [
+          ...otrosServicios.map((item) => ({ label: item.label, href: item.href })),
+          { label: hubCtaLabel(locale), href: links.servicesHub },
+        ],
+      },
+    ]
+  : [];
 ---
 
 <footer class="relative bg-[#050505] text-white pt-20 pb-10 px-6 overflow-hidden border-t border-white/5">
@@ -88,48 +145,56 @@ const links = {
       </div>
     </div>
 
-    <!-- Navegación de servicios y páginas.
-         En ES el enlace sitewide va a los tres silos + la Radiografía: son las
-         páginas que la arquitectura considera centrales. Roadmap, Implementación
-         y Metodología pierden el enlace sitewide (seguían señalando a Google la
-         jerarquía antigua) y se alcanzan desde el hub de integración, desde
-         /sobre/ y desde el catálogo. En EN/PT no existen los silos ES-only,
-         así que la fila se queda como estaba. -->
-    <nav aria-label="Site links" class="w-full py-8 border-b border-white/5">
-      <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm">
-        {locale === "es" ? (
-          <Fragment>
-            <a href="/es/integracion/" class="text-gray-400 hover:text-orange-400 transition-colors">Integración</a>
-            <span class="text-white/15 select-none">·</span>
-            <a href="/es/cumplimiento/" class="text-gray-400 hover:text-orange-400 transition-colors">Cumplimiento</a>
-            <span class="text-white/15 select-none">·</span>
-            <a href={withLocale("servicios/")} class="text-gray-400 hover:text-orange-400 transition-colors">{servicesLabel}</a>
-            <span class="text-white/15 select-none">·</span>
-            <a href={withLocale("auditoria-de-sistemas/")} class="text-gray-400 hover:text-orange-400 transition-colors">Radiografía Digital</a>
-          </Fragment>
-        ) : (
-          <Fragment>
-            <a href={withLocale("servicios/")} class="text-gray-400 hover:text-orange-400 transition-colors">{servicesLabel}</a>
-            <span class="text-white/15 select-none">·</span>
-            <a href={withLocale("auditoria-de-sistemas/")} class="text-gray-400 hover:text-orange-400 transition-colors">Radiografía Digital</a>
-            <span class="text-white/15 select-none">·</span>
-            <a href={withLocale("roadmap-tecnologico/")} class="text-gray-400 hover:text-orange-400 transition-colors">Roadmap Tecnológico</a>
-            <span class="text-white/15 select-none">·</span>
-            <a href={withLocale("implementacion/")} class="text-gray-400 hover:text-orange-400 transition-colors">Implementación</a>
-            <span class="text-white/15 select-none">·</span>
-            <a href={withLocale("metodologia/")} class="text-gray-400 hover:text-orange-400 transition-colors">Metodología</a>
-          </Fragment>
-        )}
-        <span class="text-white/15 hidden md:inline select-none">—</span>
-        <a href={links.about} class="text-gray-400 hover:text-orange-400 transition-colors">{t.about}</a>
-        <span class="text-white/15 select-none">·</span>
-        <a href={withLocale("portfolio/")} class="text-gray-400 hover:text-orange-400 transition-colors">Portfolio</a>
-        <span class="text-white/15 select-none">·</span>
-        <a href={links.blog} class="text-gray-400 hover:text-orange-400 transition-colors">Blog</a>
-        <span class="text-white/15 select-none">·</span>
-        <a href={links.contact} class="text-gray-400 hover:text-orange-400 transition-colors">{t.cta}</a>
-      </div>
-    </nav>
+    {isEs ? (
+      <!-- Navegación en columnas: la arquitectura de la empresa, no una fila
+           plana de enlaces. Los tres pilares mandan; los servicios sueltos
+           viven en "Otros servicios", que es exactamente su lugar ahora. -->
+      <nav aria-label="Site links" class="w-full py-12 border-b border-white/5">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
+          {columnasEs.map((col) => (
+            <div>
+              <p class="text-[10px] font-semibold uppercase tracking-widest text-gray-500 mb-4">
+                {col.title}
+              </p>
+              <ul class="flex flex-col gap-2.5">
+                {col.items.map((item) => (
+                  <li>
+                    <a
+                      href={item.href}
+                      class="text-sm text-gray-400 hover:text-orange-400 transition-colors"
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </nav>
+    ) : (
+      <nav aria-label="Site links" class="w-full py-8 border-b border-white/5">
+        <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm">
+          <a href={links.servicesHub} class="text-gray-400 hover:text-orange-400 transition-colors">{servicesLabel}</a>
+          <span class="text-white/15 select-none">·</span>
+          <a href={withLocale("auditoria-de-sistemas/")} class="text-gray-400 hover:text-orange-400 transition-colors">Radiografía Digital</a>
+          <span class="text-white/15 select-none">·</span>
+          <a href={withLocale("roadmap-tecnologico/")} class="text-gray-400 hover:text-orange-400 transition-colors">Roadmap Tecnológico</a>
+          <span class="text-white/15 select-none">·</span>
+          <a href={withLocale("implementacion/")} class="text-gray-400 hover:text-orange-400 transition-colors">Implementación</a>
+          <span class="text-white/15 select-none">·</span>
+          <a href={withLocale("metodologia/")} class="text-gray-400 hover:text-orange-400 transition-colors">Metodología</a>
+          <span class="text-white/15 hidden md:inline select-none">—</span>
+          <a href={links.about} class="text-gray-400 hover:text-orange-400 transition-colors">{t.about}</a>
+          <span class="text-white/15 select-none">·</span>
+          <a href={links.portfolio} class="text-gray-400 hover:text-orange-400 transition-colors">Portfolio</a>
+          <span class="text-white/15 select-none">·</span>
+          <a href={links.blog} class="text-gray-400 hover:text-orange-400 transition-colors">Blog</a>
+          <span class="text-white/15 select-none">·</span>
+          <a href={links.contact} class="text-gray-400 hover:text-orange-400 transition-colors">{t.cta}</a>
+        </div>
+      </nav>
+    )}
 
     <!-- Rodapé Inferior -->
     <div class="w-full flex flex-col md:flex-row items-center justify-between mt-12 gap-6 relative">

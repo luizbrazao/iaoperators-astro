@@ -6,9 +6,15 @@
 // dos entradas numeradas "07". Todo lo que necesite listar servicios lee de aquí.
 //
 // Añadir un servicio = añadir una entrada. La numeración se calcula por grupo.
+//
+// Reagrupación de 2026-08-10 (fase 1 del reposicionamiento): los grupos pasan de
+// dos ("agencia" / "auditoría") a tres, para que el catálogo deje de presentar
+// once servicios con el mismo peso estratégico. El orden de los grupos es la
+// jerarquía: arquitectura primero, IA después, y los servicios digitales
+// —web, SEO, marketing— explícitamente como complementarios. Ninguna URL cambia.
 
 export type Loc = "es" | "pt" | "en";
-export type GroupKey = "agencia" | "auditoria";
+export type GroupKey = "arquitectura" | "ia" | "digital";
 
 export interface ServiceDefinition {
   key: string;
@@ -28,19 +34,83 @@ export interface ServiceDefinition {
 export const SERVICE_HUB_PATH = "servicios/";
 
 export const GROUP_TITLES: Record<GroupKey, Record<Loc, string>> = {
-  agencia: { es: "Servicios", pt: "Serviços", en: "Services" },
-  auditoria: {
-    es: "Auditoría e implementación",
-    pt: "Auditoria e implementação",
-    en: "Audit & implementation",
+  arquitectura: {
+    es: "Arquitectura y transformación",
+    pt: "Arquitetura e transformação",
+    en: "Architecture & transformation",
+  },
+  ia: {
+    es: "Inteligencia artificial y automatización",
+    pt: "Inteligência artificial e automação",
+    en: "AI & automation",
+  },
+  digital: {
+    es: "Servicios digitales complementarios",
+    pt: "Serviços digitais complementares",
+    en: "Complementary digital services",
+  },
+};
+
+/**
+ * Descripción de cada grupo. Sirve para que el hub explique por qué un bloque
+ * está antes que otro en vez de dejar que el visitante lo deduzca del orden.
+ */
+export const GROUP_INTROS: Record<GroupKey, Record<Loc, string>> = {
+  arquitectura: {
+    es: "Entender qué tienes, decidir qué cambiar y construirlo. Es el trabajo que sostiene todo lo demás.",
+    pt: "Entender o que você tem, decidir o que mudar e construir. É o trabalho que sustenta todo o resto.",
+    en: "Understand what you have, decide what to change, and build it. This is the work everything else rests on.",
+  },
+  ia: {
+    es: "Agentes, asistentes y automatizaciones que se apoyan en tus sistemas reales, no al margen de ellos.",
+    pt: "Agentes, assistentes e automações apoiados nos seus sistemas reais, não à margem deles.",
+    en: "Agents, assistants and automations grounded in your actual systems, not beside them.",
+  },
+  digital: {
+    es: "Capacidades que usamos dentro de los proyectos y que también prestamos por separado.",
+    pt: "Capacidades que usamos dentro dos projetos e que também prestamos separadamente.",
+    en: "Capabilities we use inside projects and also deliver on their own.",
   },
 };
 
 export const SERVICES: ServiceDefinition[] = [
   {
+    key: "audit",
+    path: "auditoria-de-sistemas/",
+    group: "arquitectura",
+    label: { es: "Radiografía Digital", pt: "Radiografia Digital", en: "Digital X-Ray" },
+    desc: {
+      es: "Auditoría e inventario completo del parque tecnológico",
+      pt: "Auditoria e inventário completo do parque tecnológico",
+      en: "Audit and full inventory of your technology stack",
+    },
+  },
+  {
+    key: "roadmap",
+    path: "roadmap-tecnologico/",
+    group: "arquitectura",
+    label: { es: "Roadmap tecnológico", pt: "Roadmap tecnológico", en: "Technology roadmap" },
+    desc: {
+      es: "Plan de evolución con arquitectura objetivo y ROI",
+      pt: "Plano de evolução com arquitetura objetivo e ROI",
+      en: "Evolution plan with target architecture and ROI",
+    },
+  },
+  {
+    key: "implementation",
+    path: "implementacion/",
+    group: "arquitectura",
+    label: { es: "Implementación", pt: "Implementação", en: "Implementation" },
+    desc: {
+      es: "Construimos automatizaciones, integraciones y sistemas",
+      pt: "Construímos automações, integrações e sistemas",
+      en: "We build automations, integrations, and systems",
+    },
+  },
+  {
     key: "automation",
     path: "servicios/automatizacion-ia/",
-    group: "agencia",
+    group: "ia",
     label: {
       es: "Automatización con IA",
       pt: "Automação com IA",
@@ -53,22 +123,11 @@ export const SERVICES: ServiceDefinition[] = [
     },
   },
   {
-    key: "chatbots",
-    path: "servicios/chatbots/",
-    group: "agencia",
-    label: { es: "Chatbots con IA", pt: "Chatbots com IA", en: "AI Chatbots" },
-    desc: {
-      es: "WhatsApp, asistentes y reservas 24/7",
-      pt: "WhatsApp, assistentes e agendamentos 24/7",
-      en: "WhatsApp, assistants and 24/7 booking",
-    },
-  },
-  {
     // ES-only por ahora: la SERP que justifica esta landing es la española
     // (ver la cabecera de src/pages/es/servicios/agentes-de-ia/index.astro).
     key: "agents",
     path: "servicios/agentes-de-ia/",
-    group: "agencia",
+    group: "ia",
     locales: ["es"],
     label: { es: "Agentes de IA", pt: "Agentes de IA", en: "AI Agents" },
     desc: {
@@ -78,9 +137,42 @@ export const SERVICES: ServiceDefinition[] = [
     },
   },
   {
+    key: "chatbots",
+    path: "servicios/chatbots/",
+    group: "ia",
+    label: { es: "Chatbots con IA", pt: "Chatbots com IA", en: "AI Chatbots" },
+    desc: {
+      es: "WhatsApp, asistentes y reservas 24/7",
+      pt: "WhatsApp, assistentes e agendamentos 24/7",
+      en: "WhatsApp, assistants and 24/7 booking",
+    },
+  },
+  {
+    key: "consultoria",
+    path: "servicios/consultoria-ia/",
+    group: "ia",
+    label: { es: "Consultoría de IA", pt: "Consultoria de IA", en: "AI consulting" },
+    desc: {
+      es: "Diagnóstico, estrategia y roadmap de IA",
+      pt: "Diagnóstico, estratégia e roadmap de IA",
+      en: "Diagnosis, strategy and AI roadmap",
+    },
+  },
+  {
+    key: "ia",
+    path: "servicios/agencia-ia/",
+    group: "ia",
+    label: { es: "Agencia de IA", pt: "Agência de IA", en: "AI agency" },
+    desc: {
+      es: "Estrategia e implementación de IA",
+      pt: "Estratégia e implementação de IA",
+      en: "AI strategy and implementation",
+    },
+  },
+  {
     key: "web",
     path: "servicios/diseno-web/",
-    group: "agencia",
+    group: "digital",
     label: { es: "Diseño web", pt: "Criação de sites", en: "Web design" },
     desc: {
       es: "Sitios rápidos, SEO y conversión",
@@ -91,7 +183,7 @@ export const SERVICES: ServiceDefinition[] = [
   {
     key: "seo",
     path: "servicios/agencia-seo/",
-    group: "agencia",
+    group: "digital",
     label: { es: "Agencia SEO", pt: "Agência de SEO", en: "SEO agency" },
     desc: {
       es: "Posicionamiento y AI Search",
@@ -102,7 +194,7 @@ export const SERVICES: ServiceDefinition[] = [
   {
     key: "marketing",
     path: "servicios/marketing-digital/",
-    group: "agencia",
+    group: "digital",
     label: { es: "Marketing digital", pt: "Marketing digital", en: "Digital marketing" },
     desc: {
       es: "Estrategia, ads y automatización",
@@ -110,62 +202,63 @@ export const SERVICES: ServiceDefinition[] = [
       en: "Strategy, ads and automation",
     },
   },
-  {
-    key: "ia",
-    path: "servicios/agencia-ia/",
-    group: "agencia",
-    label: { es: "Agencia de IA", pt: "Agência de IA", en: "AI agency" },
-    desc: {
-      es: "Estrategia e implementación de IA",
-      pt: "Estratégia e implementação de IA",
-      en: "AI strategy and implementation",
-    },
-  },
-  {
-    key: "consultoria",
-    path: "servicios/consultoria-ia/",
-    group: "agencia",
-    label: { es: "Consultoría de IA", pt: "Consultoria de IA", en: "AI consulting" },
-    desc: {
-      es: "Diagnóstico, estrategia y roadmap de IA",
-      pt: "Diagnóstico, estratégia e roadmap de IA",
-      en: "Diagnosis, strategy and AI roadmap",
-    },
-  },
-  {
-    key: "audit",
-    path: "auditoria-de-sistemas/",
-    group: "auditoria",
-    label: { es: "Auditoría", pt: "Auditoria", en: "Audit" },
-    desc: {
-      es: "Radiografía Digital — inventario completo",
-      pt: "Radiografia Digital — inventário completo",
-      en: "Digital X-Ray — full inventory",
-    },
-  },
-  {
-    key: "roadmap",
-    path: "roadmap-tecnologico/",
-    group: "auditoria",
-    label: { es: "Roadmap", pt: "Roadmap", en: "Roadmap" },
-    desc: {
-      es: "Plan de evolución con arquitectura objetivo y ROI",
-      pt: "Plano de evolução com arquitetura objetivo e ROI",
-      en: "Evolution plan with target architecture and ROI",
-    },
-  },
-  {
-    key: "implementation",
-    path: "implementacion/",
-    group: "auditoria",
-    label: { es: "Implementación", pt: "Implementação", en: "Implementation" },
-    desc: {
-      es: "Construimos automatizaciones, integraciones y sistemas",
-      pt: "Construímos automações, integrações e sistemas",
-      en: "We build automations, integrations, and systems",
-    },
-  },
 ];
+
+/**
+ * El pilar de arquitectura tecnológica: tres páginas que ya existían sueltas
+ * (`auditoria-de-sistemas/`, `roadmap-tecnologico/`, `implementacion/`) y que
+ * pasan a presentarse como una sola familia de tres pasos.
+ *
+ * No hay página hub para el pilar todavía —crearla es una decisión de fase 2—,
+ * así que la entrada del pilar es el paso 01. La promesa de cada paso es lo
+ * que convierte tres servicios en una secuencia legible: qué tienes, qué
+ * debería cambiar, lo construimos.
+ */
+export const ARQUITECTURA_KEYS = ["audit", "roadmap", "implementation"] as const;
+
+export const ARQUITECTURA_PROMESAS: Record<
+  (typeof ARQUITECTURA_KEYS)[number],
+  Record<Loc, string>
+> = {
+  audit: { es: "Qué tienes.", pt: "O que você tem.", en: "What you have." },
+  roadmap: {
+    es: "Qué debería cambiar.",
+    pt: "O que deveria mudar.",
+    en: "What should change.",
+  },
+  implementation: { es: "Lo construimos.", pt: "Nós construímos.", en: "We build it." },
+};
+
+export const ARQUITECTURA_TITLE: Record<Loc, string> = {
+  es: "Arquitectura tecnológica",
+  pt: "Arquitetura tecnológica",
+  en: "Technology architecture",
+};
+
+export interface PasoArquitectura {
+  key: string;
+  num: string;
+  href: string;
+  label: string;
+  promesa: string;
+  desc: string;
+}
+
+/** Los tres pasos del pilar de arquitectura, resueltos para un idioma. */
+export function getArquitectura(locale: string): PasoArquitectura[] {
+  const loc = asLoc(locale);
+  return ARQUITECTURA_KEYS.map((key, index) => {
+    const service = SERVICES.find((s) => s.key === key)!;
+    return {
+      key,
+      num: String(index + 1).padStart(2, "0"),
+      href: href(locale, service.path),
+      label: service.label[loc],
+      promesa: ARQUITECTURA_PROMESAS[key][loc],
+      desc: service.desc[loc],
+    };
+  });
+}
 
 export interface ResolvedService {
   key: string;
@@ -179,6 +272,7 @@ export interface ResolvedService {
 export interface ResolvedGroup {
   key: GroupKey;
   title: string;
+  intro: string;
   items: ResolvedService[];
 }
 
@@ -193,11 +287,12 @@ function href(locale: string, path: string) {
 /** Servicios resueltos para un idioma, agrupados y numerados dentro de su grupo. */
 export function getServiceGroups(locale: string): ResolvedGroup[] {
   const loc = asLoc(locale);
-  const groups: GroupKey[] = ["agencia", "auditoria"];
+  const groups: GroupKey[] = ["arquitectura", "ia", "digital"];
 
   return groups.map((key) => ({
     key,
     title: GROUP_TITLES[key][loc],
+    intro: GROUP_INTROS[key][loc],
     items: SERVICES.filter(
       (s) => s.group === key && (s.locales ?? ["es", "pt", "en"]).includes(loc),
     ).map((s, index) => ({
@@ -228,28 +323,28 @@ export function hubCtaLabel(locale: string) {
 
 export const HUB_META: Record<Loc, { title: string; description: string; h1: string; intro: string }> = {
   es: {
-    title: "Servicios de IA, automatización y crecimiento digital",
+    title: "Servicios de arquitectura tecnológica, IA y crecimiento digital",
     description:
-      "Automatización con IA, chatbots, diseño web, SEO, marketing y auditoría de sistemas. Diagnosticamos, priorizamos y construimos — sin hand-offs entre consultora y proveedor.",
+      "Arquitectura tecnológica, automatización con IA, chatbots, diseño web, SEO y marketing. Diagnosticamos, priorizamos y construimos — sin hand-offs entre consultora y proveedor.",
     h1: "Nuestros servicios",
     intro:
-      "Dos formas de trabajar con nosotros: servicios de agencia para crecer y captar, y auditoría e implementación para ordenar y evolucionar el parque tecnológico. El mismo equipo diagnostica y construye.",
+      "El trabajo principal es de arquitectura: entender el parque tecnológico, decidir qué cambiar y construirlo. Alrededor de eso prestamos capacidades de IA y servicios digitales, que usamos dentro de los proyectos y también por separado.",
   },
   pt: {
-    title: "Serviços de IA, automação e crescimento digital",
+    title: "Serviços de arquitetura tecnológica, IA e crescimento digital",
     description:
-      "Automação com IA, chatbots, criação de sites, SEO, marketing e auditoria de sistemas. Diagnosticamos, priorizamos e construímos — sem hand-offs entre consultoria e fornecedor.",
+      "Arquitetura tecnológica, automação com IA, chatbots, criação de sites, SEO e marketing. Diagnosticamos, priorizamos e construímos — sem hand-offs entre consultoria e fornecedor.",
     h1: "Nossos serviços",
     intro:
-      "Duas formas de trabalhar com a gente: serviços de agência para crescer e captar, e auditoria e implementação para organizar e evoluir o parque tecnológico. A mesma equipe diagnostica e constrói.",
+      "O trabalho principal é de arquitetura: entender o parque tecnológico, decidir o que mudar e construir. Em volta disso prestamos capacidades de IA e serviços digitais, que usamos dentro dos projetos e também separadamente.",
   },
   en: {
-    title: "AI, automation and digital growth services",
+    title: "Technology architecture, AI and digital growth services",
     description:
-      "AI automation, chatbots, web design, SEO, marketing and systems audit. We diagnose, prioritize and build — no hand-offs between consultancy and vendor.",
+      "Technology architecture, AI automation, chatbots, web design, SEO and marketing. We diagnose, prioritize and build — no hand-offs between consultancy and vendor.",
     h1: "Our services",
     intro:
-      "Two ways to work with us: agency services to grow and capture demand, and audit and implementation to order and evolve your technology stack. The same team diagnoses and builds.",
+      "The core work is architectural: understand the technology stack, decide what to change, and build it. Around that we provide AI capabilities and digital services, used inside projects and also on their own.",
   },
 };
 

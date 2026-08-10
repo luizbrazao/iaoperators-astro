@@ -1,0 +1,102 @@
+---
+// Prueba en la home (ES).
+//
+// Hasta ahora la home hablaba de lo que hacemos y de quién lo dice (testimonios),
+// pero no enseñaba un solo proyecto. Con el reposicionamiento hacia integración,
+// cumplimiento y arquitectura, la prueba pasa a ser parte del argumento: un
+// visitante que evalúa a alguien para entrar en su operación tecnológica quiere
+// ver sistemas, no adjetivos.
+//
+// La selección es explícita y técnica a propósito —auditoría, integración con
+// ERP/Altegio y automatización sobre WhatsApp—, dejando fuera el caso de web/SEO,
+// que sigue accesible desde /portfolio/ y desde las landings de esos servicios.
+// Los datos salen de src/data/projects.ts: aquí no se duplica ningún texto.
+import { projects, type Project } from "@/data/projects";
+import { createT } from "@/i18n/t";
+
+const { locale = "es" } = Astro.props;
+
+const localeKey = (["es", "pt", "en"] as const).includes(locale as any)
+  ? (locale as "es" | "pt" | "en")
+  : "es";
+
+const t = await createT(localeKey, { namespaces: ["projects"] });
+
+const DESTACADOS = [
+  "radiografia-cadena-hotelera-menorca",
+  "chatplug-whatsapp-altegio",
+  "chatbot-reservas-turisticas-whatsapp",
+];
+
+const seleccion: Project[] = DESTACADOS.map((slugEs) =>
+  projects.find((p) => p.slugs.es === slugEs),
+).filter(Boolean) as Project[];
+
+const COPY = {
+  badge: "Prueba",
+  title: "Sistemas en producción, no presentaciones",
+  subtitle:
+    "Auditorías, integraciones y automatizaciones funcionando en empresas reales. Cada caso enlaza a lo que se construyó y con qué resultado.",
+  cta: "Ver el caso completo",
+  all: "Ver todos los casos",
+};
+---
+
+{seleccion.length > 0 && (
+  <section class="px-4 py-20">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
+          {COPY.badge}
+        </span>
+        <h2 class="text-3xl md:text-4xl font-bold mb-3 text-white">{COPY.title}</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">{COPY.subtitle}</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {seleccion.map((project) => {
+          const href = `/${localeKey}/portfolio/${project.slugs[localeKey]}/`;
+          const metric = project.metrics?.[0];
+          return (
+            <a
+              href={href}
+              class="group flex flex-col rounded-3xl border border-white/10 bg-[#0A0A0A] p-7 hover:border-orange-500/40 transition-colors"
+            >
+              <span class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3">
+                {project.categoryKey ? t(project.categoryKey) : project.category}
+              </span>
+              <h3 class="text-xl font-semibold text-white mb-3 leading-snug">
+                {t(project.titleKey)}
+              </h3>
+              <p class="text-gray-400 text-sm leading-relaxed mb-5 flex-1">
+                {t(project.taglineKey)}
+              </p>
+
+              {metric && (
+                <p class="mb-5 flex items-baseline gap-2">
+                  <span class="text-2xl font-bold text-white tabular-nums">{metric.value}</span>
+                  <span class="text-xs text-gray-500 uppercase tracking-wider">
+                    {t(metric.labelKey)}
+                  </span>
+                </p>
+              )}
+
+              <span class="text-orange-400 font-medium text-sm group-hover:underline">
+                {COPY.cta} →
+              </span>
+            </a>
+          );
+        })}
+      </div>
+
+      <p class="text-center mt-10">
+        <a
+          href={`/${localeKey}/portfolio/`}
+          class="text-gray-400 hover:text-orange-400 text-sm transition-colors"
+        >
+          {COPY.all} →
+        </a>
+      </p>
+    </div>
+  </section>
+)}

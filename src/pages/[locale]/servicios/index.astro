@@ -2,6 +2,11 @@
 // Hub de servicios. Resuelve la deuda de UX del dropdown de diez ítems: el menú
 // pasa a ser un panel de dos columnas con enlace aquí, y esta página es el
 // destino canónico que lista el catálogo completo.
+//
+// Fase 1 del reposicionamiento (2026-08-10): el catálogo se reagrupa en tres
+// bloques con jerarquía explícita (arquitectura → IA → digitales complementarios)
+// y, en ES, la página abre con los tres pilares de la empresa. Ninguna URL
+// cambia; lo que cambia es qué se lee primero y con qué peso.
 
 export async function getStaticPaths() {
   return [{ params: { locale: "es" } }, { params: { locale: "pt" } }, { params: { locale: "en" } }];
@@ -10,10 +15,13 @@ export async function getStaticPaths() {
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getLocale } from "@/i18n/ui";
 import { getServiceGroups, getHubMeta } from "@/data/servicios";
+import { getPilaresEs } from "@/data/navegacion";
 
 const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
 const meta = getHubMeta(locale);
 const groups = getServiceGroups(locale);
+const isEs = locale === "es";
+const pilares = isEs ? getPilaresEs() : [];
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const pageUrl = new URL(`/${locale}/servicios/`, site).toString();
@@ -68,12 +76,39 @@ const breadcrumbJsonLd = {
       </div>
     </section>
 
-    {groups.map((group) => (
+    {isEs && (
       <section class="px-4 pb-16">
         <div class="max-w-6xl mx-auto">
           <h2 class="text-xs font-semibold uppercase tracking-widest text-orange-400 mb-6">
+            Los tres pilares
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {pilares.map((pilar) => (
+              <a
+                href={pilar.href}
+                class="group bg-[#0a0a0a] border border-orange-500/20 rounded-3xl p-7 hover:border-orange-500/50 transition-all duration-300 flex flex-col"
+              >
+                <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-orange-400 transition-colors">
+                  {pilar.label}
+                </h3>
+                <p class="text-gray-400 text-sm leading-relaxed flex-1">{pilar.tagline}</p>
+                <span class="text-orange-400 text-sm mt-4 group-hover:translate-x-1 transition-transform inline-block">
+                  →
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {groups.map((group) => (
+      <section class="px-4 pb-16">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-xs font-semibold uppercase tracking-widest text-orange-400 mb-2">
             {group.title}
           </h2>
+          <p class="text-gray-400 text-sm mb-6 max-w-2xl">{group.intro}</p>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {group.items.map((item) => (
               <a

@@ -2,6 +2,7 @@
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import { getLocale, ui } from "../i18n/ui";
 import { getServiceGroups, hubCtaLabel, SERVICE_HUB_PATH } from "@/data/servicios";
+import { getPilaresEs } from "@/data/navegacion";
 
 type Props = { languageLinks?: Array<{ locale: string; href: string }> };
 const { languageLinks } = Astro.props as Props;
@@ -15,10 +16,15 @@ const nav =
   (dict as any)?.home?.nav ??
   {};
 
+const isEs = locale === "es";
+
 // Catálogo de servicios: fuente única en src/data/servicios.ts.
 const serviceGroups = getServiceGroups(locale);
-const serviceItems = serviceGroups.flatMap((g) => g.items);
 const hubCta = hubCtaLabel(locale);
+
+// Los tres pilares (ES). Fuente única en src/data/navegacion.ts, que a su vez
+// compone integracion.ts y servicios.ts: aquí no se escribe ningún rótulo nuevo.
+const pilares = isEs ? getPilaresEs() : [];
 
 const labels = {
   services: nav?.services ?? "Services",
@@ -28,10 +34,6 @@ const labels = {
   youtube: nav?.youtube ?? "YouTube",
   blog: nav?.blog ?? "Blog",
   contact: nav?.contact ?? "Contact",
-  // ES-only: los dos silos de la arquitectura nueva. No se traducen porque
-  // /es/integracion/ y /es/cumplimiento/ no tienen equivalente en EN/PT.
-  cumplimiento: "Cumplimiento",
-  integracion: "Integración",
 };
 
 const withLocale = (path: string) => `/${locale}/${path}`.replace(/\/+$/, "/");
@@ -43,31 +45,33 @@ const links = {
   portfolio: withLocale("portfolio/"),
   blog: withLocale("blog/"),
   contact: withLocale("contact/"),
-  integracion: "/es/integracion/",
-  cumplimiento: "/es/cumplimiento/",
   community: "https://www.skool.com/ia-operators-hub-9023/about",
   youtube: "https://www.youtube.com/@IAOperators",
 };
 
-// El menú móvil NO repite los diez servicios: lleva al hub. Los enlaces
-// individuales siguen en el HTML (panel de escritorio), así que el rastreo
-// no pierde nada y el móvil deja de ser una lista interminable.
-const mobileLinks = [
-  { key: "servicesHub", href: links.servicesHub, label: hubCta, external: false },
-  // En ES el primer nivel son los tres silos (servicios / integración /
-  // cumplimiento); Metodología baja de nivel y se alcanza desde /sobre/.
-  // En EN/PT no existen esos silos, así que Metodología se queda.
-  ...(locale === "es"
-    ? [
-        { key: "integracion", href: links.integracion, label: labels.integracion, external: false },
-        { key: "cumplimiento", href: links.cumplimiento, label: labels.cumplimiento, external: false },
-      ]
-    : [{ key: "methodology", href: links.methodology, label: labels.methodology, external: false }]),
-  { key: "portfolio", href: links.portfolio, label: labels.portfolio, external: false },
-  { key: "community", href: links.community, label: labels.community, external: true },
-  { key: "youtube", href: links.youtube, label: labels.youtube, external: true },
-  { key: "blog", href: links.blog, label: labels.blog, external: false },
-];
+// En ES el primer nivel son los tres pilares; el catálogo de servicios baja al
+// hub (enlazado desde el menú móvil y desde el footer), porque once servicios
+// en la barra superior contaban una historia de agencia horizontal que ya no es
+// la de la empresa. Los enlaces individuales siguen presentes sitewide en el
+// footer, así que el rastreo no pierde ninguna landing.
+//
+// En EN/PT no existen los silos ES-only: la barra se queda como estaba.
+const mobileLinks = isEs
+  ? [
+      ...pilares.map((p) => ({ key: p.key, href: p.href, label: p.label, external: false })),
+      { key: "portfolio", href: links.portfolio, label: labels.portfolio, external: false },
+      { key: "blog", href: links.blog, label: labels.blog, external: false },
+      { key: "servicesHub", href: links.servicesHub, label: hubCta, external: false },
+      { key: "community", href: links.community, label: labels.community, external: true },
+    ]
+  : [
+      { key: "servicesHub", href: links.servicesHub, label: hubCta, external: false },
+      { key: "methodology", href: links.methodology, label: labels.methodology, external: false },
+      { key: "portfolio", href: links.portfolio, label: labels.portfolio, external: false },
+      { key: "community", href: links.community, label: labels.community, external: true },
+      { key: "youtube", href: links.youtube, label: labels.youtube, external: true },
+      { key: "blog", href: links.blog, label: labels.blog, external: false },
+    ];
 ---
 
 <header class="fixed top-6 left-0 right-0 z-50 flex justify-center pointer-events-none">
@@ -98,90 +102,118 @@ const mobileLinks = [
       </a>
 
       <!-- Desktop navigation -->
-      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300 whitespace-nowrap">
-        <!-- Services dropdown -->
-        <div
-          id="servicesDropdown"
-          class="relative"
-          data-services-root
-        >
-          <button
-            type="button"
-            id="servicesBtn"
-            class="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer"
-            aria-haspopup="true"
-            aria-expanded="false"
-            aria-controls="servicesMenu"
-          >
-            {labels.services}
-            <span class="text-xs transition-transform duration-200" data-services-arrow>▾</span>
-          </button>
-
-          <div
-            id="servicesMenu"
-            class="hidden absolute left-1/2 -translate-x-1/2 top-full pt-3 z-50"
-            role="menu"
-          >
-            <div
-              class="
-                w-[min(92vw,660px)]
-                rounded-2xl border border-white/10
-                bg-[#0a0a0a]/95 backdrop-blur-xl
-                shadow-[0_20px_60px_rgba(0,0,0,0.7)]
-                p-3
-              "
-            >
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-2">
-                {serviceGroups.map((group) => (
-                  <div>
-                    <p class="px-3 pt-1 pb-2 text-[10px] font-semibold uppercase tracking-widest text-gray-500">
-                      {group.title}
-                    </p>
-                    {group.items.map((item) => (
-                      <a
-                        href={item.href}
-                        class="block rounded-xl px-3 py-2.5 hover:bg-white/5 transition group"
-                        role="menuitem"
-                        data-close-services
-                      >
-                        <div class="flex items-center gap-2 text-white text-sm font-semibold">
-                          <span class="text-orange-400 text-xs tabular-nums">{item.num}</span>
-                          {item.label}
-                        </div>
-                        <p class="text-xs text-gray-400 mt-0.5 group-hover:text-gray-300">
-                          {item.desc}
-                        </p>
-                      </a>
-                    ))}
-                  </div>
-                ))}
-              </div>
-
-              <a
-                href={links.servicesHub}
-                class="mt-3 flex items-center justify-between rounded-xl px-3 py-2.5 bg-white/[0.03] hover:bg-white/[0.07] transition"
-                role="menuitem"
-                data-close-services
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-gray-300 whitespace-nowrap">
+        {isEs &&
+          pilares.map((pilar) => (
+            <div class="relative" data-dropdown-root>
+              <button
+                type="button"
+                class="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer"
+                aria-haspopup="true"
+                aria-expanded="false"
+                data-dropdown-btn
               >
-                <span class="text-sm text-white font-medium">{hubCta}</span>
-                <span class="text-orange-400">→</span>
-              </a>
+                {pilar.label}
+                <span class="text-xs transition-transform duration-200" data-dropdown-arrow>▾</span>
+              </button>
+
+              <div class="hidden absolute left-1/2 -translate-x-1/2 top-full pt-3 z-50" role="menu" data-dropdown-menu>
+                <div
+                  class="
+                    w-[min(92vw,340px)]
+                    rounded-2xl border border-white/10
+                    bg-[#0a0a0a]/95 backdrop-blur-xl
+                    shadow-[0_20px_60px_rgba(0,0,0,0.7)]
+                    p-3
+                  "
+                >
+                  <p class="px-3 pt-1 pb-2 text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+                    {pilar.tagline}
+                  </p>
+                  {pilar.children.map((child) => (
+                    <a
+                      href={child.href}
+                      class="block rounded-xl px-3 py-2.5 hover:bg-white/5 transition group"
+                      role="menuitem"
+                      data-close-dropdown
+                    >
+                      <span class="block text-white text-sm font-semibold">{child.label}</span>
+                      {child.desc && (
+                        <span class="block text-xs text-gray-400 mt-0.5 group-hover:text-gray-300">
+                          {child.desc}
+                        </span>
+                      )}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+
+        {!isEs && (
+          <div class="relative" data-dropdown-root>
+            <button
+              type="button"
+              class="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer"
+              aria-haspopup="true"
+              aria-expanded="false"
+              data-dropdown-btn
+            >
+              {labels.services}
+              <span class="text-xs transition-transform duration-200" data-dropdown-arrow>▾</span>
+            </button>
+
+            <div class="hidden absolute left-1/2 -translate-x-1/2 top-full pt-3 z-50" role="menu" data-dropdown-menu>
+              <div
+                class="
+                  w-[min(92vw,820px)]
+                  rounded-2xl border border-white/10
+                  bg-[#0a0a0a]/95 backdrop-blur-xl
+                  shadow-[0_20px_60px_rgba(0,0,0,0.7)]
+                  p-3
+                "
+              >
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-x-2">
+                  {serviceGroups.map((group) => (
+                    <div>
+                      <p class="px-3 pt-1 pb-2 text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+                        {group.title}
+                      </p>
+                      {group.items.map((item) => (
+                        <a
+                          href={item.href}
+                          class="block rounded-xl px-3 py-2.5 hover:bg-white/5 transition group"
+                          role="menuitem"
+                          data-close-dropdown
+                        >
+                          <div class="flex items-center gap-2 text-white text-sm font-semibold">
+                            <span class="text-orange-400 text-xs tabular-nums">{item.num}</span>
+                            {item.label}
+                          </div>
+                          <p class="text-xs text-gray-400 mt-0.5 group-hover:text-gray-300">
+                            {item.desc}
+                          </p>
+                        </a>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+
+                <a
+                  href={links.servicesHub}
+                  class="mt-3 flex items-center justify-between rounded-xl px-3 py-2.5 bg-white/[0.03] hover:bg-white/[0.07] transition"
+                  role="menuitem"
+                  data-close-dropdown
+                >
+                  <span class="text-sm text-white font-medium">{hubCta}</span>
+                  <span class="text-orange-400">→</span>
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-
-        {locale === "es" && (
-          <Fragment>
-            <a href={links.integracion} class="hover:text-white transition-colors whitespace-nowrap">
-              {labels.integracion}
-            </a>
-            <a href={links.cumplimiento} class="hover:text-white transition-colors whitespace-nowrap">
-              {labels.cumplimiento}
-            </a>
-          </Fragment>
         )}
 
-        {locale !== "es" && (
+        {!isEs && (
           <a href={links.methodology} class="hover:text-white transition-colors">
             {labels.methodology}
           </a>
@@ -395,53 +427,72 @@ const mobileLinks = [
     el.addEventListener("click", () => setOpen(false));
   });
 
-  // Services dropdown (desktop)
-  const servicesRoot = document.querySelector("[data-services-root]");
-  const servicesBtn = document.getElementById("servicesBtn");
-  const servicesMenu = document.getElementById("servicesMenu");
-  const servicesArrow = document.querySelector("[data-services-arrow]");
+  // Dropdowns de escritorio (genéricos).
+  //
+  // Antes había un único menú, con ids fijos (servicesBtn/servicesMenu) y su
+  // propio bloque de listeners. Con tres pilares esa forma obligaba a triplicar
+  // el script, así que el comportamiento pasa a resolverse por atributos:
+  // cualquier [data-dropdown-root] funciona sin tocar este código.
+  const dropdownRoots = Array.from(document.querySelectorAll("[data-dropdown-root]"));
 
-  function setServicesOpen(next) {
-    if (!servicesBtn || !servicesMenu) return;
-    servicesBtn.setAttribute("aria-expanded", String(next));
-    servicesMenu.classList.toggle("hidden", !next);
-    if (servicesArrow) {
-      servicesArrow.style.transform = next ? "rotate(180deg)" : "rotate(0deg)";
+  const dropdowns = dropdownRoots.map((root) => ({
+    root,
+    btn: root.querySelector("[data-dropdown-btn]"),
+    menu: root.querySelector("[data-dropdown-menu]"),
+    arrow: root.querySelector("[data-dropdown-arrow]"),
+  }));
+
+  function setDropdownOpen(item, next) {
+    if (!item || !item.btn || !item.menu) return;
+    item.btn.setAttribute("aria-expanded", String(next));
+    item.menu.classList.toggle("hidden", !next);
+    if (item.arrow) {
+      item.arrow.style.transform = next ? "rotate(180deg)" : "rotate(0deg)";
     }
   }
 
-  function isServicesOpen() {
-    return servicesBtn?.getAttribute("aria-expanded") === "true";
+  function closeAllDropdowns(except) {
+    dropdowns.forEach((item) => {
+      if (item !== except) setDropdownOpen(item, false);
+    });
   }
 
-  servicesBtn?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    setServicesOpen(!isServicesOpen());
+  dropdowns.forEach((item) => {
+    if (!item.btn || !item.menu) return;
+
+    item.btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const willOpen = item.btn.getAttribute("aria-expanded") !== "true";
+      closeAllDropdowns(item);
+      setDropdownOpen(item, willOpen);
+    });
+
+    // Hover en escritorio (pointer: fine). Abrir uno cierra los demás: con tres
+    // paneles superpuestos, si no, se solapan al pasar el ratón de uno a otro.
+    if (window.matchMedia("(hover: hover)").matches) {
+      item.root.addEventListener("mouseenter", () => {
+        closeAllDropdowns(item);
+        setDropdownOpen(item, true);
+      });
+      item.root.addEventListener("mouseleave", () => setDropdownOpen(item, false));
+    }
   });
 
-  // Hover open on desktop (pointer: fine)
-  if (servicesRoot && window.matchMedia("(hover: hover)").matches) {
-    servicesRoot.addEventListener("mouseenter", () => setServicesOpen(true));
-    servicesRoot.addEventListener("mouseleave", () => setServicesOpen(false));
-  }
-
-  // Fecha com ESC
   window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") setServicesOpen(false);
+    if (e.key === "Escape") closeAllDropdowns(null);
   });
 
-  // Fecha ao clicar fora
   document.addEventListener("mousedown", (e) => {
-    if (!isServicesOpen()) return;
     const target = e.target;
     if (!(target instanceof Node)) return;
-    if (servicesRoot?.contains(target)) return;
-    setServicesOpen(false);
+    dropdowns.forEach((item) => {
+      if (item.root.contains(target)) return;
+      setDropdownOpen(item, false);
+    });
   });
 
-  // Fecha ao clicar em link interno do dropdown
-  document.querySelectorAll("[data-close-services]").forEach((el) => {
-    el.addEventListener("click", () => setServicesOpen(false));
+  document.querySelectorAll("[data-close-dropdown]").forEach((el) => {
+    el.addEventListener("click", () => closeAllDropdowns(null));
   });
 
   // Language dropdown (desktop)
