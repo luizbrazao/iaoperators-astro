@@ -103,6 +103,13 @@ export default defineConfig({
     "/": "/es/",
     "/sitemap.xml": "/sitemap-index.xml",
 
+    // Árbol de blog sin prefijo de idioma. `src/pages/blog.astro` generaba
+    // /blog/ con el mismo contenido que /es/blog/: dos árboles para la misma
+    // página, ambas indexables. Se elimina la ruta y se manda todo al hub
+    // editorial en ES, que es donde vive el contenido y los enlaces internos.
+    "/blog/": "/es/blog/",
+    "/blog/[...slug]": "/es/blog/[...slug]",
+
     // Portfolio slug redirects (old → new localized slugs)
     "/en/portfolio/radiografia-cadena-hotelera-menorca/": "/en/portfolio/hotel-chain-digital-audit-menorca/",
     "/pt/portfolio/radiografia-cadena-hotelera-menorca/": "/pt/portfolio/radiografia-rede-hoteleira-menorca/",

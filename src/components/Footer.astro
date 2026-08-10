@@ -88,22 +88,36 @@ const links = {
       </div>
     </div>
 
-    <!-- Navegação de serviços e páginas -->
+    <!-- Navegación de servicios y páginas.
+         En ES el enlace sitewide va a los tres silos + la Radiografía: son las
+         páginas que la arquitectura considera centrales. Roadmap, Implementación
+         y Metodología pierden el enlace sitewide (seguían señalando a Google la
+         jerarquía antigua) y se alcanzan desde el hub de integración, desde
+         /sobre/ y desde el catálogo. En EN/PT no existen los silos ES-only,
+         así que la fila se queda como estaba. -->
     <nav aria-label="Site links" class="w-full py-8 border-b border-white/5">
       <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm">
-        <a href={withLocale("servicios/")} class="text-gray-400 hover:text-orange-400 transition-colors">{servicesLabel}</a>
-        <span class="text-white/15 select-none">·</span>
-        <a href={withLocale("auditoria-de-sistemas/")} class="text-gray-400 hover:text-orange-400 transition-colors">Radiografía Digital</a>
-        <span class="text-white/15 select-none">·</span>
-        <a href={withLocale("roadmap-tecnologico/")} class="text-gray-400 hover:text-orange-400 transition-colors">Roadmap Tecnológico</a>
-        <span class="text-white/15 select-none">·</span>
-        <a href={withLocale("implementacion/")} class="text-gray-400 hover:text-orange-400 transition-colors">Implementación</a>
-        <span class="text-white/15 select-none">·</span>
-        <a href={withLocale("metodologia/")} class="text-gray-400 hover:text-orange-400 transition-colors">Metodología</a>
-        {locale === "es" && (
+        {locale === "es" ? (
           <Fragment>
+            <a href="/es/integracion/" class="text-gray-400 hover:text-orange-400 transition-colors">Integración</a>
             <span class="text-white/15 select-none">·</span>
             <a href="/es/cumplimiento/" class="text-gray-400 hover:text-orange-400 transition-colors">Cumplimiento</a>
+            <span class="text-white/15 select-none">·</span>
+            <a href={withLocale("servicios/")} class="text-gray-400 hover:text-orange-400 transition-colors">{servicesLabel}</a>
+            <span class="text-white/15 select-none">·</span>
+            <a href={withLocale("auditoria-de-sistemas/")} class="text-gray-400 hover:text-orange-400 transition-colors">Radiografía Digital</a>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <a href={withLocale("servicios/")} class="text-gray-400 hover:text-orange-400 transition-colors">{servicesLabel}</a>
+            <span class="text-white/15 select-none">·</span>
+            <a href={withLocale("auditoria-de-sistemas/")} class="text-gray-400 hover:text-orange-400 transition-colors">Radiografía Digital</a>
+            <span class="text-white/15 select-none">·</span>
+            <a href={withLocale("roadmap-tecnologico/")} class="text-gray-400 hover:text-orange-400 transition-colors">Roadmap Tecnológico</a>
+            <span class="text-white/15 select-none">·</span>
+            <a href={withLocale("implementacion/")} class="text-gray-400 hover:text-orange-400 transition-colors">Implementación</a>
+            <span class="text-white/15 select-none">·</span>
+            <a href={withLocale("metodologia/")} class="text-gray-400 hover:text-orange-400 transition-colors">Metodología</a>
           </Fragment>
         )}
         <span class="text-white/15 hidden md:inline select-none">—</span>

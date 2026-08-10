@@ -28,8 +28,10 @@ const labels = {
   youtube: nav?.youtube ?? "YouTube",
   blog: nav?.blog ?? "Blog",
   contact: nav?.contact ?? "Contact",
-  // ES-only: landing regulatoria (Ley 10/2025). No se traduce porque la obligación es española.
+  // ES-only: los dos silos de la arquitectura nueva. No se traducen porque
+  // /es/integracion/ y /es/cumplimiento/ no tienen equivalente en EN/PT.
   cumplimiento: "Cumplimiento",
+  integracion: "Integración",
 };
 
 const withLocale = (path: string) => `/${locale}/${path}`.replace(/\/+$/, "/");
@@ -41,6 +43,7 @@ const links = {
   portfolio: withLocale("portfolio/"),
   blog: withLocale("blog/"),
   contact: withLocale("contact/"),
+  integracion: "/es/integracion/",
   cumplimiento: "/es/cumplimiento/",
   community: "https://www.skool.com/ia-operators-hub-9023/about",
   youtube: "https://www.youtube.com/@IAOperators",
@@ -51,10 +54,15 @@ const links = {
 // no pierde nada y el móvil deja de ser una lista interminable.
 const mobileLinks = [
   { key: "servicesHub", href: links.servicesHub, label: hubCta, external: false },
+  // En ES el primer nivel son los tres silos (servicios / integración /
+  // cumplimiento); Metodología baja de nivel y se alcanza desde /sobre/.
+  // En EN/PT no existen esos silos, así que Metodología se queda.
   ...(locale === "es"
-    ? [{ key: "cumplimiento", href: links.cumplimiento, label: labels.cumplimiento, external: false }]
-    : []),
-  { key: "methodology", href: links.methodology, label: labels.methodology, external: false },
+    ? [
+        { key: "integracion", href: links.integracion, label: labels.integracion, external: false },
+        { key: "cumplimiento", href: links.cumplimiento, label: labels.cumplimiento, external: false },
+      ]
+    : [{ key: "methodology", href: links.methodology, label: labels.methodology, external: false }]),
   { key: "portfolio", href: links.portfolio, label: labels.portfolio, external: false },
   { key: "community", href: links.community, label: labels.community, external: true },
   { key: "youtube", href: links.youtube, label: labels.youtube, external: true },
@@ -163,14 +171,21 @@ const mobileLinks = [
         </div>
 
         {locale === "es" && (
-          <a href={links.cumplimiento} class="hover:text-white transition-colors whitespace-nowrap">
-            {labels.cumplimiento}
-          </a>
+          <Fragment>
+            <a href={links.integracion} class="hover:text-white transition-colors whitespace-nowrap">
+              {labels.integracion}
+            </a>
+            <a href={links.cumplimiento} class="hover:text-white transition-colors whitespace-nowrap">
+              {labels.cumplimiento}
+            </a>
+          </Fragment>
         )}
 
-        <a href={links.methodology} class="hover:text-white transition-colors">
-          {labels.methodology}
-        </a>
+        {locale !== "es" && (
+          <a href={links.methodology} class="hover:text-white transition-colors">
+            {labels.methodology}
+          </a>
+        )}
 
         <a href={links.portfolio} class="hover:text-white transition-colors">
           {labels.portfolio}
