@@ -103,6 +103,17 @@ export default defineConfig({
     "/": "/es/",
     "/sitemap.xml": "/sitemap-index.xml",
 
+    // Tracker del proyecto Datadicoco (cliente, mayo-junio 2026). Vivia en
+    // /{es,en,pt}/roadmap/ con robots="index,follow" explicito, en el sitemap
+    // y con hreflang reciproco: contenido de cliente (con precios) indexable
+    // por triplicado, colisionando con el cluster "roadmap" del blog. Las tres
+    // rutas se eliminan (archivos en _to_delete/rotas-roadmap-datadicoco/) y
+    // cualquier marcador del cliente cae en la unica URL que queda, que ya es
+    // noindex.
+    "/es/roadmap/": "/roadmap-datadicoco/",
+    "/en/roadmap/": "/roadmap-datadicoco/",
+    "/pt/roadmap/": "/roadmap-datadicoco/",
+
     // Árbol de blog sin prefijo de idioma. `src/pages/blog.astro` generaba
     // /blog/ con el mismo contenido que /es/blog/: dos árboles para la misma
     // página, ambas indexables. Se elimina la ruta y se manda el índice al hub

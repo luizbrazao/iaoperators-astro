@@ -419,7 +419,6 @@ export const RUTAS_SIN_KEYWORD: readonly string[] = [
   "autores/luiz-fernando-brazao/",
   "terminos-y-condiciones/",
   "politica-de-privacidad/",
-  "roadmap/",
   "metodologia/",
   "estudio/segunda-factura-ia/encuesta/",
 ];
