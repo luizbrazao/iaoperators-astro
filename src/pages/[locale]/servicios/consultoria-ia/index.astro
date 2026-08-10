@@ -18,73 +18,109 @@ const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale 
 const CONTENT: Record<string, any> = {
   es: {
     meta: {
-      title: "Consultoría de IA para empresas | IA Operators",
+      title: "Consultoría de IA para empresas: dónde aplicarla | IA Operators",
       description:
-        "Consultoría de inteligencia artificial para empresas: diagnóstico, estrategia y roadmap de IA — y la construimos, no solo un informe. Habla con un consultor de IA.",
+        "Consultoría de inteligencia artificial para empresas: diagnóstico de oportunidades, priorización por impacto y ROI, y un roadmap de IA ejecutable.",
     },
     breadcrumb: "Consultoría de IA",
+    // `serviceName` existe para que el JSON-LD Service lleve el nombre del
+    // servicio y no el titular del hero, que ahora es una frase de
+    // posicionamiento. Sin este campo, cambiar el H1 cambiaría el schema.
+    serviceName: "Consultoría de inteligencia artificial",
     hero: {
       badge: "Consultoría de IA",
       title: "Consultoría de inteligencia artificial para empresas",
+      // El H1 lleva la intención de búsqueda; el posicionamiento comercial baja
+      // un nivel, a `lead`, que se renderiza justo debajo y con más peso visual
+      // que el subtítulo. Campo ES-only: EN/PT no lo definen y su hero no cambia.
+      // El JSON-LD no se ve afectado — `Service.name` sale de `serviceName`.
+      lead: "Decide dónde aplicar IA antes de invertir en ella.",
       subtitle:
-        "Un consultor de IA que no se queda en el PowerPoint: diagnosticamos dónde la IA mueve la aguja, diseñamos el roadmap y lo construimos hasta producción. Con IA, pero sin humo.",
-      cta: "Hablar con un consultor ↗",
+        "Localizamos las oportunidades reales, las priorizamos por impacto y retorno, y salimos con un roadmap que se puede ejecutar. La decisión, antes que la herramienta.",
+      cta: "Analizar oportunidades de IA ↗",
     },
     problem: {
-      title: "Sabes que necesitas IA, pero no por dónde empezar",
-      subtitle: "Si te reconoces aquí, necesitas una consultoría honesta antes que herramientas:",
+      title: "Invertir en IA sin decidir antes sale caro",
+      subtitle: "Estas son las señales de que lo que falta no es tecnología, sino un criterio para elegir:",
       items: [
-        "No sabes qué automatizar primero ni qué dará más retorno.",
-        "Miedo a invertir en IA y que quede en un experimento caro.",
-        "Recibes propuestas llenas de hype y promesas sin números.",
-        "Consultoras que entregan un informe bonito y desaparecen.",
-        "Nadie en tu equipo tiene el tiempo o el perfil para decidir.",
-        "Proyectos de IA que nunca llegan a producción.",
+        "Tienes diez ideas de IA sobre la mesa y ningún criterio para ordenarlas.",
+        "Cada proveedor propone su producto, y ninguna propuesta se puede comparar con otra.",
+        "Nadie ha medido qué cuesta hoy el proceso, así que no hay con qué comparar el retorno.",
+        "No sabéis si vuestros datos sirven para lo que queréis hacer con ellos.",
+        "Dirección pide un caso de negocio y lo que hay encima de la mesa son demos.",
+        "El piloto funcionó, pero nadie sabe decir si merece la pena escalarlo.",
       ],
     },
     services: {
       title: "Qué incluye la consultoría",
-      subtitle: "Estrategia de IA aterrizada en decisiones, no en diapositivas.",
+      subtitle: "Seis entregables que terminan en una decisión defendible, no en un informe.",
       items: [
-        { title: "Diagnóstico de oportunidades", body: "Mapeamos tus procesos, datos y atención para encontrar dónde la IA aporta valor real." },
-        { title: "Roadmap priorizado", body: "Un plan de IA ordenado por impacto vs. esfuerzo: qué construir, en qué orden y con qué retorno." },
-        { title: "Auditoría de datos y procesos", body: "Revisamos si tus datos y flujos están listos para IA — y qué falta para que lo estén." },
-        { title: "Build vs. buy", body: "Te decimos honestamente qué construir a medida, qué comprar y qué no hacer todavía." },
-        { title: "Caso de negocio y ROI", body: "Estimamos coste, retorno y riesgo de cada iniciativa para que decidas con números." },
-        { title: "De la estrategia a producción", body: "No nos quedamos en el informe: podemos implementar el roadmap hasta dejarlo funcionando." },
+        { title: "Diagnóstico de oportunidades", body: "Recorremos procesos, volúmenes y puntos de fricción para localizar dónde la IA crea valor medible — y dónde solo haría ruido." },
+        { title: "Procesos y datos", body: "Qué información existe, dónde vive y en qué estado. Es la condición previa que decide si un caso es viable ahora o dentro de dos trimestres." },
+        { title: "Priorización", body: "Cada iniciativa puntuada por impacto, esfuerzo y riesgo. El resultado es un orden que se sostiene delante de dirección." },
+        { title: "Build vs. buy", body: "Para cada caso: comprar, integrar algo que ya existe, construir a medida o no hacerlo todavía. Siempre con el argumento de por qué." },
+        { title: "Caso de negocio y ROI", body: "Coste estimado, retorno esperado y los supuestos de los que depende. Si los números no salen, lo decimos." },
+        { title: "Roadmap de IA", body: "Qué hacer, en qué orden, con qué dependencias y qué hace falta de vuestro lado. Es el entregable con el que se decide." },
       ],
     },
     process: {
       badge: "Cómo trabajamos",
-      title: "Diagnóstico, estrategia y ejecución — sin hand-offs",
-      subtitle: "El mismo equipo que define la estrategia la construye. Con IA, pero sin humo.",
+      title: "Cuatro pasos que terminan en una decisión",
+      subtitle: "La consultoría acaba con el roadmap en tus manos. Ejecutarlo es una decisión aparte, y es tuya.",
       phases: [
-        { code: "01", title: "Diagnosticamos", body: "Entendemos tu negocio, tus procesos y tus datos. Dónde duele y dónde la IA puede ayudar de verdad." },
-        { code: "02", title: "Priorizamos", body: "Construimos el roadmap: iniciativas ordenadas por impacto, esfuerzo y retorno esperado." },
-        { code: "03", title: "Construimos", body: "Aquí está la diferencia: implementamos el primer caso hasta producción, no lo dejamos en un PDF." },
-        { code: "04", title: "Medimos y escalamos", body: "Medimos resultados reales, iteramos y ampliamos la IA a nuevos procesos." },
+        { code: "01", title: "Entendemos", body: "Negocio, procesos, objetivos y restricciones reales: presupuesto, equipo, calendario y lo que no se puede tocar." },
+        { code: "02", title: "Diagnosticamos", body: "Oportunidades caso a caso, estado de los datos y madurez del equipo para sostener lo que se decida construir." },
+        { code: "03", title: "Priorizamos", body: "Impacto, esfuerzo, riesgo y retorno. De una lista larga salen tres o cuatro iniciativas que se sostienen con números." },
+        { code: "04", title: "Diseñamos el roadmap", body: "Plan de ejecución con secuencia, dependencias y criterios de éxito. Aquí termina la consultoría." },
       ],
     },
-    tech: {
-      title: "La tecnología que usamos",
-      subtitle: "LLM-first, multi-agente y lista para producción.",
-      items: ["OpenAI / Claude", "LangChain", "n8n", "Supabase", "Multi-agente", "WhatsApp Cloud API", "Webhooks & APIs", "Node / TypeScript"],
+    // Bloques ES-only (fase 2, separación consultoría/agencia). El template los
+    // renderiza solo si existen, así que EN y PT no cambian.
+    despues: {
+      title: "¿Y después del roadmap?",
+      body: "El roadmap es tuyo. Con él puedes hacer tres cosas, y las tres son salidas legítimas: ejecutarlo con tu equipo interno, llevarlo al proveedor que prefieras, o pedirnos que lo ejecutemos nosotros. El trabajo de consultoría está entregado en cualquiera de los tres casos.",
+      extra: "Si eliges la tercera, no hay traspaso ni curva de aprendizaje: el mismo equipo que hizo el diagnóstico conoce cada decisión y su porqué, y la lleva a producción.",
+      cta: "Ver Agencia de IA: diseño, construcción y producción →",
+      href: "/es/servicios/agencia-ia/",
+    },
+    frontera: {
+      title: "Dónde termina esta página y empieza otra",
+      subtitle: "Dos preguntas distintas que conviene no mezclar en el mismo proyecto.",
+      items: [
+        {
+          label: "Consultoría de IA responde",
+          body: "¿Dónde tiene sentido introducir IA? ¿Qué caso de uso tiene mejor retorno? ¿Qué iniciativa priorizamos primero? ¿Compramos o construimos esta solución?",
+        },
+        {
+          label: "Arquitectura tecnológica responde",
+          body: "¿Sustituimos el ERP o lo integramos? ¿Qué sistema debe ser la fuente de la verdad? ¿Qué aplicaciones podemos retirar? ¿Cómo debe conectarse el ecosistema?",
+          cta: "Ver Arquitectura tecnológica →",
+          href: "/es/arquitectura-tecnologica/",
+        },
+      ],
+    },
+    crossLink: {
+      title: "¿Ya sabes qué quieres construir?",
+      body: "Si la decisión ya está tomada y lo que necesitas es un equipo que lo diseñe, lo construya y lo deje funcionando en producción, esta no es tu página.",
+      cta: "Ir a Agencia de IA →",
+      href: "/es/servicios/agencia-ia/",
     },
     faq: {
       title: "Preguntas frecuentes",
       items: [
-        { q: "¿En qué se diferencia una consultoría de IA de una agencia de IA?", a: "Una consultoría clásica te dice qué hacer y se va. Nosotros diagnosticamos, priorizamos y además construimos: el mismo equipo que define la estrategia la lleva a producción. Lo explicamos en detalle en <a href='/es/blog/que-es-una-agencia-de-ia/' class='text-orange-400 hover:underline'>qué es una agencia de IA</a>." },
-        { q: "¿Solo entregáis estrategia o también implementáis?", a: "Las dos cosas. La consultoría termina en un roadmap accionable, y podemos ejecutarlo nosotros mismos — agentes, automatización e integraciones. Mira nuestro servicio de <a href='/es/servicios/agencia-ia/' class='text-orange-400 hover:underline'>agencia de IA</a>." },
-        { q: "¿Cuánto cuesta una consultoría de IA?", a: "Depende del alcance: un diagnóstico acotado, un roadmap completo o un acompañamiento continuo. Lo importante no es el precio por hora, sino evitar invertir meses en el proyecto equivocado. Un diagnóstico inicial suele estar en días." },
-        { q: "¿Por dónde se empieza?", a: "Por un diagnóstico honesto: dónde tienes procesos repetitivos, datos o atención que la IA puede mejorar. Priorizamos un primer caso de alto impacto y bajo riesgo, no un mega-proyecto." },
-        { q: "¿Necesito muchos datos o un equipo técnico?", a: "No necesariamente. Muchos casos de valor no requieren big data ni equipo propio: nosotros ponemos la parte técnica y trabajamos con lo que ya tienes." },
-        { q: "¿Cuánto se tarda en ver valor?", a: "Un diagnóstico inicial en días; un primer caso en producción en semanas, no meses. Preferimos entregar algo funcionando pronto y escalar desde ahí." },
+        { q: "¿Qué incluye una consultoría de IA?", a: "Seis entregables: diagnóstico de oportunidades, revisión de procesos y datos, priorización, decisión de build vs. buy, caso de negocio con ROI y el roadmap. Termina en un documento con el que se puede decidir y presupuestar, no en una presentación." },
+        { q: "¿Cuánto dura?", a: "Un diagnóstico acotado a un área se resuelve en días. Una consultoría completa —varios procesos, datos y caso de negocio— suele llevar de dos a cuatro semanas, según cuánta gente haya que entrevistar y en qué estado esté la información." },
+        { q: "¿Qué entregables recibimos?", a: "El mapa de oportunidades con su valoración, la ficha de cada iniciativa priorizada, el caso de negocio con supuestos explícitos y el roadmap con secuencia y dependencias. Todo en un formato que podéis llevar a comité." },
+        { q: "¿Cómo priorizáis los casos de uso?", a: "Con tres ejes: impacto esperado sobre el negocio, esfuerzo de implementación y riesgo — técnico, de datos y de adopción. Lo que sale primero no es lo más vistoso, es lo que combina retorno alto con riesgo bajo." },
+        { q: "¿Cómo calculáis el ROI?", a: "Partimos del coste actual del proceso: horas dedicadas, errores, retrabajo y coste de oportunidad. Contra eso ponemos el coste estimado de la solución y el ahorro esperado, con los supuestos escritos para que podáis discutirlos. Cuando los números no salen, la recomendación es no hacerlo." },
+        { q: "¿Necesitamos tener los datos preparados?", a: "No para empezar la consultoría — precisamente parte del trabajo es decir en qué estado están y qué haría falta. Sí condiciona el orden: un caso excelente sobre datos que no existen se pospone, no se descarta." },
+        { q: "¿Qué ocurre después del roadmap?", a: "Decidís vosotros: ejecutarlo internamente, con otro proveedor o con nosotros. El roadmap es vuestro en los tres casos. Si queréis que lo ejecutemos, ese trabajo es el de <a href='/es/servicios/agencia-ia/' class='text-orange-400 hover:underline'>agencia de IA</a> y se contrata aparte." },
       ],
     },
     finalCta: {
-      title: "¿Por dónde debería empezar tu empresa con la IA?",
-      subtitle: "En una llamada de 30 minutos, un consultor de IA te dice dónde está tu mejor primer caso — sin humo y sin compromiso.",
-      cta: "Hablar con un consultor",
+      title: "¿Dónde debería aplicar IA tu empresa, y en qué orden?",
+      subtitle: "Una llamada de 30 minutos para situar el terreno. Si hay encaje, te proponemos un diagnóstico con alcance y entregables cerrados.",
+      cta: "Analizar oportunidades de IA",
     },
   },
 
@@ -250,7 +286,10 @@ const providerSchema = {
 const serviceJsonLd = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: c.hero.title,
+  // `serviceName` permite que el H1 sea una frase de posicionamiento sin
+  // arrastrar el schema. EN/PT no lo definen y siguen usando el H1, así que su
+  // JSON-LD no cambia.
+  name: c.serviceName ?? c.hero.title,
   serviceType: "Artificial intelligence consulting",
   provider: providerSchema,
   areaServed: ["ES", "PT", "BR", "US", "GB"],
@@ -287,6 +326,9 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
       <div class="max-w-5xl mx-auto text-center">
         <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-6">{c.hero.badge}</span>
         <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">{c.hero.title}</h1>
+        {c.hero.lead && (
+          <p class="text-2xl md:text-3xl font-medium tracking-tight text-orange-400 mb-5 max-w-3xl mx-auto">{c.hero.lead}</p>
+        )}
         <p class="text-lg md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto">{c.hero.subtitle}</p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
           <a href={contactHref} class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-base hover:bg-orange-400 hover:scale-105 transition-all duration-300">{c.hero.cta}</a>
@@ -354,18 +396,60 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
       </div>
     </section>
 
-    <!-- TECH -->
-    <section class="px-4 py-20">
-      <div class="max-w-5xl mx-auto text-center">
-        <h2 class="text-3xl md:text-4xl font-bold mb-3">{c.tech.title}</h2>
-        <p class="text-gray-400 mb-10 max-w-2xl mx-auto">{c.tech.subtitle}</p>
-        <div class="flex flex-wrap justify-center gap-3">
-          {c.tech.items.map((item: string) => (
-            <span class="px-5 py-2 rounded-full bg-[#0a0a0a] border border-white/10 text-gray-200 text-sm font-medium hover:border-orange-500/30 transition-colors">{item}</span>
-          ))}
+    {/* Qué pasa después del roadmap. Bloque ES-only. */}
+    {c.despues && (
+      <section class="px-4 py-20">
+        <div class="max-w-4xl mx-auto bg-[#0a0a0a] border border-orange-500/20 rounded-3xl p-8 md:p-10">
+          <h2 class="text-2xl md:text-3xl font-bold mb-5">{c.despues.title}</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">{c.despues.body}</p>
+          <p class="text-gray-400 text-sm leading-relaxed mb-8">{c.despues.extra}</p>
+          <a href={c.despues.href} class="inline-flex items-center gap-2 text-orange-400 font-medium hover:underline">
+            {c.despues.cta}
+          </a>
         </div>
-      </div>
-    </section>
+      </section>
+    )}
+
+    {/* Frontera con el pilar de arquitectura tecnológica. Bloque ES-only. */}
+    {c.frontera && (
+      <section class="px-4 py-20">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">{c.frontera.title}</h2>
+            <p class="text-gray-400 max-w-2xl mx-auto">{c.frontera.subtitle}</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {c.frontera.items.map((item: any) => (
+              <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 flex flex-col">
+                <p class="text-xs font-semibold uppercase tracking-widest text-orange-400 mb-4">{item.label}</p>
+                <p class="text-gray-300 text-sm leading-relaxed flex-1">{item.body}</p>
+                {item.href && (
+                  <a href={item.href} class="inline-flex items-center gap-2 text-orange-400 font-medium text-sm mt-5 hover:underline">
+                    {item.cta}
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- TECH -->
+    {/* La variante ES no lleva este bloque: es una página de decisión. EN/PT sí. */}
+    {c.tech && (
+      <section class="px-4 py-20">
+        <div class="max-w-5xl mx-auto text-center">
+          <h2 class="text-3xl md:text-4xl font-bold mb-3">{c.tech.title}</h2>
+          <p class="text-gray-400 mb-10 max-w-2xl mx-auto">{c.tech.subtitle}</p>
+          <div class="flex flex-wrap justify-center gap-3">
+            {c.tech.items.map((item: string) => (
+              <span class="px-5 py-2 rounded-full bg-[#0a0a0a] border border-white/10 text-gray-200 text-sm font-medium hover:border-orange-500/30 transition-colors">{item}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
 
     <!-- FAQ -->
     <section class="px-4 py-20">
@@ -384,6 +468,21 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
         </div>
       </div>
     </section>
+
+    {/* Cross-link a agencia. Bloque ES-only: en EN/PT no se emite nada. */}
+    {c.crossLink && (
+      <section class="px-4 pb-4">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row md:items-center gap-5 bg-white/[0.02] border border-white/10 rounded-3xl p-7">
+          <div class="flex-1">
+            <h2 class="text-xl font-semibold text-white mb-2">{c.crossLink.title}</h2>
+            <p class="text-gray-400 text-sm leading-relaxed">{c.crossLink.body}</p>
+          </div>
+          <a href={c.crossLink.href} class="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-sm hover:bg-orange-500/10 transition-all duration-300">
+            {c.crossLink.cta}
+          </a>
+        </div>
+      </section>
+    )}
 
     <!-- FINAL CTA -->
     <section class="px-4 py-24">

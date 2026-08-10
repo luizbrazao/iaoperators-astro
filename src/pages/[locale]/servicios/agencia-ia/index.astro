@@ -20,49 +20,53 @@ const CONTENT: Record<string, any> = {
     meta: {
       title: "Agencia de inteligencia artificial para empresas | IA Operators",
       description:
-        "Agencia de inteligencia artificial para empresas: estrategia, consultoría e implementación de IA a medida — agentes, automatización y chatbots. Sin humo.",
+        "Agencia de inteligencia artificial: diseñamos, construimos e integramos agentes, automatizaciones y asistentes sobre los sistemas que ya usas. Hasta producción.",
     },
     breadcrumb: "Agencia de IA",
+    // Ver la nota del mismo campo en consultoria-ia: el schema lleva el nombre
+    // del servicio, no el titular del hero.
+    serviceName: "Agencia de inteligencia artificial",
+    serviceType: "Artificial intelligence development and implementation",
     hero: {
       badge: "Agencia de IA",
       title: "Agencia de inteligencia artificial para empresas",
       subtitle:
-        "De la estrategia a la implementación: te ayudamos a aplicar IA donde de verdad mueve la aguja — agentes, automatización, chatbots e integraciones a medida. Con IA, pero sin humo.",
-      cta: "Hablar con un especialista ↗",
+        "Diseñamos, construimos e integramos soluciones de IA sobre los sistemas que tu empresa ya utiliza: agentes que ejecutan, automatizaciones que aguantan producción y asistentes conectados a la operación real. Somos el equipo que lo construye.",
+      cta: "Hablar de tu proyecto ↗",
     },
     problem: {
-      title: "Todo el mundo habla de IA. Pocos la aplican bien.",
-      subtitle: "Si te reconoces aquí, necesitas estrategia antes que herramientas:",
+      title: "Tienes claro qué construir. El problema es construirlo",
+      subtitle: "Los proyectos de IA no suelen morir en la idea. Mueren en el camino a producción:",
       items: [
-        "Sabes que la IA es importante, pero no por dónde empezar.",
-        "Pruebas herramientas sueltas sin impacto real en el negocio.",
-        "Miedo a invertir en IA y que quede en un experimento.",
-        "Nadie en tu equipo tiene el tiempo o el perfil técnico.",
-        "Proyectos de IA que nunca llegan a producción.",
-        "Mucho hype, pocos resultados medibles.",
+        "La demo funcionaba. Con datos reales y casos raros, se cae.",
+        "Nadie quiere tocar la integración con el ERP, así que la IA acaba viviendo en una isla.",
+        "El prototipo lo montó alguien que ya no está y no hay forma de mantenerlo.",
+        "Funciona, pero no hay logs ni métricas: nadie sabe cuándo se equivoca.",
+        "Cada cambio de modelo o de proveedor obliga a rehacer medio sistema.",
+        "El equipo interno tiene el conocimiento del negocio, pero no el tiempo para construir.",
       ],
     },
     services: {
-      title: "Qué hacemos",
-      subtitle: "Estrategia e implementación de IA de verdad. Lo que mueve la aguja, no lo que suena bien.",
+      title: "Qué construimos",
+      subtitle: "Capacidades de ejecución. Cada una con su propia página cuando el tema da para más.",
       items: [
-        { title: "Estrategia y consultoría de IA", body: "Identificamos dónde la IA aporta valor real en tu negocio y diseñamos un roadmap priorizado por impacto." },
-        { title: "Agentes y automatización", body: "Agentes de IA y automatizaciones que ejecutan procesos reales sobre tus herramientas, no demos bonitas." },
-        { title: "Chatbots y asistentes", body: "Asistentes con IA para WhatsApp y web que atienden, cualifican y reservan, integrados con tu operación." },
-        { title: "Soluciones a medida", body: "Sistemas con IA construidos para tu caso: clasificación, generación, análisis o lo que tu negocio necesite." },
-        { title: "Integraciones API-first", body: "Conectamos la IA con tu stack (CRM, ERP, datos) para que actúe donde ya trabajas." },
-        { title: "Formación y adopción", body: "Ayudamos a tu equipo a usar la IA con criterio, para que la adopción sea real y sostenible." },
+        { title: "Agentes de IA", body: "Agentes que consultan tus sistemas, deciden y ejecutan acciones reales, con permisos acotados y trazabilidad de cada paso.", href: "/es/servicios/agentes-de-ia/", cta: "Ver agentes de IA →" },
+        { title: "Automatización", body: "Flujos que mueven trabajo entre aplicaciones con colas, reintentos e idempotencia, para que un fallo no duplique nada.", href: "/es/servicios/automatizacion-ia/", cta: "Ver automatización →" },
+        { title: "Chatbots y asistentes", body: "Asistentes en WhatsApp y web que atienden, cualifican y reservan, conectados a tu agenda, tu CRM y tu catálogo.", href: "/es/servicios/chatbots/", cta: "Ver chatbots →" },
+        { title: "Integraciones", body: "ERP, CRM, TPV, e-commerce, APIs, webhooks y WhatsApp. La IA actúa donde ya está el dato, no sobre una copia paralela.", href: "/es/integracion/", cta: "Ver integración de sistemas →" },
+        { title: "Soluciones a medida", body: "Cuando no hay producto que encaje: clasificación, extracción, generación o análisis construidos para tu caso concreto." },
+        { title: "Operación y evolución", body: "Monitorización, medición de calidad, control del coste por token y evolución del sistema cuando cambian los modelos o el negocio." },
       ],
     },
     process: {
       badge: "Cómo trabajamos",
-      title: "Diagnóstico, estrategia y ejecución — sin hand-offs",
-      subtitle: "El mismo equipo que define la estrategia la construye hasta producción. Con IA, pero sin humo.",
+      title: "De discovery técnico a producción",
+      subtitle: "Sin hand-offs: el equipo que diseña la arquitectura es el que escribe el código y el que lo mantiene cuando ya está funcionando.",
       phases: [
-        { code: "01", title: "Diagnosticamos", body: "Mapeamos tus procesos y datos, y dónde la IA aporta valor real. Priorizamos por impacto vs. esfuerzo." },
-        { code: "02", title: "Diseñamos la estrategia", body: "Definimos el roadmap de IA: qué construir, en qué orden y con qué retorno esperado." },
-        { code: "03", title: "Construimos", body: "Implementamos agentes, automatizaciones, chatbots e integraciones. Con ingeniería, tipado y validación." },
-        { code: "04", title: "Operamos y escalamos", body: "Medimos resultados, iteramos y ampliamos la IA a nuevos procesos sobre una base sólida." },
+        { code: "01", title: "Discovery", body: "Validamos alcance, sistemas implicados, acceso a datos y el criterio con el que sabremos que funciona. Técnico, no comercial." },
+        { code: "02", title: "Diseño técnico", body: "Arquitectura de la solución, contratos de datos, puntos de integración, modelo de permisos y estrategia de pruebas." },
+        { code: "03", title: "Construcción", body: "Implementación con tipado, validación en los bordes e idempotencia. Entregas parciales que ya se pueden probar contra el proceso real." },
+        { code: "04", title: "Producción y evolución", body: "Despliegue, observabilidad, control de errores y de coste, y mantenimiento cuando cambia un modelo, una API o el propio proceso." },
       ],
     },
     tech: {
@@ -70,21 +74,29 @@ const CONTENT: Record<string, any> = {
       subtitle: "LLM-first, multi-agente y lista para producción.",
       items: ["OpenAI / Claude", "LangChain", "n8n", "Supabase", "Multi-agente", "WhatsApp Cloud API", "Webhooks & APIs", "Node / TypeScript"],
     },
+    // Bloque ES-only (fase 2): la puerta de vuelta a la etapa de decisión.
+    crossLink: {
+      title: "¿Todavía no sabes dónde aplicar IA?",
+      body: "Si aún no hay decisión tomada —qué caso primero, con qué retorno, comprar o construir—, empezar por construir sale caro. Esa conversación tiene su propia página.",
+      cta: "Ir a Consultoría de IA →",
+      href: "/es/servicios/consultoria-ia/",
+    },
     faq: {
       title: "Preguntas frecuentes",
       items: [
-        { q: "¿Qué diferencia hay entre una agencia de IA y una consultora?", a: "Las consultoras entregan una presentación y se van. Nosotros diagnosticamos y después construimos: el mismo equipo que define la estrategia la implementa hasta producción." },
-        { q: "¿Por dónde se empieza con la IA?", a: "Por un diagnóstico honesto: dónde tienes procesos repetitivos, datos o atención que la IA puede mejorar. Priorizamos un primer caso de alto impacto y bajo riesgo, no un mega-proyecto." },
-        { q: "¿Necesito tener muchos datos o un equipo técnico?", a: "No necesariamente. Muchos casos de valor no requieren big data ni equipo propio: nosotros ponemos la parte técnica y trabajamos con lo que ya tienes." },
-        { q: "¿Es seguro para los datos de mi empresa?", a: "Sí. Diseñamos con permisos mínimos, estado controlado y, cuando el caso lo exige, modelos privados o self-hosted para que tus datos no salgan de tu entorno." },
-        { q: "¿Cuánto tarda en verse valor?", a: "Un primer caso en producción suele estar en semanas, no meses. Preferimos entregar algo funcionando pronto y escalar desde ahí." },
-        { q: "¿Cómo empezamos?", a: "Una llamada de 30 minutos para entender tu negocio. Si hay encaje, te proponemos un primer caso de IA con alcance y retorno claros." },
+        { q: "¿Trabajáis sobre nuestros sistemas actuales o hay que migrar?", a: "Sobre los actuales. El punto de partida es siempre lo que ya está en marcha: ERP, CRM, TPV, e-commerce o el software vertical que uséis. Migrar es una decisión de negocio con su propio coste, y casi nunca es requisito para poner IA a funcionar." },
+        { q: "¿Cómo integráis la IA con nuestro ERP o CRM?", a: "Por API cuando existe, por webhooks cuando el sistema los emite, y con una capa intermedia cuando no hay ninguna de las dos. Nunca escribiendo directamente en la base de datos de producción. Lo detallamos en <a href='/es/integracion/' class='text-orange-400 hover:underline'>integración de sistemas</a>." },
+        { q: "¿Qué pasa cuando el modelo se equivoca?", a: "Se diseña asumiendo que va a pasar. Validación de salida antes de ejecutar cualquier acción, umbrales de confianza, escalado a una persona cuando no hay certeza, y registro de cada decisión para poder revisarla después. Un agente sin ruta de escape no es un sistema de producción." },
+        { q: "¿Es seguro para los datos de mi empresa?", a: "Diseñamos con permisos mínimos, estado controlado y, cuando el caso lo exige, modelos privados o self-hosted para que los datos no salgan de vuestro entorno." },
+        { q: "¿Cuánto tarda un proyecto en llegar a producción?", a: "Un caso acotado suele estar funcionando en semanas, no meses. Trabajamos con entregas parciales: preferimos algo pequeño en producción y medido antes que un sistema grande que nadie ha probado contra la realidad." },
+        { q: "¿Quién mantiene lo que construís?", a: "Podemos mantenerlo nosotros o entregarlo documentado a vuestro equipo. Construimos sobre herramientas auditables —n8n, Supabase, Node— precisamente para que la segunda opción sea viable y no dependáis de nosotros por diseño." },
+        { q: "¿Necesitamos una consultoría antes?", a: "Solo si aún no está claro qué construir ni con qué retorno. Si la decisión ya está tomada, se entra directo por aquí. Si no, el paso previo es la <a href='/es/servicios/consultoria-ia/' class='text-orange-400 hover:underline'>consultoría de IA</a>, que termina en un roadmap priorizado." },
       ],
     },
     finalCta: {
-      title: "¿Dónde podría la IA quitarte trabajo y traerte clientes?",
-      subtitle: "En una llamada de 30 minutos identificamos tu mejor primer caso de IA — sin humo y sin compromiso.",
-      cta: "Hablar con un especialista",
+      title: "¿Qué quieres poner en producción?",
+      subtitle: "Cuéntanos el caso y los sistemas implicados. Te decimos cómo lo construiríamos, con qué alcance y en qué plazo.",
+      cta: "Hablar de tu proyecto",
     },
   },
 
@@ -250,8 +262,13 @@ const providerSchema = {
 const serviceJsonLd = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: c.hero.title,
-  serviceType: "Artificial intelligence agency and consulting",
+  // Ver la nota de `serviceName` en el bloque ES. EN/PT no lo definen y su
+  // JSON-LD sigue saliendo del H1, sin cambios.
+  name: c.serviceName ?? c.hero.title,
+  // "and consulting" salía sobrando en ES: la etapa de consultoría tiene su
+  // propia página y su propio Service. El override es ES-only a propósito —
+  // EN/PT conservan el serviceType anterior y su JSON-LD no cambia.
+  serviceType: c.serviceType ?? "Artificial intelligence agency and consulting",
   provider: providerSchema,
   areaServed: ["ES", "PT", "BR", "US", "GB"],
   description: c.meta.description,
@@ -344,6 +361,11 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
                 <h3 class="text-xl font-semibold text-white">{item.title}</h3>
               </div>
               <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+              {item.href && (
+                <a href={item.href} class="inline-flex items-center gap-1 text-orange-400 text-sm font-medium mt-4 hover:underline">
+                  {item.cta}
+                </a>
+              )}
             </div>
           ))}
         </div>
@@ -418,6 +440,21 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
             <a href="/es/agencia-de-ia/valencia/" class="px-5 py-2 rounded-full bg-[#0a0a0a] border border-white/10 text-gray-200 text-sm font-medium hover:border-orange-500/30 transition-colors">IA en Valencia</a>
             <a href="/es/agencia-de-ia/" class="px-5 py-2 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-sm font-medium hover:bg-orange-500/20 transition-colors">Ver todas ↗</a>
           </div>
+        </div>
+      </section>
+    )}
+
+    {/* Cross-link a consultoría. Bloque ES-only: en EN/PT no se emite nada. */}
+    {c.crossLink && (
+      <section class="px-4 pb-4">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row md:items-center gap-5 bg-white/[0.02] border border-white/10 rounded-3xl p-7">
+          <div class="flex-1">
+            <h2 class="text-xl font-semibold text-white mb-2">{c.crossLink.title}</h2>
+            <p class="text-gray-400 text-sm leading-relaxed">{c.crossLink.body}</p>
+          </div>
+          <a href={c.crossLink.href} class="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-sm hover:bg-orange-500/10 transition-all duration-300">
+            {c.crossLink.cta}
+          </a>
         </div>
       </section>
     )}

@@ -343,11 +343,23 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     // pero sí una señal clara de qué URL asocia Google al clúster.
     // Las primarias se mantienen separadas para no bloquear el build mientras
     // se decide la consolidación. NO es una separación real de intención.
+    // ↑ Ese aviso sigue vigente y se refiere al conflicto con /es/agencia-de-ia/,
+    // que continúa abierto.
+    //
+    // Fase 2 (10/ago/2026): lo que sí quedó resuelto es la frontera con
+    // `servicios/consultoria-ia/`. Esta página es la etapa de EJECUCIÓN —diseño
+    // técnico, construcción, integración, producción y mantenimiento— y ya no
+    // vende estrategia: "Estrategia y consultoría de IA" era su capacidad nº 1 y
+    // se retiró. Las secundarias evitan el vocabulario de decisión.
     path: "servicios/agencia-ia/",
     locales: ["es", "en", "pt"],
     silo: "servicios",
     primaria: "agencia de inteligencia artificial",
-    secundarias: ["agencia inteligencia artificial"],
+    secundarias: [
+      "agencia inteligencia artificial",
+      "desarrollo de soluciones de ia",
+      "implantación de ia en empresas",
+    ],
     faixa: "c",
   },
   {
@@ -363,11 +375,21 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     // Verificado en SERP (09/ago/2026): solo 1 dominio en común en el top 10 con
     // `agencia de inteligencia artificial`. No hay canibalización — se mantiene
     // como página propia.
+    //
+    // Fase 2 (10/ago/2026): la separación con `servicios/agencia-ia/` deja de ser
+    // solo nominal. Esta página cubre la etapa de DECISIÓN —dónde aplicar IA, qué
+    // priorizar, comprar o construir, con qué retorno— y termina en el roadmap.
+    // La construcción se fue entera a la otra URL. Las secundarias se eligen en
+    // ese eje: ninguna habla de implementar.
     path: "servicios/consultoria-ia/",
     locales: ["es", "en", "pt"],
     silo: "servicios",
     primaria: "consultoría inteligencia artificial",
-    secundarias: ["consultoria de ia", "estrategia de ia para empresas"],
+    secundarias: [
+      "consultoria de ia",
+      "estrategia de ia para empresas",
+      "casos de uso de ia en empresas",
+    ],
     faixa: "c",
   },
   {
