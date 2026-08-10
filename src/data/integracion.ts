@@ -357,6 +357,11 @@ export const CASOS: Record<CasoSlug, CasoIntegracion> = {
         label: "Integración de CRM",
         body: "Para que la conversación acabe en la ficha del cliente y no en un móvil.",
       },
+      {
+        href: "/es/blog/cuanto-cuesta-whatsapp-business-api/",
+        label: "Cuánto cuesta de verdad",
+        body: "El cobro por mensaje, las tres ventanas gratis y los costes que no aparecen en la factura de Meta.",
+      },
     ],
     faq: [
       {
