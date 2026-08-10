@@ -402,7 +402,7 @@ Regra: EN recebe **três** landings comerciais no total (duas do silo de serviç
 | `/es/roadmap-tecnologico/` | `/es/integracion/` (hub) | **301, após Sprint 0** | Demanda de mercado residual, mas o GSC mostra **23 impressões/90d** e, sobretudo, o post `/es/blog/que-es-un-roadmap-tecnologico/` tem **1.124 impressões** — a 3ª página mais visível do site. O redirect só se faz se o hub absorver o conteúdo **e** o post-âncora passar a apontar para ele. |
 | `/es/implementacion/` | `/es/integracion/` (hub) | **301, após Sprint 0** | Idem. |
 | `/es/metodologia/` | `/es/sobre/` | **301, após Sprint 0** | ~22 impressões somando es/en/pt. Conteúdo de processo. |
-| `/es/auditoria-de-sistemas/` | `/es/integracion/auditoria-de-sistemas/` | **301, após Sprint 0** | Mantém a página (é a "Radiografía Digital", ativo de outbound), mas dentro do silo certo. Atenção: o post `/es/blog/auditoria-de-sistemas-tecnologicos/` tem **512 impressões** e precisa continuar apontando para o destino certo. |
+| `/es/auditoria-de-sistemas/` | — | **CANCELADO em 10/ago/2026** | A decisão original era 301 para `/es/integracion/auditoria-de-sistemas/`. Ao abrir a página apareceu o que a análise não tinha visto: ela é **trilíngue** (`src/pages/[locale]/`) e recebe **14+ links internos** em es, en e pt, incluindo o catálogo de serviços da home nos três idiomas. Como o silo de integração é ES-only, mover exigiria partir a rota `[locale]`, publicar o 301, re-apontar 8 links em ES e montar um hreflang assimétrico com EN e PT — tudo isso por **zero ganho medível**, já que a página tem 0 impressões. Vale o §8 deste mesmo plano: *os silos organizam a hierarquia, não proíbem links*. A pertença ao silo passa a ser expressa por **links bidirecionais** hub ↔ Radiografia, já implementados. Reavaliar quando `/en/services/` existir e o trio inteiro puder mudar de forma coerente. |
 | `/en/…` e `/pt/…` das rotas acima | **decidir uma a uma** | — | **Não redirecionar em bloco para a home.** O Google trata redirect em massa para um destino irrelevante como *soft 404*. Para cada URL: (A) redirecionar para a página semanticamente mais próxima — p. ex. `/en/roadmap-tecnologico/` → `/en/services/system-integration/` quando esta existir; (B) **410** se o conteúdo deixou de existir sem substituto; ou (C) manter uma versão consolidada. Enquanto `/en/services/` não existir, **manter as páginas EN/PT como estão**. |
 
 > ⚠️ **Não apagar conteúdo.** Todo o texto de auditoría/roadmap/implementación é bom material de venda; ele migra para dentro do hub `/integracion/` e das páginas de destino. O que muda é que deixa de ocupar URL e menu próprios.
@@ -674,7 +674,7 @@ E não tentar transformar `roadmap tecnológico` numa landing pesquisável. **An
 ### Sprint D — P1 e higiene técnica (semanas 7–9)
 13. `/es/cumplimiento/verifactu/homologacion/` e `/es/cumplimiento/verifactu/sanciones/`.
 14. `/es/cumplimiento/ley-atencion-al-cliente/auditoria-acreditada/`.
-15. Mover `auditoria-de-sistemas` para dentro do silo com 301.
+15. ~~Mover `auditoria-de-sistemas` para dentro do silo com 301.~~ **Cancelado** — ver §5.1. Substituído por links bidirecionais entre o hub e a Radiografia.
 16. Casos `tpv-multitienda` e `ecommerce-propio` revisados.
 17. Os 2 posts-âncora pendentes do Sprint 3 da Ley 10/2025.
 18. Correções técnicas #2 a #6.

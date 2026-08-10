@@ -311,6 +311,61 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [
       </section>
     )}
 
+    <!-- QUÉ VIENE DESPUÉS — solo ES.
+         La Radiografía pertenece al silo de integración, pero se queda en esta
+         URL: mover /es/auditoria-de-sistemas/ dentro del silo exigía partir la
+         ruta [locale] y montar un hreflang asimétrico con EN y PT, a cambio de
+         nada medible (la página tiene 0 impresiones). La pertenencia al silo se
+         expresa con enlaces, que es lo que el propio plan dice en §8.
+         El hub y sus hijos son ES-only, así que esta sección también.
+         Ver docs/plan-arquitectura-2026-08.md §5.1. -->
+    {locale === "es" && (
+      <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="text-2xl md:text-3xl font-bold mb-3 text-center">Qué viene después del diagnóstico</h2>
+          <p class="text-gray-400 text-center max-w-2xl mx-auto mb-10 leading-relaxed">
+            La Radiografía responde a «qué tengo». Estas son las dos preguntas siguientes, y quien
+            las ejecuta es el mismo equipo.
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <a
+              href={`/${locale}/roadmap-tecnologico/`}
+              class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 hover:border-orange-500/30 transition-all duration-300"
+            >
+              <h3 class="text-white font-semibold mb-2 leading-snug">Qué hago primero</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                El roadmap ordena las iniciativas que salen del diagnóstico por impacto y esfuerzo,
+                con ROI estimado por fase.
+              </p>
+              <span class="inline-block text-orange-400 text-sm mt-4 group-hover:translate-x-1 transition-transform">Roadmap tecnológico →</span>
+            </a>
+            <a
+              href={`/${locale}/integracion/`}
+              class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 hover:border-orange-500/30 transition-all duration-300"
+            >
+              <h3 class="text-white font-semibold mb-2 leading-snug">Conectar lo que ya existe</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                La conclusión más frecuente del inventario no es que falte software: es que los
+                sistemas correctos no se hablan entre ellos.
+              </p>
+              <span class="inline-block text-orange-400 text-sm mt-4 group-hover:translate-x-1 transition-transform">Integración de sistemas →</span>
+            </a>
+            <a
+              href={`/${locale}/integracion/sistemas-legados/`}
+              class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 hover:border-orange-500/30 transition-all duration-300"
+            >
+              <h3 class="text-white font-semibold mb-2 leading-snug">Y si hay un sistema intocable</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                Cuando el inventario descubre software antiguo del que depende la operación, se
+                moderniza alrededor en lugar de reemplazarlo.
+              </p>
+              <span class="inline-block text-orange-400 text-sm mt-4 group-hover:translate-x-1 transition-transform">Sistemas legados →</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    )}
+
     <!-- FINAL CTA -->
     {finalCta?.title && (
       <section class="px-4 py-24">
