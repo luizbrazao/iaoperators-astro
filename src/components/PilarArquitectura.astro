@@ -12,10 +12,19 @@
 // unas páginas que ya estaban bien.
 //
 // Trilingüe, porque las tres páginas existen en los tres idiomas.
-import { getArquitectura, ARQUITECTURA_TITLE, type Loc } from "@/data/servicios";
+import {
+  getArquitectura,
+  ARQUITECTURA_TITLE,
+  ARQUITECTURA_HUB_HREF,
+  type Loc,
+} from "@/data/servicios";
 
 type Props = {
-  /** Paso en el que estamos: "audit" | "roadmap" | "implementation". */
+  /**
+   * Paso en el que estamos: "audit" | "roadmap" | "implementation".
+   * El hub pasa "hub": ningún paso queda marcado como actual y el bloque
+   * no se enlaza a sí mismo.
+   */
   current: string;
   locale: string;
 };
@@ -24,14 +33,24 @@ const { current, locale } = Astro.props as Props;
 
 const loc: Loc = locale === "pt" || locale === "en" ? locale : "es";
 const pasos = getArquitectura(locale);
+const isHub = current === "hub";
 
-const COPY: Record<Loc, { badge: string; title: string; subtitle: string; here: string }> = {
+// El enlace al pilar solo aparece en las tres páginas hijas y solo en ES:
+// el hub existe únicamente en español y no debe enlazarse a sí mismo.
+const showHubLink = loc === "es" && !isHub;
+
+const COPY: Record<
+  Loc,
+  { badge: string; title: string; subtitle: string; here: string; hubTitle: string; hubLink: string }
+> = {
   es: {
     badge: "Pilar",
     title: ARQUITECTURA_TITLE.es,
     subtitle:
       "Tres pasos y un solo equipo: entendemos lo que tienes, definimos qué debería cambiar y lo construimos. Puedes entrar por cualquiera de los tres, pero este es el orden que evita construir sobre supuestos.",
     here: "Estás aquí",
+    hubTitle: "El método: tres pasos",
+    hubLink: "Ver Arquitectura tecnológica →",
   },
   pt: {
     badge: "Pilar",
@@ -39,6 +58,8 @@ const COPY: Record<Loc, { badge: string; title: string; subtitle: string; here: 
     subtitle:
       "Três passos e uma só equipe: entendemos o que você tem, definimos o que deveria mudar e construímos. Dá para entrar por qualquer um dos três, mas esta é a ordem que evita construir sobre suposições.",
     here: "Você está aqui",
+    hubTitle: "O método: três passos",
+    hubLink: "Ver Arquitetura tecnológica →",
   },
   en: {
     badge: "Pillar",
@@ -46,6 +67,8 @@ const COPY: Record<Loc, { badge: string; title: string; subtitle: string; here: 
     subtitle:
       "Three steps, one team: we understand what you have, define what should change, and build it. You can start at any of the three, but this order is the one that avoids building on assumptions.",
     here: "You are here",
+    hubTitle: "The method: three steps",
+    hubLink: "See Technology architecture →",
   },
 };
 
@@ -58,8 +81,18 @@ const c = COPY[loc];
       <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
         {c.badge}
       </span>
-      <h2 class="text-3xl md:text-4xl font-bold mb-3 text-white">{c.title}</h2>
+      <h2 class="text-3xl md:text-4xl font-bold mb-3 text-white">{isHub ? c.hubTitle : c.title}</h2>
       <p class="text-gray-400 max-w-2xl mx-auto">{c.subtitle}</p>
+      {showHubLink && (
+        <p class="mt-5">
+          <a
+            href={ARQUITECTURA_HUB_HREF}
+            class="inline-flex items-center gap-2 text-orange-400 font-medium text-sm hover:underline"
+          >
+            {c.hubLink}
+          </a>
+        </p>
+      )}
     </div>
 
     <ol class="grid grid-cols-1 md:grid-cols-3 gap-6">

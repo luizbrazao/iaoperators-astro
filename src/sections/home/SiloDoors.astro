@@ -11,13 +11,15 @@
 // Cambio de 2026-08-10 (fase 1 del reposicionamiento): la tercera puerta deja
 // de ser "servicios de agencia" —un catálogo horizontal que contradecía el
 // mensaje de las otras dos— y pasa a ser el tercer pilar real: arquitectura
-// tecnológica, la familia Radiografía → Roadmap → Implementación. Como el
-// pilar todavía no tiene página hub (crearla es decisión de fase 2), la puerta
-// entra por el paso 01 y enlaza los tres pasos dentro de la tarjeta.
+// tecnológica, la familia Radiografía → Roadmap → Implementación.
+//
+// Fase 2 (10/ago/2026): la puerta ya no entra por el paso 01 sino por el hub
+// del pilar, /es/arquitectura-tecnologica/. Los tres pasos siguen enlazados
+// individualmente dentro de la tarjeta.
 //
 // ES-only: las puertas 1 y 2 apuntan a silos que no existen en EN/PT.
 import { LEY } from "@/data/sectores-sac";
-import { getArquitectura, ARQUITECTURA_TITLE } from "@/data/servicios";
+import { getArquitectura, ARQUITECTURA_TITLE, ARQUITECTURA_HUB_HREF } from "@/data/servicios";
 
 const deadline = new Date(`${LEY.plazoAdaptacion}T00:00:00+01:00`);
 const diasRestantes = Math.max(
@@ -47,11 +49,11 @@ const doors = [
     steps: null,
   },
   {
-    href: pasos[0]?.href ?? "/es/auditoria-de-sistemas/",
+    href: ARQUITECTURA_HUB_HREF,
     badge: "Base del trabajo",
     title: ARQUITECTURA_TITLE.es,
     body: "Entendemos lo que tienes, definimos qué debería cambiar y lo construimos. Tres pasos, el mismo equipo.",
-    cta: "Empezar por la Radiografía →",
+    cta: "Ver arquitectura tecnológica →",
     highlight: false,
     steps: pasos,
   },

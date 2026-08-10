@@ -15,7 +15,7 @@
 // consume estos pilares únicamente cuando el locale es "es".
 
 import { CASOS as CASOS_INTEGRACION, CASO_SLUGS as INTEGRACION_SLUGS } from "@/data/integracion";
-import { getArquitectura, ARQUITECTURA_TITLE } from "@/data/servicios";
+import { getArquitectura, ARQUITECTURA_TITLE, ARQUITECTURA_HUB_HREF } from "@/data/servicios";
 
 export interface NavChild {
   label: string;
@@ -114,16 +114,24 @@ export function getPilaresEs(): NavPilar[] {
     },
     {
       key: "arquitectura",
-      // Sin hub propio todavía: la entrada del pilar es el paso 01. Crear
-      // /es/arquitectura-tecnologica/ es una decisión de fase 2, documentada.
+      // Fase 2 (10/ago/2026): el pilar ya tiene hub propio. Antes entraba por
+      // el paso 01 (/es/auditoria-de-sistemas/), que mezclaba la categoría con
+      // uno de sus servicios. Las tres páginas hijas no se han movido.
       label: "Arquitectura",
-      href: arquitectura[0]?.href ?? "/es/auditoria-de-sistemas/",
+      href: ARQUITECTURA_HUB_HREF,
       tagline: "Qué tienes, qué cambiar, lo construimos",
-      children: arquitectura.map((paso) => ({
-        label: `${paso.num} — ${paso.label}`,
-        href: paso.href,
-        desc: paso.promesa,
-      })),
+      children: [
+        {
+          label: ARQUITECTURA_TITLE.es,
+          href: ARQUITECTURA_HUB_HREF,
+          desc: "Visión general del pilar",
+        },
+        ...arquitectura.map((paso) => ({
+          label: `${paso.num} — ${paso.label}`,
+          href: paso.href,
+          desc: paso.promesa,
+        })),
+      ],
     },
   ];
 }

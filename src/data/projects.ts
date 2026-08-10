@@ -127,6 +127,7 @@ export const projects: Project[] = [
         provesFor: [
             "auditoria-de-sistemas/",
             "integracion/",
+            "arquitectura-tecnologica/",
         ],
         publishedAt: "2025-04-10",
 
@@ -309,6 +310,7 @@ export const projects: Project[] = [
             "servicios/chatbots/",
             "servicios/automatizacion-ia/",
             "integracion/whatsapp-business-api/",
+            "arquitectura-tecnologica/",
         ],
         publishedAt: "2025-03-01",
 

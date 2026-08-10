@@ -1,0 +1,285 @@
+---
+// Hub del tercer pilar — Arquitectura tecnológica (fase 2, 2026-08-10).
+//
+// Hasta ahora el pilar entraba por `/es/auditoria-de-sistemas/`, que es un
+// servicio concreto: mezclaba la categoría con su primer paso. Esta página
+// separa las dos intenciones y ocupa la de arriba.
+//
+// Frontera con la Radiografía Digital, para no canibalizarla:
+//   - Aquí: cómo debería estar organizada la tecnología de una empresa —
+//     sistemas, integraciones, datos y automatización como una sola pieza— y
+//     qué decisiones hay que tomar sobre ella.
+//   - Allí: qué hay hoy exactamente. Inventario, dependencias, riesgos,
+//     Shadow IT. Es el paso 01 del método, no la disciplina.
+// Por eso esta página no repite el desglose de entregables de la auditoría:
+// lo enlaza.
+//
+// Frontera con `/es/integracion/`: la arquitectura decide cómo debería
+// funcionar el ecosistema; la integración construye las conexiones concretas.
+//
+// ES-only, como los otros dos hubs: hreflang forzado a es + x-default.
+// El bloque del método NO se escribe aquí — sale de `getArquitectura()` en
+// src/data/servicios.ts vía <PilarArquitectura>, la misma fuente que alimenta
+// el menú, la home, el footer y las tres páginas hijas.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PilarArquitectura from "@/components/PilarArquitectura.astro";
+import RelatedCases from "@/components/RelatedCases.astro";
+import { ARQUITECTURA_TITLE } from "@/data/servicios";
+
+const locale = "es";
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(`/${locale}/arquitectura-tecnologica/`, site).toString();
+const contactHref = `/${locale}/contact/`;
+const integracionHref = `/${locale}/integracion/`;
+const cumplimientoHref = `/${locale}/cumplimiento/`;
+
+const meta = {
+  title: "Arquitectura tecnológica para empresas | IA Operators",
+  description:
+    "Diseñamos cómo deben conectarse sistemas, datos, integraciones y automatización en tu empresa: diagnóstico, roadmap de arquitectura e implementación.",
+};
+
+const sintomas = [
+  "El ERP y el CRM no se hablan, y alguien reconcilia los dos a mano.",
+  "Procesos críticos que pasan por una hoja de cálculo que hace de middleware.",
+  "Integraciones punto a punto: cada nueva herramienta añade conexiones, no capacidades.",
+  "Herramientas duplicadas que resuelven lo mismo en dos departamentos.",
+  "Datos repartidos en varios sistemas, sin acuerdo sobre cuál manda.",
+  "Software legado que nadie toca porque nadie sabe qué se rompe si lo tocan.",
+  "Automatizaciones creadas una a una, sin criterio común ni mantenimiento.",
+  "Cada herramienta nueva entra, pero ninguna sale.",
+  "Procesos que dependen de que una persona concreta esté disponible.",
+  "Ganas de meter IA, y ningún sitio seguro por donde empezar.",
+];
+
+const capas = [
+  {
+    num: "01",
+    title: "Sistemas",
+    body: "ERP, CRM, TPV, e-commerce, software vertical y las aplicaciones internas que nadie documentó. Qué hace cada uno de verdad, cuál sobra y cuál sostiene la operación aunque no lo parezca.",
+  },
+  {
+    num: "02",
+    title: "Integraciones",
+    body: "APIs, webhooks, eventos y middleware. Dónde hace falta una conexión en tiempo real, dónde basta una sincronización periódica y dónde una integración solo añadiría una pieza más que mantener.",
+  },
+  {
+    num: "03",
+    title: "Datos",
+    body: "Dónde vive cada dato, qué sistema es la fuente de la verdad para cada entidad —cliente, pedido, factura— y cómo circula entre aplicaciones sin que aparezcan tres versiones del mismo número.",
+  },
+  {
+    num: "04",
+    title: "Automatización e IA",
+    body: "Qué procesos merecen automatizarse y cuáles conviene arreglar antes, y en qué puntos un modelo aporta algo que una regla no puede. La IA se apoya en las tres capas anteriores; sin ellas amplifica el desorden.",
+  },
+];
+
+const decisiones = [
+  "¿Cambiamos el ERP o lo integramos con lo demás?",
+  "¿Qué sistema debe ser la fuente de la verdad para cada dato?",
+  "¿Qué aplicaciones podemos retirar sin romper nada?",
+  "¿Dónde necesitamos una API y dónde es sobreingeniería?",
+  "¿Qué procesos merece la pena automatizar, y en qué orden?",
+  "¿Qué sistema legado hay que modernizar primero?",
+  "¿Dónde tiene sentido introducir IA y dónde todavía no?",
+  "¿Qué construimos a medida y qué compramos hecho?",
+];
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: ARQUITECTURA_TITLE.es,
+    serviceType: "Enterprise technology architecture",
+    provider: {
+      "@type": ["Organization", "ProfessionalService"],
+      name: "IA Operators",
+      url: site,
+      address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+    },
+    areaServed: ["ES"],
+    description: meta.description,
+    url: pageUrl,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
+      { "@type": "ListItem", position: 2, name: ARQUITECTURA_TITLE.es, item: pageUrl },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  jsonLd={jsonLd}
+>
+  <div class="bg-transparent text-white">
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" class="px-4 pt-28 max-w-6xl mx-auto text-sm text-gray-400">
+      <ol class="flex flex-wrap items-center gap-1">
+        <li>
+          <a href={`/${locale}/`} class="hover:text-orange-400 transition-colors">Inicio</a>
+        </li>
+        <li class="text-gray-700">/</li>
+        <li class="text-gray-400" aria-current="page">{ARQUITECTURA_TITLE.es}</li>
+      </ol>
+    </nav>
+
+    <!-- Hero -->
+    <section class="px-4 pt-10 pb-14">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
+          Arquitectura tecnológica <span class="text-orange-500">para empresas</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-10">
+          Diseñamos cómo deben conectarse sistemas, datos, automatizaciones y procesos para que la
+          tecnología deje de crecer por piezas sueltas y empiece a funcionar como una arquitectura.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a
+            href={contactHref}
+            class="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+          >
+            Analizar nuestra arquitectura ↗
+          </a>
+          <a
+            href="#metodo"
+            class="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-black text-orange-500 border border-orange-500/30 font-medium text-lg hover:bg-orange-500/10 transition-all duration-300"
+          >
+            Ver cómo trabajamos
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problema -->
+    <section class="px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-center mb-4">
+          Casi nunca falta software. Lo que falta es arquitectura
+        </h2>
+        <p class="text-gray-400 text-center max-w-2xl mx-auto mb-12 leading-relaxed">
+          Ninguna empresa decide un día tener un parque tecnológico desordenado. Se llega ahí
+          herramienta a herramienta, cada una resolviendo bien su problema y ninguna pensada junto
+          a las demás. Estas son las señales.
+        </p>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 max-w-4xl mx-auto">
+          {sintomas.map((s) => (
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 mt-1 shrink-0" aria-hidden="true">—</span>
+              <span class="text-gray-300 text-sm md:text-base leading-relaxed">{s}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Qué es -->
+    <section class="px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-center mb-4">
+          Qué entendemos por arquitectura tecnológica
+        </h2>
+        <p class="text-gray-400 text-center max-w-2xl mx-auto mb-12 leading-relaxed">
+          No es un diagrama bonito ni un documento de cien páginas. Son cuatro capas que tienen que
+          sostenerse entre sí, y las decisiones que las mantienen coherentes cuando el negocio cambia.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {capas.map((capa) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 hover:border-orange-500/30 transition-all duration-300">
+              <span class="block text-orange-500 font-bold text-sm mb-4 tabular-nums">{capa.num}</span>
+              <h3 class="text-lg font-semibold mb-3">{capa.title}</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">{capa.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Método: los tres pasos salen de src/data/servicios.ts, no de aquí -->
+    <div id="metodo" class="scroll-mt-32">
+      <PilarArquitectura current="hub" locale={locale} />
+    </div>
+
+    <!-- Decisiones -->
+    <section class="px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-center mb-4">
+          Las preguntas que una arquitectura tiene que dejar respondidas
+        </h2>
+        <p class="text-gray-400 text-center max-w-2xl mx-auto mb-12 leading-relaxed">
+          Si alguna de estas lleva meses sin respuesta clara, el problema no es de herramientas.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {decisiones.map((d) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-5">
+              <p class="text-gray-200 text-sm md:text-base">{d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Relación con los otros dos pilares -->
+    <section class="px-4 py-16">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-8">
+          <h2 class="text-2xl font-medium tracking-tight mb-4">Arquitectura e integración</h2>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">
+            La arquitectura decide cómo debería funcionar el ecosistema: qué manda sobre qué, qué
+            se conecta y qué se retira. La integración es el trabajo de construir esas conexiones
+            —ERP, CRM, TPV, e-commerce, WhatsApp— y ponerlas en producción. Una sin la otra
+            produce o un plan que nadie ejecuta, o conexiones que nadie sabe por qué existen.
+          </p>
+          <a href={integracionHref} class="inline-flex items-center gap-2 text-orange-400 font-medium text-sm hover:underline">
+            Ver integración de sistemas →
+          </a>
+        </div>
+
+        <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-8">
+          <h2 class="text-2xl font-medium tracking-tight mb-4">Arquitectura y cumplimiento</h2>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">
+            Una obligación normativa nueva rara vez se resuelve con una casilla de configuración:
+            Verifactu toca cómo se emiten y se encadenan los registros de facturación, y la Ley
+            10/2025 toca cómo se enruta y se registra la atención al cliente. Las dos acaban siendo
+            decisiones de arquitectura sobre sistemas que ya estaban en marcha.
+          </p>
+          <a href={cumplimientoHref} class="inline-flex items-center gap-2 text-orange-400 font-medium text-sm hover:underline">
+            Ver cumplimiento normativo →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prueba contextual: sale de `provesFor` en src/data/projects.ts -->
+    <RelatedCases path="arquitectura-tecnologica/" locale={locale} />
+
+    <!-- CTA final -->
+    <section class="px-4 py-20">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight mb-6">
+          Si tu stack ha crecido herramienta a herramienta, hay una conversación que ahorra años
+        </h2>
+        <p class="text-gray-400 mb-10 leading-relaxed">
+          En 30 minutos podemos situar dónde está el desorden que más cuesta y qué se puede
+          ordenar primero: qué mantener, qué conectar y qué cambiar.
+        </p>
+        <a
+          href={contactHref}
+          class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+        >
+          Analizar nuestra arquitectura ↗
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

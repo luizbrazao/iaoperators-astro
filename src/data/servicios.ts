@@ -216,6 +216,14 @@ export const SERVICES: ServiceDefinition[] = [
  */
 export const ARQUITECTURA_KEYS = ["audit", "roadmap", "implementation"] as const;
 
+/**
+ * Hub del pilar (fase 2). ES-only: la página existe solo en español, así que
+ * quien lo enlace debe condicionar por locale. Constante única para que el
+ * menú, la home, el footer y el bloque de los tres pasos no la escriban cada
+ * uno por su cuenta.
+ */
+export const ARQUITECTURA_HUB_HREF = "/es/arquitectura-tecnologica/";
+
 export const ARQUITECTURA_PROMESAS: Record<
   (typeof ARQUITECTURA_KEYS)[number],
   Record<Loc, string>

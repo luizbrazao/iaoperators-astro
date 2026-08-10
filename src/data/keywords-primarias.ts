@@ -253,6 +253,23 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     estimada: true,
   },
   {
+    // Hub del pilar (fase 2). Frontera declarada con sus tres hijas: aquí la
+    // disciplina —cómo debe estar organizada la tecnología—, allí el servicio
+    // concreto de cada paso. Si esta página empieza a competir por
+    // "auditoría informática" habrá que reescribirla, no redirigirla.
+    path: "arquitectura-tecnologica/",
+    locales: ["es"],
+    silo: "integracion",
+    primaria: "arquitectura tecnológica",
+    secundarias: [
+      "arquitectura de sistemas empresariales",
+      "arquitectura tecnológica empresarial",
+      "arquitectura de integración",
+    ],
+    faixa: "b",
+    estimada: true,
+  },
+  {
     path: "auditoria-de-sistemas/",
     locales: ["es", "en", "pt"],
     silo: "integracion",

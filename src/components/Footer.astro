@@ -1,7 +1,14 @@
 ---
 import { getLocale, ui } from "../i18n/ui";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
-import { getServiceGroups, getArquitectura, SERVICE_HUB_PATH, hubCtaLabel } from "@/data/servicios";
+import {
+  getServiceGroups,
+  getArquitectura,
+  ARQUITECTURA_TITLE,
+  ARQUITECTURA_HUB_HREF,
+  SERVICE_HUB_PATH,
+  hubCtaLabel,
+} from "@/data/servicios";
 import { getPilaresEs } from "@/data/navegacion";
 
 type Props = { languageLinks?: Array<{ locale: string; href: string }> };
@@ -63,6 +70,7 @@ const columnasEs = isEs
         items: [
           { label: "Integración de sistemas", href: "/es/integracion/" },
           { label: "Cumplimiento tecnológico", href: "/es/cumplimiento/" },
+          { label: ARQUITECTURA_TITLE.es, href: ARQUITECTURA_HUB_HREF },
           ...arquitecturaPasos.map((paso) => ({ label: paso.label, href: paso.href })),
         ],
       },
