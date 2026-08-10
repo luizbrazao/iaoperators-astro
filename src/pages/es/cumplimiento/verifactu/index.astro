@@ -127,10 +127,10 @@ const faqJsonLd = {
             Auditoría de tu sistema ↗
           </a>
           <a
-            href="#casos"
+            href={`${base}test/`}
             class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-base hover:bg-orange-500/10 transition-all duration-300"
           >
-            Ver mi caso ↓
+            ¿Te aplica? Test de 2 min ↗
           </a>
         </div>
       </div>
@@ -380,6 +380,61 @@ const faqJsonLd = {
               <p class="text-gray-400 mt-3 leading-relaxed">{item.a}</p>
             </details>
           ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROFUNDIZAR: clúster de artículos -->
+    <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-3 text-center">Los tres puntos donde se atascan los proyectos</h2>
+        <p class="text-gray-400 text-center max-w-2xl mx-auto mb-12 leading-relaxed">
+          No es el envío a la AEAT. Son estas tres decisiones, y conviene tomarlas antes de
+          escribir código.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <a
+            href="/es/blog/series-y-cadena-de-huellas-verifactu/"
+            class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 hover:border-orange-500/30 transition-all duration-300"
+          >
+            <span class="text-xs text-orange-400 font-medium">Arquitectura</span>
+            <h3 class="text-white font-semibold mt-2 mb-2 leading-snug">
+              Cómo conviven las series con una única cadena de huellas
+            </h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Qué cambia cuando facturas desde varias cajas o tiendas a la vez, y cuántos
+              sistemas de facturación tiene realmente tu operación.
+            </p>
+            <span class="inline-block text-orange-400 text-sm mt-4 group-hover:translate-x-1 transition-transform">Leer →</span>
+          </a>
+          <a
+            href="/es/blog/qr-verifactu-ticket-termico-tpv/"
+            class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 hover:border-orange-500/30 transition-all duration-300"
+          >
+            <span class="text-xs text-orange-400 font-medium">Impresión</span>
+            <h3 class="text-white font-semibold mt-2 mb-2 leading-snug">
+              Por qué el ticket de 58 mm rompe la implementación del QR
+            </h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              La norma pide entre 30 y 40 milímetros y el rollo deja 48 imprimibles. La
+              aritmética de módulos que hay que hacer antes de comprar nada.
+            </p>
+            <span class="inline-block text-orange-400 text-sm mt-4 group-hover:translate-x-1 transition-transform">Leer →</span>
+          </a>
+          <a
+            href="/es/blog/anulaciones-y-rectificativas-verifactu/"
+            class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 hover:border-orange-500/30 transition-all duration-300"
+          >
+            <span class="text-xs text-orange-400 font-medium">Casuística</span>
+            <h3 class="text-white font-semibold mt-2 mb-2 leading-snug">
+              Anular no es borrar y rectificar no es editar
+            </h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Los dos caminos que la mayoría de sistemas resuelve con un solo botón, y lo que
+              eso obliga a rehacer en el modelo de datos.
+            </p>
+            <span class="inline-block text-orange-400 text-sm mt-4 group-hover:translate-x-1 transition-transform">Leer →</span>
+          </a>
         </div>
       </div>
     </section>
