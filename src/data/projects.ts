@@ -60,6 +60,16 @@ export type Project = {
     serviceAudienceKey?: string;
     serviceAreas?: string[];
 
+    /**
+     * Clave dentro de `src/data/web-vitals.json`. Si está presente, la ficha
+     * renderiza el bloque de rendimiento medido (`WebVitalsCard.astro`).
+     *
+     * El dato lo produce `scripts/measure-psi.mjs` contra la API de PageSpeed
+     * Insights de Google: no se escribe a mano y no es una captura de pantalla,
+     * así que se puede refrescar con un comando y auditar por fecha.
+     */
+    webVitalsKey?: string;
+
     problemKey: string;
     contextKey?: string;
     engineeringIntroKey: string;
@@ -71,6 +81,12 @@ export type Project = {
     howItWorksKeys: string[];
     pillars: ProjectPillar[];
     securityKeys: string[];
+    /**
+     * Chips técnicos que acompañan al bloque de seguridad. Por defecto la ficha
+     * añade "AES-GCM / RLS", que es cierto en los proyectos de SaaS pero no en
+     * los de web: pasar `[]` lo desactiva en vez de afirmar algo que no se hizo.
+     */
+    securityStack?: string[];
     metrics?: ProjectMetric[];
     testimonial?: ProjectTestimonial;
     forWho?: ProjectForWho;
@@ -527,6 +543,144 @@ export const projects: Project[] = [
             {
                 label: "Voltar ao portfolio",
                 labelKey: "projects:tourBooking.links.3.label",
+                href: "/portfolio",
+            },
+        ],
+    },
+
+    // =========================
+    // Propiziare Immigra — web trilingüe + SEO técnico
+    // =========================
+    // Las cifras de rendimiento NO están aquí: viven en web-vitals.json, medidas
+    // con la API de PageSpeed Insights. `webVitalsKey` es el único vínculo.
+    {
+        id: 4,
+        slugs: {
+            es: "propiziare-immigra-web-seo",
+            en: "propiziare-immigra-web-seo",
+            pt: "propiziare-immigra-web-seo",
+        },
+        publishedAt: "2026-08-10",
+
+        category: "Web + SEO técnico / Asesoría de inmigración",
+        categoryKey: "projects:propiziare.category",
+
+        // TODO(Luiz): sustituir por una captura propia subida a S3. Ahora mismo
+        // apunta a la og:image del cliente, que puede cambiar sin avisarnos.
+        heroImage: "https://propiziareimmigra.com/img/og.jpg",
+
+        gallery: [
+            {
+                src: "https://propiziareimmigra.com/img/og.jpg",
+                altKey: "projects:propiziare.gallery.heroAlt",
+            },
+        ],
+
+        seoTitleKey: "projects:propiziare.seoTitle",
+        titleKey: "projects:propiziare.title",
+        h1Key: "projects:propiziare.h1",
+        subtitleKey: "projects:propiziare.subtitle",
+        taglineKey: "projects:propiziare.tagline",
+        signalKey: "projects:propiziare.signal",
+
+        relatedServiceKey: "projects:propiziare.relatedService",
+        relatedServiceHref: "/servicios/agencia-seo/",
+
+        problemKey: "projects:propiziare.problem",
+        contextKey: "projects:propiziare.context",
+        engineeringIntroKey: "projects:propiziare.engineeringIntro",
+        impactKey: "projects:propiziare.impact",
+
+        webVitalsKey: "propiziaReimmigra",
+
+        whatItDoesKeys: [
+            "projects:propiziare.whatItDoes.0",
+            "projects:propiziare.whatItDoes.1",
+            "projects:propiziare.whatItDoes.2",
+            "projects:propiziare.whatItDoes.3",
+            "projects:propiziare.whatItDoes.4",
+        ],
+
+        howItWorksKeys: [
+            "projects:propiziare.howItWorks.0",
+            "projects:propiziare.howItWorks.1",
+            "projects:propiziare.howItWorks.2",
+            "projects:propiziare.howItWorks.3",
+            "projects:propiziare.howItWorks.4",
+        ],
+
+        pillars: [
+            {
+                titleKey: "projects:propiziare.pillars.trilingual.title",
+                descriptionKey: "projects:propiziare.pillars.trilingual.description",
+                bulletsKeys: [
+                    "projects:propiziare.pillars.trilingual.bullets.0",
+                    "projects:propiziare.pillars.trilingual.bullets.1",
+                    "projects:propiziare.pillars.trilingual.bullets.2",
+                ],
+            },
+            {
+                titleKey: "projects:propiziare.pillars.noThirdParty.title",
+                descriptionKey: "projects:propiziare.pillars.noThirdParty.description",
+                bulletsKeys: [
+                    "projects:propiziare.pillars.noThirdParty.bullets.0",
+                    "projects:propiziare.pillars.noThirdParty.bullets.1",
+                    "projects:propiziare.pillars.noThirdParty.bullets.2",
+                ],
+            },
+            {
+                titleKey: "projects:propiziare.pillars.entity.title",
+                descriptionKey: "projects:propiziare.pillars.entity.description",
+                bulletsKeys: [
+                    "projects:propiziare.pillars.entity.bullets.0",
+                    "projects:propiziare.pillars.entity.bullets.1",
+                ],
+            },
+        ],
+
+        securityKeys: [
+            "projects:propiziare.security.0",
+            "projects:propiziare.security.1",
+            "projects:propiziare.security.2",
+        ],
+
+        // Aquí no hubo cifrado ni RLS: no se firma lo que no se hizo.
+        securityStack: [],
+
+        metrics: [
+            {
+                labelKey: "projects:propiziare.metrics.0.label",
+                value: "100",
+                noteKey: "projects:propiziare.metrics.0.note",
+            },
+            {
+                labelKey: "projects:propiziare.metrics.1.label",
+                value: "0",
+                noteKey: "projects:propiziare.metrics.1.note",
+            },
+            {
+                labelKey: "projects:propiziare.metrics.2.label",
+                value: "3",
+                noteKey: "projects:propiziare.metrics.2.note",
+            },
+        ],
+
+        faq: [
+            { qKey: "projects:propiziare.faq.0.q", aKey: "projects:propiziare.faq.0.a" },
+            { qKey: "projects:propiziare.faq.1.q", aKey: "projects:propiziare.faq.1.a" },
+            { qKey: "projects:propiziare.faq.2.q", aKey: "projects:propiziare.faq.2.a" },
+        ],
+
+        links: [
+            {
+                label: "Ver sitio en producción",
+                labelKey: "projects:propiziare.links.0.label",
+                href: "https://propiziareimmigra.com/",
+                external: true,
+            },
+            {
+                label: "Volver al portfolio",
+                labelKey: "projects:propiziare.links.1.label",
                 href: "/portfolio",
             },
         ],

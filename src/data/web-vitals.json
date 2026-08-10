@@ -1,0 +1,95 @@
+{
+  "$comment": "Generado por scripts/measure-psi.mjs. No editar a mano.",
+  "measuredAt": "2026-08-10",
+  "source": "PageSpeed Insights API v5",
+  "lighthouseVersion": "13.4.1",
+  "methodology": {
+    "medianOf": {
+      "mobile": 5,
+      "desktop": 3
+    },
+    "note": "Datos de laboratorio. Performance es la mediana de N ejecuciones; el resto de categorías son deterministas."
+  },
+  "targets": {
+    "propiziaReimmigra": {
+      "url": "https://propiziareimmigra.com/",
+      "measuredAt": "2026-08-10",
+      "mobile": {
+        "scores": {
+          "performance": 97,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "lab": {
+          "lcpMs": 1876,
+          "fcpMs": 1501,
+          "tbtMs": 0,
+          "cls": 0,
+          "siMs": 4022
+        },
+        "field": null,
+        "runs": 5,
+        "finalUrl": "https://propiziareimmigra.com/"
+      },
+      "desktop": {
+        "scores": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "lab": {
+          "lcpMs": 462,
+          "fcpMs": 246,
+          "tbtMs": 0,
+          "cls": 0.007,
+          "siMs": 309
+        },
+        "field": null,
+        "runs": 3,
+        "finalUrl": "https://propiziareimmigra.com/"
+      }
+    },
+    "sundayCampers": {
+      "url": "https://sundaycampers.es/",
+      "measuredAt": "2026-08-10",
+      "mobile": {
+        "scores": {
+          "performance": 81,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "lab": {
+          "lcpMs": 4910,
+          "fcpMs": 1374,
+          "tbtMs": 103,
+          "cls": 0,
+          "siMs": 2863
+        },
+        "field": null,
+        "runs": 5,
+        "finalUrl": "https://sundaycampers.es/es"
+      },
+      "desktop": {
+        "scores": {
+          "performance": 97,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "lab": {
+          "lcpMs": 1197,
+          "fcpMs": 394,
+          "tbtMs": 81,
+          "cls": 0,
+          "siMs": 1015
+        },
+        "field": null,
+        "runs": 3,
+        "finalUrl": "https://sundaycampers.es/es"
+      }
+    }
+  }
+}

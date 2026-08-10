@@ -350,5 +350,105 @@
                 "label": "Voltar ao portfolio"
             }
         ]
+    },
+    "propiziare": {
+        "seoTitle": "Propiziare Immigra — site trilíngue e SEO técnico | IA Operators",
+        "title": "Propiziare Immigra — site trilíngue para assessoria de imigração",
+        "h1": "Site trilíngue e SEO técnico para uma assessoria de imigração",
+        "subtitle": "Vistos e residência na Espanha · pt-BR · es · en",
+        "tagline": "Site de captação para uma consultoria de vistos cujo público pesquisa do Brasil, no celular e com conexão irregular. Sem uma única tag de terceiros travando o primeiro render.",
+        "category": "Web + SEO técnico / Assessoria de imigração",
+        "signal": "Em produção",
+        "relatedService": "Ver o serviço de SEO técnico",
+        "gallery": {
+            "heroAlt": "Propiziare Immigra — assessoria de vistos e residência na Espanha"
+        },
+        "problem": "Uma assessoria de imigração disputa SERPs lotadas de fazendas de conteúdo, fóruns e escritórios com vinte anos de domínio. O visitante chega num momento de decisão alta, mudar de país, e vem do celular, muitas vezes com dados móveis brasileiros. Cada segundo de espera antes do primeiro conteúdo é uma consulta que vai para outra aba. E o setor carrega um problema de confiança: quem busca «visto de nômade digital Espanha» já viu meia dúzia de páginas prometendo o mesmo sem dizer quem responde.",
+        "context": "O público é trilíngue de verdade, não por cortesia: brasileiros pesquisando em português, residentes que já estão na Espanha e comparam em espanhol, e perfis internacionais que chegam em inglês. Isso transforma o hreflang em infraestrutura, não em enfeite de rodapé.",
+        "engineeringIntro": "O site foi construído com uma regra dura: nada de terceiros no caminho crítico. Sem gerenciador de tags, sem widget de chat embutido, sem fontes remotas bloqueantes. A captação vai para o WhatsApp por link direto em vez de SDK, e a analytics não é paga com o tempo de carregamento do visitante. O resto é disciplina conhecida: estático servido de CDN, compressão brotli, imagens em formatos modernos com carregamento adiado abaixo da dobra, e uma única versão canônica por idioma com hreflang recíproco.",
+        "impact": "O resultado é um site que renderiza o conteúdo principal antes dos dois segundos em celular simulado e não desloca nada enquanto carrega. As três categorias não cronometradas do Lighthouse, acessibilidade, boas práticas e SEO, estão em 100 tanto no celular quanto no desktop. Os números concretos, com data e método, estão logo abaixo.",
+        "whatItDoes": [
+            "Explica cada via de entrada: estudante, nômade digital, trabalho, não lucrativa, reagrupamento e arraigo",
+            "Capta consultas qualificadas com formulário de pré-consulta e saída direta para WhatsApp",
+            "Serve três idiomas com hreflang recíproco e uma canônica por versão",
+            "Marca a entidade com schema de organização e da pessoa que assessora",
+            "Publica conteúdo de apoio sobre morar na Espanha depois da aprovação"
+        ],
+        "howItWorks": [
+            "Arquitetura de conteúdo por intenção: uma página por via de visto, não uma página genérica de serviços",
+            "Renderização estática servida de CDN, com brotli e cabeçalhos de cache",
+            "Zero JavaScript de terceiros no caminho crítico: o bloqueio da thread principal fica plano",
+            "Imagens em formatos modernos, com carregamento adiado só abaixo da dobra",
+            "hreflang pt-BR / es / en mais x-default, recíproco nas três direções"
+        ],
+        "pillars": {
+            "trilingual": {
+                "title": "Trilíngue de verdade, não traduzido por cima",
+                "description": "Três versões com canônica própria e hreflang recíproco. Sem isso, o Google escolhe sozinho qual versão mostra a um brasileiro, e costuma errar.",
+                "bullets": [
+                    "pt-BR, es e en, mais x-default",
+                    "Uma canônica por idioma, sem versões órfãs",
+                    "Conteúdo adaptado ao leitor, não tradução literal do espanhol"
+                ]
+            },
+            "noThirdParty": {
+                "title": "Zero terceiros no caminho crítico",
+                "description": "A decisão de engenharia mais rentável do projeto. Um gerenciador de tags típico custa entre 150 e 270 kB de JavaScript que o visitante baixa antes de ler qualquer coisa.",
+                "bullets": [
+                    "Sem gerenciador de tags nem SDK de chat embutido",
+                    "Captação por link direto de WhatsApp, não por widget",
+                    "Bloqueio da thread principal plano no desktop e mínimo no celular"
+                ]
+            },
+            "entity": {
+                "title": "Entidade marcada, não só páginas",
+                "description": "Num setor onde o buscador pondera quem assina o conselho, declarar a organização e a pessoa que assessora faz parte do trabalho de SEO, não é extra.",
+                "bullets": [
+                    "Schema de organização e de pessoa ligados entre si",
+                    "Sinais de autoria coerentes nas três versões de idioma"
+                ]
+            }
+        },
+        "security": [
+            "O formulário de pré-consulta coleta o mínimo necessário para retornar o contato: nome, contato e via de interesse.",
+            "A conversa segue no WhatsApp, fora do site, sem armazenar histórico de consulta no front.",
+            "Sem tags de terceiros significa também sem coleta silenciosa por scripts que não controlamos."
+        ],
+        "metrics": [
+            {
+                "label": "SEO no Lighthouse",
+                "note": "No celular e no desktop"
+            },
+            {
+                "label": "Scripts de terceiros",
+                "note": "Nenhum no caminho crítico"
+            },
+            {
+                "label": "Idiomas com hreflang",
+                "note": "pt-BR, es e en, recíprocos"
+            }
+        ],
+        "faq": [
+            {
+                "q": "Por que abrir mão do Google Tag Manager?",
+                "a": "Porque o custo dele não é zero e quem paga é o visitante. Em sites comparáveis medimos entre 150 e 270 kB de JavaScript só do contêiner de tags, com cerca de metade nunca executada. Num público que chega com dados móveis, isso vira segundos antes do primeiro conteúdo. Quando o cliente precisar de medição, dá para acrescentar analytics leve do lado do servidor sem devolver esse peso ao navegador."
+            },
+            {
+                "q": "O hreflang não se resolve sozinho com o seletor de idioma?",
+                "a": "Não. O seletor é navegação para pessoas; o hreflang é uma declaração para o buscador de qual versão corresponde a qual audiência, e precisa ser recíproco: cada versão lista a si mesma e a todas as equivalentes. Sem reciprocidade, o Google ignora o conjunto e decide sozinho."
+            },
+            {
+                "q": "Essas pontuações se mantêm com o tempo?",
+                "a": "Não automaticamente. Elas se degradam assim que alguém adiciona um widget, uma fonte remota ou uma tag de campanha. Por isso publicamos a data da medição e o método junto do número, e voltamos a medir em vez de guardar uma captura de tela."
+            }
+        ],
+        "links": [
+            {
+                "label": "Ver o site em produção"
+            },
+            {
+                "label": "Voltar ao portfolio"
+            }
+        ]
     }
 }

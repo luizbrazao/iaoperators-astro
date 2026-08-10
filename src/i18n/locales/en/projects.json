@@ -350,5 +350,105 @@
                 "label": "Back to portfolio"
             }
         ]
+    },
+    "propiziare": {
+        "seoTitle": "Propiziare Immigra — trilingual site and technical SEO | IA Operators",
+        "title": "Propiziare Immigra — trilingual site for an immigration advisory",
+        "h1": "Trilingual site and technical SEO for an immigration advisory",
+        "subtitle": "Spanish visas and residency · pt-BR · es · en",
+        "tagline": "A lead-capture site for a visa consultancy whose audience researches from Brazil, on mobile, on unreliable connections. Not a single third-party tag blocking first render.",
+        "category": "Web + technical SEO / Immigration advisory",
+        "signal": "In production",
+        "relatedService": "See the technical SEO service",
+        "gallery": {
+            "heroAlt": "Propiziare Immigra — Spanish visa and residency advisory"
+        },
+        "problem": "An immigration advisory competes in SERPs crowded with content farms, forums and law firms holding twenty-year-old domains. The visitor arrives at a high-stakes moment, moving country, and arrives on mobile, often on Brazilian mobile data. Every second before the first content is a consultation that leaves for another tab. The sector also carries a trust problem: someone searching for a Spanish digital nomad visa has already seen half a dozen pages promising the same thing without saying who answers.",
+        "context": "The audience is genuinely trilingual, not trilingual out of politeness: Brazilians researching in Portuguese, residents already in Spain comparing in Spanish, and international profiles arriving in English. That makes hreflang infrastructure rather than a footer ornament.",
+        "engineeringIntro": "The site was built on one hard rule: no third parties in the critical path. No tag manager, no embedded chat widget, no blocking remote fonts. Lead capture goes to WhatsApp through a direct link instead of an SDK, and analytics is not paid for with the visitor's load time. The rest is familiar discipline: static output served from a CDN, brotli compression, modern image formats with deferred loading below the fold, and a single canonical version per language with reciprocal hreflang.",
+        "impact": "The result is a site that renders its main content in under two seconds on simulated mobile and shifts nothing while loading. Lighthouse's three untimed categories — accessibility, best practices and SEO — sit at 100 on both mobile and desktop. The concrete numbers, with their date and method, are below.",
+        "whatItDoes": [
+            "Explains each route in: student, digital nomad, work, non-lucrative, family reunification and arraigo",
+            "Captures qualified enquiries through a pre-consultation form with a direct WhatsApp handoff",
+            "Serves three languages with reciprocal hreflang and one canonical per version",
+            "Marks up the entity with organisation and advisor-person schema",
+            "Publishes supporting content on living in Spain after approval"
+        ],
+        "howItWorks": [
+            "Content architecture by intent: one page per visa route, not a generic services page",
+            "Static rendering served from a CDN, with brotli and cache headers",
+            "Zero third-party JavaScript in the critical path, so main-thread blocking stays flat",
+            "Modern image formats, deferred loading only below the fold",
+            "hreflang pt-BR / es / en plus x-default, reciprocal in all three directions"
+        ],
+        "pillars": {
+            "trilingual": {
+                "title": "Genuinely trilingual, not translated on top",
+                "description": "Three versions with their own canonical and reciprocal hreflang. Without it, Google picks which version a Brazilian sees, and it usually picks wrong.",
+                "bullets": [
+                    "pt-BR, es and en, plus x-default",
+                    "One canonical per language, no orphan versions",
+                    "Content adapted to the reader, not a literal translation of the Spanish"
+                ]
+            },
+            "noThirdParty": {
+                "title": "Zero third parties in the critical path",
+                "description": "The most profitable engineering decision in the project. A typical tag manager costs 150 to 270 kB of JavaScript the visitor downloads before reading anything.",
+                "bullets": [
+                    "No tag manager and no embedded chat SDK",
+                    "Lead capture through a direct WhatsApp link, not a widget",
+                    "Main-thread blocking flat on desktop and minimal on mobile"
+                ]
+            },
+            "entity": {
+                "title": "The entity marked up, not just the pages",
+                "description": "In a sector where the search engine weighs who signs the advice, declaring the organisation and the person advising is part of the SEO work, not an add-on.",
+                "bullets": [
+                    "Organisation and person schema linked to each other",
+                    "Consistent authorship signals across all three language versions"
+                ]
+            }
+        },
+        "security": [
+            "The pre-consultation form collects the minimum needed to call back: name, contact and route of interest.",
+            "The conversation continues on WhatsApp, off the site, with no consultation history stored on the front end.",
+            "No third-party tags also means no silent data collection by scripts we do not control."
+        ],
+        "metrics": [
+            {
+                "label": "Lighthouse SEO",
+                "note": "On mobile and desktop"
+            },
+            {
+                "label": "Third-party scripts",
+                "note": "None in the critical path"
+            },
+            {
+                "label": "Languages with hreflang",
+                "note": "pt-BR, es and en, reciprocal"
+            }
+        ],
+        "faq": [
+            {
+                "q": "Why give up Google Tag Manager?",
+                "a": "Because its cost is not zero and the visitor pays it. On comparable sites we have measured 150 to 270 kB of JavaScript from the tag container alone, with roughly half of it never executing. For an audience arriving on mobile data, that turns into seconds before the first content. When the client needs measurement, lightweight server-side analytics can be added without handing that weight back to the browser."
+            },
+            {
+                "q": "Doesn't the language switcher take care of hreflang?",
+                "a": "No. The switcher is navigation for people; hreflang is a declaration to the search engine about which version belongs to which audience, and it has to be reciprocal: each version lists itself and every equivalent. Without reciprocity Google ignores the set and decides on its own."
+            },
+            {
+                "q": "Do these scores hold over time?",
+                "a": "Not automatically. They degrade the moment someone adds a widget, a remote font or a campaign tag. That is why we publish the measurement date and method next to the number, and re-measure instead of keeping a screenshot."
+            }
+        ],
+        "links": [
+            {
+                "label": "View the live site"
+            },
+            {
+                "label": "Back to portfolio"
+            }
+        ]
     }
 }

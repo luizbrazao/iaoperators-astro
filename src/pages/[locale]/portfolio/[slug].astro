@@ -3,6 +3,7 @@ import { projects } from "../../../data/projects";
 import type { Project, ProjectMetric, ProjectPillar } from "../../../data/projects";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { createT } from "../../../i18n/t";
+import WebVitalsCard from "@/components/WebVitalsCard.astro";
 
 export async function getStaticPaths() {
   const locales = ["es", "pt", "en"] as const;
@@ -28,7 +29,7 @@ const liveLink = project.links?.find((l) => l.external)?.href;
 
 const stackLike = [
   ...project.pillars.map((p: ProjectPillar) => t(p.titleKey)),
-  ...(project.securityKeys?.length ? ["AES-GCM / RLS"] : []),
+  ...(project.securityStack ?? (project.securityKeys?.length ? ["AES-GCM / RLS"] : [])),
 ].slice(0, 8);
 
 const tx = (key: string, fallback: string) => {
@@ -365,6 +366,11 @@ const portfolioSlugJsonLd: any[] = [
               ))}
             </div>
           </section>
+
+          <!-- Rendimiento medido (solo si el proyecto declara webVitalsKey) -->
+          {project.webVitalsKey && (
+            <WebVitalsCard targetKey={project.webVitalsKey} locale={locale} />
+          )}
 
           <!-- Testimonial -->
           {project.testimonial && (

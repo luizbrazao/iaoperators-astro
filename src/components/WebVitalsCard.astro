@@ -1,0 +1,273 @@
+---
+// Bloque de evidencia de rendimiento para las fichas de portfolio.
+//
+// Decisiones de diseño, por si alguien las quiere revisar:
+//
+// 1. No es una captura de pantalla. Una imagen del informe de PSI no dice de
+//    qué día es, con qué versión de Lighthouse se sacó ni cuántas ejecuciones
+//    hay detrás, y no se puede regenerar. Aquí el número sale de
+//    `src/data/web-vitals.json`, que produce `scripts/measure-psi.mjs`.
+// 2. La cifra va en tinta blanca, no en el color de estado. El color vive en el
+//    anillo y se acompaña SIEMPRE de una etiqueta de texto ("Bueno",
+//    "Mejorable", "Deficiente"), para que el estado nunca dependa solo del
+//    color — ni para daltonismo, ni en impresión, ni en `forced-colors`.
+// 3. Los umbrales son los oficiales de Google (ver src/data/web-vitals.ts), no
+//    criterio nuestro.
+// 4. La metodología se declara al pie. Un número sin fecha ni método no es una
+//    prueba, es una afirmación.
+
+import {
+  getWebVitals,
+  scoreBand,
+  metricBand,
+  formatMetric,
+  webVitalsMeta,
+  type Band,
+  type MetricId,
+  type Strategy,
+} from "@/data/web-vitals";
+
+type Props = { targetKey: string; locale: string };
+const { targetKey, locale } = Astro.props as Props;
+
+const data = getWebVitals(targetKey);
+
+// Términos fijos de Lighthouse: viven aquí y no en projects.json porque son
+// nomenclatura del propio informe, no copy de marketing.
+const L = {
+  es: {
+    heading: "Rendimiento medido, no prometido",
+    intro:
+      "Puntuaciones de Lighthouse a través de la API de PageSpeed Insights de Google. Cualquiera puede reproducirlas.",
+    mobile: "Móvil",
+    desktop: "Escritorio",
+    categories: {
+      performance: "Rendimiento",
+      accessibility: "Accesibilidad",
+      "best-practices": "Buenas prácticas",
+      seo: "SEO",
+    },
+    metrics: { lcpMs: "LCP", clsMs: "CLS", tbtMs: "TBT" },
+    metricNotes: {
+      lcpMs: "Largest Contentful Paint",
+      cls: "Cumulative Layout Shift",
+      tbtMs: "Total Blocking Time",
+    },
+    bands: { good: "Bueno", warning: "Mejorable", critical: "Deficiente" },
+    methodology: "Metodología",
+    measuredOn: "Medido el",
+    medianNote: (m: number, d: number) =>
+      `Rendimiento es la mediana de ${m} ejecuciones en móvil y ${d} en escritorio; el resto de categorías son deterministas.`,
+    noField:
+      "Sin datos de campo del CrUX: el sitio aún no acumula tráfico suficiente en el dataset público de Chrome, así que estas son medidas de laboratorio.",
+    verify: "Verificar en PageSpeed Insights",
+  },
+  pt: {
+    heading: "Desempenho medido, não prometido",
+    intro:
+      "Pontuações do Lighthouse via API do PageSpeed Insights do Google. Qualquer pessoa consegue reproduzir.",
+    mobile: "Celular",
+    desktop: "Desktop",
+    categories: {
+      performance: "Desempenho",
+      accessibility: "Acessibilidade",
+      "best-practices": "Boas práticas",
+      seo: "SEO",
+    },
+    metrics: { lcpMs: "LCP", clsMs: "CLS", tbtMs: "TBT" },
+    metricNotes: {
+      lcpMs: "Largest Contentful Paint",
+      cls: "Cumulative Layout Shift",
+      tbtMs: "Total Blocking Time",
+    },
+    bands: { good: "Bom", warning: "A melhorar", critical: "Deficiente" },
+    methodology: "Metodologia",
+    measuredOn: "Medido em",
+    medianNote: (m: number, d: number) =>
+      `Desempenho é a mediana de ${m} execuções em celular e ${d} em desktop; as demais categorias são determinísticas.`,
+    noField:
+      "Sem dados de campo do CrUX: o site ainda não acumula tráfego suficiente no dataset público do Chrome, então estas são medidas de laboratório.",
+    verify: "Verificar no PageSpeed Insights",
+  },
+  en: {
+    heading: "Performance measured, not promised",
+    intro:
+      "Lighthouse scores via Google's PageSpeed Insights API. Anyone can reproduce them.",
+    mobile: "Mobile",
+    desktop: "Desktop",
+    categories: {
+      performance: "Performance",
+      accessibility: "Accessibility",
+      "best-practices": "Best practices",
+      seo: "SEO",
+    },
+    metrics: { lcpMs: "LCP", clsMs: "CLS", tbtMs: "TBT" },
+    metricNotes: {
+      lcpMs: "Largest Contentful Paint",
+      cls: "Cumulative Layout Shift",
+      tbtMs: "Total Blocking Time",
+    },
+    bands: { good: "Good", warning: "Needs work", critical: "Poor" },
+    methodology: "Methodology",
+    measuredOn: "Measured on",
+    medianNote: (m: number, d: number) =>
+      `Performance is the median of ${m} mobile runs and ${d} desktop runs; the other categories are deterministic.`,
+    noField:
+      "No CrUX field data: the site does not yet gather enough traffic in Chrome's public dataset, so these are lab measurements.",
+    verify: "Verify on PageSpeed Insights",
+  },
+} as const;
+
+const tx = (L as any)[locale] ?? L.es;
+
+// Paleta de estado fija, validada contra la superficie oscura de la tarjeta
+// (#0A0A0A) con el validador de la skill de dataviz: las tres superan 3:1.
+// No se tematiza y no se reutiliza para nada que no sea estado.
+const BAND_COLOR: Record<Band, string> = {
+  good: "#0ca30c",
+  warning: "#fab219",
+  critical: "#d03b3b",
+};
+
+const CATEGORY_ORDER = ["performance", "accessibility", "best-practices", "seo"] as const;
+const METRIC_ORDER: { id: MetricId; note: keyof typeof tx.metricNotes }[] = [
+  { id: "lcpMs", note: "lcpMs" },
+  { id: "cls", note: "cls" },
+  { id: "tbtMs", note: "tbtMs" },
+];
+
+const R = 26;
+const CIRC = 2 * Math.PI * R;
+
+const psiUrl = data
+  ? `https://pagespeed.web.dev/analysis?url=${encodeURIComponent(data.url)}`
+  : "#";
+
+const dateFmt = data
+  ? new Intl.DateTimeFormat(locale === "en" ? "en-GB" : locale === "pt" ? "pt-BR" : "es-ES", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }).format(new Date(`${data.measuredAt}T12:00:00Z`))
+  : "";
+---
+
+{data && (
+  <section class="mt-12 bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
+    <h2 class="text-2xl font-bold mb-2 text-white">{tx.heading}</h2>
+    <p class="text-gray-400 text-sm mb-8 max-w-2xl">{tx.intro}</p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      {(["mobile", "desktop"] as Strategy[]).map((strategy) => {
+        const run = data[strategy];
+        return (
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-5">
+              {strategy === "mobile" ? tx.mobile : tx.desktop}
+            </h3>
+
+            <ul class="grid grid-cols-2 sm:grid-cols-4 gap-4 list-none p-0 m-0">
+              {CATEGORY_ORDER.map((cat) => {
+                const score = run.scores[cat];
+                const band = scoreBand(score);
+                const color = BAND_COLOR[band];
+                return (
+                  <li class="flex flex-col items-center text-center">
+                    <svg
+                      width="72"
+                      height="72"
+                      viewBox="0 0 72 72"
+                      role="img"
+                      aria-label={`${tx.categories[cat]}: ${score} de 100 — ${tx.bands[band]}`}
+                    >
+                      <circle cx="36" cy="36" r={R} fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="4" />
+                      <circle
+                        cx="36"
+                        cy="36"
+                        r={R}
+                        fill="none"
+                        stroke={color}
+                        stroke-width="4"
+                        stroke-linecap="round"
+                        stroke-dasharray={`${(CIRC * score) / 100} ${CIRC}`}
+                        transform="rotate(-90 36 36)"
+                      />
+                      <text
+                        x="36"
+                        y="36"
+                        text-anchor="middle"
+                        dominant-baseline="central"
+                        fill="#ffffff"
+                        font-size="20"
+                        font-weight="700"
+                      >
+                        {score}
+                      </text>
+                    </svg>
+                    <span class="mt-2 text-xs font-medium text-white leading-tight">
+                      {tx.categories[cat]}
+                    </span>
+                    <span class="mt-0.5 inline-flex items-center gap-1 text-[11px] text-gray-400">
+                      <span
+                        aria-hidden="true"
+                        class="inline-block h-1.5 w-1.5 rounded-full"
+                        style={`background:${color}`}
+                      ></span>
+                      {tx.bands[band]}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <dl class="mt-6 grid grid-cols-3 gap-3">
+              {METRIC_ORDER.map(({ id, note }) => {
+                const value = id === "cls" ? run.lab.cls : (run.lab as any)[id];
+                const band = metricBand(id, value);
+                return (
+                  <div class="rounded-2xl border border-white/10 px-3 py-3">
+                    <dt class="text-[11px] uppercase tracking-wider text-gray-500">
+                      {id === "cls" ? "CLS" : id === "lcpMs" ? "LCP" : "TBT"}
+                    </dt>
+                    <dd class="mt-1 text-base font-bold text-white tabular-nums">
+                      {formatMetric(id, value, locale)}
+                    </dd>
+                    <dd class="mt-0.5 inline-flex items-center gap-1 text-[11px] text-gray-400">
+                      <span
+                        aria-hidden="true"
+                        class="inline-block h-1.5 w-1.5 rounded-full"
+                        style={`background:${BAND_COLOR[band]}`}
+                      ></span>
+                      {tx.bands[band]}
+                    </dd>
+                    <dd class="sr-only">{tx.metricNotes[note]}</dd>
+                  </div>
+                );
+              })}
+            </dl>
+          </div>
+        );
+      })}
+    </div>
+
+    <footer class="mt-8 pt-6 border-t border-white/10 text-xs text-gray-500 space-y-1">
+      <p>
+        <span class="text-gray-400 font-medium">{tx.methodology}:</span>{" "}
+        {webVitalsMeta.source} · Lighthouse {webVitalsMeta.lighthouseVersion} · {tx.measuredOn}{" "}
+        <time datetime={data.measuredAt}>{dateFmt}</time>.
+      </p>
+      <p>{tx.medianNote(webVitalsMeta.medianOf.mobile, webVitalsMeta.medianOf.desktop)}</p>
+      {!data.mobile.field && <p>{tx.noField}</p>}
+      <p>
+        <a
+          href={psiUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-orange-400 hover:underline"
+        >
+          {tx.verify} ↗
+        </a>
+      </p>
+    </footer>
+  </section>
+)}

@@ -350,5 +350,105 @@
                 "label": "Volver al portfolio"
             }
         ]
+    },
+    "propiziare": {
+        "seoTitle": "Propiziare Immigra — web trilingüe y SEO técnico | IA Operators",
+        "title": "Propiziare Immigra — web trilingüe para asesoría de inmigración",
+        "h1": "Web trilingüe y SEO técnico para una asesoría de inmigración",
+        "subtitle": "Visados y residencia en España · pt-BR · es · en",
+        "tagline": "Sitio de captación para una consultoría de visados cuyo público investiga desde Brasil, en móvil y con conexión irregular. Sin una sola etiqueta de terceros bloqueando el primer render.",
+        "category": "Web + SEO técnico / Asesoría de inmigración",
+        "signal": "En producción",
+        "relatedService": "Ver el servicio de SEO técnico",
+        "gallery": {
+            "heroAlt": "Propiziare Immigra — asesoría de visados y residencia en España"
+        },
+        "problem": "Una asesoría de inmigración compite en SERPs saturadas de granjas de contenido, foros y despachos con veinte años de dominio. El visitante llega en un momento de decisión alta —mudar de país— y desde el móvil, muchas veces con datos móviles brasileños. Cada segundo de espera antes del primer contenido es una consulta que se va a otra pestaña. Y el sector arrastra un problema de confianza: quien busca «visto de nômade digital Espanha» ha visto ya media docena de páginas que prometen lo mismo sin decir quién responde.",
+        "context": "El público es trilingüe de verdad, no por cortesía: brasileños que investigan en portugués, residentes que ya están en España y comparan en español, y perfiles internacionales que llegan en inglés. Eso convierte el hreflang en infraestructura, no en un adorno del pie de página.",
+        "engineeringIntro": "El sitio se construyó con una regla dura: nada de terceros en la ruta crítica. Sin gestor de etiquetas, sin widgets de chat embebidos, sin fuentes remotas bloqueantes. La captación va a WhatsApp con un enlace directo en vez de un SDK, y la analítica no se paga con el tiempo de carga del visitante. El resto es disciplina conocida: estático servido desde CDN, compresión brotli, imágenes en formatos modernos con carga diferida por debajo del pliegue, y una única versión canónica por idioma con hreflang recíproco.",
+        "impact": "El resultado es un sitio que renderiza el contenido principal antes de los dos segundos en móvil simulado y no mueve nada de sitio mientras carga. Las tres categorías no cronometradas de Lighthouse —accesibilidad, buenas prácticas y SEO— están en 100 tanto en móvil como en escritorio. Los números concretos, con su fecha y su método, están más abajo.",
+        "whatItDoes": [
+            "Explica cada vía de entrada: estudiante, nómada digital, trabajo, no lucrativa, reagrupación y arraigo",
+            "Capta consultas cualificadas con un formulario de pre-consulta y salida directa a WhatsApp",
+            "Sirve tres idiomas con hreflang recíproco y una canónica por versión",
+            "Marca la entidad con schema de organización y de la persona que asesora",
+            "Publica contenido de apoyo sobre vivir en España después de la aprobación"
+        ],
+        "howItWorks": [
+            "Arquitectura de contenido por intención: una página por vía de visado, no una página genérica de servicios",
+            "Renderizado estático servido desde CDN, con brotli y cabeceras de caché",
+            "Cero JavaScript de terceros en la ruta crítica: el bloqueo del hilo principal se mantiene plano",
+            "Imágenes en formatos modernos, con carga diferida solo por debajo del pliegue",
+            "hreflang pt-BR / es / en más x-default, recíproco en las tres direcciones"
+        ],
+        "pillars": {
+            "trilingual": {
+                "title": "Trilingüe de verdad, no traducido por encima",
+                "description": "Tres versiones con su propia canónica y hreflang recíproco. Sin eso, Google elige por su cuenta qué versión enseña a un brasileño y suele equivocarse.",
+                "bullets": [
+                    "pt-BR, es y en, más x-default",
+                    "Una canónica por idioma, sin versiones huérfanas",
+                    "Contenido adaptado al lector, no traducción literal del español"
+                ]
+            },
+            "noThirdParty": {
+                "title": "Cero terceros en la ruta crítica",
+                "description": "La decisión de ingeniería más rentable del proyecto. Un gestor de etiquetas típico cuesta entre 150 y 270 kB de JavaScript que el visitante descarga antes de leer nada.",
+                "bullets": [
+                    "Sin gestor de etiquetas ni SDK de chat embebido",
+                    "Captación por enlace directo a WhatsApp, no por widget",
+                    "Bloqueo del hilo principal plano en escritorio y mínimo en móvil"
+                ]
+            },
+            "entity": {
+                "title": "Entidad marcada, no solo páginas",
+                "description": "En un sector donde el buscador pondera quién firma el consejo, declarar la organización y la persona que asesora es parte del trabajo de SEO, no un extra.",
+                "bullets": [
+                    "Schema de organización y de persona enlazados entre sí",
+                    "Señales de autoría coherentes en las tres versiones de idioma"
+                ]
+            }
+        },
+        "security": [
+            "El formulario de pre-consulta recoge el mínimo necesario para devolver la llamada: nombre, contacto y vía de interés.",
+            "La conversación continúa en WhatsApp, fuera del sitio, sin almacenar historial de consulta en el front.",
+            "Sin etiquetas de terceros significa también sin recogida silenciosa de datos por scripts que no controlamos."
+        ],
+        "metrics": [
+            {
+                "label": "SEO en Lighthouse",
+                "note": "En móvil y en escritorio"
+            },
+            {
+                "label": "Scripts de terceros",
+                "note": "Ninguno en la ruta crítica"
+            },
+            {
+                "label": "Idiomas con hreflang",
+                "note": "pt-BR, es y en, recíprocos"
+            }
+        ],
+        "faq": [
+            {
+                "q": "¿Por qué renunciar a Google Tag Manager?",
+                "a": "Porque su coste no es cero y lo paga el visitante. En sitios comparables hemos medido entre 150 y 270 kB de JavaScript solo del contenedor de etiquetas, con cerca de la mitad sin ejecutarse nunca. En un público que llega con datos móviles, eso se traduce en segundos antes del primer contenido. Cuando el cliente necesite medición, se puede añadir analítica ligera del lado del servidor sin devolver ese peso al navegador."
+            },
+            {
+                "q": "¿El hreflang no se resuelve solo con el selector de idioma?",
+                "a": "No. El selector es navegación para personas; el hreflang es una declaración para el buscador de qué versión corresponde a qué audiencia, y tiene que ser recíproco: cada versión se lista a sí misma y a todas las equivalentes. Sin reciprocidad, Google ignora el conjunto y decide por su cuenta."
+            },
+            {
+                "q": "¿Estas puntuaciones se mantienen con el tiempo?",
+                "a": "No automáticamente. Se degradan en cuanto alguien añade un widget, una fuente remota o una etiqueta de campaña. Por eso publicamos la fecha de medición y el método junto al número, y volvemos a medir en lugar de guardar una captura de pantalla."
+            }
+        ],
+        "links": [
+            {
+                "label": "Ver el sitio en producción"
+            },
+            {
+                "label": "Volver al portfolio"
+            }
+        ]
     }
 }
