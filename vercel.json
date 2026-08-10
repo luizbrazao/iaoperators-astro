@@ -4,6 +4,16 @@
       "source": "/blog/:slug+",
       "destination": "/es/blog/:slug+",
       "permanent": true
+    },
+    {
+      "source": "/:locale(es|en|pt)/roadmap",
+      "destination": "/roadmap-datadicoco/",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(es|en|pt)/roadmap/",
+      "destination": "/roadmap-datadicoco/",
+      "permanent": true
     }
   ],
   "headers": [
