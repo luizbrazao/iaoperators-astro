@@ -542,6 +542,11 @@ export const CASOS: Record<CasoSlug, CasoIntegracion> = {
         label: "Roadmap tecnológico",
         body: "Para ordenar qué sale primero del sistema antiguo y con qué criterio.",
       },
+      {
+        href: "/es/blog/modernizar-sistema-legado-sin-reescribir/",
+        label: "Por dónde se empieza",
+        body: "Las siete opciones clásicas, las tres que se usan, y cómo se recuperan las reglas que solo viven en el código viejo.",
+      },
     ],
     faq: [
       {
