@@ -14,6 +14,36 @@
       "source": "/:locale(es|en|pt)/roadmap/",
       "destination": "/roadmap-datadicoco/",
       "permanent": true
+    },
+    {
+      "source": "/en/portfolio/radiografia-cadena-hotelera-menorca/",
+      "destination": "/en/portfolio/hotel-chain-digital-audit-menorca/",
+      "permanent": true
+    },
+    {
+      "source": "/pt/portfolio/radiografia-cadena-hotelera-menorca/",
+      "destination": "/pt/portfolio/radiografia-rede-hoteleira-menorca/",
+      "permanent": true
+    },
+    {
+      "source": "/en/portfolio/chatbot-reservas-turisticas-whatsapp/",
+      "destination": "/en/portfolio/tourism-booking-chatbot-whatsapp/",
+      "permanent": true
+    },
+    {
+      "source": "/es/blog/ia-local-privada-sem-mensalidade-qwen-pc/",
+      "destination": "/es/blog/ia-local-privada-sin-mensualidad-qwen-pc/",
+      "permanent": true
+    },
+    {
+      "source": "/pt/blog/ia-local-privada-sem-mensalidade-qwen-pc/",
+      "destination": "/pt/blog/como-rodar-modelos-qwen-no-seu-pc/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/ia-local-privada-sem-mensalidade-qwen-pc/",
+      "destination": "/en/blog/run-qwen-models-locally-on-your-pc/",
+      "permanent": true
     }
   ],
   "headers": [
