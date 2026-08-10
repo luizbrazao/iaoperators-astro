@@ -58,6 +58,12 @@ type Fact = { label: string; value: string };
 
 interface Content {
   seoTitle: string;
+  /**
+   * <title> completo, cuando no debe construirse como `seoTitle | IA Operators`.
+   * Existe porque `seoTitle` alimenta también el `name` del JSON-LD AboutPage:
+   * cambiarlo para arreglar el title tocaría los datos estructurados.
+   */
+  seoTitleFull?: string;
   metaDesc: string;
   breadcrumbHome: string;
   breadcrumbCurrent: string;
@@ -80,6 +86,7 @@ interface Content {
 const CONTENT: Record<Loc, Content> = {
   es: {
     seoTitle: "Sobre IA Operators — agencia de IA y automatización en Málaga",
+    seoTitleFull: "Sobre IA Operators | Integración y arquitectura tecnológica",
     metaDesc:
       "Qué es IA Operators, cuándo nació, qué problema resuelve y a qué tipo de empresa sirve. Agencia de inteligencia artificial y automatización con base en Málaga, España.",
     breadcrumbHome: "Inicio",
@@ -351,7 +358,7 @@ const jsonLd = [
 ---
 
 <BaseLayout
-  title={`${C.seoTitle} | ${ORG_NAME}`}
+  title={C.seoTitleFull ?? `${C.seoTitle} | ${ORG_NAME}`}
   ogTitle={C.h1}
   description={C.metaDesc}
   canonicalUrl={canonicalUrl}

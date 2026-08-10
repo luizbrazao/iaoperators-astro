@@ -62,8 +62,7 @@ Keyword primeiro é a convenção usual, mas aqui a única demanda comprovada da
 ## 3. H1
 
 ```
-Conectamos y automatizamos los sistemas que tu empresa ya tiene
-— y los ponemos en regla.
+Conectamos y automatizamos los sistemas que tu empresa ya tiene, y los ponemos en regla.
 ```
 
 **Texto único no DOM.** Hoje há dois `<span>` com o mesmo conteúdo para alternar desktop/mobile, o que faz o HTML conter a frase duplicada. A quebra passa a ser só CSS.
