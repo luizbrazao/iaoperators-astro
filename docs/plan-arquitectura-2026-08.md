@@ -521,7 +521,9 @@ Legenda de prioridade: **P0** = fazer antes de tudo · **P1** = próximo trimest
 | URL | KW primária | Faixa | CPC topo | Intenção | Ação | Prio |
 |---|---|---|---|---|---|---|
 | `/es/servicios/` | — | — | — | Navegacional | Manter (hub) | — |
-| `/es/servicios/agentes-de-ia/` | `agentes de ia` | **d** (+900%) | €8,23 | Comercial | **Criar** | **P0** |
+| `/es/servicios/agentes-de-ia/` | ~~`agentes de ia`~~ → **`agentes de ia para empresas`** | **d** (+900%) na raiz | €8,23 | Comercial | **Criada em 10/ago/2026** | **P0** |
+
+> **Correção de primária após inspeção de SERP (10/ago/2026, google.es, gl=es)** — feita porque o §12 deste plano pedia exatamente isto antes de escrever a landing. A SERP de `agentes de ia` é **informativa**: o top 10 são Google Cloud, IBM, Salesforce, AWS e Xataka respondendo «¿qué son?», mais um diretório e um domínio de correspondência exata. Não é ganhável nem é a intenção certa, e esse termo **já está coberto** pelo post `/es/blog/que-son-los-agentes-de-ia/` — o mesmo padrão *post ganha da landing* de roadmap e auditoria. A SERP de `agentes de ia para empresas`, em contrapartida, tem espaço comercial para alguém do nosso tamanho (Softeng, PotenzzIA e SDi convivem com os gigantes) e o módulo de anúncios confirma intenção transacional. A landing passa a mirar a variante com modificador; a raiz fica com o post, que a alimenta.
 | `/es/servicios/automatizacion-ia/` | `automatización de procesos` | **c** | €5,02 | Comercial | Manter; adicionar `automatización inteligente`, `rpa` | — |
 | `/es/servicios/chatbots/` | `chatbot para empresas` | **c** | €17,29 | Comercial | Manter | — |
 | `/es/servicios/agencia-ia/` | `agencia de inteligencia artificial` | **c** | €4,50 | Comercial | Manter; consolidação com `/es/agencia-de-ia/` **pendente** de reescrita + 60 dias de medição (§5.1-bis) | P1 |

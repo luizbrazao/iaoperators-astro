@@ -17,6 +17,12 @@ export interface ServiceDefinition {
   group: GroupKey;
   label: Record<Loc, string>;
   desc: Record<Loc, string>;
+  /**
+   * Locales en los que la página existe. Si se omite, existe en los tres.
+   * Sin esto, un servicio publicado solo en ES aparecería en el catálogo EN y
+   * PT como enlace a una URL que no existe.
+   */
+  locales?: Loc[];
 }
 
 export const SERVICE_HUB_PATH = "servicios/";
@@ -55,6 +61,20 @@ export const SERVICES: ServiceDefinition[] = [
       es: "WhatsApp, asistentes y reservas 24/7",
       pt: "WhatsApp, assistentes e agendamentos 24/7",
       en: "WhatsApp, assistants and 24/7 booking",
+    },
+  },
+  {
+    // ES-only por ahora: la SERP que justifica esta landing es la española
+    // (ver la cabecera de src/pages/es/servicios/agentes-de-ia/index.astro).
+    key: "agents",
+    path: "servicios/agentes-de-ia/",
+    group: "agencia",
+    locales: ["es"],
+    label: { es: "Agentes de IA", pt: "Agentes de IA", en: "AI Agents" },
+    desc: {
+      es: "Que consultan tus sistemas y ejecutan",
+      pt: "Que consultam seus sistemas e executam",
+      en: "That query your systems and act",
     },
   },
   {
@@ -178,7 +198,9 @@ export function getServiceGroups(locale: string): ResolvedGroup[] {
   return groups.map((key) => ({
     key,
     title: GROUP_TITLES[key][loc],
-    items: SERVICES.filter((s) => s.group === key).map((s, index) => ({
+    items: SERVICES.filter(
+      (s) => s.group === key && (s.locales ?? ["es", "pt", "en"]).includes(loc),
+    ).map((s, index) => ({
       key: s.key,
       href: href(locale, s.path),
       label: s.label[loc],

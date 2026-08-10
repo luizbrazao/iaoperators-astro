@@ -1,0 +1,348 @@
+---
+// Landing comercial de agentes de IA. ES-only, como /es/agencia-de-ia/ y las
+// páginas de ciudad: el catálogo de servicios sabe filtrar por locale.
+//
+// POR QUÉ LA PRIMARIA NO ES "agentes de ia" A SECAS (SERP inspeccionada el
+// 10/ago/2026, google.es, gl=es):
+//   - "agentes de ia": el top 10 es Google Cloud, IBM, Salesforce, AWS y Xataka
+//     respondiendo "¿qué son?", más un directorio y un dominio de coincidencia
+//     exacta. Intención informativa pura. Ese término ya lo cubre nuestro post
+//     /es/blog/que-son-los-agentes-de-ia/, que es el formato que esa SERP premia.
+//   - "agentes de ia para empresas": la SERP sí tiene huecos comerciales para
+//     alguien de nuestro tamaño — Softeng, PotenzzIA y SDi conviven con los
+//     gigantes—, y el módulo de anuncios confirma intención transaccional.
+// El plan asignaba "agentes de ia" a esta landing (§6.2) y pedía mirar la SERP
+// antes de escribirla (§12). Se miró, y por eso la primaria cambió.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const locale = "es";
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(`/${locale}/servicios/agentes-de-ia/`, site).toString();
+const contactHref = `/${locale}/contact/`;
+const postHref = `/${locale}/blog/que-son-los-agentes-de-ia/`;
+
+const meta = {
+  title: "Agentes de IA para empresas, en producción | IA Operators",
+  description:
+    "Construimos agentes de IA que consultan tus sistemas y ejecutan tareas reales, con permisos, estado y trazabilidad. Del piloto que impresiona al proceso que aguanta.",
+};
+
+const diferencia = [
+  {
+    title: "Un chatbot responde",
+    body: "Conversa, resuelve dudas y deriva. Sigue siendo la herramienta correcta para atención de primer nivel, y por eso tiene servicio propio.",
+    href: `/${locale}/servicios/chatbots/`,
+    linkLabel: "Ver chatbots con IA",
+  },
+  {
+    title: "Un agente actúa",
+    body: "Consulta el ERP, crea el registro, reserva la cita, escribe en el CRM. La conversación es la interfaz, no el producto: el valor está en lo que ejecuta.",
+    href: postHref,
+    linkLabel: "Qué es exactamente un agente",
+  },
+  {
+    title: "Y por eso el riesgo cambia",
+    body: "Un chatbot que se equivoca da una respuesta mala. Un agente que se equivoca deja el error escrito en un sistema de producción. Los permisos dejan de ser un detalle.",
+    href: `/${locale}/integracion/api-y-webhooks/`,
+    linkLabel: "Cómo lo conectamos",
+  },
+];
+
+const requisitos = [
+  {
+    num: "01",
+    title: "Acceso real a los sistemas",
+    body: "Un agente sin acceso al sistema que guarda la respuesta solo puede hablar de generalidades. Antes que el modelo va la integración: ERP, CRM, motor de reservas o lo que tenga el dato.",
+    href: `/${locale}/integracion/`,
+    linkLabel: "Integración de sistemas",
+  },
+  {
+    num: "02",
+    title: "Estado que sobrevive al mensaje",
+    body: "El contexto de la conversación y del expediente se guarda fuera del modelo. Sin eso, el agente repite preguntas, pierde el hilo y no se puede reanudar una tarea a medias.",
+  },
+  {
+    num: "03",
+    title: "Permisos y límites explícitos",
+    body: "Qué puede leer, qué puede escribir, hasta qué importe, en qué horario y qué requiere confirmación humana. Se declara como código, no se deja a criterio del modelo.",
+  },
+  {
+    num: "04",
+    title: "Evaluación antes de ampliar",
+    body: "Un conjunto de casos reales con el resultado esperado, que se ejecuta cada vez que se cambia el prompt o el modelo. Es lo que distingue mejorar de tocar y cruzar los dedos.",
+  },
+  {
+    num: "05",
+    title: "Salida a humano con contexto",
+    body: "Cuando el agente no sabe o el caso es delicado, escala con el resumen y el histórico. El cliente no debería tener que repetir lo que ya dijo.",
+  },
+  {
+    num: "06",
+    title: "Trazabilidad de cada acción",
+    body: "Qué hizo, con qué datos y por qué. No es solo observabilidad: es lo que permite responder cuando alguien pregunta por qué se ejecutó algo.",
+  },
+];
+
+const donde = {
+  si: [
+    "Clasificar y enrutar entradas en texto libre: correos, formularios, mensajes.",
+    "Extraer datos estructurados de documentos y meterlos en el sistema correcto.",
+    "Responder consultas de estado consultando el sistema que tiene el dato.",
+    "Preparar borradores que una persona revisa y aprueba.",
+    "Cerrar tareas repetitivas de varios pasos con reglas claras de parada.",
+  ],
+  no: [
+    "Decisiones con consecuencias legales o económicas directas, sin revisión.",
+    "Cálculos deterministas: sumar, validar o aplicar tarifas es trabajo de código.",
+    "Procesos que nadie ha documentado — primero se documentan, luego se automatizan.",
+    "Casos donde una respuesta incorrecta no se puede detectar ni deshacer.",
+  ],
+};
+
+const faq = [
+  {
+    q: "¿En qué se diferencia un agente de IA de un chatbot?",
+    a: "En que el agente ejecuta. Un chatbot entiende y responde; un agente entiende, decide qué hacer, usa herramientas para hacerlo y comprueba el resultado. La diferencia práctica no está en la conversación, está en si al final hay algo escrito en tu ERP, tu CRM o tu calendario. Por eso un agente exige integración, permisos y trazabilidad, y un chatbot no.",
+  },
+  {
+    q: "¿Cuánto se tarda en tener un agente en producción?",
+    a: "Entre cuatro y ocho semanas para un proceso acotado, y el reparto de ese tiempo sorprende: la parte de modelo son días, el resto es integración con los sistemas, definición de permisos y construcción del conjunto de evaluación. Los pilotos que se montan en una tarde son reales; lo que no aguanta la tarde siguiente es ponerlos delante de clientes.",
+  },
+  {
+    q: "¿Qué pasa si el agente se equivoca?",
+    a: "Se diseña asumiendo que va a pasar. Las acciones reversibles se ejecutan solas; las que no lo son piden confirmación. Todo queda registrado con lo que el agente vio y lo que decidió, de forma que un error se detecta, se explica y se deshace. Un agente sin ese registro no es más rápido: es más difícil de auditar.",
+  },
+  {
+    q: "¿Hace falta cambiar de herramientas para tener agentes?",
+    a: "No, y normalmente es contraproducente. El agente se construye encima de lo que ya usas: por eso el trabajo previo es de integración, no de migración. Si tus sistemas exponen API o eventos, el camino es corto; si no, hay vías alternativas y se evalúan en el diagnóstico.",
+  },
+  {
+    q: "¿Es lo mismo que automatizar con n8n?",
+    a: "Se solapan y se combinan. Una automatización clásica ejecuta pasos fijos y es la respuesta correcta cuando el proceso es estable. El agente entra donde hay que interpretar algo ambiguo —texto libre, un documento distinto cada vez, una petición mal formulada— y decidir la rama. En la práctica montamos las dos cosas juntas: el flujo determinista lleva el proceso y el modelo resuelve los tramos que no se pueden escribir como reglas.",
+  },
+];
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Agentes de IA para empresas",
+  serviceType: "AI agent development and integration",
+  provider: {
+    "@type": ["Organization", "ProfessionalService"],
+    name: "IA Operators",
+    url: site,
+    address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+  },
+  areaServed: "ES",
+  description: meta.description,
+  url: pageUrl,
+  inLanguage: "es-ES",
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: "Servicios", item: `${site}/${locale}/servicios/` },
+    { "@type": "ListItem", position: 3, name: "Agentes de IA", item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  jsonLd={[serviceJsonLd, breadcrumbJsonLd, faqJsonLd]}
+>
+  <div class="bg-transparent text-white">
+    <!-- HERO -->
+    <section class="px-4 pt-28 pb-14">
+      <div class="max-w-4xl mx-auto text-center">
+        <a
+          href={`/${locale}/servicios/`}
+          class="inline-block text-xs text-gray-500 hover:text-orange-400 transition-colors mb-6"
+        >
+          ← Servicios
+        </a>
+        <h1 class="text-3xl md:text-5xl font-medium tracking-tight leading-tight mb-6">
+          Agentes de IA para empresas: que hagan el trabajo, no que lo describan
+        </h1>
+        <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+          Montar un agente que impresiona en una demo lleva una tarde. Ponerlo delante de clientes,
+          conectado a tus sistemas y sin que nadie tenga que vigilarlo, es otro proyecto. Este.
+        </p>
+      </div>
+    </section>
+
+    <!-- LA DISTANCIA -->
+    <section class="px-4 pb-16">
+      <div class="max-w-3xl mx-auto">
+        <div class="bg-[#0a0a0a] border-l-2 border-orange-500 rounded-r-2xl p-6 md:p-8">
+          <div class="text-xs font-semibold uppercase tracking-widest text-orange-400 mb-3">
+            La distancia que nadie cuenta
+          </div>
+          <p class="text-gray-200 text-lg leading-relaxed">
+            Casi todas las empresas con las que hablamos ya han probado un agente. Funcionó en la
+            prueba y se quedó ahí. No falló el modelo: faltaban el acceso a los sistemas, los
+            permisos, el estado entre mensajes y una forma de saber si lo estaba haciendo bien.
+            Nada de eso es inteligencia artificial — es ingeniería, y es donde está el trabajo.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHATBOT VS AGENTE -->
+    <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-bold mb-3 text-center">Agente no es sinónimo de chatbot</h2>
+        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+          La confusión es cara, porque lleva a contratar una cosa esperando la otra.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {diferencia.map((d) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
+              <h3 class="text-lg font-semibold text-white mb-2">{d.title}</h3>
+              <p class="text-gray-400 text-sm leading-relaxed mb-4">{d.body}</p>
+              <a href={d.href} class="text-orange-400 text-sm hover:text-orange-300 underline">
+                {d.linkLabel} →
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- REQUISITOS -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-bold mb-3 text-center">
+          Lo que separa un piloto de un proceso
+        </h2>
+        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+          Seis piezas. Ninguna es el modelo.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {requisitos.map((r) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
+              <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-orange-500/10 text-orange-400 font-bold text-xs mb-4">
+                {r.num}
+              </span>
+              <h3 class="text-lg font-semibold text-white mb-2">{r.title}</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">{r.body}</p>
+              {r.href && (
+                <a href={r.href} class="inline-block text-orange-400 text-sm mt-3 hover:text-orange-300 underline">
+                  {r.linkLabel} →
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- DÓNDE SÍ Y DÓNDE NO -->
+    <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-bold mb-3 text-center">Dónde ponemos agentes y dónde no</h2>
+        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+          Decir que no a la mitad de los casos es lo que hace creíble el sí de la otra mitad.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7">
+            <h3 class="text-white font-semibold mb-4">Donde funcionan bien</h3>
+            <ul class="space-y-3">
+              {donde.si.map((item) => (
+                <li class="flex items-start gap-3 text-gray-300 text-sm leading-relaxed">
+                  <span class="text-orange-400 mt-0.5 shrink-0">▪</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7">
+            <h3 class="text-white font-semibold mb-4">Donde recomendamos no usarlos</h3>
+            <ul class="space-y-3">
+              {donde.no.map((item) => (
+                <li class="flex items-start gap-3 text-gray-400 text-sm leading-relaxed">
+                  <span class="text-gray-600 mt-0.5 shrink-0">▪</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CASO -->
+    <section class="px-4 py-20">
+      <div class="max-w-4xl mx-auto bg-[#0a0a0a] border border-orange-500/20 rounded-3xl p-8 md:p-10 text-center">
+        <span class="inline-block px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 text-xs font-semibold mb-6">
+          Caso real
+        </span>
+        <p class="text-3xl md:text-4xl font-medium tracking-tight mb-4">
+          De 1–2 horas a <span class="text-orange-500">~3 minutos</span> por solicitud
+        </p>
+        <p class="text-gray-400 max-w-2xl mx-auto">
+          Para una empresa de sourcing de automóviles, un agente clasifica y estructura las
+          solicitudes entrantes en texto libre y las deja listas en el sistema: hasta ~80 solicitudes
+          semanales procesadas en picos de demanda, sin ampliar el equipo. La parte de modelo es la
+          clasificación; el resto es integración.
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-bold mb-10 text-center">Preguntas frecuentes</h2>
+        <div class="space-y-3">
+          {faq.map((item) => (
+            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-4 hover:border-orange-500/20 transition-all duration-300">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <span class="text-white font-medium pr-4">{item.q}</span>
+                <span class="text-orange-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="text-gray-400 mt-3 leading-relaxed">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="px-4 py-24">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">
+          Empieza por el proceso, no por el modelo
+        </h2>
+        <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
+          Cuéntanos qué tarea repetitiva se come el tiempo del equipo. Salimos de la primera
+          conversación diciéndote si un agente lo resuelve — o si lo resuelve mejor una
+          automatización sin modelo.
+        </p>
+        <a
+          href={contactHref}
+          class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+        >
+          Hablar con un especialista ↗
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

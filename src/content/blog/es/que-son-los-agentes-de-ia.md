@@ -17,6 +17,10 @@ tags:
   - inteligencia artificial
   - automatización con IA
   - chatbots
+ctaTitle: "¿Un agente resuelve tu caso, o lo resuelve mejor una automatización?"
+ctaText: "Cuéntanos qué tarea repetitiva se come el tiempo del equipo. Salimos de la primera conversación con una respuesta, aunque sea que no hace falta un agente."
+ctaPrimaryLabel: "Ver agentes de IA para empresas"
+ctaPrimaryHref: "/es/servicios/agentes-de-ia/"
 faq:
   - q: "¿Qué es un agente de IA?"
     a: "Un agente de IA es un sistema que recibe un objetivo, decide por sí mismo qué pasos dar, consulta tus herramientas y actúa para cumplirlo — o avisa a una persona cuando algo se sale del guion. A diferencia de un chatbot, no solo responde: razona sobre el contexto y ejecuta acciones."
@@ -98,3 +102,7 @@ Los agentes de IA son una herramienta potente, pero no son un fin en sí mismos.
 ---
 
 En **IA Operators** construimos agentes de IA y sistemas multi-agente que funcionan en producción, no en una demo. Si quieres entender el panorama completo, lee nuestra guía de [qué es una agencia de IA](/es/blog/que-es-una-agencia-de-ia/), o mira directamente cómo lo aplicamos en [automatización con IA](/es/servicios/automatizacion-ia/). ¿Tienes un proceso en mente? Cuéntanoslo y te decimos si tiene sentido ponerle un agente.
+
+---
+
+**Del concepto al proceso.** Todo lo anterior describe qué es un agente. Lo que decide si funciona en una empresa es otra cosa: el acceso a los sistemas, los permisos, el estado entre mensajes y una forma de medir si acierta. Eso es lo que cubrimos en [agentes de IA para empresas](/es/servicios/agentes-de-ia/), y es donde se queda encallada la mayoría de los pilotos.

@@ -292,6 +292,19 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     faixa: "c",
   },
   {
+    // El plan (§6.2) asignaba "agentes de ia" a esta URL. La SERP de esa query
+    // en google.es es informativa —Google Cloud, IBM, Salesforce, AWS y Xataka
+    // respondiendo "¿qué son?"— y ya la cubre el post del blog. El hueco
+    // comercial está en la variante con modificador, que es la que se registra.
+    path: "servicios/agentes-de-ia/",
+    locales: ["es"],
+    silo: "servicios",
+    primaria: "agentes de ia para empresas",
+    secundarias: ["agentes de ia empresas", "desarrollo de agentes de ia", "implantar agentes de ia"],
+    faixa: "c",
+    estimada: true,
+  },
+  {
     // ⚠️ CONFLICTO PENDIENTE DE DECISIÓN (Sprint 0, 09/ago/2026).
     // Search Console (90 días) muestra que Google sirve /es/agencia-de-ia/ —
     // no esta página — para todo el clúster: "agencia de ia" (146 impresiones),
