@@ -5,6 +5,7 @@
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { LEY, DISCLAIMER, UMBRALES, OBLIGACIONES, SHARED, SECTOR_SLUGS, SECTORES } from "@/data/sectores-sac";
+import { ORG_REF } from "@/data/identidad";
 
 const locale = "es";
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
@@ -24,25 +25,18 @@ const diasRestantes = Math.max(
 const meta = {
   title: "Ley 10/2025 de atención a la clientela: implementación técnica | IA Operators",
   description:
-    "Implementamos el sistema que cumple la Ley 10/2025 antes del 28 de diciembre de 2026: SLA de atención medibles, clave identificativa, trazabilidad y evidencia para la auditoría ENAC.",
+    "Adaptamos tus sistemas a los requisitos técnicos de la Ley 10/2025: SLA medibles, atención personalizada, trazabilidad y evidencia técnica antes del 28 de diciembre de 2026.",
 };
 
 const sectoresList = SECTOR_SLUGS.map((slug) => ({ slug, ...SECTORES[slug] }));
 
-const providerSchema = {
-  "@type": ["Organization", "ProfessionalService"],
-  name: "IA Operators",
-  url: site,
-  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
-  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
-};
-
 const serviceJsonLd = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: "Implementación técnica del cumplimiento de la Ley 10/2025 de atención a la clientela",
-  serviceType: "Regulatory compliance systems integration",
-  provider: providerSchema,
+  "@id": `${pageUrl}#service`,
+  name: "Implementación técnica de la Ley 10/2025 de atención a la clientela",
+  serviceType: "Implementación técnica de la Ley 10/2025 de atención a la clientela",
+  provider: ORG_REF,
   areaServed: "ES",
   description: meta.description,
   url: pageUrl,
@@ -60,8 +54,14 @@ const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
-    { "@type": "ListItem", position: 2, name: "Ley de atención a la clientela", item: pageUrl },
+    { "@type": "ListItem", position: 1, name: "Inicio", item: new URL(`/${locale}/`, site).toString() },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Cumplimiento tecnológico",
+      item: new URL(`/${locale}/cumplimiento/`, site).toString(),
+    },
+    { "@type": "ListItem", position: 3, name: "Ley de atención a la clientela", item: pageUrl },
   ],
 };
 
@@ -99,8 +99,8 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
           El 28 de diciembre de 2026 tu atención a la clientela tiene que cumplir la Ley 10/2025
         </h1>
         <p class="text-lg md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto">
-          Los despachos te explican lo que dice la norma. Nosotros construimos el sistema que la
-          cumple — y que puede demostrarlo ante una auditoría acreditada por ENAC.
+          La norma define requisitos de atención y calidad. Nosotros los traducimos a sistemas,
+          flujos, medición y evidencia técnica para que puedas operar y demostrar lo implementado.
         </p>
 
         <div class="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-[#0a0a0a] border border-orange-500/20 mb-10">
@@ -175,6 +175,10 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
               Cada sector tiene su página con lo que cambia en su caso: plazos propios, escenarios
               de pico y la evidencia concreta que le van a pedir.
             </p>
+            <p class="text-xs text-gray-500 mt-4 leading-relaxed">
+              En servicios financieros prevalece la normativa sectorial y la Ley 10/2025 opera con
+              carácter supletorio; determinados artículos no resultan aplicables a este sector.
+            </p>
           </div>
 
           <!-- Vía 2: umbrales -->
@@ -185,7 +189,7 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
             <h3 class="text-2xl font-semibold mb-3">Resto de sectores</h3>
             <p class="text-gray-400 text-sm leading-relaxed mb-6">
               Empresas y <strong class="text-white">grupos de sociedades</strong> que vendan bienes o
-              presten servicios distintos de los básicos, si superan{" "}
+              presten servicios distintos de los básicos, si alcanzan{" "}
               <strong class="text-white">alguno</strong> de estos umbrales — son alternativos, no
               acumulativos (art. 2.2).
             </p>

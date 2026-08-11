@@ -2,11 +2,38 @@
 // Solo ES: la obligación es española y el comprador busca en español.
 //
 // Fuente normativa: Ley 10/2025, de 26 de diciembre (BOE-A-2025-26698).
-// - Art. 2.1: sectores de servicios básicos de interés general (obligados sin umbral).
-// - Art. 2.2: resto de empresas y grupos de sociedades, umbrales ALTERNATIVOS
-//   (≥250 personas trabajadoras O >50 M€ volumen de negocios O >43 M€ balance).
-// - Art. 10: 95 % de las llamadas atendidas, de media, en menos de 3 minutos.
-// - Art. 17: quejas y reclamaciones resueltas en un plazo máximo de 15 días hábiles.
+// - Art. 2.1: sectores de servicios básicos de interés general (obligados sin umbral):
+//   agua/gas/electricidad, transporte de viajeros, postales, comunicaciones electrónicas
+//   (+Ley 11/2022) y financieros (+Ley 44/2002).
+// - Art. 2.2: resto de empresas y grupos de sociedades, umbrales ALTERNATIVOS: al menos
+//   250 personas trabajadoras, o volumen de negocios que haya excedido 50 M€, o balance
+//   que haya excedido 43 M€. "Al menos" para personas trabajadoras, no "más de"/"superar".
+// - Art. 2.5: los servicios financieros se rigen por su normativa sectorial; la Ley 10/2025
+//   es de aplicación SUPLETORIA y NO se aplican el art. 13.8 ni los arts. 18, 19, 21, 22 y 23
+//   — es decir, ni el sistema de evaluación de calidad ni la auditoría externa/ENAC alcanzan
+//   al sector financiero. Verificado 2026-08-11 (antes la landing de servicios financieros
+//   presentaba la auditoría anual como aplicable "además" — dato pendiente de corregir ahí).
+// - Art. 8.2: 95 % de las solicitudes de atención personalizada atendidas, de media, en
+//   menos de 3 minutos (vía menú de bot/contestador). Art. 8.1: prohibido el uso exclusivo
+//   de contestadores automáticos.
+// - Art. 10.3: 95 % de las llamadas recibidas atendidas, de media, en menos de 3 minutos.
+//   Son dos objetivos del 95 %/3 min distintos: uno para llamadas en general (art. 10),
+//   otro para las solicitudes de atención personalizada desde un menú automático (art. 8).
+// - Art. 11.1: clave identificativa de toda consulta, queja, reclamación o incidencia. Para
+//   consultas, solo es preceptiva si requieren acciones posteriores (no si se resuelven en
+//   el momento).
+// - Art. 12: justificante (contenido, fecha, hora) de la consulta/queja/reclamación/incidencia,
+//   a petición del cliente; conservación de grabaciones al menos hasta la notificación de
+//   la resolución.
+// - Art. 17.1: plazo general de 15 días hábiles para consultas/quejas/reclamaciones/incidencias.
+//   Art. 17.2: 2 horas para las relativas a la continuidad de servicios básicos. Art. 17.3:
+//   5 días (sin calificar "hábiles" en el texto) para facturación y cobros indebidos.
+// - Art. 14.2: disponibilidad 24 h/365 días, solo para los servicios básicos del art. 2 que
+//   se presten de forma continuada, y solo para comunicar incidencias de continuidad.
+// - Art. 21: sistema anual de evaluación de la calidad; periodicidad BIENAL admitida para
+//   empresas de menos de 250 personas y volumen de negocios ≤50 M€.
+// - Art. 22: auditoría externa anual sobre ese sistema (misma excepción bienal), por entidad
+//   acreditada por la Entidad Nacional de Acreditación (ENAC).
 // - Disposición transitoria única: 12 meses desde la entrada en vigor (28/12/2025) → 28/12/2026.
 //
 // REGLA DE MANTENIMIENTO: no citar número de artículo que no se haya verificado en el BOE.
@@ -51,59 +78,61 @@ export const UMBRALES = [
  */
 export const OBLIGACIONES = [
   {
-    articulo: "Art. 10",
-    ley: "95 % de las llamadas atendidas, de media, en menos de 3 minutos.",
+    articulo: "Arts. 8 y 10",
+    ley: "El 95 % de las llamadas recibidas debe atenderse, de media, en menos de tres minutos. La ley establece además un objetivo equivalente para las solicitudes de atención personalizada.",
     sistema:
-      "Enrutado omnicanal con cola priorizada, medición de SLA en tiempo real y desbordamiento automático a refuerzo cuando la cola se acerca al umbral.",
+      "Enrutado omnicanal con cola priorizada, medición de SLA en tiempo real y refuerzo cuando la cola se acerca al umbral.",
     riesgo: "Sin medición continua no puedes demostrar la media ante una auditoría.",
   },
   {
-    articulo: null,
+    articulo: "Art. 8",
     ley: "Atención personalizada bajo demanda. Prohibido el uso exclusivo de contestadores automáticos.",
     sistema:
       "Salida explícita del bot a persona en cualquier punto de la conversación, con traspaso del contexto completo y sin bucles de menú.",
-    riesgo: "Un bot sin escape claro es el incumplimiento más fácil de detectar desde fuera.",
+    riesgo:
+      "El acceso a atención personalizada debe estar disponible conforme a los requisitos de la ley; la automatización no puede convertirse en una barrera para llegar a una persona.",
   },
   {
     articulo: "Art. 17",
-    ley: "Quejas y reclamaciones resueltas en un máximo de 15 días hábiles.",
+    ley: "Consultas, quejas, reclamaciones e incidencias: máximo general de 15 días hábiles, salvo que la normativa sectorial establezca otro plazo.",
     sistema:
       "Workflow de ticket con reloj de plazo sobre calendario laboral, avisos escalonados y escalado automático antes del vencimiento.",
-    riesgo: "El plazo corre en días hábiles: contarlo a mano es donde se pierde el cumplimiento.",
+    riesgo: "Automatizar el cómputo reduce el riesgo de errores en la gestión de plazos.",
   },
   {
-    articulo: null,
-    ley: "2 horas para incidencias de continuidad en servicios básicos · 5 días en facturación y cobros indebidos.",
+    articulo: "Art. 17",
+    ley: "Plazos específicos: hasta 2 horas para consultas o incidencias sobre la continuidad de servicios básicos de prestación continuada, y hasta 5 días en las relacionadas con facturación o cobros indebidos.",
     sistema:
       "Clasificación de la incidencia en la entrada por tipología y SLA diferenciado por clase, con rutas de guardia propias.",
-    riesgo: "Un único SLA para todo garantiza incumplir el más corto.",
+    riesgo: "Un único SLA para todas las tipologías puede hacer que los casos con plazos especiales se gestionen incorrectamente.",
   },
   {
-    articulo: null,
-    ley: "Clave identificativa única por interacción, para que la clientela pueda seguir su gestión.",
+    articulo: "Art. 11",
+    ley: "Clave identificativa o mecanismo equivalente de identificación cuando resulte exigible, de forma que la gestión pueda localizarse y seguirse.",
     sistema:
-      "Generación y persistencia de la clave, entrega en el canal de origen y consulta del estado desde cualquier otro canal.",
+      "Generación y persistencia de identificadores cuando resultan exigibles, con continuidad entre canales y consulta del estado de la gestión.",
     riesgo: "Si cada canal genera su propio identificador, la trazabilidad se rompe en el traspaso.",
   },
   {
-    articulo: null,
-    ley: "Registro y trazabilidad de todas las gestiones.",
+    articulo: "Art. 12",
+    ley: "Constancia de cada consulta, queja, reclamación o incidencia —contenido, fecha y hora— y conservación de la documentación asociada.",
     sistema:
-      "Log inmutable append-only con sellado temporal, política de retención y exportación en formato auditable.",
-    riesgo: "Un CRM editable no es evidencia: hay que poder demostrar que el registro no se ha alterado.",
+      "Registro técnico con controles de integridad, trazabilidad, conservación y exportación. Cuando la arquitectura lo requiere, utilizamos almacenamiento append-only y sellado temporal.",
+    riesgo:
+      "Un CRM editable por sí solo puede no ser suficiente para demostrar la integridad de las evidencias que deban conservarse.",
   },
   {
-    articulo: null,
-    ley: "Disponibilidad 24 h / 365 días para comunicar incidencias en servicios básicos.",
+    articulo: "Art. 14",
+    ley: "Disponibilidad 24 h / 365 días para comunicar incidencias de continuidad en los servicios básicos que se prestan de forma continuada.",
     sistema:
       "Canal de entrada siempre activo con acuse inmediato, cola nocturna y activación de guardia según criticidad.",
-    riesgo: "Recoger fuera de horario sin acusar recibo no cuenta como atención.",
+    riesgo: "El canal debe dejar constancia operativa de la recepción y permitir gestionar la incidencia conforme al plazo aplicable.",
   },
   {
-    articulo: null,
-    ley: "Auditoría anual de calidad por entidad acreditada por ENAC.",
+    articulo: "Arts. 21-22",
+    ley: "Sistema de evaluación de calidad y auditoría externa: anuales con carácter general, con posibilidad de periodicidad bienal para empresas de menos de 250 personas y hasta 50 M€ de volumen de negocio, y auditados por una entidad acreditada por ENAC. No aplica al sector financiero.",
     sistema:
-      "Cuadro de mando de KPIs exportable y dossier de evidencias por obligación, preparado para entregarse tal cual al auditor.",
+      "Cuadro de mando y documentación del sistema de evaluación, con evidencias exportables para facilitar la auditoría de las mediciones de calidad cuando resulte aplicable.",
     riesgo: "Reconstruir un año de evidencias la semana antes de la auditoría no es viable.",
   },
 ];
@@ -112,15 +141,15 @@ export const SHARED = {
   arquitectura: {
     title: "Qué construimos",
     subtitle:
-      "Una capa de atención que cumple los SLA por diseño y deja evidencia de que los cumple. Sobre tus sistemas actuales, no sustituyéndolos.",
+      "Una capa de atención diseñada para medir y gestionar los SLA aplicables y generar la evidencia técnica necesaria. Sobre tus sistemas actuales, no sustituyéndolos.",
     items: [
       {
         title: "Entrada omnicanal",
-        body: "WhatsApp Cloud API, voz, email y web bajo un único flujo. La clave identificativa se emite en el primer contacto, sea cual sea el canal.",
+        body: "WhatsApp Cloud API, voz, email y web bajo un único flujo. Generación y persistencia de identificadores cuando resultan exigibles, con continuidad entre canales y consulta del estado de la gestión.",
       },
       {
         title: "Clasificación y enrutado con IA",
-        body: "Un agente clasifica tipología, criticidad y SLA aplicable en la entrada, y enruta a la cola correcta. Sin árboles de menú rígidos.",
+        body: "Un agente de IA clasifica tipología y extrae los datos relevantes en la entrada. La asignación del SLA aplicable y el enrutado a la cola correcta los resuelve un motor de reglas determinista y auditable, no la IA de forma implícita.",
       },
       {
         title: "Relevo a persona sin fricción",
@@ -206,17 +235,17 @@ export const SHARED = {
       {
         title: "Mantenimiento normativo",
         precio: "Retainer mensual",
-        body: "Monitorización de SLAs, evolución del sistema y actualización del dossier de evidencias para la auditoría anual.",
+        body: "Monitorización de SLA, evolución del sistema y actualización de las evidencias y métricas necesarias para el régimen de evaluación y auditoría que resulte aplicable.",
       },
     ],
   },
 
   porQue: {
-    title: "Por qué nosotros y no una consultora de CX",
+    title: "De la norma a la operación",
     items: [
       {
         title: "Traducimos norma a arquitectura",
-        body: "El mercado está lleno de quien te explica lo que dice la ley. Nosotros construimos el sistema que la cumple y que lo demuestra.",
+        body: "Traducimos los requisitos técnicos aplicables a arquitectura, integraciones, medición y evidencia para que puedan operarse sobre sistemas reales.",
       },
       {
         title: "Venimos de la auditoría de sistemas",
@@ -224,11 +253,11 @@ export const SHARED = {
       },
       {
         title: "Integramos, no sustituimos",
-        body: "Trabajamos sobre el CRM, el ticketing y la telefonía que ya tienes. Cambiar de plataforma a nueve meses del plazo es el camino más caro.",
+        body: "Cambiar de plataforma cerca del plazo puede añadir coste y riesgo operativo. Por eso primero evaluamos si es posible adaptar el CRM, ticketing y telefonía existentes.",
       },
       {
         title: "La evidencia es parte del entregable",
-        body: "Un sistema que cumple pero no puede demostrarlo no sirve para una auditoría acreditada por ENAC. Diseñamos las dos cosas a la vez.",
+        body: "La medición y la evidencia se diseñan desde el principio, para que las obligaciones técnicas y los indicadores de calidad puedan revisarse cuando resulte necesario.",
       },
     ],
   },
@@ -238,23 +267,23 @@ export const SHARED = {
     items: [
       {
         q: "¿Mi empresa está obligada a cumplir la Ley 10/2025?",
-        a: "Si prestas servicios de suministro de agua, gas o electricidad, transporte de viajeros, servicios postales, comunicaciones electrónicas o servicios financieros, sí — con independencia de tu tamaño. Si operas en otro sector, quedas obligada si superas alguno de estos umbrales, que son alternativos: 250 personas trabajadoras, 50 millones de euros de volumen de negocios anual o 43 millones de balance anual. Se computa también a nivel de grupo de sociedades.",
+        a: "Si prestas servicios de suministro de agua, gas o electricidad, transporte de viajeros, servicios postales, comunicaciones electrónicas o servicios financieros, sí — con independencia de tu tamaño, aunque en servicios financieros la ley opera con carácter supletorio respecto de la normativa sectorial y determinados artículos no resultan aplicables. Si operas en otro sector, quedas obligada si alcanzas alguno de estos umbrales, que son alternativos: al menos 250 personas trabajadoras, más de 50 millones de euros de volumen de negocios anual o más de 43 millones de balance anual. Se computa también a nivel de grupo de sociedades. La aplicación concreta a tu empresa debe confirmarse con tu asesoría jurídica.",
       },
       {
         q: "¿Cuál es el plazo real para adaptarse?",
-        a: "La ley entró en vigor el 28 de diciembre de 2025 y concede doce meses de adaptación: el 28 de diciembre de 2026 el servicio de atención tiene que cumplir. Un proyecto de implementación con integración a CRM y telefonía lleva entre seis y diez semanas contando el diagnóstico, así que el margen real para empezar es menor que el del calendario.",
+        a: "La ley entró en vigor el 28 de diciembre de 2025 y concede doce meses de adaptación: el 28 de diciembre de 2026 el servicio de atención tiene que cumplir. Un proyecto de implementación con integración a CRM y telefonía suele estar en producción en cuatro a ocho semanas contando el diagnóstico, así que el margen real para empezar es menor que el del calendario.",
       },
       {
         q: "¿Puedo cumplir con un chatbot?",
-        a: "No por sí solo, y un chatbot mal diseñado te acerca al incumplimiento. La norma prohíbe atender exclusivamente con contestadores automáticos y obliga a dar atención personalizada cuando la clientela lo pide. La IA sirve para clasificar, enrutar y resolver lo repetitivo dentro del SLA — pero necesita una salida a persona explícita y sin bucles, y un registro de que esa salida existió.",
+        a: "No por sí solo. Un chatbot puede formar parte del sistema, pero no sustituye las obligaciones de atención personalizada cuando la ley la exige: la norma prohíbe atender exclusivamente con contestadores automáticos y obliga a ofrecer esa vía a quien la pida. La IA sirve para clasificar, enrutar y resolver lo repetitivo dentro del SLA — pero necesita una salida a persona explícita y sin bucles, con registro de que esa salida existió.",
       },
       {
         q: "¿Hay que cambiar de CRM o de centralita?",
-        a: "En la mayoría de los casos no. Trabajamos por API sobre lo que ya tienes y añadimos la capa que falta: medición de SLA, motor de plazos, clave identificativa y registro auditable. Migrar de plataforma a pocos meses del plazo suele ser el camino más caro y más arriesgado.",
+        a: "No necesariamente. Primero analizamos si los sistemas actuales permiten añadir la medición de SLA, gestión de plazos, identificación y trazabilidad necesarias. Cuando es viable, adaptar el stack existente puede reducir el coste y el riesgo operativo frente a una migración cerca del plazo.",
       },
       {
-        q: "¿Qué pasa con la auditoría anual de ENAC?",
-        a: "La ley exige una auditoría anual de calidad por una entidad acreditada por ENAC. Nosotros no auditamos — preparamos el sistema para ser auditado: cuadro de mando de KPIs exportable y dossier de evidencias organizado por obligación. Reconstruir un año de registros la semana antes de la auditoría no es viable, por eso la evidencia se diseña desde el principio.",
+        q: "¿Qué exige la ley sobre evaluación de calidad y auditoría externa?",
+        a: "La ley establece un sistema anual de evaluación de la calidad del servicio y una auditoría externa anual sobre ese sistema (arts. 21 y 22), con la posibilidad de periodicidad bienal para empresas de menos de 250 personas trabajadoras y hasta 50 millones de euros de volumen de negocio. Cuando resulta aplicable, la auditoría debe realizarla una entidad acreditada por ENAC. El sector financiero queda excluido de estos dos artículos, al regirse por su normativa sectorial. IA Operators no realiza esa auditoría: preparamos la capa técnica de medición y las evidencias necesarias para que el sistema pueda ser revisado.",
       },
       {
         q: "¿Cuánto cuesta y en cuánto tiempo está en producción?",
