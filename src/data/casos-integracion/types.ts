@@ -32,6 +32,18 @@ export interface CasoIntegracion {
   metaTitle: string;
   metaDescription: string;
   h1: string;
+  /** `name` del Service en el JSON-LD. Sin él se usa el h1. */
+  schemaName?: string;
+  /** `serviceType` del Service en el JSON-LD. Sin él, el genérico de CASO_UI. */
+  serviceType?: string;
+  /** CTA discreto bajo el párrafo del hero. Sin él no se renderiza nada. */
+  heroCta?: { label: string; href: string };
+  /**
+   * Overrides por caso de los rótulos de CASO_UI ("Relacionado con este caso",
+   * "Preguntas de este caso", "Otros casos"). Sin ellos se usan los del idioma,
+   * así el cambio de un caso no arrastra a sus hermanos ni a otros idiomas.
+   */
+  labels?: { puentesTitle?: string; faqTitle?: string; otros?: string };
   intro: string;
   /** La señal por la que se reconoce el problema desde fuera. */
   sintoma: string;

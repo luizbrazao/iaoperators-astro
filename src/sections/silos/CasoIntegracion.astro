@@ -16,6 +16,7 @@
 // `api-e-webhooks`), y `casoAlternates()` la resuelve.
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { ORG_REF } from "@/data/identidad";
 import {
   getShared,
   getCaso,
@@ -38,8 +39,12 @@ const ui = CASO_UI[locale];
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const base = integracionHref(locale);
+// `Astro.site` termina en "/": toda URL absoluta se construye con `new URL()`,
+// que normaliza barras. La concatenación `${site}/${locale}/` producía
+// `https://iaoperators.com//es/` en el breadcrumb (mismo bug que en el hub).
 const hubUrl = new URL(base, site).toString();
 const pageUrl = new URL(casoHref(locale, casoKey), site).toString();
+const homeUrl = new URL(`/${locale}/`, site).toString();
 const contactHref = `/${locale}/contact/`;
 
 const casos = getCasos(locale);
@@ -48,19 +53,15 @@ const otros = CASO_SLUGS.filter((key) => key !== casoKey).map((key) => ({
   nombreCorto: casos[key].nombreCorto,
 }));
 
-const providerSchema = {
-  "@type": ["Organization", "ProfessionalService"],
-  name: "IA Operators",
-  url: site,
-  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
-};
-
 const serviceJsonLd = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: c.h1,
-  serviceType: ui.serviceType,
-  provider: providerSchema,
+  "@id": `${pageUrl}#service`,
+  name: c.schemaName ?? c.h1,
+  serviceType: c.serviceType ?? ui.serviceType,
+  // Referencia por `@id` a la Organization canónica (src/data/identidad.ts),
+  // igual que el hub: nada de redeclarar una Organization parcial por página.
+  provider: ORG_REF,
   areaServed: "ES",
   audience: { "@type": "BusinessAudience", name: c.nombre },
   description: c.metaDescription,
@@ -73,7 +74,7 @@ const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: ui.breadcrumbHome, item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 1, name: ui.breadcrumbHome, item: homeUrl },
     { "@type": "ListItem", position: 2, name: ui.breadcrumbHub, item: hubUrl },
     { "@type": "ListItem", position: 3, name: c.nombreCorto, item: pageUrl },
   ],
@@ -110,6 +111,14 @@ const faqJsonLd = {
         </a>
         <h1 class="text-3xl md:text-5xl font-medium tracking-tight leading-tight mb-6">{c.h1}</h1>
         <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">{c.intro}</p>
+        {c.heroCta && (
+          <a
+            href={c.heroCta.href}
+            class="inline-flex items-center gap-2 text-orange-400 font-medium hover:underline mt-8"
+          >
+            {c.heroCta.label}
+          </a>
+        )}
       </div>
     </section>
 
@@ -230,7 +239,9 @@ const faqJsonLd = {
     <!-- PUENTES -->
     <section class="px-4 py-20">
       <div class="max-w-5xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold mb-3 text-center">{ui.puentesTitle}</h2>
+        <h2 class="text-2xl md:text-3xl font-bold mb-3 text-center">
+          {c.labels?.puentesTitle ?? ui.puentesTitle}
+        </h2>
         <p class="text-gray-400 text-center mb-10 max-w-2xl mx-auto">
           {ui.puentesSubtitle}
         </p>
@@ -258,7 +269,9 @@ const faqJsonLd = {
     <!-- FAQ -->
     <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
       <div class="max-w-3xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold mb-10 text-center">{ui.faqTitle}</h2>
+        <h2 class="text-2xl md:text-3xl font-bold mb-10 text-center">
+          {c.labels?.faqTitle ?? ui.faqTitle}
+        </h2>
         <div class="space-y-3">
           {c.faq.map((item) => (
             <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-4 hover:border-orange-500/20 transition-all duration-300">
@@ -288,7 +301,9 @@ const faqJsonLd = {
         </a>
 
         <div class="border-t border-white/5 pt-10">
-          <p class="text-xs uppercase tracking-widest text-gray-600 mb-4">{ui.otros}</p>
+          <p class="text-xs uppercase tracking-widest text-gray-600 mb-4">
+            {c.labels?.otros ?? ui.otros}
+          </p>
           <div class="flex flex-wrap justify-center gap-2">
             {otros.map((o) => (
               <a

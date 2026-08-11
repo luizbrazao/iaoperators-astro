@@ -85,14 +85,27 @@ export const SHARED_ES: SharedIntegracion = {
 
 export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
   erp: {
-    nombre: "Empresas con un ERP propio o muy adaptado",
+    nombre: "Empresas con un ERP propio, a medida o muy adaptado",
     nombreCorto: "ERP",
     // El H1 puede ser largo; el <title> no, porque lleva el sufijo de marca y
-    // Google lo trunca. Por eso aquí no coinciden.
-    metaTitle: "Integración de ERP: conectarlo con todo lo demás",
+    // Google lo trunca. Por eso aquí no coinciden. El title es el dueño de la
+    // intención "integración ERP para empresas"; el H1 conserva el gancho.
+    metaTitle: "Integración de ERP para empresas",
     metaDescription:
       "Conectamos tu ERP —propio, a medida o de mercado— con e-commerce, TPV, CRM y facturación. Sin migrar de sistema y sin tocar la base de datos de producción.",
     h1: "Integración de ERP: conectar tu ERP con el resto del negocio",
+    schemaName: "Integración de ERP para empresas",
+    serviceType: "Integración de ERP",
+    heroCta: { label: "Cuéntanos qué ERP utilizas →", href: "/es/contact/" },
+    labels: {
+      puentesTitle: "Relacionado con la integración de ERP",
+      faqTitle: "Preguntas frecuentes sobre integración de ERP",
+      otros: "Otras integraciones",
+    },
+    // TODO SEO/PROOF: añadir case real de integración ERP cuando exista un
+    // proyecto publicable. Revisado 2026-08-11: ningún proyecto de
+    // src/data/projects.ts implica ERP de forma directa (Menorca es auditoría,
+    // ChatPlug es CRM/reservas sobre Altegio). No inventar prueba.
     intro:
       "El ERP suele ser el sistema con más verdad de la empresa y con menos conexiones. Todo el mundo lo consulta, casi nadie puede escribir en él, y por eso a su alrededor crece una capa de hojas de cálculo que hace de pegamento.",
     sintoma:
@@ -116,9 +129,9 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
       },
       {
         title: "Facturación y cobro",
-        body: "Del pedido a la factura y del cobro a la conciliación. Aquí es donde el ERP toca la pasarela de pago, el banco y —desde 2027— el registro de facturación que exige el reglamento.",
+        body: "Del pedido a la factura y del cobro a la conciliación. Aquí es donde el ERP toca la pasarela de pago, el banco y, para las empresas y profesionales obligados por el RRSIF, los requisitos de los sistemas de facturación aplicables en 2027.",
         riesgo:
-          "Es el punto donde la integración deja de ser una comodidad y pasa a ser una obligación legal, con un calendario que no se negocia.",
+          "En los sistemas de facturación sujetos al RRSIF, esta parte de la integración además debe cumplir los requisitos regulatorios y su calendario de adaptación.",
       },
       {
         title: "Reporting sin tocar producción",
