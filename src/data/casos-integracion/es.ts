@@ -541,30 +541,44 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
   "sistemas-legados": {
     nombre: "Empresas con software antiguo en producción",
     nombreCorto: "Sistemas legados",
-    metaTitle: "Integrar sistemas legados sin reemplazarlos",
+    metaTitle: "Integración de sistemas legados",
     metaDescription:
-      "Modernizamos alrededor del sistema que funciona: capa de traducción, captura de cambios y sustitución por partes. Sin reescrituras de dos años.",
+      "Modernizamos sistemas legados con capa de traducción, captura de cambios y sustitución por fases. Sin asumir el riesgo de una reescritura completa.",
     h1: "Integrar sistemas legados sin reemplazarlos",
+    serviceType: "Integración de sistemas legados",
+    labels: {
+      back: "← Integración de sistemas",
+      puentesTitle: "Relacionado con sistemas legados",
+      faqTitle: "Preguntas frecuentes sobre sistemas legados",
+      otros: "Otras integraciones",
+    },
+    heroCta: { label: "Cuéntanos qué sistema necesitas modernizar →", href: "/es/contact/" },
+    // TODO SEO/PROOF: añadir case real de modernización de sistemas legados
+    // cuando exista uno publicable. Revisado 2026-08-11: ningún proyecto de
+    // src/data/projects.ts implementa el patrón fachada/captura de
+    // cambios/sustitución progresiva (Menorca es una auditoría, no una
+    // modernización; ChatPlug y el chatbot de reservas son integraciones sobre
+    // sistemas con API moderna, no legados sin API). No inventar prueba.
     intro:
       "«Legado» no significa malo. Significa que funciona, que lleva años acumulando reglas que nadie ha vuelto a escribir en ningún sitio, y que sustituirlo entero es un proyecto con más riesgo del que la empresa puede asumir de golpe.",
     sintoma:
       "Hay una persona que sabe cómo funciona. A veces ya no trabaja aquí y se le llama cuando algo falla. El sistema no tiene entorno de pruebas, la documentación es un manual de hace ocho años, y cada cambio se prueba directamente en producción a las siete de la mañana.",
     porQue: {
-      title: "Por qué la reescritura completa casi siempre sale mal",
-      body: "La propuesta de rehacerlo todo es atractiva porque promete terminar con el problema. En la práctica exige mantener dos sistemas en paralelo durante meses, redescubrir reglas de negocio que solo existen dentro del código viejo, y aguantar la presión de un proyecto largo sin entregas visibles. La alternativa que sí funciona es aburrida: se envuelve el sistema antiguo, se le pone delante una capa que traduce, y se van sacando funciones de una en una. Cada paso entrega valor y es reversible. El sistema viejo se apaga cuando ya no hace nada, no en una fecha señalada en un plan.",
+      title: "Por qué una reescritura completa concentra demasiado riesgo",
+      body: "La propuesta de rehacerlo todo es atractiva porque promete terminar con el problema. En la práctica exige mantener dos sistemas en paralelo durante meses, redescubrir reglas de negocio que solo existen dentro del código viejo, y aguantar la presión de un proyecto largo sin entregas visibles. Una alternativa con menos riesgo es envolver el sistema antiguo, poner delante una capa que traduzca y extraer funciones de forma progresiva. Cada paso entrega valor y se diseña para poder validarse antes de retirar la función anterior, manteniendo una vía de retorno cuando sea viable. El sistema viejo se apaga cuando ya no hace nada, no en una fecha señalada en un plan.",
     },
     patrones: [
       {
         title: "Capa de traducción por delante",
         body: "Se construye una interfaz moderna que hace de fachada. Los sistemas nuevos hablan con ella y nunca con el legado, de forma que sus rarezas —códigos numéricos, campos con doble significado, fechas en formatos propios— quedan encapsuladas en un solo sitio.",
         riesgo:
-          "Sin esa capa, cada nueva integración aprende las rarezas del legado y las hereda. A la tercera, ya no se puede sustituir sin tocarlo todo.",
+          "Sin esa capa, cada nueva integración aprende las rarezas del legado y las hereda. Con varias integraciones acopladas directamente al legado, sustituirlo acaba implicando tocar múltiples dependencias.",
       },
       {
         title: "Captura de cambios en lugar de consultas periódicas",
         body: "Cuando el legado no emite eventos, se detectan los cambios en su base de datos —por marca de tiempo, por tabla de auditoría o leyendo el registro de transacciones— y se publican hacia fuera como eventos.",
         riesgo:
-          "Consultar cada minuto una base de datos de producción castiga a los usuarios y descubre los cambios tarde. Y con solo marca de tiempo se pierden los borrados, que es justo lo que nadie prueba.",
+          "Consultar continuamente una base de datos de producción puede añadir carga innecesaria y detectar los cambios con retraso. Y con solo marca de tiempo se pierden los borrados, que es justo lo que nadie prueba.",
       },
       {
         title: "Sustitución por partes",
@@ -576,7 +590,7 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
         title: "Cuando no hay ninguna vía de datos",
         body: "Quedan sistemas que solo se dejan usar por pantalla. Ahí caben ficheros de intercambio en una carpeta acordada, o automatización de interfaz como último recurso.",
         riesgo:
-          "La automatización de pantalla se rompe con cualquier cambio visual y no da garantías de transacción. Es una solución puente con fecha de caducidad, y hay que tratarla como tal desde el primer día.",
+          "La automatización de pantalla es especialmente sensible a cambios visuales y suele ofrecer menos garantías transaccionales que una integración a nivel de datos o API. Es una solución puente con fecha de caducidad, y hay que tratarla como tal desde el primer día.",
       },
     ],
     entregables: [
@@ -584,7 +598,7 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
       "Capa de traducción con contrato de datos estable",
       "Publicación de cambios hacia el resto del ecosistema",
       "Plan de sustitución por fases, con orden justificado y puntos de retorno",
-      "Reducción medida de la dependencia de personas concretas",
+      "Documentación operativa y técnica que reduce la dependencia de conocimiento concentrado en personas concretas",
     ],
     puentes: [
       {
@@ -611,11 +625,11 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
     faq: [
       {
         q: "¿Cuándo conviene integrar y cuándo reemplazar?",
-        a: "Integrar cuando el sistema cumple su función y el problema es que está aislado, cuando contiene reglas de negocio que nadie ha documentado, o cuando la operación no puede permitirse un corte. Reemplazar cuando el proveedor ha desaparecido y no hay quien lo mantenga, cuando la tecnología impide cumplir una obligación legal que no se puede resolver por fuera, o cuando el coste de mantenerlo ya supera al de rehacerlo. La mayoría de los casos reales son el primero, aunque la conversación empiece siempre por el segundo.",
+        a: "Integrar cuando el sistema cumple su función y el problema es que está aislado, cuando contiene reglas de negocio que nadie ha documentado, o cuando la operación no puede permitirse un corte. Reemplazar cuando el proveedor ha desaparecido y no hay quien lo mantenga, cuando la tecnología impide cumplir una obligación legal que no se puede resolver por fuera, o cuando el coste de mantenerlo ya supera al de rehacerlo. La decisión se toma después de entender dependencias, coste de mantenimiento, restricciones operativas y riesgo de cambio.",
       },
       {
         q: "¿Se puede integrar un sistema sin API ni documentación?",
-        a: "Casi siempre, sí, aunque con más trabajo y por vías menos elegantes: acceso de lectura a la base de datos, detección de cambios, ficheros de intercambio o —cuando no queda otra— automatización de pantalla. Lo que decide la viabilidad no es la edad del sistema, es si existe alguna forma controlada de leer y de escribir. Eso se comprueba en el diagnóstico, y es la primera pregunta que hacemos.",
+        a: "A menudo sí, pero depende de que exista alguna vía controlada para acceder a los datos o interactuar con el sistema, aunque normalmente implica más trabajo y vías menos elegantes: acceso de lectura a la base de datos, detección de cambios, ficheros de intercambio o —cuando no queda otra— automatización de pantalla. Lo que decide la viabilidad no es la edad del sistema, es si existe alguna vía controlada para leer los datos y, cuando el flujo lo requiera, escribir o ejecutar acciones. Eso se comprueba en el diagnóstico, y es la primera pregunta que hacemos.",
       },
       {
         q: "¿Cuánto se tarda?",
