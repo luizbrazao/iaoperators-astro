@@ -20,9 +20,15 @@ type Props = {
   locale: string;
   /** Máximo de casos a mostrar. Por defecto todos los que coincidan. */
   limit?: number;
+  /**
+   * Orden explícito por slug ES. Los slugs listados van primero, en ese orden;
+   * el resto conserva el orden del array de `projects`. Sin este prop el
+   * comportamiento es idéntico al de siempre.
+   */
+  order?: string[];
 };
 
-const { path, locale, limit } = Astro.props as Props;
+const { path, locale, limit, order } = Astro.props as Props;
 
 const t = await createT(locale, { namespaces: ["projects"] });
 
@@ -62,6 +68,14 @@ const localeKey = (["es", "pt", "en"] as const).includes(locale as any)
 let matches: Project[] = projects.filter((p) =>
   (p.provesFor ?? []).some((entry) => norm(entry) === target),
 );
+if (order && order.length > 0) {
+  const rank = (p: Project) => {
+    const i = order.indexOf(p.slugs.es);
+    return i === -1 ? Number.MAX_SAFE_INTEGER : i;
+  };
+  // `Array.prototype.sort` es estable, así que los no listados no se reordenan.
+  matches = [...matches].sort((a, b) => rank(a) - rank(b));
+}
 if (limit) matches = matches.slice(0, limit);
 ---
 

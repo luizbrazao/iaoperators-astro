@@ -12,17 +12,22 @@
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import RelatedCases from "@/components/RelatedCases.astro";
+import { ORG_REF } from "@/data/identidad";
 
 const locale = "es";
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
+// `Astro.site` termina en "/" — todas las URLs absolutas se construyen con
+// `new URL()`, que normaliza y evita dobles barras (`${site}/${locale}/`
+// producía `https://iaoperators.com//es/` en el breadcrumb).
 const pageUrl = new URL(`/${locale}/integracion/`, site).toString();
+const homeUrl = new URL(`/${locale}/`, site).toString();
 const contactHref = `/${locale}/contact/`;
 const auditHref = `/${locale}/auditoria-de-sistemas/`;
 
 const meta = {
-  title: "Integración y automatización de sistemas para empresas | IA Operators",
+  title: "Integración de sistemas para empresas | IA Operators",
   description:
-    "Conectamos ERP, TPV, e-commerce, CRM y WhatsApp sobre los sistemas que ya usas, con IA donde aporta. Diagnóstico, prioridad e implementación — de la estrategia a producción.",
+    "Integración de sistemas para empresas: ERP, TPV, e-commerce, CRM y WhatsApp. Conectamos tu stack actual y automatizamos procesos de punta a punta.",
 };
 
 const problemas = [
@@ -74,15 +79,15 @@ const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "Integración y automatización de sistemas",
-    serviceType: "Systems integration and business automation",
-    provider: {
-      "@type": ["Organization", "ProfessionalService"],
-      name: "IA Operators",
-      url: site,
-      address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
-    },
-    areaServed: ["ES"],
+    "@id": `${pageUrl}#service`,
+    name: "Integración de sistemas para empresas",
+    serviceType: "Integración de sistemas y automatización empresarial",
+    // Referencia por `@id` a la entidad Organization canónica del sitio
+    // (src/data/identidad.ts) en vez de redeclarar una Organization parcial.
+    provider: ORG_REF,
+    // "ES" a secas, como los hijos del silo ([caso].astro): la keyword primaria
+    // y la intención comercial de este cluster son ES-only.
+    areaServed: "ES",
     description: meta.description,
     url: pageUrl,
   },
@@ -90,7 +95,7 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
+      { "@type": "ListItem", position: 1, name: "Inicio", item: homeUrl },
       { "@type": "ListItem", position: 2, name: "Integración y automatización", item: pageUrl },
     ],
   },
@@ -122,6 +127,27 @@ const jsonLd = [
         >
           Hablar con un especialista ↗
         </a>
+      </div>
+    </section>
+
+    <!-- Qué es — respuesta explícita a la intención informacional de la
+         keyword primaria, antes de entrar en la venta. Corta a propósito. -->
+    <section class="px-4 py-16">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight mb-6">
+          Qué es la integración de sistemas empresariales
+        </h2>
+        <p class="text-gray-400 leading-relaxed mb-4">
+          La integración de sistemas conecta las aplicaciones que una empresa ya utiliza para que
+          intercambien datos y ejecuten procesos sin intervención manual. ERP, CRM, TPV, e-commerce,
+          facturación, WhatsApp o herramientas internas dejan de funcionar como islas y pasan a
+          formar parte de un mismo flujo operativo.
+        </p>
+        <p class="text-gray-400 leading-relaxed">
+          El objetivo no es añadir más software, sino conseguir que el existente trabaje junto:
+          menos datos duplicados, menos tareas manuales, menos errores y una operación más fácil
+          de controlar.
+        </p>
       </div>
     </section>
 
@@ -225,8 +251,18 @@ const jsonLd = [
     </section>
 
     <!-- Prueba contextual: los casos que respaldan esta página.
-         La lista sale de `provesFor` en src/data/projects.ts, no de aquí. -->
-    <RelatedCases path="integracion/" locale={locale} />
+         La lista sale de `provesFor` en src/data/projects.ts, no de aquí.
+         `order` prioriza los casos de integración en producción (ChatPlug,
+         reservas) y deja la Radiografía Digital como prueba secundaria. -->
+    <RelatedCases
+      path="integracion/"
+      locale={locale}
+      order={[
+        "chatplug-whatsapp-altegio",
+        "chatbot-reservas-turisticas-whatsapp",
+        "radiografia-cadena-hotelera-menorca",
+      ]}
+    />
 
     <!-- CTA final -->
     <section class="px-4 py-20">

@@ -309,6 +309,7 @@ export const projects: Project[] = [
         provesFor: [
             "servicios/chatbots/",
             "servicios/automatizacion-ia/",
+            "integracion/",
             "integracion/whatsapp-business-api/",
             "arquitectura-tecnologica/",
         ],
@@ -456,6 +457,7 @@ export const projects: Project[] = [
         provesFor: [
             "servicios/chatbots/",
             "servicios/automatizacion-ia/",
+            "integracion/",
         ],
         publishedAt: "2025-02-15",
 
