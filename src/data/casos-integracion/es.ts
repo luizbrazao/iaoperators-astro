@@ -196,17 +196,40 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
     // El título ya no dice "CRM para empresas": esa query la sirven comparativas
     // de producto ("los mejores CRM") y es de quien va a comprar un CRM, no de
     // quien quiere integrar el que ya tiene. Ver src/data/keywords-primarias.ts.
-    metaTitle: "Integración de CRM: conectarlo con tu ERP",
+    // Tampoco dice "conectarlo con tu ERP": la página cubre captura multicanal,
+    // deduplicación, clasificación y enrutado además de la sincronización con
+    // ERP, y ese framing invadía el territorio de /es/integracion/erp/.
+    metaTitle: "Integración y automatización de CRM",
     metaDescription:
-      "Leads que entran solos y sin duplicados, actividad registrada sin teclear y sincronización con el ERP sin bucles. Automatizamos el CRM que ya usas, sea cual sea.",
+      "Leads que entran sin duplicados, actividad registrada sin teclear y sincronización con ERP. Integramos y automatizamos el CRM que ya utilizas.",
     h1: "Integración y automatización de CRM",
+    schemaName: "Integración y automatización de CRM",
+    serviceType: "Integración y automatización de CRM",
+    heroCta: { label: "Cuéntanos qué CRM utilizas →", href: "/es/contact/" },
+    labels: {
+      back: "← Integración de sistemas",
+      puentesTitle: "Relacionado con la integración de CRM",
+      faqTitle: "Preguntas frecuentes sobre integración de CRM",
+      otros: "Otras integraciones",
+    },
+    queEs: {
+      title: "Qué significa integrar y automatizar un CRM",
+      p1: "Integrar un CRM significa conectarlo con los canales y sistemas donde nace y avanza la relación comercial —formularios, email, WhatsApp, llamadas, ERP u otras aplicaciones— para que los datos lleguen y se actualicen sin depender de copias manuales.",
+      p2: "Automatizarlo añade reglas y modelos para clasificar, resumir, enriquecer y enrutar información, manteniendo las decisiones que afectan al negocio en lógica explícita y auditable.",
+    },
+    // TODO SEO/PROOF: añadir case real de integración/automatización CRM
+    // cuando exista uno publicable. Revisado 2026-08-11: ChatPlug sincroniza
+    // WhatsApp con Altegio (booking, no CRM comercial) y el chatbot de
+    // reservas registra leads en una hoja de cálculo, no en un CRM. Ninguno
+    // documenta deduplicación, clasificación/enrutado o sincronización CRM↔ERP.
+    // No forzar el ajuste.
     intro:
-      "Un CRM no falla por falta de funciones. Falla porque mantenerlo al día es trabajo manual, y el trabajo manual solo se hace cuando alguien mira. La integración consiste en quitar del medio a la persona que teclea.",
+      "Un CRM no falla por falta de funciones. Falla porque mantenerlo al día es trabajo manual, y el trabajo manual solo se hace cuando alguien mira. La integración consiste en que actualizar el CRM deje de depender de que alguien se acuerde de hacerlo.",
     sintoma:
       "El CRM está impecable el día antes de la reunión de ventas. Los dos meses anteriores, no. Cuando la calidad del dato depende del calendario de reuniones, lo que hay no es un CRM: es un informe que se rellena a posteriori.",
     porQue: {
       title: "Por qué cambiar de CRM tampoco lo arregla",
-      body: "La migración de CRM se vende como la solución al problema de adopción, y a veces lo es durante tres meses. Después vuelve el mismo patrón, porque la causa no estaba en la herramienta: estaba en que introducir la información seguía siendo trabajo de la persona que menos gana introduciéndola. Un comercial no deja de actualizar el CRM por rebeldía; deja de hacerlo porque hay treinta segundos de fricción entre él y su siguiente llamada. Lo que cambia el comportamiento es que el registro ocurra solo.",
+      body: "La migración de CRM se vende como la solución al problema de adopción, y a veces mejora la situación durante un tiempo. Después vuelve el mismo patrón, porque la causa no estaba en la herramienta: estaba en que introducir la información seguía siendo trabajo de la persona que menos gana introduciéndola. Un comercial no deja de actualizar el CRM por rebeldía; deja de hacerlo porque cada registro añade fricción entre él y su siguiente llamada. Lo que cambia el comportamiento es que el registro ocurra solo.",
     },
     patrones: [
       {
@@ -266,7 +289,7 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
     faq: [
       {
         q: "¿Funciona con cualquier CRM?",
-        a: "Con cualquiera que exponga API o webhooks, que hoy es prácticamente todo el mercado. La diferencia real no está en la marca, sino en dos cosas: si permite crear campos personalizados para guardar el rastro de la integración, y si sus límites de llamadas por minuto aguantan tu volumen. Ambas se comprueban en el diagnóstico, antes de comprometer un alcance.",
+        a: "Con la mayoría de CRM actuales que exponen API o webhooks. La diferencia real no está en la marca, sino en dos cosas: si permite crear campos personalizados para guardar el rastro de la integración, y si sus límites de llamadas por minuto aguantan tu volumen. Ambas se comprueban en el diagnóstico, antes de comprometer un alcance.",
       },
       {
         q: "¿La IA decide a qué comercial va cada lead?",
@@ -278,7 +301,7 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
       },
       {
         q: "¿Esto sustituye al equipo comercial?",
-        a: "Sustituye la parte de su día que consiste en copiar información de un sitio a otro. En los proyectos que hemos hecho, el efecto medible no es reducir plantilla: es que el seguimiento deja de depender de la memoria de cada persona y los leads no se enfrían mientras alguien se acuerda de llamarlos.",
+        a: "Sustituye la parte de su día que consiste en copiar información de un sitio a otro. El objetivo no es reducir plantilla: es que el seguimiento deje de depender de la memoria de cada persona y que los leads no se enfríen por falta de seguimiento.",
       },
     ],
   },
