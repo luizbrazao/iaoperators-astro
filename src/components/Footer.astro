@@ -5,11 +5,12 @@ import {
   getServiceGroups,
   getArquitectura,
   ARQUITECTURA_TITLE,
-  ARQUITECTURA_HUB_HREF,
+  arquitecturaHubHref,
   SERVICE_HUB_PATH,
   hubCtaLabel,
 } from "@/data/servicios";
-import { getPilaresEs } from "@/data/navegacion";
+import { getPilares } from "@/data/navegacion";
+import { integracionHref } from "@/data/integracion";
 
 type Props = { languageLinks?: Array<{ locale: string; href: string }> };
 const { languageLinks } = Astro.props as Props;
@@ -21,9 +22,6 @@ const nav = (dict as any)?.nav ?? (dict as any)?.common?.nav ?? {};
 const withLocale = (path: string) => `/${locale}/${path}`.replace(/\/+$/, "/");
 
 const year = new Date().getFullYear();
-const isEs = locale === "es";
-const servicesLabel =
-  locale === "pt" ? "Serviços" : locale === "en" ? "Services" : "Servicios";
 
 // textos com fallback (pra não quebrar se faltar chave)
 const t = {
@@ -44,60 +42,106 @@ const links = {
   privacy: withLocale("politica-de-privacidad/"),
   blog: withLocale("blog/"),
   portfolio: withLocale("portfolio/"),
+  methodology: withLocale("metodologia/"),
   servicesHub: withLocale(SERVICE_HUB_PATH),
 };
 
-// ===== Footer ES: cuatro columnas que reproducen la arquitectura nueva =====
+// ===== Footer en columnas: la arquitectura de la empresa, en los 3 idiomas ====
 //
 // El footer es el único sitio del sitio donde conviven, en todas las páginas,
-// los tres pilares y el catálogo completo. Por eso aquí sí se listan las ocho
-// landings de servicio: salieron de la barra superior en ES, pero no pueden
-// perder el enlace sitewide, que es lo que las sostiene en el índice.
-const pilares = isEs ? getPilaresEs() : [];
+// los pilares y el catálogo completo. Por eso aquí sí se listan las landings de
+// servicio: salieron de la barra superior, pero no pueden perder el enlace
+// sitewide, que es lo que las sostiene en el índice.
+//
+// Ago/2026: deja de ser ES-only. Diferencias entre idiomas, todas derivadas de
+// los datos y ninguna escrita a mano aquí:
+//   · "Cumplimiento" solo aparece en ES (silo ES-only por decisión).
+//   · La columna "Integraciones" solo aparece donde hay casos traducidos
+//     (`CASOS_LOCALES`). En EN/PT hoy sale vacía y se filtra: el footer pasa a
+//     tener tres columnas en vez de cuatro, sin huecos.
+const pilares = getPilares(locale);
 const integracionPilar = pilares.find((p) => p.key === "integracion");
-const arquitecturaPasos = isEs ? getArquitectura(locale) : [];
+const cumplimientoPilar = pilares.find((p) => p.key === "cumplimiento");
+const arquitecturaPasos = getArquitectura(locale);
 
-const otrosServicios = isEs
-  ? getServiceGroups(locale)
-      .filter((g) => g.key !== "arquitectura")
-      .flatMap((g) => g.items)
-  : [];
+const otrosServicios = getServiceGroups(locale)
+  .filter((g) => g.key !== "arquitectura")
+  .flatMap((g) => g.items);
 
-const columnasEs = isEs
-  ? [
-      {
-        title: "Soluciones",
-        items: [
-          { label: "Integración de sistemas", href: "/es/integracion/" },
-          { label: "Cumplimiento tecnológico", href: "/es/cumplimiento/" },
-          { label: ARQUITECTURA_TITLE.es, href: ARQUITECTURA_HUB_HREF },
-          ...arquitecturaPasos.map((paso) => ({ label: paso.label, href: paso.href })),
-        ],
-      },
-      {
-        title: "Integraciones",
-        items: (integracionPilar?.children ?? []).filter(
-          (child) => child.href !== "/es/integracion/",
-        ),
-      },
-      {
-        title: "Empresa",
-        items: [
-          { label: nav?.portfolio ?? "Casos", href: links.portfolio },
-          { label: t.about, href: links.about },
-          { label: "Blog", href: links.blog },
-          { label: t.cta, href: links.contact },
-        ],
-      },
-      {
-        title: "Otros servicios",
-        items: [
-          ...otrosServicios.map((item) => ({ label: item.label, href: item.href })),
-          { label: hubCtaLabel(locale), href: links.servicesHub },
-        ],
-      },
-    ]
-  : [];
+const COLUMN_TITLES: Record<string, { soluciones: string; integraciones: string; empresa: string; otros: string }> = {
+  es: {
+    soluciones: "Soluciones",
+    integraciones: "Integraciones",
+    empresa: "Empresa",
+    otros: "Otros servicios",
+  },
+  en: {
+    soluciones: "Solutions",
+    integraciones: "Integrations",
+    empresa: "Company",
+    otros: "Other services",
+  },
+  pt: {
+    soluciones: "Soluções",
+    integraciones: "Integrações",
+    empresa: "Empresa",
+    otros: "Outros serviços",
+  },
+};
+
+const col = COLUMN_TITLES[locale] ?? COLUMN_TITLES.es;
+const integracionBase = integracionHref(locale);
+
+// Los hijos del pilar de integración que ya tienen columna propia. En EN/PT hoy
+// son las landings trilingües (automatización, chatbots), que ya viven en
+// "Otros servicios": para no duplicarlas, la columna solo se monta con los
+// hijos que son casos del silo, es decir los que cuelgan del propio hub.
+const integracionItems = (integracionPilar?.children ?? []).filter(
+  (child) => child.href !== integracionBase && child.href.startsWith(integracionBase),
+);
+
+const columnas = [
+  {
+    title: col.soluciones,
+    items: [
+      { label: integracionPilar?.children?.[0]?.label ?? "Integración de sistemas", href: integracionBase },
+      ...(cumplimientoPilar
+        ? [{ label: "Cumplimiento tecnológico", href: cumplimientoPilar.href }]
+        : []),
+      { label: ARQUITECTURA_TITLE[locale], href: arquitecturaHubHref(locale) },
+      ...arquitecturaPasos.map((paso) => ({ label: paso.label, href: paso.href })),
+    ],
+  },
+  {
+    title: col.integraciones,
+    items: integracionItems,
+  },
+  {
+    title: col.empresa,
+    items: [
+      { label: nav?.portfolio ?? "Casos", href: links.portfolio },
+      { label: t.about, href: links.about },
+      // Metodología: salió del primer nivel del menú en los tres idiomas, así
+      // que este es su único enlace sitewide. Sin él, /{locale}/metodologia/
+      // se queda huérfana (en ES ya lo estaba desde la fase 1: 1 enlace
+      // entrante frente a los 70 de EN/PT).
+      { label: nav?.methodology ?? "Methodology", href: links.methodology },
+      { label: "Blog", href: links.blog },
+      { label: t.cta, href: links.contact },
+    ],
+  },
+  {
+    title: col.otros,
+    items: [
+      ...otrosServicios.map((item) => ({ label: item.label, href: item.href })),
+      { label: hubCtaLabel(locale), href: links.servicesHub },
+    ],
+  },
+].filter((c) => c.items.length > 0);
+
+// Tailwind no admite clases construidas por concatenación: la cuenta se mapea
+// explícitamente para que el JIT las vea.
+const gridCols = columnas.length === 4 ? "md:grid-cols-4" : "md:grid-cols-3";
 ---
 
 <footer class="relative bg-[#050505] text-white pt-20 pb-10 px-6 overflow-hidden border-t border-white/5">
@@ -153,56 +197,35 @@ const columnasEs = isEs
       </div>
     </div>
 
-    {isEs ? (
-      <!-- Navegación en columnas: la arquitectura de la empresa, no una fila
-           plana de enlaces. Los tres pilares mandan; los servicios sueltos
-           viven en "Otros servicios", que es exactamente su lugar ahora. -->
-      <nav aria-label="Site links" class="w-full py-12 border-b border-white/5">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
-          {columnasEs.map((col) => (
-            <div>
-              <p class="text-[10px] font-semibold uppercase tracking-widest text-gray-500 mb-4">
-                {col.title}
-              </p>
-              <ul class="flex flex-col gap-2.5">
-                {col.items.map((item) => (
-                  <li>
-                    <a
-                      href={item.href}
-                      class="text-sm text-gray-400 hover:text-orange-400 transition-colors"
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </nav>
-    ) : (
-      <nav aria-label="Site links" class="w-full py-8 border-b border-white/5">
-        <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm">
-          <a href={links.servicesHub} class="text-gray-400 hover:text-orange-400 transition-colors">{servicesLabel}</a>
-          <span class="text-white/15 select-none">·</span>
-          <a href={withLocale("auditoria-de-sistemas/")} class="text-gray-400 hover:text-orange-400 transition-colors">Radiografía Digital</a>
-          <span class="text-white/15 select-none">·</span>
-          <a href={withLocale("roadmap-tecnologico/")} class="text-gray-400 hover:text-orange-400 transition-colors">Roadmap Tecnológico</a>
-          <span class="text-white/15 select-none">·</span>
-          <a href={withLocale("implementacion/")} class="text-gray-400 hover:text-orange-400 transition-colors">Implementación</a>
-          <span class="text-white/15 select-none">·</span>
-          <a href={withLocale("metodologia/")} class="text-gray-400 hover:text-orange-400 transition-colors">Metodología</a>
-          <span class="text-white/15 hidden md:inline select-none">—</span>
-          <a href={links.about} class="text-gray-400 hover:text-orange-400 transition-colors">{t.about}</a>
-          <span class="text-white/15 select-none">·</span>
-          <a href={links.portfolio} class="text-gray-400 hover:text-orange-400 transition-colors">Portfolio</a>
-          <span class="text-white/15 select-none">·</span>
-          <a href={links.blog} class="text-gray-400 hover:text-orange-400 transition-colors">Blog</a>
-          <span class="text-white/15 select-none">·</span>
-          <a href={links.contact} class="text-gray-400 hover:text-orange-400 transition-colors">{t.cta}</a>
-        </div>
-      </nav>
-    )}
+    <!-- Navegación en columnas: la arquitectura de la empresa, no una fila
+         plana de enlaces. Los pilares mandan; los servicios sueltos viven en
+         "Otros servicios", que es exactamente su lugar ahora. Trilingüe desde
+         ago/2026: la fila plana de EN/PT desaparece y sus enlaces (Radiografía,
+         Roadmap, Implementación, Metodología) pasan a las columnas, ninguno se
+         pierde. -->
+    <nav aria-label="Site links" class="w-full py-12 border-b border-white/5">
+      <div class:list={["grid grid-cols-2 gap-x-6 gap-y-10", gridCols]}>
+        {columnas.map((columna) => (
+          <div>
+            <p class="text-[10px] font-semibold uppercase tracking-widest text-gray-500 mb-4">
+              {columna.title}
+            </p>
+            <ul class="flex flex-col gap-2.5">
+              {columna.items.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class="text-sm text-gray-400 hover:text-orange-400 transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </nav>
 
     <!-- Rodapé Inferior -->
     <div class="w-full flex flex-col md:flex-row items-center justify-between mt-12 gap-6 relative">

@@ -1,0 +1,257 @@
+---
+// Hub del silo de integración y automatización de sistemas (core evergreen).
+//
+// Creado en el Sprint A como página ES-only (`src/pages/es/integracion/`) para
+// que la puerta 1 de la home naciera apuntando a su destino definitivo
+// (docs/plan-arquitectura-2026-08.md, §5.3 y §10). El Sprint C añadió los cinco
+// hijos, servidos por `[caso].astro` sobre `src/data/integracion.ts`.
+//
+// Ago/2026: el hub pasa a los tres idiomas y el markup sale de la página para
+// vivir aquí. Las tres rutas —/es/integracion/, /en/integration/ y
+// /pt/integracao/— son ficheros de cinco líneas que instancian este componente.
+// El texto está en `src/data/hub-integracion.ts`; el bloque `es` es literal
+// respecto a lo publicado, así que el HTML español no cambia salvo el hreflang,
+// que pasa de ES-only a recíproco entre los tres idiomas.
+//
+// Los cinco hijos siguen siendo ES-only: `hayCasos(locale)` decide si las
+// tarjetas de capacidades enlazan al caso o se quedan como tarjeta sin enlace.
+// Una tarjeta sin enlace es honesta; un enlace desde /en/ a una página en
+// español, no.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import RelatedCases from "@/components/RelatedCases.astro";
+import { ORG_REF } from "@/data/identidad";
+import { integracionHref, integracionAlternates, hayCasos, type Loc } from "@/data/integracion";
+import { HUB_INTEGRACION, type CapacidadHub } from "@/data/hub-integracion";
+
+type Props = { locale: Loc };
+const { locale } = Astro.props as Props;
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+// `Astro.site` termina en "/" — todas las URLs absolutas se construyen con
+// `new URL()`, que normaliza y evita dobles barras (`${site}/${locale}/`
+// producía `https://iaoperators.com//es/` en el breadcrumb).
+const base = integracionHref(locale);
+const pageUrl = new URL(base, site).toString();
+const homeUrl = new URL(`/${locale}/`, site).toString();
+const contactHref = `/${locale}/contact/`;
+const auditHref = `/${locale}/auditoria-de-sistemas/`;
+
+const c = HUB_INTEGRACION[locale];
+const conCasos = hayCasos(locale);
+
+/**
+ * Destino de cada tarjeta de capacidad.
+ * `automatizacion` apunta a su landing de servicio, que es trilingüe. Los otros
+ * cinco son hijos del silo y solo existen en español: fuera de ES devuelven
+ * `null` y la tarjeta se renderiza sin enlace.
+ */
+function capacidadHref(item: CapacidadHub): string | null {
+  if (item.key === "automatizacion") return `/${locale}/servicios/automatizacion-ia/`;
+  return conCasos ? `${base}${item.key}/` : null;
+}
+
+const capacidades = c.capacidades.items.map((item) => ({
+  ...item,
+  href: capacidadHref(item),
+}));
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${pageUrl}#service`,
+    name: c.serviceName,
+    serviceType: c.serviceType,
+    // Referencia por `@id` a la entidad Organization canónica del sitio
+    // (src/data/identidad.ts) en vez de redeclarar una Organization parcial.
+    provider: ORG_REF,
+    areaServed: "ES",
+    description: c.meta.description,
+    url: pageUrl,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: c.breadcrumbHome, item: homeUrl },
+      { "@type": "ListItem", position: 2, name: c.breadcrumbSelf, item: pageUrl },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={c.meta.title}
+  description={c.meta.description}
+  canonicalUrl={pageUrl}
+  alternates={integracionAlternates(site)}
+  xDefaultUrl={new URL(integracionHref("es"), site).toString()}
+  jsonLd={jsonLd}
+>
+  <div class="bg-transparent text-white">
+    <!-- Hero -->
+    <section class="px-4 pt-28 pb-14">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
+          {c.h1.lead}<span class="text-orange-500">{c.h1.accent}</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-10">
+          {c.heroBody}
+        </p>
+        <a
+          href={contactHref}
+          class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-black text-orange-500 border border-orange-500/30 font-medium text-lg hover:bg-orange-500/10 hover:scale-105 transition-all duration-300"
+        >
+          {c.heroCta}
+        </a>
+      </div>
+    </section>
+
+    <!-- Qué es — respuesta explícita a la intención informacional de la
+         keyword primaria, antes de entrar en la venta. Corta a propósito. -->
+    <section class="px-4 py-16">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight mb-6">
+          {c.queEs.title}
+        </h2>
+        <p class="text-gray-400 leading-relaxed mb-4">
+          {c.queEs.p1}
+        </p>
+        <p class="text-gray-400 leading-relaxed">
+          {c.queEs.p2}
+        </p>
+      </div>
+    </section>
+
+    <!-- Problema -->
+    <section class="px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-center mb-4">
+          {c.problema.title}
+        </h2>
+        <p class="text-gray-400 text-center max-w-2xl mx-auto mb-12">
+          {c.problema.subtitle}
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {c.problema.items.map((p) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7">
+              <h3 class="text-lg font-semibold mb-3">{p.title}</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">{p.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Método -->
+    <section class="px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-center mb-12">
+          {c.metodo.title}
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {c.metodo.items.map((m) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 hover:border-orange-500/30 transition-all duration-300">
+              <span class="block text-orange-500 font-bold text-sm mb-4 tabular-nums">{m.step}</span>
+              <h3 class="text-lg font-semibold mb-3">{m.title}</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">{m.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Capacidades -->
+    <section class="px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-center mb-4">
+          {c.capacidades.title}
+        </h2>
+        <p class="text-gray-400 text-center max-w-2xl mx-auto mb-12 leading-relaxed">
+          {c.capacidades.subtitle}
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {capacidades.map((c2) =>
+            c2.href ? (
+              <a
+                href={c2.href}
+                class="group bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 hover:border-orange-500/30 transition-all duration-300"
+              >
+                <h3 class="text-base font-semibold mb-2">{c2.title}</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">{c2.body}</p>
+                <span class="inline-block text-orange-400 text-sm mt-4 group-hover:translate-x-1 transition-transform">
+                  {c.capacidades.cta}
+                </span>
+              </a>
+            ) : (
+              <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7">
+                <h3 class="text-base font-semibold mb-2">{c2.title}</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">{c2.body}</p>
+              </div>
+            ),
+          )}
+        </div>
+      </div>
+    </section>
+
+    <!-- Caso -->
+    <section class="px-4 py-16">
+      <div class="max-w-4xl mx-auto bg-[#0a0a0a] border border-orange-500/20 rounded-3xl p-8 md:p-10 text-center">
+        <span class="inline-block px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 text-xs font-semibold mb-6">
+          {c.caso.badge}
+        </span>
+        <p class="text-3xl md:text-4xl font-medium tracking-tight mb-4">
+          {c.caso.pre}<span class="text-orange-500">{c.caso.accent}</span>{c.caso.post}
+        </p>
+        <p class="text-gray-400 max-w-2xl mx-auto">
+          {c.caso.body}
+        </p>
+      </div>
+    </section>
+
+    <!-- Radiografía Digital como puerta de entrada -->
+    <section class="px-4 py-16">
+      <div class="max-w-4xl mx-auto bg-[#0a0a0a] border border-white/5 rounded-3xl p-8 md:p-10">
+        <h2 class="text-2xl md:text-3xl font-medium tracking-tight mb-4">
+          {c.radiografia.title}
+        </h2>
+        <p class="text-gray-400 mb-6">
+          {c.radiografia.body}
+        </p>
+        <a href={auditHref} class="inline-flex items-center gap-2 text-orange-400 font-medium hover:underline">
+          {c.radiografia.cta}
+        </a>
+      </div>
+    </section>
+
+    <!-- Prueba contextual: los casos que respaldan esta página.
+         La lista sale de `provesFor` en src/data/projects.ts, no de aquí.
+         `order` prioriza los casos de integración en producción (ChatPlug,
+         reservas) y deja la Radiografía Digital como prueba secundaria. -->
+    <RelatedCases
+      path="integracion/"
+      locale={locale}
+      order={[
+        "chatplug-whatsapp-altegio",
+        "chatbot-reservas-turisticas-whatsapp",
+        "radiografia-cadena-hotelera-menorca",
+      ]}
+    />
+
+    <!-- CTA final -->
+    <section class="px-4 py-20">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight mb-6">
+          {c.ctaFinal.title}
+        </h2>
+        <a
+          href={contactHref}
+          class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+        >
+          {c.ctaFinal.cta}
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

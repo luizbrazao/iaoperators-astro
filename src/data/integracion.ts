@@ -16,6 +16,41 @@
 //   enviados dentro de la ventana de free entry point de 72 h.
 //   https://developers.facebook.com/documentation/business-messaging/whatsapp/pricing
 
+export type Loc = "es" | "en" | "pt";
+
+/**
+ * Slug del hub del silo, por idioma.
+ *
+ * El hub existe en los tres idiomas desde agosto de 2026 y el slug se localiza:
+ * `integration` y `integracao` son las palabras que se buscan en cada mercado.
+ * Fuente única — menú, home, footer y las propias páginas leen de aquí.
+ */
+export const INTEGRACION_SLUG: Record<Loc, string> = {
+  es: "integracion/",
+  en: "integration/",
+  pt: "integracao/",
+};
+
+function asLoc(locale: string): Loc {
+  return locale === "en" || locale === "pt" ? locale : "es";
+}
+
+/** Ruta del hub de integración para un idioma. */
+export function integracionHref(locale: string): string {
+  const loc = asLoc(locale);
+  return `/${loc}/${INTEGRACION_SLUG[loc]}`;
+}
+
+/** Alternates de hreflang del hub, recíprocos entre los tres idiomas. */
+export function integracionAlternates(site?: string) {
+  return (["es", "en", "pt"] as const).map((lang) => ({
+    lang,
+    href: site
+      ? new URL(`/${lang}/${INTEGRACION_SLUG[lang]}`, site).toString()
+      : `/${lang}/${INTEGRACION_SLUG[lang]}`,
+  }));
+}
+
 export const CASO_SLUGS = [
   "erp",
   "crm",
@@ -23,6 +58,19 @@ export const CASO_SLUGS = [
   "api-y-webhooks",
   "sistemas-legados",
 ] as const;
+
+/**
+ * Idiomas en los que existen las cinco páginas hijas.
+ *
+ * El hub es trilingüe, pero `CASOS` (abajo) es ~500 líneas de copy en español
+ * cuya traducción es una entrega aparte. Mientras esta lista sea solo `["es"]`,
+ * el menú y el hub de EN/PT no deben enlazar los cinco casos: enlazarlos sería
+ * mandar a un inglés a una página en español. Cuando se traduzcan, se añaden
+ * los idiomas aquí y los enlaces aparecen solos.
+ */
+export const CASOS_LOCALES: readonly Loc[] = ["es"];
+
+export const hayCasos = (locale: string) => CASOS_LOCALES.includes(asLoc(locale));
 
 export type CasoSlug = (typeof CASO_SLUGS)[number];
 

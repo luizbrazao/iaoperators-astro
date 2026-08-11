@@ -15,13 +15,22 @@ export async function getStaticPaths() {
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getLocale } from "@/i18n/ui";
 import { getServiceGroups, getHubMeta } from "@/data/servicios";
-import { getPilaresEs } from "@/data/navegacion";
+import { getPilares } from "@/data/navegacion";
 
 const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
 const meta = getHubMeta(locale);
 const groups = getServiceGroups(locale);
-const isEs = locale === "es";
-const pilares = isEs ? getPilaresEs() : [];
+// Los pilares del idioma: tres en ES (integración · cumplimiento ·
+// arquitectura) y dos en EN/PT, donde el silo de cumplimiento no existe. El
+// bloque deja de ser ES-only en ago/2026 y la rejilla se ajusta a la cuenta.
+const pilares = getPilares(locale);
+const pilaresCols = pilares.length === 3 ? "md:grid-cols-3" : "md:grid-cols-2";
+const PILARES_TITLE: Record<string, string> = {
+  es: "Los tres pilares",
+  en: "The two pillars",
+  pt: "Os dois pilares",
+};
+const pilaresTitle = PILARES_TITLE[locale] ?? PILARES_TITLE.es;
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const pageUrl = new URL(`/${locale}/servicios/`, site).toString();
@@ -76,13 +85,13 @@ const breadcrumbJsonLd = {
       </div>
     </section>
 
-    {isEs && (
+    {pilares.length > 0 && (
       <section class="px-4 pb-16">
         <div class="max-w-6xl mx-auto">
           <h2 class="text-xs font-semibold uppercase tracking-widest text-orange-400 mb-6">
-            Los tres pilares
+            {pilaresTitle}
           </h2>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div class:list={["grid grid-cols-1 gap-5", pilaresCols]}>
             {pilares.map((pilar) => (
               <a
                 href={pilar.href}

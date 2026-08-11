@@ -1,8 +1,8 @@
 ---
-// Las tres puertas de la home — la traducción visual de la arquitectura del
-// plan (docs/plan-arquitectura-2026-08.md, §5.3): integración como core
-// evergreen primero; cumplimiento como wedge de adquisición 2026–2027 con más
-// peso visual, pero en segundo lugar de la jerarquía.
+// Las puertas de la home — la traducción visual de la arquitectura del plan
+// (docs/plan-arquitectura-2026-08.md, §5.3): integración como core evergreen
+// primero; cumplimiento como wedge de adquisición 2026–2027 con más peso
+// visual, pero en segundo lugar de la jerarquía.
 //
 // Sustituye al antiguo ComplianceBanner, que ocupaba el espacio bajo el hero
 // con una sola intención (Ley 10/2025) antes de que la home consolidara la
@@ -14,12 +14,31 @@
 // tecnológica, la familia Radiografía → Roadmap → Implementación.
 //
 // Fase 2 (10/ago/2026): la puerta ya no entra por el paso 01 sino por el hub
-// del pilar, /es/arquitectura-tecnologica/. Los tres pasos siguen enlazados
-// individualmente dentro de la tarjeta.
+// del pilar. Los tres pasos siguen enlazados individualmente dentro de la
+// tarjeta.
 //
-// ES-only: las puertas 1 y 2 apuntan a silos que no existen en EN/PT.
+// Ago/2026: las puertas dejan de ser ES-only. La diferencia entre idiomas es
+// una sola y es deliberada: **la puerta de cumplimiento no se traduce**. Su
+// contenido es la Ley 10/2025 y Verifactu, obligaciones españolas con plazo y
+// sanción; ofrecerlas en /en/ o /pt/ sería vender una urgencia que no aplica a
+// quien lee. En su lugar, EN/PT reciben como tercera puerta el catálogo de
+// servicios, que es donde vive el resto de la oferta. La rejilla sigue siendo
+// de tres columnas en los tres idiomas.
 import { LEY } from "@/data/sectores-sac";
-import { getArquitectura, ARQUITECTURA_TITLE, ARQUITECTURA_HUB_HREF } from "@/data/servicios";
+import {
+  getArquitectura,
+  ARQUITECTURA_TITLE,
+  arquitecturaHubHref,
+  hubCtaLabel,
+  SERVICE_HUB_PATH,
+  type Loc,
+} from "@/data/servicios";
+import { integracionHref } from "@/data/integracion";
+
+type Props = { locale?: string };
+const { locale: localeProp = "es" } = Astro.props as Props;
+const locale: Loc =
+  localeProp === "en" || localeProp === "pt" ? (localeProp as Loc) : "es";
 
 const deadline = new Date(`${LEY.plazoAdaptacion}T00:00:00+01:00`);
 const diasRestantes = Math.max(
@@ -27,36 +46,130 @@ const diasRestantes = Math.max(
   Math.ceil((deadline.getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
 );
 
-const pasos = getArquitectura("es");
+const pasos = getArquitectura(locale);
+
+const COPY = {
+  es: {
+    integracion: {
+      badge: "Core",
+      title: "Integración de sistemas",
+      body: "El sistema que ya tienes, conectado y automatizado: ERP, TPV, e-commerce, CRM y WhatsApp — con IA donde aporta.",
+      cta: "Ver integración →",
+    },
+    cumplimiento: {
+      badge: "Con plazo legal",
+      title: "Cumplimiento tecnológico",
+      body: "Verifactu y la Ley 10/2025 sin cambiar de software. Adaptamos lo que ya usas y dejamos la evidencia lista para la auditoría.",
+      cta: "Ver cumplimiento →",
+    },
+    arquitectura: {
+      badge: "Base del trabajo",
+      body: "Entendemos lo que tienes, definimos qué debería cambiar y lo construimos. Tres pasos, el mismo equipo.",
+      cta: "Ver arquitectura tecnológica →",
+    },
+    servicios: {
+      badge: "Capacidades",
+      title: "IA y servicios digitales",
+      body: "Automatización, agentes, chatbots, web, SEO y marketing. Capacidades que usamos dentro de los proyectos y que también prestamos por separado.",
+    },
+  },
+  en: {
+    integracion: {
+      badge: "Core",
+      title: "Systems integration",
+      body: "The systems you already run, connected and automated: ERP, POS, e-commerce, CRM and WhatsApp — with AI where it actually helps.",
+      cta: "See integration →",
+    },
+    cumplimiento: null,
+    arquitectura: {
+      badge: "The groundwork",
+      body: "We understand what you have, define what should change, and build it. Three steps, one team.",
+      cta: "See technology architecture →",
+    },
+    servicios: {
+      badge: "Capabilities",
+      title: "AI and digital services",
+      body: "Automation, agents, chatbots, web, SEO and marketing. Capabilities we use inside projects and also deliver on their own.",
+    },
+  },
+  pt: {
+    integracion: {
+      badge: "Core",
+      title: "Integração de sistemas",
+      body: "Os sistemas que você já usa, conectados e automatizados: ERP, PDV, e-commerce, CRM e WhatsApp — com IA onde ela agrega.",
+      cta: "Ver integração →",
+    },
+    cumplimiento: null,
+    arquitectura: {
+      badge: "Base do trabalho",
+      body: "Entendemos o que você tem, definimos o que deveria mudar e construímos. Três passos, a mesma equipe.",
+      cta: "Ver arquitetura tecnológica →",
+    },
+    servicios: {
+      badge: "Capacidades",
+      title: "IA e serviços digitais",
+      body: "Automação, agentes, chatbots, web, SEO e marketing. Capacidades que usamos dentro dos projetos e que também prestamos separadamente.",
+    },
+  },
+} as const;
+
+const c = COPY[locale];
+
+const puertaIntegracion = {
+  href: integracionHref(locale),
+  badge: c.integracion.badge,
+  title: c.integracion.title,
+  body: c.integracion.body,
+  cta: c.integracion.cta,
+  highlight: false,
+  steps: null as typeof pasos | null,
+  countdown: false,
+};
+
+const puertaCumplimiento = c.cumplimiento
+  ? {
+      href: "/es/cumplimiento/",
+      badge: c.cumplimiento.badge,
+      title: c.cumplimiento.title,
+      body: c.cumplimiento.body,
+      cta: c.cumplimiento.cta,
+      highlight: true,
+      steps: null as typeof pasos | null,
+      countdown: true,
+    }
+  : null;
+
+const puertaArquitectura = {
+  href: arquitecturaHubHref(locale),
+  badge: c.arquitectura.badge,
+  title: ARQUITECTURA_TITLE[locale],
+  body: c.arquitectura.body,
+  cta: c.arquitectura.cta,
+  highlight: false,
+  steps: pasos,
+  countdown: false,
+};
+
+// Tercera puerta de EN/PT: el catálogo. No es un pilar y no se presenta como
+// tal —de ahí que no lleve la lista de pasos ni el badge de jerarquía—, pero
+// mantiene el enlace desde la página de más autoridad del dominio hacia el hub
+// de servicios, que es lo que sostiene las ocho landings en el índice.
+const puertaServicios = {
+  href: `/${locale}/${SERVICE_HUB_PATH}`,
+  badge: c.servicios.badge,
+  title: c.servicios.title,
+  body: c.servicios.body,
+  cta: `${hubCtaLabel(locale)} →`,
+  highlight: false,
+  steps: null as typeof pasos | null,
+  countdown: false,
+};
 
 const doors = [
-  {
-    href: "/es/integracion/",
-    badge: "Core",
-    title: "Integración de sistemas",
-    body: "El sistema que ya tienes, conectado y automatizado: ERP, TPV, e-commerce, CRM y WhatsApp — con IA donde aporta.",
-    cta: "Ver integración →",
-    highlight: false,
-    steps: null,
-  },
-  {
-    href: "/es/cumplimiento/",
-    badge: "Con plazo legal",
-    title: "Cumplimiento tecnológico",
-    body: "Verifactu y la Ley 10/2025 sin cambiar de software. Adaptamos lo que ya usas y dejamos la evidencia lista para la auditoría.",
-    cta: "Ver cumplimiento →",
-    highlight: true,
-    steps: null,
-  },
-  {
-    href: ARQUITECTURA_HUB_HREF,
-    badge: "Base del trabajo",
-    title: ARQUITECTURA_TITLE.es,
-    body: "Entendemos lo que tienes, definimos qué debería cambiar y lo construimos. Tres pasos, el mismo equipo.",
-    cta: "Ver arquitectura tecnológica →",
-    highlight: false,
-    steps: pasos,
-  },
+  puertaIntegracion,
+  ...(puertaCumplimiento ? [puertaCumplimiento] : []),
+  puertaArquitectura,
+  ...(puertaCumplimiento ? [] : [puertaServicios]),
 ];
 ---
 
@@ -99,7 +212,7 @@ const doors = [
             </ol>
           )}
 
-          {door.highlight && (
+          {door.countdown && (
             <p class="text-xs text-gray-500 mb-4">
               Ley 10/2025:{" "}
               <span

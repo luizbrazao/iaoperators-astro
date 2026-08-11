@@ -1,0 +1,232 @@
+---
+// Hub del pilar de arquitectura tecnológica (fase 2, 2026-08-10).
+//
+// Hasta la fase 2 el pilar entraba por `/es/auditoria-de-sistemas/`, que es un
+// servicio concreto: mezclaba la categoría con su primer paso. Esta página
+// separa las dos intenciones y ocupa la de arriba.
+//
+// Frontera con la Radiografía Digital, para no canibalizarla:
+//   - Aquí: cómo debería estar organizada la tecnología de una empresa —
+//     sistemas, integraciones, datos y automatización como una sola pieza— y
+//     qué decisiones hay que tomar sobre ella.
+//   - Allí: qué hay hoy exactamente. Inventario, dependencias, riesgos,
+//     Shadow IT. Es el paso 01 del método, no la disciplina.
+// Por eso esta página no repite el desglose de entregables de la auditoría:
+// lo enlaza.
+//
+// Frontera con el hub de integración: la arquitectura decide cómo debería
+// funcionar el ecosistema; la integración construye las conexiones concretas.
+//
+// Ago/2026: el pilar pasa a los tres idiomas con slug localizado y hreflang
+// recíproco. El markup sale de `src/pages/es/arquitectura-tecnologica/` y vive
+// aquí; el texto está en `src/data/hub-arquitectura.ts`.
+//
+// El bloque del método NO se escribe aquí — sale de `getArquitectura()` en
+// src/data/servicios.ts vía <PilarArquitectura>, la misma fuente que alimenta
+// el menú, la home, el footer y las tres páginas hijas.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PilarArquitectura from "@/components/PilarArquitectura.astro";
+import RelatedCases from "@/components/RelatedCases.astro";
+import { ARQUITECTURA_TITLE, arquitecturaHubHref, arquitecturaAlternates } from "@/data/servicios";
+import { integracionHref, type Loc } from "@/data/integracion";
+import { HUB_ARQUITECTURA, type RelacionTarget } from "@/data/hub-arquitectura";
+
+type Props = { locale: Loc };
+const { locale } = Astro.props as Props;
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(arquitecturaHubHref(locale), site).toString();
+const contactHref = `/${locale}/contact/`;
+
+const c = HUB_ARQUITECTURA[locale];
+const titulo = ARQUITECTURA_TITLE[locale];
+
+// El destino de cada tarjeta de la sección "relación con los otros pilares".
+// `cumplimiento` solo aparece en ES: el silo es ES-only por decisión, porque
+// Verifactu y la Ley 10/2025 son obligaciones españolas.
+const RELACION_HREF: Record<RelacionTarget, string> = {
+  integracion: integracionHref(locale),
+  cumplimiento: `/${locale}/cumplimiento/`,
+  automatizacion: `/${locale}/servicios/automatizacion-ia/`,
+};
+
+const relaciones = c.relaciones.map((r) => ({ ...r, href: RELACION_HREF[r.target] }));
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: titulo,
+    serviceType: c.serviceType,
+    provider: {
+      "@type": ["Organization", "ProfessionalService"],
+      name: "IA Operators",
+      url: site,
+      address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+    },
+    areaServed: c.areaServed,
+    description: c.meta.description,
+    url: pageUrl,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: c.breadcrumbHome, item: `${site}/${locale}/` },
+      { "@type": "ListItem", position: 2, name: titulo, item: pageUrl },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={c.meta.title}
+  description={c.meta.description}
+  canonicalUrl={pageUrl}
+  alternates={arquitecturaAlternates(site)}
+  xDefaultUrl={new URL(arquitecturaHubHref("es"), site).toString()}
+  jsonLd={jsonLd}
+>
+  <div class="bg-transparent text-white">
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" class="px-4 pt-28 max-w-6xl mx-auto text-sm text-gray-400">
+      <ol class="flex flex-wrap items-center gap-1">
+        <li>
+          <a href={`/${locale}/`} class="hover:text-orange-400 transition-colors">{c.breadcrumbHome}</a>
+        </li>
+        <li class="text-gray-700">/</li>
+        <li class="text-gray-400" aria-current="page">{titulo}</li>
+      </ol>
+    </nav>
+
+    <!-- Hero -->
+    <section class="px-4 pt-10 pb-14">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
+          {c.h1.lead}<span class="text-orange-500">{c.h1.accent}</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-10">
+          {c.heroBody}
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a
+            href={contactHref}
+            class="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+          >
+            {c.heroCtaPrimary}
+          </a>
+          <a
+            href="#metodo"
+            class="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-black text-orange-500 border border-orange-500/30 font-medium text-lg hover:bg-orange-500/10 transition-all duration-300"
+          >
+            {c.heroCtaSecondary}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problema -->
+    <section class="px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-center mb-4">
+          {c.problema.title}
+        </h2>
+        <p class="text-gray-400 text-center max-w-2xl mx-auto mb-12 leading-relaxed">
+          {c.problema.subtitle}
+        </p>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 max-w-4xl mx-auto">
+          {c.problema.sintomas.map((s) => (
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 mt-1 shrink-0" aria-hidden="true">—</span>
+              <span class="text-gray-300 text-sm md:text-base leading-relaxed">{s}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Qué es -->
+    <section class="px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-center mb-4">
+          {c.capas.title}
+        </h2>
+        <p class="text-gray-400 text-center max-w-2xl mx-auto mb-12 leading-relaxed">
+          {c.capas.subtitle}
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {c.capas.items.map((capa) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 hover:border-orange-500/30 transition-all duration-300">
+              <span class="block text-orange-500 font-bold text-sm mb-4 tabular-nums">{capa.num}</span>
+              <h3 class="text-lg font-semibold mb-3">{capa.title}</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">{capa.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Método: los tres pasos salen de src/data/servicios.ts, no de aquí -->
+    <div id="metodo" class="scroll-mt-32">
+      <PilarArquitectura current="hub" locale={locale} />
+    </div>
+
+    <!-- Decisiones -->
+    <section class="px-4 py-16">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-center mb-4">
+          {c.decisiones.title}
+        </h2>
+        <p class="text-gray-400 text-center max-w-2xl mx-auto mb-12 leading-relaxed">
+          {c.decisiones.subtitle}
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {c.decisiones.items.map((d) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-5">
+              <p class="text-gray-200 text-sm md:text-base">{d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Relación con los otros dos pilares -->
+    <section class="px-4 py-16">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+        {relaciones.map((r) => (
+          <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-8">
+            <h2 class="text-2xl font-medium tracking-tight mb-4">{r.title}</h2>
+            <p class="text-gray-400 text-sm leading-relaxed mb-6">
+              {r.body}
+            </p>
+            <a href={r.href} class="inline-flex items-center gap-2 text-orange-400 font-medium text-sm hover:underline">
+              {r.cta}
+            </a>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Prueba contextual: sale de `provesFor` en src/data/projects.ts -->
+    <RelatedCases path="arquitectura-tecnologica/" locale={locale} />
+
+    <!-- CTA final -->
+    <section class="px-4 py-20">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight mb-6">
+          {c.ctaFinal.title}
+        </h2>
+        <p class="text-gray-400 mb-10 leading-relaxed">
+          {c.ctaFinal.body}
+        </p>
+        <a
+          href={contactHref}
+          class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
+        >
+          {c.ctaFinal.cta}
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

@@ -11,14 +11,17 @@ export async function getStaticPaths() {
 }
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { SHARED, CASOS, CASO_SLUGS, type CasoSlug } from "@/data/integracion";
+import { SHARED, CASOS, CASO_SLUGS, integracionHref, type CasoSlug } from "@/data/integracion";
 
 const locale = "es";
 const slug = Astro.params.caso as CasoSlug;
 const c = CASOS[slug];
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
-const base = `/${locale}/integracion/`;
+// El slug del hub sale de INTEGRACION_SLUG, no se escribe aquí: estas páginas
+// hijas siguen siendo ES-only, pero deben seguir colgando del hub aunque un día
+// cambie el slug español.
+const base = integracionHref(locale);
 const hubUrl = new URL(base, site).toString();
 const pageUrl = new URL(`${base}${slug}/`, site).toString();
 const contactHref = `/${locale}/contact/`;

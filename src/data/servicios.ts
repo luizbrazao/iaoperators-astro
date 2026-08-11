@@ -217,12 +217,42 @@ export const SERVICES: ServiceDefinition[] = [
 export const ARQUITECTURA_KEYS = ["audit", "roadmap", "implementation"] as const;
 
 /**
- * Hub del pilar (fase 2). ES-only: la página existe solo en español, así que
- * quien lo enlace debe condicionar por locale. Constante única para que el
- * menú, la home, el footer y el bloque de los tres pasos no la escriban cada
- * uno por su cuenta.
+ * Slug del hub del pilar, por idioma.
+ *
+ * La fase 2 (10/ago/2026) lo creó solo en ES, como una constante de una sola
+ * URL. Ahora el pilar existe en los tres idiomas y el slug se localiza: una URL
+ * en español dentro de /en/ no la busca nadie, y obliga a Google a inferir el
+ * idioma del contenido en contra de la señal que da la ruta.
+ *
+ * Fuente única: menú, home, footer, el bloque de los tres pasos y las propias
+ * páginas leen de aquí. Cambiar un slug es cambiar esta tabla y añadir el
+ * redirect correspondiente — nunca escribirlo a mano en otro sitio.
  */
-export const ARQUITECTURA_HUB_HREF = "/es/arquitectura-tecnologica/";
+export const ARQUITECTURA_SLUG: Record<Loc, string> = {
+  es: "arquitectura-tecnologica/",
+  en: "technology-architecture/",
+  pt: "arquitetura-tecnologica/",
+};
+
+/** Ruta del hub de arquitectura para un idioma. */
+export function arquitecturaHubHref(locale: string): string {
+  const loc = asLoc(locale);
+  return `/${loc}/${ARQUITECTURA_SLUG[loc]}`;
+}
+
+/**
+ * Alternates de hreflang del hub, recíprocos entre los tres idiomas.
+ * Con `site` devuelve URLs absolutas, que es lo que necesita
+ * `<link rel="alternate">`; sin él, rutas relativas.
+ */
+export function arquitecturaAlternates(site?: string) {
+  return (["es", "en", "pt"] as const).map((lang) => ({
+    lang,
+    href: site
+      ? new URL(`/${lang}/${ARQUITECTURA_SLUG[lang]}`, site).toString()
+      : `/${lang}/${ARQUITECTURA_SLUG[lang]}`,
+  }));
+}
 
 export const ARQUITECTURA_PROMESAS: Record<
   (typeof ARQUITECTURA_KEYS)[number],

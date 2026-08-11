@@ -1,5 +1,5 @@
 ---
-// Prueba en la home (ES).
+// Prueba en la home.
 //
 // Hasta ahora la home hablaba de lo que hacemos y de quién lo dice (testimonios),
 // pero no enseñaba un solo proyecto. Con el reposicionamiento hacia integración,
@@ -32,14 +32,37 @@ const seleccion: Project[] = DESTACADOS.map((slugEs) =>
   projects.find((p) => p.slugs.es === slugEs),
 ).filter(Boolean) as Project[];
 
-const COPY = {
-  badge: "Prueba",
-  title: "Sistemas en producción, no presentaciones",
-  subtitle:
-    "Auditorías, integraciones y automatizaciones funcionando en empresas reales. Cada caso enlaza a lo que se construyó y con qué resultado.",
-  cta: "Ver el caso completo",
-  all: "Ver todos los casos",
-};
+// Trilingüe desde ago/2026, cuando la home de EN/PT adopta la arquitectura
+// nueva. La selección no cambia entre idiomas: los tres proyectos tienen ficha
+// en los tres, y `project.slugs[localeKey]` resuelve la URL de cada uno.
+const COPY_BY_LOCALE = {
+  es: {
+    badge: "Prueba",
+    title: "Sistemas en producción, no presentaciones",
+    subtitle:
+      "Auditorías, integraciones y automatizaciones funcionando en empresas reales. Cada caso enlaza a lo que se construyó y con qué resultado.",
+    cta: "Ver el caso completo",
+    all: "Ver todos los casos",
+  },
+  en: {
+    badge: "Proof",
+    title: "Systems in production, not slide decks",
+    subtitle:
+      "Audits, integrations and automations running inside real companies. Each case links to what was built and what it changed.",
+    cta: "Read the full case",
+    all: "See all cases",
+  },
+  pt: {
+    badge: "Prova",
+    title: "Sistemas em produção, não apresentações",
+    subtitle:
+      "Auditorias, integrações e automações funcionando em empresas reais. Cada caso leva ao que foi construído e com que resultado.",
+    cta: "Ver o caso completo",
+    all: "Ver todos os casos",
+  },
+} as const;
+
+const COPY = COPY_BY_LOCALE[localeKey];
 ---
 
 {seleccion.length > 0 && (

@@ -66,6 +66,10 @@ const CONTENT: Record<string, any> = {
   },
 };
 
+// Ago/2026: los tres idiomas usan la variante secundaria, así que ya no basta
+// con el bloque `es` (el fallback habría servido texto en español a EN y PT).
+// El subtítulo de ES nombra cumplimiento porque el silo existe; EN/PT nombran
+// solo integración y arquitectura, que son sus dos pilares reales.
 const SECONDARY_COPY: Record<string, { badge: string; title: string; subtitle: string; cta: string }> = {
   es: {
     badge: "Capacidades",
@@ -73,6 +77,20 @@ const SECONDARY_COPY: Record<string, { badge: string; title: string; subtitle: s
     subtitle:
       "Las usamos dentro de los proyectos de integración, cumplimiento y arquitectura — y también las prestamos por separado.",
     cta: "Ver servicio",
+  },
+  en: {
+    badge: "Capabilities",
+    title: "The capabilities we build with",
+    subtitle:
+      "We use them inside integration and architecture projects — and we also deliver them on their own.",
+    cta: "View service",
+  },
+  pt: {
+    badge: "Capacidades",
+    title: "As capacidades com que construímos",
+    subtitle:
+      "Usamos dentro dos projetos de integração e arquitetura — e também prestamos separadamente.",
+    cta: "Ver serviço",
   },
 };
 

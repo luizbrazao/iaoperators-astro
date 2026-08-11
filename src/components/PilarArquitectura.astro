@@ -15,7 +15,7 @@
 import {
   getArquitectura,
   ARQUITECTURA_TITLE,
-  ARQUITECTURA_HUB_HREF,
+  arquitecturaHubHref,
   type Loc,
 } from "@/data/servicios";
 
@@ -35,9 +35,12 @@ const loc: Loc = locale === "pt" || locale === "en" ? locale : "es";
 const pasos = getArquitectura(locale);
 const isHub = current === "hub";
 
-// El enlace al pilar solo aparece en las tres páginas hijas y solo en ES:
-// el hub existe únicamente en español y no debe enlazarse a sí mismo.
-const showHubLink = loc === "es" && !isHub;
+// El enlace al pilar aparece en las tres páginas hijas, en los tres idiomas.
+// La condición era `loc === "es"` mientras el hub existía solo en español; desde
+// ago/2026 existe en los tres, con slug localizado. Sigue sin enlazarse a sí
+// mismo: el hub pasa `current="hub"`.
+const hubHref = arquitecturaHubHref(loc);
+const showHubLink = !isHub;
 
 const COPY: Record<
   Loc,
@@ -86,7 +89,7 @@ const c = COPY[loc];
       {showHubLink && (
         <p class="mt-5">
           <a
-            href={ARQUITECTURA_HUB_HREF}
+            href={hubHref}
             class="inline-flex items-center gap-2 text-orange-400 font-medium text-sm hover:underline"
           >
             {c.hubLink}

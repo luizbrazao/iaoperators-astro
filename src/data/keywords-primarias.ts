@@ -269,6 +269,53 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     faixa: "b",
     estimada: true,
   },
+  // Hubs traducidos (ago/2026). Slug localizado, no espejo del español: una URL
+  // en castellano dentro de /en/ contradice la señal de idioma de la ruta.
+  // Cada idioma necesita su propia entrada porque `path` es la ruta sin locale
+  // y aquí NO coincide entre idiomas. Las primarias no chocan —lenguas
+  // distintas, tokens distintos— y son a propósito el equivalente exacto: es la
+  // misma intención servida tres veces, que es lo que resuelve el hreflang
+  // recíproco y no la regla de canibalización.
+  {
+    path: "integration/",
+    locales: ["en"],
+    silo: "integracion",
+    primaria: "systems integration",
+    secundarias: [
+      "enterprise systems integration",
+      "erp integration services",
+      "application integration",
+    ],
+    faixa: "c",
+    estimada: true,
+  },
+  {
+    path: "integracao/",
+    locales: ["pt"],
+    silo: "integracion",
+    primaria: "integração de sistemas",
+    secundarias: ["integração e automação de sistemas", "integração de aplicações"],
+    faixa: "c",
+    estimada: true,
+  },
+  {
+    path: "technology-architecture/",
+    locales: ["en"],
+    silo: "integracion",
+    primaria: "technology architecture",
+    secundarias: ["enterprise technology architecture", "systems architecture consulting"],
+    faixa: "b",
+    estimada: true,
+  },
+  {
+    path: "arquitetura-tecnologica/",
+    locales: ["pt"],
+    silo: "integracion",
+    primaria: "arquitetura tecnológica",
+    secundarias: ["arquitetura de sistemas empresariais", "arquitetura tecnológica empresarial"],
+    faixa: "b",
+    estimada: true,
+  },
   {
     path: "auditoria-de-sistemas/",
     locales: ["es", "en", "pt"],

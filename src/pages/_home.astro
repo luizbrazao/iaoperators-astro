@@ -124,27 +124,28 @@ const metaDescription = meta?.description ?? "";
     <Hero locale={locale} hero={home?.hero ?? {}} />
     <WhyUs why={home?.why ?? {}} industries={home?.industries ?? []} />
 
-    <!-- Orden de la home en ES (fase 1 del reposicionamiento, 2026-08-10):
-         problema → tres pilares → cómo trabajamos → prueba → capacidades.
+    <!-- Orden de la home (fase 1 del reposicionamiento, 2026-08-10):
+         problema → pilares → cómo trabajamos → prueba → capacidades.
          El catálogo de servicios estaba justo debajo de las puertas y era lo
          primero que leía un visitante después del problema: once servicios
          horizontales contando una historia de agencia generalista antes de que
          la de integración/cumplimiento/arquitectura hubiera terminado. Baja
          detrás de la prueba y en variante secundaria, sin perder un solo enlace.
 
-         EN/PT conservan exactamente el orden anterior: no tienen los silos
-         ES-only y su reposicionamiento no es objeto de esta fase. -->
-    {locale === "es" && <SiloDoors />}
-    {locale !== "es" && <ServiceCatalog locale={locale} />}
+         Ago/2026: el mismo orden pasa a EN y PT. La única diferencia entre
+         idiomas vive dentro de <SiloDoors>: la puerta de cumplimiento es
+         ES-only —Verifactu y la Ley 10/2025 son obligaciones españolas— y en
+         EN/PT su lugar lo ocupa el catálogo de servicios. -->
+    <SiloDoors locale={locale} />
 
     <Services services={home?.services ?? {}} />
 
-    {locale === "es" && <HomeCases locale={locale} />}
+    <HomeCases locale={locale} />
 
     <Testimonial testimonial={home?.testimonial ?? {}} socials={socials} ctaHref={`/${locale}/sobre/`} />
     <ClientTestimonials clientTestimonials={home?.clientTestimonials ?? { badge: "", title: "", items: [] }} />
 
-    {locale === "es" && <ServiceCatalog locale={locale} variant="secondary" />}
+    <ServiceCatalog locale={locale} variant="secondary" />
 
     <BlogSection blogSection={home?.blogSection ?? {}} posts={latestPosts} locale={locale} />
     <FAQ faq={faq ?? { items: [] }} />

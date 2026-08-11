@@ -1,0 +1,9 @@
+---
+// English route of the integration hub. Slug declared in INTEGRACION_SLUG
+// (src/data/integracion.ts); content in src/sections/silos/IntegracionHub.astro.
+// The five case pages are still Spanish-only, so this hub renders their cards
+// without links until CASOS_LOCALES includes "en".
+import IntegracionHub from "@/sections/silos/IntegracionHub.astro";
+---
+
+<IntegracionHub locale="en" />

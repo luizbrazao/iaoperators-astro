@@ -2,7 +2,7 @@
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import { getLocale, ui } from "../i18n/ui";
 import { getServiceGroups, hubCtaLabel, SERVICE_HUB_PATH } from "@/data/servicios";
-import { getPilaresEs } from "@/data/navegacion";
+import { getPilares } from "@/data/navegacion";
 
 type Props = { languageLinks?: Array<{ locale: string; href: string }> };
 const { languageLinks } = Astro.props as Props;
@@ -22,9 +22,11 @@ const isEs = locale === "es";
 const serviceGroups = getServiceGroups(locale);
 const hubCta = hubCtaLabel(locale);
 
-// Los tres pilares (ES). Fuente única en src/data/navegacion.ts, que a su vez
-// compone integracion.ts y servicios.ts: aquí no se escribe ningún rótulo nuevo.
-const pilares = isEs ? getPilaresEs() : [];
+// Los pilares del idioma actual. Fuente única en src/data/navegacion.ts, que a
+// su vez compone integracion.ts y servicios.ts: aquí no se escribe ningún
+// rótulo nuevo. Son tres en ES (integración · cumplimiento · arquitectura) y
+// dos en EN/PT, donde el silo de cumplimiento no existe por decisión.
+const pilares = getPilares(locale);
 
 const labels = {
   services: nav?.services ?? "Services",
@@ -49,29 +51,25 @@ const links = {
   youtube: "https://www.youtube.com/@IAOperators",
 };
 
-// En ES el primer nivel son los tres pilares; el catálogo de servicios baja al
-// hub (enlazado desde el menú móvil y desde el footer), porque once servicios
-// en la barra superior contaban una historia de agencia horizontal que ya no es
-// la de la empresa. Los enlaces individuales siguen presentes sitewide en el
-// footer, así que el rastreo no pierde ninguna landing.
+// El primer nivel son los pilares, en los tres idiomas. El catálogo de
+// servicios baja al hub (menú móvil y footer), porque once servicios en la
+// barra superior contaban una historia de agencia horizontal que ya no es la de
+// la empresa. Los enlaces individuales siguen presentes sitewide en el footer,
+// así que el rastreo no pierde ninguna landing.
 //
-// En EN/PT no existen los silos ES-only: la barra se queda como estaba.
-const mobileLinks = isEs
-  ? [
-      ...pilares.map((p) => ({ key: p.key, href: p.href, label: p.label, external: false })),
-      { key: "portfolio", href: links.portfolio, label: labels.portfolio, external: false },
-      { key: "blog", href: links.blog, label: labels.blog, external: false },
-      { key: "servicesHub", href: links.servicesHub, label: hubCta, external: false },
-      { key: "community", href: links.community, label: labels.community, external: true },
-    ]
-  : [
-      { key: "servicesHub", href: links.servicesHub, label: hubCta, external: false },
-      { key: "methodology", href: links.methodology, label: labels.methodology, external: false },
-      { key: "portfolio", href: links.portfolio, label: labels.portfolio, external: false },
-      { key: "community", href: links.community, label: labels.community, external: true },
-      { key: "youtube", href: links.youtube, label: labels.youtube, external: true },
-      { key: "blog", href: links.blog, label: labels.blog, external: false },
-    ];
+// Diferencia entre idiomas: en ES el catálogo NO aparece como desplegable de
+// primer nivel (hay tres pilares y la barra se llenaría); en EN/PT, con dos
+// pilares, el panel de servicios se queda como tercer desplegable. Es la misma
+// decisión que en la home, donde la tercera puerta de EN/PT es el catálogo.
+const showServicesDropdown = !isEs;
+
+const mobileLinks = [
+  ...pilares.map((p) => ({ key: p.key, href: p.href, label: p.label, external: false })),
+  { key: "portfolio", href: links.portfolio, label: labels.portfolio, external: false },
+  { key: "blog", href: links.blog, label: labels.blog, external: false },
+  { key: "servicesHub", href: links.servicesHub, label: hubCta, external: false },
+  { key: "community", href: links.community, label: labels.community, external: true },
+];
 ---
 
 <header class="fixed top-6 left-0 right-0 z-50 flex justify-center pointer-events-none">
@@ -103,8 +101,7 @@ const mobileLinks = isEs
 
       <!-- Desktop navigation -->
       <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-gray-300 whitespace-nowrap">
-        {isEs &&
-          pilares.map((pilar) => (
+        {pilares.map((pilar) => (
             <div class="relative" data-dropdown-root>
               <button
                 type="button"
@@ -150,7 +147,7 @@ const mobileLinks = isEs
             </div>
           ))}
 
-        {!isEs && (
+        {showServicesDropdown && (
           <div class="relative" data-dropdown-root>
             <button
               type="button"
@@ -213,11 +210,10 @@ const mobileLinks = isEs
           </div>
         )}
 
-        {!isEs && (
-          <a href={links.methodology} class="hover:text-white transition-colors">
-            {labels.methodology}
-          </a>
-        )}
+        {/* Metodología sale del primer nivel también en EN/PT, como ya había
+            salido en ES: con dos pilares más el panel de servicios, la barra ya
+            cuenta la jerarquía sin ella. Conserva su enlace sitewide en la
+            columna "Empresa" del footer, así que no queda huérfana. */}
 
         <a href={links.portfolio} class="hover:text-white transition-colors">
           {labels.portfolio}
