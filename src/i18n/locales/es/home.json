@@ -1,12 +1,12 @@
 {
   "meta": {
-    "title": "IA Operators | Integración y automatización de sistemas con IA",
-    "description": "Integramos ERP, TPV, e-commerce y CRM con IA sobre los sistemas que ya usas. Los adaptamos a Verifactu y a la Ley 10/2025. De la estrategia a producción."
+    "title": "IA Operators | Sistemas, automatización e IA para empresas",
+    "description": "Conectamos y automatizamos el stack que ya usas: ERP, TPV, e-commerce, CRM y WhatsApp. Diagnóstico, arquitectura y ejecución hasta producción."
   },
   "hero": {
     "titleHighlight": "Conectamos y automatizamos",
-    "titleRest": "los sistemas que tu empresa ya tiene, y los ponemos en regla.",
-    "subtitle": "Integración y automatización de sistemas para empresas: ERP, TPV, e-commerce, CRM y WhatsApp — con IA donde aporta. Y la adaptación a las obligaciones que te aplican, Verifactu y la Ley 10/2025, sin cambiar de software.",
+    "titleRest": "los sistemas que tu empresa ya tiene para que trabajen como uno.",
+    "subtitle": "Integramos ERP, TPV, e-commerce, CRM y WhatsApp, automatizamos procesos con IA donde aporta y adaptamos el stack existente cuando hacerlo tiene sentido.",
     "cta": "Hablar con un especialista ↗",
     "tech": "Trabajamos con la tecnología que ya usas"
   },
@@ -115,11 +115,11 @@
     "items": [
       {
         "q": "¿Qué hace exactamente IA Operators?",
-        "a": "Somos una firma de integración, automatización y arquitectura tecnológica. Conectamos los sistemas que tu empresa ya usa —ERP, TPV, e-commerce, CRM y WhatsApp—, automatizamos los procesos que hoy son manuales y adaptamos ese stack a las obligaciones que te aplican, como Verifactu y la Ley 10/2025. Alrededor de ese trabajo prestamos las capacidades que usamos en los proyectos: agentes de IA, chatbots, desarrollo web, SEO y marketing digital. El mismo equipo que define la estrategia la implementa hasta producción, sin hand-offs."
+        "a": "Somos una firma de integración, automatización y arquitectura tecnológica. Conectamos los sistemas que tu empresa ya utiliza, automatizamos procesos y ayudamos a ordenar el stack antes de construir sobre él. El trabajo se organiza en tres frentes: integración de sistemas, cumplimiento tecnológico y arquitectura tecnológica. Cuando el proyecto lo requiere utilizamos capacidades como agentes de IA, chatbots, desarrollo web, SEO y automatización. El mismo equipo puede acompañar el proyecto desde el diagnóstico hasta producción, sin hand-offs innecesarios."
       },
       {
         "q": "¿En qué se diferencian de una consultora o de una agencia de IA?",
-        "a": "Las consultoras entregan presentaciones y se van; las agencias de IA construyen lo que les pidas sin diagnóstico previo. Nosotros somos el mismo equipo que diagnostica el problema real y después lo construye."
+        "a": "Nuestro modelo combina diagnóstico y ejecución con el mismo equipo. En lugar de separar estrategia e implementación en proveedores distintos, mantenemos continuidad desde el mapa inicial hasta producción."
       },
       {
         "q": "¿Qué es la Radiografía Digital?",
@@ -127,7 +127,7 @@
       },
       {
         "q": "¿Para qué tipo de empresa están pensados?",
-        "a": "Empresas de 50–500 personas que han crecido acumulando herramientas sin una arquitectura planificada. Sectores: hotelería, salud, servicios profesionales, retail, inmobiliario, manufactura mid-market."
+        "a": "Especialmente empresas de 50–500 personas que han crecido acumulando herramientas sin una arquitectura planificada. Sectores: hotelería, salud, servicios profesionales, retail, inmobiliario, manufactura mid-market."
       },
       {
         "q": "¿Cuánto cuesta una Radiografía Digital?",
@@ -139,7 +139,7 @@
       },
       {
         "q": "¿Tocan la infraestructura que ya tenemos?",
-        "a": "No rompemos lo que funciona. Documentamos primero, integramos después. Las recomendaciones siempre se priorizan por impacto vs. riesgo."
+        "a": "No sustituimos sistemas por defecto. Documentamos primero y recomendamos cambios según impacto, riesgo y dependencia."
       },
       {
         "q": "¿Cómo empezamos?",

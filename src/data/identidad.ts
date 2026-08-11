@@ -187,7 +187,7 @@ export function organizationNode(
 
   const node: Record<string, unknown> = {
     "@context": "https://schema.org",
-    "@type": ["Organization", "ProfessionalService"],
+    "@type": "Organization",
     "@id": ORG_ID,
     name: ORG_NAME,
     legalName: LEGAL.legalName,
