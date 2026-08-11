@@ -10,6 +10,7 @@ export async function getStaticPaths() {
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
 import { getLocale } from "../../../../i18n/ui";
 import RelatedCases from "@/components/RelatedCases.astro";
+import { ORG_REF } from "@/data/identidad";
 
 const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
 
@@ -50,9 +51,9 @@ const CONTENT: Record<string, any> = {
         "Del proceso repetitivo al agente autónomo. Construimos lo que de verdad mueve la aguja.",
       items: [
         { title: "Automatización de procesos", body: "Flujos que conectan tus apps y ejecutan tareas repetitivas sin intervención: altas, validaciones, notificaciones y sincronización de datos." },
-        { title: "Agentes de IA", body: "Agentes y sistemas multi-agente que razonan, deciden y actúan sobre tus herramientas: clasifican, responden, resumen y escalan cuando hace falta." },
-        { title: "Integraciones API a medida", body: "Conectamos CRM, ERP, WhatsApp, email y cualquier SaaS con API. Arquitectura API-first, sin parches manuales." },
-        { title: "Chatbots y asistentes virtuales", body: "Asistentes en WhatsApp y web que atienden, cualifican y reservan 24/7, integrados con tu operación real." },
+        { title: "Agentes de IA", body: "Agentes y sistemas multi-agente que razonan, deciden y actúan sobre tus herramientas: clasifican, responden, resumen y escalan cuando hace falta.", href: "/es/servicios/agentes-de-ia/", linkLabel: "Ver servicio de agentes de IA →" },
+        { title: "Integraciones API a medida", body: "Cuando una automatización necesita actuar sobre tu CRM, ERP, WhatsApp u otro SaaS, construimos la integración necesaria para ejecutarla. Si tu necesidad principal es conectar sistemas sin una capa de IA, tienes nuestro servicio de integración de sistemas.", href: "/es/integracion/", linkLabel: "Ver servicio de integración de sistemas →" },
+        { title: "Chatbots y asistentes virtuales", body: "Asistentes en WhatsApp y web que atienden, cualifican y reservan 24/7, integrados con tu operación real.", href: "/es/servicios/chatbots/", linkLabel: "Ver servicio de chatbots →" },
         { title: "Automatización de ventas y CRM", body: "Captación, seguimiento y nurturing automáticos: el lead entra, se cualifica y llega caliente al comercial." },
         { title: "Reporting e insights", body: "Dashboards y reportes que se actualizan solos, con la IA resumiendo lo que importa para decidir." },
       ],
@@ -76,10 +77,10 @@ const CONTENT: Record<string, any> = {
     faq: {
       title: "Preguntas frecuentes",
       items: [
-        { q: "¿Qué procesos puedo automatizar con IA?", a: "Casi cualquier proceso repetitivo basado en reglas o en texto: atención al cliente, cualificación de leads, entrada de datos, generación de informes, seguimiento comercial o clasificación de correos y documentos. En el diagnóstico priorizamos los de mayor impacto." },
-        { q: "¿Usáis herramientas no-code o desarrollo a medida?", a: "Lo que el problema pida. Empezamos con n8n y flujos LLM-first cuando aportan velocidad, y bajamos a código a medida (Node/TypeScript, APIs) cuando hace falta control, escala o lógica compleja. Evitamos reglas rígidas si una IA lo resuelve mejor." },
+        { q: "¿Qué procesos puedo automatizar con IA?", a: "Muchos procesos repetitivos basados en reglas, documentos o texto: atención al cliente, cualificación de leads, entrada de datos, generación de informes, seguimiento comercial o clasificación de correos y documentos. En el diagnóstico priorizamos los de mayor impacto." },
+        { q: "¿Usáis herramientas no-code o desarrollo a medida?", a: "Lo que el problema pida. Empezamos con n8n y flujos LLM-first cuando aportan velocidad, y bajamos a código a medida (Node/TypeScript, APIs) cuando hace falta control, escala o lógica compleja. Usamos modelos cuando hace falta interpretar información no estructurada y reglas explícitas cuando la decisión debe ser determinista y auditable." },
         { q: "¿n8n, Make o Zapier?", a: "Trabajamos sobre todo con n8n por su flexibilidad, self-hosting y coste a escala. Integramos Make o Zapier si ya forman parte de tu stack. Elegimos por arquitectura, no por moda." },
-        { q: "¿Es seguro para los datos de mi empresa?", a: "Sí. Diseñamos con estado persistente controlado, permisos mínimos y, cuando el caso lo exige, modelos privados o self-hosted para que tus datos no salgan de tu entorno." },
+        { q: "¿Es seguro para los datos de mi empresa?", a: "Depende de la arquitectura y de los datos que procese el flujo. Diseñamos cada automatización con permisos mínimos, control del estado y una política explícita sobre qué información puede salir a servicios externos. Cuando el caso lo requiere, podemos utilizar modelos privados o componentes self-hosted para mantener determinados datos dentro del entorno controlado por el cliente." },
         { q: "¿Cuánto tarda una automatización?", a: "Un primer flujo de valor suele estar en producción en semanas, no meses. Trabajamos por fases: entregamos algo funcionando pronto y ampliamos desde ahí." },
         { q: "¿Cómo empezamos?", a: "Una llamada de 30 minutos para entender tu proceso. Si hay encaje, te proponemos un primer caso de automatización con alcance y resultado claros." },
       ],
@@ -241,32 +242,40 @@ const contactHref = `/${locale}/contact/`;
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const pageUrl = new URL(`/${locale}/servicios/automatizacion-ia/`, site).toString();
+const homeUrl = new URL(`/${locale}/`, site).toString();
+// `/[locale]/servicios/` es una ruta real e indexable (src/pages/[locale]/servicios/index.astro),
+// así que el breadcrumb usa la jerarquía de tres niveles en vez de saltar directo del inicio.
+const serviciosUrl = new URL(`/${locale}/servicios/`, site).toString();
 
-const providerSchema = {
-  "@type": ["Organization", "ProfessionalService"],
-  name: "IA Operators",
-  url: site,
-  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
-  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
-};
+// serviceType solo se traduce al español porque es lo único que pide esta
+// corrección (checklist del brief); pt/en mantienen el valor que ya tenían
+// para no tocar contenido en esos idiomas.
+const serviceTypeByLoc = locale === "es" ? "Automatización con inteligencia artificial" : "AI automation and workflow automation";
 
 const serviceJsonLd = {
   "@context": "https://schema.org",
   "@type": "Service",
+  "@id": `${pageUrl}#service`,
   name: c.hero.title,
-  serviceType: "AI automation and workflow automation",
-  provider: providerSchema,
+  serviceType: serviceTypeByLoc,
+  // Organization global única (src/data/identidad.ts): antes este bloque
+  // redefinía "IA Operators" entero como ["Organization","ProfessionalService"]
+  // con un logo de 32px y una URL con doble slash. Un solo nodo de Organization
+  // en todo el grafo, citado por @id.
+  provider: ORG_REF,
   areaServed: ["ES", "PT", "BR", "US", "GB"],
   description: c.meta.description,
   url: pageUrl,
+  inLanguage: locale === "pt" ? "pt-BR" : locale === "en" ? "en-US" : "es-ES",
 };
 
 const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio", item: `${site}/${locale}/` },
-    { "@type": "ListItem", position: 2, name: c.breadcrumb, item: pageUrl },
+    { "@type": "ListItem", position: 1, name: locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio", item: homeUrl },
+    { "@type": "ListItem", position: 2, name: locale === "pt" ? "Serviços" : locale === "en" ? "Services" : "Servicios", item: serviciosUrl },
+    { "@type": "ListItem", position: 3, name: c.breadcrumb, item: pageUrl },
   ],
 };
 
@@ -347,6 +356,11 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
                 <h3 class="text-xl font-semibold text-white">{item.title}</h3>
               </div>
               <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
+              {item.href && (
+                <a href={item.href} class="inline-block mt-3 text-orange-400 text-sm font-medium hover:underline">
+                  {item.linkLabel}
+                </a>
+              )}
             </div>
           ))}
         </div>
@@ -393,8 +407,24 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
     </section>
 
     <!-- Prueba contextual: los casos que respaldan esta página.
-         La lista sale de `provesFor` en src/data/projects.ts, no de aquí. -->
-    <RelatedCases path="servicios/automatizacion-ia/" locale={locale} />
+         La lista sale de `provesFor` en src/data/projects.ts, no de aquí.
+         Override solo en ES: el proyecto id 2 (chatbot de reservas turísticas)
+         mostraba "100%" como si fuera una tasa medida, cuando el propio caso
+         (src/i18n/locales/es/projects.json, tourBooking) documenta que es un
+         precio calculado con reglas determinísticas, no una métrica de
+         precisión observada. Se corrige aquí, no en la fuente compartida,
+         porque ese mismo dato también se usa en /es/servicios/chatbots/ y en
+         el hub de integración, fuera del alcance de esta tarea. -->
+    <RelatedCases
+      path="servicios/automatizacion-ia/"
+      locale={locale}
+      overrides={locale === "es" ? {
+        2: {
+          tagline: "Atención y reservas 24/7 con el precio calculado mediante reglas deterministas — basado en variables reales (barco, temporada, experiencia, duración y personas).",
+          metric: { value: "Determinista", label: "Precio calculado con reglas reales" },
+        },
+      } : undefined}
+    />
 
     <!-- FAQ -->
     <section class="px-4 py-20">

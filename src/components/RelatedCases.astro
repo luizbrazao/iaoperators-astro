@@ -14,6 +14,16 @@
 import { projects, type Project } from "@/data/projects";
 import { createT } from "@/i18n/t";
 
+type CardOverride = {
+  /** Sustituye el tagline traducido de ese proyecto solo en esta invocación. */
+  tagline?: string;
+  /**
+   * Sustituye el métrico destacado (`metrics[0]`) solo en esta invocación.
+   * `null` lo oculta en vez de mostrar uno.
+   */
+  metric?: { value: string; label: string } | null;
+};
+
 type Props = {
   /** Ruta sin locale ni barra inicial, p. ej. "servicios/agencia-seo/". */
   path: string;
@@ -26,9 +36,18 @@ type Props = {
    * comportamiento es idéntico al de siempre.
    */
   order?: string[];
+  /**
+   * Overrides de copy puntuales, keyed por `Project.id`, para cuando el
+   * tagline o la métrica por defecto de un caso no encajan con la landing
+   * concreta desde la que se enlaza (p. ej. una cifra que en un sitio se lee
+   * como tasa medida y en otro necesita matizarse). Sin este prop el
+   * comportamiento es idéntico al de siempre en cualquier otra página que
+   * use este mismo caso.
+   */
+  overrides?: Record<number, CardOverride>;
 };
 
-const { path, locale, limit, order } = Astro.props as Props;
+const { path, locale, limit, order, overrides } = Astro.props as Props;
 
 const t = await createT(locale, { namespaces: ["projects"] });
 
@@ -98,7 +117,16 @@ if (limit) matches = matches.slice(0, limit);
       >
         {matches.map((project) => {
           const href = `/${localeKey}/portfolio/${project.slugs[localeKey]}/`;
-          const metric = project.metrics?.[0];
+          const override = overrides?.[project.id];
+          const tagline = override?.tagline ?? t(project.taglineKey);
+          const hasMetricOverride = override && "metric" in override;
+          const metricValue = hasMetricOverride ? override!.metric?.value : project.metrics?.[0]?.value;
+          const metricLabel = hasMetricOverride
+            ? override!.metric?.label
+            : project.metrics?.[0]
+              ? t(project.metrics[0].labelKey)
+              : undefined;
+          const metric = metricValue && metricLabel ? { value: metricValue, label: metricLabel } : null;
           return (
             <a
               href={href}
@@ -111,14 +139,14 @@ if (limit) matches = matches.slice(0, limit);
                 {t(project.titleKey)}
               </h3>
               <p class="text-gray-400 text-sm leading-relaxed mb-5 flex-1">
-                {t(project.taglineKey)}
+                {tagline}
               </p>
 
               {metric && (
                 <p class="mb-5 flex items-baseline gap-2">
                   <span class="text-2xl font-bold text-white tabular-nums">{metric.value}</span>
                   <span class="text-xs text-gray-500 uppercase tracking-wider">
-                    {t(metric.labelKey)}
+                    {metric.label}
                   </span>
                 </p>
               )}
