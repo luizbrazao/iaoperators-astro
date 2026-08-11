@@ -43,7 +43,7 @@ export interface CasoIntegracion {
    * "Preguntas de este caso", "Otros casos"). Sin ellos se usan los del idioma,
    * así el cambio de un caso no arrastra a sus hermanos ni a otros idiomas.
    */
-  labels?: { puentesTitle?: string; faqTitle?: string; otros?: string };
+  labels?: { back?: string; puentesTitle?: string; faqTitle?: string; otros?: string };
   intro: string;
   /** La señal por la que se reconoce el problema desde fuera. */
   sintoma: string;

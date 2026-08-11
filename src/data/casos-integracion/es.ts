@@ -98,6 +98,7 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
     serviceType: "Integración de ERP",
     heroCta: { label: "Cuéntanos qué ERP utilizas →", href: "/es/contact/" },
     labels: {
+      back: "← Integración de sistemas",
       puentesTitle: "Relacionado con la integración de ERP",
       faqTitle: "Preguntas frecuentes sobre integración de ERP",
       otros: "Otras integraciones",
@@ -151,7 +152,7 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
       {
         href: "/es/cumplimiento/verifactu/erp-a-medida/",
         label: "Verifactu sobre un ERP propio",
-        body: "Si tu ERP factura, el reglamento de facturación te alcanza en 2027. Es la integración con fecha límite.",
+        body: "Si tu sistema de facturación está sujeto al RRSIF, deberá adaptarse a los requisitos aplicables en 2027. Es una integración con calendario regulatorio.",
       },
       {
         href: "/es/auditoria-de-sistemas/",
