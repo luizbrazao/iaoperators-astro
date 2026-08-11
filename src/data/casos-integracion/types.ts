@@ -44,6 +44,12 @@ export interface CasoIntegracion {
    * así el cambio de un caso no arrastra a sus hermanos ni a otros idiomas.
    */
   labels?: { back?: string; puentesTitle?: string; faqTitle?: string; otros?: string };
+  /**
+   * Explicación breve para lectores no técnicos, entre el hero y "Cómo se
+   * reconoce desde fuera". Sin ella no se renderiza la sección (opt-in por
+   * caso, no cambia el comportamiento de los que no la declaran).
+   */
+  queEs?: { title: string; p1: string; p2: string };
   intro: string;
   /** La señal por la que se reconoce el problema desde fuera. */
   sintoma: string;

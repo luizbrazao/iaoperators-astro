@@ -374,23 +374,44 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
   },
 
   "api-y-webhooks": {
-    nombre: "Equipos técnicos que conectan aplicaciones",
+    nombre: "Empresas que necesitan conectar aplicaciones y sistemas",
     nombreCorto: "APIs y webhooks",
-    metaTitle: "Integraciones por API y webhooks a medida",
+    // El H1 se queda como está (gancho comercial); el title pasa a nombrar la
+    // intención "integración de APIs y webhooks" tal cual se busca.
+    metaTitle: "Integración de APIs y webhooks a medida",
     metaDescription:
       "Conectamos aplicaciones por API y webhooks con idempotencia, reintentos, firma y estado observable. Lo que no tiene API, se resuelve por otra vía.",
     h1: "Integraciones por API y webhooks a medida",
+    schemaName: "Integración de APIs y webhooks a medida",
+    serviceType: "Integración de APIs y webhooks",
+    heroCta: { label: "Cuéntanos qué sistemas quieres conectar →", href: "/es/contact/" },
+    labels: {
+      back: "← Integración de sistemas",
+      puentesTitle: "Relacionado con APIs y webhooks",
+      faqTitle: "Preguntas frecuentes sobre APIs y webhooks",
+      otros: "Otras integraciones",
+    },
+    queEs: {
+      title: "Qué es una integración por API y webhooks",
+      p1: "Una integración por API permite que dos aplicaciones intercambien datos y ejecuten acciones de forma controlada. Los webhooks añaden la parte reactiva: un sistema avisa al otro cuando ocurre un evento, sin necesidad de consultarlo constantemente.",
+      p2: "En producción, conectar dos endpoints es solo el principio. La integración también tiene que gestionar duplicados, reintentos, errores, límites de llamadas, seguridad y trazabilidad para que un fallo de un tercero no termine afectando a la operación.",
+    },
+    // TODO SEO/PROOF: añadir case real de integración por API/webhooks cuando
+    // exista uno publicable. Revisado 2026-08-11: ChatPlug (WhatsApp↔Altegio) y
+    // el chatbot de reservas turísticas son agentes conversacionales, no casos
+    // de ingeniería de API/webhooks (sin colas, idempotencia, DLQ o rate limit
+    // documentados en su copy publicado). No forzar el ajuste.
     intro:
       "Casi cualquiera monta hoy una integración que funciona el primer día. Lo difícil es que siga funcionando el día que el otro extremo tarda diez segundos en responder, devuelve un error a mitad de un lote o reenvía el mismo evento tres veces.",
     sintoma:
       "La integración «va bien» pero cada dos semanas alguien pregunta por un pedido que no llegó. Nadie sabe responder sin abrir la base de datos, porque no hay un sitio donde mirar qué pasó con ese mensaje concreto.",
     porQue: {
       title: "Por qué una herramienta no-code no siempre basta",
-      body: "Las plataformas de automatización visual resuelven muy bien el 80 % de los casos, y las usamos a diario. Dejan de bastar en tres situaciones concretas: cuando el volumen hace que el precio por ejecución deje de tener sentido, cuando hace falta una transacción real entre dos pasos, y cuando la lógica de error es más compleja que la lógica de negocio. Ese último caso es más frecuente de lo que parece —lo que se tarda en construir no es el camino feliz, es todo lo demás—. La decisión correcta rara vez es «todo a medida»: suele ser dejar en la herramienta lo que le corresponde y sacar a código las dos o tres piezas que la desbordan.",
+      body: "Las plataformas de automatización visual resuelven muy bien una gran parte de las integraciones, y las usamos a diario. Dejan de bastar en tres situaciones concretas: cuando el volumen hace que el precio por ejecución deje de tener sentido, cuando hace falta una transacción real entre dos pasos, y cuando la lógica de error es más compleja que la lógica de negocio. Ese último caso es más frecuente de lo que parece —lo que se tarda en construir no es el camino feliz, es todo lo demás—. La decisión correcta rara vez es «todo a medida»: suele ser dejar en la herramienta lo que le corresponde y sacar a código las dos o tres piezas que la desbordan.",
     },
     patrones: [
       {
-        title: "Entrega al menos una vez, procesamiento exactamente una vez",
+        title: "Entrega al menos una vez, procesamiento idempotente",
         body: "Prácticamente ningún emisor de webhooks garantiza entrega única. Lo que hay que construir en el receptor es la capacidad de reconocer el evento repetido y descartarlo, guardando la clave del evento con la operación en la misma transacción.",
         riesgo:
           "Sin eso, un reintento del emisor genera un cobro duplicado, un pedido duplicado o un correo enviado dos veces. Y el emisor reintenta más veces de las que uno espera.",
