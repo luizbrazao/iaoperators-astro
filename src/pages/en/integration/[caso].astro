@@ -1,5 +1,5 @@
 ---
-// Rutas de los cinco casos en español.
+// English routes for the five integration cases.
 //
 // El slug público sale de CASO_SLUG_BY_LOC (src/data/integracion.ts) y la clave
 // canónica se resuelve con casoKeyFromSlug, así que una ruta de otro idioma
@@ -9,10 +9,10 @@ import CasoIntegracion from "@/sections/silos/CasoIntegracion.astro";
 import { CASO_SLUGS, CASO_SLUG_BY_LOC, casoKeyFromSlug, type CasoKey } from "@/data/integracion";
 
 export function getStaticPaths() {
-  return CASO_SLUGS.map((key) => ({ params: { caso: CASO_SLUG_BY_LOC["es"][key] } }));
+  return CASO_SLUGS.map((key) => ({ params: { caso: CASO_SLUG_BY_LOC["en"][key] } }));
 }
 
-const casoKey = casoKeyFromSlug("es", Astro.params.caso as string) as CasoKey;
+const casoKey = casoKeyFromSlug("en", Astro.params.caso as string) as CasoKey;
 ---
 
-<CasoIntegracion locale="es" casoKey={casoKey} />
+<CasoIntegracion locale="en" casoKey={casoKey} />

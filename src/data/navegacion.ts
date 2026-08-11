@@ -20,10 +20,12 @@
 // caso de integración, aparece aquí solo.
 
 import {
-  CASOS as CASOS_INTEGRACION,
-  CASO_SLUGS as INTEGRACION_SLUGS,
+  getCasos,
+  casoHref,
+  CASO_SLUGS,
   integracionHref,
   hayCasos,
+  type CasoKey,
   type Loc,
 } from "@/data/integracion";
 import {
@@ -113,33 +115,34 @@ function servicio(locale: string, key: string): NavChild | null {
 }
 
 function integracionChildren(locale: string): NavChild[] {
-  const base = integracionHref(locale);
-
   // Automatización no es un caso del silo: vive como landing de servicio y se
   // enlaza aquí porque, para quien navega, es parte de la misma pregunta.
   const automatizacion = servicio(locale, "automation");
 
   if (!hayCasos(locale)) {
-    // EN/PT mientras los cinco casos sigan sin traducir. Enlazar aquí
-    // `/es/integracion/erp/` sería mandar a un inglés a una página en español,
-    // así que el panel se apoya en las landings que sí son trilingües. En
-    // cuanto `CASOS_LOCALES` incluya el idioma, este `if` deja de aplicarse y
-    // los cinco casos aparecen solos.
+    // Salvaguarda para un idioma futuro con hub traducido y casos sin traducir
+    // (fue el estado de EN/PT durante la fase 3). Enlazar `/es/integracion/erp/`
+    // desde /en/ sería mandar a un lector a otra lengua, así que el panel se
+    // apoya en las landings trilingües. En cuanto `CASOS_LOCALES` incluya el
+    // idioma, este `if` deja de aplicarse y los cinco casos aparecen solos.
     return [automatizacion, servicio(locale, "chatbots")].filter(Boolean) as NavChild[];
   }
 
-  const ordenados = INTEGRACION_ORDEN.filter((slug) =>
-    (INTEGRACION_SLUGS as readonly string[]).includes(slug),
-  );
+  const casos = getCasos(locale);
+  const ordenados = INTEGRACION_ORDEN.filter((key) =>
+    (CASO_SLUGS as readonly string[]).includes(key),
+  ) as readonly CasoKey[];
 
-  const desdeDatos: NavChild[] = ordenados.map((slug) => ({
-    label: CASOS_INTEGRACION[slug].nombreCorto,
-    href: `${base}${slug}/`,
+  const desdeDatos: NavChild[] = ordenados.map((key) => ({
+    label: casos[key].nombreCorto,
+    href: casoHref(locale, key),
   }));
 
   if (!automatizacion) return desdeDatos;
 
-  const legadosIndex = desdeDatos.findIndex((c) => c.href.endsWith("/sistemas-legados/"));
+  // Automatización entra justo antes de sistemas legados, que cierra la lista.
+  const legadosHref = casoHref(locale, "sistemas-legados");
+  const legadosIndex = desdeDatos.findIndex((c) => c.href === legadosHref);
   if (legadosIndex === -1) return [...desdeDatos, automatizacion];
 
   return [

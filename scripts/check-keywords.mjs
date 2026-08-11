@@ -35,15 +35,23 @@ const dim = (s) => `\x1b[2m${s}\x1b[0m`;
 // regulares para que el script no necesite ni tsx ni un paso de build.
 const source = readFileSync(REGISTRY, "utf8");
 
+// El cuerpo entero de la entrada se captura en un solo grupo y los campos se
+// extraen de él. Antes se capturaba solo lo que venía DESPUÉS de `primaria:`, y
+// como `locales:` se declara antes, `e.locales` salía siempre vacío. No se notó
+// mientras nada usaba ese campo; desde que las comprobaciones son por idioma
+// (silo de integración traducido, ago/2026) habría metido a todas las rutas en
+// los tres idiomas y dado falsos positivos de canibalización.
 const entries = [];
-const entryRe = /\{\s*(?:\/\/[^\n]*\n\s*)*path:\s*"([^"]+)"[\s\S]*?primaria:\s*"([^"]+)"([\s\S]*?)\n  \}/g;
+const entryRe = /\{\s*(?:\/\/[^\n]*\n\s*)*path:\s*"([^"]+)"([\s\S]*?)\n  \}/g;
 for (const m of source.matchAll(entryRe)) {
-  const [, path, primaria, rest] = m;
-  const secBlock = rest.match(/secundarias:\s*\[([\s\S]*?)\]/);
+  const [, path, body] = m;
+  const primaria = body.match(/primaria:\s*"([^"]+)"/)?.[1];
+  if (!primaria) continue;
+  const secBlock = body.match(/secundarias:\s*\[([\s\S]*?)\]/);
   const secundarias = secBlock
     ? [...secBlock[1].matchAll(/"([^"]+)"/g)].map((x) => x[1])
     : [];
-  const localesBlock = rest.match(/locales:\s*\[([\s\S]*?)\]/);
+  const localesBlock = body.match(/locales:\s*\[([\s\S]*?)\]/);
   const locales = localesBlock
     ? [...localesBlock[1].matchAll(/"([^"]+)"/g)].map((x) => x[1])
     : [];
@@ -63,30 +71,56 @@ if (entries.length === 0) {
 const errors = [];
 const warnings = [];
 
-// --- 2. Primarias duplicadas --------------------------------------------
-const byPrimaria = new Map();
+// --- 2. Primarias duplicadas, DENTRO DE CADA IDIOMA ----------------------
+//
+// La comprobación era global y eso dejó de ser correcto cuando el silo de
+// integración se tradujo (ago/2026): `/es/integracion/whatsapp-business-api/` y
+// `/en/integration/whatsapp-business-api/` declaran la misma primaria —
+// "whatsapp business api" es una marca, no se traduce— y no compiten entre sí:
+// son la misma intención servida en dos idiomas, que es justo lo que resuelve
+// el hreflang recíproco. Canibalización es dos URLs del MISMO idioma peleando
+// por la misma query, así que el índice se construye por idioma.
+//
+// Una ruta declarada en varios idiomas entra en el índice de cada uno.
+const LOCALES = ["es", "en", "pt"];
+
+/** Map<locale, Map<keywordNormalizada, path[]>> */
+const byPrimariaPorLocale = new Map(LOCALES.map((l) => [l, new Map()]));
+
 for (const e of entries) {
   const key = normalize(e.primaria);
-  if (!byPrimaria.has(key)) byPrimaria.set(key, []);
-  byPrimaria.get(key).push(e.path);
+  const locales = e.locales.length ? e.locales : LOCALES;
+  for (const loc of locales) {
+    const index = byPrimariaPorLocale.get(loc);
+    if (!index) continue;
+    if (!index.has(key)) index.set(key, []);
+    index.get(key).push(e.path);
+  }
 }
-for (const [kw, paths] of byPrimaria) {
-  if (paths.length > 1) {
-    errors.push(
-      `Keyword primaria duplicada: "${kw}"\n    → ${paths.join("\n    → ")}`,
-    );
+
+for (const [loc, index] of byPrimariaPorLocale) {
+  for (const [kw, paths] of index) {
+    if (paths.length > 1) {
+      errors.push(
+        `Keyword primaria duplicada en "${loc}": "${kw}"\n    → ${paths.join("\n    → ")}`,
+      );
+    }
   }
 }
 
 // --- 3. Primaria de una ruta usada como secundaria de otra ---------------
+// También por idioma, y por la misma razón.
 for (const e of entries) {
+  const locales = e.locales.length ? e.locales : LOCALES;
   for (const sec of e.secundarias) {
-    const owner = byPrimaria.get(normalize(sec));
-    if (owner && !owner.includes(e.path)) {
-      errors.push(
-        `"${sec}" es primaria de ${owner[0]} y secundaria de ${e.path}.\n` +
-          `    Quítala de las secundarias o cambia la primaria de una de las dos.`,
-      );
+    for (const loc of locales) {
+      const owner = byPrimariaPorLocale.get(loc)?.get(normalize(sec));
+      if (owner && !owner.includes(e.path)) {
+        errors.push(
+          `[${loc}] "${sec}" es primaria de ${owner[0]} y secundaria de ${e.path}.\n` +
+            `    Quítala de las secundarias o cambia la primaria de una de las dos.`,
+        );
+      }
     }
   }
 }
@@ -122,9 +156,18 @@ function jaccard(a, b) {
 // ("... energía" vs "... telecomunicaciones", "... madrid" vs "... barcelona":
 // Jaccard 0,6) y conserva los pares que son el mismo concepto escrito de dos
 // formas ("agencia de ia" vs "agencia de inteligencia artificial": 1,0).
+//
+// Igual que las dos comprobaciones anteriores, el aviso solo tiene sentido
+// entre rutas que compiten en la misma SERP: dos idiomas distintos no compiten.
 const SIMILARITY_THRESHOLD = 0.8;
+const compartenIdioma = (a, b) => {
+  const la = a.locales.length ? a.locales : LOCALES;
+  const lb = b.locales.length ? b.locales : LOCALES;
+  return la.some((l) => lb.includes(l));
+};
 for (let i = 0; i < entries.length; i++) {
   for (let j = i + 1; j < entries.length; j++) {
+    if (!compartenIdioma(entries[i], entries[j])) continue;
     const a = tokens(entries[i].primaria);
     const b = tokens(entries[j].primaria);
     const subsetAB = [...a].every((x) => b.has(x)) && a.size < b.size;
@@ -237,10 +280,36 @@ function expandDynamic(route) {
   // Se indexa por RUTA, no por nombre de parámetro: dos silos distintos usan
   // "[caso]" y con un mapa por parámetro el segundo heredaba los slugs del
   // primero, generando rutas inexistentes y falsos "sin declarar".
+  // El silo de integración se sirve en tres idiomas con slugs distintos, así
+  // que sus rutas dinámicas no se expanden desde una lista plana sino desde
+  // `CASO_SLUG_BY_LOC` (src/data/integracion.ts), leyendo el bloque del idioma
+  // que corresponde a cada ruta. Sin esto, `/en/integration/api-and-webhooks/`
+  // se declararía como ruta inexistente y `api-y-webhooks` como huérfana.
+  const CASO_HUB_POR_IDIOMA = [
+    ["integracion/[caso]", "es"],
+    ["integration/[caso]", "en"],
+    ["integracao/[caso]", "pt"],
+  ];
+  const casoEntry = CASO_HUB_POR_IDIOMA.find(([match]) => route.includes(match));
+  if (casoEntry) {
+    const [match, loc] = casoEntry;
+    try {
+      const src = readFileSync(join(ROOT, "src", "data", "integracion.ts"), "utf8");
+      const table = src.match(/CASO_SLUG_BY_LOC[^=]*=\s*\{([\s\S]*?)\n\};/);
+      if (!table) return null;
+      const block = table[1].match(new RegExp(`\\b${loc}:\\s*\\{([\\s\\S]*?)\\}`));
+      if (!block) return null;
+      const slugs = [...block[1].matchAll(/:\s*"([^"]+)"/g)].map((x) => x[1]);
+      if (slugs.length === 0) return null;
+      return slugs.map((slug) => route.replace(match.slice(match.indexOf("[")), slug));
+    } catch {
+      return null;
+    }
+  }
+
   const sources = [
     ["cumplimiento/ley-atencion-al-cliente/[sector]", "sectores-sac.ts", "SECTOR_SLUGS"],
     ["cumplimiento/verifactu/[caso]", "verifactu.ts", "CASO_SLUGS"],
-    ["integracion/[caso]", "integracion.ts", "CASO_SLUGS"],
     ["[ciudad]", "ciudades-ia.ts", "CIUDAD_SLUGS"],
   ];
   const entry = sources.find(([match]) => route.includes(match));

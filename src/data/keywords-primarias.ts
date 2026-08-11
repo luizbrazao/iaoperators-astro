@@ -252,6 +252,107 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     faixa: "c",
     estimada: true,
   },
+
+  // ----- Los cinco casos traducidos (fase 4, ago/2026) ---------------------
+  //
+  // El slug se localiza salvo cuando es sigla o nombre de producto: `erp`,
+  // `crm` y `whatsapp-business-api` son idénticos en los tres idiomas porque
+  // traducirlos inventaría una query que nadie escribe.
+  //
+  // `whatsapp business api` es primaria de la ruta española Y de la inglesa. No
+  // es canibalización: son la misma intención en dos idiomas, resuelta por
+  // hreflang recíproco. El gate `check:keywords` compara por idioma desde esta
+  // fase precisamente por este caso — antes habría fallado el build.
+  {
+    path: "integration/erp/",
+    locales: ["en"],
+    silo: "integracion",
+    primaria: "erp integration",
+    secundarias: ["connect erp", "erp integration services", "integrate erp with ecommerce"],
+    faixa: "c",
+    estimada: true,
+  },
+  {
+    path: "integration/crm/",
+    locales: ["en"],
+    silo: "integracion",
+    primaria: "crm integration",
+    secundarias: ["integrate crm with erp", "crm automation", "sync crm and erp"],
+    faixa: "c",
+    estimada: true,
+  },
+  {
+    path: "integration/whatsapp-business-api/",
+    locales: ["en"],
+    silo: "integracion",
+    primaria: "whatsapp business api",
+    secundarias: ["whatsapp business api integration", "automate whatsapp", "whatsapp api pricing"],
+    faixa: "d",
+    estimada: true,
+  },
+  {
+    path: "integration/api-and-webhooks/",
+    locales: ["en"],
+    silo: "integracion",
+    primaria: "api integration",
+    secundarias: ["webhooks", "custom api integration", "connect applications by api"],
+    faixa: "c",
+    estimada: true,
+  },
+  {
+    path: "integration/legacy-systems/",
+    locales: ["en"],
+    silo: "integracion",
+    primaria: "legacy system modernization",
+    secundarias: ["legacy system integration", "modernize legacy software", "custom software development"],
+    faixa: "c",
+    estimada: true,
+  },
+  {
+    path: "integracao/erp/",
+    locales: ["pt"],
+    silo: "integracion",
+    primaria: "integração de erp",
+    secundarias: ["conectar erp", "integrar erp com ecommerce", "integração de sistemas erp"],
+    faixa: "c",
+    estimada: true,
+  },
+  {
+    path: "integracao/crm/",
+    locales: ["pt"],
+    silo: "integracion",
+    primaria: "integrar crm com erp",
+    secundarias: ["automatizar crm", "integração de crm", "sincronizar crm e erp"],
+    faixa: "c",
+    estimada: true,
+  },
+  {
+    path: "integracao/whatsapp-business-api/",
+    locales: ["pt"],
+    silo: "integracion",
+    primaria: "api do whatsapp business",
+    secundarias: ["whatsapp business api", "automatizar whatsapp", "integrar whatsapp com crm"],
+    faixa: "d",
+    estimada: true,
+  },
+  {
+    path: "integracao/api-e-webhooks/",
+    locales: ["pt"],
+    silo: "integracion",
+    primaria: "integração de api",
+    secundarias: ["webhooks", "integração via api", "conectar aplicações por api"],
+    faixa: "c",
+    estimada: true,
+  },
+  {
+    path: "integracao/sistemas-legados/",
+    locales: ["pt"],
+    silo: "integracion",
+    primaria: "modernizar sistema legado",
+    secundarias: ["integrar software antigo", "sistema legado", "desenvolvimento sob medida"],
+    faixa: "c",
+    estimada: true,
+  },
   {
     // Hub del pilar (fase 2). Frontera declarada con sus tres hijas: aquí la
     // disciplina —cómo debe estar organizada la tecnología—, allí el servicio

@@ -21,7 +21,14 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import RelatedCases from "@/components/RelatedCases.astro";
 import { ORG_REF } from "@/data/identidad";
-import { integracionHref, integracionAlternates, hayCasos, type Loc } from "@/data/integracion";
+import {
+  integracionHref,
+  integracionAlternates,
+  casoHref,
+  hayCasos,
+  type CasoKey,
+  type Loc,
+} from "@/data/integracion";
 import { HUB_INTEGRACION, type CapacidadHub } from "@/data/hub-integracion";
 
 type Props = { locale: Loc };
@@ -42,13 +49,15 @@ const conCasos = hayCasos(locale);
 
 /**
  * Destino de cada tarjeta de capacidad.
- * `automatizacion` apunta a su landing de servicio, que es trilingüe. Los otros
- * cinco son hijos del silo y solo existen en español: fuera de ES devuelven
- * `null` y la tarjeta se renderiza sin enlace.
+ * `automatizacion` apunta a su landing de servicio. Los otros cinco son hijos
+ * del silo: `casoHref` resuelve el slug del idioma (que no siempre coincide con
+ * la clave: `api-y-webhooks` es `api-and-webhooks` en inglés). Si un idioma no
+ * tuviera los casos traducidos, la tarjeta se renderiza sin enlace en vez de
+ * apuntar a otra lengua.
  */
 function capacidadHref(item: CapacidadHub): string | null {
   if (item.key === "automatizacion") return `/${locale}/servicios/automatizacion-ia/`;
-  return conCasos ? `${base}${item.key}/` : null;
+  return conCasos ? casoHref(locale, item.key as CasoKey) : null;
 }
 
 const capacidades = c.capacidades.items.map((item) => ({

@@ -1,0 +1,306 @@
+---
+// Página de caso del silo de integración, trilingüe.
+//
+// Misma regla anti-doorway que las sectoriales de la Ley 10/2025 y los casos de
+// Verifactu: la mayoría del contenido es propio —síntoma, por qué no se compra
+// la solución, patrones con su riesgo, entregables y FAQ— y lo común se resume
+// enlazando al hub en lugar de repetirse (docs/plan-arquitectura-2026-08.md §7.4).
+//
+// Ago/2026: el markup sale de `src/pages/es/integracion/[caso].astro` y vive
+// aquí. Las tres rutas dinámicas —es, en, pt— lo instancian con su `locale` y
+// su `casoKey`. El texto está en `src/data/casos-integracion/<loc>.ts` y los
+// rótulos fijos de la plantilla en `CASO_UI`: ninguno se escribe aquí.
+//
+// hreflang: recíproco entre los tres idiomas. La clave del caso es la misma en
+// los tres aunque el slug cambie (`api-y-webhooks` / `api-and-webhooks` /
+// `api-e-webhooks`), y `casoAlternates()` la resuelve.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import {
+  getShared,
+  getCaso,
+  getCasos,
+  CASO_SLUGS,
+  CASO_UI,
+  casoHref,
+  casoAlternates,
+  integracionHref,
+  type CasoKey,
+  type Loc,
+} from "@/data/integracion";
+
+type Props = { locale: Loc; casoKey: CasoKey };
+const { locale, casoKey } = Astro.props as Props;
+
+const c = getCaso(locale, casoKey);
+const SHARED = getShared(locale);
+const ui = CASO_UI[locale];
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const base = integracionHref(locale);
+const hubUrl = new URL(base, site).toString();
+const pageUrl = new URL(casoHref(locale, casoKey), site).toString();
+const contactHref = `/${locale}/contact/`;
+
+const casos = getCasos(locale);
+const otros = CASO_SLUGS.filter((key) => key !== casoKey).map((key) => ({
+  href: casoHref(locale, key),
+  nombreCorto: casos[key].nombreCorto,
+}));
+
+const providerSchema = {
+  "@type": ["Organization", "ProfessionalService"],
+  name: "IA Operators",
+  url: site,
+  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+};
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: c.h1,
+  serviceType: ui.serviceType,
+  provider: providerSchema,
+  areaServed: "ES",
+  audience: { "@type": "BusinessAudience", name: c.nombre },
+  description: c.metaDescription,
+  url: pageUrl,
+  inLanguage: ui.inLanguage,
+  isPartOf: { "@type": "WebPage", name: ui.hubName, url: hubUrl },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: ui.breadcrumbHome, item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: ui.breadcrumbHub, item: hubUrl },
+    { "@type": "ListItem", position: 3, name: c.nombreCorto, item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: c.faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<BaseLayout
+  title={`${c.metaTitle} | IA Operators`}
+  description={c.metaDescription}
+  canonicalUrl={pageUrl}
+  alternates={casoAlternates(casoKey, site)}
+  xDefaultUrl={new URL(casoHref("es", casoKey), site).toString()}
+  jsonLd={[serviceJsonLd, breadcrumbJsonLd, faqJsonLd]}
+>
+  <div class="bg-transparent text-white">
+    <!-- HERO -->
+    <section class="px-4 pt-28 pb-14">
+      <div class="max-w-4xl mx-auto text-center">
+        <a
+          href={base}
+          class="inline-block text-xs text-gray-500 hover:text-orange-400 transition-colors mb-6"
+        >
+          {ui.back}
+        </a>
+        <h1 class="text-3xl md:text-5xl font-medium tracking-tight leading-tight mb-6">{c.h1}</h1>
+        <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">{c.intro}</p>
+      </div>
+    </section>
+
+    <!-- SÍNTOMA -->
+    <section class="px-4 pb-16">
+      <div class="max-w-3xl mx-auto">
+        <div class="bg-[#0a0a0a] border-l-2 border-orange-500 rounded-r-2xl p-6 md:p-8">
+          <div class="text-xs font-semibold uppercase tracking-widest text-orange-400 mb-3">
+            {ui.sintoma}
+          </div>
+          <p class="text-gray-200 text-lg leading-relaxed">{c.sintoma}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- POR QUÉ -->
+    <section class="px-4 pb-16">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">{c.porQue.title}</h2>
+        <p class="text-gray-300 leading-relaxed">{c.porQue.body}</p>
+      </div>
+    </section>
+
+    <!-- PATRONES -->
+    <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-bold mb-3 text-center">{ui.patronesTitle}</h2>
+        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+          {ui.patronesSubtitle}
+        </p>
+        <div class="space-y-5">
+          {c.patrones.map((p, idx) => (
+            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-7 hover:border-orange-500/30 transition-all duration-300">
+              <div class="flex items-start gap-4">
+                <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-orange-500/10 text-orange-400 font-bold text-xs shrink-0">
+                  {String(idx + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3 class="text-lg font-semibold text-white mb-2">{p.title}</h3>
+                  <p class="text-gray-300 text-sm leading-relaxed mb-4">{p.body}</p>
+                  <div class="border-t border-white/5 pt-3">
+                    <span class="text-xs font-semibold uppercase tracking-widest text-orange-400/80">
+                      {ui.riesgo}
+                    </span>
+                    <p class="text-gray-400 text-sm leading-relaxed mt-1">{p.riesgo}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PRINCIPIOS + ENTREGABLES -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold mb-6">{ui.entregables}</h2>
+          <ul class="space-y-3">
+            {c.entregables.map((e) => (
+              <li class="flex items-start gap-3 text-gray-300 leading-relaxed">
+                <span class="text-orange-400 mt-1 shrink-0">▪</span>
+                <span>{e}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold mb-6">{ui.principios}</h2>
+          <div class="space-y-4">
+            {SHARED.principios.map((p) => (
+              <div class="bg-white/[0.02] border border-white/5 rounded-2xl p-5">
+                <h3 class="text-white font-medium mb-1">{p.title}</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">{p.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESO -->
+    <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-bold mb-3">{SHARED.proceso.title}</h2>
+        <p class="text-gray-400 mb-8">
+          {SHARED.proceso.subtitle} {ui.procesoLink.pre}
+          <a href={base} class="text-orange-400 underline hover:text-orange-300">
+            {ui.procesoLink.label}</a>{ui.procesoLink.post}
+        </p>
+        <ol class="space-y-3">
+          {SHARED.proceso.phases.map((phase) => (
+            <li class="flex items-start gap-4 bg-[#0a0a0a] border border-white/5 rounded-2xl p-5">
+              <span class="text-orange-400 text-xs font-semibold tabular-nums shrink-0 mt-1">
+                {phase.code}
+              </span>
+              <div>
+                <div class="text-white font-medium">
+                  {phase.title}
+                  <span class="text-gray-500 text-sm font-normal"> · {phase.plazo}</span>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed mt-1">{phase.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div class="flex flex-wrap gap-2 mt-8">
+          {SHARED.tech.map((t) => (
+            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-400 text-xs">
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PUENTES -->
+    <section class="px-4 py-20">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-bold mb-3 text-center">{ui.puentesTitle}</h2>
+        <p class="text-gray-400 text-center mb-10 max-w-2xl mx-auto">
+          {ui.puentesSubtitle}
+        </p>
+        <div
+          class={`grid grid-cols-1 gap-5 ${
+            c.puentes.length === 4 ? "md:grid-cols-2 lg:grid-cols-4" : "md:grid-cols-3"
+          }`}
+        >
+          {c.puentes.map((p) => (
+            <a
+              href={p.href}
+              class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 hover:border-orange-500/30 transition-all duration-300"
+            >
+              <h3 class="text-white font-semibold mb-2 leading-snug">{p.label}</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">{p.body}</p>
+              <span class="inline-block text-orange-400 text-sm mt-4 group-hover:translate-x-1 transition-transform">
+                {ui.puentesCta}
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-bold mb-10 text-center">{ui.faqTitle}</h2>
+        <div class="space-y-3">
+          {c.faq.map((item) => (
+            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-4 hover:border-orange-500/20 transition-all duration-300">
+              <summary class="flex items-center justify-between cursor-pointer list-none">
+                <span class="text-white font-medium pr-4">{item.q}</span>
+                <span class="text-orange-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p class="text-gray-400 mt-3 leading-relaxed">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA + OTROS CASOS -->
+    <section class="px-4 py-20">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-2xl md:text-4xl font-bold mb-4">{ui.ctaTitle}</h2>
+        <p class="text-gray-400 mb-8">
+          {ui.ctaBody}
+        </p>
+        <a
+          href={contactHref}
+          class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium hover:bg-orange-400 hover:scale-105 transition-all duration-300 mb-16"
+        >
+          {ui.ctaButton}
+        </a>
+
+        <div class="border-t border-white/5 pt-10">
+          <p class="text-xs uppercase tracking-widest text-gray-600 mb-4">{ui.otros}</p>
+          <div class="flex flex-wrap justify-center gap-2">
+            {otros.map((o) => (
+              <a
+                href={o.href}
+                class="px-4 py-2 rounded-full bg-[#0a0a0a] border border-white/10 text-gray-300 text-sm hover:border-orange-500/30 hover:text-white transition-colors"
+              >
+                {o.nombreCorto}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
