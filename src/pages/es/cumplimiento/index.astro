@@ -22,22 +22,29 @@ const frentes = [
     plazo: LEY.plazoAdaptacionLegible,
     dias: dias(LEY.plazoAdaptacion),
     quien:
-      "Servicios básicos de interés general sin umbral de tamaño, y el resto de empresas que superen 250 personas, 50 M€ de facturación o 43 M€ de balance.",
+      "Servicios básicos de interés general y, para el resto de actividades cubiertas por la ley, empresas o grupos que hayan ocupado al menos a 250 personas trabajadoras, superado 50 M€ de volumen de negocio o superado 43 M€ de balance.",
     que:
-      "SLA de atención medibles, clave identificativa, gestión del plazo de 15 días hábiles, trazabilidad y evidencia para la auditoría anual acreditada por ENAC.",
+      "SLA de atención medibles, clave identificativa, gestión de los plazos de resolución aplicables —15 días hábiles con carácter general y plazos específicos cuando corresponda—, trazabilidad y evidencia para auditoría acreditada por ENAC.",
     cta: "Ver la Ley 10/2025",
     extra: { label: "Test de cumplimiento · 2 min", href: `/${locale}/cumplimiento/ley-atencion-al-cliente/test/` },
   },
   {
     href: `/${locale}/cumplimiento/verifactu/`,
+    // La etiqueta comercial/SEO se mantiene; el título de la card es el sitio
+    // donde se distingue RRSIF (el reglamento, para todo sistema) de VERI*FACTU
+    // (una de sus dos modalidades — la otra es NO VERI*FACTU).
     badge: "Verifactu",
-    title: "Sistemas informáticos de facturación",
-    plazo: `${NORMA.fechaSociedadesLegible} · ${NORMA.fechaRestoLegible}`,
-    dias: dias(NORMA.fechaSociedades),
+    title: "Sistemas informáticos de facturación — RRSIF / VERI*FACTU",
+    // Dos plazos reales, no uno: sustituye al contador único para no dar a
+    // entender que la misma fecha aplica a todo el mundo (RD 1007/2023 art. 7).
+    plazos: [
+      { fecha: NORMA.fechaSociedadesLegible, label: "Impuesto sobre Sociedades" },
+      { fecha: NORMA.fechaRestoLegible, label: "resto de obligados" },
+    ],
     quien:
-      "Quien emite facturas desde un sistema informático y no está en el SII ni tributa en territorio foral. Sociedades primero, resto de obligados después.",
+      "Empresarios y profesionales incluidos en el ámbito del RRSIF que utilicen sistemas informáticos de facturación, con las exclusiones previstas —entre ellas determinados supuestos de SII y territorios forales—.",
     que:
-      "Registros de alta y anulación encadenados por huella, remisión a la AEAT, QR verificable, registro inalterable y declaración responsable del sistema.",
+      "Registros de facturación íntegros, trazables e inalterables, QR y declaración responsable del sistema. En la modalidad VERI*FACTU los registros se remiten a la AEAT de forma continuada; en modalidad NO VERI*FACTU se añaden firma electrónica y registro de eventos.",
     cta: "Ver Verifactu",
     extra: null,
   },
@@ -46,13 +53,14 @@ const frentes = [
 const meta = {
   title: "Cumplimiento normativo: Ley 10/2025 y Verifactu | IA Operators",
   description:
-    "Implementación técnica de las dos obligaciones españolas con plazo: atención a la clientela (Ley 10/2025) y sistemas de facturación (Verifactu). Sistemas, no informes.",
+    "Implementación técnica para Ley 10/2025 y RRSIF/VERI*FACTU: atención a la clientela y sistemas de facturación. Sistemas y evidencia, no informes.",
 };
 
 const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
+    "@id": `${pageUrl}#webpage`,
     name: meta.title,
     description: meta.description,
     url: pageUrl,
@@ -71,7 +79,9 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
+      // `Astro.site` ya termina en "/": la concatenación `${site}/${locale}/`
+      // producía `https://iaoperators.com//es/` (mismo bug que en otros silos).
+      { "@type": "ListItem", position: 1, name: "Inicio", item: new URL(`/${locale}/`, site).toString() },
       { "@type": "ListItem", position: 2, name: "Cumplimiento normativo", item: pageUrl },
     ],
   },
@@ -90,11 +100,29 @@ const jsonLd = [
     <section class="px-4 pt-28 pb-14">
       <div class="max-w-4xl mx-auto text-center">
         <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
-          Cumplimiento normativo, construido
+          Cumplimiento normativo llevado a sistemas
         </h1>
         <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-          Dos obligaciones españolas con fecha y sanción. Los despachos te explican qué dicen.
-          Nosotros construimos el sistema que las cumple y que puede demostrarlo.
+          Dos frentes regulatorios con calendario de adaptación. Traducimos los requisitos
+          aplicables a sistemas, flujos, trazabilidad y evidencia técnica para que la empresa
+          pueda operar y demostrar lo implementado.
+        </p>
+      </div>
+    </section>
+
+    <!-- QUÉ ES — bloque corto, no es una guía regulatoria. -->
+    <section class="px-4 pb-16">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">Qué significa cumplimiento tecnológico</h2>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          El cumplimiento tecnológico empieza cuando una norma deja de ser un documento y se
+          convierte en requisitos concretos para sistemas, datos, tiempos de respuesta, registros
+          y evidencias.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          Nuestro trabajo está en esa capa: traducir los requisitos técnicos aplicables a
+          arquitectura, integraciones y operación, en coordinación con el criterio jurídico o
+          fiscal cuando sea necesario.
         </p>
       </div>
     </section>
@@ -107,18 +135,31 @@ const jsonLd = [
               <span class="inline-block px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 text-xs font-semibold">
                 {f.badge}
               </span>
-              <span class="text-right">
-                <span class="block text-2xl font-bold text-orange-400 tabular-nums leading-none">
-                  {f.dias}
+              {!f.plazos && (
+                <span class="text-right">
+                  <span class="block text-2xl font-bold text-orange-400 tabular-nums leading-none">
+                    {f.dias}
+                  </span>
+                  <span class="block text-[10px] uppercase tracking-widest text-gray-500 mt-1">
+                    días
+                  </span>
                 </span>
-                <span class="block text-[10px] uppercase tracking-widest text-gray-500 mt-1">
-                  días
-                </span>
-              </span>
+              )}
             </div>
 
             <h2 class="text-2xl font-semibold text-white mb-2">{f.title}</h2>
-            <p class="text-xs text-gray-500 mb-6">Plazo: {f.plazo}</p>
+            {f.plazos ? (
+              // Dos plazos reales en vez de un contador único: mostrar solo
+              // "143 días" sin decir a quién corresponde da a entender que la
+              // misma fecha aplica a todo el mundo, y no es así (RD 1007/2023 art. 7).
+              <div class="text-xs text-gray-500 mb-6 space-y-0.5">
+                {f.plazos.map((p) => (
+                  <p>{p.fecha} — {p.label}</p>
+                ))}
+              </div>
+            ) : (
+              <p class="text-xs text-gray-500 mb-6">Plazo: {f.plazo}</p>
+            )}
 
             <div class="mb-4">
               <div class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-2">
@@ -158,8 +199,8 @@ const jsonLd = [
     <section class="px-4 pb-24">
       <div class="max-w-3xl mx-auto text-center">
         <p class="text-gray-400 mb-8">
-          ¿No sabes cuál de las dos te alcanza? En una llamada de 30 minutos lo aclaramos y salimos
-          con el alcance de lo que haya que hacer.
+          ¿No sabes qué requisitos técnicos pueden afectar a tus sistemas? En una llamada de 30
+          minutos revisamos el contexto y delimitamos el alcance técnico inicial.
         </p>
         <a
           href={contactHref}
