@@ -313,20 +313,51 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
     metaDescription:
       "Integramos WhatsApp Business API con tu CRM y tu ERP: plantillas, ventana de 24 horas, agentes con estado y trazabilidad. No es la app de WhatsApp Business.",
     h1: "WhatsApp Business API: integración y automatización",
+    labels: {
+      back: "← Integración de sistemas",
+      puentesTitle: "Relacionado con WhatsApp Business API",
+      faqTitle: "Preguntas frecuentes sobre WhatsApp Business API",
+      otros: "Otras integraciones",
+    },
+    heroCta: { label: "Cuéntanos cómo utilizas WhatsApp hoy →", href: "/es/contact/" },
+    serviceType: "Integración y automatización de WhatsApp Business API",
+    queEs: {
+      title: "Qué es WhatsApp Business API",
+      p1: "WhatsApp Business API —parte de WhatsApp Business Platform— permite conectar el canal de WhatsApp con software empresarial para recibir y enviar mensajes de forma programática, distribuir conversaciones entre agentes y registrar lo que ocurre en otros sistemas.",
+      p2: "Eso permite integrar WhatsApp con CRM, ERP, reservas o soporte y construir automatizaciones y agentes que consultan información real, mantienen contexto y escalan la conversación a una persona cuando hace falta.",
+    },
+    // Caso real: ChatPlug conecta WhatsApp Business API con Altegio (agenda de
+    // salones/clínicas) en tiempo real. Único proyecto del portfolio con
+    // integración WhatsApp↔plataforma de reservas documentada públicamente.
+    // Datos tomados de src/i18n/locales/es/projects.json (chatplug: problem,
+    // engineeringIntro, howItWorks, impact, metrics) — nada inventado.
+    caseStudy: {
+      title: "WhatsApp Business API en producción",
+      context:
+        "ChatPlug conecta WhatsApp Business API con Altegio, el sistema de agenda de salones y clínicas: los chatbots genéricos no se conectan con la agenda real, lo que generaba dobles reservas y clientes sin respuesta fuera de horario.",
+      sistemas: [
+        "WhatsApp Business API: recibe, entiende y responde cada mensaje, en varios idiomas",
+        "Altegio: la integración consulta y confirma disponibilidad real, reserva, cancela y reprograma directamente",
+      ],
+      resultado:
+        "Reservas confirmadas en segundos, operación continua 24/7 y menos conflictos de agenda, con salida a una persona cuando la conversación lo requiere.",
+      href: "/es/portfolio/chatplug-whatsapp-altegio/",
+      cta: "Ver el caso completo →",
+    },
     intro:
       "WhatsApp es el canal donde ya están tus clientes y, casi siempre, el peor documentado de la empresa. La API cambia eso: convierte una conversación que vivía en el móvil de alguien en un flujo con estado, historial y reglas.",
     sintoma:
       "El número de la empresa está instalado en el teléfono de una persona. Si esa persona libra, nadie contesta; si se va, el historial se va con ella. Y no hay forma de responder a la pregunta «¿cuánto tardamos en contestar?» con un número.",
     porQue: {
       title: "La API no es la app, y la diferencia importa",
-      body: "Hay tres productos con nombres parecidos: WhatsApp normal, la app WhatsApp Business y la WhatsApp Business Platform —la API—. Solo la tercera permite varios agentes sobre el mismo número, integración con otros sistemas, envíos masivos aprobados y trazabilidad. También es la única que tiene coste por mensaje y que exige un proceso de verificación del negocio. Empezar por la app y migrar después es posible, pero implica rehacer el alta y perder parte del histórico: si el plan es integrar, conviene entrar directamente por la API.",
+      body: "Hay productos de WhatsApp orientados a usos distintos. La WhatsApp Business Platform está diseñada para operar el canal de forma programática: conectarla con agentes o bots, integrarla con CRM y otros sistemas, trabajar con plantillas y mantener trazabilidad del flujo. La app WhatsApp Business, en cambio, está pensada para que una persona atienda manualmente desde el móvil. Meta permite hoy que ambas convivan sobre el mismo número en determinadas configuraciones, pero automatizar de verdad —varios agentes de software, envíos por API, integración con otros sistemas— sigue pasando por la Business Platform. La configuración empresarial, el registro del número y, cuando corresponde según las capacidades que necesites, la verificación del negocio forman parte de su alta, y las plantillas pasan por el proceso de aprobación de Meta antes de poder enviarse.",
     },
     patrones: [
       {
         title: "Plantillas y ventana de atención",
-        body: "Meta cobra por mensaje enviado, y solo en las categorías de plantilla: marketing, utility y authentication. Cuando el cliente escribe primero, se abre una ventana de atención de 24 horas en la que se puede responder con mensajes libres sin coste. Diseñar el flujo alrededor de esa ventana es la diferencia entre una factura razonable y una desagradable.",
+        body: "La estructura de precios de Meta distingue entre tipos de mensaje y el contexto en el que se envían, y cambia con el tiempo, así que la verificamos al dimensionar cada proyecto en lugar de darla por fija. Lo estable es el diseño: cuando el cliente escribe primero se abre una ventana de atención en la que se puede responder con mensajes libres, y las plantillas —de marketing, utility o authentication— sirven para retomar la conversación fuera de esa ventana o para notificaciones proactivas.",
         riesgo:
-          "Resolver con plantilla de marketing lo que cabía dentro de la ventana de atención multiplica el coste sin mejorar nada. Y las plantillas requieren aprobación previa, así que no se improvisan un viernes.",
+          "Resolver con plantilla de marketing lo que cabía dentro de la ventana de atención multiplica el coste sin mejorar nada. Y las plantillas requieren aprobación previa de Meta, así que no se improvisan un viernes.",
       },
       {
         title: "Agente con estado, no árbol de botones",
@@ -349,7 +380,7 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
     ],
     entregables: [
       "Alta y verificación del número en la plataforma, con el proveedor que corresponda",
-      "Catálogo de plantillas aprobadas por categoría y caso de uso",
+      "Diseño, alta y gestión de plantillas para los casos de uso definidos, sujetas al proceso de aprobación de Meta",
       "Agente conversacional con estado persistente y salida a humano",
       "Conexión en tiempo real con el sistema que tiene el dato",
       "Métricas de canal: tiempo de primera respuesta, resolución y coste por conversación",
@@ -373,17 +404,17 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
       {
         href: "/es/blog/cuanto-cuesta-whatsapp-business-api/",
         label: "Cuánto cuesta de verdad",
-        body: "El cobro por mensaje, las tres ventanas gratis y los costes que no aparecen en la factura de Meta.",
+        body: "Cómo funciona el modelo de cobro de Meta y qué otros costes entran en una integración real.",
       },
     ],
     faq: [
       {
         q: "¿Cuánto cuesta WhatsApp Business API?",
-        a: "Hay dos costes separados. El de Meta se factura por mensaje enviado en las categorías de plantilla —marketing, utility y authentication—, con tarifas que dependen del país de destino; los mensajes que recibes y los que envías dentro de una ventana de atención abierta no se cobran. El segundo coste es el del proveedor a través del que se accede a la plataforma, y varía mucho según el modelo comercial. Las tarifas concretas cambian con frecuencia, así que las verificamos en el momento de dimensionar el proyecto en lugar de citarlas de memoria.",
+        a: "Hay dos costes separados. El de Meta sigue una estructura por mensaje que distingue entre tipos de plantilla —marketing, utility y authentication— y el contexto en el que se envían: los mensajes que no son de plantilla, y algunas plantillas dentro de la ventana de atención abierta, no se cobran según las reglas vigentes. Esas reglas cambian con cierta frecuencia, así que las verificamos al dimensionar cada proyecto en lugar de citarlas de memoria. El segundo coste es el del proveedor a través del que se accede a la plataforma, y varía mucho según el modelo comercial.",
       },
       {
         q: "¿Puedo seguir usando mi número actual?",
-        a: "En general sí, pero ese número deja de funcionar en la app de WhatsApp: pasa a la plataforma y se opera desde el sistema que integremos. No se pueden usar los dos a la vez. Si el número es el móvil personal de alguien, conviene planificar el cambio antes de empezar, no durante.",
+        a: "En muchos casos sí. Meta ofrece dos caminos: una migración tradicional a la plataforma, en la que el número deja de operar desde la app, o coexistencia entre la app y la plataforma sobre el mismo número, cuando la configuración es compatible. La coexistencia tiene condiciones propias —versión de la app, alta a través de un proveedor y una ventana de tiempo para sincronizar el historial— y no aplica igual a todas las cuentas. Si el número es el móvil personal de alguien, conviene planificar el cambio antes de empezar, no durante. Lo comprobamos en el diagnóstico.",
       },
       {
         q: "¿Puedo enviar campañas masivas?",

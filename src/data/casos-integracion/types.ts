@@ -50,6 +50,19 @@ export interface CasoIntegracion {
    * caso, no cambia el comportamiento de los que no la declaran).
    */
   queEs?: { title: string; p1: string; p2: string };
+  /**
+   * Prueba real en producción, solo cuando existe un caso publicable que
+   * encaje. Reusa el vocabulario visual de la card "Caso real" del hub
+   * (fondo oscuro, borde naranja). Sin ella no se renderiza nada.
+   */
+  caseStudy?: {
+    title: string;
+    context: string;
+    sistemas: string[];
+    resultado: string;
+    href: string;
+    cta: string;
+  };
   intro: string;
   /** La señal por la que se reconoce el problema desde fuera. */
   sintoma: string;
