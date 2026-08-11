@@ -14,6 +14,7 @@ import {
   CASO_SLUGS,
   CASOS,
 } from "@/data/verifactu";
+import { ORG_REF } from "@/data/identidad";
 
 const locale = "es";
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
@@ -33,23 +34,16 @@ const casos = CASO_SLUGS.map((slug) => ({ slug, ...CASOS[slug] }));
 const meta = {
   title: "Verifactu para ERP, TPV y software propio | IA Operators",
   description:
-    "Integramos Verifactu en el sistema que ya usas: registros encadenados, remisión a la AEAT, QR y declaración responsable. Para quien no puede migrar de software.",
-};
-
-const providerSchema = {
-  "@type": ["Organization", "ProfessionalService"],
-  name: "IA Operators",
-  url: site,
-  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
-  address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+    "Adaptamos tu ERP, TPV o software propio al RRSIF: registros, QR, declaración responsable y, si eliges VERI*FACTU, remisión a la AEAT.",
 };
 
 const serviceJsonLd = {
   "@context": "https://schema.org",
   "@type": "Service",
+  "@id": `${pageUrl}#service`,
   name: "Integración de Verifactu en sistemas de facturación propios y legados",
-  serviceType: "Tax compliance systems integration",
-  provider: providerSchema,
+  serviceType: "Adaptación de sistemas de facturación al RRSIF y VERI*FACTU",
+  provider: ORG_REF,
   areaServed: "ES",
   description: meta.description,
   url: pageUrl,
@@ -67,8 +61,14 @@ const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
-    { "@type": "ListItem", position: 2, name: "Verifactu", item: pageUrl },
+    { "@type": "ListItem", position: 1, name: "Inicio", item: new URL(`/${locale}/`, site).toString() },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Cumplimiento tecnológico",
+      item: new URL(`/${locale}/cumplimiento/`, site).toString(),
+    },
+    { "@type": "ListItem", position: 3, name: "Verifactu", item: pageUrl },
   ],
 };
 
@@ -96,17 +96,17 @@ const faqJsonLd = {
     <section class="relative px-4 pt-28 pb-16">
       <div class="max-w-5xl mx-auto text-center">
         <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-6">
-          Verifactu · {NORMA.fechaSociedadesLegible} sociedades · {NORMA.fechaRestoLegible} autónomos
+          Verifactu (RRSIF) · {NORMA.fechaSociedadesLegible} sociedades · {NORMA.fechaRestoLegible} resto de obligados
         </span>
         <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
           Verifactu sin cambiar el software que hace funcionar tu negocio
         </h1>
         <p class="text-lg md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto">
-          Todo el mercado te dice que migres a su programa de facturación. Nosotros integramos el
-          cumplimiento en tu ERP, tu TPV o tu e-commerce actual.
+          Adaptamos el cumplimiento del RRSIF a tu ERP, tu TPV o tu e-commerce actual, sin
+          necesidad de migrar de software.
         </p>
 
-        <div class="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-[#0a0a0a] border border-orange-500/20 mb-10">
+        <div class="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-[#0a0a0a] border border-orange-500/20 mb-3">
           <span
             id="vf-countdown"
             data-deadline={NORMA.fechaSociedades}
@@ -115,9 +115,12 @@ const faqJsonLd = {
             {diasRestantes}
           </span>
           <span class="text-left text-sm text-gray-400 leading-tight">
-            días para el<br />{NORMA.fechaSociedadesLegible}
+            días para el {NORMA.fechaSociedadesLegible}<br />(Impuesto sobre Sociedades)
           </span>
         </div>
+        <p class="text-xs text-gray-500 mb-10">
+          {NORMA.fechaRestoLegible} — resto de obligados
+        </p>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
           <a
@@ -133,6 +136,25 @@ const faqJsonLd = {
             ¿Te aplica? Test de 2 min ↗
           </a>
         </div>
+      </div>
+    </section>
+
+    <!-- RRSIF vs VERI*FACTU vs NO VERI*FACTU -->
+    <section class="px-4 pb-16">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">RRSIF y VERI*FACTU no son exactamente lo mismo</h2>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          El RRSIF es el reglamento que obliga a todo sistema de facturación afectado a generar
+          registros íntegros, trazables e inalterables, con QR y declaración responsable del
+          productor. Se cumple de dos formas posibles: VERI*FACTU o NO VERI*FACTU.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          VERI*FACTU remite esos registros a la AEAT de forma continuada, a cambio de simplificar
+          algunas exigencias locales. NO VERI*FACTU no remite en el momento, pero exige firma
+          electrónica, registro de eventos y más control por tu parte. En el lenguaje comercial
+          «Verifactu» se usa a menudo para el conjunto; aquí distinguimos los tres términos porque
+          afectan a decisiones técnicas distintas.
+        </p>
       </div>
     </section>
 
@@ -257,14 +279,15 @@ const faqJsonLd = {
       </div>
     </section>
 
+    <!-- TODO SEO/PROOF: añadir caso real RRSIF/VERI*FACTU cuando exista uno publicable. -->
     <!-- CASOS -->
     <section id="casos" class="px-4 py-20 scroll-mt-24">
       <div class="max-w-6xl mx-auto">
         <div class="text-center mb-12">
           <h2 class="text-3xl md:text-4xl font-bold mb-4">¿Cuál es tu caso?</h2>
           <p class="text-gray-400 max-w-2xl mx-auto">
-            Cuatro situaciones donde migrar a un software estándar sale más caro que integrar el
-            cumplimiento en lo que ya tienes.
+            Cuatro situaciones donde integrar el cumplimiento en el sistema que ya tienes suele
+            ser una alternativa más simple que migrar a un software estándar.
           </p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -294,11 +317,16 @@ const faqJsonLd = {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {SHARED.arquitectura.items.map((item, idx) => (
             <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
-              <div class="flex items-center gap-3 mb-4">
-                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 font-bold text-sm">
-                  {String(idx + 1).padStart(2, "0")}
+              <div class="flex items-center justify-between gap-3 mb-4">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 font-bold text-sm">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                  <h3 class="text-lg font-semibold text-white">{item.title}</h3>
+                </div>
+                <span class="shrink-0 text-[10px] uppercase tracking-widest text-gray-500 border border-white/10 rounded-full px-2 py-1">
+                  {item.modalidad}
                 </span>
-                <h3 class="text-lg font-semibold text-white">{item.title}</h3>
               </div>
               <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
             </div>
@@ -447,7 +475,8 @@ const faqJsonLd = {
         </h2>
         <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
           La auditoría del sistema de facturación dura entre tres y cinco días y sale con el alcance
-          y el precio cerrados. Si resulta que no te aplica, te lo decimos ahí.
+          y el precio cerrados. Si en la auditoría técnica vemos que no te aplica, te lo decimos
+          ahí; la calificación fiscal de tu caso concreto sigue siendo cosa de tu asesoría.
         </p>
         <a
           href={contactHref}

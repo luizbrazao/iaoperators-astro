@@ -1,23 +1,35 @@
 // Datos de la Frente B — integración Verifactu (RRSIF) para sistemas propios y legados.
 // Solo ES: obligación española.
 //
-// FUENTES VERIFICADAS (2026-07-26). No re-investigar sin motivo:
+// FUENTES VERIFICADAS (2026-07-26, ampliadas 2026-08-11). No re-investigar sin motivo:
 // - RD 1007/2023 (RRSIF) + RD-ley 15/2025, de 2 de diciembre (BOE 3/12/2025), que
 //   aplaza la obligatoriedad: 1/1/2027 contribuyentes del Impuesto sobre Sociedades,
-//   1/7/2027 el resto (IRPF/autónomos).
+//   1/7/2027 el resto (IRPF/autónomos y demás obligados).
 // - AEAT, "¿Quiénes están obligados?": EXCLUIDOS los adscritos al SII, los residentes
-//   en País Vasco y Navarra (fuera del régimen común) y las operaciones que no deban
-//   documentarse en factura.
+//   en País Vasco y Navarra (fuera del régimen común, con normativa foral propia como
+//   TicketBAI) y las operaciones que no deban documentarse en factura.
 // - AEAT, FAQ sistemas VERI*FACTU: registros de alta y anulación, encadenamiento por
 //   huella/hash, remisión inmediata, QR y mención "VERI*FACTU"/"Factura verificable";
 //   los sistemas NO VERI*FACTU exigen firma electrónica, registro de eventos,
 //   exportación, verificación de integridad y gestión de alarmas.
-// - Declaración responsable: la emite el productor del software; en desarrollo propio
-//   o a medida para uso interno, la asume la propia empresa.
-// - Régimen sancionador del art. 201 bis LGT: 50.000 € por ejercicio para quien usa
-//   sistemas no conformes, 150.000 € por ejercicio para quien los produce o comercializa.
-//   Importes citados de forma consistente por las fuentes; su aplicación al caso
-//   concreto corresponde a la asesoría del cliente.
+// - AEAT, FAQ sobre incidencias: el término oficial para fallos de conectividad o de
+//   remisión es "incidencia". La facturación no se detiene; el sistema reintenta la
+//   remisión de forma periódica, sin plazo máximo fijo, marcando el registro con el
+//   indicador de incidencia correspondiente.
+// - AEAT, FAQ sobre encadenamiento con varios puntos de emisión: si los sistemas están
+//   interconectados, la cadena debe ser única; si son sistemas independientes (SIF no
+//   interconectados), cada uno puede llevar su propia cadena.
+// - Orden HAC/1177/2024, art. 21.1: el QR debe medir entre 30x30 y 40x40 mm, con nivel
+//   de corrección de errores M, conforme a ISO/IEC 18004.
+// - Declaración responsable: la emite el productor del sistema informático de
+//   facturación para la versión concreta instalada. En desarrollo propio o a medida
+//   para uso interno, la empresa suele ser también la productora; si el sistema lo
+//   desarrolló o adaptó un tercero, hay que identificar quién ostenta esa condición
+//   para esa versión.
+// - Régimen sancionador del art. 201 bis LGT: apartado 1 (fabricación, producción o
+//   comercialización de sistemas no conformes) 150.000 € por cada ejercicio en que se
+//   hayan producido ventas; apartado 2 (tenencia de sistemas no conformes) 50.000 € por
+//   ejercicio. Su aplicación al caso concreto corresponde a la asesoría del cliente.
 
 export const NORMA = {
   nombre: "Real Decreto 1007/2023 (Reglamento de sistemas informáticos de facturación)",
@@ -89,10 +101,11 @@ export const REQUISITOS = [
     norma: "Alternativa NO VERI*FACTU: sin remisión inmediata, con más exigencias locales.",
     sistema:
       "Firma electrónica de los registros, registro de eventos, exportación, verificación de integridad y gestión de alarmas. Más control, notablemente más trabajo.",
-    trampa: "Se elige por criterio operativo, no por preferencia: sin conectividad fiable, VERI*FACTU es inviable; con ella, suele ser el camino más barato.",
+    trampa:
+      "Se elige por criterio operativo, no por preferencia. La conectividad forma parte del diseño: una incidencia de red no obliga a detener la facturación, el sistema debe gestionar el estado y reintentar la remisión conforme a las reglas de incidencia de la AEAT. VERI*FACTU simplifica determinadas obligaciones locales frente a NO VERI*FACTU, pero la elección debe hacerse según la operación y la arquitectura del sistema.",
   },
   {
-    norma: "QR verificable en la factura y mención «VERI*FACTU» o «Factura verificable».",
+    norma: "QR en la factura y, en modalidad VERI*FACTU, mención «VERI*FACTU» o «Factura verificable».",
     sistema:
       "Generación del QR con los datos exigidos e integración en todas las plantillas: PDF, impresión térmica de TPV, email y portal de cliente.",
     trampa: "El ticket de 58 mm de una impresora térmica es donde más veces se rompe la implementación del QR.",
@@ -100,25 +113,25 @@ export const REQUISITOS = [
   {
     norma: "Integridad, conservación, trazabilidad e inalterabilidad de los registros.",
     sistema:
-      "Almacenamiento append-only, retención y exportación en formato legible por la Administración, con separación entre el sistema de trabajo y el registro de evidencia.",
+      "Una arquitectura posible: almacenamiento append-only, retención y exportación en formato legible por la Administración, con separación entre el sistema de trabajo y el registro de evidencia.",
     trampa: "Un registro que vive en la misma tabla que el ERP edita a diario no es inalterable.",
   },
   {
     norma: "Declaración responsable del productor del sistema informático.",
     sistema:
-      "Documentación del sistema, identificación de versión y certificación de conformidad. En desarrollo propio o a medida para uso interno, la firma la asume la propia empresa usuaria.",
-    trampa: "Es el punto que casi nadie ve venir: si mantienes tu ERP propio, el responsable de la declaración eres tú, no un proveedor.",
+      "Documentación del sistema, identificación de versión y declaración responsable del productor. Si el desarrollo es propio, la empresa es también productora y asume la declaración; si lo desarrolló o adaptó un tercero, hay que identificar quién asume esa condición para la versión concreta del sistema.",
+    trampa: "Es el punto que casi nadie ve venir: si mantienes tu ERP propio, sueles ser también tú el productor a efectos de esta declaración, no un proveedor.",
   },
 ];
 
 export const SANCIONES = [
   {
-    quien: "Quien usa sistemas no conformes",
-    importe: "50.000 € por ejercicio",
+    quien: "Tenencia de sistemas en los supuestos del artículo 201 bis.2 LGT",
+    importe: "50.000 €/ejercicio",
   },
   {
-    quien: "Quien produce o comercializa sistemas no conformes",
-    importe: "150.000 € por ejercicio",
+    quien: "Fabricación, producción o comercialización en los supuestos del artículo 201 bis.1 LGT",
+    importe: "150.000 €/ejercicio en el que se hayan producido ventas",
   },
 ];
 
@@ -130,26 +143,32 @@ export const SHARED = {
     items: [
       {
         title: "Motor de registros",
-        body: "Alta y anulación generados en el acto de emisión, con los campos del reglamento y validación previa al envío.",
+        modalidad: "Común RRSIF",
+        body: "Alta y anulación generados en el acto de emisión, con los campos del reglamento y validación previa a la persistencia y, en modalidad VERI*FACTU, a la remisión.",
       },
       {
         title: "Cadena de huellas",
+        modalidad: "Común RRSIF",
         body: "Encadenamiento por hash con estrategia de series definida para multi-punto de emisión, y detección de huecos.",
       },
       {
         title: "Cola de remisión",
-        body: "Envío a la AEAT con reintento exponencial, idempotencia por registro y estado consultable. Una caída no para tu facturación.",
+        modalidad: "VERI*FACTU",
+        body: "Envío a la AEAT con reintento periódico, idempotencia por registro y estado consultable. Una incidencia de conectividad no para tu facturación: se gestiona conforme a las reglas de incidencia de la AEAT.",
       },
       {
         title: "QR y plantillas",
-        body: "Generación del QR e integración en PDF, ticket térmico, email y portal, con la mención exigida en la factura.",
+        modalidad: "Común RRSIF",
+        body: "Generación del QR e integración en PDF, ticket térmico, email y portal. En modalidad VERI*FACTU incorpora además la mención «VERI*FACTU» o «Factura verificable».",
       },
       {
         title: "Registro inalterable",
-        body: "Almacenamiento append-only separado del sistema operativo, con exportación en el formato que pide la Administración.",
+        modalidad: "Común RRSIF",
+        body: "Una arquitectura posible para la exigencia de integridad y trazabilidad: almacenamiento append-only separado del sistema operativo, con exportación en el formato que pide la Administración.",
       },
       {
         title: "Panel de estado",
+        modalidad: "Común RRSIF",
         body: "Qué se envió, qué falló y qué está pendiente, con alarma cuando algo lleva demasiado tiempo sin confirmar.",
       },
     ],
@@ -159,7 +178,7 @@ export const SHARED = {
     badge: "Cómo trabajamos",
     title: "De la auditoría del sistema al conector en producción",
     subtitle:
-      "Trabajamos sobre tu ERP, TPV o e-commerce actual. El objetivo no es cambiar tu operación, es que siga siendo legal.",
+      "Trabajamos sobre tu ERP, TPV o e-commerce actual. El objetivo no es cambiar tu operación, es que tu sistema de facturación cumpla el reglamento vigente.",
     phases: [
       {
         code: "01",
@@ -171,13 +190,13 @@ export const SHARED = {
         code: "02",
         title: "Diseño del conector",
         plazo: "1 semana",
-        body: "Modelo de registro, estrategia de encadenamiento, política de reintentos y punto de integración con tu sistema. Decidimos VERI*FACTU o no según tu operación.",
+        body: "Modelo de registro, estrategia de encadenamiento, política de reintentos y punto de integración con tu sistema. Te recomendamos técnicamente VERI*FACTU o NO VERI*FACTU según tu operación; la determinación fiscal última corresponde a tu asesoría.",
       },
       {
         code: "03",
         title: "Implementación y pruebas",
         plazo: "3–6 semanas",
-        body: "Construcción, pruebas contra el entorno de la AEAT y validación con tu casuística real, incluidas las rectificativas que siempre aparecen tarde.",
+        body: "Construcción y validación con tu casuística real, incluidas las rectificativas que siempre aparecen tarde. En modalidad VERI*FACTU, además, pruebas contra el entorno de pruebas de la AEAT.",
       },
       {
         code: "04",
@@ -229,24 +248,24 @@ export const SHARED = {
     title: "Preguntas frecuentes",
     items: [
       {
-        q: "¿Cuándo es obligatorio Verifactu?",
-        a: "Tras el aplazamiento aprobado por el Real Decreto-ley 15/2025, de 2 de diciembre, el 1 de enero de 2027 para los contribuyentes del Impuesto sobre Sociedades y el 1 de julio de 2027 para el resto de obligados tributarios, autónomos incluidos. Han sido dos aplazamientos ya, así que conviene planificar sobre las fechas vigentes y no sobre la expectativa de un tercero.",
+        q: "¿Cuándo es obligatorio adaptar el sistema de facturación al RRSIF?",
+        a: "Tras el aplazamiento aprobado por el Real Decreto-ley 15/2025, de 2 de diciembre, el 1 de enero de 2027 para los contribuyentes del Impuesto sobre Sociedades y el 1 de julio de 2027 para el resto de obligados tributarios, autónomos incluidos. Conviene planificar sobre estas fechas vigentes, que pueden actualizarse por norma posterior.",
       },
       {
         q: "¿Tengo que cambiar de programa de facturación?",
-        a: "No necesariamente, y ese es justo el trabajo que hacemos. Si tu ERP, tu TPV o tu e-commerce son propios o están muy adaptados, migrar a un software estándar suele costar más —en dinero y en riesgo operativo— que añadir el módulo de cumplimiento sobre lo que ya tienes.",
+        a: "No necesariamente, y ese es justo el trabajo que hacemos. Si tu ERP, tu TPV o tu e-commerce son propios o están muy adaptados, añadir el módulo de cumplimiento sobre lo que ya tienes suele ser una alternativa viable a migrar a un software estándar, con menos riesgo operativo. El coste concreto de cada opción depende de tu caso.",
       },
       {
         q: "¿Quién firma la declaración responsable si mi software es propio?",
-        a: "La propia empresa. La declaración responsable la emite el productor del sistema informático de facturación, y en un desarrollo propio o a medida para uso interno ese productor eres tú. Es el punto que más veces se descubre tarde: mantener el sistema propio traslada la responsabilidad de certificarlo a tu lado de la mesa. Nosotros construimos el sistema y documentamos la conformidad; la firma es tuya.",
+        a: "Depende de quién sea el productor del sistema para tu versión concreta. Si el desarrollo es propio o a medida para uso interno, la empresa suele ser también la productora y asume la declaración responsable. Si el sistema lo desarrolló o lo adaptó un tercero, hay que identificar quién tiene esa condición para esa versión exacta del sistema. Nosotros documentamos el sistema y su conformidad, y ayudamos a identificar quién firma en cada caso.",
       },
       {
-        q: "¿VERI*FACTU o sistema no verificable?",
-        a: "Depende de tu operación, no de una preferencia. La modalidad VERI*FACTU remite los registros a la AEAT en el momento y a cambio te ahorra las exigencias locales de firma, registro de eventos y gestión de alarmas. Si tienes puntos de venta con conectividad poco fiable, esa decisión cambia. Lo evaluamos en la auditoría.",
+        q: "¿VERI*FACTU o NO VERI*FACTU?",
+        a: "Depende de tu operación, no de una preferencia. La modalidad VERI*FACTU remite los registros a la AEAT de forma continuada y a cambio te ahorra las exigencias locales de firma electrónica, registro de eventos y gestión de alarmas que exige NO VERI*FACTU. La conectividad no descarta VERI*FACTU: una incidencia de red se gestiona con reintento conforme a las reglas de la AEAT, sin detener la facturación. Lo evaluamos en la auditoría, según tu operación y tu arquitectura.",
       },
       {
         q: "¿Qué pasa si se cae la conexión o la AEAT no responde?",
-        a: "La facturación no puede pararse por eso. El diseño correcto encola los registros, reintenta con espaciado creciente y los envía cuando el servicio se restablece, manteniendo el estado de cada uno. Un envío síncrono sin cola convierte una incidencia de la AEAT en una incidencia de tu negocio.",
+        a: "La facturación no puede pararse por eso. Es lo que la AEAT denomina una incidencia: el sistema encola los registros, reintenta de forma periódica y los envía cuando el servicio se restablece, manteniendo el estado de cada uno. Un envío síncrono sin cola convierte una incidencia de conectividad en una incidencia de tu negocio.",
       },
       {
         q: "¿Esto es lo mismo que la factura electrónica obligatoria?",
@@ -258,7 +277,7 @@ export const SHARED = {
       },
       {
         q: "¿Y si estoy en el SII?",
-        a: "Entonces no te aplica. Quienes llevan los libros registro de IVA por la sede electrónica de la AEAT quedan excluidos del reglamento. También quedan fuera quienes tributan en País Vasco o Navarra, con normativa foral propia. Te lo decimos en la primera llamada si es tu caso.",
+        a: "Entonces no te aplica el RRSIF: quienes llevan los libros registro de IVA por la sede electrónica de la AEAT quedan excluidos. Los obligados domiciliados en territorio foral de régimen especial (País Vasco y Navarra) se rigen por su propia normativa de facturación electrónica, como TicketBAI; conviene confirmarlo caso por caso porque depende del régimen fiscal exacto de cada empresa. Te lo decimos en la primera llamada si es tu caso.",
       },
     ],
   },
@@ -296,7 +315,7 @@ export const CASOS: Record<
       "Adaptamos tu ERP propio o customizado a Verifactu: registros encadenados, remisión a la AEAT, QR y declaración responsable. Sin migrar de sistema.",
     h1: "Verifactu para un ERP propio o muy adaptado",
     intro:
-      "Cuando el ERP lleva años absorbiendo la lógica real del negocio, migrar a un software estándar no es una decisión técnica: es rehacer la operación. La alternativa es acoplarle el módulo de cumplimiento.",
+      "Cuando el ERP lleva años absorbiendo la lógica real del negocio, migrar a un software estándar no es solo un cambio técnico: implica rehacer buena parte de la operación. La alternativa es acoplarle el módulo de cumplimiento.",
     escenario:
       "El ERP factura desde tres módulos distintos —ventas, servicios y renovaciones— y cada uno con su serie. Nadie recuerda por qué la serie de renovaciones salta números. Ese detalle, invisible durante diez años, es exactamente lo que rompe una cadena de huellas.",
     porQueNoMigras:
@@ -331,7 +350,7 @@ export const CASOS: Record<
       "Verifactu para TPV con varias cajas o tiendas: estrategia de series, cadena de huellas, QR en ticket térmico y funcionamiento sin conexión.",
     h1: "Verifactu en TPV multi-tienda",
     intro:
-      "En retail y hostelería el problema no es enviar registros: es que hay muchos puntos emitiendo a la vez, a veces sin conexión, y todos tienen que encadenar sin colisionar.",
+      "En retail y hostelería el problema no es enviar registros: es que hay muchos puntos emitiendo a la vez, a veces sin conexión, y cada uno necesita una estrategia de encadenamiento que no colisione con los demás.",
     escenario:
       "Viernes por la noche, seis cajas cobrando en paralelo y el router de la tienda con la fibra caída. Si el TPV depende de una confirmación de la AEAT para imprimir el ticket, la cola de clientes no se mueve.",
     porQueNoMigras:
