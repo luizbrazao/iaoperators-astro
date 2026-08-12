@@ -35,7 +35,7 @@ export const POST: APIRoute = async ({ request, clientAddress, url }) => {
   try {
     const body = await request.json().catch(() => null);
 
-    if (String(body?.website ?? "").trim()) {
+    if (String(body?.hp_confirm ?? "").trim()) {
       return json({ ok: true }, 200);
     }
 

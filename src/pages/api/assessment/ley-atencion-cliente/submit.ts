@@ -15,7 +15,7 @@ export const POST: APIRoute = async ({ request, clientAddress, url }) => {
     const body = await request.json().catch(() => null);
 
     // Honeypot: respondemos 200 para no dar señal al bot, pero no persistimos.
-    if (String(body?.website ?? "").trim()) {
+    if (String(body?.hp_confirm ?? "").trim()) {
       return json({ ok: true, responseId: randomUUID(), result: null, persisted: false }, 200);
     }
 

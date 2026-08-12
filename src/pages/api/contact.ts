@@ -38,7 +38,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     const body = await request.json().catch(() => null);
 
     // honeypot: se preencher, é bot
-    const hp = String(body?.website ?? "").trim();
+    const hp = String(body?.hp_confirm ?? "").trim();
     if (hp) return json({ ok: true }, 200);
 
     const name = String(body?.name ?? "").trim();

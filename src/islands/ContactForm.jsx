@@ -149,9 +149,12 @@ export default function ContactForm({ locale: localeProp = "es" }) {
             {/* honeypot anti-spam */}
             <input
               type="text"
-              name="website"
+              name="hp_confirm"
               tabIndex={-1}
               autoComplete="off"
+              aria-hidden="true"
+              data-lpignore="true"
+              data-1p-ignore="true"
               className="hidden"
             />
 

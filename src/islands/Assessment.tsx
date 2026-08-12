@@ -125,7 +125,7 @@ export default function Assessment({
           durationMs: Date.now() - startedAt.current,
           landingPath: window.location.pathname,
           referrer: document.referrer,
-          website: honeypot.current?.value ?? "",
+          hp_confirm: honeypot.current?.value ?? "",
         }),
       });
       const data = await res.json().catch(() => null);
@@ -170,7 +170,7 @@ export default function Assessment({
           durationMs: Date.now() - startedAt.current,
           landingPath: window.location.pathname,
           referrer: document.referrer,
-          website: honeypot.current?.value ?? "",
+          hp_confirm: honeypot.current?.value ?? "",
         }),
       });
       const data = await res.json().catch(() => null);
@@ -415,10 +415,12 @@ export default function Assessment({
         <input
           ref={honeypot}
           type="text"
-          name="website"
+          name="hp_confirm"
           tabIndex={-1}
           autoComplete="off"
           aria-hidden="true"
+          data-lpignore="true"
+          data-1p-ignore="true"
           className="hidden"
         />
 
