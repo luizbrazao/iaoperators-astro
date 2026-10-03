@@ -39,7 +39,6 @@ export interface HubIntegracionCopy {
   problema: { title: string; subtitle: string; items: { title: string; body: string }[] };
   metodo: { title: string; items: { step: string; title: string; body: string }[] };
   capacidades: { title: string; subtitle: string; cta: string; items: CapacidadHub[] };
-  caso: { badge: string; pre: string; accent: string; post: string; body: string };
   radiografia: { title: string; body: string; cta: string };
   ctaFinal: { title: string; cta: string };
 }
@@ -140,13 +139,6 @@ export const HUB_INTEGRACION: Record<Loc, HubIntegracionCopy> = {
           body: "Modernizamos sin reemplazar: el sistema que funciona se queda; lo que falta se construye alrededor.",
         },
       ],
-    },
-    caso: {
-      badge: "Caso real",
-      pre: "De 1–2 horas a ",
-      accent: "~3 minutos",
-      post: " por solicitud",
-      body: "Para una empresa de sourcing de automóviles, automatizamos la clasificación y estructuración de las solicitudes entrantes: hasta ~80 solicitudes semanales procesadas en picos de demanda, sin ampliar el equipo.",
     },
     radiografia: {
       title: "¿No sabes por dónde empezar? Empieza por la Radiografía Digital",
@@ -255,13 +247,6 @@ export const HUB_INTEGRACION: Record<Loc, HubIntegracionCopy> = {
         },
       ],
     },
-    caso: {
-      badge: "Real project",
-      pre: "From 1–2 hours to ",
-      accent: "~3 minutes",
-      post: " per request",
-      body: "For a vehicle sourcing company we automated the classification and structuring of incoming requests: up to ~80 requests a week processed at peak demand, without growing the team.",
-    },
     radiografia: {
       title: "Not sure where to start? Start with the Digital X-Ray",
       body: "Before integrating anything, you need to know what is there. The Digital X-Ray is our systems audit: a full inventory of the technology stack, data flows, dependencies and a prioritised plan of what to connect first.",
@@ -368,13 +353,6 @@ export const HUB_INTEGRACION: Record<Loc, HubIntegracionCopy> = {
           body: "Modernizamos sem substituir: o sistema que funciona fica; o que falta é construído em volta.",
         },
       ],
-    },
-    caso: {
-      badge: "Caso real",
-      pre: "De 1–2 horas para ",
-      accent: "~3 minutos",
-      post: " por solicitação",
-      body: "Para uma empresa de sourcing de automóveis, automatizamos a classificação e a estruturação das solicitações que chegam: até ~80 solicitações por semana processadas em picos de demanda, sem aumentar a equipe.",
     },
     radiografia: {
       title: "Não sabe por onde começar? Comece pela Radiografia Digital",

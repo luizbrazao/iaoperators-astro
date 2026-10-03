@@ -1,0 +1,114 @@
+---
+// Hub de arquitectura tecnológica (/es/arquitectura-tecnologica/) con el
+// lenguaje editorial. Mismo texto (bloque `es` de src/data/hub-arquitectura.ts)
+// y mismo método (PilarArquitectura, ahora con variant="editorial"); EN y PT
+// siguen con el markup de ArquitecturaHub.astro.
+import type { HubArquitecturaCopy } from "@/data/hub-arquitectura";
+import PilarArquitectura from "@/components/PilarArquitectura.astro";
+import RelatedCases from "@/components/RelatedCases.astro";
+import { getPilares } from "@/data/navegacion";
+import copy from "@/i18n/locales/es/pagesEditorial.json";
+import "@/styles/editorial-pages.css";
+
+interface Relacion { target: string; title: string; body: string; cta: string; href: string }
+interface Props {
+  c: HubArquitecturaCopy;
+  titulo: string;
+  relaciones: Relacion[];
+  contactHref: string;
+}
+const { c, titulo, relaciones, contactHref } = Astro.props;
+const L = copy.arquitectura;
+const pillar = getPilares("es").find((item) => item.key === "arquitectura");
+const bare = (text: string) => text.replace(/\s*[↗→]\s*$/, "");
+const pad = (n: number) => String(n).padStart(2, "0");
+---
+<div class="ed-container">
+  <header class="pg-hero">
+    <nav class="pf-crumbs ed-eyebrow" aria-label={copy.breadcrumb.label}>
+      <ol>
+        <li><a href="/es/">{c.breadcrumbHome}</a></li>
+        <li><span aria-current="page">{titulo}</span></li>
+      </ol>
+    </nav>
+    <h1>{c.h1.lead.trim()} <span>{c.h1.accent}</span></h1>
+    <div class="pg-hero-bottom">
+      <p class="ed-eyebrow">{L.pillar}{pillar?.tagline ? ` · ${pillar.tagline}` : ""}</p>
+      <div>
+        <p class="pg-lead">{c.heroBody}</p>
+        <div class="pg-actions">
+          <a class="ed-button" href={contactHref}>{bare(c.heroCtaPrimary)}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+          <a class="ed-underlined" href="#metodo">{c.heroCtaSecondary} <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="pg-section" aria-labelledby="problema-title">
+    <div class="ed-section-intro">
+      <p class="ed-eyebrow">{L.problema}</p>
+      <div>
+        <h2 id="problema-title">{c.problema.title}</h2>
+        <div class="pg-prose"><p>{c.problema.subtitle}</p></div>
+      </div>
+    </div>
+    <ul class="pg-symptoms">
+      {c.problema.sintomas.map((sintoma) => <li>{sintoma}</li>)}
+    </ul>
+  </section>
+
+  <section class="pg-section pg-section-flush" aria-labelledby="capas-title">
+    <div class="ed-section-intro">
+      <p class="ed-eyebrow">{L.capas}</p>
+      <div>
+        <h2 id="capas-title">{c.capas.title}</h2>
+        <div class="pg-prose"><p>{c.capas.subtitle}</p></div>
+      </div>
+    </div>
+    <ol class="pg-columns pg-columns-4">
+      {c.capas.items.map((capa) => (
+        <li><span class="ed-eyebrow">{capa.num}</span><h3>{capa.title}</h3><p>{capa.body}</p></li>
+      ))}
+    </ol>
+  </section>
+</div>
+
+<div class="pg-method-wrap">
+  <PilarArquitectura current="hub" locale="es" variant="editorial" id="metodo" />
+</div>
+
+<div class="ed-container">
+  <section class="pg-section" aria-labelledby="decisiones-title">
+    <div class="ed-section-intro">
+      <p class="ed-eyebrow">{L.decisiones}</p>
+      <div>
+        <h2 id="decisiones-title">{c.decisiones.title}</h2>
+        <div class="pg-prose"><p>{c.decisiones.subtitle}</p></div>
+      </div>
+    </div>
+    <ol class="pg-questions">
+      {c.decisiones.items.map((pregunta, index) => <li><span class="ed-eyebrow" aria-hidden="true">{pad(index + 1)}</span><p>{pregunta}</p></li>)}
+    </ol>
+  </section>
+
+  <div class="pg-relations" role="group" aria-label={L.relaciones}>
+    {relaciones.map((relacion) => (
+      <section class="pg-relation" aria-labelledby={`relacion-${relacion.target}`}>
+        <h2 id={`relacion-${relacion.target}`}>{relacion.title}</h2>
+        <p>{relacion.body}</p>
+        <a class="ed-underlined" href={relacion.href}>{bare(relacion.cta)} <span class="ed-arrow" aria-hidden="true">↗</span></a>
+      </section>
+    ))}
+  </div>
+</div>
+
+<RelatedCases path="arquitectura-tecnologica/" locale="es" variant="editorial" />
+
+<section class="ed-closing" aria-labelledby="arquitectura-closing-title">
+  <div class="ed-container">
+    <p class="ed-eyebrow">{copy.closingLabel}</p>
+    <h2 id="arquitectura-closing-title" class="pg-closing-title">{c.ctaFinal.title}</h2>
+    <p class="pg-closing-copy">{c.ctaFinal.body}</p>
+    <a class="ed-button" href={contactHref}>{bare(c.ctaFinal.cta)}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+  </div>
+</section>

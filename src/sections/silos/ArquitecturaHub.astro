@@ -28,6 +28,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import PilarArquitectura from "@/components/PilarArquitectura.astro";
 import RelatedCases from "@/components/RelatedCases.astro";
+import HubArquitecturaEditorial from "@/components/editorial/HubArquitecturaEditorial.astro";
 import { ARQUITECTURA_TITLE, arquitecturaHubHref, arquitecturaAlternates } from "@/data/servicios";
 import { integracionHref, type Loc } from "@/data/integracion";
 import { HUB_ARQUITECTURA, type RelacionTarget } from "@/data/hub-arquitectura";
@@ -41,6 +42,8 @@ const contactHref = `/${locale}/contact/`;
 
 const c = HUB_ARQUITECTURA[locale];
 const titulo = ARQUITECTURA_TITLE[locale];
+// Rediseño editorial: solo ES. EN/PT conservan el markup de abajo.
+const editorial = locale === "es";
 
 // El destino de cada tarjeta de la sección "relación con los otros pilares".
 // `cumplimiento` solo aparece en ES: el silo es ES-only por decisión, porque
@@ -87,7 +90,11 @@ const jsonLd = [
   alternates={arquitecturaAlternates(site)}
   xDefaultUrl={new URL(arquitecturaHubHref("es"), site).toString()}
   jsonLd={jsonLd}
+  editorial={editorial}
 >
+  {editorial ? (
+    <HubArquitecturaEditorial c={c} titulo={titulo} relaciones={relaciones} contactHref={contactHref} />
+  ) : (
   <div class="bg-transparent text-white">
     <!-- Breadcrumb -->
     <nav aria-label="Breadcrumb" class="px-4 pt-28 max-w-6xl mx-auto text-sm text-gray-400">
@@ -229,4 +236,5 @@ const jsonLd = [
       </div>
     </section>
   </div>
+  )}
 </BaseLayout>

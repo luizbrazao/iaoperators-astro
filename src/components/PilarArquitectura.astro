@@ -27,9 +27,16 @@ type Props = {
    */
   current: string;
   locale: string;
+  /**
+   * "dark": bloque de la plantilla anterior (por defecto).
+   * "editorial": banda verde de la home ES (ed-method / ed-steps), mismos
+   * textos y enlaces. `id` permite anclar el bloque (#metodo en el hub).
+   */
+  variant?: "dark" | "editorial";
+  id?: string;
 };
 
-const { current, locale } = Astro.props as Props;
+const { current, locale, variant = "dark", id } = Astro.props as Props;
 
 const loc: Loc = locale === "pt" || locale === "en" ? locale : "es";
 const pasos = getArquitectura(locale);
@@ -78,6 +85,35 @@ const COPY: Record<
 const c = COPY[loc];
 ---
 
+{variant === "editorial" && (
+  <section class="ed-method pg-method" id={id} aria-labelledby="pilar-arquitectura-title">
+    <div class="ed-container">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{c.badge}</p>
+        <div>
+          <h2 id="pilar-arquitectura-title">{isHub ? c.hubTitle : c.title}</h2>
+          <p class="pg-method-lead">{c.subtitle}</p>
+          {showHubLink && <a class="ed-underlined" href={hubHref}>{c.hubLink.replace(/\s*→\s*$/, "")} <span aria-hidden="true">→</span></a>}
+        </div>
+      </div>
+      <ol class="ed-steps">
+        {pasos.map((paso) => {
+          const isCurrent = paso.key === current;
+          return (
+            <li class:list={{ "pg-step-current": isCurrent }}>
+              <span class="ed-eyebrow">{paso.num}{isCurrent && ` · ${c.here}`}</span>
+              <h3><a href={paso.href} aria-current={isCurrent ? "page" : undefined}>{paso.label}</a></h3>
+              <p class="pg-step-promise">{paso.promesa}</p>
+              <p>{paso.desc}</p>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  </section>
+)}
+
+{variant === "dark" && (
 <section class="px-4 py-20">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-12">
@@ -132,3 +168,4 @@ const c = COPY[loc];
     </ol>
   </div>
 </section>
+)}

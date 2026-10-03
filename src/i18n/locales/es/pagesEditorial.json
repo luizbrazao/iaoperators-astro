@@ -11,5 +11,12 @@
     "metodo": "Método",
     "capacidades": "Capacidades",
     "puerta": "Primer paso"
+  },
+  "arquitectura": {
+    "pillar": "03 / Arquitectura",
+    "problema": "El problema",
+    "capas": "Qué es",
+    "decisiones": "Decisiones",
+    "relaciones": "Con los otros pilares"
   }
 }
