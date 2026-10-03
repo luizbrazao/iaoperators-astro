@@ -22,17 +22,20 @@ export interface SurveyOGProps {
 let fontRegular: ArrayBuffer | undefined;
 let fontBold: ArrayBuffer | undefined;
 
+// `readFileSync(...).buffer` NO es el fichero: es el ArrayBuffer subyacente del
+// Buffer, que Node puede compartir con otros datos (pool interno), así que
+// puede empezar en otro sitio y contener bytes ajenos. En la Vercel eso hizo
+// fallar el build con "Unsupported OpenType signature cons" (oct/2026): satori
+// leía el principio de un fichero JS en lugar de la cabecera wOFF. Se copia
+// exactamente la ventana [byteOffset, byteOffset + byteLength) del fichero.
+function readFont(relativePath: string): ArrayBuffer {
+  const file = readFileSync(join(process.cwd(), relativePath));
+  return file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength) as ArrayBuffer;
+}
+
 export async function getOGFonts() {
-  if (!fontRegular) {
-    fontRegular = readFileSync(
-      join(process.cwd(), "src/assets/fonts/inter-400.woff")
-    ).buffer as ArrayBuffer;
-  }
-  if (!fontBold) {
-    fontBold = readFileSync(
-      join(process.cwd(), "src/assets/fonts/inter-700.woff")
-    ).buffer as ArrayBuffer;
-  }
+  if (!fontRegular) fontRegular = readFont("src/assets/fonts/inter-400.woff");
+  if (!fontBold) fontBold = readFont("src/assets/fonts/inter-700.woff");
   return [
     { name: "Inter", data: fontRegular, weight: 400 as const, style: "normal" as const },
     { name: "Inter", data: fontBold, weight: 700 as const, style: "normal" as const },
