@@ -3,6 +3,7 @@ import { projects } from "../../../data/projects";
 import type { Project } from "../../../data/projects";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { createT } from "../../../i18n/t";
+import PortfolioIndexEditorial from "@/components/editorial/PortfolioIndexEditorial.astro";
 
 export async function getStaticPaths() {
   const locales = ["es", "pt", "en"];
@@ -10,6 +11,8 @@ export async function getStaticPaths() {
 }
 
 const locale = Astro.params.locale!;
+// Rediseño editorial: solo ES. EN/PT mantienen la plantilla anterior.
+const editorial = locale === "es";
 const t = await createT(locale, { namespaces: ["portfolio", "projects"] });
 
 const headerTitle = t("portfolio:header.title");
@@ -70,7 +73,8 @@ const portfolioJsonLd: any[] = [
 ];
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription} jsonLd={portfolioJsonLd}>
+<BaseLayout title={pageTitle} description={pageDescription} jsonLd={portfolioJsonLd} editorial={editorial}>
+  {editorial ? <PortfolioIndexEditorial /> : (
   <section class="bg-transparent text-white py-24 px-6" id="portfolio">
     <div class="max-w-7xl mx-auto">
       <!-- Cabeçalho -->
@@ -272,4 +276,5 @@ const portfolioJsonLd: any[] = [
       </div>
     </div>
   </section>
+  )}
 </BaseLayout>

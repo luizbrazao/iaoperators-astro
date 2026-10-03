@@ -2,6 +2,9 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { ui, getLocale } from "../i18n/ui";
 import Hero from "../sections/home/Hero.astro";
+import PremiumHomeIntro from "../sections/home/PremiumHomeIntro.astro";
+import EditorialHomeContent from "../sections/home/EditorialHomeContent.astro";
+import { projects } from "../data/projects";
 import WhyUs from "../sections/home/WhyUs.astro";
 import Services from "../sections/home/Services.astro";
 import ServiceCatalog from "../sections/home/ServiceCatalog.astro";
@@ -23,6 +26,12 @@ import {
 type FaqItem = { q: string; a: string };
 
 const locale = getLocale(Astro.currentLocale);
+
+// Composición editorial exclusiva de ES; EN/PT conservan su contenido actual.
+// Los casos y sus URLs siguen usando la fuente de datos compartida.
+const featuredProject = locale === "es"
+  ? projects.find((project) => project.slugs.es === "radiografia-cadena-hotelera-menorca")
+  : undefined;
 
 // Fallback forte: nunca deixe dict virar undefined
 const dict =
@@ -120,33 +129,24 @@ const metaDescription = meta?.description ?? "";
 
 <!-- Sin <main> propio: BaseLayout ya envuelve el slot en <main>, y el
      anidamiento producía dos <main> en el DOM (hallazgo de la auditoría). -->
-<BaseLayout title={metaTitle} description={metaDescription} jsonLd={jsonLd}>
-    <Hero locale={locale} hero={home?.hero ?? {}} />
-    <WhyUs why={home?.why ?? {}} industries={home?.industries ?? []} />
-
-    <!-- Orden de la home (fase 1 del reposicionamiento, 2026-08-10):
-         problema → pilares → cómo trabajamos → prueba → capacidades.
-         El catálogo de servicios estaba justo debajo de las puertas y era lo
-         primero que leía un visitante después del problema: once servicios
-         horizontales contando una historia de agencia generalista antes de que
-         la de integración/cumplimiento/arquitectura hubiera terminado. Baja
-         detrás de la prueba y en variante secundaria, sin perder un solo enlace.
-
-         Ago/2026: el mismo orden pasa a EN y PT. La única diferencia entre
-         idiomas vive dentro de <SiloDoors>: la puerta de cumplimiento es
-         ES-only —Verifactu y la Ley 10/2025 son obligaciones españolas— y en
-         EN/PT su lugar lo ocupa el catálogo de servicios. -->
-    <SiloDoors locale={locale} />
-
-    <Services services={home?.services ?? {}} />
-
-    <HomeCases locale={locale} />
-
-    <Testimonial testimonial={home?.testimonial ?? {}} socials={socials} ctaHref={`/${locale}/sobre/`} />
-    <ClientTestimonials clientTestimonials={home?.clientTestimonials ?? { badge: "", title: "", items: [] }} />
-
-    <ServiceCatalog locale={locale} variant="secondary" />
-
-    <BlogSection blogSection={home?.blogSection ?? {}} posts={latestPosts} locale={locale} />
-    <FAQ faq={faq ?? { items: [] }} />
+<BaseLayout title={metaTitle} description={metaDescription} jsonLd={jsonLd} editorial={Boolean(featuredProject)}>
+  {featuredProject ? (
+    <>
+      <PremiumHomeIntro project={featuredProject} />
+      <EditorialHomeContent posts={latestPosts} faq={faq} />
+    </>
+  ) : (
+    <>
+      <Hero locale={locale} hero={home?.hero ?? {}} />
+      <WhyUs why={home?.why ?? {}} industries={home?.industries ?? []} />
+      <SiloDoors locale={locale} />
+      <Services services={home?.services ?? {}} />
+      <HomeCases locale={locale} />
+      <Testimonial testimonial={home?.testimonial ?? {}} socials={socials} ctaHref={`/${locale}/sobre/`} />
+      <ClientTestimonials clientTestimonials={home?.clientTestimonials ?? { badge: "", title: "", items: [] }} />
+      <ServiceCatalog locale={locale} variant="secondary" />
+      <BlogSection blogSection={home?.blogSection ?? {}} posts={latestPosts} locale={locale} />
+      <FAQ faq={faq ?? { items: [] }} />
+    </>
+  )}
 </BaseLayout>

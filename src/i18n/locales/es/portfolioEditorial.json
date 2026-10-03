@@ -1,0 +1,83 @@
+{
+  "breadcrumb": {
+    "home": "Inicio",
+    "label": "Ruta de navegación"
+  },
+  "index": {
+    "eyebrow": "Casos",
+    "countSuffix": "casos documentados",
+    "listLabel": "Casos",
+    "figuresLabel": "Datos del caso",
+    "open": "Ver el caso",
+    "live": "Online"
+  },
+  "visual": {
+    "illustration": "Ilustración",
+    "webVitals": {
+      "label": "Web / rendimiento medido",
+      "source": "PageSpeed Insights",
+      "strategy": "Móvil",
+      "rows": {
+        "performance": "Rendimiento",
+        "accessibility": "Accesibilidad",
+        "best-practices": "Buenas prácticas",
+        "seo": "SEO",
+        "lcp": "LCP"
+      },
+      "caption": "Medido el {date} con Lighthouse {version}. Rendimiento: mediana de {runs} ejecuciones."
+    }
+  },
+  "detail": {
+    "back": "Todos los casos",
+    "factsLabel": "Ficha del caso",
+    "facts": {
+      "context": "Contexto",
+      "type": "Tipo de proyecto",
+      "service": "Servicio relacionado",
+      "status": "Estado"
+    },
+    "tocLabel": "En este caso",
+    "sections": {
+      "problem": "Problema",
+      "context": "Contexto",
+      "solution": "Solución",
+      "deliverables": "Entregables",
+      "scope": "Alcance",
+      "results": "Resultados",
+      "fit": "Para quién es",
+      "faq": "Preguntas",
+      "pricing": "Precio",
+      "performance": "Rendimiento"
+    },
+    "solutionTitle": "Cómo lo resolvimos",
+    "phasesLabel": "Fases",
+    "stepsLabel": "Flujo",
+    "pillarsLabel": "Ejes del trabajo",
+    "resultsTitle": "Lo que cambió",
+    "metricsLabel": "En cifras",
+    "securityLabel": "Seguridad y confidencialidad",
+    "linksLabel": "Enlaces del caso",
+    "nextLabel": "Siguiente caso",
+    "testimonialLabel": "Testimonio",
+    "productResults": {
+      "label": "Impacto",
+      "title": "Qué resuelve"
+    },
+    "archOutputsLabel": "Además, el sistema",
+    "decisionsLabel": "Decisiones técnicas"
+  },
+  "arch": {
+    "tourBooking": {
+      "input": "WhatsApp (texto o audio)",
+      "aggregation": "Agregación de mensajes",
+      "agent": "Agente IA: intención y variables",
+      "tools": "Herramientas determinísticas: temporada, duraciones y precio",
+      "reply": "Respuesta por partes en WhatsApp",
+      "leads": "Registro de leads y conversación en hoja de cálculo",
+      "logs": "Logs"
+    }
+  },
+  "contextTitles": {
+    "propiziare": "Un público trilingüe de verdad"
+  }
+}

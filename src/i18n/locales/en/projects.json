@@ -159,7 +159,8 @@
             {
                 "label": "Back to Cases"
             }
-        ]
+        ],
+        "serviceType": "Technology audit"
     },
     "chatplug": {
         "title": "ChatPlug: WhatsApp + Altegio Automation",
@@ -261,7 +262,8 @@
             {
                 "label": "Back to portfolio"
             }
-        ]
+        ],
+        "serviceType": "WhatsApp automation integrated with Altegio"
     },
     "tourBooking": {
         "title": "Tour Booking Chatbot (WhatsApp + n8n)",
@@ -349,7 +351,8 @@
             {
                 "label": "Back to portfolio"
             }
-        ]
+        ],
+        "serviceType": "WhatsApp booking chatbot"
     },
     "propiziare": {
         "seoTitle": "Propiziare Immigra — trilingual site and technical SEO | IA Operators",
@@ -449,6 +452,7 @@
             {
                 "label": "Back to portfolio"
             }
-        ]
+        ],
+        "serviceType": "Web development and technical SEO"
     }
 }

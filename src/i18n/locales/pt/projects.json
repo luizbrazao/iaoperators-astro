@@ -159,7 +159,8 @@
             {
                 "label": "Voltar aos Cases"
             }
-        ]
+        ],
+        "serviceType": "Auditoria tecnológica"
     },
     "chatplug": {
         "title": "ChatPlug: Automação WhatsApp + Altegio",
@@ -261,7 +262,8 @@
             {
                 "label": "Voltar ao portfolio"
             }
-        ]
+        ],
+        "serviceType": "Automação de WhatsApp integrada ao Altegio"
     },
     "tourBooking": {
         "title": "Chatbot de Reservas Turísticas (WhatsApp + n8n)",
@@ -349,7 +351,8 @@
             {
                 "label": "Voltar ao portfolio"
             }
-        ]
+        ],
+        "serviceType": "Chatbot de reservas pelo WhatsApp"
     },
     "propiziare": {
         "seoTitle": "Propiziare Immigra — site trilíngue e SEO técnico | IA Operators",
@@ -449,6 +452,7 @@
             {
                 "label": "Voltar ao portfolio"
             }
-        ]
+        ],
+        "serviceType": "Desenvolvimento web e SEO técnico"
     }
 }

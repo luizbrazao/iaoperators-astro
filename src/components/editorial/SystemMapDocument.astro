@@ -1,0 +1,52 @@
+---
+// "Mapa de sistemas" del caso hotelero: ilustración del entregable, no una
+// captura del sistema del cliente (lo dice su pie). Única fuente para la home
+// (PremiumHomeIntro) y el portfolio (CaseVisual).
+//
+// El componente define el documento; quien lo usa decide la caja exterior
+// (ancho, márgenes, hover) a través de `class`. Por eso el margen va en
+// :where(), sin especificidad, para que el padre pueda sobrescribirlo.
+import intro from "@/i18n/locales/es/homeIntro.json";
+
+interface Props { class?: string }
+const { class: className } = Astro.props;
+---
+<figure class:list={["sm-doc", className]}>
+  <div class="sm-head sm-eyebrow"><span>IA Operators</span><span aria-hidden="true">RD / 01</span></div>
+  <p class="sm-title">{intro.case.documentTitle}</p>
+  <div class="sm-map" aria-hidden="true">
+    {intro.case.connections.map(([from, to], index) => (
+      <div class="sm-row">
+        <span class="sm-node">{from}</span>
+        <span class="sm-connector"></span>
+        <span class:list={["sm-node", { "sm-node-accent": index === 1 }]}>{to}</span>
+      </div>
+    ))}
+  </div>
+  <div class="sm-legend sm-eyebrow" aria-hidden="true">{intro.case.legend.map((label) => <span>{label}</span>)}</div>
+  <figcaption>{intro.case.disclaimer}</figcaption>
+</figure>
+
+<style>
+  :where(.sm-doc) { margin: 0; }
+  .sm-doc { min-width: 0; background: #eceee4; color: #22241f; padding: 25px; transform: rotate(-3deg); box-shadow: 0 20px 40px #0003; transition: transform .4s ease; }
+  .sm-eyebrow { font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; line-height: 1.6; letter-spacing: .06em; text-transform: uppercase; }
+  .sm-head { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid #b8beac; padding-bottom: 18px; }
+  .sm-title { font-size: 26px; letter-spacing: -.04em; line-height: 1.25; max-width: 10em; margin-block: 23px; }
+  .sm-map { display: grid; gap: 12px; margin-block: 20px; }
+  .sm-row { display: grid; grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr); gap: 12px; align-items: center; }
+  .sm-node { border: 1px solid #aeb5a2; padding: 12px; font-size: 11px; background: #f8f9f2; }
+  .sm-node-accent { background: #f16532; border-color: #f16532; }
+  .sm-connector { height: 1px; background: #8d9780; position: relative; }
+  .sm-connector::after { content: "›"; position: absolute; right: -3px; top: -13px; }
+  .sm-legend { display: flex; flex-wrap: wrap; gap: 18px; padding-top: 18px; border-top: 1px solid #b8beac; font-size: 9px; color: #535b49; }
+  figcaption { font-size: 10px; line-height: 1.5; color: #535b49; margin-top: 15px; }
+  @media (max-width: 720px) {
+    .sm-doc { padding: 18px; }
+    .sm-title { font-size: 22px; }
+    .sm-row { grid-template-columns: minmax(0, 1fr) 12px minmax(0, 1fr); gap: 6px; }
+    .sm-node { padding: 10px 7px; font-size: 10px; overflow-wrap: anywhere; }
+    .sm-legend { gap: 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .sm-doc { transition: none; } }
+</style>
