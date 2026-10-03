@@ -18,5 +18,15 @@
     "capas": "Qué es",
     "decisiones": "Decisiones",
     "relaciones": "Con los otros pilares"
+  },
+  "cumplimiento": {
+    "pillar": "02 / Cumplimiento",
+    "queEs": "Qué es",
+    "frentes": "Dos frentes",
+    "plazo": "Plazo",
+    "plazos": "Plazos",
+    "dias": "días",
+    "quien": "A quién aplica",
+    "que": "Qué hay que construir"
   }
 }

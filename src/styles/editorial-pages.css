@@ -76,6 +76,37 @@
 .editorial-shell .ed-closing .pg-closing-title { font-size: clamp(36px, 5vw, 68px); max-width: 16em; }
 .editorial-shell .ed-closing .pg-closing-copy { font-size: 17px; line-height: 1.6; max-width: 46ch; margin: -10px 0 30px; }
 
+/* Frentes de cumplimiento (/es/cumplimiento/). */
+.editorial-shell .pg-fronts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; padding-block: 84px; }
+.editorial-shell .pg-front { display: flex; flex-direction: column; background: #e4dfd3; padding: 44px; min-width: 0; }
+.editorial-shell .pg-front-dark { background: #252923; color: var(--ed-paper); }
+.editorial-shell .pg-front-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.editorial-shell .pg-front-head .ed-eyebrow { color: #5b5f53; }
+.editorial-shell .pg-front-dark .pg-front-head .ed-eyebrow { color: #c2cab9; }
+.editorial-shell .pg-front-count { display: flex; align-items: baseline; gap: 8px; }
+.editorial-shell .pg-front-count strong { font-size: 44px; font-weight: 500; letter-spacing: -.05em; line-height: 1; color: var(--ed-orange); font-variant-numeric: tabular-nums; }
+.editorial-shell .pg-front h2 { font-size: clamp(26px, 2.7vw, 36px); font-weight: 500; letter-spacing: -.045em; line-height: 1.18; margin-block: 28px 20px; }
+.editorial-shell .pg-front-dates { margin: 0; display: grid; gap: 6px; }
+.editorial-shell .pg-front-dates > div { display: flex; justify-content: space-between; gap: 16px; border-top: 1px solid #c9c2b2; padding-top: 10px; font-size: 14px; }
+.editorial-shell .pg-front-dark .pg-front-dates > div { border-top-color: #4b5146; }
+.editorial-shell .pg-front-dates dt { color: #5b5f53; }
+.editorial-shell .pg-front-dark .pg-front-dates dt { color: #c2cab9; }
+.editorial-shell .pg-front-dates dd { margin: 0; font-weight: 500; text-align: right; }
+.editorial-shell .pg-front-facts { margin: 30px 0 0; flex: 1; }
+.editorial-shell .pg-front-facts > div + div { margin-top: 22px; }
+.editorial-shell .pg-front-facts dt { color: #5b5f53; margin-bottom: 6px; }
+.editorial-shell .pg-front-dark .pg-front-facts dt { color: #c2cab9; }
+.editorial-shell .pg-front-facts dd { margin: 0; font-size: 15px; line-height: 1.65; color: #3f4238; }
+.editorial-shell .pg-front-dark .pg-front-facts dd { color: #d6dccd; }
+.editorial-shell .pg-front .pg-actions { margin-top: 32px; }
+.editorial-shell .pg-front-dark .ed-button { background: var(--ed-paper); color: var(--ed-ink); }
+.editorial-shell .pg-front-dark .ed-underlined { border-bottom-color: #6c7364; }
+.editorial-shell .pg-front-dark a:focus-visible { outline-color: var(--ed-orange); }
+
+/* Cierre con una frase en lugar de titular (la página no tenía H2 aquí). */
+.editorial-shell .pg-closing-statement { font-size: clamp(28px, 3.2vw, 42px); font-weight: 500; letter-spacing: -.04em; line-height: 1.2; max-width: 24em; margin-block: 26px 34px; }
+.editorial-shell .pg-disclaimer { font-size: 12px; line-height: 1.6; max-width: 60ch; margin-top: 34px; color: var(--ed-ink); }
+
 /* ---------- Casos relacionados (RelatedCases variant="editorial") ---------- */
 .editorial-shell .pg-related { padding-block: 84px 72px; }
 .editorial-shell .pg-related-head { display: grid; grid-template-columns: 1fr 2fr; gap: 50px; padding-bottom: 36px; }
@@ -110,6 +141,7 @@
   .editorial-shell .pg-door,
   .editorial-shell .pg-related-head { grid-template-columns: 1fr; gap: 24px; }
   .editorial-shell .pg-columns { grid-template-columns: 1fr; gap: 30px; }
+  .editorial-shell .pg-fronts,
   .editorial-shell .pg-symptoms,
   .editorial-shell .pg-questions,
   .editorial-shell .pg-relations { grid-template-columns: 1fr; }
@@ -129,6 +161,11 @@
   .editorial-shell .pg-door { padding: 28px 22px; }
   .editorial-shell .pg-related { padding-block: 52px 44px; }
   .editorial-shell .pg-method-wrap { margin-top: 52px; }
+  .editorial-shell .pg-fronts { padding-block: 52px; gap: 20px; }
+  .editorial-shell .pg-front { padding: 28px 22px; }
+  .editorial-shell .pg-front-dates > div { flex-direction: column; gap: 2px; }
+  .editorial-shell .pg-front-dates dd { text-align: left; }
+  .editorial-shell .pg-closing-statement { font-size: 26px; }
   .editorial-shell .pg-relations { padding-top: 52px; gap: 36px; }
   .editorial-shell .pg-questions p { font-size: 17px; }
   .editorial-shell .pg-symptoms li { font-size: 15px; }
