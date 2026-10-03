@@ -1,0 +1,45 @@
+---
+import { getPilares } from "@/data/navegacion";
+interface Props { languageLinks: Array<{ locale: string; href: string }> }
+const { languageLinks } = Astro.props;
+const links = [
+  ...getPilares("es").map(({label, href}) => ({label, href})),
+  {label: "Casos", href: "/es/portfolio/"},
+  {label: "Blog", href: "/es/blog/"},
+];
+---
+<a class="ed-skip" href="#main-content">Saltar al contenido</a>
+<div class="ed-container">
+  <header class="ed-header">
+    <a class="ed-wordmark" href="/es/" aria-label="IA Operators, inicio"><span aria-hidden="true">↗</span> IA Operators</a>
+    <nav class="ed-desktop-nav" aria-label="Navegación principal">
+      {links.map(link => <a href={link.href}>{link.label}</a>)}
+      <a class="ed-nav-contact" href="/es/contact/">¿Hablamos? <span aria-hidden="true">↗</span></a>
+      <div class="ed-languages" aria-label="Idiomas">{languageLinks.map(link => <a href={link.href} lang={link.locale} aria-current={link.locale === "es" ? "page" : undefined}>{link.locale.toUpperCase()}</a>)}</div>
+    </nav>
+    <details class="ed-mobile-menu">
+      <summary>Menú <span aria-hidden="true">+</span></summary>
+      <nav aria-label="Navegación móvil">
+        {links.map(link => <a href={link.href}>{link.label}</a>)}
+        <a href="/es/servicios/">Todas las capacidades</a>
+        <a class="ed-nav-contact" href="/es/contact/">¿Hablamos? <span aria-hidden="true">↗</span></a>
+        <div class="ed-languages" aria-label="Idiomas">{languageLinks.map(link => <a href={link.href} lang={link.locale} aria-current={link.locale === "es" ? "page" : undefined}>{link.locale.toUpperCase()}</a>)}</div>
+      </nav>
+    </details>
+  </header>
+</div>
+<script>
+  const menu = document.querySelector<HTMLDetailsElement>(".ed-mobile-menu");
+  if (menu) {
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && menu.open) {
+        menu.open = false;
+        menu.querySelector("summary")?.focus();
+      }
+    });
+    document.addEventListener("click", event => {
+      if (event.target instanceof Node && !menu.contains(event.target)) menu.open = false;
+    });
+    menu.querySelectorAll("a").forEach(link => link.addEventListener("click", () => { menu.open = false; }));
+  }
+</script>

@@ -27,8 +27,20 @@ import {
   type Strategy,
 } from "@/data/web-vitals";
 
-type Props = { targetKey: string; locale: string };
-const { targetKey, locale } = Astro.props as Props;
+type Props = {
+  targetKey: string;
+  locale: string;
+  /**
+   * "dark": tarjeta de la plantilla anterior (por defecto, EN/PT y fichas sin migrar).
+   * "editorial": misma información y mismos textos sobre fondo marfil, para la
+   * ficha editorial ES. `eyebrow` e `id` integran el bloque en la numeración
+   * y el índice de secciones de la ficha.
+   */
+  variant?: "dark" | "editorial";
+  eyebrow?: string;
+  id?: string;
+};
+const { targetKey, locale, variant = "dark", eyebrow, id } = Astro.props as Props;
 
 const data = getWebVitals(targetKey);
 
@@ -129,6 +141,15 @@ const BAND_COLOR: Record<Band, string> = {
   critical: "#d03b3b",
 };
 
+// Sobre marfil (#f3f1eb) los tonos de arriba no llegan a 3:1 (el ámbar se queda
+// en ~1,6). Variantes oscuras para la versión editorial, todas por encima de
+// 4:1 sobre el fondo; el estado sigue acompañado siempre de su etiqueta.
+const BAND_COLOR_EDITORIAL: Record<Band, string> = {
+  good: "#2f7d32",
+  warning: "#9a5b00",
+  critical: "#b3261e",
+};
+
 const CATEGORY_ORDER = ["performance", "accessibility", "best-practices", "seo"] as const;
 const METRIC_ORDER: { id: MetricId; note: keyof typeof tx.metricNotes }[] = [
   { id: "lcpMs", note: "lcpMs" },
@@ -152,7 +173,64 @@ const dateFmt = data
   : "";
 ---
 
-{data && (
+{data && variant === "editorial" && (
+  <section class="pf-section pf-vitals" id={id} aria-labelledby={id ? `${id}-title` : undefined}>
+    {eyebrow && <p class="ed-eyebrow">{eyebrow}</p>}
+    <h2 id={id ? `${id}-title` : undefined}>{tx.heading}</h2>
+    <div class="pf-prose"><p>{tx.intro}</p></div>
+
+    <div class="pf-vitals-grid">
+      {(["mobile", "desktop"] as Strategy[]).map((strategy) => {
+        const run = data[strategy];
+        return (
+          <div class="pf-vitals-run">
+            <h3 class="ed-eyebrow">{strategy === "mobile" ? tx.mobile : tx.desktop}</h3>
+            <ul class="pf-scores">
+              {CATEGORY_ORDER.map((cat) => {
+                const score = run.scores[cat];
+                const band = scoreBand(score);
+                const color = BAND_COLOR_EDITORIAL[band];
+                return (
+                  <li>
+                    <svg width="64" height="64" viewBox="0 0 72 72" role="img" aria-label={`${tx.categories[cat]}: ${score} de 100, ${tx.bands[band]}`}>
+                      <circle cx="36" cy="36" r={R} fill="none" stroke="#d0d1c7" stroke-width="4" />
+                      <circle cx="36" cy="36" r={R} fill="none" stroke={color} stroke-width="4" stroke-linecap="round" stroke-dasharray={`${(CIRC * score) / 100} ${CIRC}`} transform="rotate(-90 36 36)" />
+                      <text x="36" y="36" text-anchor="middle" dominant-baseline="central" fill="#22241f" font-size="20" font-weight="600">{score}</text>
+                    </svg>
+                    <span class="pf-score-label">{tx.categories[cat]}</span>
+                    <span class="pf-band"><span aria-hidden="true" style={`background:${color}`}></span>{tx.bands[band]}</span>
+                  </li>
+                );
+              })}
+            </ul>
+            <dl class="pf-labs">
+              {METRIC_ORDER.map(({ id: metricId, note }) => {
+                const value = metricId === "cls" ? run.lab.cls : (run.lab as any)[metricId];
+                const band = metricBand(metricId, value);
+                return (
+                  <div>
+                    <dt><abbr title={tx.metricNotes[note]}>{metricId === "cls" ? "CLS" : metricId === "lcpMs" ? "LCP" : "TBT"}</abbr></dt>
+                    <dd class="pf-lab-value">{formatMetric(metricId, value, locale)}</dd>
+                    <dd class="pf-band"><span aria-hidden="true" style={`background:${BAND_COLOR_EDITORIAL[band]}`}></span>{tx.bands[band]}</dd>
+                  </div>
+                );
+              })}
+            </dl>
+          </div>
+        );
+      })}
+    </div>
+
+    <footer class="pf-vitals-foot">
+      <p><strong>{tx.methodology}:</strong>{" "}{webVitalsMeta.source} · Lighthouse {webVitalsMeta.lighthouseVersion} · {tx.measuredOn}{" "}<time datetime={data.measuredAt}>{dateFmt}</time>.</p>
+      <p>{tx.medianNote(webVitalsMeta.medianOf.mobile, webVitalsMeta.medianOf.desktop)}</p>
+      {!data.mobile.field && <p>{tx.noField}</p>}
+      <p><a class="ed-underlined" href={psiUrl} target="_blank" rel="noopener noreferrer">{tx.verify} <span aria-hidden="true">↗</span></a></p>
+    </footer>
+  </section>
+)}
+
+{data && variant === "dark" && (
   <section class="mt-12 bg-[#0A0A0A] border border-white/10 rounded-3xl p-8">
     <h2 class="text-2xl font-bold mb-2 text-white">{tx.heading}</h2>
     <p class="text-gray-400 text-sm mb-8 max-w-2xl">{tx.intro}</p>

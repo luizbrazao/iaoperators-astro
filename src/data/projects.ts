@@ -58,6 +58,8 @@ export type Project = {
     relatedServiceKey?: string;
     relatedServiceHref?: string;
     serviceAudienceKey?: string;
+    /** Tipo de servicio para el JSON-LD `Service` de la ficha (antes era "Auditoría tecnológica" para todos). */
+    serviceTypeKey?: string;
     serviceAreas?: string[];
 
     /**
@@ -146,6 +148,7 @@ export const projects: Project[] = [
 
         seoTitleKey: "projects:menorcaHotelChain.seoTitle",
         titleKey: "projects:menorcaHotelChain.title",
+        serviceTypeKey: "projects:menorcaHotelChain.serviceType",
         h1Key: "projects:menorcaHotelChain.h1",
         subtitleKey: "projects:menorcaHotelChain.subtitle",
         taglineKey: "projects:menorcaHotelChain.tagline",
@@ -328,6 +331,7 @@ export const projects: Project[] = [
         ],
 
         titleKey: "projects:chatplug.title",
+        serviceTypeKey: "projects:chatplug.serviceType",
         taglineKey: "projects:chatplug.tagline",
 
         problemKey: "projects:chatplug.problem",
@@ -418,7 +422,8 @@ export const projects: Project[] = [
             },
             {
                 labelKey: "projects:chatplug.metrics.1.label",
-                value: "6+",
+                // Idiomas listados en el caso: PT/EN/ES/FR/RU.
+                value: "5",
                 noteKey: "projects:chatplug.metrics.1.note",
             },
             {
@@ -475,6 +480,7 @@ export const projects: Project[] = [
 
 
         titleKey: "projects:tourBooking.title",
+        serviceTypeKey: "projects:tourBooking.serviceType",
         taglineKey: "projects:tourBooking.tagline",
 
         problemKey: "projects:tourBooking.problem",
@@ -614,6 +620,7 @@ export const projects: Project[] = [
 
         seoTitleKey: "projects:propiziare.seoTitle",
         titleKey: "projects:propiziare.title",
+        serviceTypeKey: "projects:propiziare.serviceType",
         h1Key: "projects:propiziare.h1",
         subtitleKey: "projects:propiziare.subtitle",
         taglineKey: "projects:propiziare.tagline",

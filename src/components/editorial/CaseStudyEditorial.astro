@@ -1,0 +1,333 @@
+---
+// Ficha editorial de un caso (ES). Solo reorganiza y presenta el contenido que
+// ya existe en projects.ts + projects.json: no añade cifras ni afirmaciones.
+// Las secciones opcionales (contexto, entregables, testimonio, FAQ…) solo se
+// pintan si el caso las declara.
+import { projects, type Project } from "@/data/projects";
+import { getCaseEditorial, caseFigures } from "@/data/casosEditorial";
+import { createT } from "@/i18n/t";
+import copy from "@/i18n/locales/es/portfolioEditorial.json";
+import home from "@/i18n/locales/es/homeEditorial.json";
+import CaseVisual from "./CaseVisual.astro";
+import WebVitalsCard from "@/components/WebVitalsCard.astro";
+import "@/styles/editorial-cases.css";
+
+interface Props { project: Project }
+const { project } = Astro.props;
+const t = await createT("es", { namespaces: ["portfolio", "projects", "portfolioEditorial"] });
+const s = copy.detail.sections;
+const entry = getCaseEditorial(project);
+const isProduct = entry?.results === "product";
+const resultsLabel = isProduct ? copy.detail.productResults.label : s.results;
+const resultsTitle = isProduct ? copy.detail.productResults.title : copy.detail.resultsTitle;
+const metrics = caseFigures(project, "detail");
+const architecture = entry?.architecture;
+// Los precios se guardan con sufijo en portugués ("€19/mês"); en ES se muestra el sufijo en español.
+const localizePrice = (price: string) => price.replace("/mês", "/mes").replace("/ano", "/año");
+const plans = project.pricing
+  ? ([
+      ["monthly", project.pricing.monthly],
+      ["annual", project.pricing.annual],
+    ] as const).flatMap(([key, plan]) => (plan ? [{ key, label: t(`portfolio:project.pricing.${key}`), price: localizePrice(plan.price), details: plan.detailsKeys ?? [] }] : []))
+  : [];
+
+// Algunos textos del caso están pensados para ir en mitad de una frase
+// ("servicio de auditoría…"); como etiqueta suelta se capitalizan.
+const capitalize = (text: string) => text.charAt(0).toLocaleUpperCase("es") + text.slice(1);
+
+const category = project.categoryKey ? t(project.categoryKey) : project.category;
+const title = t(project.titleKey);
+const h1 = t(project.h1Key ?? project.titleKey);
+const liveLink = project.links?.find((link) => link.external)?.href;
+const relatedHref = project.relatedServiceHref ? `/es${project.relatedServiceHref}` : undefined;
+const relatedLabel = project.relatedServiceKey ? capitalize(t(project.relatedServiceKey)) : undefined;
+
+const resolveHref = (href: string, external?: boolean) => {
+  if (external || /^(https?:)?\/\//.test(href)) return href;
+  if (href.startsWith("/es/") || href === "/es") return href;
+  return href.startsWith("/") ? `/es${href}` : `/es/${href}`;
+};
+const contactHref = "/es/contact/";
+const portfolioHref = "/es/portfolio/";
+const links = project.links.map((link) => ({
+  label: link.labelKey ? t(link.labelKey) : link.label,
+  href: resolveHref(link.href, link.external),
+  external: Boolean(link.external),
+}));
+const normalize = (href: string) => href.replace(/\/?$/, "/");
+// El botón principal lleva al contacto; "volver a casos" ya está en las migas.
+const primaryLink = links.find((link) => normalize(link.href) === contactHref);
+const secondaryLinks = links.filter((link) => {
+  const target = normalize(link.href);
+  return target !== contactHref && target !== portfolioHref;
+});
+
+// "Fase 0 — Kick-off: alineación…" → etiqueta, título y texto. Los pasos sin
+// ese formato se numeran y se muestran tal cual.
+const steps = project.howItWorksKeys.map((key, index) => {
+  const text = t(key);
+  const [head, ...rest] = text.split(" — ");
+  if (rest.length === 0) return { label: String(index + 1).padStart(2, "0"), title: "", body: text };
+  const remainder = rest.join(" — ");
+  const colon = remainder.indexOf(": ");
+  return colon > 0
+    ? { label: head, title: remainder.slice(0, colon), body: capitalize(remainder.slice(colon + 2)) }
+    : { label: head, title: "", body: capitalize(remainder) };
+});
+const stepsArePhases = steps.some((step) => step.title !== "");
+
+const deliverables = (project.deliverablesKeys ?? []).map((key) => {
+  const [label, ...rest] = t(key).split(" — ");
+  return { label, body: capitalize(rest.join(" — ")) };
+});
+
+const sections = [
+  { id: "problema", label: s.problem, show: true },
+  { id: "contexto", label: s.context, show: Boolean(project.contextKey) },
+  { id: "solucion", label: s.solution, show: true },
+  { id: "entregables", label: deliverables.length ? s.deliverables : s.scope, show: deliverables.length > 0 || project.whatItDoesKeys.length > 0 },
+  { id: "resultados", label: resultsLabel, show: true },
+  { id: "precio", label: s.pricing, show: plans.length > 0 },
+  { id: "rendimiento", label: s.performance, show: Boolean(project.webVitalsKey) },
+  { id: "para-quien", label: s.fit, show: Boolean(project.forWho) },
+  { id: "preguntas", label: s.faq, show: Boolean(project.faq?.length) },
+].filter((section) => section.show);
+const number = (id: string) => String(sections.findIndex((section) => section.id === id) + 1).padStart(2, "0");
+
+const position = projects.findIndex((item) => item.id === project.id);
+const next = projects[(position + 1) % projects.length];
+---
+<div class="ed-container">
+  <header class="pf-detail-hero">
+    <nav class="pf-crumbs ed-eyebrow" aria-label={copy.breadcrumb.label}>
+      <ol>
+        <li><a href="/es/">{copy.breadcrumb.home}</a></li>
+        <li><a href={portfolioHref}>{t("portfolio:breadcrumb.portfolio")}</a></li>
+        <li class="pf-crumb-current"><span aria-current="page">{title}</span></li>
+      </ol>
+    </nav>
+    <div class="pf-detail-head">
+      <div>
+        <p class="ed-eyebrow">{category}</p>
+        <h1>{h1}</h1>
+        <p class="pf-detail-lead">{t(project.taglineKey)}</p>
+      </div>
+      <dl class="pf-facts" aria-label={copy.detail.factsLabel}>
+        {project.subtitleKey && <div><dt class="ed-eyebrow">{copy.detail.facts.context}</dt><dd>{t(project.subtitleKey)}</dd></div>}
+        <div><dt class="ed-eyebrow">{copy.detail.facts.type}</dt><dd>{category}</dd></div>
+        {relatedHref && relatedLabel && <div><dt class="ed-eyebrow">{copy.detail.facts.service}</dt><dd><a href={relatedHref}>{relatedLabel}</a></dd></div>}
+        {liveLink && <div><dt class="ed-eyebrow">{copy.detail.facts.status}</dt><dd><a href={liveLink} target="_blank" rel="noopener noreferrer">{t("portfolio:actions.live")} <span aria-hidden="true">↗</span></a></dd></div>}
+      </dl>
+    </div>
+  </header>
+
+  <CaseVisual project={project} size="detail" />
+
+  {metrics.length ? (
+    <dl class="pf-metrics" aria-label={copy.detail.metricsLabel} style={`--pf-metric-cols: ${Math.min(metrics.length, 4)}`}>
+      {metrics.map((metric) => (
+        <div>
+          <dt>{metric.labelIsKey ? t(metric.label) : metric.label}</dt>
+          <dd class:list={["pf-metric-value", { "pf-metric-text": metric.isText }]}>{metric.value}</dd>
+          {metric.noteKey && <dd class="pf-metric-note">{t(metric.noteKey)}</dd>}
+        </div>
+      ))}
+    </dl>
+  ) : null}
+
+  <div class="pf-detail-body">
+    <aside class="pf-toc">
+      <nav aria-label={copy.detail.tocLabel}>
+        <p class="ed-eyebrow">{copy.detail.tocLabel}</p>
+        <ol>{sections.map((section, index) => <li><a href={`#${section.id}`}><span>{String(index + 1).padStart(2, "0")}</span>{section.label}</a></li>)}</ol>
+      </nav>
+    </aside>
+
+    <div class="pf-content">
+      <section class="pf-section" id="problema" aria-labelledby="problema-title">
+        <h2 id="problema-title" class="ed-eyebrow">{number("problema")} / {s.problem}</h2>
+        <p class="pf-statement">{t(project.problemKey)}</p>
+      </section>
+
+      {project.contextKey && (
+        <section class="pf-section" id="contexto" aria-labelledby="contexto-title">
+          <p class="ed-eyebrow">{number("contexto")} / {s.context}</p>
+          <h2 id="contexto-title">{entry?.contextTitleKey ? t(entry.contextTitleKey) : s.context}</h2>
+          <div class="pf-prose">{t(project.contextKey).split("\n\n").map((paragraph) => <p>{paragraph}</p>)}</div>
+          {relatedHref && relatedLabel && <a class="ed-underlined pf-related" href={relatedHref}>{relatedLabel} <span class="ed-arrow" aria-hidden="true">↗</span></a>}
+        </section>
+      )}
+
+      <section class="pf-section" id="solucion" aria-labelledby="solucion-title">
+        <p class="ed-eyebrow">{number("solucion")} / {s.solution}</p>
+        <h2 id="solucion-title">{copy.detail.solutionTitle}</h2>
+        <div class="pf-prose"><p>{t(project.engineeringIntroKey)}</p></div>
+
+        {steps.length > 0 && (
+          <>
+            <h3 class="pf-sublabel ed-eyebrow">{stepsArePhases ? copy.detail.phasesLabel : entry?.stepsKind === "decisions" ? copy.detail.decisionsLabel : copy.detail.stepsLabel}</h3>
+            <ol class="pf-steps">
+              {steps.map((step) => (
+                <li>
+                  <span class="ed-eyebrow">{step.label}</span>
+                  <p class:list={{ "pf-step-plain": !step.title }}>{step.title && <strong>{step.title}</strong>}{step.body}</p>
+                </li>
+              ))}
+            </ol>
+          </>
+        )}
+
+        {architecture && (
+          <>
+            <h3 class="pf-sublabel ed-eyebrow">{t("portfolio:project.sections.engineering.archTitle")}</h3>
+            <div class="pf-arch">
+              <ol class:list={["pf-arch-flow", { "pf-arch-flow-long": architecture.flow.length > 4 }]} style={`--pf-arch-cols: ${architecture.flow.length}`}>
+                {architecture.flow.map((key, index) => <li class:list={{ "pf-arch-core": index === architecture.core }}>{t(key)}</li>)}
+              </ol>
+              {architecture.outputs.length > 0 && (
+                <div class="pf-arch-outputs">
+                  <p class="ed-eyebrow">{copy.detail.archOutputsLabel}</p>
+                  <ul>{architecture.outputs.map((key) => <li>{t(key)}</li>)}</ul>
+                </div>
+              )}
+            </div>
+          </>
+        )}
+
+        {project.pillars.length > 0 && (
+          <>
+            <h3 class="pf-sublabel ed-eyebrow">{copy.detail.pillarsLabel}</h3>
+            <div class="pf-pillars">
+              {project.pillars.map((pillar) => (
+                <article>
+                  <h4 class="pf-pillar-title">{t(pillar.titleKey)}</h4>
+                  <p>{t(pillar.descriptionKey)}</p>
+                  {pillar.bulletsKeys?.length ? <ul class="pf-dash">{pillar.bulletsKeys.map((key) => <li>{t(key)}</li>)}</ul> : null}
+                </article>
+              ))}
+            </div>
+          </>
+        )}
+      </section>
+
+      {(deliverables.length > 0 || project.whatItDoesKeys.length > 0) && (
+        <section class="pf-section" id="entregables" aria-labelledby="entregables-title">
+          {deliverables.length > 0 ? (
+            <>
+              <p class="ed-eyebrow">{number("entregables")} / {s.deliverables}</p>
+              <h2 id="entregables-title">{t("portfolio:project.sections.deliverables.title")}</h2>
+              <dl class="pf-deliverables">
+                {deliverables.map((item, index) => (
+                  <div>
+                    <span class="ed-eyebrow" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                    <dt>{item.label}</dt>
+                    {item.body && <dd>{item.body}</dd>}
+                  </div>
+                ))}
+              </dl>
+            </>
+          ) : (
+            <>
+              <p class="ed-eyebrow">{number("entregables")} / {s.scope}</p>
+              <h2 id="entregables-title">{t("projects:sections.whatItDoes.title")}</h2>
+              <ul class="pf-dash">{project.whatItDoesKeys.map((key) => <li>{t(key)}</li>)}</ul>
+            </>
+          )}
+        </section>
+      )}
+
+      <section class="pf-section" id="resultados" aria-labelledby="resultados-title">
+        <p class="ed-eyebrow">{number("resultados")} / {resultsLabel}</p>
+        <h2 id="resultados-title">{resultsTitle}</h2>
+        <p class="pf-statement">{t(project.impactKey)}</p>
+        {project.testimonial && (
+          <blockquote class="pf-quote">
+            <p>“{t(project.testimonial.quoteKey)}”</p>
+            <footer><cite>{t(project.testimonial.authorKey)}</cite> · {t(project.testimonial.roleKey)}</footer>
+          </blockquote>
+        )}
+        {project.securityKeys.length > 0 && (
+          <div class="pf-security">
+            <h3 class="ed-eyebrow">{copy.detail.securityLabel}</h3>
+            <ul class="pf-dash">{project.securityKeys.map((key) => <li>{t(key)}</li>)}</ul>
+          </div>
+        )}
+      </section>
+
+      {plans.length > 0 && (
+        <section class="pf-section" id="precio" aria-labelledby="precio-title">
+          <p class="ed-eyebrow">{number("precio")} / {s.pricing}</p>
+          <h2 id="precio-title">{t("portfolio:project.sections.pricing.title")}</h2>
+          <div class="pf-plans">
+            {plans.map((plan) => (
+              <article class:list={["pf-plan", { "pf-plan-accent": plan.key === "annual" }]}>
+                <h3 class="ed-eyebrow">{plan.label}</h3>
+                <p class="pf-plan-price">{plan.price}</p>
+                {plan.details.length > 0 && <ul class="pf-dash">{plan.details.map((key) => <li>{t(key)}</li>)}</ul>}
+              </article>
+            ))}
+          </div>
+          {project.pricing?.trialKey && <p class="pf-plan-trial">{t(project.pricing.trialKey)}</p>}
+        </section>
+      )}
+
+      {project.webVitalsKey && (
+        <WebVitalsCard targetKey={project.webVitalsKey} locale="es" variant="editorial" id="rendimiento" eyebrow={`${number("rendimiento")} / ${s.performance}`} />
+      )}
+
+      {project.forWho && (
+        <section class="pf-section" id="para-quien" aria-labelledby="para-quien-title">
+          <p class="ed-eyebrow">{number("para-quien")} / {s.fit}</p>
+          <h2 id="para-quien-title">{t("portfolio:project.sections.forWho.title")}</h2>
+          <div class="pf-fit">
+            <div><h3>{t("portfolio:project.sections.forWho.yes")}</h3><ul class="pf-dash">{project.forWho.yesKeys.map((key) => <li>{t(key)}</li>)}</ul></div>
+            <div class="pf-fit-no"><h3>{t("portfolio:project.sections.forWho.no")}</h3><ul class="pf-dash">{project.forWho.noKeys.map((key) => <li>{t(key)}</li>)}</ul></div>
+          </div>
+        </section>
+      )}
+
+      {project.iaReadinessKey && (
+        <aside class="pf-callout" aria-labelledby="ia-readiness-title">
+          <h2 id="ia-readiness-title">{t("portfolio:project.sections.iaReadiness.title")}</h2>
+          <p>{t(project.iaReadinessKey)}</p>
+        </aside>
+      )}
+
+      {project.faq?.length ? (
+        <section class="pf-section pf-faq" id="preguntas" aria-labelledby="preguntas-title">
+          <p class="ed-eyebrow">{number("preguntas")} / {s.faq}</p>
+          <h2 id="preguntas-title">{t("portfolio:project.sections.faq.title")}</h2>
+          <div class="ed-faq">{project.faq.map((item) => <details><summary>{t(item.qKey)}</summary><p>{t(item.aKey)}</p></details>)}</div>
+        </section>
+      ) : null}
+    </div>
+  </div>
+</div>
+
+<section class="ed-closing pf-closing" aria-labelledby="case-closing-title">
+  <div class="ed-container">
+    <p class="ed-eyebrow">{home.closing.label}</p>
+    <h2 id="case-closing-title">{project.ctaTitleKey ? t(project.ctaTitleKey) : t("portfolio:cta.title")}</h2>
+    {project.ctaSubtitleKey && <p class="pf-closing-copy">{t(project.ctaSubtitleKey)}</p>}
+    <a class="ed-button" href={contactHref}>{primaryLink?.label ?? home.closing.cta}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+    {secondaryLinks.length > 0 && (
+      <nav class="pf-closing-links" aria-label={copy.detail.linksLabel}>
+        {secondaryLinks.map((link) => (
+          <a href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined}>{link.label} <span aria-hidden="true">{link.external ? "↗" : "→"}</span></a>
+        ))}
+      </nav>
+    )}
+  </div>
+</section>
+
+{next && next.id !== project.id && (
+  <div class="ed-container">
+    <nav class="pf-next" aria-label={copy.detail.nextLabel}>
+      <div>
+        <p class="ed-eyebrow">{copy.detail.nextLabel}</p>
+        <a class="pf-next-title" href={`/es/portfolio/${next.slugs.es}/`}>{t(next.titleKey)} <span class="ed-arrow" aria-hidden="true">↗</span></a>
+      </div>
+      <a class="ed-underlined" href={portfolioHref}>{copy.detail.back} <span aria-hidden="true">→</span></a>
+    </nav>
+  </div>
+)}

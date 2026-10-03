@@ -1,12 +1,18 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import EditorialHeader from "../components/EditorialHeader.astro";
+import EditorialFooter from "../components/EditorialFooter.astro";
+import "../styles/editorial-home.css";
 import { getLocale, locales } from "../i18n/ui";
 import CookieBanner from "../islands/CookieBanner.jsx";
 import GridSpotlight from "../islands/GridSpotlight.jsx";
 
 type Props = {
   title?: string;
+  solidHeader?: boolean;
+  /** Shell editorial (marfil + Manrope). Solo páginas ES migradas: home y portfolio. */
+  editorial?: boolean;
   description?: string;
   canonicalUrl?: string;
   alternates?: Array<{ lang: string; href: string }>;
@@ -27,6 +33,8 @@ type Props = {
 
 const {
   title = "IA Operators",
+  solidHeader = false,
+  editorial = false,
   description,
   canonicalUrl,
   alternates: alternatesOverride,
@@ -175,6 +183,8 @@ const ogLocale = OG_LOCALE_MAP[locale] ?? locale;
       ))
     }
 
+    {editorial && <link rel="preload" href="/fonts/manrope-latin-variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />}
+
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -189,14 +199,19 @@ const ogLocale = OG_LOCALE_MAP[locale] ?? locale;
   </head>
 
   <body class="min-h-screen bg-background text-foreground">
-    <!-- GridSpotlight precisa ser o wrapper global (camada de fundo + mask) -->
-    <GridSpotlight client:load>
-      <Header languageLinks={languageLinks} />
-      <main class="pt-120px">
-        <slot />
-      </main>
-      <Footer languageLinks={languageLinks} />
-    </GridSpotlight>
+    {editorial ? (
+      <div class="editorial-shell">
+        <EditorialHeader languageLinks={languageLinks} />
+        <main id="main-content"><slot /></main>
+        <EditorialFooter languageLinks={languageLinks} />
+      </div>
+    ) : (
+      <GridSpotlight client:load>
+        <Header languageLinks={languageLinks} solidSurface={solidHeader} />
+        <main class="pt-120px"><slot /></main>
+        <Footer languageLinks={languageLinks} />
+      </GridSpotlight>
+    )}
 
     <!-- Elementos fixos/overlays fora do wrapper -->
     <CookieBanner client:idle />

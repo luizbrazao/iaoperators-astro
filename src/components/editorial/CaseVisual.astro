@@ -1,0 +1,94 @@
+---
+// Ilustración de un caso para el portfolio editorial (ES).
+//
+// Todas las piezas son ilustraciones y lo dicen en su pie: no son capturas de
+// los sistemas del cliente. La excepción es "web-vitals", que no ilustra nada:
+// pinta los datos medidos de src/data/web-vitals.json con su fecha y método.
+//
+// Las clases ed-phone / ed-ledger son las mismas de la home
+// (editorial-home.css), para que el caso se reconozca entre páginas.
+import type { Project } from "@/data/projects";
+import { getCaseEditorial } from "@/data/casosEditorial";
+import { getWebVitals, formatMetric, webVitalsMeta } from "@/data/web-vitals";
+import intro from "@/i18n/locales/es/homeIntro.json";
+import home from "@/i18n/locales/es/homeEditorial.json";
+import copy from "@/i18n/locales/es/portfolioEditorial.json";
+import "@/styles/editorial-cases.css";
+import SystemMapDocument from "./SystemMapDocument.astro";
+
+interface Props {
+  project: Project;
+  size?: "index" | "detail";
+}
+const { project, size = "index" } = Astro.props;
+const entry = getCaseEditorial(project);
+const kind = entry?.visual;
+const tone = entry?.tone ?? "sand";
+
+const vitals = kind === "web-vitals" && project.webVitalsKey ? getWebVitals(project.webVitalsKey) : null;
+const dateFormatter = new Intl.DateTimeFormat("es", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+const vitalsCaption = vitals
+  ? copy.visual.webVitals.caption
+      .replace("{date}", dateFormatter.format(new Date(vitals.measuredAt)))
+      .replace("{version}", webVitalsMeta.lighthouseVersion)
+      .replace("{runs}", String(vitals.mobile.runs))
+  : "";
+const vitalsRows = vitals
+  ? [
+      [copy.visual.webVitals.rows.performance, String(vitals.mobile.scores.performance)],
+      [copy.visual.webVitals.rows.accessibility, String(vitals.mobile.scores.accessibility)],
+      [copy.visual.webVitals.rows["best-practices"], String(vitals.mobile.scores["best-practices"])],
+      [copy.visual.webVitals.rows.seo, String(vitals.mobile.scores.seo)],
+      [copy.visual.webVitals.rows.lcp, formatMetric("lcpMs", vitals.mobile.lab.lcpMs, "es")],
+    ]
+  : [];
+const vitalsHost = vitals ? new URL(vitals.url).hostname : "";
+---
+{kind && (
+  <div class:list={["pf-visual", `pf-tone-${tone}`, `pf-visual-${size}`]}>
+    {kind === "system-map" && (
+      <>
+        <p class="pf-visual-label ed-eyebrow">{intro.case.caption}</p>
+        <SystemMapDocument class="pf-doc" />
+      </>
+    )}
+
+    {kind === "chat" && (
+      <>
+        <p class="pf-visual-label ed-eyebrow">{home.cases.chat.label}</p>
+        <figure class="ed-phone">
+          <div class="ed-phone-header">ChatPlug <span aria-hidden="true">↗</span></div>
+          <div class="ed-bubble">{home.cases.chat.message}</div>
+          <div class="ed-bubble ed-reply">{home.cases.chat.reply}</div>
+          <div class="ed-booking"><span>{home.cases.chat.bookingLabel}</span><strong>{home.cases.chat.slots}</strong><span>{home.cases.chat.hint}</span></div>
+          <figcaption>{home.cases.chat.disclaimer}</figcaption>
+        </figure>
+      </>
+    )}
+
+    {kind === "booking-rules" && (
+      <>
+        <p class="pf-visual-label ed-eyebrow">{home.cases.tour.label}</p>
+        <figure class="ed-ledger">
+          <p class="ed-eyebrow">{home.cases.tour.documentLabel}</p>
+          <p class="ed-ledger-title">{home.cases.tour.title}</p>
+          <dl>{home.cases.tour.rows.map(([label, value]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+          <p class="ed-ledger-result">{home.cases.tour.result} <span aria-hidden="true">↗</span></p>
+          <figcaption>{home.cases.tour.disclaimer}</figcaption>
+        </figure>
+      </>
+    )}
+
+    {kind === "web-vitals" && vitals && (
+      <>
+        <p class="pf-visual-label ed-eyebrow">{copy.visual.webVitals.label}</p>
+        <figure class="pf-sheet">
+          <div class="pf-doc-head ed-eyebrow"><span>{copy.visual.webVitals.source}</span><span>{copy.visual.webVitals.strategy}</span></div>
+          <p class="pf-sheet-host">{vitalsHost}</p>
+          <dl>{vitalsRows.map(([label, value]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+          <figcaption>{vitalsCaption}</figcaption>
+        </figure>
+      </>
+    )}
+  </div>
+)}

@@ -4,8 +4,8 @@ import { getLocale, ui } from "../i18n/ui";
 import { getServiceGroups, hubCtaLabel, SERVICE_HUB_PATH } from "@/data/servicios";
 import { getPilares } from "@/data/navegacion";
 
-type Props = { languageLinks?: Array<{ locale: string; href: string }> };
-const { languageLinks } = Astro.props as Props;
+type Props = { languageLinks?: Array<{ locale: string; href: string }>; solidSurface?: boolean };
+const { languageLinks, solidSurface = false } = Astro.props as Props;
 const locale = getLocale(Astro.currentLocale);
 const dict =
   (ui as any)?.[locale] ?? (ui as any)?.es ?? (ui as any)?.en ?? (ui as any)?.pt ?? {};
@@ -72,8 +72,9 @@ const mobileLinks = [
 ];
 ---
 
-<header class="fixed top-6 left-0 right-0 z-50 flex justify-center pointer-events-none">
+<header data-home-intro={solidSurface || undefined} class="fixed top-6 left-0 right-0 z-50 flex justify-center pointer-events-none">
   <div
+    style={solidSurface ? "background-color: #252923;" : undefined}
     class="
       relative flex items-center gap-6
       w-[90%] sm:w-auto sm:inline-flex
@@ -363,6 +364,17 @@ const mobileLinks = [
 
 <!-- CSS + Script -->
 <style is:global>
+  /* La navegación completa no cabe en tablet sobre la nueva home.
+     El piloto reutiliza el menú móvil sin cambiar las otras páginas. */
+  @media (min-width: 768px) and (max-width: 1099px) {
+    header[data-home-intro] > div { width: 90%; }
+    header[data-home-intro] .md\:flex,
+    header[data-home-intro] .md\:inline-flex { display: none; }
+    header[data-home-intro] .md\:ml-0 { margin-left: auto; }
+    header[data-home-intro] #menuBtn { display: flex; }
+    header[data-home-intro] #mobileMenu:not(.hidden) { display: block; }
+  }
+
   /* ring conic gradient como no Vite antigo */
   @keyframes spin {
     to { transform: rotate(360deg); }

@@ -1,0 +1,75 @@
+---
+// Índice editorial de casos (/es/portfolio/). El orden, los títulos y los
+// enlaces salen de projects.ts, igual que el ItemList del JSON-LD de la página.
+import { projects } from "@/data/projects";
+import { caseFigures } from "@/data/casosEditorial";
+import { createT } from "@/i18n/t";
+import copy from "@/i18n/locales/es/portfolioEditorial.json";
+import home from "@/i18n/locales/es/homeEditorial.json";
+import CaseVisual from "./CaseVisual.astro";
+import "@/styles/editorial-cases.css";
+
+const t = await createT("es", { namespaces: ["portfolio", "projects"] });
+const total = String(projects.length).padStart(2, "0");
+---
+<div class="ed-container">
+  <section class="pf-hero" aria-labelledby="portfolio-title">
+    <nav class="pf-crumbs ed-eyebrow" aria-label={copy.breadcrumb.label}>
+      <ol>
+        <li><a href="/es/">{copy.breadcrumb.home}</a></li>
+        <li><span aria-current="page">{t("portfolio:breadcrumb.portfolio")}</span></li>
+      </ol>
+    </nav>
+    <h1 id="portfolio-title" class="pf-title">{t("portfolio:header.title")} <span>{t("portfolio:header.highlight")}</span></h1>
+    <div class="pf-hero-bottom">
+      <p class="pf-count"><strong>{total}</strong><span class="ed-eyebrow">{copy.index.countSuffix}</span></p>
+      <div class="pf-hero-copy">
+        <p>{t("portfolio:header.subtitle")}</p>
+        <div class="pf-actions">
+          <a class="ed-button" href="/es/contact/">{t("portfolio:actions.talk")}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ol class="pf-list" aria-label={copy.index.listLabel}>
+    {projects.map((project, index) => {
+      const href = `/es/portfolio/${project.slugs.es}/`;
+      // Mismo criterio que la plantilla anterior: el primer enlace externo marca
+      // el caso como online y se conserva como enlace directo desde el índice.
+      const liveHref = project.links?.find((link) => link.external)?.href;
+      const figures = caseFigures(project, "index");
+      const headingId = `case-${project.id}`;
+      return (
+        <li class="pf-case">
+          <div class="pf-case-media"><CaseVisual project={project} /></div>
+          <div class="pf-case-body">
+            <p class="pf-case-meta ed-eyebrow">
+              <span>{String(index + 1).padStart(2, "0")} / {total}</span>
+              <span>{project.categoryKey ? t(project.categoryKey) : project.category}</span>
+              {liveHref && <a class="pf-live" href={liveHref} target="_blank" rel="noopener noreferrer" aria-label={`${copy.index.live}: ${t(project.titleKey)} (abre en una pestaña nueva)`}>{copy.index.live} <span aria-hidden="true">↗</span></a>}
+            </p>
+            <h2 id={headingId}><a href={href}>{t(project.titleKey)}</a></h2>
+            <p class="pf-case-summary">{t(project.taglineKey)}</p>
+            {figures.length > 0 && (
+              <dl class="pf-figures" aria-label={copy.index.figuresLabel}>
+                {figures.map((figure) => (
+                  <div><dt>{figure.labelIsKey ? t(figure.label) : figure.label}</dt><dd class:list={{ "pf-figure-text": figure.isText }}>{figure.value}</dd></div>
+                ))}
+              </dl>
+            )}
+            <span class="pf-case-cta" aria-hidden="true">{copy.index.open} <span class="ed-arrow">↗</span></span>
+          </div>
+        </li>
+      );
+    })}
+  </ol>
+</div>
+
+<section class="ed-closing" aria-labelledby="portfolio-closing-title">
+  <div class="ed-container">
+    <p class="ed-eyebrow">{home.closing.label}</p>
+    <h2 id="portfolio-closing-title">{t("portfolio:cta.title")}</h2>
+    <a class="ed-button" href="/es/contact/">{home.closing.cta}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+  </div>
+</section>

@@ -159,7 +159,8 @@
             {
                 "label": "Volver a Casos"
             }
-        ]
+        ],
+        "serviceType": "Auditoría tecnológica"
     },
     "chatplug": {
         "title": "ChatPlug: Automatización de WhatsApp + Altegio",
@@ -189,7 +190,7 @@
         ],
         "pillars": {
             "integration": {
-                "title": "Deep Integration (Altegio)",
+                "title": "Integración profunda con Altegio",
                 "description": "Lectura y escritura en tiempo real: servicios, precios, equipo y disponibilidad vienen de Altegio, y las reservas se confirman/cancelan directamente en el CRM.",
                 "bullets": [
                     "Disponibilidad real (sin doble reserva)",
@@ -261,11 +262,12 @@
             {
                 "label": "Volver al portfolio"
             }
-        ]
+        ],
+        "serviceType": "Automatización de WhatsApp integrada con Altegio"
     },
     "tourBooking": {
         "title": "Chatbot de Reservas Turísticas (WhatsApp + n8n)",
-        "tagline": "Atención y reservas 24/7 con precio 100% correcto — basado en variables reales (barco, temporada, experiencia, duración y personas).",
+        "tagline": "Atención y reservas 24/7 por WhatsApp, con el precio calculado por reglas del negocio: barco, temporada, experiencia, duración y personas.",
         "category": "Automatización de Reservas / WhatsApp",
         "gallery": {
             "heroAlt": "Chatbot de reservas turísticas en WhatsApp con n8n"
@@ -278,7 +280,7 @@
             "Entiende intención: precio, dudas, reserva, cambios",
             "Recoge variables (experiencia, barco, fecha, personas, duración)",
             "Valida disponibilidad de duración para esa experiencia/fecha",
-            "Calcula el precio exacto con reglas del cliente (sin margen de error)",
+            "Calcula el precio con las reglas del cliente, en código",
             "Registra leads y conversación en una hoja de cálculo"
         ],
         "howItWorks": [
@@ -295,7 +297,7 @@
                 "bullets": [
                     "Variables: barco, temporada, experiencia, duración, personas",
                     "Validación: solo duraciones realmente disponibles",
-                    "Siempre exacto (sin alucinaciones)"
+                    "El precio lo calcula el código, no la IA"
                 ]
             },
             {
@@ -349,7 +351,8 @@
             {
                 "label": "Volver al portfolio"
             }
-        ]
+        ],
+        "serviceType": "Chatbot de reservas por WhatsApp"
     },
     "propiziare": {
         "seoTitle": "Propiziare Immigra — web trilingüe y SEO técnico | IA Operators",
@@ -449,6 +452,7 @@
             {
                 "label": "Volver al portfolio"
             }
-        ]
+        ],
+        "serviceType": "Desarrollo web y SEO técnico"
     }
 }

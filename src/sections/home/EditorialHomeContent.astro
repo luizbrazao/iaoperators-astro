@@ -1,0 +1,69 @@
+---
+import { projects, type Project } from "@/data/projects";
+import { getPilares } from "@/data/navegacion";
+import { getArquitectura, getServiceGroups, SERVICE_HUB_PATH } from "@/data/servicios";
+import { createT } from "@/i18n/t";
+import type { BlogPost } from "@/lib/blog";
+import copy from "@/i18n/locales/es/homeEditorial.json";
+import home from "@/i18n/locales/es/home.json";
+
+interface Props { posts: BlogPost[]; faq: { items: Array<{q: string; a: string}> } }
+const { posts, faq } = Astro.props;
+const t = await createT("es", {namespaces: ["projects"]});
+const selected = ["chatplug-whatsapp-altegio", "chatbot-reservas-turisticas-whatsapp"]
+  .map(slug => projects.find(project => project.slugs.es === slug))
+  .filter((project): project is Project => project !== undefined);
+const pillars = getPilares("es");
+const steps = getArquitectura("es");
+const capabilities = getServiceGroups("es").filter(group=>group.key!=="arquitectura").flatMap(group=>group.items);
+const client = home.clientTestimonials.items[0];
+const dateFormatter = new Intl.DateTimeFormat("es", {day:"numeric",month:"short",year:"numeric",timeZone:"UTC"});
+const formatDate = (date: string) => Number.isNaN(Date.parse(date)) ? "" : dateFormatter.format(new Date(date));
+---
+<div class="ed-content">
+  <div class="ed-container">
+    {selected.length > 0 && <section class="ed-case-section" aria-labelledby="more-cases-title">
+      <h2 class="ed-eyebrow ed-case-label" id="more-cases-title">{copy.cases.title}</h2>
+      <div class="ed-case-pair">
+        {selected.map(project => {
+          const chat = project.slugs.es === "chatplug-whatsapp-altegio";
+          return <article><a class="ed-case-link" href={`/es/portfolio/${project.slugs.es}/`} aria-labelledby={`project-${project.id}`}>
+            {chat ? <div class="ed-case-visual ed-case-chat">
+              <p class="ed-visual-label ed-eyebrow">{copy.cases.chat.label}</p>
+              <figure class="ed-phone">
+                <div class="ed-phone-header">ChatPlug <span aria-hidden="true">↗</span></div>
+                <div class="ed-bubble">{copy.cases.chat.message}</div><div class="ed-bubble ed-reply">{copy.cases.chat.reply}</div>
+                <div class="ed-booking"><span>{copy.cases.chat.bookingLabel}</span><strong>{copy.cases.chat.slots}</strong><span>{copy.cases.chat.hint}</span></div>
+                <figcaption>{copy.cases.chat.disclaimer}</figcaption>
+              </figure>
+            </div> : <div class="ed-case-visual ed-case-tour">
+              <p class="ed-visual-label ed-eyebrow">{copy.cases.tour.label}</p>
+              <figure class="ed-ledger"><p class="ed-eyebrow">{copy.cases.tour.documentLabel}</p><p class="ed-ledger-title">{copy.cases.tour.title}</p>
+                <dl>{copy.cases.tour.rows.map(([label,value])=><div><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+                <p class="ed-ledger-result">{copy.cases.tour.result} <span aria-hidden="true">↗</span></p><figcaption>{copy.cases.tour.disclaimer}</figcaption>
+              </figure>
+            </div>}
+            <div class="ed-case-caption"><div><h3 id={`project-${project.id}`}>{t(project.titleKey)}</h3><p class="ed-eyebrow">{project.categoryKey ? t(project.categoryKey) : project.category}</p><p class="ed-case-description">{chat ? copy.cases.chat.caption : copy.cases.tour.caption}</p></div><span class="ed-arrow" aria-hidden="true">↗</span></div>
+          </a></article>;
+        })}
+      </div>
+    </section>}
+    <section id="why-us" class="ed-capabilities" aria-labelledby="capabilities-title">
+      <div class="ed-section-intro"><p class="ed-eyebrow">{copy.capabilities.label}</p><div><h2 id="capabilities-title">{copy.capabilities.title}</h2><p class="ed-body">{copy.capabilities.body}</p></div></div>
+      <div class="ed-offers">{pillars.map((pillar,index)=>{
+        const detail = copy.capabilities.pillars[pillar.key as keyof typeof copy.capabilities.pillars];
+        return <a class="ed-offer" href={pillar.href}><span class="ed-eyebrow">{String(index+1).padStart(2,"0")} / {detail.verb}</span><h3>{pillar.children[0].label}</h3><p>{detail.body}</p><span class="ed-arrow" aria-hidden="true">↗</span></a>;
+      })}</div>
+      <div class="ed-capability-links" id="servicios">{capabilities.map(item=><a href={item.href}>{item.label} <span aria-hidden="true">↗</span></a>)}<a href={`/es/${SERVICE_HUB_PATH}`}>{copy.capabilities.all} <span aria-hidden="true">↗</span></a></div>
+    </section>
+  </div>
+  <section class="ed-method" id="services" aria-labelledby="method-title"><div class="ed-container"><div class="ed-section-intro"><p class="ed-eyebrow">{copy.method.label}</p><h2 id="method-title">{copy.method.title}</h2></div><ol class="ed-steps">{steps.map((step,index)=><li><span class="ed-eyebrow">{step.num}</span><h3>{copy.method.steps[index].title}</h3><p>{copy.method.steps[index].body}</p><a href={step.href}>{step.label} <span aria-hidden="true">↗</span></a></li>)}</ol></div></section>
+  <div class="ed-container">
+    <section class="ed-team ed-section-intro" id="testimonials" aria-labelledby="team-title"><p class="ed-eyebrow">{copy.team.label}</p><div><h2 id="team-title">{copy.team.title}</h2><p class="ed-body">{copy.team.body}</p><a class="ed-underlined" href="/es/sobre/">{copy.team.cta} <span aria-hidden="true">↗</span></a>
+      {client && <div class="ed-testimonial" id="client-testimonials"><blockquote><p>“{client.paragraphs[2] ?? client.paragraphs[0]}”</p><footer><a href={client.link}>{client.name}</a> · {copy.team.excerpt}</footer></blockquote><details><summary>{copy.team.full}</summary><div>{client.paragraphs.map(paragraph=><p>{paragraph}</p>)}</div></details></div>}
+    </div></section>
+    {posts.length>0 && <section class="ed-articles" aria-labelledby="articles-title"><div class="ed-section-heading"><h2 class="ed-eyebrow" id="articles-title">{copy.blog.title}</h2><a href="/es/blog/">{copy.blog.all} <span aria-hidden="true">↗</span></a></div>{posts.slice(0,3).map(post=><a class="ed-article" href={`/es/blog/${post.slug}/`}><time class="ed-eyebrow" datetime={post.date}>{formatDate(post.date)}</time><h3>{post.title}</h3><span class="ed-arrow" aria-hidden="true">↗</span></a>)}</section>}
+    <section class="ed-faq ed-section-intro" aria-labelledby="faq-title"><h2 id="faq-title">{copy.faq.title}</h2><div>{faq.items.map(item=><details><summary>{item.q}</summary><p>{item.a}</p></details>)}</div></section>
+  </div>
+  <section class="ed-closing" aria-labelledby="closing-title"><div class="ed-container"><p class="ed-eyebrow">{copy.closing.label}</p><h2 id="closing-title">{copy.closing.title}</h2><a class="ed-button" href="/es/contact/">{copy.closing.cta}<span class="ed-arrow" aria-hidden="true">↗</span></a></div></section>
+</div>

@@ -1,0 +1,41 @@
+---
+import { getPilares } from "@/data/navegacion";
+import { getArquitectura, getServiceGroups, ARQUITECTURA_TITLE, arquitecturaHubHref, SERVICE_HUB_PATH, hubCtaLabel } from "@/data/servicios";
+import { CONTACT, SOCIAL_PROFILES } from "@/data/identidad";
+interface Props { languageLinks: Array<{ locale: string; href: string }> }
+const { languageLinks } = Astro.props;
+const pillars = getPilares("es");
+const integration = pillars.find(pillar => pillar.key === "integracion");
+const compliance = pillars.find(pillar => pillar.key === "cumplimiento");
+const columns = [
+  {title: "Soluciones", items: [
+    ...(integration ? [{label: integration.children[0].label, href: integration.href}] : []),
+    ...(compliance ? compliance.children.map(({label, href}) => ({label, href})) : []),
+    {label: ARQUITECTURA_TITLE.es, href: arquitecturaHubHref("es")},
+    ...getArquitectura("es").map(({label,href}) => ({label,href})),
+  ]},
+  {title: "Integraciones", items: (integration?.children ?? []).filter(item => item.href !== integration?.href && item.href.startsWith(integration?.href ?? "/es/integracion/"))},
+  {title: "Empresa", items: [
+    {label:"Casos",href:"/es/portfolio/"}, {label:"Sobre",href:"/es/sobre/"}, {label:"Metodología",href:"/es/metodologia/"},
+    {label:"Blog",href:"/es/blog/"}, {label:"Contacto",href:"/es/contact/"},
+    {label:"Comunidad",href:"https://www.skool.com/ia-operators-hub-9023/about"},
+  ]},
+  {title:"Capacidades",items:[
+    ...getServiceGroups("es").filter(group=>group.key!=="arquitectura").flatMap(group=>group.items).map(({label,href})=>({label,href})),
+    {label:hubCtaLabel("es"),href:`/es/${SERVICE_HUB_PATH}`},
+  ]},
+];
+---
+<footer class="ed-footer">
+  <div class="ed-container">
+    <div class="ed-footer-top"><a class="ed-wordmark" href="/es/">IA Operators</a><div><a href={`mailto:${CONTACT.email}`}>{CONTACT.email} <span aria-hidden="true">↗</span></a><a class="ed-footer-phone" href={CONTACT.whatsapp}>WhatsApp · {CONTACT.phoneDisplay}</a></div></div>
+    <nav class="ed-footer-grid" aria-label="Enlaces del sitio">{columns.map(column => <div><h2 class="ed-eyebrow">{column.title}</h2><ul>{column.items.map(item=><li><a href={item.href}>{item.label}</a></li>)}</ul></div>)}</nav>
+    <div class="ed-footer-socials">{SOCIAL_PROFILES.map(profile=><a href={profile.href}>{profile.label} <span aria-hidden="true">↗</span></a>)}</div>
+    <div class="ed-footer-bottom"><span>© {new Date().getFullYear()} IA Operators</span><div><a href="/es/terminos-y-condiciones/">Términos y Condiciones</a><a href="/es/politica-de-privacidad/">Privacidad</a><button id="open-cookies" type="button">Cookies</button></div><nav class="ed-languages" aria-label="Idiomas del sitio">{languageLinks.map(link=><a href={link.href} lang={link.locale} aria-current={link.locale==="es"?"page":undefined}>{link.locale.toUpperCase()}</a>)}</nav><a href="#main-content">Volver arriba ↑</a></div>
+  </div>
+</footer>
+<script>
+  document.querySelector(".ed-footer #open-cookies")?.addEventListener("click", () => {
+    window.dispatchEvent(new CustomEvent("iaoperators:open-cookies"));
+  });
+</script>

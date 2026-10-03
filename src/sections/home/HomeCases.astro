@@ -14,7 +14,11 @@
 import { projects, type Project } from "@/data/projects";
 import { createT } from "@/i18n/t";
 
-const { locale = "es" } = Astro.props;
+interface Props {
+  locale?: "es" | "en" | "pt";
+  excludeSlugs?: string[];
+}
+const { locale = "es", excludeSlugs = [] } = Astro.props;
 
 const localeKey = (["es", "pt", "en"] as const).includes(locale as any)
   ? (locale as "es" | "pt" | "en")
@@ -28,9 +32,10 @@ const DESTACADOS = [
   "chatbot-reservas-turisticas-whatsapp",
 ];
 
-const seleccion: Project[] = DESTACADOS.map((slugEs) =>
-  projects.find((p) => p.slugs.es === slugEs),
-).filter(Boolean) as Project[];
+const seleccion = DESTACADOS
+  .filter((slug) => !excludeSlugs.includes(slug))
+  .map((slugEs) => projects.find((project) => project.slugs.es === slugEs))
+  .filter((project): project is Project => project !== undefined);
 
 // El caso de reservas turísticas mide "100%" en "Fiabilidad del precio", pero la
 // nota real del dato (ver metrics.tourBooking en projects.json) es que el precio
@@ -86,7 +91,7 @@ const COPY = COPY_BY_LOCALE[localeKey];
         <p class="text-gray-400 max-w-2xl mx-auto">{COPY.subtitle}</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class:list={["grid grid-cols-1 gap-6", seleccion.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"]}>
         {seleccion.map((project) => {
           const href = `/${localeKey}/portfolio/${project.slugs[localeKey]}/`;
           const metric = project.metrics?.[0];
