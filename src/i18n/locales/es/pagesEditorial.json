@@ -1,0 +1,15 @@
+{
+  "breadcrumb": {
+    "home": "Inicio",
+    "label": "Ruta de navegación"
+  },
+  "closingLabel": "Tu siguiente proyecto",
+  "integracion": {
+    "pillar": "01 / Integración",
+    "queEs": "Qué es",
+    "problema": "El problema",
+    "metodo": "Método",
+    "capacidades": "Capacidades",
+    "puerta": "Primer paso"
+  }
+}

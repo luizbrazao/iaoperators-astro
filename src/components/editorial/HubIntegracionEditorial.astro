@@ -1,0 +1,131 @@
+---
+// Hub de integración (/es/integracion/) con el lenguaje editorial.
+// Solo presenta: el texto es el mismo bloque `es` de src/data/hub-integracion.ts
+// que usa la versión anterior, así que título, H1, H2 y enlaces no cambian.
+// EN y PT siguen con el markup de IntegracionHub.astro.
+import type { HubIntegracionCopy } from "@/data/hub-integracion";
+import RelatedCases from "@/components/RelatedCases.astro";
+import { getPilares } from "@/data/navegacion";
+import copy from "@/i18n/locales/es/pagesEditorial.json";
+import "@/styles/editorial-pages.css";
+
+interface Capacidad { key: string; title: string; body: string; href: string | null }
+interface Props {
+  c: HubIntegracionCopy;
+  capacidades: Capacidad[];
+  contactHref: string;
+  auditHref: string;
+}
+const { c, capacidades, contactHref, auditHref } = Astro.props;
+const L = copy.integracion;
+const pillar = getPilares("es").find((item) => item.key === "integracion");
+// Los CTA del texto traen su propia flecha ("… ↗", "… →"); el botón editorial
+// dibuja la suya, así que se quita para no duplicarla.
+const bare = (text: string) => text.replace(/\s*[↗→]\s*$/, "");
+const pad = (n: number) => String(n).padStart(2, "0");
+---
+<div class="ed-container">
+  <header class="pg-hero">
+    <nav class="pf-crumbs ed-eyebrow" aria-label={copy.breadcrumb.label}>
+      <ol>
+        <li><a href="/es/">{copy.breadcrumb.home}</a></li>
+        <li><span aria-current="page">{c.breadcrumbSelf}</span></li>
+      </ol>
+    </nav>
+    <h1>{c.h1.lead.trim()} <span>{c.h1.accent}</span></h1>
+    <div class="pg-hero-bottom">
+      <p class="ed-eyebrow">{L.pillar}{pillar?.tagline ? ` · ${pillar.tagline}` : ""}</p>
+      <div>
+        <p class="pg-lead">{c.heroBody}</p>
+        <div class="pg-actions"><a class="ed-button" href={contactHref}>{bare(c.heroCta)}<span class="ed-arrow" aria-hidden="true">↗</span></a></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="pg-section" aria-labelledby="que-es-title">
+    <div class="ed-section-intro">
+      <p class="ed-eyebrow">{L.queEs}</p>
+      <div>
+        <h2 id="que-es-title">{c.queEs.title}</h2>
+        <div class="pg-prose"><p>{c.queEs.p1}</p><p>{c.queEs.p2}</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pg-section" aria-labelledby="problema-title">
+    <div class="ed-section-intro">
+      <p class="ed-eyebrow">{L.problema}</p>
+      <div>
+        <h2 id="problema-title">{c.problema.title}</h2>
+        <div class="pg-prose"><p>{c.problema.subtitle}</p></div>
+      </div>
+    </div>
+    <ol class="pg-columns">
+      {c.problema.items.map((item, index) => (
+        <li><span class="ed-eyebrow">{pad(index + 1)}</span><h3>{item.title}</h3><p>{item.body}</p></li>
+      ))}
+    </ol>
+  </section>
+</div>
+
+<section class="ed-method pg-method" aria-labelledby="metodo-title">
+  <div class="ed-container">
+    <div class="ed-section-intro"><p class="ed-eyebrow">{L.metodo}</p><h2 id="metodo-title">{c.metodo.title}</h2></div>
+    <ol class="ed-steps">
+      {c.metodo.items.map((step) => <li><span class="ed-eyebrow">{step.step}</span><h3>{step.title}</h3><p>{step.body}</p></li>)}
+    </ol>
+  </div>
+</section>
+
+<div class="ed-container">
+  <section class="pg-section pg-section-flush" aria-labelledby="capacidades-title">
+    <div class="ed-section-intro">
+      <p class="ed-eyebrow">{L.capacidades}</p>
+      <div>
+        <h2 id="capacidades-title">{c.capacidades.title}</h2>
+        <div class="pg-prose"><p>{c.capacidades.subtitle}</p></div>
+      </div>
+    </div>
+    <div class="pg-offers">
+      {capacidades.map((item, index) => item.href ? (
+        <a class="ed-offer" href={item.href}>
+          <span class="ed-eyebrow">{pad(index + 1)}</span><h3>{item.title}</h3><p>{item.body}</p><span class="ed-arrow" aria-hidden="true">↗</span>
+        </a>
+      ) : (
+        <div class="ed-offer ed-offer-static">
+          <span class="ed-eyebrow">{pad(index + 1)}</span><h3>{item.title}</h3><p>{item.body}</p><span aria-hidden="true"></span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <div class="pg-door-wrap">
+    <section class="pg-door" aria-labelledby="radiografia-title">
+      <p class="ed-eyebrow">{L.puerta}</p>
+      <div>
+        <h2 id="radiografia-title">{c.radiografia.title}</h2>
+        <p>{c.radiografia.body}</p>
+        <a class="ed-underlined" href={auditHref}>{bare(c.radiografia.cta)} <span class="ed-arrow" aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </div>
+</div>
+
+<RelatedCases
+  path="integracion/"
+  locale="es"
+  variant="editorial"
+  order={[
+    "chatplug-whatsapp-altegio",
+    "chatbot-reservas-turisticas-whatsapp",
+    "radiografia-cadena-hotelera-menorca",
+  ]}
+/>
+
+<section class="ed-closing" aria-labelledby="integracion-closing-title">
+  <div class="ed-container">
+    <p class="ed-eyebrow">{copy.closingLabel}</p>
+    <h2 id="integracion-closing-title">{c.ctaFinal.title}</h2>
+    <a class="ed-button" href={contactHref}>{bare(c.ctaFinal.cta)}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+  </div>
+</section>

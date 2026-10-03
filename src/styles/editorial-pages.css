@@ -1,0 +1,103 @@
+/* Páginas editoriales ES fuera de home y portfolio: hubs de los pilares y,
+   más adelante, landings. Reutiliza los tokens y piezas de editorial-home.css
+   (ed-container, ed-eyebrow, ed-button, ed-offer, ed-method, ed-steps,
+   ed-closing) y añade solo lo que no existe allí. Todo bajo .editorial-shell. */
+
+/* ---------- Cabecera de página ---------- */
+.editorial-shell .pg-hero { padding-block: 22px 72px; border-bottom: 1px solid var(--ed-line); }
+.editorial-shell .pg-hero h1 { font-size: clamp(42px, 6vw, 92px); font-weight: 500; letter-spacing: -.064em; line-height: 1.06; margin-block: 34px 44px; max-width: 13em; }
+.editorial-shell .pg-hero h1 span { display: block; color: #74796d; }
+.editorial-shell .pg-hero-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: end; }
+.editorial-shell .pg-hero-bottom > p.ed-eyebrow { color: var(--ed-muted); }
+.editorial-shell .pg-lead { font-size: 18px; line-height: 1.6; max-width: 36em; }
+.editorial-shell .pg-actions { display: flex; flex-wrap: wrap; gap: 22px; align-items: center; margin-top: 26px; }
+
+/* ---------- Bloques de sección ---------- */
+.editorial-shell .pg-section { padding-block: 84px; border-bottom: 1px solid var(--ed-line); }
+.editorial-shell .pg-section-flush { border-bottom: 0; padding-bottom: 0; }
+.editorial-shell .pg-section h2 { font-size: clamp(30px, 3.7vw, 46px); font-weight: 500; letter-spacing: -.05em; line-height: 1.2; max-width: 20em; }
+.editorial-shell .pg-section .ed-section-intro { align-items: start; }
+.editorial-shell .pg-section .ed-section-intro > .ed-eyebrow { color: var(--ed-muted); padding-top: 12px; }
+.editorial-shell .pg-prose p { font-size: 17px; line-height: 1.7; color: var(--ed-muted); max-width: 62ch; margin-top: 20px; }
+.editorial-shell .pg-prose p:first-child { margin-top: 26px; }
+
+.editorial-shell .pg-columns { list-style: none; margin: 52px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
+.editorial-shell .pg-columns li { border-top: 2px solid var(--ed-ink); padding-top: 20px; min-width: 0; }
+.editorial-shell .pg-columns .ed-eyebrow { color: var(--ed-muted); }
+.editorial-shell .pg-columns h3 { font-size: 23px; font-weight: 500; letter-spacing: -.035em; line-height: 1.25; margin-block: 16px 12px; }
+.editorial-shell .pg-columns p { font-size: 15px; line-height: 1.65; color: var(--ed-muted); }
+
+/* Lista de capacidades: reutiliza .ed-offer de la home. */
+.editorial-shell .pg-offers { margin-top: 52px; }
+.editorial-shell .pg-offers .ed-offer h3 { font-size: 25px; }
+.editorial-shell .pg-offers .ed-offer > p { font-size: 14px; line-height: 1.6; }
+.editorial-shell .pg-offers .ed-offer-static { cursor: default; }
+
+/* Método: la banda verde de la home, con pasos sin enlace. */
+.editorial-shell .pg-method { border-bottom: 0; }
+.editorial-shell .pg-method .ed-steps h3 { font-size: 23px; }
+.editorial-shell .pg-method .ed-steps p { font-size: 14px; line-height: 1.65; max-width: 34ch; }
+
+
+/* Puerta de entrada (Radiografía Digital). */
+.editorial-shell .pg-door-wrap { padding-top: 84px; }
+.editorial-shell .pg-door { display: grid; grid-template-columns: 1fr 2fr; gap: 50px; background: var(--ed-sage); padding: 48px 56px; }
+.editorial-shell .pg-door h2 { font-size: clamp(26px, 2.8vw, 36px); font-weight: 500; letter-spacing: -.045em; line-height: 1.22; }
+.editorial-shell .pg-door p:not(.ed-eyebrow) { font-size: 16px; line-height: 1.7; color: #3f4636; margin-block: 16px 22px; max-width: 58ch; }
+.editorial-shell .pg-door .ed-eyebrow { color: #515a46; }
+.editorial-shell .pg-door .ed-underlined { border-bottom-color: #3f4636; }
+
+/* ---------- Casos relacionados (RelatedCases variant="editorial") ---------- */
+.editorial-shell .pg-related { padding-block: 84px 72px; }
+.editorial-shell .pg-related-head { display: grid; grid-template-columns: 1fr 2fr; gap: 50px; padding-bottom: 36px; }
+.editorial-shell .pg-related-head > .ed-eyebrow { color: var(--ed-muted); padding-top: 12px; }
+.editorial-shell .pg-related-head h2 { font-size: clamp(30px, 3.7vw, 46px); font-weight: 500; letter-spacing: -.05em; line-height: 1.2; margin-bottom: 14px; }
+.editorial-shell .pg-related-head .pg-lead { color: var(--ed-muted); font-size: 16px; }
+.editorial-shell .pg-related-list { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--ed-line); }
+.editorial-shell .pg-related-item { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.9fr) minmax(0, .8fr) 24px; gap: 32px; align-items: baseline; padding-block: 28px; border-top: 1px solid var(--ed-line); }
+.editorial-shell .pg-related-cat { color: var(--ed-muted); }
+.editorial-shell .pg-related-main { display: block; min-width: 0; }
+.editorial-shell .pg-related-title { display: block; font-size: 24px; font-weight: 500; letter-spacing: -.04em; line-height: 1.25; }
+.editorial-shell .pg-related-tagline { display: block; font-size: 14px; line-height: 1.6; color: var(--ed-muted); margin-top: 8px; max-width: 56ch; }
+.editorial-shell .pg-related-figure { display: flex; flex-direction: column; gap: 4px; }
+.editorial-shell .pg-related-value { font-size: 30px; font-weight: 500; letter-spacing: -.05em; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.editorial-shell .pg-related-value-text { font-size: 20px; letter-spacing: -.03em; }
+.editorial-shell .pg-related-label { font-size: 12px; color: var(--ed-muted); line-height: 1.4; }
+.editorial-shell .pg-related-item > .ed-arrow { font-size: 22px; }
+.editorial-shell .pg-related-item:hover .pg-related-title { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
+.editorial-shell .pg-related-all { margin-top: 26px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1050px) {
+  .editorial-shell .pg-door { padding: 40px; gap: 32px; }
+  .editorial-shell .pg-related-item { grid-template-columns: minmax(0, 1.9fr) minmax(0, .8fr) 24px; }
+  .editorial-shell .pg-related-cat { grid-column: 1 / -1; }
+}
+@media (max-width: 860px) {
+  .editorial-shell .pg-hero-bottom,
+  .editorial-shell .pg-door,
+  .editorial-shell .pg-related-head { grid-template-columns: 1fr; gap: 24px; }
+  .editorial-shell .pg-columns { grid-template-columns: 1fr; gap: 30px; }
+}
+@media (max-width: 720px) {
+  .editorial-shell .pg-hero { padding-bottom: 48px; }
+  .editorial-shell .pg-hero h1 { font-size: clamp(34px, 10.4vw, 60px); margin-block: 20px 28px; }
+  .editorial-shell .pg-lead { font-size: 15px; }
+  .editorial-shell .pg-section { padding-block: 52px; }
+  .editorial-shell .pg-section .ed-section-intro > .ed-eyebrow { padding-top: 0; }
+  .editorial-shell .pg-prose p { font-size: 15px; }
+  .editorial-shell .pg-columns { margin-top: 32px; }
+  .editorial-shell .pg-columns h3 { font-size: 21px; }
+  .editorial-shell .pg-offers { margin-top: 30px; }
+  .editorial-shell .pg-offers .ed-offer h3 { font-size: 22px; }
+  .editorial-shell .pg-door-wrap { padding-top: 52px; }
+  .editorial-shell .pg-door { padding: 28px 22px; }
+  .editorial-shell .pg-related { padding-block: 52px 44px; }
+  .editorial-shell .pg-related-item { grid-template-columns: minmax(0, 1fr) 20px; gap: 12px; padding-block: 22px; }
+  .editorial-shell .pg-related-cat,
+  .editorial-shell .pg-related-main,
+  .editorial-shell .pg-related-figure { grid-column: 1; }
+  .editorial-shell .pg-related-item > .ed-arrow { grid-column: 2; grid-row: 2; }
+  .editorial-shell .pg-related-title { font-size: 20px; }
+  .editorial-shell .pg-related-value { font-size: 24px; }
+}

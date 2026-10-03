@@ -2,14 +2,6 @@
    Igual que editorial-home.css, todo cuelga de .editorial-shell: el resto del
    sitio y los otros idiomas no reciben estas reglas aunque compartan bundle. */
 
-/* ---------- Migas ---------- */
-.editorial-shell .pf-crumbs ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 10px; color: var(--ed-muted); }
-.editorial-shell .pf-crumbs li { display: inline-flex; align-items: center; gap: 10px; }
-.editorial-shell .pf-crumbs li + li::before { content: "/"; color: var(--ed-line); }
-.editorial-shell .pf-crumbs a { display: inline-flex; align-items: center; min-height: 44px; border-bottom: 1px solid transparent; }
-.editorial-shell .pf-crumbs a:hover { border-bottom-color: var(--ed-ink); }
-.editorial-shell .pf-crumbs [aria-current] { color: var(--ed-ink); }
-
 /* ---------- Cabecera del índice ---------- */
 .editorial-shell .pf-hero { padding-block: 22px 64px; }
 .editorial-shell .pf-title { font-size: clamp(44px, 6.4vw, 96px); font-weight: 500; letter-spacing: -.064em; line-height: 1.06; margin-block: 34px 44px; max-width: 13em; }

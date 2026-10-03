@@ -13,6 +13,9 @@
 
 import { projects, type Project } from "@/data/projects";
 import { createT } from "@/i18n/t";
+// Solo la variante editorial lo usa; sus estilos (`pg-related-*`) vienen de
+// editorial-pages.css, que importa la página editorial que lo instancia.
+import { caseFigures } from "@/data/casosEditorial";
 
 type CardOverride = {
   /** Sustituye el tagline traducido de ese proyecto solo en esta invocación. */
@@ -45,9 +48,16 @@ type Props = {
    * use este mismo caso.
    */
   overrides?: Record<number, CardOverride>;
+  /**
+   * "dark": tarjetas de la plantilla anterior (por defecto).
+   * "editorial": lista sobre marfil para las páginas ES migradas. La cifra
+   * destacada sale de casosEditorial (`caseFigures`), que ya aplica las
+   * sustituciones honestas (p. ej. el "100%" de reservas turísticas).
+   */
+  variant?: "dark" | "editorial";
 };
 
-const { path, locale, limit, order, overrides } = Astro.props as Props;
+const { path, locale, limit, order, overrides, variant = "dark" } = Astro.props as Props;
 
 const t = await createT(locale, { namespaces: ["projects"] });
 
@@ -98,7 +108,51 @@ if (order && order.length > 0) {
 if (limit) matches = matches.slice(0, limit);
 ---
 
-{matches.length > 0 && (
+{matches.length > 0 && variant === "editorial" && (
+  <section class="ed-container pg-related" aria-labelledby="related-cases-title">
+    <div class="pg-related-head">
+      <p class="ed-eyebrow">{tx.badge}</p>
+      <div>
+        <h2 id="related-cases-title">{tx.title}</h2>
+        <p class="pg-lead">{tx.subtitle}</p>
+      </div>
+    </div>
+    <ul class="pg-related-list">
+      {matches.map((project) => {
+        const href = `/${localeKey}/portfolio/${project.slugs[localeKey]}/`;
+        const override = overrides?.[project.id];
+        const tagline = override?.tagline ?? t(project.taglineKey);
+        const figure = override && "metric" in override
+          ? (override.metric ? { value: override.metric.value, label: override.metric.label, isText: false } : null)
+          : (() => {
+              const first = caseFigures(project, "index")[0];
+              return first ? { value: first.value, label: first.labelIsKey ? t(first.label) : first.label, isText: first.isText } : null;
+            })();
+        return (
+          <li>
+            <a class="pg-related-item" href={href}>
+              <span class="ed-eyebrow pg-related-cat">{project.categoryKey ? t(project.categoryKey) : project.category}</span>
+              <span class="pg-related-main">
+                <h3 class="pg-related-title">{t(project.titleKey)}</h3>
+                <span class="pg-related-tagline">{tagline}</span>
+              </span>
+              {figure ? (
+                <span class="pg-related-figure">
+                  <span class:list={["pg-related-value", { "pg-related-value-text": figure.isText }]}>{figure.value}</span>
+                  <span class="pg-related-label">{figure.label}</span>
+                </span>
+              ) : <span aria-hidden="true"></span>}
+              <span class="ed-arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+    <p class="pg-related-all"><a class="ed-underlined" href={`/${localeKey}/portfolio/`}>{tx.all} <span aria-hidden="true">→</span></a></p>
+  </section>
+)}
+
+{matches.length > 0 && variant === "dark" && (
   <section class="px-4 py-20">
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-12">

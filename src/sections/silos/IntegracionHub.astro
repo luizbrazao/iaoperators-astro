@@ -20,6 +20,7 @@
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import RelatedCases from "@/components/RelatedCases.astro";
+import HubIntegracionEditorial from "@/components/editorial/HubIntegracionEditorial.astro";
 import { ORG_REF } from "@/data/identidad";
 import {
   integracionHref,
@@ -45,6 +46,8 @@ const contactHref = `/${locale}/contact/`;
 const auditHref = `/${locale}/auditoria-de-sistemas/`;
 
 const c = HUB_INTEGRACION[locale];
+// Rediseño editorial: solo ES. EN/PT conservan el markup de abajo.
+const editorial = locale === "es";
 const conCasos = hayCasos(locale);
 
 /**
@@ -97,7 +100,11 @@ const jsonLd = [
   alternates={integracionAlternates(site)}
   xDefaultUrl={new URL(integracionHref("es"), site).toString()}
   jsonLd={jsonLd}
+  editorial={editorial}
 >
+  {editorial ? (
+    <HubIntegracionEditorial c={c} capacidades={capacidades} contactHref={contactHref} auditHref={auditHref} />
+  ) : (
   <div class="bg-transparent text-white">
     <!-- Hero -->
     <section class="px-4 pt-28 pb-14">
@@ -204,20 +211,9 @@ const jsonLd = [
       </div>
     </section>
 
-    <!-- Caso -->
-    <section class="px-4 py-16">
-      <div class="max-w-4xl mx-auto bg-[#0a0a0a] border border-orange-500/20 rounded-3xl p-8 md:p-10 text-center">
-        <span class="inline-block px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 text-xs font-semibold mb-6">
-          {c.caso.badge}
-        </span>
-        <p class="text-3xl md:text-4xl font-medium tracking-tight mb-4">
-          {c.caso.pre}<span class="text-orange-500">{c.caso.accent}</span>{c.caso.post}
-        </p>
-        <p class="text-gray-400 max-w-2xl mx-auto">
-          {c.caso.body}
-        </p>
-      </div>
-    </section>
+    {/* Bloque "Caso real" eliminado (04/out/2026): no correspondía a un
+        proyecto real. Solo se publican cifras de casos de src/data/projects.ts.
+        Comentario JSX y no HTML: un <!-- --> saldría en el HTML público. */}
 
     <!-- Radiografía Digital como puerta de entrada -->
     <section class="px-4 py-16">
@@ -263,4 +259,5 @@ const jsonLd = [
       </div>
     </section>
   </div>
+  )}
 </BaseLayout>
