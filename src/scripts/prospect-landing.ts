@@ -10,6 +10,8 @@
 //   video_play     primera reproducción
 //   video_complete fin del vídeo
 //   click_cta      clic en cualquier [data-cta] (param `cta_location`)
+//   scroll_<n>     opcional: profundidad de scroll, si se pasa `scrollMarks`
+//                  (p. ej. [50, 90] → scroll_50 y scroll_90, una vez cada uno)
 // El page_view lo envía la etiqueta GA4 de GTM. Sin consentimiento no sale
 // nada: los eventos quedan en la cola del dataLayer y GTM los procesa si la
 // persona acepta durante la misma visita.
@@ -19,7 +21,7 @@ type Win = Window & { dataLayer?: Params[]; __GTM_LOADED__?: boolean };
 
 const CONSENT_KEY = "iaoperators_cookie_consent";
 
-export function initProspectLanding(opts: { landing: string; gtmId: string; videoTitle?: string }) {
+export function initProspectLanding(opts: { landing: string; gtmId: string; videoTitle?: string; scrollMarks?: number[] }) {
   const w = window as Win;
   const { landing, gtmId } = opts;
   const videoTitle = opts.videoTitle ?? `${landing}_luiz`;
@@ -96,6 +98,25 @@ export function initProspectLanding(opts: { landing: string; gtmId: string; vide
   const onScroll = () => top?.classList.toggle("is-scrolled", window.scrollY > 12);
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
+
+  // Profundidad de scroll (opcional). Se calcula sobre la altura total del
+  // documento y cada marca se envía una sola vez por visita.
+  const marks = (opts.scrollMarks ?? []).filter((m) => m > 0 && m <= 100).sort((a, b) => a - b);
+  if (marks.length) {
+    const sent = new Set<number>();
+    let ticking = false;
+    const check = () => {
+      ticking = false;
+      const doc = document.documentElement;
+      const pct = ((window.scrollY + window.innerHeight) / Math.max(doc.scrollHeight, 1)) * 100;
+      for (const m of marks) {
+        if (pct >= m && !sent.has(m)) { sent.add(m); track(`scroll_${m}`, { percent_scrolled: m }); }
+      }
+      if (sent.size === marks.length) window.removeEventListener("scroll", onDepth);
+    };
+    const onDepth = () => { if (!ticking) { ticking = true; requestAnimationFrame(check); } };
+    window.addEventListener("scroll", onDepth, { passive: true });
+  }
 
   // Entradas suaves. Con prefers-reduced-motion el CSS de la página las anula.
   const items = document.querySelectorAll<HTMLElement>("[data-reveal]");

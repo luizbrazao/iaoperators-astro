@@ -1,0 +1,741 @@
+---
+// Landing personalizada para Javier Tausía, CEO de deLuna Hotels. Se llega por
+// el QR de una tarjeta entregada en mano. Privada: noindex,nofollow y fuera del
+// sitemap ("/tis/" en NOINDEX_PATHS de astro.config.mjs).
+//
+// Concepto: deLuna ya ha construido un modelo preparado para crecer. Lo que
+// también escala, si nadie lo mira, son los detalles: tareas, transferencias,
+// excepciones. El lenguaje visual es la multiplicación (1 → 2 → 4 → 8) de un
+// mismo establecimiento con el mismo punto naranja: la fricción que se replica.
+// Verde arrayán como acento, grafito como tinta.
+//
+// Datos públicos usados (verificados el 04/10/2026):
+//   - Hosteltur, 13/02/2025: tres años trabajando en procedimientos, reporting y
+//     formación para los lanzamientos en nuevos destinos; robotización de
+//     procesos operativos para eliminar tareas repetitivas.
+//   - TecnoHotel, 07/2024: PMS Ulyses Cloud (Tesipro), plan de transformación
+//     con cambio de sistemas.
+//   - Canary Technologies, 18/12/2025: mensajería, webchat, AI Voice, check-in
+//     móvil, smart checkout, upselling y compendio digital.
+//   - TecnoHotel, 06/2025: robots IRBS en el back-office de restauración,
+//     2.690 horas anuales liberadas (premio TH a la Mejor Estrategia Operativa).
+//   - TecnoHotel, 26/08/2025: cita literal sobre liberar a los profesionales de
+//     tareas rutinarias.
+//   - Hosteltur, 22/10/2025: crecimiento "muy estable, sostenible y de calidad".
+// No se menciona la Alianza Hotelera a propósito.
+//
+// Comportamiento compartido (analítica, consentimiento, vídeo, entradas y
+// profundidad de scroll) en src/scripts/prospect-landing.ts.
+
+// --- Configuración editable ---------------------------------------------------
+const VIDEO = {
+  src: "",
+  poster: "",
+  type: "video/mp4",
+  orientation: "horizontal" as "horizontal" | "vertical",
+  duracion: "55 segundos",
+};
+
+// "Hablar con Luiz": hoy WhatsApp con mensaje preparado. Para Cal.com basta
+// con sustituir la URL.
+const CONTACT_HREF = `https://wa.me/34662423523?text=${encodeURIComponent(
+  "Hola Luiz, soy Javier Tausía, de deLuna Hotels. He visto la página sobre la Radiografía Digital y me gustaría hablarlo.",
+)}`;
+const GTM_ID = "GTM-572KJ7HZ";
+// -----------------------------------------------------------------------------
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL("/tis/javier/", site).toString();
+const ogImage = new URL("/og/javier.png", site).toString();
+const title = "Javier Tausía × IA Operators | Radiografía Digital";
+const description = "Una reflexión sobre crecimiento, operaciones y tecnología preparada por IA Operators para Javier Tausía y deLuna Hotels.";
+
+const invisibles = ["pequeñas tareas", "transferencias", "excepciones", "dependencias", "decisiones manuales"];
+
+const detalles = [
+  "Una tarea de tres minutos.",
+  "Una información que alguien copia a mano.",
+  "Una aprobación que espera.",
+  "Una excepción que siempre termina en la misma persona.",
+  "Una pregunta repetitiva.",
+  "Una herramienta que necesita información de otra.",
+];
+
+const modelo = [
+  { k: "Procedimientos, reporting y formación", v: "Tres años de trabajo para tener equipos capaces de acompañar los lanzamientos en nuevos destinos." },
+  { k: "Tesipro", v: "Parte de la arquitectura de gestión sobre la que crece el modelo." },
+  { k: "Canary", v: "Mensajería, webchat, voz, check-in y check-out digitales: la relación con el huésped evoluciona." },
+  { k: "Robotización", v: "En el back-office de restauración, 2.690 horas al año que ya no se dedican a tareas repetitivas." },
+  { k: "Inteligencia artificial", v: "Ya forma parte de la conversación operativa." },
+];
+
+const observar = [
+  "cómo trabaja la gente",
+  "cómo circula la información",
+  "qué decisiones se toman",
+  "qué sistemas participan",
+  "qué excepciones aparecen",
+  "dónde espera el proceso",
+  "dónde alguien transfiere información",
+  "dónde una tarea vuelve a repetirse",
+];
+
+const areas = ["Captación", "Atención", "Operación", "Gestión"];
+const senales = ["Repetición", "Transferencia", "Espera", "Inconsistencia"];
+
+const factores = ["1 proceso", "varios hoteles", "varios equipos", "365 días"];
+const etapas = [1, 2, 4, 8];
+
+const entender = [
+  "qué sucede realmente",
+  "quién interviene",
+  "qué sistemas participan",
+  "dónde aparece trabajo manual",
+  "qué ocurre cuando hay una excepción",
+  "qué impacto tendría eliminar la fricción",
+];
+const despues = ["¿Automatizar?", "¿Integrar?", "¿Rediseñar?", "¿Aplicar IA?"];
+
+const cadena = ["Fricción detectada", "Causa", "Impacto", "Prioridad", "Opciones", "Decisión"];
+const destinos = ["Integración", "Automatización", "IA", "Cambio de proceso"];
+
+const replicar = [
+  "qué merece replicarse",
+  "qué merece simplificarse",
+  "qué merece automatizarse",
+];
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
+    <link rel="canonical" href={pageUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="IA Operators" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="¿Cómo detectáis la próxima fricción antes de que también escale? Una idea para Javier Tausía." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="theme-color" content="#f7f6f2" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/manrope-latin-variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
+  </head>
+
+  <body data-gtm={GTM_ID}>
+    <header class="top" data-top>
+      <div class="wrap top-inner">
+        <a class="wordmark" href="#inicio" aria-label="IA Operators, volver al inicio de la página"><span aria-hidden="true">↗</span> IA Operators</a>
+        <nav class="top-nav" aria-label="Página">
+          <a class="top-link" href="#radiografia">Radiografía Digital</a>
+          <a class="top-cta" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="header">Hablar con Luiz</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section id="inicio" class="hero wrap" aria-labelledby="hero-title">
+        <p class="label">Una idea para Javier Tausía</p>
+        <h1 id="hero-title" class="greeting">Javier, habéis construido un modelo preparado para crecer.</h1>
+        <p class="aside-q">¿Y las fricciones?</p>
+        <p class="big-q">¿Cómo detectáis la próxima fricción antes de que también escale?</p>
+
+        <div class="hero-grid">
+          <div class:list={["video", `video-${VIDEO.orientation}`]} data-video>
+            {VIDEO.src && (
+              <video class="video-el" preload="none" playsinline controls poster={VIDEO.poster || undefined} aria-label="Vídeo de Luiz Brazão para Javier Tausía">
+                <source src={VIDEO.src} type={VIDEO.type} />
+              </video>
+            )}
+            <button class="video-cover" type="button" data-video-play aria-label={`Reproducir el vídeo de Luiz Brazão, ${VIDEO.duracion}`}>
+              <span class="video-cells" aria-hidden="true">{Array.from({ length: 8 }, () => <i></i>)}</span>
+              <span class="video-play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+              </span>
+              <span class="video-meta">
+                <span class="video-time">▶ {VIDEO.duracion}</span>
+                <span class="video-who">Luiz Brazão · IA Operators</span>
+              </span>
+            </button>
+            <p class="video-note" data-video-note hidden>El vídeo estará disponible en breve.</p>
+          </div>
+
+          <div class="hero-copy">
+            <p>Cuando crecen los hoteles, los clientes, los canales y las interacciones, también puede crecer algo mucho menos visible:</p>
+            <ul class="quiet-list">
+              {invisibles.map((t) => <li>{t}</li>)}
+            </ul>
+            <p>que, por separado, parecen irrelevantes.</p>
+            <p class="hero-key">Una fricción pequeña repetida miles de veces deja de ser pequeña.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Detalles -->
+      <section id="detalles" class="section wrap" aria-labelledby="det-title">
+        <div class="split">
+          <p class="label" data-reveal>Detalles</p>
+          <div>
+            <h2 id="det-title" class="h2" data-reveal>Escalar un modelo también significa escalar sus detalles.</h2>
+            <ol class="details" data-reveal>
+              {detalles.map((d, i) => <li style={`--i:${i}`}>{d}</li>)}
+            </ol>
+            <p class="prose-line" data-reveal>En una operación pequeña pueden parecer detalles. Cuando la organización crece:</p>
+            <p class="multiply-word" data-reveal>se multiplican.</p>
+
+            <figure class="ticks" data-reveal aria-label="Representación conceptual: tres minutos repetidos cientos de veces">
+              <div class="ticks-head">
+                <span class="ticks-one">3 minutos</span>
+                <span class="ticks-times">× cientos de veces</span>
+              </div>
+              <div class="ticks-field" aria-hidden="true"><span class="ticks-first"></span><span class="ticks-rest"></span></div>
+              <figcaption class="ticks-cap">Representación conceptual. No describe ningún proceso de deLuna.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- deLuna -->
+      <section id="deluna" class="stone" aria-labelledby="dl-title">
+        <div class="wrap section">
+          <div class="split">
+            <p class="label label-green" data-reveal>deLuna Hotels</p>
+            <div>
+              <h2 id="dl-title" class="h2" data-reveal>En deLuna la tecnología ya forma parte del modelo.</h2>
+              <p class="lede" data-reveal>Habéis construido procedimientos, reporting y sistemas para crecer más allá de Granada.</p>
+              <dl class="spec" data-reveal>
+                {modelo.map((m) => (
+                  <div class="spec-row">
+                    <dt>{m.k}</dt>
+                    <dd>{m.v}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p class="src" data-reveal>Según lo publicado en Hosteltur (2025), TecnoHotel (2024 y 2025) y Canary Technologies (diciembre de 2025).</p>
+              <p class="prose-line" data-reveal>Por eso no tendría mucho sentido preguntaros qué tecnología os falta.</p>
+              <p class="statement" data-reveal>La pregunta interesante es qué fricción aparece después.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filosofía -->
+      <section id="filosofia" class="section wrap" aria-labelledby="fi-title">
+        <div class="split">
+          <p class="label" data-reveal>Una idea en común</p>
+          <div>
+            <h2 id="fi-title" class="h2" data-reveal>Aquí hay una idea en la que creo que coincidimos.</h2>
+            <p class="lede" data-reveal>La tecnología no debería ser el punto de partida.</p>
+            <figure class="quote" data-reveal>
+              <p class="quote-intro">Lo has explicado públicamente:</p>
+              <blockquote>«Es imprescindible liberar a los profesionales de tareas rutinarias para que se centren en actividades más creativas, empáticas y de mayor valor añadido.»</blockquote>
+              <figcaption>Javier Tausía · TecnoHotel, agosto de 2025</figcaption>
+            </figure>
+            <p class="prose-line" data-reveal>Es también un principio central de IA Operators.</p>
+            <p class="pair" data-reveal>
+              <span>Automatizar lo repetitivo.</span>
+              <span class="pair-b">Proteger lo humano.</span>
+            </p>
+            <p class="prose-line" data-reveal>La pregunta es cómo encontrar esas oportunidades de forma sistemática.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Radiografía -->
+      <section id="radiografia" class="stone" aria-labelledby="rd-title">
+        <div class="wrap section">
+          <div class="split">
+            <p class="label" data-reveal>Radiografía Digital</p>
+            <div>
+              <h2 id="rd-title" class="h2" data-reveal>Para eso utilizamos la Radiografía Digital.</h2>
+              <p class="not-q" data-reveal>No empezamos preguntando <span>«¿Dónde podemos poner IA?»</span></p>
+              <p class="prose-line" data-reveal>Empezamos observando:</p>
+              <ul class="observe" data-reveal>
+                {observar.map((o, i) => <li style={`--i:${i}`}>{o}</li>)}
+              </ul>
+            </div>
+          </div>
+          <p class="headline-xl" data-reveal>Seguimos el trabajo, no el software.</p>
+        </div>
+      </section>
+
+      <!-- Framework 4×4 -->
+      <section id="metodo" class="section wrap" aria-labelledby="fw-title">
+        <div class="split">
+          <p class="label" data-reveal>Framework 4×4</p>
+          <div>
+            <h2 id="fw-title" class="h3" data-reveal>Buscamos patrones, no ocurrencias.</h2>
+            <p class="prose-line" data-reveal>Cuatro áreas. Cuatro señales en cada una.</p>
+            <div class="grid44" data-reveal role="table" aria-label="Framework 4×4: áreas por señales">
+              <div class="g-row g-head" role="row">
+                <span role="columnheader"><span class="sr-only">Área</span></span>
+                {senales.map((s) => <span role="columnheader"><span class="g-full">{s}</span><span class="g-short" aria-hidden="true">{s.charAt(0)}</span></span>)}
+              </div>
+              {areas.map((a, r) => (
+                <div class="g-row" role="row">
+                  <span class="g-area" role="rowheader">{a}</span>
+                  {senales.map((s, c) => <span role="cell" class="g-cell" style={`--i:${r * 4 + c}`}><i></i><span class="sr-only">{a} · {s}</span></span>)}
+                </div>
+              ))}
+            </div>
+            <p class="g-legend" aria-hidden="true">{senales.map((s) => <span><b>{s.charAt(0)}</b> {s}</span>)}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Escala -->
+      <section id="escala" class="dark" aria-labelledby="es-title">
+        <div class="wrap section">
+          <p class="label label-dark" data-reveal>Escala</p>
+          <h2 id="es-title" class="h2 h2-dark" data-reveal>Una fricción no escala de forma lineal.</h2>
+
+          <div class="scale">
+            <ol class="stages" aria-label="El mismo establecimiento, con la misma fricción, multiplicado por 1, 2, 4 y 8">
+              {etapas.map((n, k) => (
+                <li class="stage" data-reveal style={`--d:${k * 140}ms`}>
+                  <span class="stage-n">×{n}</span>
+                  <span class:list={["cells", `cells-${n}`]} aria-hidden="true">
+                    {Array.from({ length: n }, () => <i></i>)}
+                  </span>
+                </li>
+              ))}
+            </ol>
+
+            <div class="equation" data-reveal>
+              {factores.map((f, i) => (
+                <p class="eq-term">{i > 0 && <span class="eq-op" aria-hidden="true">×</span>}{f}</p>
+              ))}
+              <p class="eq-result"><span class="eq-op" aria-hidden="true">=</span>una oportunidad que merece atención</p>
+            </div>
+          </div>
+
+          <p class="dark-close" data-reveal>Por eso, en una compañía en crecimiento, identificar pequeñas fricciones puede ser tan importante como implantar grandes plataformas.</p>
+        </div>
+      </section>
+
+      <!-- Propuesta -->
+      <section id="propuesta" class="section wrap" aria-labelledby="pr-title">
+        <div class="split">
+          <p class="label label-green" data-reveal>Una idea para deLuna</p>
+          <div>
+            <h2 id="pr-title" class="h2 h2-pair" data-reveal>
+              <span>No auditemos toda la compañía.</span>
+              <span class="h2-green">Busquemos una fricción que merezca desaparecer.</span>
+            </h2>
+            <div class="prose" data-reveal>
+              <p>Podríamos elegir un proceso transversal concreto y seguirlo de principio a fin.</p>
+              <p>Idealmente, un proceso que aparezca en varios establecimientos o departamentos.</p>
+            </div>
+            <p class="prose-line" data-reveal>El objetivo sería entender:</p>
+            <ol class="understand" data-reveal>
+              {entender.map((e, i) => <li><span class="u-n">{String(i + 1).padStart(2, "0")}</span>{e}</li>)}
+            </ol>
+            <p class="label label-ink after-label" data-reveal>Y solo después</p>
+            <ul class="choices" data-reveal>
+              {despues.map((d) => <li>{d}</li>)}
+              <li class="choice-keep">¿O dejarlo exactamente como está?</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mirada externa -->
+      <section id="mirada" class="green" aria-labelledby="mi-title">
+        <div class="wrap section">
+          <div class="split">
+            <p class="label label-greenbg" data-reveal>Independencia</p>
+            <div>
+              <h2 id="mi-title" class="h2" data-reveal>Una mirada externa, sin plataforma que defender.</h2>
+              <div class="prose prose-greenbg" data-reveal>
+                <p>IA Operators no representa un PMS. No vende una plataforma hotelera. No necesita introducir una solución determinada.</p>
+                <p>Eso permite analizar la operación desde fuera y hacer una pregunta sencilla:</p>
+              </div>
+            </div>
+          </div>
+          <p class="fresh-q" data-reveal>Si empezáramos hoy, ¿seguiríamos haciendo este proceso exactamente así?</p>
+        </div>
+      </section>
+
+      <!-- Resultado -->
+      <section id="resultado" class="section wrap" aria-labelledby="re-title">
+        <div class="split">
+          <p class="label" data-reveal>Resultado</p>
+          <div>
+            <h2 id="re-title" class="h2" data-reveal>Un mapa para decidir, no una lista de herramientas.</h2>
+            <ol class="decide" data-reveal aria-label="De la fricción detectada a la decisión">
+              {cadena.map((c, i) => <li style={`--i:${i}`}>{c}</li>)}
+            </ol>
+            <p class="prose-line" data-reveal>Algunas oportunidades terminan en:</p>
+            <ul class="ends" data-reveal>
+              {destinos.map((d) => <li>{d}</li>)}
+            </ul>
+            <p class="ends-none" data-reveal>Y algunas no justifican ningún cambio.</p>
+            <p class="statement" data-reveal>También es importante saber dónde no invertir.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Crecer -->
+      <section id="crecer" class="stone" aria-labelledby="cr-title">
+        <div class="wrap section">
+          <div class="split">
+            <p class="label" data-reveal>Crecimiento</p>
+            <div>
+              <h2 id="cr-title" class="h2" data-reveal>Crecer bien también significa decidir qué no queremos multiplicar.</h2>
+              <div class="prose" data-reveal>
+                <p>Cuando un modelo está preparado para incorporar más hoteles, cada nuevo establecimiento replica parte de su forma de trabajar.</p>
+                <p>Eso convierte el momento de crecimiento en una oportunidad especialmente interesante para observar:</p>
+              </div>
+              <ul class="replicate" data-reveal>
+                {replicar.map((r) => <li>{r}</li>)}
+                <li class="replicate-last">y qué debería desaparecer antes de seguir creciendo</li>
+              </ul>
+              <p class="prose-line prose-ink" data-reveal>Si el objetivo es crecer de forma estable y con calidad, como habéis contado públicamente, el mejor momento para mirarlo es antes de replicar, no después.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Conversación -->
+      <section id="hablar" class="cta" aria-labelledby="cta-title">
+        <div class="wrap section">
+          <h2 id="cta-title" class="h2 cta-title" data-reveal>Si esta pregunta te resulta interesante, seguimos hablando.</h2>
+          <p class="cta-copy" data-reveal>Puedo enseñarte cómo hacemos una Radiografía Digital y valorar contigo si existe algún proceso transversal de deLuna que merezca analizar.</p>
+          <div class="cta-row" data-reveal>
+            <a class="button" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="final">Hablar con Luiz <span aria-hidden="true">↗</span></a>
+            <div class="signature">
+              <p class="signature-name">Luiz Brazão</p>
+              <p class="signature-role">Founder, IA Operators</p>
+              <a class="signature-site" href="https://iaoperators.com/es/" data-cta="site">iaoperators.com</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="wrap foot-inner">
+        <span class="foot-brand"><span aria-hidden="true">↗</span> IA Operators</span>
+        <a href="/es/auditoria-de-sistemas/">Radiografía Digital</a>
+        <a href="https://iaoperators.com/es/">iaoperators.com</a>
+      </div>
+    </footer>
+
+    <div class="consent" data-consent hidden role="region" aria-label="Cookies">
+      <p>Usamos cookies para medir y mejorar la experiencia. Puedes aceptar o rechazar. <a href="/es/politica-de-privacidad/">Política de Privacidad</a>.</p>
+      <div class="consent-actions">
+        <button type="button" data-consent-reject>Rechazar</button>
+        <button type="button" class="consent-accept" data-consent-accept>Aceptar</button>
+      </div>
+    </div>
+
+    <script>
+      import { initProspectLanding } from "../../scripts/prospect-landing";
+      initProspectLanding({ landing: "javier", gtmId: document.body.dataset.gtm ?? "", videoTitle: "javier_luiz", scrollMarks: [50, 90] });
+    </script>
+
+    <style is:global>
+      @font-face {
+        font-family: "Manrope Javier";
+        src: url("/fonts/manrope-latin-variable.woff2") format("woff2");
+        font-weight: 200 800;
+        font-display: swap;
+      }
+      :root {
+        --paper: #f7f6f2;
+        --stone: #efede7;
+        --ink: #141716;
+        --text: #2d3331;
+        --muted: #5d6461;
+        --soft: #8d9490;
+        --line: #dedcd5;
+        --line-strong: #bdbab1;
+        --green: #2d5a4a;
+        --green-bg: #1f3d33;
+        --green-text: #e8efea;
+        --green-muted: #a3bbb0;
+        --green-line: #3a5f52;
+        --dark: #151918;
+        --dark-text: #ecefed;
+        --dark-muted: #98a29e;
+        --dark-line: #2c3431;
+        --orange: #f16532;
+        --orange-ink: #b4441a;
+        --gutter: 20px;
+        --ease: cubic-bezier(.2, .7, .2, 1);
+      }
+      *, *::before, *::after { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 72px; }
+      body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Manrope Javier", "Helvetica Neue", Arial, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+      h1, h2, h3, p, ol, ul, dl, dd, figure, blockquote { margin: 0; }
+      ol, ul { padding: 0; list-style: none; }
+      a { color: inherit; text-decoration: none; }
+      a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+      .wrap { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: var(--gutter); }
+      .label { font-size: 12px; font-weight: 600; letter-spacing: .02em; color: var(--soft); }
+      .label::before { content: ""; display: inline-block; width: 18px; height: 1px; margin-right: 10px; vertical-align: middle; background: currentColor; }
+      .label-green { color: var(--green); }
+      .label-ink { color: var(--muted); }
+      .label-dark { color: var(--dark-muted); }
+      .label-greenbg { color: var(--green-muted); }
+
+      /* Cabecera */
+      .top { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid transparent; transition: background-color .3s ease, border-color .3s ease; }
+      .top.is-scrolled { background: rgba(247, 246, 242, .9); border-bottom-color: var(--line); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+      .top-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
+      .wordmark { font-size: 18px; font-weight: 650; letter-spacing: -.04em; white-space: nowrap; }
+      .wordmark span, .foot-brand span { color: var(--orange); }
+      .top-nav { display: flex; align-items: center; gap: 22px; font-size: 13px; }
+      .top-link { display: none; color: var(--muted); }
+      .top-link:hover { color: var(--ink); }
+      .top-cta { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; background: var(--ink); color: var(--paper); border-radius: 999px; font-weight: 550; white-space: nowrap; transition: background-color .2s ease; }
+      .top-cta:hover { background: var(--green); }
+
+      /* Hero */
+      .hero { padding-top: 18px; padding-bottom: 72px; }
+      .greeting { margin-top: 14px; max-width: 20em; font-size: clamp(21px, 2.6vw, 32px); font-weight: 500; letter-spacing: -.03em; line-height: 1.22; }
+      .aside-q { margin-top: 14px; font-size: clamp(17px, 1.6vw, 20px); color: var(--soft); letter-spacing: -.01em; }
+      .big-q { margin-top: 6px; max-width: 13em; font-size: clamp(32px, 6.6vw, 88px); font-weight: 400; letter-spacing: -.055em; line-height: 1.02; }
+      .hero-grid { display: grid; gap: 28px; margin-top: 26px; }
+      .hero-copy { display: grid; gap: 12px; align-content: start; color: var(--muted); }
+      .hero-copy p { max-width: 32em; }
+      .quiet-list { display: flex; flex-wrap: wrap; gap: 6px; }
+      .quiet-list li { padding: 3px 10px; border: 1px solid var(--line-strong); border-radius: 999px; font-size: 14px; color: var(--text); }
+      .hero-key { margin-top: 10px; padding-top: 16px; border-top: 1px solid var(--ink); color: var(--ink); font-size: clamp(22px, 2.2vw, 28px); font-weight: 500; letter-spacing: -.035em; line-height: 1.22; max-width: 17em; }
+
+      /* Vídeo */
+      .video { position: relative; overflow: hidden; background: var(--dark); color: var(--dark-text); border-radius: 3px; }
+      .video-horizontal { aspect-ratio: 16 / 9; }
+      .video-vertical { aspect-ratio: 9 / 16; max-height: 78vh; width: min(100%, calc(78vh * 9 / 16)); margin-inline: auto; }
+      .video-el { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #000; }
+      .video-cover { position: absolute; inset: 0; display: grid; place-items: center; width: 100%; padding: 0; border: 0; background: var(--dark); color: inherit; font: inherit; cursor: pointer; }
+      .video-cells { position: absolute; right: 16px; top: 16px; display: grid; grid-template-columns: repeat(4, 12px); gap: 5px; opacity: .55; }
+      .video-cells i { position: relative; width: 12px; height: 15px; border: 1px solid var(--dark-muted); }
+      .video-cells i::after { content: ""; position: absolute; right: 2px; bottom: 2px; width: 3px; height: 3px; border-radius: 50%; background: var(--orange); }
+      .video.is-playing .video-cover { display: none; }
+      .video-play { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; border: 1px solid rgba(236, 239, 237, .6); color: var(--dark-text); transition: background-color .3s ease, color .3s ease, transform .35s var(--ease); }
+      .video-play svg { margin-left: 3px; }
+      .video-cover:hover .video-play { background: var(--dark-text); color: var(--dark); transform: scale(1.04); }
+      .video-meta { position: absolute; left: 16px; right: 16px; bottom: 14px; display: flex; justify-content: space-between; gap: 12px; font-size: 12px; font-weight: 600; letter-spacing: .02em; color: var(--dark-muted); }
+      .video-time { color: var(--dark-text); }
+      .video-note { position: absolute; left: 0; right: 0; top: 46%; transform: translateY(52px); text-align: center; font-size: 13px; color: var(--dark-text); }
+
+      /* Secciones */
+      .section { padding-block: 88px; }
+      .stone { background: var(--stone); }
+      .split { display: grid; gap: 18px; }
+      .split > .label { padding-top: 10px; }
+      .h2 { font-size: clamp(30px, 4.4vw, 60px); font-weight: 400; letter-spacing: -.05em; line-height: 1.07; max-width: 15em; }
+      .h2-pair { display: grid; gap: 6px; max-width: 16em; }
+      .h2-green { color: var(--green); }
+      .h3 { font-size: clamp(26px, 3vw, 40px); font-weight: 400; letter-spacing: -.045em; line-height: 1.12; }
+      .lede { margin-top: 20px; max-width: 30em; font-size: clamp(19px, 1.7vw, 22px); line-height: 1.45; letter-spacing: -.018em; color: var(--text); }
+      .prose { margin-top: 20px; max-width: 36em; }
+      .prose p { color: var(--muted); }
+      .prose p + p { margin-top: 10px; }
+      .prose-line { margin-top: 26px; color: var(--muted); max-width: 36em; }
+      .prose-ink { color: var(--text); }
+      .statement { margin-top: 18px; padding-left: 16px; border-left: 2px solid var(--orange); font-size: clamp(25px, 3.2vw, 42px); font-weight: 400; letter-spacing: -.045em; line-height: 1.14; max-width: 16em; }
+      .src { margin-top: 14px; font-size: 13px; color: var(--soft); max-width: 40em; }
+
+      /* Detalles */
+      .details { margin-top: 32px; border-top: 1px solid var(--line); }
+      .details li { padding: 13px 0; border-bottom: 1px solid var(--line); font-size: clamp(19px, 1.9vw, 24px); letter-spacing: -.025em; line-height: 1.3; }
+      .multiply-word { margin-top: 4px; font-size: clamp(44px, 9vw, 120px); font-weight: 400; letter-spacing: -.06em; line-height: 1; color: var(--green); }
+      .ticks { margin-top: 44px; }
+      .ticks-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+      .ticks-one { font-size: 15px; font-weight: 650; color: var(--orange-ink); }
+      .ticks-times { font-size: 15px; color: var(--muted); }
+      .ticks-field { display: flex; align-items: stretch; gap: 6px; height: 34px; margin-top: 10px; }
+      .ticks-first { flex: 0 0 2px; background: var(--orange); }
+      .ticks-rest { flex: 1; background: repeating-linear-gradient(90deg, var(--line-strong) 0 1px, transparent 1px 7px); transform-origin: left; }
+      .ticks-cap { margin-top: 10px; font-size: 13px; color: var(--soft); }
+
+      /* deLuna */
+      .spec { margin-top: 32px; border-top: 1px solid var(--ink); }
+      .spec-row { display: grid; gap: 4px; padding: 16px 0; border-bottom: 1px solid var(--line-strong); }
+      .spec dt { font-size: 15px; font-weight: 650; letter-spacing: -.01em; color: var(--green); }
+      .spec dd { font-size: 17px; color: var(--text); max-width: 34em; }
+
+      /* Filosofía */
+      .quote { margin-top: 36px; padding: 24px 0 0; border-top: 1px solid var(--line); }
+      .quote-intro { font-size: 15px; color: var(--muted); }
+      .quote blockquote { margin-top: 10px; font-size: clamp(22px, 2.4vw, 31px); font-weight: 400; letter-spacing: -.035em; line-height: 1.28; max-width: 22em; }
+      .quote figcaption { margin-top: 14px; font-size: 13px; color: var(--soft); }
+      .pair { display: grid; gap: 2px; margin-top: 14px; font-size: clamp(32px, 5.4vw, 72px); font-weight: 400; letter-spacing: -.055em; line-height: 1.04; }
+      .pair-b { color: var(--green); }
+
+      /* Radiografía */
+      .not-q { margin-top: 22px; font-size: 17px; color: var(--muted); }
+      .not-q span { color: var(--ink); }
+      .observe { display: grid; margin-top: 12px; border-top: 1px solid var(--line-strong); }
+      .observe li { position: relative; padding: 12px 0 12px 22px; border-bottom: 1px solid var(--line-strong); font-size: clamp(18px, 1.7vw, 21px); letter-spacing: -.02em; }
+      .observe li::before { content: ""; position: absolute; left: 0; top: calc(12px + .8em); width: 8px; height: 1px; background: var(--ink); }
+      .headline-xl { margin-top: 72px; font-size: clamp(40px, 8vw, 112px); font-weight: 400; letter-spacing: -.06em; line-height: 1; max-width: 9em; }
+
+      /* Framework 4×4 */
+      .grid44 { margin-top: 30px; max-width: 720px; }
+      .g-row { display: grid; grid-template-columns: minmax(0, 1.3fr) repeat(4, minmax(0, 1fr)); align-items: center; border-top: 1px solid var(--line); min-height: 46px; }
+      .g-row:last-child { border-bottom: 1px solid var(--line); }
+      .g-head { border-top: 0; min-height: 34px; font-size: 12px; font-weight: 600; color: var(--muted); text-align: center; }
+      .g-area { font-size: 15px; font-weight: 600; }
+      .g-cell { display: grid; place-items: center; }
+      .g-cell i { width: 10px; height: 10px; border: 1px solid var(--ink); background: var(--ink); }
+      .g-full { display: none; }
+      .g-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 14px; font-size: 12px; color: var(--muted); }
+      .g-legend b { color: var(--ink); }
+
+      /* Escala */
+      .dark { background: var(--dark); color: var(--dark-text); }
+      .h2-dark { margin-top: 16px; max-width: 13em; }
+      .scale { display: grid; gap: 52px; margin-top: 52px; }
+      .stages { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 16px; align-items: end; }
+      .stage { display: grid; gap: 10px; justify-items: start; }
+      .stage-n { font-size: 13px; font-weight: 650; color: var(--dark-muted); font-variant-numeric: tabular-nums; }
+      .cells { display: grid; gap: 6px; }
+      .cells-1 { grid-template-columns: repeat(1, 26px); }
+      .cells-2 { grid-template-columns: repeat(2, 26px); }
+      .cells-4 { grid-template-columns: repeat(2, 26px); }
+      .cells-8 { grid-template-columns: repeat(4, 26px); }
+      .cells i { position: relative; width: 26px; height: 34px; border: 1px solid var(--dark-muted); }
+      .cells i::after { content: ""; position: absolute; right: 4px; bottom: 5px; width: 5px; height: 5px; border-radius: 50%; background: var(--orange); }
+      .equation { display: grid; gap: 4px; }
+      .eq-term, .eq-result { display: flex; align-items: baseline; gap: 14px; font-size: clamp(24px, 3vw, 40px); font-weight: 400; letter-spacing: -.04em; line-height: 1.2; }
+      .eq-term:first-child { padding-left: 34px; }
+      .eq-op { flex: 0 0 20px; text-align: center; color: var(--orange); font-weight: 300; }
+      .eq-result { margin-top: 12px; padding-top: 14px; border-top: 1px solid var(--dark-line); color: var(--dark-text); }
+      .eq-result { font-size: clamp(22px, 2.4vw, 32px); }
+      .dark-close { margin-top: 56px; max-width: 32em; font-size: clamp(18px, 1.7vw, 22px); color: var(--dark-muted); line-height: 1.5; }
+
+      /* Propuesta */
+      .understand { margin-top: 12px; border-top: 1px solid var(--line); }
+      .understand li { display: flex; gap: 14px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: clamp(18px, 1.7vw, 21px); letter-spacing: -.02em; }
+      .u-n { flex: 0 0 24px; font-size: 12px; font-weight: 650; color: var(--soft); font-variant-numeric: tabular-nums; }
+      .after-label { margin-top: 40px; }
+      .choices { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+      .choices li { padding: 8px 14px; border: 1px solid var(--line-strong); border-radius: 999px; font-size: 16px; }
+      .choices .choice-keep { border-color: var(--green); color: var(--green); }
+
+      /* Mirada externa */
+      .green { background: var(--green-bg); color: var(--green-text); }
+      .prose-greenbg p { color: var(--green-muted); }
+      .fresh-q { margin-top: 64px; padding-top: 30px; border-top: 1px solid var(--green-line); font-size: clamp(32px, 6vw, 84px); font-weight: 400; letter-spacing: -.055em; line-height: 1.05; max-width: 14em; }
+
+      /* Resultado */
+      .decide { display: grid; margin-top: 32px; }
+      .decide li { position: relative; display: flex; align-items: center; min-height: 46px; padding-left: 26px; font-size: clamp(19px, 1.8vw, 23px); letter-spacing: -.025em; }
+      .decide li::before { content: ""; position: absolute; left: 3px; top: 50%; width: 9px; height: 9px; margin-top: -5px; border-radius: 50%; border: 1px solid var(--ink); background: var(--paper); }
+      .decide li:first-child::before { background: var(--orange); border-color: var(--orange); }
+      .decide li:last-child::before { background: var(--ink); }
+      .decide li + li::after { content: ""; position: absolute; left: 7px; top: -18px; height: 28px; width: 1px; background: var(--line-strong); }
+      .ends { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+      .ends li { padding: 6px 12px; border: 1px solid var(--line-strong); border-radius: 3px; font-size: 15px; }
+      .ends-none { margin-top: 14px; font-size: 18px; color: var(--orange-ink); }
+
+      /* Crecer */
+      .replicate { margin-top: 14px; border-top: 1px solid var(--line-strong); }
+      .replicate li { padding: 13px 0; border-bottom: 1px solid var(--line-strong); font-size: clamp(20px, 2vw, 26px); letter-spacing: -.03em; }
+      .replicate .replicate-last { color: var(--green); }
+
+      /* Conversación */
+      .cta { border-top: 1px solid var(--line); }
+      .cta-title { max-width: 14em; }
+      .cta-copy { margin-top: 20px; max-width: 32em; font-size: 18px; color: var(--muted); }
+      .cta-row { display: grid; gap: 36px; margin-top: 40px; }
+      .button { display: inline-flex; align-items: center; justify-content: space-between; gap: 28px; width: max-content; min-height: 56px; padding: 0 26px; background: var(--ink); color: var(--paper); border-radius: 999px; font-size: 16px; font-weight: 550; transition: background-color .2s ease; }
+      .button:hover { background: var(--green); }
+      .signature { padding-top: 18px; border-top: 1px solid var(--line); max-width: 280px; }
+      .signature-name { font-size: 18px; font-weight: 650; letter-spacing: -.02em; }
+      .signature-role { font-size: 14px; color: var(--muted); }
+      .signature-site { display: inline-block; margin-top: 6px; font-size: 13px; color: var(--green); }
+
+      /* Pie y consentimiento */
+      .foot { border-top: 1px solid var(--line); }
+      .foot-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; padding-block: 26px 30px; font-size: 13px; color: var(--muted); }
+      .foot-brand { margin-right: auto; font-weight: 650; color: var(--ink); letter-spacing: -.02em; }
+      .foot a:hover { color: var(--ink); }
+      .consent { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 30; display: grid; gap: 12px; padding: 14px 16px; background: var(--dark); color: var(--dark-text); font-size: 13px; line-height: 1.5; border-radius: 3px; border: 1px solid #3a4440; box-shadow: 0 10px 30px rgba(0, 0, 0, .18); }
+      .consent[hidden] { display: none; }
+      .consent a { text-decoration: underline; }
+      .consent-actions { display: flex; gap: 8px; justify-content: flex-end; }
+      .consent button { min-height: 38px; padding: 0 16px; border: 1px solid var(--dark-line); background: transparent; color: var(--dark-text); font: inherit; border-radius: 999px; cursor: pointer; }
+      .consent .consent-accept { background: var(--dark-text); color: var(--dark); border-color: var(--dark-text); }
+
+      /* Entradas: muy discretas */
+      .js [data-reveal] { opacity: 0; transform: translateY(10px); transition: opacity .7s ease var(--d, 0ms), transform .7s var(--ease) var(--d, 0ms); }
+      .js [data-reveal].is-in { opacity: 1; transform: none; }
+      .js .ticks-rest { transform: scaleX(.02); transition: transform 1.6s var(--ease) .3s; }
+      .js .ticks.is-in .ticks-rest { transform: none; }
+      .js .g-cell i { background: transparent; transition: background-color .3s ease calc(.2s + var(--i) * 40ms); }
+      .js .grid44.is-in .g-cell i { background: var(--ink); }
+      .js .cells i { opacity: 0; transition: opacity .4s ease; }
+      .js .stage.is-in .cells i { opacity: 1; }
+      .js .stage.is-in .cells i:nth-child(2) { transition-delay: .08s; }
+      .js .stage.is-in .cells i:nth-child(3) { transition-delay: .16s; }
+      .js .stage.is-in .cells i:nth-child(4) { transition-delay: .24s; }
+      .js .stage.is-in .cells i:nth-child(n+5) { transition-delay: .32s; }
+
+      @media (min-width: 420px) {
+        .top-link { display: inline; }
+      }
+
+      @media (min-width: 720px) {
+        :root { --gutter: 36px; }
+        .spec-row { grid-template-columns: 220px minmax(0, 1fr); column-gap: 28px; align-items: baseline; }
+        .observe { grid-template-columns: 1fr 1fr; column-gap: 40px; }
+        .g-full { display: inline; }
+        .g-short, .g-legend { display: none; }
+        .stages { grid-template-columns: repeat(4, auto); justify-content: start; gap: 48px; }
+        .decide { position: relative; display: grid; grid-template-columns: repeat(6, auto); justify-content: space-between; gap: 0 18px; }
+        .decide::before { content: ""; position: absolute; left: 4px; right: 4px; top: 4px; height: 1px; background: var(--line-strong); }
+        .decide li { display: block; min-height: 0; padding: 22px 0 0; font-size: 18px; }
+        .decide li::before { left: 0; top: 0; margin-top: 0; }
+        .decide li + li::after { content: none; }
+        .cta-row { grid-template-columns: auto 1fr; align-items: end; gap: 64px; }
+        .signature { justify-self: end; min-width: 260px; }
+        .consent { left: auto; right: 24px; bottom: 24px; max-width: 560px; grid-template-columns: 1fr auto; align-items: center; }
+      }
+
+      @media (min-width: 1000px) {
+        body { font-size: 18px; }
+        .top-inner { height: 72px; }
+        .hero { padding-top: 40px; padding-bottom: 116px; }
+        .hero-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 56px; margin-top: 52px; align-items: start; }
+        .hero-copy { order: -1; }
+        .section { padding-block: 128px; }
+        .split { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 48px; }
+        .headline-xl { margin-top: 96px; }
+        .scale { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); align-items: end; gap: 56px; margin-top: 72px; }
+        .fresh-q { margin-top: 88px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+        .js .ticks-rest, .js .g-cell i, .js .cells i { transform: none; opacity: 1; transition: none; }
+        .js .g-cell i { background: var(--ink); }
+        .video-play, .top, .button, .top-cta { transition: none; }
+      }
+    </style>
+  </body>
+</html>
