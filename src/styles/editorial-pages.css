@@ -173,6 +173,23 @@
 .editorial-shell .pg-siblings a { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; border-bottom: 1px solid transparent; }
 .editorial-shell .pg-siblings a:hover { border-bottom-color: var(--ed-ink); }
 
+/* ---------- Pilar de arquitectura: Radiografía, Roadmap, Implementación ---------- */
+.editorial-shell .pg-lead-strong { font-size: 20px; line-height: 1.5; letter-spacing: -.015em; }
+.editorial-shell .pg-lead-muted { font-size: 16px; color: var(--ed-muted); margin-top: 16px; }
+.editorial-shell .pg-phases { list-style: none; margin: 52px 0 0; padding: 0; }
+.editorial-shell .pg-phases li { display: grid; grid-template-columns: 150px minmax(0, .9fr) minmax(0, 1.6fr); gap: 32px; align-items: baseline; padding-block: 26px; border-top: 1px solid var(--ed-line); }
+.editorial-shell .pg-phases .ed-eyebrow { color: var(--ed-muted); }
+.editorial-shell .pg-phases h3 { font-size: 23px; font-weight: 500; letter-spacing: -.035em; line-height: 1.25; }
+.editorial-shell .pg-phases p { font-size: 15px; line-height: 1.7; color: var(--ed-muted); max-width: 60ch; }
+.editorial-shell .pg-pricing { display: grid; grid-template-columns: 1fr 2fr; gap: 50px; background: #e4dfd3; padding: 52px 56px; margin-block: 84px; }
+.editorial-shell .pg-pricing > .ed-eyebrow { color: #5b5f53; }
+.editorial-shell .pg-pricing h2 { font-size: clamp(34px, 4.4vw, 58px); font-weight: 500; letter-spacing: -.055em; line-height: 1.08; }
+.editorial-shell .pg-pricing-sub { font-size: 17px; line-height: 1.6; color: #3f4238; margin-top: 16px; max-width: 54ch; }
+.editorial-shell .pg-pricing .pg-checklist li { border-top-color: #c9c2b2; }
+.editorial-shell .pg-pricing .pg-actions { margin-top: 32px; }
+.editorial-shell .pg-pricing .ed-underlined { border-bottom-color: #8f887a; }
+.editorial-shell .pg-next .ed-offer > .ed-eyebrow { color: var(--ed-muted); }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1050px) {
   .editorial-shell .pg-door { padding: 40px; gap: 32px; }
@@ -184,6 +201,8 @@
   .editorial-shell .pg-process .ed-steps.pg-steps-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .editorial-shell .pg-patterns li { grid-template-columns: 44px minmax(0, 1fr); gap: 18px 24px; }
   .editorial-shell .pg-pattern-risk { grid-column: 2; }
+  .editorial-shell .pg-phases li { grid-template-columns: 120px minmax(0, 1fr); gap: 10px 28px; }
+  .editorial-shell .pg-phases p { grid-column: 2; }
 }
 @media (max-width: 860px) {
   .editorial-shell .pg-hero-bottom,
@@ -191,7 +210,8 @@
   .editorial-shell .pg-related-head { grid-template-columns: 1fr; gap: 24px; }
   .editorial-shell .pg-columns { grid-template-columns: 1fr; gap: 30px; }
   .editorial-shell .pg-split,
-  .editorial-shell .pg-proofcase { grid-template-columns: 1fr; gap: 24px; }
+  .editorial-shell .pg-proofcase,
+  .editorial-shell .pg-pricing { grid-template-columns: 1fr; gap: 24px; }
   .editorial-shell .pg-split { gap: 52px; }
   .editorial-shell .pg-fronts,
   .editorial-shell .pg-symptoms,
@@ -240,4 +260,12 @@
   .editorial-shell .pg-method .ed-steps p.pg-step-title { font-size: 19px; margin-block: 10px 6px; }
   .editorial-shell .pg-tech { margin-top: 32px; }
   .editorial-shell .pg-siblings { margin-top: 36px; }
+  .editorial-shell .pg-lead-strong { font-size: 17px; }
+  .editorial-shell .pg-lead-muted { font-size: 15px; }
+  .editorial-shell .pg-phases { margin-top: 32px; }
+  .editorial-shell .pg-phases li { grid-template-columns: minmax(0, 1fr); gap: 8px; padding-block: 22px; }
+  .editorial-shell .pg-phases p { grid-column: 1; }
+  .editorial-shell .pg-phases h3 { font-size: 20px; }
+  .editorial-shell .pg-pricing { padding: 30px 22px; margin-block: 52px; }
+  .editorial-shell .pg-pricing h2 { font-size: 34px; }
 }

@@ -41,5 +41,15 @@
     "tech": "Tecnología",
     "puentes": "Relacionado",
     "faq": "Preguntas"
+  },
+  "servicioArquitectura": {
+    "pillar": "03 / Arquitectura",
+    "problema": "El problema",
+    "entregables": "Entrega",
+    "metodologia": "Metodología",
+    "audiencia": "Para quién",
+    "inversion": "Inversión",
+    "faq": "Preguntas",
+    "despues": "Después"
   }
 }

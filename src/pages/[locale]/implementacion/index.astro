@@ -10,6 +10,7 @@ export async function getStaticPaths() {
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getLocale, ui } from "../../../i18n/ui";
 import PilarArquitectura from "@/components/PilarArquitectura.astro";
+import ServicioArquitecturaEditorial from "@/components/editorial/ServicioArquitecturaEditorial.astro";
 
 const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
 const dict = (ui as any)?.[locale] ?? {};
@@ -26,6 +27,9 @@ const faq = impl?.faq ?? {};
 const finalCta = impl?.finalCta ?? {};
 
 const contactHref = `/${locale}/contact/`;
+
+// Rediseño editorial: solo ES. EN/PT conservan el markup de abajo.
+const editorial = locale === "es";
 const roadmapHref = `/${locale}/roadmap-tecnologico/`;
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
@@ -93,7 +97,11 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [
   title={meta?.title ?? "Implementación"}
   description={meta?.description}
   jsonLd={jsonLd}
+  editorial={editorial}
 >
+  {editorial ? (
+    <ServicioArquitecturaEditorial d={impl} current="implementation" contactHref={contactHref} heroSecondaryHref="#capacidades" deliverablesId="capacidades" pricingBack={{ href: roadmapHref, label: "← Roadmap Tecnológico" }} />
+  ) : (
   <div class="bg-transparent text-white">
     <!-- HERO -->
     <section class="relative px-4 pt-28 pb-20">
@@ -344,4 +352,5 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [
       </section>
     )}
   </div>
+  )}
 </BaseLayout>

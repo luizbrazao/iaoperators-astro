@@ -11,6 +11,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getLocale, ui } from "../../../i18n/ui";
 import RelatedCases from "@/components/RelatedCases.astro";
 import PilarArquitectura from "@/components/PilarArquitectura.astro";
+import ServicioArquitecturaEditorial from "@/components/editorial/ServicioArquitecturaEditorial.astro";
 
 const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
 const dict = (ui as any)?.[locale] ?? {};
@@ -27,6 +28,36 @@ const faq = audit?.faq ?? {};
 const finalCta = audit?.finalCta ?? {};
 
 const contactHref = `/${locale}/contact/`;
+
+// Rediseño editorial: solo ES. EN/PT conservan el markup de abajo.
+const editorial = locale === "es";
+
+// "Qué viene después" (solo ES): el mismo texto que el bloque de abajo, para la
+// versión editorial.
+const NEXT_ES = {
+  title: "Qué viene después del diagnóstico",
+  body: "La Radiografía responde a «qué tengo». Estas son las dos preguntas siguientes, y quien las ejecuta es el mismo equipo.",
+  items: [
+    {
+      href: `/${locale}/roadmap-tecnologico/`,
+      title: "Qué hago primero",
+      body: "El roadmap ordena las iniciativas que salen del diagnóstico por impacto y esfuerzo, con ROI estimado por fase.",
+      cta: "Roadmap tecnológico →",
+    },
+    {
+      href: `/${locale}/integracion/`,
+      title: "Conectar lo que ya existe",
+      body: "La conclusión más frecuente del inventario no es que falte software: es que los sistemas correctos no se hablan entre ellos.",
+      cta: "Integración de sistemas →",
+    },
+    {
+      href: `/${locale}/integracion/sistemas-legados/`,
+      title: "Y si hay un sistema intocable",
+      body: "Cuando el inventario descubre software antiguo del que depende la operación, se moderniza alrededor en lugar de reemplazarlo.",
+      cta: "Sistemas legados →",
+    },
+  ],
+};
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const pageUrl = new URL(`/${locale}/auditoria-de-sistemas/`, site).toString();
@@ -95,7 +126,11 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [
   title={meta?.title ?? "Radiografía Digital"}
   description={meta?.description}
   jsonLd={jsonLd}
+  editorial={editorial}
 >
+  {editorial ? (
+    <ServicioArquitecturaEditorial d={audit} current="audit" contactHref={contactHref} heroSecondaryHref="#metodologia" methodologyId="metodologia" relatedPath="auditoria-de-sistemas/" next={NEXT_ES} />
+  ) : (
   <div class="bg-transparent text-white">
     <!-- HERO -->
     <section class="relative px-4 pt-28 pb-20">
@@ -397,4 +432,5 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [
       </section>
     )}
   </div>
+  )}
 </BaseLayout>
