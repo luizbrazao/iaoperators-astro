@@ -28,7 +28,7 @@ const columns = [
 ---
 <footer class="ed-footer">
   <div class="ed-container">
-    <div class="ed-footer-top"><a class="ed-wordmark" href="/es/">IA Operators</a><div><a href={`mailto:${CONTACT.email}`}>{CONTACT.email} <span aria-hidden="true">↗</span></a><a class="ed-footer-phone" href={CONTACT.whatsapp}>WhatsApp · {CONTACT.phoneDisplay}</a></div></div>
+    <div class="ed-footer-top"><a class="ed-wordmark" href="/es/"><img src="/brand/ia-operators-logo-white.png" alt="IA Operators" width="453" height="82" loading="lazy" /></a><div><a href={`mailto:${CONTACT.email}`}>{CONTACT.email} <span aria-hidden="true">↗</span></a><a class="ed-footer-phone" href={CONTACT.whatsapp}>WhatsApp · {CONTACT.phoneDisplay}</a></div></div>
     <nav class="ed-footer-grid" aria-label="Enlaces del sitio">{columns.map(column => <div><h2 class="ed-eyebrow">{column.title}</h2><ul>{column.items.map(item=><li><a href={item.href}>{item.label}</a></li>)}</ul></div>)}</nav>
     <div class="ed-footer-socials">{SOCIAL_PROFILES.map(profile=><a href={profile.href}>{profile.label} <span aria-hidden="true">↗</span></a>)}</div>
     <div class="ed-footer-bottom"><span>© {new Date().getFullYear()} IA Operators</span><div><a href="/es/terminos-y-condiciones/">Términos y Condiciones</a><a href="/es/politica-de-privacidad/">Privacidad</a><button id="open-cookies" type="button">Cookies</button></div><nav class="ed-languages" aria-label="Idiomas del sitio">{languageLinks.map(link=><a href={link.href} lang={link.locale} aria-current={link.locale==="es"?"page":undefined}>{link.locale.toUpperCase()}</a>)}</nav><a href="#main-content">Volver arriba ↑</a></div>

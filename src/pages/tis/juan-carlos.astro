@@ -160,7 +160,7 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
   <body data-gtm={GTM_ID}>
     <header class="top" data-top>
       <div class="wrap top-inner">
-        <a class="wordmark" href="#inicio" aria-label="IA Operators, volver al inicio de la página"><span aria-hidden="true">↗</span> IA Operators</a>
+        <a class="wordmark" href="#inicio" aria-label="IA Operators, volver al inicio de la página"><img src="/brand/ia-operators-logo.png" alt="" width="453" height="82" /></a>
         <nav class="top-nav" aria-label="Página">
           <a class="top-link" href="#radiografia">Radiografía Digital</a>
           <a class="top-cta" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="header">Hablar con Luiz</a>
@@ -488,7 +488,7 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
 
     <footer class="foot">
       <div class="wrap foot-inner">
-        <span class="foot-brand"><span aria-hidden="true">↗</span> IA Operators</span>
+        <span class="foot-brand"><img src="/brand/ia-operators-logo.png" alt="IA Operators" width="453" height="82" loading="lazy" /></span>
         <a href="/es/auditoria-de-sistemas/">Radiografía Digital</a>
         <a href="https://iaoperators.com/es/">iaoperators.com</a>
       </div>
@@ -553,6 +553,8 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
       .top-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
       .wordmark { font-size: 18px; font-weight: 650; letter-spacing: -.04em; white-space: nowrap; }
       .wordmark span, .foot-brand span { color: var(--orange); }
+      .wordmark img { display: block; width: auto; height: 22px; }
+      .foot-brand img { display: block; width: auto; height: 18px; }
       .top-nav { display: flex; align-items: center; gap: 22px; font-size: 13px; }
       .top-link { display: none; color: var(--muted); }
       .top-link:hover { color: var(--ink); }

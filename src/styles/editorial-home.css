@@ -24,3 +24,4 @@
 .editorial-shell .pf-crumbs a { display: inline-flex; align-items: center; min-height: 44px; border-bottom: 1px solid transparent; }
 .editorial-shell .pf-crumbs a:hover { border-bottom-color: var(--ed-ink); }
 .editorial-shell .pf-crumbs [aria-current] { color: var(--ed-ink); }
+.editorial-shell .ed-wordmark{display:inline-flex;align-items:center}.editorial-shell .ed-wordmark img{display:block;width:auto;height:30px}.editorial-shell .ed-footer .ed-wordmark img{height:28px}@media(max-width:720px){.editorial-shell .ed-wordmark img{height:25px}}

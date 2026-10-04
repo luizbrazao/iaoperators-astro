@@ -33,6 +33,18 @@ function readFont(relativePath: string): ArrayBuffer {
   return file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength) as ArrayBuffer;
 }
 
+// Logo de IA Operators (versión blanca: las tres plantillas tienen fondo oscuro).
+// Se embebe como data URI para que satori no dependa de la red en el build.
+let logoWhiteUri: string | undefined;
+const LOGO_RATIO = 453 / 82;
+function logoWhite(height: number): React.ReactElement {
+  if (!logoWhiteUri) {
+    const file = readFileSync(join(process.cwd(), "public/brand/ia-operators-logo-white.png"));
+    logoWhiteUri = `data:image/png;base64,${file.toString("base64")}`;
+  }
+  return <img src={logoWhiteUri} width={Math.round(height * LOGO_RATIO)} height={height} alt="" />;
+}
+
 export async function getOGFonts() {
   if (!fontRegular) fontRegular = readFont("src/assets/fonts/inter-400.woff");
   if (!fontBold) fontBold = readFont("src/assets/fonts/inter-700.woff");
@@ -133,26 +145,7 @@ export function createBlogOGElement({ title, author, categoryLabel }: BlogOGProp
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <div
-            style={{
-              width: "10px",
-              height: "10px",
-              borderRadius: "50%",
-              backgroundColor: "#FF6900",
-              display: "flex",
-            }}
-          />
-          <span
-            style={{
-              color: "white",
-              fontSize: "22px",
-              fontWeight: 700,
-              fontFamily: "Inter",
-              letterSpacing: "-0.3px",
-            }}
-          >
-            IA Operators
-          </span>
+          {logoWhite(30)}
         </div>
 
         <span
@@ -266,26 +259,7 @@ export function createDefaultOGElement(): React.ReactElement {
           marginBottom: "auto",
         }}
       >
-        <div
-          style={{
-            width: "12px",
-            height: "12px",
-            borderRadius: "50%",
-            backgroundColor: "#FF6900",
-            display: "flex",
-          }}
-        />
-        <span
-          style={{
-            color: "white",
-            fontSize: "24px",
-            fontWeight: 700,
-            fontFamily: "Inter",
-            letterSpacing: "-0.5px",
-          }}
-        >
-          IA Operators
-        </span>
+        {logoWhite(34)}
       </div>
 
       {/* Headline */}
@@ -297,8 +271,13 @@ export function createDefaultOGElement(): React.ReactElement {
           justifyContent: "center",
         }}
       >
-        <span
+        {/* Satori no compone bien texto mezclado con un <span> en línea (el
+            resaltado acababa encima del resto). Cada palabra es su propio
+            bloque dentro de un flex que hace wrap. */}
+        <div
           style={{
+            display: "flex",
+            flexWrap: "wrap",
             color: "white",
             fontSize: "64px",
             fontWeight: 700,
@@ -308,10 +287,10 @@ export function createDefaultOGElement(): React.ReactElement {
             maxWidth: "900px",
           }}
         >
-          {"Diagnóstico, "}
-          <span style={{ color: "#FF6900" }}>prioridad</span>
-          {" y ejecución tecnológica."}
-        </span>
+          {["Diagnóstico,", "prioridad", "y", "ejecución", "tecnológica."].map((word) => (
+            <span style={{ marginRight: "18px", color: word === "prioridad" ? "#FF6900" : "white" }}>{word}</span>
+          ))}
+        </div>
         <span
           style={{
             color: "#9ca3af",
@@ -410,25 +389,7 @@ export function createSurveyOGElement({
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <div
-            style={{
-              width: "12px",
-              height: "12px",
-              borderRadius: "999px",
-              backgroundColor: "#FF6900",
-              display: "flex",
-            }}
-          />
-          <span
-            style={{
-              color: "white",
-              fontSize: "24px",
-              fontWeight: 700,
-              fontFamily: "Inter",
-            }}
-          >
-            IA Operators
-          </span>
+          {logoWhite(34)}
         </div>
 
         <span
