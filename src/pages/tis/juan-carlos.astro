@@ -1,0 +1,847 @@
+---
+// Landing personalizada para Juan Carlos Sanjuán, fundador y CEO de Casual
+// Hoteles. Se llega por el QR de una tarjeta entregada en mano. Privada:
+// noindex,nofollow y fuera del sitemap ("/tis/" en NOINDEX_PATHS).
+//
+// Concepto: continúa la pregunta "CapEx or TechEx? Where should hotels invest
+// first?" con otra anterior: dentro del TechEx, ¿qué primero? El lenguaje
+// visual es la priorización: muchas opciones grises que se ordenan y solo tres
+// quedan en naranja. Monocromo con el naranja de marca reservado a las
+// prioridades. Números grandes y tabulares.
+//
+// Datos públicos usados (verificados el 04/10/2026):
+//   - Agenda TIS 2026: Juan Carlos Sanjuán (CEO & Founder) en "CapEx or TechEx?
+//     Where should hotels invest first?", 06/10/2026. No se menciona en la página.
+//   - Sivarious, 07/09/2026: cita literal sobre el modelo que nació en Valencia;
+//     presencia en España, Portugal, Italia, Grecia y República Dominicana.
+//   - Interdiario, 09/09/2026: Bayahíbe ("En Europa crecer cada vez es más difícil").
+//   - Web de Casual: propiedad, alquiler, gestión y franquicia.
+//   - Nexotur, 2019: IDeaS RMS y análisis de datos para decidir.
+// No se cita el número exacto de hoteles ni de habitaciones.
+//
+// Comportamiento compartido en src/scripts/prospect-landing.ts.
+
+// --- Configuración editable ---------------------------------------------------
+const VIDEO = {
+  src: "",
+  poster: "",
+  type: "video/mp4",
+  orientation: "horizontal" as "horizontal" | "vertical",
+  duracion: "55 segundos",
+};
+
+const CONTACT_HREF = `https://wa.me/34662423523?text=${encodeURIComponent(
+  "Hola Luiz, soy Juan Carlos Sanjuán, de Casual Hoteles. He visto la página sobre la Radiografía Digital y me gustaría hablarlo.",
+)}`;
+const GTM_ID = "GTM-572KJ7HZ";
+// -----------------------------------------------------------------------------
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL("/tis/juan-carlos/", site).toString();
+const ogImage = new URL("/og/juan-carlos.png", site).toString();
+const title = "Juan Carlos Sanjuán × IA Operators | Radiografía Digital";
+const description = "Una reflexión sobre priorización tecnológica preparada por IA Operators para Juan Carlos Sanjuán y Casual Hoteles.";
+
+const pad = (n: number) => String(n).padStart(2, "0");
+
+const valor = [
+  { a: "Una tarea repetitiva", b: "puede merecer automatización." },
+  { a: "Dos sistemas desconectados", b: "quizá solo necesiten integrarse." },
+  { a: "Un proceso lento", b: "quizá haya que rediseñarlo." },
+  { a: "Una decisión compleja", b: "puede beneficiarse de datos o de IA." },
+  { a: "Y a veces", b: "el proceso ya funciona bien." },
+];
+
+const techex = ["automatización", "IA", "nuevas plataformas", "integraciones", "datos", "experiencia digital"];
+const bien = ["Fricción", "Impacto", "Prioridad", "Tecnología"];
+
+const multiplica = [
+  "repetirse entre establecimientos",
+  "afectar a distintos equipos",
+  "aparecer en varios países",
+  "replicarse rápido en nuevas aperturas",
+];
+
+const pequenas = [
+  "Una tarea de pocos minutos.",
+  "Una validación manual.",
+  "Una transferencia entre departamentos.",
+  "Una información que alguien vuelve a introducir.",
+  "Una excepción que termina siempre en la misma persona.",
+];
+
+const pasos = [
+  "Entramos en una parte concreta de la operación.",
+  "Hablamos con las personas que ejecutan los procesos.",
+  "Seguimos el flujo de trabajo.",
+  "Observamos qué información entra y sale.",
+  "Identificamos qué sistemas participan.",
+  "Detectamos tareas manuales, esperas, transferencias, repeticiones y excepciones.",
+];
+const criterios = ["Impacto", "Frecuencia", "Esfuerzo", "Riesgo", "Potencial de mejora"];
+
+const areas = ["Captación", "Atención", "Operación", "Gestión"];
+const senales = ["Repetición", "Transferencia", "Espera", "Inconsistencia"];
+
+// Campo de 40 ideas: posición dispersa (pseudoaleatoria y estable) → rejilla 8×5.
+// Tres de ellas terminan como prioridades.
+let seed = 7;
+const rnd = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
+const PRIORIDADES: Record<number, number> = { 9: 1, 20: 2, 30: 3 };
+const ideas = Array.from({ length: 40 }, (_, i) => {
+  const gx = 6 + (i % 8) * 12.5;
+  const gy = 10 + Math.floor(i / 8) * 20;
+  return { gx, gy, sx: 4 + rnd() * 92, sy: 6 + rnd() * 86, p: PRIORIDADES[i] ?? 0 };
+});
+
+// Matriz impacto × esfuerzo con ejemplos abstractos (x: esfuerzo, y: impacto, 0–100).
+const puntos = [
+  { id: "A", x: 22, y: 78 }, { id: "B", x: 36, y: 66 }, { id: "C", x: 76, y: 66 },
+  { id: "D", x: 62, y: 62 }, { id: "E", x: 18, y: 30 }, { id: "F", x: 38, y: 18 },
+  { id: "G", x: 70, y: 32 }, { id: "H", x: 86, y: 14 },
+];
+
+const tareaA = [
+  ["Frecuencia", "una vez al mes"],
+  ["Duración", "cinco minutos"],
+  ["Errores", "no genera"],
+  ["Huésped", "no le afecta"],
+  ["Bloqueos", "no bloquea a nadie"],
+];
+const tareaB = [
+  ["Frecuencia", "cientos de veces al día"],
+  ["Duración", "pocos minutos"],
+  ["Errores", "hay que medirlo"],
+  ["Huésped", "hay que medirlo"],
+  ["Equipos", "varios departamentos"],
+];
+
+const ambitos = ["operación", "atención al huésped", "backoffice", "reservas", "información entre hoteles y central", "gestión interna"];
+const objetivo = ["identificar fricciones", "cuantificar su frecuencia", "entender su impacto", "evaluar alternativas"];
+
+const cadena = ["Fricción", "Frecuencia", "Impacto", "Causa", "Prioridad", "Opciones", "Decisión"];
+const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramienta", "rediseñar el proceso"];
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
+    <link rel="canonical" href={pageUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="IA Operators" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Antes del próximo TechEx, una pregunta: ¿dónde genera realmente más retorno? Una idea para Juan Carlos Sanjuán." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="theme-color" content="#fafaf8" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/manrope-latin-variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
+  </head>
+
+  <body data-gtm={GTM_ID}>
+    <header class="top" data-top>
+      <div class="wrap top-inner">
+        <a class="wordmark" href="#inicio" aria-label="IA Operators, volver al inicio de la página"><span aria-hidden="true">↗</span> IA Operators</a>
+        <nav class="top-nav" aria-label="Página">
+          <a class="top-link" href="#radiografia">Radiografía Digital</a>
+          <a class="top-cta" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="header">Hablar con Luiz</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section id="inicio" class="hero wrap" aria-labelledby="hero-title">
+        <p class="label">Una idea para Juan Carlos Sanjuán</p>
+        <h1 id="hero-title" class="greeting">Juan Carlos, antes del próximo <b>TechEx</b> hay una pregunta que me parece más importante.</h1>
+        <p class="return-q">¿Dónde genera realmente más retorno?</p>
+
+        <div class="hero-grid">
+          <div class:list={["video", `video-${VIDEO.orientation}`]} data-video>
+            {VIDEO.src && (
+              <video class="video-el" preload="none" playsinline controls poster={VIDEO.poster || undefined} aria-label="Vídeo de Luiz Brazão para Juan Carlos Sanjuán">
+                <source src={VIDEO.src} type={VIDEO.type} />
+              </video>
+            )}
+            <button class="video-cover" type="button" data-video-play aria-label={`Reproducir el vídeo de Luiz Brazão, ${VIDEO.duracion}`}>
+              <span class="video-dots" aria-hidden="true">{Array.from({ length: 12 }, (_, i) => <i class:list={{ on: i === 4 }}></i>)}</span>
+              <span class="video-play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+              </span>
+              <span class="video-meta">
+                <span class="video-time">▶ {VIDEO.duracion}</span>
+                <span class="video-who">Luiz Brazão · IA Operators</span>
+              </span>
+            </button>
+            <p class="video-note" data-video-note hidden>El vídeo estará disponible en breve.</p>
+          </div>
+
+          <div class="hero-copy">
+            <p>Entre automatización, inteligencia artificial, datos, integraciones y nuevas plataformas, hoy existen más posibilidades tecnológicas que capacidad para implementarlas todas.</p>
+            <p>Por eso quizá la primera decisión no sea</p>
+            <p class="hero-not">qué tecnología incorporar,</p>
+            <p>sino</p>
+            <p class="hero-yes">qué problema merece inversión primero.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Valor -->
+      <section id="valor" class="section wrap" aria-labelledby="va-title">
+        <p class="label" data-reveal>Valor</p>
+        <h2 id="va-title" class="h2" data-reveal>No todas las oportunidades tecnológicas tienen el mismo valor.</h2>
+        <ol class="pairs" data-reveal>
+          {valor.map((v, i) => (
+            <li class:list={{ "pair-last": i === valor.length - 1 }}>
+              <span class="pair-a">{v.a}</span>
+              <span class="pair-arrow" aria-hidden="true">→</span>
+              <span class="pair-b">{v.b}</span>
+            </li>
+          ))}
+        </ol>
+        <p class="thesis" data-reveal>
+          <span>El reto no es encontrar tecnología.</span>
+          <span class="thesis-b">El reto es priorizar dónde utilizarla.</span>
+        </p>
+      </section>
+
+      <!-- TechEx -->
+      <section id="techex" class="night" aria-labelledby="tx-title">
+        <div class="wrap section">
+          <p class="label label-night" data-reveal>CapEx o TechEx</p>
+          <p class="tx-lead" data-reveal>CapEx o TechEx es una gran pregunta.</p>
+          <p class="tx-lead tx-lead-2" data-reveal>Pero dentro del TechEx aparece otra.</p>
+          <h2 id="tx-title" class="tx-big" data-reveal>¿Qué TechEx primero?</h2>
+
+          <div class="tx-body">
+            <p class="tx-text" data-reveal>Antes de invertir en</p>
+            <ul class="tx-list" data-reveal>{techex.map((t) => <li>{t}</li>)}</ul>
+            <p class="tx-text" data-reveal>conviene saber dónde existe una fricción que justifique la inversión.</p>
+          </div>
+
+          <div class="orders">
+            <div class="order order-yes" data-reveal>
+              <p class="order-label">Proponemos</p>
+              <ol class="order-row">
+                {bien.map((b, i) => <li class:list={{ "order-tech": i === bien.length - 1 }}>{b}</li>)}
+              </ol>
+            </div>
+            <div class="order order-no" data-reveal style="--d:120ms">
+              <p class="order-label">No</p>
+              <ol class="order-row">
+                <li class="order-tech">Tecnología</li>
+                <li>buscar dónde utilizarla</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Casual -->
+      <section id="casual" class="section wrap" aria-labelledby="ca-title">
+        <div class="split">
+          <p class="label label-accent" data-reveal>Casual Hoteles</p>
+          <div>
+            <h2 id="ca-title" class="h2" data-reveal>En una operación como Casual, esta decisión se vuelve aún más interesante.</h2>
+            <div class="facts" data-reveal>
+              <p><span class="fact-k">Mercados</span><span class="fact-v">España, Portugal, Italia, Grecia y el salto a Bayahíbe</span></p>
+              <p><span class="fact-k">Modelos</span><span class="fact-v">propiedad, alquiler, gestión y franquicia</span></p>
+              <p><span class="fact-k">Decisiones</span><span class="fact-v">con revenue management y datos desde hace años</span></p>
+            </div>
+            <figure class="quote" data-reveal>
+              <blockquote>«Demostrar que el modelo que nació en Valencia puede viajar, adaptarse y seguir creciendo en otros mercados.»</blockquote>
+              <figcaption>Juan Carlos Sanjuán · septiembre de 2026</figcaption>
+            </figure>
+            <div class="prose" data-reveal>
+              <p>Una organización con hoteles en distintos mercados y distintos modelos de explotación tiene una realidad operativa más compleja que la de un único hotel.</p>
+              <p>Una mejora pequeña puede:</p>
+            </div>
+            <ul class="ticks" data-reveal>{multiplica.map((m) => <li>{m}</li>)}</ul>
+            <p class="prose-line" data-reveal>Del mismo modo, una ineficiencia pequeña también puede escalar.</p>
+            <p class="statement" data-reveal>Cuando una operación crece, priorizar bien tiene efecto multiplicador.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Escala -->
+      <section id="escala" class="warm" aria-labelledby="sc-title">
+        <div class="wrap section">
+          <h2 id="sc-title" class="h2 h2-wide" data-reveal>¿Qué ocurre cuando multiplicamos un proceso por</h2>
+          <p class="numbers" data-reveal aria-label="20, 25 o 30 hoteles"><span>20</span><span>25</span><span>30</span><small>hoteles?</small></p>
+          <div class="split split-tight">
+            <span></span>
+            <div>
+              <ul class="small-list" data-reveal>{pequenas.map((p) => <li>{p}</li>)}</ul>
+              <p class="prose-line" data-reveal>Individualmente pueden parecer pequeñas. Multiplicadas por establecimientos, huéspedes y días:</p>
+              <p class="statement statement-plain" data-reveal>pueden convertirse en decisiones de inversión.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Radiografía -->
+      <section id="radiografia" class="section wrap" aria-labelledby="rd-title">
+        <div class="split">
+          <p class="label" data-reveal>Radiografía Digital</p>
+          <div>
+            <h2 id="rd-title" class="h2" data-reveal>Ahí entra la Radiografía Digital.</h2>
+            <p class="lede" data-reveal>Antes de decidir la solución, buscamos el problema que merece ser resuelto.</p>
+            <ol class="steps" data-reveal>{pasos.map((p, i) => <li><span class="n">{pad(i + 1)}</span>{p}</li>)}</ol>
+            <p class="prose-line" data-reveal>Después evaluamos:</p>
+            <ul class="criteria" data-reveal>{criterios.map((c) => <li>{c}</li>)}</ul>
+            <p class="statement statement-plain" data-reveal>Solo entonces hablamos de tecnología.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Framework 4×4 -->
+      <section id="metodo" class="section section-top0 wrap" aria-labelledby="fw-title">
+        <div class="split">
+          <p class="label" data-reveal>Framework 4×4</p>
+          <div>
+            <h2 id="fw-title" class="h3" data-reveal>Un método para encontrar fricciones antes de hablar de soluciones.</h2>
+            <div class="m44" data-reveal role="table" aria-label="Framework 4×4: cuatro áreas por cuatro señales">
+              <div class="m-row m-head" role="row">
+                <span role="columnheader"><span class="sr-only">Área</span></span>
+                {senales.map((s) => <span role="columnheader"><span class="m-full">{s}</span><span class="m-short" aria-hidden="true">{s.charAt(0)}</span></span>)}
+              </div>
+              {areas.map((a, r) => (
+                <div class="m-row" role="row">
+                  <span class="m-area" role="rowheader">{a}</span>
+                  {senales.map((s, c) => <span class="m-cell" role="cell" style={`--i:${r * 4 + c}`}><i></i><span class="sr-only">{a} · {s}</span></span>)}
+                </div>
+              ))}
+            </div>
+            <p class="m-legend" aria-hidden="true">{senales.map((s) => <span><b>{s.charAt(0)}</b> {s}</span>)}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Priorizar -->
+      <section id="priorizar" class="night" aria-labelledby="pz-title">
+        <div class="wrap section">
+          <p class="label label-night" data-reveal>Priorizar</p>
+          <p class="tx-lead" data-reveal>Detectar oportunidades es relativamente fácil.</p>
+          <h2 id="pz-title" class="tx-big" data-reveal>Priorizar es lo difícil.</h2>
+
+          <div class="prio-grid">
+            <figure class="matrix" data-reveal aria-label="Matriz de impacto y esfuerzo con ejemplos abstractos">
+              <div class="mx">
+                <span class="mx-q mx-q1">Hacer primero</span>
+                <span class="mx-q mx-q2">Proyecto estratégico</span>
+                <span class="mx-q mx-q3">Evaluar</span>
+                <span class="mx-q mx-q4">No prioritario</span>
+                {puntos.map((p) => <i class:list={["mx-dot", { hot: p.x < 50 && p.y > 50 }]} style={`left:${p.x}%;bottom:${p.y}%`}><b>{p.id}</b></i>)}
+                <span class="mx-axis mx-x">Esfuerzo →</span>
+                <span class="mx-axis mx-y">Impacto →</span>
+              </div>
+              <figcaption>Ejemplos abstractos. No representan proyectos de Casual.</figcaption>
+            </figure>
+
+            <figure class="field-fig" data-reveal aria-label="Cuarenta ideas posibles que se ordenan hasta quedar tres prioridades">
+              <div class="field">
+                {ideas.map((d) => (
+                  <i class:list={["idea", { prio: d.p }]} style={`--sx:${d.sx.toFixed(1)}%;--sy:${d.sy.toFixed(1)}%;--gx:${d.gx}%;--gy:${d.gy}%`}>{d.p ? <b>{d.p}</b> : null}</i>
+                ))}
+              </div>
+              <figcaption class="field-cap"><span class="cap-40">40 ideas</span><span class="cap-arrow" aria-hidden="true">→</span><span class="cap-3">3 prioridades</span></figcaption>
+            </figure>
+          </div>
+
+          <div class="prio-close">
+            <p class="tx-text" data-reveal>La Radiografía no busca producir una lista de 40 ideas. Busca ayudar a responder:</p>
+            <p class="three-q" data-reveal>¿Qué tres merecen nuestra atención primero?</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ejemplo -->
+      <section id="ejemplo" class="section wrap" aria-labelledby="ej-title">
+        <p class="label" data-reveal>Un ejemplo</p>
+        <h2 id="ej-title" class="h2" data-reveal>Porque «automatizable» no significa «prioritario».</h2>
+        <div class="compare" data-reveal>
+          <div class="task">
+            <p class="task-name">Tarea A <span>perfectamente automatizable</span></p>
+            <dl>{tareaA.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
+            <p class="task-verdict">Quizá no es donde deberíamos invertir.</p>
+          </div>
+          <div class="task task-b">
+            <p class="task-name">Tarea B <span>aparentemente pequeña</span></p>
+            <dl>{tareaB.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
+            <p class="task-verdict">Puede merecer atención antes.</p>
+          </div>
+        </div>
+        <p class="compare-note" data-reveal>Ejemplo ilustrativo. No describe ningún proceso de Casual.</p>
+        <div class="right-q" data-reveal>
+          <p class="right-no">La pregunta correcta no es «¿podemos automatizarlo?».</p>
+          <p class="right-yes">Es «¿merece la pena hacerlo?».</p>
+        </div>
+      </section>
+
+      <!-- Independencia -->
+      <section id="independencia" class="warm" aria-labelledby="in-title">
+        <div class="wrap section">
+          <div class="split">
+            <p class="label" data-reveal>Independencia</p>
+            <div>
+              <h2 id="in-title" class="h2" data-reveal>Sin plataforma que justificar.</h2>
+              <ul class="nots" data-reveal>
+                <li>IA Operators no representa una tecnología hotelera concreta.</li>
+                <li>No vendemos un PMS.</li>
+                <li>No vendemos un RMS.</li>
+                <li>No necesitamos colocar un chatbot.</li>
+                <li>Y no necesitamos encontrar artificialmente un caso de uso para la IA.</li>
+              </ul>
+              <p class="prose-line" data-reveal>Eso permite un análisis independiente.</p>
+            </div>
+          </div>
+          <p class="euro" data-reveal><span class="euro-n">1 €</span><span class="euro-q">Si tuviéramos 1 € de TechEx para invertir, ¿dónde generaría más valor?</span></p>
+          <p class="euro-note" data-reveal>Un euro conceptual. No es un cálculo financiero.</p>
+        </div>
+      </section>
+
+      <!-- Propuesta -->
+      <section id="propuesta" class="section wrap" aria-labelledby="pr-title">
+        <div class="split">
+          <p class="label label-accent" data-reveal>Una idea concreta</p>
+          <div>
+            <h2 id="pr-title" class="h2 h2-pair" data-reveal>
+              <span>No empecemos por toda Casual Hoteles.</span>
+              <span class="h2-accent">Empecemos por un proceso.</span>
+            </h2>
+            <p class="lede" data-reveal>Lo elegiríamos junto con la dirección: un proceso suficientemente relevante y transversal, y lo seguiríamos de principio a fin.</p>
+            <p class="prose-line" data-reveal>Podría estar relacionado con:</p>
+            <ul class="chips" data-reveal>{ambitos.map((a) => <li>{a}</li>)}</ul>
+            <p class="chips-note" data-reveal>Son solo ejemplos. No damos por hecho dónde está la fricción.</p>
+            <p class="prose-line" data-reveal>El objetivo:</p>
+            <ol class="steps steps-tight" data-reveal>{objetivo.map((o, i) => <li><span class="n">{pad(i + 1)}</span>{o}</li>)}</ol>
+            <p class="prose-line" data-reveal>y responder:</p>
+            <p class="worth" data-reveal>¿Merece inversión?</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Resultado -->
+      <section id="resultado" class="warm" aria-labelledby="re-title">
+        <div class="wrap section">
+          <div class="split">
+            <p class="label" data-reveal>Resultado</p>
+            <div>
+              <h2 id="re-title" class="h2" data-reveal>Una decisión antes de una implementación.</h2>
+              <ol class="funnel" data-reveal aria-label="De la fricción a la decisión">
+                {cadena.map((c, i) => <li style={`--w:${100 - i * 9}%`}>{c}</li>)}
+              </ol>
+              <p class="prose-line" data-reveal>Las opciones pueden ser:</p>
+              <ul class="chips chips-solid" data-reveal>
+                {opciones.map((o) => <li>{o}</li>)}
+                <li class="chip-none">o no hacer nada</li>
+              </ul>
+              <p class="statement" data-reveal>No invertir también puede ser una buena decisión.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cierre -->
+      <section id="cierre" class="closing wrap" aria-labelledby="ci-title">
+        <p class="cl-1" data-reveal>CapEx o TechEx.</p>
+        <p class="cl-2" data-reveal>Y dentro del TechEx:</p>
+        <h2 id="ci-title" class="cl-big" data-reveal>¿Dónde primero?</h2>
+        <p class="cl-3" data-reveal>Esa es la pregunta que me gustaría explorar contigo.</p>
+      </section>
+
+      <!-- Conversación -->
+      <section id="hablar" class="cta" aria-labelledby="cta-title">
+        <div class="wrap section">
+          <h2 id="cta-title" class="h2 cta-title" data-reveal>Si te parece una conversación interesante, seguimos.</h2>
+          <p class="cta-copy" data-reveal>Puedo enseñarte cómo hacemos una Radiografía Digital y valorar contigo si existe algún proceso de Casual Hoteles que merezca analizar primero.</p>
+          <div class="cta-row" data-reveal>
+            <a class="button" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="final">Hablar con Luiz <span aria-hidden="true">↗</span></a>
+            <div class="signature">
+              <p class="signature-name">Luiz Brazão</p>
+              <p class="signature-role">Founder, IA Operators</p>
+              <a class="signature-site" href="https://iaoperators.com/es/" data-cta="site">iaoperators.com</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="wrap foot-inner">
+        <span class="foot-brand"><span aria-hidden="true">↗</span> IA Operators</span>
+        <a href="/es/auditoria-de-sistemas/">Radiografía Digital</a>
+        <a href="https://iaoperators.com/es/">iaoperators.com</a>
+      </div>
+    </footer>
+
+    <div class="consent" data-consent hidden role="region" aria-label="Cookies">
+      <p>Usamos cookies para medir y mejorar la experiencia. Puedes aceptar o rechazar. <a href="/es/politica-de-privacidad/">Política de Privacidad</a>.</p>
+      <div class="consent-actions">
+        <button type="button" data-consent-reject>Rechazar</button>
+        <button type="button" class="consent-accept" data-consent-accept>Aceptar</button>
+      </div>
+    </div>
+
+    <script>
+      import { initProspectLanding } from "../../scripts/prospect-landing";
+      initProspectLanding({ landing: "juan-carlos", gtmId: document.body.dataset.gtm ?? "", videoTitle: "juan_carlos_luiz", scrollMarks: [50, 90] });
+    </script>
+
+    <style is:global>
+      @font-face {
+        font-family: "Manrope JC";
+        src: url("/fonts/manrope-latin-variable.woff2") format("woff2");
+        font-weight: 200 800;
+        font-display: swap;
+      }
+      :root {
+        --paper: #fafaf8;
+        --warm: #f1efea;
+        --ink: #121212;
+        --text: #2b2b2b;
+        --muted: #616161;
+        --soft: #9a9a9a;
+        --line: #e3e2de;
+        --line-strong: #c4c3be;
+        --orange: #f16532;
+        --orange-ink: #b4441a;
+        --night: #111111;
+        --night-text: #f2f2f0;
+        --night-muted: #9c9c98;
+        --night-line: #2c2c2c;
+        --gutter: 20px;
+        --ease: cubic-bezier(.2, .7, .2, 1);
+      }
+      *, *::before, *::after { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 72px; }
+      body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Manrope JC", "Helvetica Neue", Arial, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+      h1, h2, h3, p, ol, ul, dl, dd, figure, blockquote { margin: 0; }
+      ol, ul { padding: 0; list-style: none; }
+      a { color: inherit; text-decoration: none; }
+      a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+      .wrap { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: var(--gutter); }
+      .label { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+      .label::before { content: ""; width: 7px; height: 7px; background: var(--line-strong); }
+      .label-accent::before { background: var(--orange); }
+      .label-night { color: var(--night-muted); }
+      .label-night::before { background: var(--night-line); }
+
+      /* Cabecera */
+      .top { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid transparent; transition: background-color .3s ease, border-color .3s ease; }
+      .top.is-scrolled { background: rgba(250, 250, 248, .9); border-bottom-color: var(--line); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+      .top-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
+      .wordmark { font-size: 18px; font-weight: 650; letter-spacing: -.04em; white-space: nowrap; }
+      .wordmark span, .foot-brand span { color: var(--orange); }
+      .top-nav { display: flex; align-items: center; gap: 22px; font-size: 13px; }
+      .top-link { display: none; color: var(--muted); }
+      .top-link:hover { color: var(--ink); }
+      .top-cta { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border: 1px solid var(--ink); font-weight: 600; white-space: nowrap; transition: background-color .2s ease, color .2s ease; }
+      .top-cta:hover { background: var(--ink); color: var(--paper); }
+
+      /* Hero */
+      .hero { padding-top: 18px; padding-bottom: 72px; }
+      .greeting { margin-top: 14px; max-width: 22em; font-size: clamp(20px, 2.4vw, 30px); font-weight: 500; letter-spacing: -.03em; line-height: 1.25; }
+      .greeting b { font-weight: 700; }
+      .return-q { margin-top: 16px; max-width: 11em; font-size: clamp(36px, 7.4vw, 104px); font-weight: 500; letter-spacing: -.06em; line-height: .98; }
+      .hero-grid { display: grid; gap: 28px; margin-top: 28px; }
+      .hero-copy { display: grid; gap: 4px; align-content: start; color: var(--muted); }
+      .hero-copy p:first-child { margin-bottom: 14px; max-width: 32em; }
+      .hero-not { font-size: clamp(20px, 2vw, 25px); letter-spacing: -.03em; color: var(--soft); text-decoration: line-through; text-decoration-thickness: 1px; text-decoration-color: var(--line-strong); }
+      .hero-yes { font-size: clamp(22px, 2.3vw, 30px); font-weight: 600; letter-spacing: -.035em; line-height: 1.2; color: var(--ink); }
+      .hero-yes::after { content: ""; display: block; width: 40px; height: 3px; margin-top: 14px; background: var(--orange); }
+
+      /* Vídeo */
+      .video { position: relative; overflow: hidden; background: var(--night); color: var(--night-text); }
+      .video-horizontal { aspect-ratio: 16 / 9; }
+      .video-vertical { aspect-ratio: 9 / 16; max-height: 78vh; width: min(100%, calc(78vh * 9 / 16)); margin-inline: auto; }
+      .video-el { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #000; }
+      .video-cover { position: absolute; inset: 0; display: grid; place-items: center; width: 100%; padding: 0; border: 0; background: var(--night); color: inherit; font: inherit; cursor: pointer; }
+      .video-dots { position: absolute; right: 18px; top: 18px; display: grid; grid-template-columns: repeat(6, 6px); gap: 6px; }
+      .video-dots i { width: 6px; height: 6px; border-radius: 50%; background: #3a3a3a; }
+      .video-dots i.on { background: var(--orange); }
+      .video.is-playing .video-cover { display: none; }
+      .video-play { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; border: 1px solid rgba(242, 242, 240, .55); color: var(--night-text); transition: background-color .3s ease, color .3s ease, transform .35s var(--ease); }
+      .video-play svg { margin-left: 3px; }
+      .video-cover:hover .video-play { background: var(--night-text); color: var(--night); transform: scale(1.04); }
+      .video-meta { position: absolute; left: 16px; right: 16px; bottom: 14px; display: flex; justify-content: space-between; gap: 12px; font-size: 11px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--night-muted); }
+      .video-time { color: var(--night-text); }
+      .video-note { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(46px); text-align: center; font-size: 13px; color: var(--night-text); }
+
+      /* Secciones */
+      .section { padding-block: 88px; }
+      .section-top0 { padding-top: 0; }
+      .warm { background: var(--warm); }
+      .night { background: var(--night); color: var(--night-text); }
+      .split { display: grid; gap: 18px; }
+      .split > .label { align-self: start; padding-top: 10px; }
+      .h2 { font-size: clamp(30px, 4.4vw, 60px); font-weight: 500; letter-spacing: -.05em; line-height: 1.06; max-width: 15em; }
+      section > .wrap > .h2, .section > .h2 { margin-top: 16px; }
+      .h2-wide { max-width: 18em; }
+      .h2-pair { display: grid; gap: 4px; }
+      .h2-accent { color: var(--orange-ink); }
+      .h3 { font-size: clamp(25px, 2.8vw, 38px); font-weight: 500; letter-spacing: -.045em; line-height: 1.12; max-width: 18em; }
+      .lede { margin-top: 20px; max-width: 30em; font-size: clamp(19px, 1.7vw, 22px); line-height: 1.45; letter-spacing: -.018em; color: var(--text); }
+      .prose { margin-top: 22px; max-width: 36em; }
+      .prose p { color: var(--muted); }
+      .prose p + p { margin-top: 10px; }
+      .prose-line { margin-top: 24px; color: var(--muted); max-width: 36em; }
+      .statement { margin-top: 22px; font-size: clamp(25px, 3.2vw, 42px); font-weight: 500; letter-spacing: -.045em; line-height: 1.12; max-width: 16em; }
+      .statement::before { content: ""; display: block; width: 40px; height: 3px; margin-bottom: 16px; background: var(--orange); }
+      .statement-plain::before { display: none; }
+
+      /* Valor */
+      .pairs { margin-top: 40px; border-top: 1px solid var(--ink); }
+      .pairs li { display: grid; grid-template-columns: 1fr; gap: 2px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+      .pair-a { font-size: clamp(20px, 2.1vw, 28px); font-weight: 500; letter-spacing: -.035em; line-height: 1.2; }
+      .pair-arrow { display: none; color: var(--soft); }
+      .pair-b { font-size: 17px; color: var(--muted); }
+      .pair-last .pair-a { color: var(--soft); }
+      .pair-last .pair-b { color: var(--ink); font-weight: 600; }
+      .thesis { display: grid; gap: 4px; margin-top: 64px; font-size: clamp(32px, 5.4vw, 76px); font-weight: 500; letter-spacing: -.055em; line-height: 1.02; }
+      .thesis span:first-child { color: var(--soft); }
+      .thesis-b { position: relative; }
+
+      /* TechEx */
+      .tx-lead { margin-top: 18px; font-size: clamp(22px, 2.6vw, 34px); font-weight: 400; letter-spacing: -.035em; line-height: 1.2; color: var(--night-muted); }
+      .tx-lead-2 { margin-top: 4px; color: var(--night-text); }
+      .tx-big { margin-top: 18px; font-size: clamp(48px, 11vw, 168px); font-weight: 500; letter-spacing: -.065em; line-height: .92; }
+      .tx-body { margin-top: 48px; max-width: 40em; }
+      .tx-text { font-size: 18px; color: var(--night-muted); max-width: 34em; }
+      .tx-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+      .tx-list li { padding: 4px 10px; border: 1px solid var(--night-line); font-size: 14px; color: var(--night-text); }
+      .orders { display: grid; gap: 14px; margin-top: 48px; }
+      .order { display: grid; gap: 10px; padding: 18px 16px; border: 1px solid var(--night-line); }
+      .order-label { font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; color: var(--night-muted); }
+      .order-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 0; }
+      .order-row li { font-size: clamp(19px, 2.2vw, 28px); font-weight: 500; letter-spacing: -.03em; }
+      .order-row li:not(:last-child)::after { content: "→"; margin-inline: 12px; color: var(--night-muted); font-weight: 400; }
+      .order-yes { border-color: var(--orange); }
+      .order-yes .order-label { color: var(--orange); }
+      .order-yes .order-tech { color: var(--orange); }
+      .order-no { opacity: .6; }
+      .order-no .order-row li { color: var(--night-muted); text-decoration: line-through; text-decoration-thickness: 1px; }
+
+      /* Casual */
+      .facts { margin-top: 28px; border-top: 1px solid var(--ink); }
+      .facts p { display: grid; gap: 2px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+      .fact-k { font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+      .fact-v { font-size: 18px; letter-spacing: -.015em; }
+      .quote { margin-top: 32px; }
+      .quote blockquote { font-size: clamp(22px, 2.4vw, 30px); font-weight: 400; letter-spacing: -.035em; line-height: 1.28; max-width: 22em; }
+      .quote figcaption { margin-top: 10px; font-size: 13px; color: var(--soft); }
+      .ticks { margin-top: 10px; }
+      .ticks li { position: relative; padding: 8px 0 8px 22px; font-size: clamp(18px, 1.7vw, 21px); letter-spacing: -.02em; }
+      .ticks li::before { content: ""; position: absolute; left: 0; top: calc(8px + .65em); width: 8px; height: 8px; border: 1px solid var(--ink); transform: translateY(-50%); }
+
+      /* Escala */
+      .numbers { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 .35em; margin-top: 10px; font-size: clamp(72px, 15vw, 196px); font-weight: 500; letter-spacing: -.07em; line-height: .95; }
+      .numbers span:nth-child(1) { color: var(--line-strong); }
+      .numbers span:nth-child(2) { color: var(--soft); }
+      .numbers small { font-size: clamp(24px, 3vw, 40px); letter-spacing: -.04em; color: var(--muted); }
+      .split-tight { margin-top: 40px; }
+      .small-list { border-top: 1px solid var(--line-strong); }
+      .small-list li { padding: 12px 0; border-bottom: 1px solid var(--line-strong); font-size: clamp(18px, 1.7vw, 21px); letter-spacing: -.02em; }
+
+      /* Radiografía */
+      .steps { margin-top: 28px; border-top: 1px solid var(--line); counter-reset: s; }
+      .steps li { display: flex; gap: 14px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: clamp(18px, 1.7vw, 21px); letter-spacing: -.02em; }
+      .steps-tight { margin-top: 10px; }
+      .n { flex: 0 0 26px; font-size: 12px; font-weight: 650; color: var(--soft); }
+      .criteria { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin-top: 12px; background: var(--line); border: 1px solid var(--line); }
+      .criteria li { padding: 14px 12px; background: var(--paper); font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+      .criteria li:last-child { grid-column: 1 / -1; }
+
+      /* 4×4 */
+      .m44 { margin-top: 30px; max-width: 720px; }
+      .m-row { display: grid; grid-template-columns: minmax(0, 1.3fr) repeat(4, minmax(0, 1fr)); align-items: center; min-height: 46px; border-top: 1px solid var(--line); }
+      .m-row:last-child { border-bottom: 1px solid var(--line); }
+      .m-head { border-top: 0; min-height: 32px; font-size: 11px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); text-align: center; }
+      .m-area { font-size: 15px; font-weight: 600; }
+      .m-cell { display: grid; place-items: center; }
+      .m-cell i { width: 9px; height: 9px; background: var(--ink); }
+      .m-full { display: none; }
+      .m-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 14px; font-size: 12px; color: var(--muted); }
+      .m-legend b { color: var(--ink); }
+
+      /* Priorizar */
+      .prio-grid { display: grid; gap: 48px; margin-top: 56px; }
+      .matrix { position: relative; padding: 0 0 0 26px; }
+      .mx { position: relative; aspect-ratio: 1 / .78; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; border-left: 1px solid var(--night-muted); border-bottom: 1px solid var(--night-muted); }
+      .mx-q { display: block; padding: 10px; font-size: 11px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--night-muted); }
+      .mx-q1 { grid-area: 1 / 1; color: var(--orange); background: rgba(241, 101, 50, .08); border-right: 1px dashed var(--night-line); border-bottom: 1px dashed var(--night-line); }
+      .mx-q2 { grid-area: 1 / 2; border-bottom: 1px dashed var(--night-line); text-align: right; }
+      .mx-q3 { grid-area: 2 / 1; border-right: 1px dashed var(--night-line); align-self: end; }
+      .mx-q4 { grid-area: 2 / 2; align-self: end; text-align: right; }
+      .mx-dot { position: absolute; width: 22px; height: 22px; margin: 0 0 -11px -11px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--night-muted); background: var(--night); font-style: normal; }
+      .mx-dot b { font-size: 10px; font-weight: 700; color: var(--night-muted); }
+      .mx-dot.hot { border-color: var(--orange); background: var(--orange); }
+      .mx-dot.hot b { color: var(--night); }
+      .mx-axis { position: absolute; font-size: 11px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--night-muted); }
+      .mx-x { right: 0; bottom: -24px; }
+      .mx-y { left: -26px; top: 0; writing-mode: vertical-rl; transform: rotate(180deg); }
+      .matrix figcaption { margin-top: 40px; font-size: 12px; color: var(--night-muted); }
+      .field { position: relative; aspect-ratio: 1.6 / 1; }
+      .idea { position: absolute; left: var(--gx); top: var(--gy); width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #4a4a48; display: grid; place-items: center; font-style: normal; }
+      .idea.prio { width: 30px; height: 30px; margin: -15px 0 0 -15px; background: var(--orange); }
+      .idea.prio b { font-size: 13px; font-weight: 700; color: var(--night); }
+      .field-cap { display: flex; align-items: baseline; gap: 12px; margin-top: 18px; font-size: clamp(20px, 2.2vw, 28px); font-weight: 500; letter-spacing: -.035em; }
+      .cap-40 { color: var(--night-muted); }
+      .cap-arrow { color: var(--night-muted); }
+      .cap-3 { color: var(--orange); }
+      .prio-close { margin-top: 64px; }
+      .three-q { margin-top: 12px; font-size: clamp(32px, 6vw, 84px); font-weight: 500; letter-spacing: -.06em; line-height: 1; max-width: 12em; }
+
+      /* Ejemplo */
+      .compare { display: grid; gap: 16px; margin-top: 36px; }
+      .task { padding: 20px 18px; border: 1px solid var(--line-strong); }
+      .task-b { border-color: var(--ink); }
+      .task-name { font-size: 22px; font-weight: 600; letter-spacing: -.03em; }
+      .task-name span { display: block; font-size: 13px; font-weight: 500; letter-spacing: 0; color: var(--muted); }
+      .task dl { margin: 16px 0; border-top: 1px solid var(--line); }
+      .task dl div { display: flex; justify-content: space-between; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+      .task dt { color: var(--muted); }
+      .task dd { text-align: right; font-weight: 550; }
+      .task-verdict { font-size: 16px; color: var(--muted); }
+      .task-b .task-verdict { color: var(--orange-ink); font-weight: 600; }
+      .compare-note { margin-top: 12px; font-size: 13px; color: var(--soft); }
+      .right-q { margin-top: 56px; }
+      .right-no { font-size: clamp(20px, 2.4vw, 30px); letter-spacing: -.03em; color: var(--soft); }
+      .right-yes { margin-top: 4px; font-size: clamp(32px, 5vw, 68px); font-weight: 500; letter-spacing: -.055em; line-height: 1.02; }
+
+      /* Independencia */
+      .nots { margin-top: 24px; border-top: 1px solid var(--line-strong); }
+      .nots li { padding: 11px 0; border-bottom: 1px solid var(--line-strong); font-size: clamp(17px, 1.6vw, 20px); letter-spacing: -.015em; color: var(--text); }
+      .euro { display: grid; gap: 12px; margin-top: 72px; padding-top: 32px; border-top: 1px solid var(--ink); }
+      .euro-n { font-size: clamp(88px, 18vw, 220px); font-weight: 500; letter-spacing: -.07em; line-height: .85; color: var(--orange); }
+      .euro-q { font-size: clamp(28px, 4.6vw, 62px); font-weight: 500; letter-spacing: -.05em; line-height: 1.05; max-width: 14em; }
+      .euro-note { margin-top: 14px; font-size: 13px; color: var(--soft); }
+
+      /* Propuesta */
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+      .chips li { padding: 7px 12px; border: 1px dashed var(--line-strong); font-size: 14px; }
+      .chips-note { margin-top: 12px; font-size: 14px; color: var(--muted); }
+      .chips-solid li { border-style: solid; background: var(--paper); }
+      .chips-solid .chip-none { border-color: var(--orange); color: var(--orange-ink); font-weight: 600; }
+      .worth { margin-top: 6px; font-size: clamp(40px, 7vw, 96px); font-weight: 500; letter-spacing: -.06em; line-height: 1; color: var(--orange-ink); }
+
+      /* Resultado: embudo */
+      .funnel { display: grid; gap: 6px; margin-top: 32px; }
+      .funnel li { width: var(--w); min-width: 140px; padding: 10px 14px; background: var(--paper); border-left: 3px solid var(--line-strong); font-size: 17px; font-weight: 550; letter-spacing: -.015em; }
+      .funnel li:first-child { border-left-color: var(--soft); }
+      .funnel li:last-child { border-left-color: var(--orange); background: var(--ink); color: var(--paper); }
+
+      /* Cierre */
+      .closing { padding-block: 120px 128px; }
+      .cl-1 { font-size: clamp(28px, 3.6vw, 48px); font-weight: 500; letter-spacing: -.045em; color: var(--soft); }
+      .cl-2 { margin-top: 28px; font-size: 18px; color: var(--muted); }
+      .cl-big { margin-top: 10px; font-size: clamp(56px, 13vw, 190px); font-weight: 500; letter-spacing: -.07em; line-height: .95; }
+      .cl-3 { margin-top: 64px; font-size: clamp(19px, 1.8vw, 23px); letter-spacing: -.02em; color: var(--text); }
+
+      /* Conversación */
+      .cta { border-top: 1px solid var(--line); }
+      .cta-title { max-width: 14em; }
+      .cta-copy { margin-top: 20px; max-width: 32em; font-size: 18px; color: var(--muted); }
+      .cta-row { display: grid; gap: 36px; margin-top: 40px; }
+      .button { display: inline-flex; align-items: center; justify-content: space-between; gap: 28px; width: max-content; min-height: 56px; padding: 0 24px; background: var(--ink); color: var(--paper); font-size: 16px; font-weight: 600; transition: background-color .2s ease; }
+      .button:hover { background: var(--orange-ink); }
+      .signature { padding-top: 18px; border-top: 1px solid var(--line); max-width: 280px; }
+      .signature-name { font-size: 18px; font-weight: 650; letter-spacing: -.02em; }
+      .signature-role { font-size: 14px; color: var(--muted); }
+      .signature-site { display: inline-block; margin-top: 6px; font-size: 13px; color: var(--orange-ink); }
+
+      /* Pie y consentimiento */
+      .foot { border-top: 1px solid var(--line); }
+      .foot-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; padding-block: 26px 30px; font-size: 13px; color: var(--muted); }
+      .foot-brand { margin-right: auto; font-weight: 650; color: var(--ink); letter-spacing: -.02em; }
+      .foot a:hover { color: var(--ink); }
+      .consent { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 30; display: grid; gap: 12px; padding: 14px 16px; background: var(--night); color: var(--night-text); font-size: 13px; line-height: 1.5; border: 1px solid #3a3a3a; box-shadow: 0 10px 30px rgba(0, 0, 0, .18); }
+      .consent[hidden] { display: none; }
+      .consent a { text-decoration: underline; }
+      .consent-actions { display: flex; gap: 8px; justify-content: flex-end; }
+      .consent button { min-height: 38px; padding: 0 16px; border: 1px solid #3a3a3a; background: transparent; color: var(--night-text); font: inherit; cursor: pointer; }
+      .consent .consent-accept { background: var(--night-text); color: var(--night); border-color: var(--night-text); }
+
+      /* Movimiento: discreto */
+      .js [data-reveal] { opacity: 0; transform: translateY(10px); transition: opacity .7s ease var(--d, 0ms), transform .7s var(--ease) var(--d, 0ms); }
+      .js [data-reveal].is-in { opacity: 1; transform: none; }
+      .js .field .idea { left: var(--sx); top: var(--sy); transition: left 1.4s var(--ease) .2s, top 1.4s var(--ease) .2s, opacity .6s ease 1.5s, background-color .5s ease 1.4s; }
+      .js .field .idea.prio { background: #4a4a48; width: 10px; height: 10px; margin: -5px 0 0 -5px; transition: left 1.4s var(--ease) .2s, top 1.4s var(--ease) .2s, width .4s ease 1.6s, height .4s ease 1.6s, margin .4s ease 1.6s, background-color .4s ease 1.6s; }
+      .js .field .idea.prio b { opacity: 0; transition: opacity .3s ease 1.9s; }
+      .js .field-fig.is-in .idea { left: var(--gx); top: var(--gy); }
+      .js .field-fig.is-in .idea:not(.prio) { opacity: .35; }
+      .js .field-fig.is-in .idea.prio { background: var(--orange); width: 30px; height: 30px; margin: -15px 0 0 -15px; }
+      .js .field-fig.is-in .idea.prio b { opacity: 1; }
+      .idea:not(.prio) { opacity: .35; }
+      .js .field .idea:not(.prio) { opacity: 1; }
+      .js .field-fig.is-in .idea:not(.prio) { opacity: .35; }
+      .js .m-cell i { background: transparent; box-shadow: inset 0 0 0 1px var(--ink); transition: background-color .3s ease calc(.2s + var(--i) * 40ms); }
+      .js .m44.is-in .m-cell i { background: var(--ink); }
+
+      @media (min-width: 420px) {
+        .top-link { display: inline; }
+      }
+
+      @media (min-width: 720px) {
+        :root { --gutter: 36px; }
+        .pairs li { grid-template-columns: minmax(0, 5fr) 40px minmax(0, 6fr); align-items: baseline; gap: 12px; }
+        .pair-arrow { display: block; }
+        .pair-b { font-size: 19px; }
+        .orders { grid-template-columns: 3fr 2fr; }
+        .facts p { grid-template-columns: 140px minmax(0, 1fr); align-items: baseline; gap: 16px; }
+        .criteria { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+        .criteria li:last-child { grid-column: auto; }
+        .m-full { display: inline; }
+        .m-short, .m-legend { display: none; }
+        .compare { grid-template-columns: 1fr 1fr; }
+        .euro { grid-template-columns: auto 1fr; align-items: end; gap: 40px; }
+        .cta-row { grid-template-columns: auto 1fr; align-items: end; gap: 64px; }
+        .signature { justify-self: end; min-width: 260px; }
+        .consent { left: auto; right: 24px; bottom: 24px; max-width: 560px; grid-template-columns: 1fr auto; align-items: center; }
+      }
+
+      @media (min-width: 1000px) {
+        body { font-size: 18px; }
+        .top-inner { height: 72px; }
+        .hero { padding-top: 40px; padding-bottom: 116px; }
+        .hero-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 56px; margin-top: 52px; align-items: start; }
+        .section { padding-block: 128px; }
+        .section-top0 { padding-top: 0; }
+        .split { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 48px; }
+        .prio-grid { grid-template-columns: 1fr 1fr; gap: 72px; align-items: end; }
+        .closing { padding-block: 180px 190px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+        .js .field .idea { left: var(--gx); top: var(--gy); transition: none; }
+        .js .field .idea:not(.prio) { opacity: .35; }
+        .js .field .idea.prio { background: var(--orange); width: 30px; height: 30px; margin: -15px 0 0 -15px; transition: none; }
+        .js .field .idea.prio b { opacity: 1; transition: none; }
+        .js .m-cell i { background: var(--ink); transition: none; }
+        .video-play, .top, .button, .top-cta { transition: none; }
+      }
+    </style>
+  </body>
+</html>
