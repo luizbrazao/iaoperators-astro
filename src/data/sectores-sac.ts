@@ -218,23 +218,21 @@ export const SHARED = {
     ],
   },
 
-  precio: {
-    title: "Alcance y precio",
+  // Sin importes: oct/2026 se decidió no publicar precios en el sitio.
+  alcance: {
+    title: "Alcance",
     subtitle: "Proyecto cerrado más mantenimiento normativo. Sin licencia propietaria que te ate.",
     items: [
       {
         title: "Diagnóstico de brecha",
-        precio: "Desde 1.500 €",
         body: "Una semana. Informe de brecha por obligación, con esfuerzo y prioridad. Se descuenta si sigues con la implementación.",
       },
       {
         title: "Implementación",
-        precio: "Desde 5.000 €",
         body: "Capa omnicanal, motor de plazos, clave identificativa y registro auditable, integrados con tu CRM o ticketing.",
       },
       {
         title: "Mantenimiento normativo",
-        precio: "Retainer mensual",
         body: "Monitorización de SLA, evolución del sistema y actualización de las evidencias y métricas necesarias para el régimen de evaluación y auditoría que resulte aplicable.",
       },
     ],
@@ -287,7 +285,7 @@ export const SHARED = {
       },
       {
         q: "¿Cuánto cuesta y en cuánto tiempo está en producción?",
-        a: "El diagnóstico de brecha empieza en 1.500 € y dura una semana. La implementación empieza en 5.000 € y suele estar en producción en cuatro a ocho semanas según el número de canales y la complejidad de las integraciones. Después, un retainer mensual de mantenimiento normativo.",
+        a: "El diagnóstico de brecha dura una semana y termina con el alcance y el precio cerrados de la implementación. La implementación suele estar en producción en cuatro a ocho semanas según el número de canales y la complejidad de las integraciones. Después, un retainer mensual de mantenimiento normativo.",
       },
       {
         q: "¿Dais asesoramiento jurídico?",

@@ -222,23 +222,21 @@ export const SHARED = {
     ],
   },
 
-  precio: {
-    title: "Alcance y precio",
+  // Sin importes: oct/2026 se decidió no publicar precios en el sitio.
+  alcance: {
+    title: "Alcance",
     subtitle: "Proyecto cerrado por integración, más mantenimiento normativo.",
     items: [
       {
         title: "Auditoría del sistema",
-        precio: "Desde 900 €",
         body: "Tres a cinco días. Informe de brecha, modalidad recomendada y alcance cerrado. Se descuenta de la integración.",
       },
       {
         title: "Integración",
-        precio: "Desde 1.500 €",
         body: "Conector completo sobre tu ERP, TPV o e-commerce. El rango depende de puntos de emisión, series y casuística.",
       },
       {
         title: "Mantenimiento normativo",
-        precio: "Cuota mensual",
         body: "Seguimiento de cambios en la norma y en las especificaciones de la AEAT, monitorización de la cola y soporte.",
       },
     ],

@@ -50,5 +50,16 @@
     "audiencia": "Para quién",
     "faq": "Preguntas",
     "despues": "Después"
+  },
+  "leySac": {
+    "cumplimiento": "Cumplimiento",
+    "ambito": "Ámbito",
+    "arquitectura": "Qué construimos",
+    "alcance": "Alcance",
+    "porQue": "Por qué",
+    "faq": "Preguntas",
+    "escenario": "El día que se rompe",
+    "obligaciones": "Obligaciones",
+    "otros": "Otros sectores obligados"
   }
 }
