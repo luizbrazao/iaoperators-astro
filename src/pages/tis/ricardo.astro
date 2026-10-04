@@ -1,0 +1,843 @@
+---
+// Landing personalizada para Ricardo Sánchez González, director general de
+// Hotel Cap Negret (Altea). Se llega por el QR de una tarjeta entregada en mano.
+// Privada: noindex,nofollow y fuera del sitemap ("/tis/" en NOINDEX_PATHS de
+// astro.config.mjs).
+//
+// Concepto: Cap Negret ya trabaja con tecnología y datos. La pregunta no es qué
+// falta, sino si el conjunto funciona como un sistema. El lenguaje visual son
+// nodos, capas y conexiones: las herramientas están en los nodos y la fricción,
+// si existe, en las líneas entre ellos. El naranja de marca se reserva para
+// esos puntos de paso; el azul es el de las cúpulas de Altea.
+//
+// Datos públicos usados (verificados el 04/10/2026):
+//   - Web de Cap Negret, sostenibilidad: Power BI para datos de negocio y de
+//     consumo energético, Niikiis (fichajes y comunicación interna), app Salto
+//     como llave, planta fotovoltaica de 100 kW, contactos magnéticos en
+//     terrazas, check-in online.
+//   - TecnoHotel, 27/01/2025: PMS integrado con el motor de reservas y este con
+//     el channel manager; precio que sube automáticamente con la ocupación;
+//     encuestas durante la estancia; equipos ciclistas profesionales en invierno.
+//
+// Comportamiento compartido (analítica, consentimiento, vídeo, entradas) en
+// src/scripts/prospect-landing.ts.
+
+// --- Configuración editable ---------------------------------------------------
+// Vídeo: subir el MP4 a /public/video/ y rellenar `src` (y `poster`).
+const VIDEO = {
+  src: "",
+  poster: "",
+  type: "video/mp4",
+  orientation: "horizontal" as "horizontal" | "vertical",
+  duracion: "55 segundos",
+};
+
+// "Hablar con Luiz": hoy WhatsApp con mensaje preparado. Para Cal.com basta
+// con sustituir la URL.
+const CONTACT_HREF = `https://wa.me/34662423523?text=${encodeURIComponent(
+  "Hola Luiz, soy Ricardo Sánchez, de Cap Negret. He visto la página sobre la Radiografía Digital y me gustaría hablarlo.",
+)}`;
+const GTM_ID = "GTM-572KJ7HZ";
+// -----------------------------------------------------------------------------
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL("/tis/ricardo/", site).toString();
+const ogImage = new URL("/og/ricardo.png", site).toString();
+const title = "Ricardo Sánchez × IA Operators | Radiografía Digital";
+const description = "Una propuesta de Radiografía Digital preparada por IA Operators para Hotel Cap Negret.";
+
+const pad = (n: number) => String(n).padStart(2, "0");
+
+const cadena = ["Persona", "Sistema", "Dato", "Decisión", "Acción"];
+
+const preguntas = [
+  { tag: "Sistema → sistema", q: "¿Dónde se copia información manualmente entre sistemas?" },
+  { tag: "Dato → persona", q: "¿Qué dato existe pero no llega a quien lo necesita?" },
+  { tag: "Excel · email · mensaje", q: "¿Qué proceso depende todavía de un Excel, un email o un mensaje?" },
+  { tag: "Herramienta ↔ herramienta", q: "¿Qué tarea se ejecuta dos veces porque las herramientas no están conectadas?" },
+  { tag: "Persona como enlace", q: "¿Dónde una persona actúa como «integración» entre dos sistemas?" },
+  { tag: "Dato → acción", q: "¿Qué información podría desencadenar automáticamente una acción?" },
+];
+
+// Lo que se ve desde fuera. `linked`: la integración entre esos nodos es pública.
+const capas = [
+  { name: "Comercial", nodes: ["Motor de reservas", "PMS", "Channel manager"], linked: true, note: "Integrados entre sí. El precio sube solo al llegar a cierta ocupación." },
+  { name: "Huésped", nodes: ["Check-in online", "Llave en el móvil con Salto", "Encuestas durante la estancia"], linked: false, note: "" },
+  { name: "Equipo", nodes: ["Niikiis"], linked: false, note: "Fichajes y comunicación interna." },
+  { name: "Datos", nodes: ["Power BI"], linked: false, note: "Cruza datos de negocio, ingresos, costes y consumos para decidir." },
+  { name: "Energía", nodes: ["Planta fotovoltaica", "Corte del aire al abrir la terraza"], linked: false, note: "" },
+];
+
+const observamos = [
+  "Quién interviene",
+  "Qué información entra",
+  "Qué sistema se utiliza",
+  "Qué decisión se toma",
+  "Qué información se transfiere",
+  "Qué tarea se ejecuta después",
+];
+
+const senales = [
+  { name: "Repetición", gloss: "Lo mismo, hecho más de una vez." },
+  { name: "Transferencia", gloss: "Información que cambia de manos o de sistema." },
+  { name: "Espera", gloss: "Trabajo parado hasta que alguien actúa." },
+  { name: "Inconsistencia", gloss: "El mismo dato, con dos valores distintos." },
+];
+const areas = ["Captación", "Atención", "Operación", "Gestión"];
+
+const revelar = [
+  "una integración sencilla resuelve el problema;",
+  "un proceso necesita rediseñarse;",
+  "una información debería llegar sola a otra área;",
+  "una tarea puede automatizarse;",
+  "un dato disponible todavía no se está aprovechando;",
+];
+const revelarUltimo = "o que una parte de la operación ya funciona muy bien y no necesita ninguna intervención.";
+
+const pasosEjemplo = [
+  "Abre una herramienta",
+  "Copia la información",
+  "Envía un email",
+  "Actualiza otra herramienta",
+  "Avisa a otra persona",
+];
+
+const mapa = [
+  "Dónde existe una fricción",
+  "Qué impacto tiene",
+  "Qué la está causando",
+  "Qué merece prioridad",
+  "Qué podría integrarse",
+  "Qué podría automatizarse",
+  "Dónde puede aportar valor la IA",
+];
+
+const flujos = [
+  "atención al huésped",
+  "operación",
+  "administración",
+  "gestión interna",
+  "información entre departamentos",
+  "sostenibilidad",
+  "la estancia de un equipo ciclista",
+];
+
+const preguntasPropuesta = [
+  "¿Dónde está la fricción?",
+  "¿Qué impacto tiene?",
+  "¿Qué la provoca?",
+  "¿Merece la pena resolverla?",
+];
+
+const opciones = ["automatizar", "integrar", "rediseñar un proceso", "aprovechar mejor un dato existente", "cambiar una herramienta"];
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
+    <link rel="canonical" href={pageUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="IA Operators" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="La tecnología ya está. La pregunta es si todo funciona como un sistema. Una idea para Ricardo Sánchez." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="theme-color" content="#fbfbf9" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/manrope-latin-variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
+  </head>
+
+  <body data-gtm={GTM_ID}>
+    <header class="top" data-top>
+      <div class="wrap top-inner">
+        <a class="wordmark" href="#inicio" aria-label="IA Operators, volver al inicio de la página"><span aria-hidden="true">↗</span> IA Operators</a>
+        <nav class="top-nav" aria-label="Página">
+          <a class="top-link" href="#radiografia">Radiografía Digital</a>
+          <a class="top-cta" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="header">Hablar con Luiz</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section id="inicio" class="hero wrap" aria-labelledby="hero-title">
+        <p class="label">Una idea para Ricardo Sánchez</p>
+        <h1 id="hero-title" class="greeting">Ricardo, por lo que he visto, en Cap Negret la tecnología ya forma parte de la operación.</h1>
+        <p class="thesis">
+          <span class="thesis-a">La tecnología ya está.</span>
+          <span class="thesis-b">La pregunta es si todo funciona como un sistema.</span>
+        </p>
+
+        <div class="hero-grid">
+          <div class:list={["video", `video-${VIDEO.orientation}`]} data-video>
+            {VIDEO.src && (
+              <video class="video-el" preload="none" playsinline controls poster={VIDEO.poster || undefined} aria-label="Vídeo de Luiz Brazão para Ricardo Sánchez">
+                <source src={VIDEO.src} type={VIDEO.type} />
+              </video>
+            )}
+            <button class="video-cover" type="button" data-video-play aria-label={`Reproducir el vídeo de Luiz Brazão, ${VIDEO.duracion}`}>
+              <span class="video-grid" aria-hidden="true"></span>
+              <span class="video-play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+              </span>
+              <span class="video-meta">
+                <span class="video-time">▶ {VIDEO.duracion}</span>
+                <span class="video-who">Luiz Brazão · IA Operators</span>
+              </span>
+            </button>
+            <p class="video-note" data-video-note hidden>El vídeo estará disponible en breve.</p>
+          </div>
+
+          <div class="hero-copy">
+            <p>Power BI, herramientas de gestión, comunicación interna, eficiencia energética, sostenibilidad y nuevas soluciones operativas ya forman parte del día a día.</p>
+            <p>Cuando una organización llega a ese nivel de madurez, aparece una pregunta diferente:</p>
+            <p class="hero-q">¿Dónde siguen existiendo fricciones entre personas, procesos, datos y tecnología?</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 01 · Entre herramientas -->
+      <section id="entre" class="section wrap" aria-labelledby="entre-title">
+        <p class="label" data-reveal>01 · Entre herramientas</p>
+        <h2 id="entre-title" class="h2 h2-pair" data-reveal>
+          <span>A veces la fricción no está dentro de una herramienta.</span>
+          <span class="h2-accent">Está entre dos herramientas.</span>
+        </h2>
+
+        <figure class="chain-fig" data-reveal>
+          <ol class="chain" aria-label="Persona, sistema, dato, decisión, acción">
+            {cadena.map((c, i) => <li style={`--i:${i}`}><span class="chain-node">{c}</span></li>)}
+          </ol>
+          <figcaption class="chain-cap">Las herramientas están en los nodos. La fricción, si existe, suele estar en las flechas.</figcaption>
+        </figure>
+
+        <p class="intro" data-reveal>Son algunas de las preguntas que hacemos cuando analizamos una operación tecnológicamente madura.</p>
+        <ul class="joints">
+          {preguntas.map((p, i) => (
+            <li data-reveal style={`--d:${(i % 2) * 80}ms`}>
+              <span class="joint-tag">{p.tag}</span>
+              <p>{p.q}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <!-- 02 · Cap Negret -->
+      <section id="cap-negret" class="limestone" aria-labelledby="cn-title">
+        <div class="wrap section">
+          <div class="split">
+            <p class="label" data-reveal>02 · Cap Negret</p>
+            <div>
+              <h2 id="cn-title" class="h2" data-reveal>Cap Negret ya ha demostrado algo importante.</h2>
+              <p class="lede" data-reveal>La tecnología puede utilizarse para mejorar decisiones, eficiencia y rentabilidad.</p>
+              <div class="prose" data-reveal>
+                <p>El hotel ya utiliza datos y herramientas digitales en áreas distintas de la operación.</p>
+                <p>Por eso, la siguiente oportunidad quizá no esté en incorporar otra plataforma, sino en mirar de forma transversal cómo trabajan juntas todas las piezas.</p>
+              </div>
+            </div>
+          </div>
+
+          <figure class="stack" data-reveal>
+            <div class="stack-head">
+              <p class="label">Lo que se ve desde fuera</p>
+              <p class="stack-src">Según la web del hotel y una entrevista publicada en TecnoHotel (enero de 2025).</p>
+            </div>
+            <ol class="layers">
+              {capas.map((c, i) => (
+                <li class="layer" style={`--i:${i}`}>
+                  <span class="layer-name">{c.name}</span>
+                  <span class:list={["nodes", { "nodes-linked": c.linked }]}>
+                    {c.nodes.map((n) => <span class="node">{n}</span>)}
+                  </span>
+                  {c.note && <span class="layer-note">{c.note}</span>}
+                </li>
+              ))}
+            </ol>
+            <figcaption class="legend">
+              <span class="legend-item"><i class="legend-solid" aria-hidden="true"></i>Conexión publicada</span>
+              <span class="legend-item"><i class="legend-dashed" aria-hidden="true"></i>Lo que no se ve desde fuera: cómo pasa el trabajo de una capa a otra</span>
+            </figcaption>
+          </figure>
+
+          <p class="less-more" data-reveal>
+            <span>Menos herramientas aisladas.</span>
+            <span>Más flujo entre ellas.</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- La pregunta -->
+      <section class="navy flowq" aria-labelledby="flowq-title">
+        <div class="wrap">
+          <p class="flowq-small" data-reveal>La pregunta que nos interesa no es:</p>
+          <p class="flowq-not" data-reveal>¿Qué software falta?</p>
+          <p class="flowq-small" data-reveal>Sino:</p>
+          <h2 id="flowq-title" class="flowq-big" data-reveal>¿Dónde se rompe el flujo?</h2>
+          <div class="breakline" data-reveal aria-hidden="true"><span></span><i></i><span></span></div>
+        </div>
+      </section>
+
+      <!-- 03 · Radiografía -->
+      <section id="radiografia" class="section wrap" aria-labelledby="rd-title">
+        <div class="split">
+          <p class="label" data-reveal>03 · Radiografía Digital</p>
+          <div>
+            <h2 id="rd-title" class="h2" data-reveal>Eso es lo que buscamos en una Radiografía Digital.</h2>
+            <p class="lede" data-reveal>No analizamos herramientas de forma aislada. Analizamos cómo circula el trabajo.</p>
+            <p class="prose-line" data-reveal>Seguimos los procesos desde que empieza una necesidad hasta que termina.</p>
+          </div>
+        </div>
+
+        <div class="trace-block">
+          <p class="label label-ink" data-reveal>Observamos</p>
+          <ol class="trace" data-reveal>
+            {observamos.map((o, i) => <li style={`--i:${i}`}><span class="trace-n">{pad(i + 1)}</span>{o}</li>)}
+          </ol>
+        </div>
+
+        <div class="signals-block">
+          <p class="label label-ink" data-reveal>Y buscamos los momentos en los que aparece</p>
+          <ul class="signals">
+            {senales.map((s, i) => (
+              <li data-reveal style={`--d:${i * 70}ms`}>
+                <span class="signal-name">{s.name}</span>
+                <span class="signal-gloss">{s.gloss}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <!-- Framework 4×4 -->
+      <section id="metodo" class="section section-tight wrap" aria-labelledby="fw-title">
+        <div class="split">
+          <p class="label" data-reveal>Framework 4×4</p>
+          <div>
+            <h2 id="fw-title" class="h3" data-reveal>Una forma estructurada de mirar la operación.</h2>
+            <p class="prose-line" data-reveal>Cuatro áreas de la operación. Cuatro señales en cada una.</p>
+            <div class="matrix" data-reveal>
+              <table>
+                <caption class="sr-only">Framework 4×4: cuatro áreas de la operación por cuatro señales de fricción</caption>
+                <thead>
+                  <tr>
+                    <td></td>
+                    {senales.map((s) => (
+                      <th scope="col"><span class="mx-full">{s.name}</span><span class="mx-short" aria-hidden="true">{s.name.charAt(0)}</span></th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {areas.map((a, r) => (
+                    <tr>
+                      <th scope="row">{a}</th>
+                      {senales.map((s, c) => (
+                        <td><span class="mx-dot" style={`--i:${r * 4 + c}`}></span><span class="sr-only">{a} · {s.name}</span></td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <p class="mx-legend" aria-hidden="true">{senales.map((s) => <span><b>{s.name.charAt(0)}</b> {s.name}</span>)}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 04 · Lo que ya existe -->
+      <section id="existente" class="limestone" aria-labelledby="ex-title">
+        <div class="wrap section">
+          <div class="split">
+            <p class="label" data-reveal>04 · Lo que ya existe</p>
+            <div>
+              <h2 id="ex-title" class="h2" data-reveal>No empezamos preguntando qué deberíamos comprar.</h2>
+              <p class="lede" data-reveal>Primero queremos entender qué está pasando con lo que ya existe.</p>
+              <p class="prose-line" data-reveal>El análisis puede mostrar que:</p>
+              <ul class="outcomes" data-reveal>
+                {revelar.map((r) => <li>{r}</li>)}
+                <li class="outcome-last">{revelarUltimo}</li>
+              </ul>
+              <div class="maxim" data-reveal>
+                <p class="maxim-a">Más tecnología no siempre significa mejor operación.</p>
+                <p class="maxim-b">A veces la mejor decisión es conectar mejor lo que ya existe.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ejemplo -->
+      <section id="ejemplo" class="section wrap" aria-labelledby="ej-title">
+        <div class="example" data-reveal>
+          <p class="example-tag">Ejemplo ilustrativo · no describe Cap Negret</p>
+          <h2 id="ej-title" class="h3">Un ejemplo sencillo</h2>
+          <p class="example-intro">Imagina que un dato ya existe en un sistema. Otro departamento lo necesita. Pero entre los dos todavía hay una persona que:</p>
+
+          <ol class="handoff" aria-label="Pasos manuales entre dos sistemas">
+            <li class="handoff-sys">Sistema A</li>
+            {pasosEjemplo.map((p, i) => <li class="handoff-step" style={`--i:${i}`}><span class="handoff-n">{i + 1}</span>{p}</li>)}
+            <li class="handoff-sys">Sistema B</li>
+          </ol>
+
+          <div class="example-close">
+            <p>Ninguna de las herramientas está necesariamente mal. El problema está en el flujo entre ellas.</p>
+            <p class="example-last">Ese espacio entre sistemas es precisamente donde muchas oportunidades pasan desapercibidas.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 05 · Resultado -->
+      <section id="resultado" class="section section-top0 wrap" aria-labelledby="res-title">
+        <div class="split">
+          <p class="label" data-reveal>05 · Resultado</p>
+          <div>
+            <h2 id="res-title" class="h2" data-reveal>El resultado no es una lista de software.</h2>
+            <p class="lede" data-reveal>Es un mapa priorizado de oportunidades.</p>
+            <ol class="results" data-reveal>
+              {mapa.map((m, i) => <li><span class="res-n">{pad(i + 1)}</span>{m}</li>)}
+            </ol>
+            <p class="results-last" data-reveal><span class="res-n">{pad(mapa.length + 1)}</span>Qué no merece la pena tocar</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 06 · Propuesta -->
+      <section id="propuesta" class="limestone" aria-labelledby="pr-title">
+        <div class="wrap section">
+          <div class="split">
+            <p class="label label-blue" data-reveal>Una propuesta para Cap Negret</p>
+            <div>
+              <h2 id="pr-title" class="h2" data-reveal>Analicemos un proceso de principio a fin.</h2>
+              <div class="prose" data-reveal>
+                <p>En lugar de empezar con una auditoría enorme de toda la organización, podemos elegir uno o varios procesos concretos y seguir todo su recorrido.</p>
+                <p>Desde que aparece una necesidad hasta que el proceso termina.</p>
+              </div>
+              <p class="prose-line" data-reveal>Por ejemplo, un flujo relacionado con:</p>
+              <ul class="chips" data-reveal>
+                {flujos.map((f) => <li>{f}</li>)}
+              </ul>
+              <p class="chips-note" data-reveal>Cuál conviene mirar primero es algo que preferimos decidir contigo.</p>
+            </div>
+          </div>
+
+          <div class="journey" data-reveal>
+            <p class="label label-ink">El objetivo inicial sería responder</p>
+            <ol class="stations">
+              <li class="station-end">Necesidad</li>
+              {preguntasPropuesta.map((p, i) => <li class="station" style={`--i:${i}`}>{p}</li>)}
+              <li class="station-end">Fin del proceso</li>
+            </ol>
+            <div class="after">
+              <p class="label label-ink">Y solo después</p>
+              <p class="after-q">¿Cuál es la mejor forma de hacerlo?</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Independencia -->
+      <section id="independencia" class="section wrap" aria-labelledby="ind-title">
+        <div class="split">
+          <p class="label" data-reveal>Independencia</p>
+          <div>
+            <h2 id="ind-title" class="h2" data-reveal>Sin software que vender.</h2>
+            <div class="prose" data-reveal>
+              <p>IA Operators no representa ninguna plataforma hotelera.</p>
+              <p>No necesitamos justificar una herramienta. Tampoco necesitamos encontrar un lugar donde introducir inteligencia artificial.</p>
+            </div>
+            <p class="prose-line" data-reveal>Podemos recomendar:</p>
+            <ul class="options" data-reveal>
+              {opciones.map((o) => <li>{o}</li>)}
+            </ul>
+            <p class="options-last" data-reveal>o, simplemente, no cambiar nada.</p>
+            <p class="principle" data-reveal>La tecnología es una consecuencia del diagnóstico, no el punto de partida.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Conversación -->
+      <section id="hablar" class="cta" aria-labelledby="cta-title">
+        <div class="wrap section">
+          <h2 id="cta-title" class="h2 cta-title" data-reveal>Si la pregunta te parece interesante, seguimos la conversación.</h2>
+          <p class="cta-copy" data-reveal>Puedo enseñarte cómo hacemos una Radiografía Digital y valorar juntos qué proceso tendría más sentido analizar primero en Cap Negret.</p>
+          <div class="cta-row" data-reveal>
+            <a class="button" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="final">Hablar con Luiz <span aria-hidden="true">↗</span></a>
+            <div class="signature">
+              <p class="signature-name">Luiz Brazão</p>
+              <p class="signature-role">Founder, IA Operators</p>
+              <a class="signature-site" href="https://iaoperators.com/es/" data-cta="site">iaoperators.com</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="wrap foot-inner">
+        <span class="foot-brand"><span aria-hidden="true">↗</span> IA Operators</span>
+        <a href="/es/auditoria-de-sistemas/">Radiografía Digital</a>
+        <a href="https://iaoperators.com/es/">iaoperators.com</a>
+      </div>
+    </footer>
+
+    <div class="consent" data-consent hidden role="region" aria-label="Cookies">
+      <p>Usamos cookies para medir y mejorar la experiencia. Puedes aceptar o rechazar. <a href="/es/politica-de-privacidad/">Política de Privacidad</a>.</p>
+      <div class="consent-actions">
+        <button type="button" data-consent-reject>Rechazar</button>
+        <button type="button" class="consent-accept" data-consent-accept>Aceptar</button>
+      </div>
+    </div>
+
+    <script>
+      import { initProspectLanding } from "../../scripts/prospect-landing";
+      initProspectLanding({ landing: "ricardo", gtmId: document.body.dataset.gtm ?? "", videoTitle: "ricardo_luiz" });
+    </script>
+
+    <style is:global>
+      @font-face {
+        font-family: "Manrope Ricardo";
+        src: url("/fonts/manrope-latin-variable.woff2") format("woff2");
+        font-weight: 200 800;
+        font-display: swap;
+      }
+      :root {
+        --white: #fbfbf9;
+        --limestone: #f2f1ed;
+        --ink: #10202b;
+        --text: #2c3a44;
+        --muted: #5a6872;
+        --soft: #8b979f;
+        --line: #dfe3e5;
+        --line-strong: #b9c2c8;
+        --blue: #1f5a8c;
+        --blue-wash: #e6edf3;
+        --orange: #f16532;
+        --orange-ink: #b4441a;
+        --navy: #0f1f2b;
+        --navy-text: #e8eef2;
+        --navy-muted: #93a4b1;
+        --navy-line: #2b3d4b;
+        --gutter: 20px;
+        --ease: cubic-bezier(.2, .7, .2, 1);
+      }
+      *, *::before, *::after { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 72px; }
+      body { margin: 0; background: var(--white); color: var(--ink); font-family: "Manrope Ricardo", "Helvetica Neue", Arial, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; font-feature-settings: "tnum" 0; }
+      h1, h2, h3, p, ol, ul, figure, table { margin: 0; }
+      ol, ul { padding: 0; list-style: none; }
+      a { color: inherit; text-decoration: none; }
+      a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+      .wrap { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: var(--gutter); }
+      .label { font-size: 11px; font-weight: 650; letter-spacing: .14em; text-transform: uppercase; color: var(--soft); font-variant-numeric: tabular-nums; }
+      .label-ink { color: var(--muted); }
+      .label-blue { color: var(--blue); }
+
+      /* Cabecera */
+      .top { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid transparent; transition: background-color .3s ease, border-color .3s ease; }
+      .top.is-scrolled { background: rgba(251, 251, 249, .9); border-bottom-color: var(--line); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+      .top-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
+      .wordmark { font-size: 18px; font-weight: 650; letter-spacing: -.04em; white-space: nowrap; }
+      .wordmark span, .foot-brand span { color: var(--orange); }
+      .top-nav { display: flex; align-items: center; gap: 22px; font-size: 13px; }
+      .top-link { display: none; color: var(--muted); }
+      .top-link:hover { color: var(--ink); }
+      .top-cta { display: inline-flex; align-items: center; min-height: 38px; padding: 0 14px; border: 1px solid var(--line-strong); border-radius: 2px; font-weight: 550; white-space: nowrap; transition: border-color .2s ease, background-color .2s ease, color .2s ease; }
+      .top-cta:hover { border-color: var(--ink); background: var(--ink); color: var(--white); }
+
+      /* Hero */
+      .hero { padding-top: 20px; padding-bottom: 72px; }
+      .greeting { margin-top: 14px; max-width: 24em; font-size: clamp(19px, 2.3vw, 27px); font-weight: 500; letter-spacing: -.025em; line-height: 1.3; color: var(--text); }
+      .thesis { display: grid; gap: 4px; margin-top: 18px; max-width: 15em; font-size: clamp(31px, 6.2vw, 76px); font-weight: 450; letter-spacing: -.05em; line-height: 1.04; }
+      .thesis-a { color: var(--soft); }
+      .hero-grid { display: grid; gap: 26px; margin-top: 24px; }
+      .hero-copy { display: grid; gap: 12px; align-content: start; }
+      .hero-copy p { color: var(--muted); max-width: 34em; }
+      .hero-copy .hero-q { margin-top: 6px; color: var(--ink); font-size: clamp(21px, 2.1vw, 27px); font-weight: 500; letter-spacing: -.03em; line-height: 1.28; max-width: 19em; }
+
+      /* Vídeo */
+      .video { position: relative; overflow: hidden; background: var(--navy); color: var(--navy-text); border-radius: 2px; }
+      .video-horizontal { aspect-ratio: 16 / 9; }
+      .video-vertical { aspect-ratio: 9 / 16; max-height: 78vh; width: min(100%, calc(78vh * 9 / 16)); margin-inline: auto; }
+      .video-el { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #000; }
+      .video-cover { position: absolute; inset: 0; display: grid; place-items: center; width: 100%; padding: 0; border: 0; background: var(--navy); color: inherit; font: inherit; cursor: pointer; }
+      .video-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--navy-line) 1px, transparent 1px), linear-gradient(90deg, var(--navy-line) 1px, transparent 1px); background-size: 48px 48px; background-position: center; opacity: .35; mask-image: radial-gradient(70% 70% at 50% 50%, #000 0%, transparent 100%); -webkit-mask-image: radial-gradient(70% 70% at 50% 50%, #000 0%, transparent 100%); }
+      .video.is-playing .video-cover { display: none; }
+      .video-play { position: relative; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; border: 1px solid rgba(232, 238, 242, .65); color: var(--navy-text); transition: background-color .3s ease, color .3s ease, transform .35s var(--ease); }
+      .video-play svg { margin-left: 3px; }
+      .video-cover:hover .video-play { background: var(--navy-text); color: var(--navy); transform: scale(1.04); }
+      .video-meta { position: absolute; left: 16px; right: 16px; bottom: 14px; display: flex; justify-content: space-between; gap: 12px; font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--navy-muted); }
+      .video-time { color: var(--navy-text); }
+      .video-note { position: absolute; left: 0; right: 0; top: 14px; text-align: center; font-size: 13px; color: var(--navy-text); }
+
+      /* Secciones */
+      .section { padding-block: 88px; }
+      .section-tight { padding-top: 0; }
+      .section-top0 { padding-top: 0; }
+      .limestone { background: var(--limestone); }
+      .navy { background: var(--navy); color: var(--navy-text); }
+      .split { display: grid; gap: 18px; }
+      .split > .label { padding-top: 8px; }
+      .h2 { margin-top: 14px; font-size: clamp(30px, 4.4vw, 60px); font-weight: 450; letter-spacing: -.048em; line-height: 1.08; max-width: 15em; }
+      .split .h2 { margin-top: 0; }
+      .h2-pair { display: grid; gap: 6px; max-width: 16em; }
+      .h2-accent { color: var(--blue); }
+      .h3 { font-size: clamp(25px, 2.8vw, 36px); font-weight: 450; letter-spacing: -.04em; line-height: 1.15; }
+      .lede { margin-top: 20px; max-width: 30em; font-size: clamp(19px, 1.7vw, 22px); line-height: 1.45; letter-spacing: -.018em; color: var(--text); }
+      .prose { margin-top: 20px; max-width: 36em; }
+      .prose p { color: var(--muted); }
+      .prose p + p { margin-top: 10px; }
+      .prose-line { margin-top: 22px; color: var(--muted); max-width: 36em; }
+
+      /* 01 · Cadena */
+      .chain-fig { margin-top: 52px; padding: 28px 0; border-block: 1px solid var(--line); }
+      .chain { display: grid; justify-items: start; }
+      .chain li { position: relative; display: flex; flex-direction: column; align-items: flex-start; }
+      .chain li + li::before { content: ""; display: block; width: 9px; height: 34px; margin-left: 20px; background: radial-gradient(circle, var(--orange) 3px, transparent 3.6px) center / 9px 9px no-repeat, linear-gradient(var(--line-strong), var(--line-strong)) center / 1px 100% no-repeat; transform-origin: top; }
+      .chain-node { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border: 1px solid var(--ink); border-radius: 2px; font-size: 15px; font-weight: 550; letter-spacing: -.01em; background: var(--white); }
+      .chain-cap { margin-top: 22px; max-width: 30em; font-size: 15px; color: var(--muted); }
+      .intro { margin-top: 56px; max-width: 30em; font-size: clamp(19px, 1.7vw, 22px); letter-spacing: -.018em; line-height: 1.45; color: var(--text); }
+      .joints { display: grid; margin-top: 28px; border-top: 1px solid var(--line); }
+      .joints li { padding: 20px 0 22px; border-bottom: 1px solid var(--line); }
+      .joint-tag { display: inline-block; font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); }
+      .joints p { margin-top: 6px; font-size: clamp(20px, 2vw, 26px); font-weight: 450; letter-spacing: -.03em; line-height: 1.25; max-width: 21em; }
+
+      /* 02 · Capas */
+      .stack { margin-top: 56px; padding: 24px 18px 20px; background: var(--white); border: 1px solid var(--line); }
+      .stack-head { display: grid; gap: 4px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+      .stack-src { font-size: 13px; color: var(--soft); }
+      .layers { position: relative; padding-left: 26px; }
+      .layers::before { content: ""; position: absolute; left: 5px; top: 30px; bottom: 30px; border-left: 1px dashed var(--line-strong); }
+      .layer { position: relative; display: grid; gap: 8px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+      .layer:last-child { border-bottom: 0; padding-bottom: 6px; }
+      .layer::before { content: ""; position: absolute; left: -25px; top: 25px; width: 9px; height: 9px; border-radius: 50%; background: var(--white); border: 1px solid var(--line-strong); }
+      .layer-name { font-size: 11px; font-weight: 650; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+      .nodes { display: flex; flex-wrap: wrap; gap: 8px; }
+      .node { display: inline-flex; align-items: center; min-height: 36px; padding: 0 12px; border: 1px solid var(--line-strong); border-radius: 2px; font-size: 14px; font-weight: 550; letter-spacing: -.01em; background: var(--white); }
+      .nodes-linked { flex-direction: column; align-items: flex-start; gap: 0; }
+      .nodes-linked .node { border-color: var(--ink); }
+      .nodes-linked .node + .node::before { content: none; }
+      .nodes-linked .node + .node { position: relative; margin-top: 18px; }
+      .nodes-linked .node + .node::after { content: ""; position: absolute; left: 18px; top: -19px; width: 1px; height: 18px; background: var(--ink); }
+      .layer-note { font-size: 14px; color: var(--muted); max-width: 26em; }
+      .legend { display: grid; gap: 8px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+      .legend-item { display: flex; align-items: center; gap: 10px; }
+      .legend-solid, .legend-dashed { flex: 0 0 28px; height: 0; }
+      .legend-solid { border-top: 1px solid var(--ink); }
+      .legend-dashed { border-top: 1px dashed var(--soft); }
+      .less-more { display: grid; gap: 2px; margin-top: 64px; font-size: clamp(30px, 5vw, 66px); font-weight: 450; letter-spacing: -.05em; line-height: 1.05; }
+      .less-more span:first-child { color: var(--soft); }
+
+      /* La pregunta */
+      .flowq { padding-block: 92px 84px; }
+      .flowq-small { font-size: 15px; color: var(--navy-muted); }
+      .flowq-not { margin: 8px 0 30px; font-size: clamp(24px, 3vw, 38px); font-weight: 400; letter-spacing: -.035em; color: var(--navy-muted); }
+      .flowq-big { margin-top: 10px; font-size: clamp(40px, 8.4vw, 116px); font-weight: 450; letter-spacing: -.055em; line-height: 1; max-width: 10em; }
+      .breakline { display: flex; align-items: center; gap: 0; margin-top: 54px; }
+      .breakline span { flex: 1; height: 1px; background: var(--navy-line); }
+      .breakline span:first-child { flex: 3; background: var(--navy-muted); }
+      .breakline i { flex: 0 0 40px; height: 14px; border-inline: 2px solid var(--orange); }
+
+      /* 03 · Radiografía */
+      .trace-block { margin-top: 60px; }
+      .trace { position: relative; display: grid; margin-top: 18px; padding-left: 22px; }
+      .trace::before { content: ""; position: absolute; left: 3px; top: 14px; bottom: 14px; width: 1px; background: var(--line-strong); transform-origin: top; }
+      .trace li { position: relative; padding: 9px 0; font-size: clamp(19px, 1.8vw, 23px); font-weight: 450; letter-spacing: -.025em; }
+      .trace li::before { content: ""; position: absolute; left: -22px; top: 19px; width: 7px; height: 7px; border-radius: 50%; background: var(--white); border: 1px solid var(--ink); }
+      .trace-n { display: inline-block; width: 34px; font-size: 11px; font-weight: 650; letter-spacing: .08em; color: var(--soft); font-variant-numeric: tabular-nums; vertical-align: 2px; }
+      .signals-block { margin-top: 60px; }
+      .signals { display: grid; margin-top: 18px; border-top: 1px solid var(--ink); }
+      .signals li { display: grid; gap: 2px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+      .signal-name { font-size: clamp(28px, 3.6vw, 46px); font-weight: 450; letter-spacing: -.045em; line-height: 1.1; }
+      .signal-gloss { font-size: 15px; color: var(--muted); }
+
+      /* Framework 4×4 */
+      .matrix { margin-top: 32px; max-width: 720px; }
+      .matrix table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+      .matrix thead th { padding: 0 0 12px; font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); text-align: center; }
+      .matrix tbody th { padding: 13px 0; text-align: left; font-size: 15px; font-weight: 550; letter-spacing: -.01em; width: 34%; }
+      .matrix tbody tr { border-top: 1px solid var(--line); }
+      .matrix tbody tr:last-child { border-bottom: 1px solid var(--line); }
+      .matrix td { text-align: center; }
+      .mx-full { display: none; }
+      .mx-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--ink); background: var(--ink); }
+      .mx-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 14px; font-size: 12px; color: var(--muted); }
+      .mx-legend b { font-weight: 650; color: var(--ink); }
+
+      /* 04 · Lo que ya existe */
+      .outcomes { margin-top: 14px; max-width: 34em; border-top: 1px solid var(--line-strong); }
+      .outcomes li { padding: 12px 0; border-bottom: 1px solid var(--line-strong); color: var(--text); }
+      .outcomes .outcome-last { color: var(--ink); font-weight: 550; }
+      .maxim { margin-top: 48px; padding-left: 18px; border-left: 2px solid var(--blue); }
+      .maxim-a { font-size: clamp(24px, 2.8vw, 36px); font-weight: 450; letter-spacing: -.04em; line-height: 1.15; max-width: 16em; }
+      .maxim-b { margin-top: 10px; font-size: 18px; color: var(--text); max-width: 28em; }
+
+      /* Ejemplo */
+      .example { padding: 26px 18px 30px; border: 1px dashed var(--line-strong); background-image: radial-gradient(var(--line) 1px, transparent 1px); background-size: 18px 18px; }
+      .example-tag { display: table; margin-bottom: 18px; padding: 5px 9px; background: var(--white); border: 1px solid var(--line-strong); font-size: 11px; font-weight: 650; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+      .example .h3 { background: var(--white); display: inline; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+      .example-intro { margin-top: 16px; max-width: 32em; color: var(--text); background: var(--white); }
+      .handoff { position: relative; display: grid; gap: 0; margin-top: 28px; padding-left: 0; }
+      .handoff li { position: relative; display: flex; align-items: center; gap: 12px; }
+      .handoff-sys { justify-content: center; width: max-content; min-height: 44px; padding: 0 16px; border: 1px solid var(--ink); background: var(--white); font-size: 14px; font-weight: 650; letter-spacing: .02em; }
+      .handoff-step { margin-left: 18px; padding: 10px 0 10px 22px; border-left: 1px solid var(--line-strong); font-size: 16px; color: var(--text); }
+      .handoff-step:first-of-type, .handoff-sys + .handoff-step { padding-top: 16px; }
+      .handoff-n { display: grid; place-items: center; flex: 0 0 22px; height: 22px; margin-left: -34px; border-radius: 50%; border: 1px solid var(--orange); background: var(--white); color: var(--orange-ink); font-size: 11px; font-weight: 700; }
+      .handoff-step:last-of-type { padding-bottom: 16px; }
+      .example-close { margin-top: 28px; display: grid; gap: 10px; max-width: 34em; }
+      .example-close p { background: var(--white); color: var(--text); }
+      .example-close .example-last { font-size: clamp(20px, 2vw, 25px); font-weight: 500; letter-spacing: -.03em; line-height: 1.3; color: var(--ink); }
+
+      /* 05 · Resultado */
+      .results { margin-top: 32px; border-top: 1px solid var(--line); }
+      .results li { display: flex; align-items: baseline; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--line); font-size: clamp(19px, 1.8vw, 23px); font-weight: 450; letter-spacing: -.025em; }
+      .res-n { flex: 0 0 26px; font-size: 11px; font-weight: 650; letter-spacing: .08em; color: var(--soft); font-variant-numeric: tabular-nums; }
+      .results-last { display: flex; align-items: baseline; gap: 14px; margin-top: 18px; padding: 20px 18px 22px; background: var(--navy); color: var(--navy-text); font-size: clamp(23px, 2.6vw, 32px); font-weight: 450; letter-spacing: -.035em; line-height: 1.2; }
+      .results-last .res-n { color: var(--orange); }
+
+      /* 06 · Propuesta */
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+      .chips li { padding: 7px 12px; border: 1px solid var(--line-strong); border-radius: 2px; font-size: 14px; background: var(--white); }
+      .chips-note { margin-top: 14px; font-size: 14px; color: var(--muted); }
+      .journey { margin-top: 64px; padding-top: 30px; border-top: 1px solid var(--line-strong); }
+      .stations { position: relative; display: grid; margin-top: 20px; padding-left: 22px; }
+      .stations::before { content: ""; position: absolute; left: 3px; top: 16px; bottom: 16px; width: 1px; background: var(--ink); }
+      .stations li { position: relative; padding: 10px 0; }
+      .stations li::before { content: ""; position: absolute; left: -22px; top: 21px; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); }
+      .station { font-size: clamp(21px, 2.2vw, 28px); font-weight: 450; letter-spacing: -.035em; line-height: 1.2; }
+      .station-end { font-size: 11px; font-weight: 650; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+      .stations li.station-end::before { background: var(--limestone); border: 1px solid var(--ink); }
+      .after { margin-top: 36px; padding-top: 22px; border-top: 1px dashed var(--line-strong); }
+      .after-q { margin-top: 8px; font-size: clamp(24px, 3vw, 38px); font-weight: 450; letter-spacing: -.04em; color: var(--blue); }
+
+      /* Independencia */
+      .options { display: flex; flex-wrap: wrap; gap: 6px 0; margin-top: 10px; font-size: clamp(19px, 1.8vw, 22px); letter-spacing: -.02em; }
+      .options li:not(:last-child)::after { content: "·"; margin-inline: 12px; color: var(--soft); }
+      .options-last { margin-top: 10px; font-size: clamp(19px, 1.8vw, 22px); letter-spacing: -.02em; color: var(--orange-ink); }
+      .principle { margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--ink); font-size: clamp(25px, 3.2vw, 42px); font-weight: 450; letter-spacing: -.045em; line-height: 1.15; max-width: 17em; }
+
+      /* Conversación */
+      .cta { border-top: 1px solid var(--line); }
+      .cta-title { max-width: 14em; }
+      .cta-copy { margin-top: 20px; max-width: 32em; font-size: 18px; color: var(--muted); }
+      .cta-row { display: grid; gap: 36px; margin-top: 40px; }
+      .button { display: inline-flex; align-items: center; justify-content: space-between; gap: 28px; width: max-content; min-height: 56px; padding: 0 24px; background: var(--ink); color: var(--white); border-radius: 2px; font-size: 16px; font-weight: 550; transition: background-color .2s ease; }
+      .button:hover { background: var(--blue); }
+      .signature { padding-top: 18px; border-top: 1px solid var(--line); max-width: 280px; }
+      .signature-name { font-size: 18px; font-weight: 650; letter-spacing: -.02em; }
+      .signature-role { font-size: 14px; color: var(--muted); }
+      .signature-site { display: inline-block; margin-top: 6px; font-size: 13px; color: var(--blue); }
+
+      /* Pie y consentimiento */
+      .foot { border-top: 1px solid var(--line); }
+      .foot-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; padding-block: 26px 30px; font-size: 13px; color: var(--muted); }
+      .foot-brand { margin-right: auto; font-weight: 650; color: var(--ink); letter-spacing: -.02em; }
+      .foot a:hover { color: var(--ink); }
+      .consent { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 30; display: grid; gap: 12px; padding: 16px; background: var(--navy); color: var(--navy-text); font-size: 13px; line-height: 1.5; box-shadow: 0 10px 30px rgba(15, 31, 43, .18); }
+      .consent[hidden] { display: none; }
+      .consent a { text-decoration: underline; }
+      .consent-actions { display: flex; gap: 8px; justify-content: flex-end; }
+      .consent button { min-height: 40px; padding: 0 16px; border: 1px solid var(--navy-line); background: transparent; color: var(--navy-text); font: inherit; border-radius: 2px; cursor: pointer; }
+      .consent .consent-accept { background: var(--navy-text); color: var(--navy); border-color: var(--navy-text); }
+
+      /* Entradas: muy discretas */
+      .js [data-reveal] { opacity: 0; transform: translateY(10px); transition: opacity .7s ease var(--d, 0ms), transform .7s var(--ease) var(--d, 0ms); }
+      .js [data-reveal].is-in { opacity: 1; transform: none; }
+      .js .chain li + li::before { transform: scaleY(0); transition: transform .5s var(--ease) calc(.25s + var(--i) * .14s); }
+      .js .chain-fig.is-in .chain li + li::before { transform: none; }
+      .js .mx-dot { background: transparent; transition: background-color .3s ease calc(.2s + var(--i) * 40ms); }
+      .js .matrix.is-in .mx-dot { background: var(--ink); }
+      .js .breakline i { opacity: 0; transition: opacity .6s ease .5s; }
+      .js .breakline.is-in i { opacity: 1; }
+
+      @media (min-width: 420px) {
+        .top-link { display: inline; }
+      }
+
+      @media (min-width: 720px) {
+        :root { --gutter: 36px; }
+        .chain { display: flex; align-items: center; justify-items: initial; }
+        .chain li { flex-direction: row; align-items: center; flex: 1 1 0; }
+        .chain li:first-child { flex: 0 0 auto; }
+        .chain li + li::before { flex: 1; width: auto; height: 9px; margin: 0 10px; background-size: 9px 9px, 100% 1px; transform-origin: left; }
+        .js .chain li + li::before { transform: scaleX(0); }
+        .joints { grid-template-columns: 1fr 1fr; column-gap: 48px; }
+        .stack { padding: 30px 32px 24px; }
+        .layer { grid-template-columns: 130px minmax(0, 1fr); align-items: center; column-gap: 24px; }
+        .layer-note { grid-column: 2; }
+        .nodes-linked { flex-direction: row; align-items: center; }
+        .nodes-linked .node + .node { margin-top: 0; margin-left: 26px; }
+        .nodes-linked .node + .node::after { left: -27px; top: 50%; width: 26px; height: 1px; }
+        .legend { grid-template-columns: auto 1fr; column-gap: 32px; }
+        .mx-full { display: inline; }
+        .mx-short, .mx-legend { display: none; }
+        .example { padding: 40px 44px 44px; }
+        .results { display: grid; grid-template-columns: 1fr 1fr; column-gap: 40px; }
+        .stations { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); padding-left: 0; padding-top: 22px; column-gap: 18px; }
+        .stations::before { left: 0; right: 0; top: 3px; bottom: auto; width: auto; height: 1px; }
+        .stations li { padding: 0; }
+        .stations li::before { left: 0; top: -22px; }
+        .station { font-size: clamp(19px, 1.8vw, 23px); }
+        .cta-row { grid-template-columns: auto 1fr; align-items: end; gap: 64px; }
+        .signature { justify-self: end; min-width: 260px; }
+        .consent { left: auto; right: 24px; bottom: 24px; max-width: 560px; grid-template-columns: 1fr auto; align-items: center; }
+      }
+
+      @media (min-width: 1000px) {
+        body { font-size: 18px; }
+        .top-inner { height: 72px; }
+        .hero { padding-top: 40px; padding-bottom: 112px; }
+        .hero-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 56px; margin-top: 44px; align-items: start; }
+        .section { padding-block: 128px; }
+        .section-tight, .section-top0 { padding-top: 0; }
+        .split { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 48px; }
+        .chain-fig, .intro, .joints, .stack, .trace-block, .signals-block, .journey, .less-more { margin-left: calc((100% - 48px) / 3 + 48px); }
+        .chain-fig { margin-top: 72px; }
+        .stack { margin-top: 72px; }
+        .trace-block, .signals-block { margin-top: 72px; }
+        .trace { grid-template-columns: 1fr 1fr; column-gap: 40px; }
+        .trace::before { display: none; }
+        .trace li { border-bottom: 1px solid var(--line); padding: 14px 0; }
+        .trace li::before { display: none; }
+        .trace { padding-left: 0; border-top: 1px solid var(--line); }
+        .signals { grid-template-columns: 1fr 1fr; column-gap: 40px; }
+        .flowq { padding-block: 140px 120px; }
+        .journey { margin-top: 88px; }
+        .handoff { display: grid; grid-template-columns: auto repeat(5, minmax(0, 1fr)) auto; align-items: start; margin-top: 44px; }
+        .handoff li { display: block; }
+        .handoff li.handoff-sys { display: inline-flex; align-items: center; }
+        .handoff-step { margin: 0; padding: 56px 12px 0; border-left: 0; font-size: 15px; line-height: 1.35; }
+        .handoff-step:first-of-type, .handoff-sys + .handoff-step { padding-top: 56px; }
+        .handoff-step:last-of-type { padding-bottom: 0; }
+        .handoff-step::before { content: ""; position: absolute; left: 0; right: 0; top: 22px; height: 1px; background: var(--line-strong); }
+        .handoff-n { position: absolute; top: 11px; left: 12px; width: 22px; height: 22px; margin: 0; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+        .js .chain li + li::before, .js .mx-dot, .js .breakline i { transform: none; transition: none; opacity: 1; }
+        .js .mx-dot { background: var(--ink); }
+        .video-play, .top, .button { transition: none; }
+      }
+    </style>
+  </body>
+</html>
