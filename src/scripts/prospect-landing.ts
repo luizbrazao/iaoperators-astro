@@ -10,6 +10,8 @@
 //   video_play     primera reproducción
 //   video_complete fin del vídeo
 //   click_cta      clic en cualquier [data-cta] (param `cta_location`)
+//   <evento propio> opcional: si el enlace lleva data-cta-event="click_x",
+//                  además de click_cta se envía ese evento (mismos params)
 //   scroll_<n>     opcional: profundidad de scroll, si se pasa `scrollMarks`
 //                  (p. ej. [50, 90] → scroll_50 y scroll_90, una vez cada uno)
 // El page_view lo envía la etiqueta GA4 de GTM. Sin consentimiento no sale
@@ -67,7 +69,11 @@ export function initProspectLanding(opts: { landing: string; gtmId: string; vide
   });
 
   document.querySelectorAll<HTMLAnchorElement>("[data-cta]").forEach((a) => {
-    a.addEventListener("click", () => track("click_cta", { cta_location: a.dataset.cta, cta_url: a.href }));
+    a.addEventListener("click", () => {
+      const params = { cta_location: a.dataset.cta, cta_url: a.href };
+      track("click_cta", params);
+      if (a.dataset.ctaEvent) track(a.dataset.ctaEvent, params);
+    });
   });
 
   // Vídeo: solo se reproduce al pulsar.
