@@ -1,0 +1,975 @@
+---
+// Landing personalizada para Mayte García Córcoles, directora ejecutiva de
+// HOSBEC. Se llega por el QR de una tarjeta entregada en mano. Privada:
+// noindex,nofollow y fuera del sitemap.
+//
+// No vende consultoría a HOSBEC. Propone una iniciativa para sus asociados:
+// aplicar la Radiografía Digital a un grupo pequeño de establecimientos
+// (3–5, empezando por 1) para observar qué fricciones operativas se repiten.
+// Cada hotel recibe su diagnóstico confidencial; HOSBEC recibe patrones
+// agregados y anonimizados. Complementa a ITH y al resto de socios.
+//
+// Lenguaje visual: red de establecimientos. Cada uno con su propia matriz
+// 4×4; al comparar, las mismas celdas se encienden en varios a la vez.
+// Baya para los patrones, grises para lo individual. Sin datos inventados:
+// todas las figuras van marcadas como ilustración.
+//
+// Verificado a 04/10/2026:
+// - Mayte García, directora ejecutiva desde febrero de 2025 (Hosteltur,
+//   07/02/2025): servicios a asociados, innovación y tecnología, entre otras.
+// - HOSBEC recoge datos de ocupación de sus asociados desde 1985
+//   (hosbec.com/big-data). Hoteles, apartamentos, campings y oferta
+//   complementaria en Alicante, Valencia y Castellón (hosbec.com).
+// - HOSBEC e ITH: "The Hotel Data Breakfast & Coffee Tour 2026", 22/09 en
+//   Valencia y 24/09 en Benidorm (datos, IA, automatización, robótica).
+
+// --- Configuración editable ---------------------------------------------------
+const VIDEO = {
+  src: "",
+  poster: "",
+  type: "video/mp4",
+  orientation: "horizontal" as "horizontal" | "vertical",
+  duracion: "55 segundos",
+};
+
+const CONTACT_HREF = `https://wa.me/34662423523?text=${encodeURIComponent(
+  "Hola Luiz, soy Mayte García, de HOSBEC. He visto la propuesta de la Radiografía Operativa Hotelera y me gustaría hablarlo.",
+)}`;
+const MAIL_HREF = `mailto:info@iaoperators.com?subject=${encodeURIComponent("Radiografía Operativa Hotelera · HOSBEC")}`;
+const CASE_HREF = "/es/portfolio/radiografia-cadena-hotelera-menorca/";
+const GTM_ID = "GTM-572KJ7HZ";
+// -----------------------------------------------------------------------------
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL("/tis/mayte/", site).toString();
+const ogImage = new URL("/og/mayte.png", site).toString();
+const title = "Mayte García × IA Operators | Radiografía Operativa Hotelera";
+const description = "Una propuesta de piloto de Radiografía Digital para hoteles asociados a HOSBEC.";
+
+const pad = (n: number) => String(n).padStart(2, "0");
+
+const dentro = [
+  "qué tareas se repiten",
+  "dónde espera un proceso",
+  "qué información cambia de manos",
+  "qué sistemas no comparten datos",
+  "qué procesos dependen demasiado de determinadas personas",
+];
+
+const medimos = ["ocupación", "ADR", "RevPAR", "mercados", "reservas", "estacionalidad"];
+const casiNunca = ["repetición", "transferencia", "espera", "inconsistencia", "trabajo manual", "dependencias operativas"];
+
+const detalles = [
+  "Una tarea repetida.",
+  "Una información introducida dos veces.",
+  "Una aprobación que tarda.",
+  "Un dato que pasa a mano entre sistemas.",
+  "Una excepción que siempre necesita a la misma persona.",
+];
+
+const queRepite = [
+  "¿Qué aparece una y otra vez entre operaciones distintas?",
+  "¿Qué fricciones son comunes?",
+  "¿Cuáles son propias de ciertos tipos de establecimiento?",
+  "¿Dónde la automatización aparece como respuesta frecuente?",
+  "¿Dónde el problema es de integración?",
+  "¿Dónde la tecnología no parece ser la respuesta?",
+];
+
+const areas = ["Captación", "Atención", "Operación", "Gestión"];
+const senales = [
+  { k: "Repetición", d: "lo que se hace una y otra vez" },
+  { k: "Transferencia", d: "lo que cambia de manos o de sistema" },
+  { k: "Espera", d: "lo que se queda parado" },
+  { k: "Inconsistencia", d: "lo que cada uno hace a su manera" },
+];
+
+const perfiles = ["hotel urbano", "hotel vacacional", "hotel independiente", "pequeña cadena", "establecimiento de otro tamaño"];
+
+const proceso = [
+  { k: "Escuchar", d: "Conversaciones con las personas que ejecutan los procesos reales." },
+  { k: "Seguir", d: "Observar cómo circulan el trabajo y la información." },
+  { k: "Detectar", d: "Identificar las fricciones." },
+  { k: "Priorizar", d: "Valorar frecuencia, impacto y esfuerzo." },
+  { k: "Decidir", d: "Determinar qué merece atención." },
+];
+
+const privacidad = [
+  { k: "Anonimizaríamos", d: "Sin nombres de establecimientos ni de personas." },
+  { k: "Agruparíamos", d: "Por tipo de fricción, área y perfil de operación." },
+  { k: "Compararíamos", d: "Lo que se repite entre varios, no lo que hace uno." },
+  { k: "Filtraríamos", d: "Solo patrones que no permitan identificar a ningún participante." },
+];
+
+const preguntasRepite = [
+  "¿En qué áreas aparecen más tareas manuales?",
+  "¿Qué tipo de transferencias son frecuentes?",
+  "¿Dónde aparecen más esperas?",
+  "¿Qué procesos dependen más de personas concretas?",
+  "¿Qué oportunidades podrían resolverse con integración?",
+  "¿Dónde aparece la automatización?",
+  "¿Dónde aparece la IA?",
+  "¿Dónde el problema no es tecnológico?",
+];
+
+const respuestas = ["formación", "guías prácticas", "talleres", "proyectos piloto", "casos de uso", "tecnologías"];
+const cadenaProv = ["Patrón", "Necesidad", "Soluciones", "Piloto", "Resultado"];
+const caminos = ["formación", "investigación", "tecnología", "pilotos", "guías prácticas"];
+const uno = ["Seleccionamos un hotel asociado.", "Aplicamos la metodología.", "Entregamos la Radiografía.", "Tú y el hotel valoráis si el resultado es útil."];
+const revisado = ["procesos", "sistemas", "aplicaciones", "datos", "integraciones", "oportunidades de mejora"];
+
+// Red de establecimientos: cada uno con su matriz 4×4 (índice = área*4 + señal).
+// Ilustrativo. Las celdas 4, 9 y 14 aparecen en varios a la vez.
+const patronCeldas = [4, 9, 14];
+const red = [
+  { k: "A", f: [2, 4, 9, 14] },
+  { k: "B", f: [4, 7, 9] },
+  { k: "C", f: [0, 9, 11, 14] },
+  { k: "D", f: [4, 13, 14] },
+  { k: "E", f: [4, 6, 9, 14] },
+];
+const celdas = Array.from({ length: 16 }, (_, i) => i);
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
+    <link rel="canonical" href={pageUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="IA Operators" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="¿Y si observamos también lo que ocurre dentro de los hoteles? Radiografía Operativa Hotelera: 3–5 hoteles, una misma metodología." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="theme-color" content="#f7f7f5" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/manrope-latin-variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
+  </head>
+
+  <body data-gtm={GTM_ID}>
+    <header class="top" data-top>
+      <div class="wrap top-inner">
+        <a class="wordmark" href="#inicio" aria-label="IA Operators, volver al inicio de la página"><span aria-hidden="true">↗</span> IA Operators</a>
+        <nav class="top-nav" aria-label="Página">
+          <a class="top-link" href="#iniciativa">La iniciativa</a>
+          <a class="top-cta" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="header">Hablar con Luiz</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section id="inicio" class="hero wrap" aria-labelledby="hero-title">
+        <p class="kicker"><i aria-hidden="true"></i>Una idea para Mayte García y HOSBEC</p>
+        <p class="greeting">Mayte, HOSBEC conoce muy bien lo que ocurre alrededor de los hoteles.</p>
+        <h1 id="hero-title" class="question">¿Y si observamos también lo que ocurre dentro?</h1>
+        <p class="hero-sub">Además de medir el mercado, observar las fricciones de la operación.</p>
+        <p class="sample"><span class="sample-net" aria-hidden="true"><i></i><i></i><i></i><i class="opt"></i><i class="opt"></i></span>3–5 hoteles. Una misma metodología.</p>
+
+        <div class="hero-grid">
+          <div class:list={["video", `video-${VIDEO.orientation}`]} data-video>
+            {VIDEO.src && (
+              <video class="video-el" preload="none" playsinline controls poster={VIDEO.poster || undefined} aria-label="Vídeo de Luiz Brazão para Mayte García">
+                <source src={VIDEO.src} type={VIDEO.type} />
+              </video>
+            )}
+            <button class="video-cover" type="button" data-video-play aria-label={`Reproducir el vídeo de Luiz Brazão, ${VIDEO.duracion}`}>
+              <span class="video-net" aria-hidden="true">{celdas.map((c) => <i class:list={{ on: patronCeldas.includes(c) }}></i>)}</span>
+              <span class="video-play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+              </span>
+              <span class="video-meta">
+                <span class="video-time">▶ {VIDEO.duracion}</span>
+                <span class="video-who">Luiz Brazão · IA Operators</span>
+              </span>
+            </button>
+            <p class="video-note" data-video-note hidden>El vídeo estará disponible en breve.</p>
+          </div>
+
+          <div class="hero-copy">
+            <p>Ocupación, mercados, estacionalidad y destinos ayudan a entender cómo funciona el negocio desde fuera.</p>
+            <p>Pero hay otra capa de información que normalmente no aparece en los datos del sector: <b>cómo circula de verdad el trabajo dentro de un hotel.</b></p>
+            <ul class="inside">{dentro.map((t) => <li>{t}</li>)}</ul>
+            <p class="hero-strong">Eso es lo que buscamos con una Radiografía Digital.</p>
+          </div>
+        </div>
+
+        <figure class="ad" aria-label="Ilustración: alrededor del hotel, ocupación, mercados, estacionalidad y destinos; dentro, un proceso con dos fricciones">
+          <svg viewBox="0 0 720 300" role="presentation" aria-hidden="true">
+            <g class="ad-out">
+              <text x="360" y="26" text-anchor="middle">ocupación</text>
+              <text x="360" y="292" text-anchor="middle">estacionalidad</text>
+              <text x="8" y="156">destinos</text>
+              <text x="712" y="156" text-anchor="end">mercados</text>
+              <path d="M360 36v22M360 242v22M106 150h40M574 150h40" />
+            </g>
+            <rect class="ad-box" x="160" y="64" width="400" height="172" rx="14" />
+            <text class="ad-k" x="182" y="92">dentro</text>
+            <g class="ad-flow">
+              <path d="M210 140H510M300 140V200H420" />
+              <circle cx="210" cy="140" r="7" />
+              <circle cx="300" cy="140" r="7" />
+              <circle class="fr" cx="390" cy="140" r="9" />
+              <circle cx="510" cy="140" r="7" />
+              <circle class="fr" cx="300" cy="200" r="9" />
+              <circle cx="420" cy="200" r="7" />
+              <text x="390" y="120" text-anchor="middle">espera</text>
+              <text x="318" y="224">transferencia</text>
+            </g>
+          </svg>
+          <figcaption>Ilustración. Fuera, el mercado. Dentro, el trabajo.</figcaption>
+        </figure>
+      </section>
+
+      <!-- Dos capas -->
+      <section id="capas" class="section tone" aria-labelledby="capas-title">
+        <div class="wrap">
+          <p class="kicker" data-reveal><i aria-hidden="true"></i>Dos capas de información</p>
+          <h2 id="capas-title" class="sr-only">Dos capas de información</h2>
+          <div class="layers" data-reveal>
+            <div class="layer">
+              <p class="layer-k">Lo que normalmente medimos</p>
+              <ul>{medimos.map((t) => <li>{t}</li>)}</ul>
+            </div>
+            <span class="layer-plus" aria-hidden="true">+</span>
+            <div class="layer layer-in">
+              <p class="layer-k">Lo que casi nunca medimos</p>
+              <ul>{casiNunca.map((t) => <li>{t}</li>)}</ul>
+            </div>
+          </div>
+          <p class="note" data-reveal>Dos perspectivas complementarias. Una no sustituye a la otra.</p>
+          <p class="statement" data-reveal>
+            <span>Una explica cómo funciona el negocio.</span>
+            <span class="accent">La otra puede ayudarnos a entender cómo funciona el trabajo.</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- Fricción -->
+      <section id="friccion" class="section wrap" aria-labelledby="friccion-title">
+        <div class="split">
+          <p class="kicker" data-reveal><i aria-hidden="true"></i>Fricción operativa</p>
+          <div>
+            <h2 id="friccion-title" class="h2" data-reveal>La eficiencia también deja datos.</h2>
+            <ul class="details" data-reveal>{detalles.map((t, i) => <li style={`--i:${i}`}>{t}</li>)}</ul>
+            <p class="lede" data-reveal>Por separado parecen pequeños detalles. Observados de forma sistemática,</p>
+            <p class="patterns-line" data-reveal>se convierten en <mark class="hl">patrones</mark>.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Red -->
+      <section id="red" class="section tone" aria-labelledby="red-title">
+        <div class="wrap">
+          <p class="kicker" data-reveal><i aria-hidden="true"></i>Por qué una asociación</p>
+          <h2 id="red-title" class="statement statement-h" data-reveal>
+            <span>Un hotel nos enseña un caso.</span>
+            <span class="accent">Varios hoteles pueden enseñarnos un patrón.</span>
+          </h2>
+          <div class="split">
+            <span></span>
+            <div>
+              <p class="lede" data-reveal>No se trataría solo de producir informes individuales. La pregunta interesante es otra:</p>
+              <ol class="qlist" data-reveal>{queRepite.map((q, i) => <li style={`--i:${i}`}><span>{pad(i + 1)}</span>{q}</li>)}</ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Método -->
+      <section id="metodo" class="section wrap" aria-labelledby="metodo-title">
+        <div class="split">
+          <p class="kicker" data-reveal><i aria-hidden="true"></i>Radiografía Digital</p>
+          <div>
+            <h2 id="metodo-title" class="h2" data-reveal>Una misma forma de observar hoteles diferentes.</h2>
+            <p class="lede" data-reveal>El Framework 4×4 de IA Operators cruza cuatro áreas del negocio con cuatro señales de fricción. Al ser siempre la misma rejilla, lo que se observa en un establecimiento se puede comparar con lo que se observa en otro.</p>
+            <figure class="mx" data-reveal>
+              <div class="mx-grid" role="img" aria-label="Matriz de cuatro por cuatro: Captación, Atención, Operación y Gestión cruzadas con Repetición, Transferencia, Espera e Inconsistencia.">
+                <span></span>
+                {senales.map((s) => <span class="mx-h"><b>{s.k}</b><small>{s.d}</small></span>)}
+                {areas.map((a, ai) => (
+                  <>
+                    <span class="mx-a">{a}</span>
+                    {senales.map((_, si) => <span class="mx-c" style={`--i:${ai * 4 + si}`}></span>)}
+                  </>
+                ))}
+              </div>
+              <figcaption>Framework 4×4 de IA Operators · 16 puntos de observación por establecimiento</figcaption>
+            </figure>
+          </div>
+        </div>
+        <p class="triad" data-reveal><span>Misma metodología.</span><span>Diferentes hoteles.</span><span class="accent">Patrones comparables.</span></p>
+      </section>
+
+      <!-- La iniciativa -->
+      <section id="iniciativa" class="dark" aria-labelledby="iniciativa-title">
+        <div class="section wrap">
+          <div class="split">
+            <p class="kicker kicker-ink" data-reveal><i aria-hidden="true"></i>Una posible iniciativa con HOSBEC</p>
+            <div data-view="pilot">
+              <h2 id="iniciativa-title" class="h2 h2-ink" data-reveal>Radiografía Operativa Hotelera</h2>
+              <p class="init-sub" data-reveal>Empecemos con 3–5 establecimientos.</p>
+              <p class="note note-ink" data-reveal>Es solo una propuesta inicial, no algo acordado.</p>
+            </div>
+          </div>
+
+          <div class="split">
+            <p class="kicker kicker-ink" data-reveal>Quién podría participar</p>
+            <div>
+              <ul class="profiles" data-reveal>{perfiles.map((p) => <li>{p}</li>)}</ul>
+              <p class="lede lede-ink" data-reveal>Por ejemplo. La selección se definiría junto con HOSBEC; no hay una muestra impuesta.</p>
+            </div>
+          </div>
+
+          <div class="split">
+            <p class="kicker kicker-ink" data-reveal>En cada hotel</p>
+            <div>
+              <ol class="path" data-reveal>
+                {proceso.map((p, i) => (
+                  <li style={`--i:${i}`}>
+                    <span class="path-dot" aria-hidden="true"></span>
+                    <b>{p.k}</b>
+                    <span>{p.d}</span>
+                  </li>
+                ))}
+              </ol>
+              <p class="init-out" data-reveal>Cada establecimiento recibiría su propia Radiografía. <span>Los resultados específicos son confidenciales.</span></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Confidencialidad -->
+      <section id="confidencialidad" class="section wrap" aria-labelledby="conf-title">
+        <div class="split">
+          <p class="kicker" data-reveal><i aria-hidden="true"></i>Confidencialidad</p>
+          <div>
+            <h2 id="conf-title" class="statement statement-h statement-tight" data-reveal>
+              <span>El hotel recibe su diagnóstico.</span>
+              <span class="accent">HOSBEC recibe patrones, no secretos.</span>
+            </h2>
+            <div class="lanes" data-reveal>
+              <div class="lane">
+                <p class="lane-who">Cada hotel</p>
+                <span class="lane-line" aria-hidden="true"></span>
+                <p class="lane-what">Su Radiografía completa<small>Solo para el establecimiento</small></p>
+              </div>
+              <div class="lane lane-b">
+                <p class="lane-who">HOSBEC</p>
+                <span class="lane-line" aria-hidden="true"></span>
+                <p class="lane-what">Patrones agregados<small>Sin datos que identifiquen a nadie</small></p>
+              </div>
+            </div>
+            <p class="lede" data-reveal>La información operativa de cada hotel se quedaría en ese hotel. Para el análisis conjunto:</p>
+            <ol class="privacy" data-reveal>{privacidad.map((p, i) => <li style={`--i:${i}`}><b>{p.k}</b><span>{p.d}</span></li>)}</ol>
+          </div>
+        </div>
+        <p class="big" data-reveal>Compartir aprendizaje sin compartir información sensible.</p>
+      </section>
+
+      <!-- ¿Qué se repite? -->
+      <section id="repite" class="section tone" aria-labelledby="repite-title">
+        <div class="wrap">
+          <p class="kicker" data-reveal><i aria-hidden="true"></i>Segunda capa</p>
+          <p class="pre" data-reveal>Después de las Radiografías individuales aparece otra pregunta.</p>
+          <h2 id="repite-title" class="mega" data-reveal>¿Qué se repite?</h2>
+
+          <figure class="net" data-reveal aria-label="Ilustración: cinco establecimientos con su propia matriz de cuatro por cuatro; al compararlos, tres celdas coinciden en varios a la vez">
+            <div class="net-row">
+              {red.map((h, hi) => (
+                <div class="net-h" style={`--h:${hi}`}>
+                  <p>Hotel {h.k}</p>
+                  <span class="net-m">{celdas.map((c) => <i class:list={{ f: h.f.includes(c), p: h.f.includes(c) && patronCeldas.includes(c) }} style={`--i:${c}`}></i>)}</span>
+                </div>
+              ))}
+              <div class="net-h net-sum">
+                <p>Patrones observados</p>
+                <span class="net-m">{celdas.map((c) => <i class:list={{ p: patronCeldas.includes(c) }} style={`--i:${c}`}></i>)}</span>
+              </div>
+            </div>
+            <figcaption>Ilustración, no datos. La misma rejilla en cada establecimiento permite ver qué coincide.</figcaption>
+          </figure>
+
+          <div class="split">
+            <span></span>
+            <div>
+              <p class="lede" data-reveal>Algunas dimensiones que el piloto podría explorar:</p>
+              <ol class="qlist" data-reveal>{preguntasRepite.map((q, i) => <li style={`--i:${i}`}><span>{pad(i + 1)}</span>{q}</li>)}</ol>
+              <p class="note" data-reveal>No tenemos estas respuestas. Son las preguntas que el piloto intentaría contestar.</p>
+              <p class="caveat" data-reveal>Con 3–5 establecimientos no hablaríamos de un benchmark representativo del sector valenciano, sino de <b>patrones observados</b> y <b>señales recurrentes</b>: un primer mapa exploratorio. Si más adelante la muestra creciera, podría convertirse en algo más sólido.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Datos + operación -->
+      <section id="datos" class="section wrap" aria-labelledby="datos-title">
+        <div class="split">
+          <p class="kicker" data-reveal><i aria-hidden="true"></i>Datos y operación</p>
+          <div>
+            <h2 id="datos-title" class="h2" data-reveal>HOSBEC ya convierte actividad turística en información.</h2>
+            <p class="lede" data-reveal>Lleva desde 1985 recogiendo datos de ocupación de sus asociados. La pregunta es si podríamos hacer algo parecido con otra materia prima:</p>
+            <p class="h2 h2-accent q-op" data-reveal>¿Podríamos convertir también la operación en conocimiento?</p>
+          </div>
+        </div>
+        <div class="eq" data-reveal aria-label="Datos de mercado más patrones operativos igual a mejores preguntas para el sector">
+          <p class="eq-a">Datos de mercado</p>
+          <span class="eq-op" aria-hidden="true">+</span>
+          <p class="eq-b">Patrones operativos</p>
+          <span class="eq-op" aria-hidden="true">=</span>
+          <p class="eq-c">Mejores preguntas para el sector</p>
+        </div>
+        <div class="split">
+          <span></span>
+          <p class="note" data-reveal>Sin promesas de resultados. El valor estaría en sumar una perspectiva que hoy casi no se mide.</p>
+        </div>
+      </section>
+
+      <!-- Formación -->
+      <section id="formacion" class="section tone" aria-labelledby="formacion-title">
+        <div class="wrap">
+          <div class="split">
+            <p class="kicker" data-reveal><i aria-hidden="true"></i>De la fricción a la formación</p>
+            <div>
+              <h2 id="formacion-title" class="h2" data-reveal>Los patrones también pueden orientar qué enseñar.</h2>
+              <p class="lede" data-reveal>Si ciertas fricciones aparecen una y otra vez, podrían ayudar a detectar necesidades de:</p>
+              <ul class="chips" data-reveal>{respuestas.map((t) => <li>{t}</li>)}</ul>
+              <p class="note" data-reveal>Son posibilidades, no compromisos.</p>
+            </div>
+          </div>
+          <p class="statement" data-reveal>
+            <span>Primero descubrir la necesidad.</span>
+            <span class="accent">Después diseñar la respuesta.</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- Proveedores -->
+      <section id="proveedores" class="section wrap" aria-labelledby="prov-title">
+        <div class="split">
+          <p class="kicker" data-reveal><i aria-hidden="true"></i>De la fricción a la tecnología</p>
+          <div>
+            <h2 id="prov-title" class="h2" data-reveal>Y también puede mejorar la conversación con proveedores.</h2>
+            <div class="talk" data-reveal>
+              <p class="talk-a"><small>En vez de empezar con</small>«Tenemos una solución de IA.»</p>
+              <p class="talk-b"><small>Podríamos empezar con</small>«Este problema aparece una y otra vez. ¿Qué soluciones existen?»</p>
+            </div>
+            <ol class="chain" data-reveal>{cadenaProv.map((t, i) => <li class:list={{ first: i === 0 }} style={`--i:${i}`}>{t}</li>)}</ol>
+            <p class="note" data-reveal>La Radiografía se situaría antes de elegir tecnología. No compite con quien la ofrece.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ecosistema -->
+      <section id="ecosistema" class="section tone" aria-labelledby="eco-title">
+        <div class="wrap">
+          <div class="split">
+            <p class="kicker" data-reveal><i aria-hidden="true"></i>Con quien ya trabaja HOSBEC</p>
+            <div>
+              <h2 id="eco-title" class="h2" data-reveal>Una pieza más en un ecosistema que ya existe.</h2>
+              <p class="lede" data-reveal>HOSBEC ya trabaja con ITH en datos, IA y robótica, como en las jornadas de septiembre de 2026 en Valencia y Benidorm. ITH tiene una enorme experiencia acercando la tecnología a la hotelería.</p>
+              <p class="lede" data-reveal>La Radiografía trabajaría en una capa concreta: <b>descubrir y estructurar fricciones operativas antes de decidir qué tipo de solución explorar.</b></p>
+              <ol class="stack" data-reveal aria-label="Hipótesis de encaje por capas">
+                <li class="stack-mine"><small>Descubrir y estructurar</small>Fricciones operativas · Radiografía Digital</li>
+                <li><small>Explorar y probar</small>Soluciones · ITH y socios tecnológicos</li>
+                <li><small>Compartir y formar</small>Conocimiento para los asociados · HOSBEC</li>
+              </ol>
+              <p class="note" data-reveal>Una hipótesis de encaje para conversar, no una descripción de cómo trabajáis hoy.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Resultado posible -->
+      <section id="resultado" class="section wrap" aria-labelledby="resultado-title">
+        <div class="split">
+          <p class="kicker" data-reveal><i aria-hidden="true"></i>Resultado posible</p>
+          <div>
+            <h2 id="resultado-title" class="h2" data-reveal>Qué podría salir del piloto.</h2>
+            <figure class="out" data-reveal aria-label="Tres Radiografías confidenciales, anonimización, patrones observados y posibles iniciativas">
+              <div class="out-hotels">
+                {["A", "B", "C"].map((k) => <p><b>Hotel {k}</b><small>Radiografía confidencial</small></p>)}
+              </div>
+              <p class="out-step"><span>anonimización</span></p>
+              <p class="out-pat">Patrones observados</p>
+              <p class="out-step"><span>posibles caminos</span></p>
+              <ul class="chips chips-out">{caminos.map((t) => <li>{t}</li>)}</ul>
+            </figure>
+            <p class="note" data-reveal>Caminos que los hallazgos podrían sugerir. No tendrían por qué aparecer todos.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Empezar con uno -->
+      <section id="uno" class="section tone" aria-labelledby="uno-title">
+        <div class="wrap">
+          <div class="split">
+            <p class="kicker" data-reveal><i aria-hidden="true"></i>Primer paso</p>
+            <div>
+              <p class="pre" data-reveal>No necesitamos empezar con cinco.</p>
+              <h2 id="uno-title" class="mega mega-accent" data-reveal>Podemos empezar con uno.</h2>
+              <ol class="steps" data-reveal>{uno.map((t, i) => <li style={`--i:${i}`}><span>{pad(i + 1)}</span>{t}</li>)}</ol>
+              <p class="then" data-reveal><span>Y después nos preguntamos:</span><b>¿Merece la pena repetirlo?</b></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Experiencia -->
+      <section id="experiencia" class="section section-tight wrap" aria-labelledby="exp-title">
+        <div class="split">
+          <p class="kicker" data-reveal><i aria-hidden="true"></i>Experiencia</p>
+          <div class="exp" data-reveal>
+            <h2 id="exp-title" class="h3">Ya lo hemos hecho en hospitality.</h2>
+            <p>IA Operators ya ha realizado un análisis tecnológico y operativo en una empresa hotelera, estudiando:</p>
+            <ul class="chips chips-sm">{revisado.map((t) => <li>{t}</li>)}</ul>
+            <a class="link" href={CASE_HREF} data-cta="case">Ver el caso <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section id="hablar" class="section wrap cta" aria-labelledby="cta-title">
+        <p class="kicker" data-reveal><i aria-hidden="true"></i>Una propuesta concreta</p>
+        <h2 id="cta-title" class="cta-q" data-reveal>¿Probamos la metodología con un asociado?</h2>
+        <div class="cta-row">
+          <div data-reveal>
+            <p class="lede">Podemos seleccionar un establecimiento, hacer una primera Radiografía Digital y revisar juntos si el resultado aporta algo suficientemente útil como para explorar una iniciativa más amplia.</p>
+            <div class="cta-actions">
+              <a class="button" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="final">Hablar con Luiz <span aria-hidden="true">↗</span></a>
+              <a class="mail" href={MAIL_HREF} data-cta="email">o escríbeme a info@iaoperators.com</a>
+            </div>
+          </div>
+          <div class="signature" data-reveal>
+            <p class="signature-name">Luiz Brazão</p>
+            <p class="signature-role">Founder, IA Operators</p>
+            <a class="signature-site" href="https://iaoperators.com/es/">iaoperators.com</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="wrap foot-inner">
+        <span class="foot-brand"><span aria-hidden="true">↗</span> IA Operators</span>
+        <a href="/es/auditoria-de-sistemas/">Radiografía Digital</a>
+        <a href="https://iaoperators.com/es/">iaoperators.com</a>
+      </div>
+    </footer>
+
+    <div class="consent" data-consent hidden role="region" aria-label="Cookies">
+      <p>Usamos cookies para medir y mejorar la experiencia. Puedes aceptar o rechazar. <a href="/es/politica-de-privacidad/">Política de Privacidad</a>.</p>
+      <div class="consent-actions">
+        <button type="button" data-consent-reject>Rechazar</button>
+        <button type="button" class="consent-accept" data-consent-accept>Aceptar</button>
+      </div>
+    </div>
+
+    <script>
+      import { initProspectLanding } from "../../scripts/prospect-landing";
+      const { track } = initProspectLanding({ landing: "mayte", gtmId: document.body.dataset.gtm ?? "", videoTitle: "mayte_luiz", scrollMarks: [50, 90] });
+
+      // view_pilot: una vez, cuando la cabecera de la iniciativa entra de verdad en pantalla.
+      const pilot = document.querySelector<HTMLElement>('[data-view="pilot"]');
+      if (pilot && "IntersectionObserver" in window) {
+        const io = new IntersectionObserver((entries) => {
+          if (entries.some((e) => e.isIntersecting)) { track("view_pilot", { section: "iniciativa" }); io.disconnect(); }
+        }, { threshold: 0.6 });
+        io.observe(pilot);
+      }
+    </script>
+
+    <style is:global>
+      @font-face {
+        font-family: "Manrope Mayte";
+        src: url("/fonts/manrope-latin-variable.woff2") format("woff2");
+        font-weight: 200 800;
+        font-display: swap;
+      }
+      :root {
+        --paper: #f7f7f5;
+        --tone: #eeeeea;
+        --ink: #131418;
+        --text: #34363c;
+        --muted: #6a6c73;
+        --soft: #a2a3a8;
+        --line: #dfdfda;
+        --line-strong: #c6c6bf;
+        --berry: #8a2d5b;
+        --berry-2: #a8487a;
+        --berry-soft: #f2e2ea;
+        --dark: #17141a;
+        --dark-2: #221d25;
+        --dark-text: #f0edf1;
+        --dark-muted: #a39ba6;
+        --dark-line: #332c37;
+        --berry-ink: #e2a6c4;
+        --gutter: 20px;
+        --ease: cubic-bezier(.2, .7, .2, 1);
+      }
+      *, *::before, *::after { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 72px; }
+      body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Manrope Mayte", "Helvetica Neue", Arial, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+      h1, h2, h3, p, ol, ul, figure { margin: 0; }
+      ol, ul { padding: 0; list-style: none; }
+      a { color: inherit; text-decoration: none; }
+      a:focus-visible, button:focus-visible { outline: 2px solid var(--berry); outline-offset: 3px; }
+      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+      .wrap { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: var(--gutter); }
+      .kicker { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+      .kicker i { flex: 0 0 auto; width: 7px; height: 7px; border-radius: 2px; background: var(--berry); }
+      .kicker-ink { color: var(--dark-muted); }
+      .kicker-ink i { background: var(--berry-ink); }
+      .accent { color: var(--berry); }
+      .note { margin-top: 16px; font-size: 13px; line-height: 1.5; color: var(--muted); }
+      .note-ink { color: var(--dark-muted); }
+
+      /* Cabecera */
+      .top { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid transparent; transition: background-color .3s ease, border-color .3s ease; }
+      .top.is-scrolled { background: rgba(247, 247, 245, .92); border-bottom-color: var(--line); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+      .top-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
+      .wordmark { font-size: 18px; font-weight: 650; letter-spacing: -.04em; white-space: nowrap; }
+      .wordmark span, .foot-brand span { color: var(--berry); }
+      .top-nav { display: flex; align-items: center; gap: 22px; font-size: 13px; }
+      .top-link { display: none; color: var(--muted); }
+      .top-link:hover { color: var(--ink); }
+      .top-cta { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 999px; background: var(--ink); color: #fff; font-weight: 600; white-space: nowrap; transition: background-color .2s ease; }
+      .top-cta:hover { background: var(--berry); }
+
+      /* Hero */
+      .hero { padding-top: 14px; padding-bottom: 72px; }
+      .kicker + .greeting { margin-top: 10px; }
+      .hero .kicker { color: var(--berry); }
+      .greeting { max-width: 36em; text-wrap: balance; font-size: clamp(18px, 2vw, 26px); font-weight: 500; letter-spacing: -.025em; line-height: 1.3; color: var(--text); }
+      .question { margin-top: 12px; max-width: 12em; text-wrap: balance; font-size: clamp(36px, 7vw, 100px); font-weight: 500; letter-spacing: -.055em; line-height: 1; }
+      .hero-sub { margin-top: 14px; max-width: 26em; text-wrap: balance; font-size: clamp(18px, 2vw, 25px); font-weight: 500; letter-spacing: -.025em; line-height: 1.3; color: var(--berry); }
+      .sample { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 15px; font-weight: 600; color: var(--muted); }
+      .sample-net { display: inline-flex; gap: 4px; }
+      .sample-net i { width: 9px; height: 9px; border-radius: 2px; background: var(--berry); }
+      .sample-net i.opt { background: transparent; box-shadow: inset 0 0 0 1.5px var(--berry); }
+      .hero-grid { display: grid; gap: 26px; margin-top: 24px; }
+      .hero-copy { display: grid; gap: 12px; align-content: start; color: var(--text); }
+      .hero-copy p { max-width: 32em; }
+      .hero-copy b { font-weight: 650; color: var(--ink); }
+      .inside { display: grid; border-top: 1px solid var(--line); }
+      .inside li { position: relative; padding: 8px 0 8px 20px; border-bottom: 1px solid var(--line); }
+      .inside li::before { content: ""; position: absolute; left: 2px; top: 1.05em; width: 7px; height: 7px; border-radius: 2px; background: var(--berry); }
+      .hero-strong { font-size: clamp(20px, 2vw, 26px); font-weight: 600; letter-spacing: -.03em; line-height: 1.25; color: var(--ink); }
+
+      /* Vídeo */
+      .video { position: relative; overflow: hidden; background: var(--dark); color: var(--dark-text); border-radius: 10px; }
+      .video-horizontal { aspect-ratio: 16 / 9; }
+      .video-vertical { aspect-ratio: 9 / 16; max-height: 78vh; width: min(100%, calc(78vh * 9 / 16)); margin-inline: auto; }
+      .video-el { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #000; }
+      .video-cover { position: absolute; inset: 0; display: grid; place-items: center; width: 100%; padding: 0; border: 0; background: var(--dark); color: inherit; font: inherit; cursor: pointer; }
+      .video-net { position: absolute; right: 18px; top: 18px; display: grid; grid-template-columns: repeat(4, 7px); gap: 4px; }
+      .video-net i { width: 7px; height: 7px; border-radius: 2px; background: #3a333e; }
+      .video-net i.on { background: var(--berry-2); }
+      .video.is-playing .video-cover { display: none; }
+      .video-play { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; border: 1px solid rgba(240, 237, 241, .55); color: var(--dark-text); transition: background-color .3s ease, color .3s ease, transform .35s var(--ease); }
+      .video-play svg { margin-left: 3px; }
+      .video-cover:hover .video-play { background: var(--dark-text); color: var(--dark); transform: scale(1.04); }
+      .video-meta { position: absolute; left: 16px; right: 16px; bottom: 12px; display: flex; justify-content: space-between; gap: 12px; font-size: 12px; font-weight: 600; color: var(--dark-muted); }
+      .video-time { color: var(--dark-text); }
+      .video-note { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(46px); text-align: center; font-size: 13px; color: var(--dark-text); }
+
+      /* Alrededor / dentro */
+      .ad { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--line); }
+      .ad svg { display: block; width: 100%; max-width: 760px; height: auto; margin-inline: auto; overflow: visible; font-family: inherit; }
+      .ad-out text { font-size: 19px; font-weight: 500; fill: var(--muted); }
+      .ad-out path { stroke: var(--line-strong); stroke-width: 1.5; fill: none; stroke-dasharray: 3 4; }
+      .ad-box { fill: #fff; stroke: var(--ink); stroke-width: 1.5; }
+      .ad-k { font-size: 14px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; fill: var(--berry); }
+      .ad-flow path { stroke: var(--line-strong); stroke-width: 2; fill: none; }
+      .ad-flow circle { fill: #fff; stroke: var(--ink); stroke-width: 2; }
+      .ad-flow circle.fr { fill: var(--berry); stroke: none; }
+      .ad-flow text { font-size: 16px; font-weight: 600; fill: var(--berry); }
+      .ad figcaption { margin-top: 12px; text-align: center; font-size: 12px; color: var(--soft); }
+
+      /* Secciones */
+      .section { padding-block: 84px; }
+      .section-tight { padding-block: 64px; }
+      .tone { background: var(--tone); }
+      .split { display: grid; gap: 14px; }
+      .split > .kicker { align-self: start; }
+      .h2, .statement, .big, .triad, .mega, .cta-q, .then b { text-wrap: balance; }
+      .split + .split, .split + .triad, .split + .big, .split + .statement, .eq + .split, .net + .split { margin-top: 40px; }
+      .h2 { font-size: clamp(30px, 4.2vw, 56px); font-weight: 500; letter-spacing: -.05em; line-height: 1.07; max-width: 16em; }
+      .h2-ink { color: var(--dark-text); }
+      .h2-accent { color: var(--berry); }
+      .h3 { font-size: clamp(24px, 2.6vw, 34px); font-weight: 500; letter-spacing: -.04em; line-height: 1.12; }
+      .lede { margin-top: 18px; max-width: 32em; font-size: clamp(18px, 1.6vw, 21px); line-height: 1.5; letter-spacing: -.015em; color: var(--text); }
+      .lede b { font-weight: 650; color: var(--ink); }
+      .lede-ink { color: var(--dark-text); }
+      .statement { display: grid; gap: 6px; margin-top: 44px; max-width: 18em; font-size: clamp(30px, 4.6vw, 64px); font-weight: 500; letter-spacing: -.05em; line-height: 1.06; }
+      .statement-h { margin-top: 16px; }
+      .statement-tight { max-width: 14em; font-size: clamp(30px, 4vw, 54px); }
+      .pre { margin-top: 18px; font-size: clamp(20px, 2vw, 26px); font-weight: 500; letter-spacing: -.03em; color: var(--muted); }
+      .mega { margin-top: 6px; font-size: clamp(52px, 10vw, 140px); font-weight: 500; letter-spacing: -.065em; line-height: .95; padding-bottom: .08em; }
+      .mega-accent { color: var(--berry); max-width: 9em; }
+      .big { margin-top: 56px; max-width: 16em; font-size: clamp(32px, 5.4vw, 76px); font-weight: 500; letter-spacing: -.055em; line-height: 1.02; color: var(--berry); }
+
+      /* Dos capas */
+      .layers { display: grid; gap: 12px; margin-top: 22px; }
+      .layer { padding: 18px 16px; border-radius: 10px; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line-strong); }
+      .layer-k { font-size: 13px; font-weight: 650; letter-spacing: .02em; color: var(--muted); }
+      .layer ul { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 12px; }
+      .layer li { font-size: clamp(20px, 2.2vw, 30px); font-weight: 500; letter-spacing: -.035em; color: var(--soft); }
+      .layer-in { background: var(--ink); box-shadow: none; }
+      .layer-in .layer-k { color: var(--berry-ink); }
+      .layer-in li { color: #fff; }
+      .layer-plus { justify-self: center; font-size: 28px; font-weight: 300; color: var(--soft); line-height: 1; }
+
+      /* Fricción */
+      .details { display: grid; margin-top: 24px; border-top: 1px solid var(--line); }
+      .details li { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: clamp(19px, 1.9vw, 25px); font-weight: 500; letter-spacing: -.03em; line-height: 1.3; }
+      .patterns-line { margin-top: 6px; font-size: clamp(40px, 6.6vw, 92px); font-weight: 500; letter-spacing: -.06em; line-height: 1.02; }
+      .hl { padding: 0 .08em; color: var(--berry); background: linear-gradient(var(--berry-soft), var(--berry-soft)) no-repeat 0 85% / 100% .42em; }
+
+      /* Listas de preguntas */
+      .qlist { display: grid; margin-top: 16px; border-top: 1px solid var(--line-strong); }
+      .qlist li { display: grid; grid-template-columns: 36px minmax(0, 1fr); align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line-strong); font-size: clamp(18px, 1.7vw, 22px); letter-spacing: -.02em; line-height: 1.35; }
+      .qlist li span { font-size: 12px; font-weight: 650; color: var(--berry); }
+
+      /* 4×4 */
+      .mx { margin-top: 28px; padding: 18px 14px; border-radius: 10px; background: #fff; box-shadow: inset 0 0 0 1px var(--line); }
+      .mx-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) repeat(4, minmax(0, 1fr)); gap: 6px; align-items: stretch; }
+      .mx-h { display: grid; align-content: end; gap: 2px; padding-bottom: 4px; font-size: 11px; line-height: 1.25; }
+      .mx-h b { font-weight: 650; color: var(--ink); overflow: hidden; text-overflow: ellipsis; }
+      .mx-h small { display: none; font-size: 11px; color: var(--muted); }
+      .mx-a { align-self: center; font-size: 13px; font-weight: 600; color: var(--text); }
+      .mx-c { aspect-ratio: 1; min-height: 28px; border-radius: 6px; background: var(--tone); box-shadow: inset 0 0 0 1px var(--line); }
+      .mx figcaption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+      .triad { display: grid; margin-top: 52px; font-size: clamp(32px, 5.4vw, 76px); font-weight: 500; letter-spacing: -.055em; line-height: 1.04; }
+
+      /* Iniciativa */
+      .dark { background: var(--dark); color: var(--dark-text); }
+      .init-sub { margin-top: 10px; font-size: clamp(26px, 3.4vw, 46px); font-weight: 500; letter-spacing: -.045em; line-height: 1.1; color: var(--berry-ink); }
+      .profiles { display: flex; flex-wrap: wrap; gap: 8px; }
+      .profiles li { padding: 6px 12px; border-radius: 999px; box-shadow: inset 0 0 0 1px #4a4250; font-size: 15px; color: var(--dark-text); }
+      .path { position: relative; display: grid; gap: 18px; }
+      .path::before { content: ""; position: absolute; left: 6px; top: 10px; bottom: 10px; width: 1px; background: var(--dark-line); }
+      .path li { position: relative; display: grid; gap: 2px; padding-left: 30px; }
+      .path-dot { position: absolute; left: 0; top: .42em; width: 13px; height: 13px; border-radius: 4px; background: var(--dark); box-shadow: inset 0 0 0 1.5px var(--berry-ink); }
+      .path li:nth-child(3) .path-dot { background: var(--berry-ink); }
+      .path b { font-size: clamp(22px, 2.4vw, 32px); font-weight: 500; letter-spacing: -.04em; line-height: 1.15; }
+      .path span:not(.path-dot) { font-size: 15px; color: var(--dark-muted); }
+      .init-out { margin-top: 30px; padding: 18px; border-radius: 10px; background: var(--dark-2); box-shadow: inset 0 0 0 1px var(--dark-line); font-size: clamp(19px, 1.9vw, 25px); font-weight: 500; letter-spacing: -.03em; line-height: 1.3; }
+      .init-out span { display: block; margin-top: 6px; color: var(--berry-ink); }
+
+      /* Confidencialidad */
+      .lanes { display: grid; gap: 10px; margin-top: 28px; }
+      .lane { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 10px; background: #fff; box-shadow: inset 0 0 0 1px var(--line); }
+      .lane-who { font-weight: 650; letter-spacing: -.01em; }
+      .lane-line { height: 1px; background: var(--line-strong); }
+      .lane-what { display: grid; text-align: right; font-weight: 600; letter-spacing: -.01em; }
+      .lane-what small { font-size: 12px; font-weight: 500; color: var(--muted); }
+      .lane-b { background: var(--berry); box-shadow: none; color: #fff; }
+      .lane-b .lane-line { background: rgba(255, 255, 255, .45); }
+      .lane-b .lane-what small { color: rgba(255, 255, 255, .75); }
+      .privacy { display: grid; margin-top: 16px; border-top: 1px solid var(--line); }
+      .privacy li { display: grid; gap: 2px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+      .privacy b { font-size: clamp(19px, 1.8vw, 23px); font-weight: 600; letter-spacing: -.025em; }
+      .privacy span { font-size: 15px; color: var(--muted); }
+
+      /* Red de establecimientos */
+      .net { margin-top: 44px; }
+      .net-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+      .net-h { padding: 12px; border-radius: 10px; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line-strong); }
+      .net-h p { font-size: 12px; font-weight: 650; color: var(--muted); }
+      .net-m { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; margin-top: 10px; }
+      .net-m i { aspect-ratio: 1; border-radius: 3px; background: var(--tone); }
+      .net-m i.f { background: #8d8e94; }
+      .net-m i.p { background: var(--berry); }
+      .net-h:not(.net-sum) .net-m i.f:not(.p) { background: transparent; box-shadow: inset 0 0 0 1.5px #b9b9bd; }
+      .net-sum { background: var(--ink); box-shadow: none; }
+      .net-sum p { color: var(--berry-ink); }
+      .net-sum .net-m i { background: #2b2a30; }
+      .net-sum .net-m i.p { background: var(--berry-2); }
+      .net figcaption { margin-top: 12px; font-size: 12px; color: var(--muted); }
+      .caveat { margin-top: 24px; max-width: 36em; padding: 14px 16px; border-left: 2px solid var(--berry); background: var(--paper); font-size: 15px; line-height: 1.55; color: var(--text); }
+      .caveat b { font-weight: 650; color: var(--ink); }
+
+      /* Datos + operación */
+      .q-op { margin-top: 24px; }
+      .eq { display: grid; gap: 8px; margin-top: 44px; }
+      .eq p { padding: 18px; border-radius: 10px; font-size: clamp(20px, 2.2vw, 30px); font-weight: 500; letter-spacing: -.035em; line-height: 1.15; }
+      .eq-a { background: #fff; box-shadow: inset 0 0 0 1px var(--line-strong); color: var(--muted); }
+      .eq-b { background: var(--berry-soft); color: var(--berry); }
+      .eq-c { background: var(--ink); color: #fff; }
+      .eq-op { justify-self: center; font-size: 30px; font-weight: 300; line-height: 1; color: var(--soft); }
+
+      /* Formación */
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+      .chips li { padding: 6px 12px; border-radius: 999px; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line-strong); font-size: 15px; font-weight: 500; }
+      .chips-sm li { font-size: 13px; padding: 4px 10px; }
+
+      /* Proveedores */
+      .talk { display: grid; gap: 10px; margin-top: 26px; }
+      .talk p { display: grid; gap: 6px; padding: 18px 16px; border-radius: 10px; font-size: clamp(20px, 2.1vw, 28px); font-weight: 500; letter-spacing: -.035em; line-height: 1.2; }
+      .talk small { font-size: 12px; font-weight: 650; letter-spacing: .04em; text-transform: uppercase; }
+      .talk-a { color: var(--soft); box-shadow: inset 0 0 0 1px var(--line); }
+      .talk-b { background: var(--ink); color: #fff; }
+      .talk-b small { color: var(--berry-ink); }
+      .chain { display: flex; flex-wrap: wrap; gap: 10px 0; margin-top: 28px; }
+      .chain li { position: relative; padding-right: 42px; font-size: clamp(18px, 1.9vw, 24px); font-weight: 500; letter-spacing: -.03em; }
+      .chain li:not(:last-child)::after { content: "→"; position: absolute; right: 14px; color: var(--soft); font-weight: 400; }
+      .chain li.first { color: var(--berry); }
+
+      /* Ecosistema */
+      .stack { display: grid; gap: 6px; margin-top: 26px; }
+      .stack li { display: grid; gap: 2px; padding: 14px 16px; border-radius: 10px; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line-strong); font-size: clamp(17px, 1.7vw, 21px); font-weight: 600; letter-spacing: -.02em; }
+      .stack small { font-size: 12px; font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+      .stack-mine { background: var(--berry) !important; box-shadow: none !important; color: #fff; }
+      .stack-mine small { color: rgba(255, 255, 255, .75); }
+
+      /* Resultado */
+      .out { display: grid; gap: 10px; margin-top: 26px; }
+      .out-hotels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+      .out-hotels p { display: grid; gap: 2px; padding: 12px; border-radius: 10px; background: #fff; box-shadow: inset 0 0 0 1px var(--line-strong); }
+      .out-hotels b { font-size: 15px; font-weight: 650; }
+      .out-hotels small { font-size: 12px; line-height: 1.3; color: var(--muted); }
+      .out-step { position: relative; display: flex; justify-content: center; height: 34px; }
+      .out-step::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--line-strong); }
+      .out-step span { position: relative; align-self: center; padding: 0 8px; background: var(--paper); font-size: 12px; font-weight: 600; color: var(--muted); }
+      .out-pat { padding: 14px 16px; border-radius: 10px; background: var(--berry); color: #fff; text-align: center; font-size: clamp(19px, 2vw, 25px); font-weight: 600; letter-spacing: -.03em; }
+      .chips-out { justify-content: center; margin-top: 0; }
+
+      /* Empezar con uno */
+      .steps { display: grid; margin-top: 30px; border-top: 1px solid var(--line-strong); }
+      .steps li { display: grid; grid-template-columns: 40px minmax(0, 1fr); align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line-strong); font-size: clamp(19px, 1.8vw, 24px); font-weight: 500; letter-spacing: -.025em; }
+      .steps li span { font-size: 12px; font-weight: 650; color: var(--berry); }
+      .then { display: grid; gap: 6px; margin-top: 28px; }
+      .then span { color: var(--muted); }
+      .then b { font-size: clamp(26px, 3vw, 40px); font-weight: 500; letter-spacing: -.045em; line-height: 1.15; }
+
+      /* Experiencia */
+      .exp p { margin-top: 12px; max-width: 34em; color: var(--text); }
+      .link { display: inline-flex; gap: 6px; margin-top: 16px; font-weight: 600; color: var(--berry); border-bottom: 1px solid currentColor; }
+
+      /* CTA */
+      .cta-q { margin-top: 16px; max-width: 11em; font-size: clamp(40px, 7.2vw, 106px); font-weight: 500; letter-spacing: -.06em; line-height: .98; }
+      .cta-row { display: grid; gap: 40px; margin-top: 30px; }
+      .cta-row .lede { margin-top: 0; }
+      .cta-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 26px; }
+      .button { display: inline-flex; align-items: center; gap: 22px; min-height: 52px; padding: 0 24px; border-radius: 999px; background: var(--berry); color: #fff; font-weight: 650; transition: background-color .2s ease; }
+      .button:hover { background: var(--ink); }
+      .mail { font-size: 14px; color: var(--muted); border-bottom: 1px solid var(--line-strong); }
+      .mail:hover { color: var(--ink); }
+      .signature { padding-top: 16px; border-top: 1px solid var(--line-strong); }
+      .signature-name { font-weight: 650; letter-spacing: -.02em; }
+      .signature-role { font-size: 14px; color: var(--muted); }
+      .signature-site { display: inline-block; margin-top: 6px; font-size: 13px; color: var(--berry); }
+
+      /* Pie y consentimiento */
+      .foot { border-top: 1px solid var(--line); }
+      .foot-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; padding-block: 26px 30px; font-size: 13px; color: var(--muted); }
+      .foot-brand { margin-right: auto; font-weight: 650; color: var(--ink); letter-spacing: -.02em; }
+      .foot a:hover { color: var(--ink); }
+      .consent { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 30; display: grid; gap: 12px; padding: 14px 16px; background: var(--dark); color: var(--dark-text); font-size: 13px; line-height: 1.5; border-radius: 10px; border: 1px solid #3c3440; box-shadow: 0 10px 30px rgba(0, 0, 0, .16); }
+      .consent[hidden] { display: none; }
+      .consent a { text-decoration: underline; }
+      .consent-actions { display: flex; gap: 8px; justify-content: flex-end; }
+      .consent button { min-height: 38px; padding: 0 16px; border: 1px solid #3c3440; border-radius: 999px; background: transparent; color: var(--dark-text); font: inherit; cursor: pointer; }
+      .consent .consent-accept { background: var(--dark-text); color: var(--dark); border-color: var(--dark-text); }
+
+      /* Movimiento discreto */
+      .js [data-reveal] { opacity: 0; transform: translateY(10px); transition: opacity .7s ease var(--d, 0ms), transform .7s var(--ease) var(--d, 0ms); }
+      .js [data-reveal].is-in { opacity: 1; transform: none; }
+      .js .hl { background-size: 0% .42em; transition: background-size .9s var(--ease) .5s; }
+      .js .patterns-line.is-in .hl { background-size: 100% .42em; }
+      .js .mx-c { transition: background-color .4s ease calc(.25s + var(--i) * 40ms), box-shadow .4s ease calc(.25s + var(--i) * 40ms); }
+      .js .mx:not(.is-in) .mx-c { background: transparent; box-shadow: inset 0 0 0 1px var(--line); }
+      .js .net-m i { transition: background-color .5s ease calc(.6s + var(--h, 0) * 120ms), box-shadow .5s ease calc(.6s + var(--h, 0) * 120ms); }
+      .js .net:not(.is-in) .net-h:not(.net-sum) .net-m i.f { background: #8d8e94; box-shadow: none; }
+      .js .net:not(.is-in) .net-sum .net-m i.p { background: #2b2a30; }
+      .js .net-sum .net-m i { transition-delay: 1.4s; }
+      .js .path li { opacity: .3; transition: opacity .5s ease calc(.2s + var(--i) * 140ms); }
+      .js .path.is-in li { opacity: 1; }
+
+      @media (min-width: 420px) {
+        .top-link { display: inline; }
+      }
+
+      @media (min-width: 560px) {
+        .net-row { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+        .mx-h { font-size: 12px; }
+      }
+
+      @media (min-width: 720px) {
+        :root { --gutter: 36px; }
+        .layers { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: stretch; gap: 18px; }
+        .layer { padding: 24px; }
+        .layer-plus { align-self: center; }
+        .mx { padding: 24px; }
+        .mx-grid { gap: 8px; }
+        .mx-h small { display: block; }
+        .mx-a { font-size: 15px; }
+        .mx-c { min-height: 40px; aspect-ratio: auto; }
+        .lanes { grid-template-columns: 1fr; }
+        .eq { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); align-items: stretch; gap: 14px; }
+        .eq-op { align-self: center; }
+        .talk { grid-template-columns: 1fr 1fr; }
+        .path { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+        .path::before { left: 6px; right: 0; top: 6px; bottom: auto; width: auto; height: 1px; }
+        .path li { padding-left: 0; padding-top: 26px; }
+        .path-dot { top: 0; }
+        .cta-row { grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 64px; }
+        .signature { justify-self: end; min-width: 260px; }
+        .consent { left: auto; right: 24px; bottom: 24px; max-width: 560px; grid-template-columns: 1fr auto; align-items: center; }
+      }
+
+      @media (min-width: 1000px) {
+        body { font-size: 18px; }
+        .top-inner { height: 72px; }
+        .hero { padding-top: 36px; padding-bottom: 112px; }
+        .hero-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 56px; margin-top: 44px; align-items: start; }
+        .ad { margin-top: 88px; }
+        .section { padding-block: 124px; }
+        .section-tight { padding-block: 88px; }
+        .split { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 48px; }
+        .split + .split, .split + .triad, .split + .big, .split + .statement, .eq + .split, .net + .split { margin-top: 64px; }
+        .statement { margin-top: 64px; }
+        .statement-h { margin-top: 18px; }
+        .split .statement-h { margin-top: 0; }
+        .triad, .big { margin-top: 80px; }
+        .net { margin-top: 64px; }
+        .net-row { gap: 14px; }
+        .net-h { padding: 16px; }
+        .net-m { gap: 6px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+        .js .hl { background-size: 100% .42em; transition: none; }
+        .js .mx-c, .js .net-m i, .js .path li { transition: none; }
+        .js .mx:not(.is-in) .mx-c { background: var(--tone); }
+        .js .net:not(.is-in) .net-h:not(.net-sum) .net-m i.f:not(.p) { background: transparent; box-shadow: inset 0 0 0 1.5px #b9b9bd; }
+        .js .net:not(.is-in) .net-h .net-m i.p { background: var(--berry); }
+        .js .net:not(.is-in) .net-sum .net-m i.p { background: var(--berry-2); }
+        .js .path li { opacity: 1; }
+        .video-play, .top, .button, .top-cta { transition: none; }
+      }
+    </style>
+  </body>
+</html>
