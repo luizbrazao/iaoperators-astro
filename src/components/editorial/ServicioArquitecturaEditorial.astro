@@ -4,6 +4,7 @@
 // texto sale del mismo diccionario (audit / roadmap / implementation) que la
 // versión anterior y el orden de las secciones no cambia, así que H1, H2, H3 y
 // enlaces se mantienen. EN y PT siguen con el markup de cada página.
+// Sin bloque de precios: oct/2026 se decidió no publicar importes.
 import RelatedCases from "@/components/RelatedCases.astro";
 import PilarArquitectura from "@/components/PilarArquitectura.astro";
 import { getArquitectura, arquitecturaHubHref, ARQUITECTURA_TITLE } from "@/data/servicios";
@@ -22,15 +23,13 @@ interface Props {
   /** Ancla de la sección de entregables o de la metodología, si la página la usa. */
   deliverablesId?: string;
   methodologyId?: string;
-  /** Enlace "← paso anterior" junto al CTA del precio. */
-  pricingBack?: { href: string; label: string };
   /** Casos de prueba (RelatedCases), solo donde la página ya los mostraba. */
   relatedPath?: string;
   /** "Qué viene después", solo en la Radiografía. */
   next?: { title: string; body: string; items: NextLink[] };
 }
-const { d, current, contactHref, heroSecondaryHref, deliverablesId, methodologyId, pricingBack, relatedPath, next } = Astro.props;
-const { hero = {}, problem = {}, deliverables = {}, methodology = {}, audience = {}, pricing = {}, faq = {}, finalCta = {} } = d ?? {};
+const { d, current, contactHref, heroSecondaryHref, deliverablesId, methodologyId, relatedPath, next } = Astro.props;
+const { hero = {}, problem = {}, deliverables = {}, methodology = {}, audience = {}, faq = {}, finalCta = {} } = d ?? {};
 const L = copy.servicioArquitectura;
 const paso = getArquitectura("es").find((p) => p.key === current);
 const bare = (text = "") => text.replace(/\s*[↗→←]\s*$/, "").replace(/^\s*←\s*/, "");
@@ -123,20 +122,6 @@ const h1Accent = split > 0 ? title.slice(split + 2) : "";
     </section>
   )}
 
-  {pricing.title && (
-    <section class="pg-pricing" aria-labelledby="inversion-title">
-      <p class="ed-eyebrow">{pricing.badge ?? L.inversion}</p>
-      <div>
-        <h2 id="inversion-title">{pricing.title}</h2>
-        {pricing.subtitle && <p class="pg-pricing-sub">{pricing.subtitle}</p>}
-        {pricing.items?.length > 0 && <ul class="pg-checklist">{pricing.items.map((item: string) => <li>{item}</li>)}</ul>}
-        <div class="pg-actions">
-          <a class="ed-button" href={contactHref}>{bare(pricing.cta)}<span class="ed-arrow" aria-hidden="true">↗</span></a>
-          {pricingBack && <a class="ed-underlined" href={pricingBack.href}><span aria-hidden="true">←</span> {bare(pricingBack.label)}</a>}
-        </div>
-      </div>
-    </section>
-  )}
 </div>
 
 {relatedPath && <RelatedCases path={relatedPath} locale="es" variant="editorial" />}

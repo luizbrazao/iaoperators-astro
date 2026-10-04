@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "Technology Roadmap | Evolution plan for your stack",
-        "description": "From audit to plan: target architecture, prioritization with estimated ROI, and phased implementation plan. 4–6 weeks, from €10,000."
+        "description": "From audit to plan: target architecture, prioritization with estimated ROI, and phased implementation plan in 4–6 weeks."
     },
     "hero": {
         "badge": "Service · Technology roadmap",
@@ -99,18 +99,6 @@
             "Companies with a new or absent CTO who need an auditable plan for the board",
             "Mid-market (50–500 people) in hospitality, healthcare, services, retail, and manufacturing"
         ]
-    },
-    "pricing": {
-        "badge": "Investment",
-        "title": "From €10,000 + VAT",
-        "subtitle": "Fixed-scope 4–6 week project. €10,000–€20,000 range depending on scope and number of areas.",
-        "items": [
-            "Full diagnostic + target architecture + prioritization + phased plan",
-            "Up to 12 functional areas and 50 systems in standard scope",
-            "2 executive sessions (kick-off and final defense) + workshops with area owners",
-            "Editable deliverables: diagrams, prioritization sheets, and plan in open formats"
-        ],
-        "cta": "Request a proposal"
     },
     "faq": {
         "title": "Frequently asked questions",

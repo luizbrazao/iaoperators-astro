@@ -47,7 +47,6 @@
                 "title": "Digital X-Ray",
                 "summary": "We diagnose. Full inventory, integration map, risk analysis, and prioritized recommendations.",
                 "duration": "About 3 weeks",
-                "price": "From €4,500",
                 "href": "/auditoria-de-sistemas/",
                 "linkLabel": "See Digital X-Ray"
             },
@@ -56,7 +55,6 @@
                 "title": "Technology Roadmap",
                 "summary": "We prioritize. Target architecture, make/buy/consolidate decisions, estimated ROI, and phased plan in 4–6 weeks.",
                 "duration": "4–6 weeks",
-                "price": "From €10,000",
                 "href": "/roadmap-tecnologico/",
                 "linkLabel": "See Technology Roadmap"
             },
@@ -65,7 +63,6 @@
                 "title": "Implementation",
                 "summary": "We build. AI automations, API integrations, dashboards, and custom systems. Fixed-scope project or monthly retainer.",
                 "duration": "Continuous sprints",
-                "price": "From €3,000/month",
                 "href": "/implementacion/",
                 "linkLabel": "See Implementation"
             }

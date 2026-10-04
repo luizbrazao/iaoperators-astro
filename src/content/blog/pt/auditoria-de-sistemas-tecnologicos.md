@@ -1,7 +1,7 @@
 ---
 title: "O que é uma auditoria de sistemas tecnológicos (e por que sua empresa precisa)"
 seoTitle: "O que é uma auditoria de sistemas tecnológicos"
-description: "O que é uma auditoria de sistemas tecnológicos, o que cobre e quando sua empresa precisa. Guia completo com fases, entregáveis e investimento."
+description: "O que é uma auditoria de sistemas tecnológicos, o que cobre e quando sua empresa precisa. Guia completo com fases e entregáveis."
 category: others
 date: 2026-04-30
 locale: pt
@@ -28,7 +28,7 @@ faq:
   - q: "Qual a diferença entre auditoria tecnológica e auditoria de TI?"
     a: "A auditoria de TI tradicional foca em infraestrutura, segurança e conformidade. A auditoria de sistemas tecnológicos analisa também as aplicações de negócio (SaaS, CRMs, ERPs), integrações, Shadow IT e dependências operacionais — não apenas hardware e rede."
   - q: "Quanto custa uma auditoria de sistemas tecnológicos?"
-    a: "Para empresas de 50–500 pessoas, com até 30 sistemas e 8 áreas funcionais, o investimento habitual está entre €4.500 e €8.000. O retorno é imediato: a maioria das empresas identifica entre €10.000 e €40.000 anuais em licenças subutilizadas ou redundantes na primeira revisão."
+    a: "Para empresas de 50–500 pessoas, com até 30 sistemas e 8 áreas funcionais, o preço depende do número de sistemas e áreas no escopo, e é fechado numa proposta depois de uma primeira conversa. O retorno é imediato: a maioria das empresas identifica entre €10.000 e €40.000 anuais em licenças subutilizadas ou redundantes na primeira revisão."
 ---
 
 Uma auditoria de sistemas tecnológicos é um inventário completo e análise estruturada de todas as aplicações, licenças, integrações e processos digitais que uma empresa opera. O resultado é uma fotografia precisa do parque tecnológico: o que existe, quanto custa, quem usa, como está conectado e quais riscos apresenta.

@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "Roadmap Tecnológico | Plan de evolución de tu stack",
-        "description": "De la auditoría al plan: arquitectura objetivo, priorización con ROI estimado y plan faseado de implementación. 4–6 semanas, desde 10.000 €."
+        "description": "De la auditoría al plan: arquitectura objetivo, priorización con ROI estimado y plan faseado de implementación en 4–6 semanas."
     },
     "hero": {
         "badge": "Servicio · Roadmap tecnológico",
@@ -99,18 +99,6 @@
             "Empresas con CTO nuevo o sin CTO que necesitan plan auditable para el consejo",
             "Mid-market (50–500 personas) en hotelería, salud, servicios, retail y manufactura"
         ]
-    },
-    "pricing": {
-        "badge": "Inversión",
-        "title": "Desde 10.000 € + IVA",
-        "subtitle": "Proyecto cerrado de 4–6 semanas. Rango 10.000–20.000 € según alcance y número de áreas.",
-        "items": [
-            "Diagnóstico completo + arquitectura objetivo + priorización + plan faseado",
-            "Hasta 12 áreas funcionales y 50 sistemas en alcance estándar",
-            "2 sesiones ejecutivas (kick-off y defensa final) + workshops con dueños de área",
-            "Entregables editables: diagramas, hojas de priorización y plan en formatos abiertos"
-        ],
-        "cta": "Solicitar propuesta"
     },
     "faq": {
         "title": "Preguntas frecuentes",

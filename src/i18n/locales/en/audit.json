@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "Digital X-Ray | Systems audit",
-        "description": "Master inventory, integration map, risk analysis, and prioritized recommendations for your technology stack. Fixed-scope 3-week project, from €4,500."
+        "description": "Master inventory, integration map, risk analysis, and prioritized recommendations for your technology stack. Fixed-scope 3-week project."
     },
     "hero": {
         "badge": "Service · Systems audit",
@@ -95,18 +95,6 @@
             "Omnichannel retail with decoupled ERP, e-commerce, marketplaces, and logistics",
             "Companies of 50–500 people preparing an AI rollout, digital transformation, or M&A"
         ]
-    },
-    "pricing": {
-        "badge": "Investment",
-        "title": "From €4,500 + VAT",
-        "subtitle": "Fixed-scope 3-week project. No hidden fees, no retainer.",
-        "items": [
-            "Kick-off, interviews, document collection, and field work all included",
-            "Up to 8 functional areas and 30 systems in standard scope",
-            "Final executive session with C-level and/or transformation steering committee",
-            "Editable deliverables (not just PDFs)"
-        ],
-        "cta": "Request a proposal"
     },
     "faq": {
         "title": "Frequently asked questions",

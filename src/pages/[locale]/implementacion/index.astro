@@ -53,20 +53,6 @@ const serviceJsonLd = {
   areaServed: ["ES", "PT", "BR"],
   description: meta?.description,
   url: pageUrl,
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "EUR",
-    price: "3000",
-    priceSpecification: {
-      "@type": "UnitPriceSpecification",
-      priceCurrency: "EUR",
-      minPrice: "3000",
-      maxPrice: "8000",
-      unitCode: "MON",
-    },
-    availability: "https://schema.org/InStock",
-    url: pageUrl,
-  },
 };
 
 const faqJsonLd = Array.isArray(faq?.items) && faq.items.length > 0
@@ -100,7 +86,7 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [
   editorial={editorial}
 >
   {editorial ? (
-    <ServicioArquitecturaEditorial d={impl} current="implementation" contactHref={contactHref} heroSecondaryHref="#capacidades" deliverablesId="capacidades" pricingBack={{ href: roadmapHref, label: "← Roadmap Tecnológico" }} />
+    <ServicioArquitecturaEditorial d={impl} current="implementation" contactHref={contactHref} heroSecondaryHref="#capacidades" deliverablesId="capacidades" />
   ) : (
   <div class="bg-transparent text-white">
     <!-- HERO -->

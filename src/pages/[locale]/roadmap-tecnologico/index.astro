@@ -53,19 +53,6 @@ const serviceJsonLd = {
   areaServed: ["ES", "PT", "BR"],
   description: meta?.description,
   url: pageUrl,
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "EUR",
-    price: "10000",
-    priceSpecification: {
-      "@type": "PriceSpecification",
-      priceCurrency: "EUR",
-      minPrice: "10000",
-      maxPrice: "20000",
-    },
-    availability: "https://schema.org/InStock",
-    url: pageUrl,
-  },
 };
 
 const breadcrumbJsonLd = {
@@ -99,7 +86,7 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [
   editorial={editorial}
 >
   {editorial ? (
-    <ServicioArquitecturaEditorial d={roadmap} current="roadmap" contactHref={contactHref} heroSecondaryHref="#entregables" deliverablesId="entregables" pricingBack={{ href: auditHref, label: "← Radiografía Digital" }} />
+    <ServicioArquitecturaEditorial d={roadmap} current="roadmap" contactHref={contactHref} heroSecondaryHref="#entregables" deliverablesId="entregables" />
   ) : (
   <div class="bg-transparent text-white">
     <!-- HERO -->

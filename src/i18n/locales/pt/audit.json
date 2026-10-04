@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "Radiografia Digital | Auditoria de sistemas",
-        "description": "Inventário mestre, mapa de integrações, análise de risco e recomendações priorizadas para o seu parque tecnológico. A partir de €4.500."
+        "description": "Inventário mestre, mapa de integrações, análise de risco e recomendações priorizadas para o seu parque tecnológico."
     },
     "hero": {
         "badge": "Serviço · Auditoria de sistemas",
@@ -95,18 +95,6 @@
             "Varejo omnicanal com ERP, e-commerce, marketplaces e logística desacoplados",
             "Empresas de 50–500 pessoas antes de um projeto de IA, transformação digital ou M&A"
         ]
-    },
-    "pricing": {
-        "badge": "Investimento",
-        "title": "A partir de €4.500 + impostos",
-        "subtitle": "Sem cobranças ocultas, sem retainer.",
-        "items": [
-            "Kick-off, entrevistas, coleta documental e trabalho de campo inclusos",
-            "Até 8 áreas funcionais e 30 sistemas no escopo padrão",
-            "Sessão executiva final com C-level e/ou comitê de transformação",
-            "Acesso aos entregáveis em formato editável (não apenas PDF)"
-        ],
-        "cta": "Solicitar proposta"
     },
     "faq": {
         "title": "Perguntas frequentes",

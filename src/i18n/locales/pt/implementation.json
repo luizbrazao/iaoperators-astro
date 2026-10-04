@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "Implementação | Construímos o que o roadmap prescreve",
-        "description": "Automações com IA, integrações API-first, dashboards e sistemas sob medida. Projetos fechados ou retainer mensal a partir de €3.000/mês."
+        "description": "Automações com IA, integrações API-first, dashboards e sistemas sob medida. Projetos fechados ou retainer mensal."
     },
     "hero": {
         "badge": "Serviço · Implementação",
@@ -88,18 +88,6 @@
             "Suporte e evolução: pós go-live, monitoramento, melhorias e novos casos de uso sobre o que já foi construído",
             "Squad embarcado: nosso time trabalha junto ao seu em ferramentas e processos compartilhados"
         ]
-    },
-    "pricing": {
-        "badge": "Investimento",
-        "title": "A partir de €3.000 / mês",
-        "subtitle": "Retainer mensal entre €3.000–€8.000/mês conforme capacidade reservada. Projetos fechados precificados por escopo.",
-        "items": [
-            "Time sênior de IA e desenvolvimento — sem junior masking nem terceirização oculta",
-            "Capacidade reservada e previsível (não cobrança por hora)",
-            "Acesso direto ao time no Slack/WhatsApp — sem gerente de conta intermediário",
-            "Reportes quinzenais com avanços, riscos e decisões pendentes"
-        ],
-        "cta": "Falar de um projeto"
     },
     "faq": {
         "title": "Perguntas frequentes",

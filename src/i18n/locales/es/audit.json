@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "Radiografía Digital | Auditoría de sistemas",
-        "description": "Inventario maestro, mapa de integraciones, análisis de riesgos y recomendaciones priorizadas para tu parque tecnológico. Desde 4.500 €."
+        "description": "Inventario maestro, mapa de integraciones, análisis de riesgos y recomendaciones priorizadas para tu parque tecnológico."
     },
     "hero": {
         "badge": "Servicio · Auditoría de sistemas",
@@ -95,18 +95,6 @@
             "Retail omnicanal con ERP, e-commerce, marketplaces y logística desacoplados",
             "Empresas de 50–500 personas previas a un proyecto de IA, transformación digital o M&A"
         ]
-    },
-    "pricing": {
-        "badge": "Inversión",
-        "title": "Desde 4.500 € + IVA",
-        "subtitle": "Sin cargos ocultos, sin retainer.",
-        "items": [
-            "Kick-off, entrevistas, recopilación documental y trabajo de campo incluidos",
-            "Hasta 8 áreas funcionales y 30 sistemas en alcance estándar",
-            "Sesión ejecutiva final con C-level y/o comité de transformación",
-            "Acceso a los entregables en formato editable (no solo PDF)"
-        ],
-        "cta": "Solicitar propuesta"
     },
     "faq": {
         "title": "Preguntas frecuentes",

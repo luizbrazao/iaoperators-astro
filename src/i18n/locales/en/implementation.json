@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "Implementation | We build what the roadmap prescribes",
-        "description": "AI automations, API-first integrations, dashboards, and custom systems. Fixed-scope projects or monthly retainer from €3,000/month."
+        "description": "AI automations, API-first integrations, dashboards, and custom systems. Fixed-scope projects or monthly retainer."
     },
     "hero": {
         "badge": "Service · Implementation",
@@ -88,18 +88,6 @@
             "Support and evolution: post go-live monitoring, improvements, and new use cases on top of what's built",
             "Embedded squad: our team works alongside yours in shared tools and processes"
         ]
-    },
-    "pricing": {
-        "badge": "Investment",
-        "title": "From €3,000 / month",
-        "subtitle": "Monthly retainer between €3,000–€8,000/month based on reserved capacity. Fixed-scope projects priced by scope.",
-        "items": [
-            "Senior AI and development team — no junior masking, no hidden outsourcing",
-            "Reserved, predictable capacity (not hourly billing)",
-            "Direct team access on Slack/WhatsApp — no account manager middleman",
-            "Bi-weekly reports with progress, risks, and pending decisions"
-        ],
-        "cta": "Talk about a project"
     },
     "faq": {
         "title": "Frequently asked questions",

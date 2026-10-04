@@ -47,7 +47,6 @@
                 "title": "Radiografía Digital",
                 "summary": "Diagnosticamos. Inventario completo, mapa de integraciones, análisis de riesgo y recomendaciones priorizadas.",
                 "duration": "Desde 3 semanas",
-                "price": "Desde 4.500 €",
                 "href": "/auditoria-de-sistemas/",
                 "linkLabel": "Ver Radiografía Digital"
             },
@@ -56,7 +55,6 @@
                 "title": "Roadmap Tecnológico",
                 "summary": "Priorizamos. Arquitectura objetivo, decisiones make/buy/consolidate, ROI estimado y plan faseado en 4–6 semanas.",
                 "duration": "4–6 semanas",
-                "price": "Desde 10.000 €",
                 "href": "/roadmap-tecnologico/",
                 "linkLabel": "Ver Roadmap Tecnológico"
             },
@@ -65,7 +63,6 @@
                 "title": "Implementación",
                 "summary": "Construimos. Automatizaciones con IA, integraciones API, dashboards y sistemas a medida. Proyecto cerrado o retainer mensual.",
                 "duration": "Sprints continuos",
-                "price": "Desde 3.000 €/mes",
                 "href": "/implementacion/",
                 "linkLabel": "Ver Implementación"
             }

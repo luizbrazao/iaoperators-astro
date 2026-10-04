@@ -1,6 +1,6 @@
 ---
 title: "What is a technology systems audit (and why your company needs one)"
-description: "What is a technology systems audit, what it covers and when your company needs one. Complete guide with phases, deliverables and pricing."
+description: "What is a technology systems audit, what it covers and when your company needs one. Complete guide with phases and deliverables."
 category: others
 date: 2026-04-30
 locale: en
@@ -27,7 +27,7 @@ faq:
   - q: "What's the difference between a technology audit and an IT audit?"
     a: "A traditional IT audit focuses on infrastructure, security, and compliance. A technology systems audit also analyzes business applications (SaaS, CRMs, ERPs), integrations, Shadow IT, and operational dependencies — not just hardware and networks."
   - q: "How much does a technology systems audit cost?"
-    a: "For companies of 50–500 people, with up to 30 systems and 8 functional areas, the typical investment is between €4,500 and €8,000. The return is immediate: most companies identify between €10,000 and €40,000 per year in underused or redundant licenses in the first review."
+    a: "For companies of 50–500 people, with up to 30 systems and 8 functional areas, the price depends on the number of systems and areas in scope, and is fixed in a proposal after a first conversation. The return is immediate: most companies identify between €10,000 and €40,000 per year in underused or redundant licenses in the first review."
 ---
 
 A technology systems audit is a complete inventory and structured analysis of all the applications, licenses, integrations, and digital processes a company operates. The result is a precise picture of the technology landscape: what exists, how much it costs, who uses it, how it's connected, and what risks it presents.
