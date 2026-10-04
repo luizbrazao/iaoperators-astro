@@ -31,6 +31,8 @@ const NOINDEX_PATHS = [
   "/roadmap-datadicoco/",
   "/agencia-lanza-ghl/",
   "/desafio-de-60-dias/",
+  // Landings personalizadas de prospección (QR en tarjeta)
+  "/tis/",
 ];
 
 export default defineConfig({

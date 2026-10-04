@@ -1,0 +1,601 @@
+---
+// Landing personalizada para la dirección de Hoteles Casa 1800 (Francisca García
+// Moreno y Elisabeth Martínez Santos). Se llega por el QR de una tarjeta entregada
+// en mano. Privada: noindex,nofollow y fuera del sitemap (NOINDEX_PATHS en
+// astro.config.mjs).
+//
+// Página autónoma, sin BaseLayout: necesita una cabecera y un pie mínimos y no
+// la navegación completa del sitio. Reutiliza la identidad editorial (marfil,
+// grafito, naranja, salvia y Manrope local) sin cargar Tailwind ni React.
+//
+// Analítica: reutiliza el GTM del sitio (GTM-572KJ7HZ) con el mismo consentimiento
+// que el resto de páginas (clave `iaoperators_cookie_consent` en localStorage).
+// Eventos en dataLayer: landing_view, video_play, video_complete, click_cta.
+// Sin consentimiento no se envía nada: es la regla del sitio y aquí no se cambia.
+
+// --- Configuración editable ---------------------------------------------------
+// Vídeo: cuando exista, subir el MP4 a /public/video/ y rellenar `src` (y `poster`).
+// `orientation` acepta "horizontal" (16:9) o "vertical" (9:16).
+const VIDEO = {
+  src: "",
+  poster: "",
+  type: "video/mp4",
+  orientation: "horizontal" as "horizontal" | "vertical",
+  duracion: "55 segundos",
+};
+
+// Destino del CTA "Hablar con Luiz". Hoy abre WhatsApp con un mensaje preparado;
+// para pasar a Cal.com o Calendly basta con sustituir esta URL.
+const CONTACT_HREF = `https://wa.me/34662423523?text=${encodeURIComponent(
+  "Hola Luiz, he visto la página que preparaste para Casa 1800 y me gustaría hablar sobre la Radiografía Digital.",
+)}`;
+
+const GTM_ID = "GTM-572KJ7HZ";
+// -----------------------------------------------------------------------------
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL("/tis/casa1800/", site).toString();
+const ogImage = new URL("/og/casa1800.png", site).toString();
+const title = "Casa 1800 × IA Operators | Radiografía Digital";
+const description = "Una propuesta de Radiografía Digital preparada por IA Operators para Hoteles Casa 1800.";
+
+const preguntas = [
+  "¿Qué tareas siguen siendo manuales?",
+  "¿Dónde se introduce la misma información más de una vez?",
+  "¿Qué procesos dependen demasiado de una persona concreta?",
+  "¿Qué herramientas deberían estar conectadas y no lo están?",
+  "¿Dónde hay esperas, transferencias o trabajo administrativo que podría desaparecer?",
+  "¿Dónde tendría realmente sentido aplicar automatización o inteligencia artificial?",
+];
+
+const pasos = ["Personas", "Procesos", "Sistemas", "Fricciones", "Oportunidades"];
+
+const resultado = [
+  "Qué merece la pena mejorar",
+  "Qué puede automatizarse",
+  "Qué sistemas deberían integrarse",
+  "Dónde puede utilizarse IA",
+];
+const pad = (n: number) => String(n).padStart(2, "0");
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
+    <link rel="canonical" href={pageUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="IA Operators" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Crecer sin multiplicar la complejidad. Una idea para Casa 1800." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="theme-color" content="#f3f1eb" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/manrope-latin-variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
+  </head>
+
+  <body>
+    <header class="top" data-top>
+      <div class="wrap top-inner">
+        <a class="wordmark" href="#inicio" aria-label="IA Operators, volver al inicio de la página"><span aria-hidden="true">↗</span> IA Operators</a>
+        <nav class="top-nav" aria-label="Página">
+          <a class="top-link" href="#radiografia">Radiografía Digital</a>
+          <a class="top-cta" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="header">Hablar con Luiz</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="inicio">
+      <section class="hero wrap" aria-labelledby="hero-title">
+        <p class="eyebrow" data-reveal style="--d:0ms">Una idea para Casa 1800</p>
+        <h1 id="hero-title" class="greeting" data-reveal style="--d:80ms">Francisca, Elisabeth: preparé esto pensando en Casa&nbsp;1800.</h1>
+        <p class="thesis" data-reveal style="--d:180ms">Crecer sin multiplicar la complejidad.</p>
+
+        <div class="hero-grid">
+          <div class:list={["video", `video-${VIDEO.orientation}`]} data-video data-reveal style="--d:300ms">
+            {VIDEO.src && (
+              <video
+                class="video-el"
+                preload="none"
+                playsinline
+                controls
+                poster={VIDEO.poster || undefined}
+                aria-label="Vídeo de Luiz Brazão para Casa 1800"
+              >
+                <source src={VIDEO.src} type={VIDEO.type} />
+              </video>
+            )}
+            <button class="video-cover" type="button" data-video-play aria-label={`Reproducir el vídeo, ${VIDEO.duracion}`}>
+              <svg class="video-lines" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <g fill="none" stroke="currentColor" stroke-width="1">
+                  <path d="M-10 120 H260 C300 120 300 190 340 190 H820" />
+                  <path d="M-10 230 H180 C220 230 220 300 260 300 H520 C560 300 560 230 600 230 H820" />
+                  <path d="M-10 340 H420 C460 340 460 270 500 270 H820" />
+                </g>
+                <g fill="currentColor">
+                  <circle cx="340" cy="190" r="3" /><circle cx="260" cy="300" r="3" /><circle cx="600" cy="230" r="3" /><circle cx="500" cy="270" r="3" />
+                </g>
+              </svg>
+              <span class="video-play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+              </span>
+              <span class="video-meta">
+                <span class="video-who">Luiz Brazão · IA Operators</span>
+                <span class="video-time">{VIDEO.duracion}</span>
+              </span>
+            </button>
+            <p class="video-note" data-video-note hidden>El vídeo estará disponible en breve.</p>
+          </div>
+
+          <div class="hero-copy" data-reveal style="--d:380ms">
+            <p class="lead">Casa 1800 ya ha demostrado que la tecnología puede eliminar límites al crecimiento.</p>
+            <p>Ahora, con Sevilla y Granada en operación y Córdoba en el horizonte, aparece una pregunta diferente:</p>
+            <p class="hero-question">¿Qué procesos, sistemas y tareas actuales deberían revisarse antes de hacer crecer nuevamente la operación?</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section wrap" aria-labelledby="porque-title">
+        <div class="intro">
+          <p class="eyebrow" data-reveal>Contexto</p>
+          <div>
+            <h2 id="porque-title" class="h2" data-reveal>¿Por qué pensé en Casa 1800?</h2>
+            <div class="prose" data-reveal>
+              <p>Porque no parece que vuestro reto sea simplemente incorporar más tecnología.</p>
+              <p>Ya habéis avanzado en digitalización, distribución, revenue y experiencia del huésped.</p>
+              <p class="prose-strong">La oportunidad puede estar ahora en mirar la operación de forma transversal.</p>
+            </div>
+          </div>
+        </div>
+
+        <ol class="questions">
+          {preguntas.map((q, i) => (
+            <li class:list={["question", { "question-last": i === preguntas.length - 1 }]} data-reveal>
+              <span class="question-n">{pad(i + 1)}</span>
+              <p>{q}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section id="radiografia" class="dark" aria-labelledby="radiografia-title">
+        <div class="wrap section">
+          <div class="intro">
+            <p class="eyebrow" data-reveal>Radiografía Digital</p>
+            <div>
+              <h2 id="radiografia-title" class="h2" data-reveal>Eso es lo que buscamos en una Radiografía Digital.</h2>
+              <p class="statement" data-reveal>No empezamos recomendando software.</p>
+            </div>
+          </div>
+
+          <ol class="method">
+            <li data-reveal><span>01</span><p>Primero hablamos con las personas que ejecutan los procesos.</p></li>
+            <li data-reveal><span>02</span><p>Analizamos cómo funciona realmente la operación.</p></li>
+            <li data-reveal><span>03</span><p>Revisamos sistemas, flujos de información, tareas manuales, puntos de fricción e integraciones.</p></li>
+            <li data-reveal><span>04</span><p>Después organizamos las oportunidades según impacto, esfuerzo y prioridad.</p></li>
+          </ol>
+
+          <figure class="flow" data-reveal data-flow aria-label="Recorrido de la Radiografía Digital: personas, procesos, sistemas, fricciones y oportunidades">
+            <span class="flow-line" aria-hidden="true"></span>
+            <ol>
+              {pasos.map((p, i) => (
+                <li class:list={{ "flow-end": i === pasos.length - 1 }} style={`--i:${i}`}>
+                  <span class="flow-dot" aria-hidden="true"></span>
+                  <span class="flow-label">{p}</span>
+                </li>
+              ))}
+            </ol>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section wrap" aria-labelledby="resultado-title">
+        <div class="intro">
+          <p class="eyebrow" data-reveal>Entregable</p>
+          <div>
+            <h2 id="resultado-title" class="h2" data-reveal>El resultado</h2>
+            <p class="prose-lead" data-reveal>Un mapa claro de:</p>
+          </div>
+        </div>
+
+        <ol class="results">
+          {resultado.map((r, i) => (
+            <li data-reveal><span>{pad(i + 1)}</span><p>{r}</p></li>
+          ))}
+          <li class="results-last" data-reveal><span>05</span><p>Qué no merece la pena tocar</p></li>
+        </ol>
+      </section>
+
+      <section class="sage" aria-labelledby="idea-title">
+        <div class="wrap section">
+          <div class="intro">
+            <p class="eyebrow" data-reveal>Propuesta</p>
+            <div>
+              <h2 id="idea-title" class="h2" data-reveal>Una idea para Casa 1800</h2>
+              <div class="prose prose-ink" data-reveal>
+                <p>Antes de incorporar una nueva operación en Córdoba, podríamos realizar una Radiografía Digital de uno de los hoteles actuales.</p>
+                <p>El objetivo sería identificar qué procesos están preparados para escalar y cuáles podrían generar más trabajo, dependencia o complejidad al crecer.</p>
+              </div>
+              <p class="pledge" data-reveal>Sin compromiso de implementar ninguna tecnología.</p>
+            </div>
+          </div>
+          <p class="motto" data-reveal>
+            <span>Primero entender.</span>
+            <span>Después decidir.</span>
+          </p>
+        </div>
+      </section>
+
+      <section class="cta wrap section" aria-labelledby="cta-title">
+        <h2 id="cta-title" class="h2 cta-title" data-reveal>Si tiene sentido, seguimos la conversación.</h2>
+        <p class="cta-copy" data-reveal>Podemos revisar juntos cómo funciona la Radiografía Digital y valorar si tendría sentido aplicarla a una de las operaciones de Casa&nbsp;1800.</p>
+        <div class="cta-row" data-reveal>
+          <a class="button" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="final">Hablar con Luiz <span aria-hidden="true">↗</span></a>
+          <div class="signature">
+            <p class="signature-name">Luiz Brazão</p>
+            <p class="signature-role">Founder, IA Operators</p>
+            <a class="signature-site" href="https://iaoperators.com/es/" data-cta="site">iaoperators.com</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="wrap foot-inner">
+        <span class="foot-brand"><span aria-hidden="true">↗</span> IA Operators</span>
+        <a href="/es/auditoria-de-sistemas/">Radiografía Digital</a>
+        <a href="https://iaoperators.com/es/">iaoperators.com</a>
+      </div>
+    </footer>
+
+    <div class="consent" data-consent hidden role="region" aria-label="Cookies">
+      <p>Usamos cookies para medir y mejorar la experiencia. Puedes aceptar o rechazar. <a href="/es/politica-de-privacidad/">Política de Privacidad</a>.</p>
+      <div class="consent-actions">
+        <button type="button" data-consent-reject>Rechazar</button>
+        <button type="button" class="consent-accept" data-consent-accept>Aceptar</button>
+      </div>
+    </div>
+
+    <script define:vars={{ GTM_ID }}>
+      window.__CASA1800_GTM__ = GTM_ID;
+    </script>
+    <script>
+      type Params = Record<string, unknown>;
+      const w = window as unknown as { dataLayer?: Params[]; __GTM_LOADED__?: boolean; __CASA1800_GTM__?: string };
+      const LANDING = "casa1800";
+      const CONSENT_KEY = "iaoperators_cookie_consent";
+
+      // dataLayer: los eventos se encolan aunque GTM aún no esté cargado. Si la
+      // persona acepta cookies más tarde en la misma visita, GTM procesa la cola.
+      function track(event: string, params: Params = {}) {
+        w.dataLayer = w.dataLayer || [];
+        w.dataLayer.push({ event, landing: LANDING, ...params });
+      }
+
+      function loadGTM() {
+        if (w.__GTM_LOADED__ || !w.__CASA1800_GTM__) return;
+        w.__GTM_LOADED__ = true;
+        w.dataLayer = w.dataLayer || [];
+        w.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
+        const s = document.createElement("script");
+        s.async = true;
+        s.src = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(w.__CASA1800_GTM__)}`;
+        document.head.appendChild(s);
+      }
+
+      function readConsent() {
+        try { return localStorage.getItem(CONSENT_KEY); } catch { return null; }
+      }
+      function writeConsent(v: string) {
+        try { localStorage.setItem(CONSENT_KEY, v); } catch { /* sin almacenamiento */ }
+      }
+
+      const params = new URLSearchParams(location.search);
+      track("landing_view", { entry: params.get("src") || "direct" });
+
+      // Consentimiento: misma clave que el banner del resto del sitio.
+      const bar = document.querySelector<HTMLElement>("[data-consent]");
+      const consent = readConsent();
+      if (consent === "accepted") loadGTM();
+      else if (consent === null && bar) bar.hidden = false;
+      bar?.querySelector("[data-consent-accept]")?.addEventListener("click", () => {
+        writeConsent("accepted");
+        loadGTM();
+        bar.hidden = true;
+      });
+      bar?.querySelector("[data-consent-reject]")?.addEventListener("click", () => {
+        writeConsent("rejected");
+        bar.hidden = true;
+      });
+
+      // CTA
+      document.querySelectorAll<HTMLAnchorElement>("[data-cta]").forEach((a) => {
+        a.addEventListener("click", () => track("click_cta", { cta_location: a.dataset.cta, cta_url: a.href }));
+      });
+
+      // Vídeo: sin autoplay. Se reproduce solo al pulsar.
+      const box = document.querySelector<HTMLElement>("[data-video]");
+      const cover = box?.querySelector<HTMLButtonElement>("[data-video-play]");
+      const video = box?.querySelector<HTMLVideoElement>("video");
+      const note = box?.querySelector<HTMLElement>("[data-video-note]");
+      let played = false;
+      let completed = false;
+      cover?.addEventListener("click", () => {
+        if (!video) {
+          if (note) note.hidden = false;
+          return;
+        }
+        box?.classList.add("is-playing");
+        video.play().catch(() => { /* el usuario puede usar los controles nativos */ });
+      });
+      video?.addEventListener("play", () => {
+        box?.classList.add("is-playing");
+        if (!played) {
+          played = true;
+          track("video_play", { video_title: "casa1800_luiz" });
+        }
+      });
+      video?.addEventListener("ended", () => {
+        if (!completed) {
+          completed = true;
+          track("video_complete", { video_title: "casa1800_luiz" });
+        }
+      });
+
+      // Cabecera: fondo y borde solo cuando ya hay scroll.
+      const top = document.querySelector<HTMLElement>("[data-top]");
+      const onScroll = () => top?.classList.toggle("is-scrolled", window.scrollY > 12);
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      // Entradas suaves. Con prefers-reduced-motion el CSS las anula.
+      const items = document.querySelectorAll<HTMLElement>("[data-reveal]");
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("is-in");
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+        );
+        items.forEach((el) => io.observe(el));
+      } else {
+        items.forEach((el) => el.classList.add("is-in"));
+      }
+    </script>
+
+    <style is:global>
+      @font-face {
+        font-family: "Manrope C1800";
+        src: url("/fonts/manrope-latin-variable.woff2") format("woff2");
+        font-weight: 200 800;
+        font-display: swap;
+      }
+      :root {
+        --paper: #f3f1eb;
+        --ink: #22241f;
+        --muted: #666960;
+        --soft: #8a8d82;
+        --line: #d6d6cc;
+        --orange: #f16532;
+        --orange-ink: #b4441a;
+        --sage: #dde2d3;
+        --dark: #22241f;
+        --dark-muted: #b9c0b0;
+        --dark-line: #3d4238;
+        --mono: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+        --gutter: 22px;
+      }
+      *, *::before, *::after { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 76px; }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "Manrope C1800", "Helvetica Neue", Arial, sans-serif;
+        font-size: 17px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      h1, h2, p, ol, figure { margin: 0; }
+      ol { padding: 0; list-style: none; }
+      a { color: inherit; text-decoration: none; }
+      a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+      .wrap { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: var(--gutter); }
+      .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+
+      /* Cabecera */
+      .top { position: sticky; top: 0; z-index: 20; background: transparent; transition: background-color .3s ease, border-color .3s ease; border-bottom: 1px solid transparent; }
+      .top.is-scrolled { background: rgba(243, 241, 235, .92); border-bottom-color: var(--line); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+      .top-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+      .wordmark { font-size: 19px; font-weight: 600; letter-spacing: -.04em; white-space: nowrap; }
+      .wordmark span, .foot-brand span { color: var(--orange); }
+      .top-nav { display: flex; align-items: center; gap: 22px; font-size: 13px; }
+      .top-link { display: none; }
+      .top-cta { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border: 1px solid var(--ink); border-radius: 999px; font-weight: 500; white-space: nowrap; transition: background-color .2s ease, color .2s ease; }
+      .top-cta:hover { background: var(--ink); color: var(--paper); }
+
+      /* Hero */
+      .hero { padding-top: 28px; padding-bottom: 72px; }
+      .greeting { margin-top: 22px; max-width: 22em; font-size: clamp(25px, 3.5vw, 42px); font-weight: 500; letter-spacing: -.035em; line-height: 1.2; }
+      .thesis { margin-top: 22px; font-size: clamp(40px, 10.6vw, 104px); font-weight: 500; letter-spacing: -.06em; line-height: 1; max-width: 9.5em; color: var(--ink); }
+      .hero-grid { display: grid; gap: 36px; margin-top: 40px; }
+      .hero-copy p { color: var(--muted); max-width: 34em; }
+      .hero-copy p + p { margin-top: 16px; }
+      .hero-copy .lead { font-size: 20px; line-height: 1.5; letter-spacing: -.015em; color: var(--ink); }
+      .hero-copy .hero-question { margin-top: 22px; padding-left: 18px; border-left: 2px solid var(--orange); font-size: 19px; line-height: 1.5; letter-spacing: -.012em; color: var(--ink); }
+
+      /* Vídeo */
+      .video { position: relative; overflow: hidden; background: var(--dark); color: var(--paper); border-radius: 4px; }
+      .video-horizontal { aspect-ratio: 16 / 9; }
+      .video-vertical { aspect-ratio: 9 / 16; max-height: 78vh; width: min(100%, calc(78vh * 9 / 16)); margin-inline: auto; }
+      .video-el { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #000; }
+      .video-cover { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; width: 100%; padding: 0; border: 0; background: var(--dark); color: inherit; font: inherit; cursor: pointer; }
+      .video.is-playing .video-cover { display: none; }
+      .video-lines { position: absolute; inset: 0; width: 100%; height: 100%; color: #5d6455; opacity: .55; }
+      .video-play { position: relative; display: grid; place-items: center; width: 74px; height: 74px; border-radius: 50%; background: var(--paper); color: var(--ink); transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+      .video-play svg { margin-left: 3px; }
+      .video-cover:hover .video-play { transform: scale(1.06); }
+      .video-meta { position: absolute; left: 18px; right: 18px; bottom: 16px; display: flex; justify-content: space-between; gap: 12px; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--dark-muted); }
+      .video-time { color: var(--paper); }
+      .video-note { position: absolute; left: 0; right: 0; top: 16px; text-align: center; font-size: 13px; color: var(--paper); }
+
+      /* Secciones */
+      .section { padding-block: 88px; }
+      .intro { display: grid; gap: 22px; }
+      .intro > .eyebrow { padding-top: 6px; }
+      .h2 { font-size: clamp(34px, 5.4vw, 72px); font-weight: 500; letter-spacing: -.055em; line-height: 1.06; max-width: 13em; }
+      .prose { margin-top: 26px; max-width: 36em; }
+      .prose p { color: var(--muted); }
+      .prose p + p { margin-top: 14px; }
+      .prose .prose-strong { color: var(--ink); font-size: 20px; line-height: 1.45; letter-spacing: -.015em; margin-top: 22px; }
+
+      /* Preguntas */
+      .questions { margin-top: 64px; border-top: 1px solid var(--line); }
+      .question { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; padding-block: 26px; border-bottom: 1px solid var(--line); }
+      .question-n { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--soft); padding-top: .55em; }
+      .question p { font-size: clamp(22px, 3vw, 40px); font-weight: 500; letter-spacing: -.04em; line-height: 1.18; max-width: 22em; }
+      .question-last p { color: var(--orange-ink); }
+      .question-last .question-n { color: var(--orange-ink); }
+
+      /* Radiografía (oscuro) */
+      .dark { background: var(--dark); color: var(--paper); }
+      .dark .eyebrow { color: var(--dark-muted); }
+      .statement { margin-top: 28px; font-size: clamp(26px, 3.6vw, 46px); font-weight: 500; letter-spacing: -.045em; line-height: 1.15; color: var(--orange); }
+      .method { margin-top: 64px; display: grid; gap: 0; border-top: 1px solid var(--dark-line); }
+      .method li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; padding-block: 22px; border-bottom: 1px solid var(--dark-line); }
+      .method span { font-family: var(--mono); font-size: 12px; color: var(--dark-muted); padding-top: .4em; }
+      .method p { font-size: clamp(18px, 2vw, 24px); letter-spacing: -.02em; line-height: 1.4; color: #e9ece4; max-width: 30em; }
+
+      .flow { position: relative; margin-top: 72px; }
+      .flow ol { position: relative; display: grid; gap: 22px; }
+      .flow li { position: relative; display: flex; align-items: center; gap: 16px; }
+      .flow-dot { position: relative; z-index: 1; width: 11px; height: 11px; border-radius: 50%; border: 1px solid var(--paper); background: var(--dark); flex: none; }
+      .flow-end .flow-dot { background: var(--orange); border-color: var(--orange); }
+      .flow-label { font-size: 18px; letter-spacing: -.02em; }
+      .flow-end .flow-label { color: var(--orange); }
+      .flow-line { position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: #6f776a; transform-origin: top; }
+
+      /* Resultado */
+      .prose-lead { margin-top: 22px; font-size: 20px; color: var(--muted); }
+      .results { margin-top: 56px; border-top: 1px solid var(--line); }
+      .results li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; padding-block: 22px; border-bottom: 1px solid var(--line); }
+      .results span { font-family: var(--mono); font-size: 12px; color: var(--soft); padding-top: .7em; }
+      .results p { font-size: clamp(28px, 4.2vw, 56px); font-weight: 500; letter-spacing: -.055em; line-height: 1.05; }
+      .results .results-last { margin-top: 40px; padding: 30px 22px 34px; border: 0; background: var(--dark); color: var(--paper); grid-template-columns: 44px minmax(0, 1fr); }
+      .results .results-last span { color: var(--orange); }
+      .results .results-last p { color: var(--paper); }
+
+      /* Propuesta (salvia) */
+      .sage { background: var(--sage); }
+      .sage .eyebrow { color: #5a6350; }
+      .prose-ink p { color: #3e4537; }
+      .pledge { margin-top: 30px; display: inline-flex; align-items: center; gap: 12px; padding: 12px 18px; border: 1px solid var(--ink); border-radius: 4px; font-size: 15px; font-weight: 500; letter-spacing: -.01em; }
+      .pledge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--orange); flex: none; }
+      .motto { margin-top: 84px; display: grid; font-size: clamp(46px, 11vw, 152px); font-weight: 500; letter-spacing: -.065em; line-height: .96; }
+      .motto span:last-child { color: #6d7663; }
+
+      /* CTA */
+      .cta { padding-top: 104px; }
+      .cta-title { max-width: 12em; }
+      .cta-copy { margin-top: 24px; max-width: 34em; color: var(--muted); font-size: 18px; }
+      .cta-row { margin-top: 40px; display: grid; gap: 34px; }
+      .button { display: inline-flex; align-items: center; justify-content: space-between; gap: 28px; justify-self: start; min-height: 56px; padding: 0 24px; background: var(--ink); color: var(--paper); font-size: 15px; font-weight: 500; transition: background-color .2s ease; }
+      .button:hover { background: #000; }
+      .button span { transition: transform .25s ease; }
+      .button:hover span { transform: translate(2px, -2px); }
+      .signature { border-top: 1px solid var(--line); padding-top: 18px; max-width: 320px; }
+      .signature-name { font-size: 18px; font-weight: 600; letter-spacing: -.02em; }
+      .signature-role { color: var(--muted); font-size: 14px; }
+      .signature-site { display: inline-block; margin-top: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--soft); min-height: 24px; }
+      .signature-site:hover { color: var(--ink); }
+
+      /* Pie */
+      .foot { border-top: 1px solid var(--line); }
+      .foot-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; padding-block: 26px 34px; font-size: 13px; color: var(--muted); }
+      .foot-brand { color: var(--ink); font-weight: 600; letter-spacing: -.03em; margin-right: auto; }
+      .foot a { min-height: 32px; display: inline-flex; align-items: center; }
+      .foot a:hover { color: var(--ink); }
+
+      /* Consentimiento (mismo almacenamiento que el banner del sitio) */
+      .consent { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 30; display: grid; gap: 12px; padding: 14px 16px; background: var(--ink); color: #e9ece4; font-size: 13px; line-height: 1.5; border-radius: 4px; max-width: 560px; margin-inline: auto; }
+      .consent[hidden] { display: none; }
+      .consent a { text-decoration: underline; text-underline-offset: 3px; }
+      .consent-actions { display: flex; gap: 10px; justify-content: flex-end; }
+      .consent button { min-height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #5d6455; background: transparent; color: inherit; font: inherit; font-weight: 500; cursor: pointer; }
+      .consent .consent-accept { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+
+      /* Entradas */
+      .js [data-reveal] { opacity: 0; transform: translateY(16px); transition: opacity .9s ease var(--d, 0ms), transform .9s cubic-bezier(.2, .7, .2, 1) var(--d, 0ms); }
+      .js [data-reveal].is-in { opacity: 1; transform: none; }
+      .js .flow .flow-line { transform: scaleY(0); transition: transform 1.4s cubic-bezier(.2, .7, .2, 1) .2s; }
+      .js .flow.is-in .flow-line { transform: none; }
+      .js .flow li { opacity: 0; transition: opacity .6s ease calc(.25s + var(--i) * .18s); }
+      .js .flow.is-in li { opacity: 1; }
+
+      @media (min-width: 560px) {
+        .top-link { display: inline-flex; align-items: center; min-height: 40px; color: var(--muted); }
+        .top-link:hover { color: var(--ink); }
+        .consent { grid-template-columns: 1fr auto; align-items: center; }
+      }
+      @media (min-width: 900px) {
+        :root { --gutter: 48px; }
+        body { font-size: 18px; }
+        .top-inner { height: 76px; }
+        .wordmark { font-size: 21px; }
+        .hero { padding-top: 36px; padding-bottom: 112px; }
+        .thesis { max-width: 12em; font-size: clamp(64px, 7.4vw, 104px); }
+        .greeting { margin-top: 18px; }
+        .hero-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 56px; align-items: end; margin-top: 48px; }
+        .hero-grid .video-vertical { grid-row: span 1; }
+        .section { padding-block: 128px; }
+        .intro { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 48px; }
+        .questions, .method, .results { margin-left: calc(33.333% + 16px); }
+        .question { grid-template-columns: 64px minmax(0, 1fr); padding-block: 32px; }
+        .question:nth-child(even) p { padding-left: 8%; }
+        .method li, .results li { grid-template-columns: 64px minmax(0, 1fr); }
+        .results .results-last { margin-top: 56px; padding: 44px 40px 48px 24px; grid-template-columns: 64px minmax(0, 1fr); }
+        .flow { margin-top: 96px; }
+        .flow ol { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; }
+        .flow li { flex-direction: column; align-items: flex-start; gap: 18px; }
+        .flow-line { left: 0; right: 0; top: 5px; bottom: auto; width: auto; height: 1px; transform-origin: left; }
+        .js .flow .flow-line { transform: scaleX(0); }
+        .flow-label { font-size: 22px; }
+        .motto { margin-top: 112px; }
+        .cta { padding-top: 140px; padding-bottom: 140px; }
+        .cta-row { grid-template-columns: auto 1fr; align-items: end; gap: 64px; }
+        .signature { justify-self: end; min-width: 260px; }
+        .consent { left: auto; right: 24px; bottom: 24px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .js [data-reveal], .js .flow li, .js .flow .flow-line { opacity: 1 !important; transform: none !important; transition: none !important; }
+        .video-play, .button span, .top { transition: none; }
+      }
+    </style>
+  </body>
+</html>
