@@ -15,6 +15,8 @@ import {
   CASOS,
 } from "@/data/verifactu";
 import { ORG_REF } from "@/data/identidad";
+import copy from "@/i18n/locales/es/pagesEditorial.json";
+import "@/styles/editorial-pages.css";
 
 const locale = "es";
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
@@ -28,6 +30,9 @@ const diasRestantes = Math.max(
   0,
   Math.ceil((deadline.getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
 );
+
+// Rótulos de la versión editorial (oct/2026).
+const L = copy.verifactu;
 
 const casos = CASO_SLUGS.map((slug) => ({ slug, ...CASOS[slug] }));
 
@@ -90,411 +95,272 @@ const faqJsonLd = {
   alternates={[{ lang: "es", href: pageUrl }]}
   xDefaultUrl={pageUrl}
   jsonLd={[serviceJsonLd, breadcrumbJsonLd, faqJsonLd]}
+  editorial
 >
-  <div class="bg-transparent text-white">
-    <!-- HERO -->
-    <section class="relative px-4 pt-28 pb-16">
-      <div class="max-w-5xl mx-auto text-center">
-        <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-6">
-          Verifactu (RRSIF) · {NORMA.fechaSociedadesLegible} sociedades · {NORMA.fechaRestoLegible} resto de obligados
-        </span>
-        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
-          Verifactu sin cambiar el software que hace funcionar tu negocio
-        </h1>
-        <p class="text-lg md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto">
-          Adaptamos el cumplimiento del RRSIF a tu ERP, tu TPV o tu e-commerce actual, sin
-          necesidad de migrar de software.
-        </p>
-
-        <div class="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-[#0a0a0a] border border-orange-500/20 mb-3">
-          <span
-            id="vf-countdown"
-            data-deadline={NORMA.fechaSociedades}
-            class="text-3xl md:text-4xl font-bold text-orange-400 tabular-nums"
-          >
-            {diasRestantes}
-          </span>
-          <span class="text-left text-sm text-gray-400 leading-tight">
-            días para el {NORMA.fechaSociedadesLegible}<br />(Impuesto sobre Sociedades)
-          </span>
-        </div>
-        <p class="text-xs text-gray-500 mb-10">
-          {NORMA.fechaRestoLegible} — resto de obligados
-        </p>
-
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <a
-            href={contactHref}
-            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-base hover:bg-orange-400 hover:scale-105 transition-all duration-300"
-          >
-            Auditoría de tu sistema ↗
-          </a>
-          <a
-            href={`${base}test/`}
-            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-base hover:bg-orange-500/10 transition-all duration-300"
-          >
-            ¿Te aplica? Test de 2 min ↗
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- RRSIF vs VERI*FACTU vs NO VERI*FACTU -->
-    <section class="px-4 pb-16">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-2xl md:text-3xl font-bold mb-4">RRSIF y VERI*FACTU no son exactamente lo mismo</h2>
-        <p class="text-gray-300 leading-relaxed mb-4">
-          El RRSIF es el reglamento que obliga a todo sistema de facturación afectado a generar
-          registros íntegros, trazables e inalterables, con QR y declaración responsable del
-          productor. Se cumple de dos formas posibles: VERI*FACTU o NO VERI*FACTU.
-        </p>
-        <p class="text-gray-300 leading-relaxed">
-          VERI*FACTU remite esos registros a la AEAT de forma continuada, a cambio de simplificar
-          algunas exigencias locales. NO VERI*FACTU no remite en el momento, pero exige firma
-          electrónica, registro de eventos y más control por tu parte. En el lenguaje comercial
-          «Verifactu» se usa a menudo para el conjunto; aquí distinguimos los tres términos porque
-          afectan a decisiones técnicas distintas.
-        </p>
-      </div>
-    </section>
-
-    <!-- SUBPÁGINAS DEL PILAR -->
-    <!-- Enlaces internos hub→hijos con ancla descriptiva (no exacta): el plan
-         §7.7 y §8 piden texto de enlace claro, no correspondencia literal. -->
-    <section class="px-4 pb-4">
-      <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
-        <a
-          href={`${base}plazos/`}
-          class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-5 hover:border-orange-500/30 transition-all duration-300"
-        >
-          <h2 class="text-base font-semibold mb-1 group-hover:text-orange-400 transition-colors">
-            Cuándo te obliga
-          </h2>
-          <p class="text-gray-400 text-sm">Las dos fechas de 2027 y a quién no le aplica.</p>
-        </a>
-        <a
-          href={`${base}integracion/`}
-          class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-5 hover:border-orange-500/30 transition-all duration-300"
-        >
-          <h2 class="text-base font-semibold mb-1 group-hover:text-orange-400 transition-colors">
-            Cómo es el proyecto
-          </h2>
-          <p class="text-gray-400 text-sm">Vías de integración, fases, entregables y precio.</p>
-        </a>
-        <a
-          href={`${base}api/`}
-          class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-5 hover:border-orange-500/30 transition-all duration-300"
-        >
-          <h2 class="text-base font-semibold mb-1 group-hover:text-orange-400 transition-colors">
-            El detalle técnico
-          </h2>
-          <p class="text-gray-400 text-sm">Arquitectura de la conexión con el servicio de la AEAT.</p>
-        </a>
-      </div>
-    </section>
-
-    <!-- ¿TE APLICA? -->
-    <section class="px-4 py-20">
-      <div class="max-w-5xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold mb-4">Primero: ¿te aplica?</h2>
-          <p class="text-gray-400 max-w-2xl mx-auto">
-            Hay tres situaciones en las que el reglamento no te alcanza. Preferimos decírtelo antes
-            que venderte un proyecto que no necesitas.
-          </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {EXCLUSIONES.map((item) => (
-            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6">
-              <div class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3">
-                Quedas fuera si
-              </div>
-              <h3 class="text-lg font-semibold text-white mb-2">{item.title}</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
-            </div>
-          ))}
-        </div>
-        <p class="text-center text-sm text-gray-400 mt-8 max-w-2xl mx-auto leading-relaxed">
-          Si no estás en ninguno de esos tres casos y emites facturas desde un sistema informático,
-          la obligación llega el <strong class="text-white">{NORMA.fechaSociedadesLegible}</strong>
-          si tributas por el Impuesto sobre Sociedades, y el
-          <strong class="text-white">{NORMA.fechaRestoLegible}</strong> en el resto de casos.
-        </p>
-      </div>
-    </section>
-
-    <!-- DE LA NORMA AL SISTEMA -->
-    <section class="px-4 py-24 bg-white/[0.02] border-y border-white/5">
-      <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-14">
-          <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
-            El núcleo del proyecto
-          </span>
-          <h2 class="text-3xl md:text-4xl font-bold mb-4">De la norma al sistema</h2>
-          <p class="text-gray-400 max-w-2xl mx-auto">
-            Cada exigencia del reglamento se traduce en una pieza de software. Y cada pieza tiene una
-            trampa que solo aparece cuando el sistema ya está en producción.
-          </p>
-        </div>
-
-        <div class="space-y-4">
-          {REQUISITOS.map((r, idx) => (
-            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8 hover:border-orange-500/20 transition-all duration-300">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-                <div>
-                  <div class="flex items-center gap-3 mb-3">
-                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-orange-500/10 text-orange-400 font-bold text-xs shrink-0">
-                      {String(idx + 1).padStart(2, "0")}
-                    </span>
-                    <span class="text-xs font-semibold uppercase tracking-widest text-gray-500">
-                      Lo que exige la norma
-                    </span>
-                  </div>
-                  <p class="text-white text-base leading-relaxed">{r.norma}</p>
-                </div>
-                <div class="md:border-l md:border-white/5 md:pl-10">
-                  <div class="text-xs font-semibold uppercase tracking-widest text-orange-400 mb-3">
-                    Lo que hay que construir
-                  </div>
-                  <p class="text-gray-300 text-base leading-relaxed mb-3">{r.sistema}</p>
-                  <p class="text-gray-500 text-sm leading-relaxed italic">{r.trampa}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <p class="text-center text-xs text-gray-500 mt-8">
-          Requisitos contrastados con la
-          <a
-            href={NORMA.aeatUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-gray-400 underline hover:text-orange-400 transition-colors"
-          >
-            documentación de la AEAT
-          </a>
-          y el texto del {NORMA.nombre}.
-        </p>
-      </div>
-    </section>
-
-    <!-- TODO SEO/PROOF: añadir caso real RRSIF/VERI*FACTU cuando exista uno publicable. -->
-    <!-- CASOS -->
-    <section id="casos" class="px-4 py-20 scroll-mt-24">
-      <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold mb-4">¿Cuál es tu caso?</h2>
-          <p class="text-gray-400 max-w-2xl mx-auto">
-            Cuatro situaciones donde integrar el cumplimiento en el sistema que ya tienes suele
-            ser una alternativa más simple que migrar a un software estándar.
-          </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {casos.map((caso) => (
-            <a
-              href={`${base}${caso.slug}/`}
-              class="group bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 hover:border-orange-500/30 transition-all duration-300"
-            >
-              <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-orange-400 transition-colors">
-                {caso.nombreCorto}
-              </h3>
-              <p class="text-gray-400 text-sm leading-relaxed mb-4">{caso.intro}</p>
-              <span class="text-orange-400 text-sm">Ver este caso →</span>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- ARQUITECTURA -->
-    <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
-      <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold mb-4">{SHARED.arquitectura.title}</h2>
-          <p class="text-gray-400 max-w-2xl mx-auto">{SHARED.arquitectura.subtitle}</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {SHARED.arquitectura.items.map((item, idx) => (
-            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
-              <div class="flex items-center justify-between gap-3 mb-4">
-                <div class="flex items-center gap-3">
-                  <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 font-bold text-sm">
-                    {String(idx + 1).padStart(2, "0")}
-                  </span>
-                  <h3 class="text-lg font-semibold text-white">{item.title}</h3>
-                </div>
-                <span class="shrink-0 text-[10px] uppercase tracking-widest text-gray-500 border border-white/10 rounded-full px-2 py-1">
-                  {item.modalidad}
-                </span>
-              </div>
-              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- PROCESO -->
-    <section class="px-4 py-24">
-      <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-16">
-          <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
-            {SHARED.proceso.badge}
-          </span>
-          <h2 class="text-3xl md:text-4xl font-bold mb-4">{SHARED.proceso.title}</h2>
-          <p class="text-gray-400 max-w-2xl mx-auto">{SHARED.proceso.subtitle}</p>
-        </div>
-        <ol class="space-y-6 max-w-4xl mx-auto">
-          {SHARED.proceso.phases.map((phase) => (
-            <li class="flex flex-col md:flex-row gap-6 bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8 hover:border-orange-500/20 transition-all duration-300">
-              <div class="md:w-56 shrink-0">
-                <div class="text-orange-400 text-xs font-semibold uppercase tracking-widest mb-1">
-                  {phase.code} · {phase.plazo}
-                </div>
-                <h3 class="text-xl font-bold text-white">{phase.title}</h3>
-              </div>
-              <p class="text-gray-300 leading-relaxed flex-1">{phase.body}</p>
-            </li>
-          ))}
+  <div class="ed-container">
+    <header class="pg-hero pg-hero-compact">
+      <nav class="pf-crumbs ed-eyebrow" aria-label={copy.breadcrumb.label}>
+        <ol>
+          <li><a href="/es/">{copy.breadcrumb.home}</a></li>
+          <li><a href="/es/cumplimiento/">{L.cumplimiento}</a></li>
+          <li><span aria-current="page">{NORMA.nombreCorto}</span></li>
         </ol>
-      </div>
-    </section>
-
-    <!-- SANCIONES + PRECIO -->
-    <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
-      <div class="max-w-6xl mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
-          {SHARED.alcance.items.map((item) => (
-            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-8 flex flex-col">
-              <h3 class="text-lg font-semibold text-white mb-2">{item.title}</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">{item.body}</p>
-            </div>
-          ))}
-        </div>
-
-        <div class="max-w-3xl mx-auto text-center">
-          <p class="text-xs uppercase tracking-widest text-gray-500 mb-4">
-            Lo que hay al otro lado
+      </nav>
+      <h1>Verifactu <span>sin cambiar el software que hace funcionar tu negocio</span></h1>
+      <div class="pg-hero-bottom">
+        <div class="pg-countdown">
+          <p class="ed-eyebrow">Verifactu (RRSIF) · {NORMA.fechaSociedadesLegible} sociedades · {NORMA.fechaRestoLegible} resto de obligados</p>
+          <p class="pg-countdown-value">
+            <strong id="vf-countdown" data-deadline={NORMA.fechaSociedades}>{diasRestantes}</strong>
+            <span>días para el {NORMA.fechaSociedadesLegible}<br />(Impuesto sobre Sociedades)</span>
           </p>
-          <div class="flex flex-col sm:flex-row justify-center gap-4">
-            {SANCIONES.map((s) => (
-              <div class="flex-1 bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-5">
-                <div class="text-xl font-bold text-white mb-1">{s.importe}</div>
-                <div class="text-gray-500 text-xs leading-relaxed">{s.quien}</div>
-              </div>
-            ))}
+          <p class="pg-countdown-note">{NORMA.fechaRestoLegible} — resto de obligados</p>
+        </div>
+        <div>
+          <p class="pg-lead pg-lead-strong">
+            Adaptamos el cumplimiento del RRSIF a tu ERP, tu TPV o tu e-commerce actual, sin
+            necesidad de migrar de software.
+          </p>
+          <div class="pg-actions">
+            <a class="ed-button" href={contactHref}>Auditoría de tu sistema<span class="ed-arrow" aria-hidden="true">↗</span></a>
+            <a class="ed-underlined" href={`${base}test/`}>¿Te aplica? Test de 2 min <span class="ed-arrow" aria-hidden="true">↗</span></a>
           </div>
-          <p class="text-xs text-gray-600 mt-4 leading-relaxed">
-            Régimen del artículo 201 bis de la Ley General Tributaria. Su aplicación a un caso
-            concreto corresponde a tu asesoría.
-          </p>
         </div>
+      </div>
+    </header>
+
+    <section class="pg-section" aria-labelledby="rrsif-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.queEs}</p>
+        <div>
+          <h2 id="rrsif-title">RRSIF y VERI*FACTU no son exactamente lo mismo</h2>
+          <div class="pg-prose">
+            <p>
+              El RRSIF es el reglamento que obliga a todo sistema de facturación afectado a generar
+              registros íntegros, trazables e inalterables, con QR y declaración responsable del
+              productor. Se cumple de dos formas posibles: VERI*FACTU o NO VERI*FACTU.
+            </p>
+            <p>
+              VERI*FACTU remite esos registros a la AEAT de forma continuada, a cambio de simplificar
+              algunas exigencias locales. NO VERI*FACTU no remite en el momento, pero exige firma
+              electrónica, registro de eventos y más control por tu parte. En el lenguaje comercial
+              «Verifactu» se usa a menudo para el conjunto; aquí distinguimos los tres términos porque
+              afectan a decisiones técnicas distintas.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="pg-doors">
+        <a href={`${base}plazos/`}><h2>Cuándo te obliga</h2><p>Las dos fechas de 2027 y a quién no le aplica.</p><span class="ed-arrow" aria-hidden="true">↗</span></a>
+        <a href={`${base}integracion/`}><h2>Cómo es el proyecto</h2><p>Vías de integración, fases, entregables y precio.</p><span class="ed-arrow" aria-hidden="true">↗</span></a>
+        <a href={`${base}api/`}><h2>El detalle técnico</h2><p>Arquitectura de la conexión con el servicio de la AEAT.</p><span class="ed-arrow" aria-hidden="true">↗</span></a>
       </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="px-4 py-20">
-      <div class="max-w-3xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">{SHARED.faq.title}</h2>
-        <div class="space-y-3">
-          {SHARED.faq.items.map((item) => (
-            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-4 hover:border-orange-500/20 transition-all duration-300">
-              <summary class="flex items-center justify-between cursor-pointer list-none">
-                <span class="text-white font-medium pr-4">{item.q}</span>
-                <span class="text-orange-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
-              </summary>
-              <p class="text-gray-400 mt-3 leading-relaxed">{item.a}</p>
-            </details>
-          ))}
+    <section class="pg-section" aria-labelledby="aplica-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.exclusiones}</p>
+        <div>
+          <h2 id="aplica-title">Primero: ¿te aplica?</h2>
+          <div class="pg-prose">
+            <p>
+              Hay tres situaciones en las que el reglamento no te alcanza. Preferimos decírtelo antes
+              que venderte un proyecto que no necesitas.
+            </p>
+          </div>
         </div>
+      </div>
+      <ol class="pg-columns">
+        {EXCLUSIONES.map((item) => (
+          <li><span class="ed-eyebrow">Quedas fuera si</span><h3>{item.title}</h3><p>{item.body}</p></li>
+        ))}
+      </ol>
+      <p class="pg-callout">
+        Si no estás en ninguno de esos tres casos y emites facturas desde un sistema informático,
+        la obligación llega el <strong>{NORMA.fechaSociedadesLegible}</strong> si tributas por el
+        Impuesto sobre Sociedades, y el <strong>{NORMA.fechaRestoLegible}</strong> en el resto de casos.
+      </p>
+    </section>
+
+    <section class="pg-section" aria-labelledby="norma-sistema-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">El núcleo del proyecto</p>
+        <div>
+          <h2 id="norma-sistema-title">De la norma al sistema</h2>
+          <div class="pg-prose">
+            <p>
+              Cada exigencia del reglamento se traduce en una pieza de software. Y cada pieza tiene una
+              trampa que solo aparece cuando el sistema ya está en producción.
+            </p>
+          </div>
+        </div>
+      </div>
+      <ol class="pg-patterns pg-obligations">
+        {REQUISITOS.map((r, idx) => (
+          <li>
+            <span class="ed-eyebrow">{String(idx + 1).padStart(2, "0")}</span>
+            <div class="pg-pattern-main">
+              <p class="ed-eyebrow">Lo que exige la norma</p>
+              <p class="pg-obligation-law">{r.norma}</p>
+            </div>
+            <div class="pg-pattern-risk">
+              <p class="ed-eyebrow">Lo que hay que construir</p>
+              <p class="pg-obligation-system">{r.sistema}</p>
+              <p class="pg-obligation-risk">{r.trampa}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="pg-source">
+        Requisitos contrastados con la{" "}
+        <a href={NORMA.aeatUrl} target="_blank" rel="noopener noreferrer">documentación de la AEAT</a>{" "}
+        y el texto del {NORMA.nombre}.
+      </p>
+    </section>
+
+    <section id="casos" class="pg-section pg-section-flush pg-anchor" aria-labelledby="casos-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.casos}</p>
+        <div>
+          <h2 id="casos-title">¿Cuál es tu caso?</h2>
+          <div class="pg-prose">
+            <p>
+              Cuatro situaciones donde integrar el cumplimiento en el sistema que ya tienes suele
+              ser una alternativa más simple que migrar a un software estándar.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="pg-offers">
+        {casos.map((caso, idx) => (
+          <a class="ed-offer" href={`${base}${caso.slug}/`}>
+            <span class="ed-eyebrow">{String(idx + 1).padStart(2, "0")}</span><h3>{caso.nombreCorto}</h3><p>{caso.intro}</p><span class="ed-arrow" aria-hidden="true">↗</span>
+          </a>
+        ))}
       </div>
     </section>
 
-    <!-- PROFUNDIZAR: clúster de artículos -->
-    <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
-      <div class="max-w-5xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-3 text-center">Los tres puntos donde se atascan los proyectos</h2>
-        <p class="text-gray-400 text-center max-w-2xl mx-auto mb-12 leading-relaxed">
-          No es el envío a la AEAT. Son estas tres decisiones, y conviene tomarlas antes de
-          escribir código.
+    <section class="pg-section" aria-labelledby="arquitectura-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.arquitectura}</p>
+        <div>
+          <h2 id="arquitectura-title">{SHARED.arquitectura.title}</h2>
+          <div class="pg-prose"><p>{SHARED.arquitectura.subtitle}</p></div>
+        </div>
+      </div>
+      <ol class="pg-columns">
+        {SHARED.arquitectura.items.map((item, idx) => (
+          <li><span class="ed-eyebrow">{String(idx + 1).padStart(2, "0")} · {item.modalidad}</span><h3>{item.title}</h3><p>{item.body}</p></li>
+        ))}
+      </ol>
+    </section>
+  </div>
+
+  <section class="ed-method pg-method pg-process" aria-labelledby="proceso-title">
+    <div class="ed-container">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{SHARED.proceso.badge}</p>
+        <div>
+          <h2 id="proceso-title">{SHARED.proceso.title}</h2>
+          <p class="pg-method-lead">{SHARED.proceso.subtitle}</p>
+        </div>
+      </div>
+      <ol class="ed-steps pg-steps-4">
+        {SHARED.proceso.phases.map((phase) => (
+          <li><span class="ed-eyebrow">{phase.code} · {phase.plazo}</span><h3>{phase.title}</h3><p>{phase.body}</p></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <div class="ed-container">
+    <section class="pg-section" aria-label={SHARED.alcance.title}>
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.alcance}</p>
+        <div class="pg-prose"><p>{SHARED.alcance.subtitle}</p></div>
+      </div>
+      <ol class="pg-columns">
+        {SHARED.alcance.items.map((item, idx) => (
+          <li><span class="ed-eyebrow">{String(idx + 1).padStart(2, "0")}</span><h3>{item.title}</h3><p>{item.body}</p></li>
+        ))}
+      </ol>
+      <div class="pg-sanctions">
+        <p class="ed-eyebrow">Lo que hay al otro lado</p>
+        <ul class="pg-thresholds">
+          {SANCIONES.map((s) => <li><strong>{s.importe}</strong><span>{s.quien}</span></li>)}
+        </ul>
+        <p class="pg-source">
+          Régimen del artículo 201 bis de la Ley General Tributaria. Su aplicación a un caso
+          concreto corresponde a tu asesoría.
         </p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <a
-            href="/es/blog/series-y-cadena-de-huellas-verifactu/"
-            class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 hover:border-orange-500/30 transition-all duration-300"
-          >
-            <span class="text-xs text-orange-400 font-medium">Arquitectura</span>
-            <h3 class="text-white font-semibold mt-2 mb-2 leading-snug">
-              Cómo conviven las series con una única cadena de huellas
-            </h3>
-            <p class="text-gray-400 text-sm leading-relaxed">
-              Qué cambia cuando facturas desde varias cajas o tiendas a la vez, y cuántos
-              sistemas de facturación tiene realmente tu operación.
-            </p>
-            <span class="inline-block text-orange-400 text-sm mt-4 group-hover:translate-x-1 transition-transform">Leer →</span>
-          </a>
-          <a
-            href="/es/blog/qr-verifactu-ticket-termico-tpv/"
-            class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 hover:border-orange-500/30 transition-all duration-300"
-          >
-            <span class="text-xs text-orange-400 font-medium">Impresión</span>
-            <h3 class="text-white font-semibold mt-2 mb-2 leading-snug">
-              Por qué el ticket de 58 mm rompe la implementación del QR
-            </h3>
-            <p class="text-gray-400 text-sm leading-relaxed">
-              La norma pide entre 30 y 40 milímetros y el rollo deja 48 imprimibles. La
-              aritmética de módulos que hay que hacer antes de comprar nada.
-            </p>
-            <span class="inline-block text-orange-400 text-sm mt-4 group-hover:translate-x-1 transition-transform">Leer →</span>
-          </a>
-          <a
-            href="/es/blog/anulaciones-y-rectificativas-verifactu/"
-            class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 hover:border-orange-500/30 transition-all duration-300"
-          >
-            <span class="text-xs text-orange-400 font-medium">Casuística</span>
-            <h3 class="text-white font-semibold mt-2 mb-2 leading-snug">
-              Anular no es borrar y rectificar no es editar
-            </h3>
-            <p class="text-gray-400 text-sm leading-relaxed">
-              Los dos caminos que la mayoría de sistemas resuelve con un solo botón, y lo que
-              eso obliga a rehacer en el modelo de datos.
-            </p>
-            <span class="inline-block text-orange-400 text-sm mt-4 group-hover:translate-x-1 transition-transform">Leer →</span>
-          </a>
+      </div>
+    </section>
+
+    <section class="pg-section pg-faq ed-faq" aria-labelledby="faq-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.faq}</p>
+        <div>
+          <h2 id="faq-title">{SHARED.faq.title}</h2>
+          <div class="pg-faq-list">
+            {SHARED.faq.items.map((item) => <details><summary>{item.q}</summary><p>{item.a}</p></details>)}
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- CTA FINAL -->
-    <section class="px-4 py-24">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">
-          Empieza por saber qué hay que tocar
-        </h2>
-        <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
-          La auditoría del sistema de facturación dura entre tres y cinco días y sale con el alcance
-          y el precio cerrados. Si en la auditoría técnica vemos que no te aplica, te lo decimos
-          ahí; la calificación fiscal de tu caso concreto sigue siendo cosa de tu asesoría.
-        </p>
-        <a
-          href={contactHref}
-          class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
-        >
-          Hablar con un especialista ↗
+    <section class="pg-section pg-section-flush pg-next" aria-labelledby="atascos-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.profundizar}</p>
+        <div>
+          <h2 id="atascos-title">Los tres puntos donde se atascan los proyectos</h2>
+          <div class="pg-prose">
+            <p>
+              No es el envío a la AEAT. Son estas tres decisiones, y conviene tomarlas antes de
+              escribir código.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="pg-offers">
+        <a class="ed-offer" href="/es/blog/series-y-cadena-de-huellas-verifactu/">
+          <span class="ed-eyebrow">Arquitectura</span>
+          <h3>Cómo conviven las series con una única cadena de huellas</h3>
+          <p>Qué cambia cuando facturas desde varias cajas o tiendas a la vez, y cuántos sistemas de facturación tiene realmente tu operación.</p>
+          <span class="ed-arrow" aria-hidden="true">↗</span>
         </a>
-
-        <p class="text-sm text-gray-500 mt-10">
-          ¿Buscabas la otra obligación con plazo?
-          <a href={sacHref} class="text-orange-400 underline hover:text-orange-300">
-            Ley 10/2025 de atención a la clientela
-          </a>
-        </p>
-
-        <p class="text-xs text-gray-600 mt-8 max-w-2xl mx-auto leading-relaxed">{DISCLAIMER}</p>
+        <a class="ed-offer" href="/es/blog/qr-verifactu-ticket-termico-tpv/">
+          <span class="ed-eyebrow">Impresión</span>
+          <h3>Por qué el ticket de 58 mm rompe la implementación del QR</h3>
+          <p>La norma pide entre 30 y 40 milímetros y el rollo deja 48 imprimibles. La aritmética de módulos que hay que hacer antes de comprar nada.</p>
+          <span class="ed-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="ed-offer" href="/es/blog/anulaciones-y-rectificativas-verifactu/">
+          <span class="ed-eyebrow">Casuística</span>
+          <h3>Anular no es borrar y rectificar no es editar</h3>
+          <p>Los dos caminos que la mayoría de sistemas resuelve con un solo botón, y lo que eso obliga a rehacer en el modelo de datos.</p>
+          <span class="ed-arrow" aria-hidden="true">↗</span>
+        </a>
       </div>
     </section>
   </div>
+
+  <section class="ed-closing" aria-labelledby="vf-closing-title">
+    <div class="ed-container">
+      <p class="ed-eyebrow">{copy.closingLabel}</p>
+      <h2 id="vf-closing-title" class="pg-closing-title">Empieza por saber qué hay que tocar</h2>
+      <p class="pg-closing-copy">
+        La auditoría del sistema de facturación dura entre tres y cinco días y sale con el alcance
+        y el precio cerrados. Si en la auditoría técnica vemos que no te aplica, te lo decimos
+        ahí; la calificación fiscal de tu caso concreto sigue siendo cosa de tu asesoría.
+      </p>
+      <a class="ed-button" href={contactHref}>Hablar con un especialista<span class="ed-arrow" aria-hidden="true">↗</span></a>
+      <p class="pg-closing-aside">
+        ¿Buscabas la otra obligación con plazo?{" "}
+        <a href={sacHref}>Ley 10/2025 de atención a la clientela</a>
+      </p>
+      <p class="pg-disclaimer">{DISCLAIMER}</p>
+    </div>
+  </section>
 </BaseLayout>
 
 <script is:inline>

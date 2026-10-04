@@ -61,5 +61,30 @@
     "escenario": "El día que se rompe",
     "obligaciones": "Obligaciones",
     "otros": "Otros sectores obligados"
+  },
+  "verifactu": {
+    "cumplimiento": "Cumplimiento",
+    "queEs": "Qué es",
+    "exclusiones": "Exclusiones",
+    "casos": "Casos",
+    "arquitectura": "Qué construimos",
+    "alcance": "Alcance",
+    "faq": "Preguntas",
+    "profundizar": "Profundizar",
+    "proceso": "Cómo trabajamos",
+    "otros": "Otros casos",
+    "volver": "Verifactu",
+    "escenario": "El detalle que rompe la implementación",
+    "porQue": "Por qué",
+    "calendario": "Calendario",
+    "margen": "Qué hacer",
+    "proyecto": "El proyecto",
+    "vias": "Vías de integración",
+    "entrega": "Entrega",
+    "necesitamos": "De tu lado",
+    "tecnico": "Detalle técnico",
+    "capas": "Capas",
+    "decisiones": "Decisiones",
+    "integracion": "Integración"
   }
 }

@@ -12,6 +12,11 @@
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { NORMA, DISCLAIMER, SHARED, CASO_SLUGS, CASOS } from "@/data/verifactu";
+import copy from "@/i18n/locales/es/pagesEditorial.json";
+import "@/styles/editorial-pages.css";
+
+// Rótulos de la versión editorial (oct/2026).
+const L = copy.verifactu;
 
 const locale = "es";
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
@@ -155,179 +160,150 @@ const jsonLd = [
   alternates={[{ lang: "es", href: pageUrl }]}
   xDefaultUrl={pageUrl}
   jsonLd={jsonLd}
+  editorial
 >
-  <div class="bg-transparent text-white">
-    <!-- Hero -->
-    <section class="px-4 pt-28 pb-14">
-      <div class="max-w-4xl mx-auto">
-        <nav class="text-sm text-gray-500 mb-6">
-          <a href={base} class="hover:text-orange-400">Verifactu</a>
-          <span class="mx-2">/</span>
-          <span class="text-gray-400">Integración</span>
-        </nav>
-        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
-          Integramos Verifactu en el sistema que <span class="text-orange-500">ya usas</span>
-        </h1>
-        <p class="text-lg md:text-xl text-gray-300 mb-8">
-          La respuesta del mercado a Verifactu es «migra a mi programa». La nuestra es acoplar
-          el cumplimiento a tu ERP, tu TPV o tu e-commerce, y dejar intactos los años de reglas
-          de negocio que solo existen ahí dentro.
-        </p>
-        <a
-          href={contactHref}
-          class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
-        >
-          Empezar por la auditoría ↗
-        </a>
+  <div class="ed-container">
+    <header class="pg-hero pg-hero-compact">
+      <nav class="pf-crumbs ed-eyebrow" aria-label={copy.breadcrumb.label}>
+        <ol>
+          <li><a href="/es/">{copy.breadcrumb.home}</a></li>
+          <li><a href={base}>Verifactu</a></li>
+          <li><span aria-current="page">Integración</span></li>
+        </ol>
+      </nav>
+      <h1>Integramos Verifactu en el sistema que <span>ya usas</span></h1>
+      <div class="pg-hero-bottom">
+        <p class="ed-eyebrow">Verifactu · {L.proyecto}</p>
+        <div>
+          <p class="pg-lead">
+            La respuesta del mercado a Verifactu es «migra a mi programa». La nuestra es acoplar
+            el cumplimiento a tu ERP, tu TPV o tu e-commerce, y dejar intactos los años de reglas
+            de negocio que solo existen ahí dentro.
+          </p>
+          <div class="pg-actions">
+            <a class="ed-button" href={contactHref}>Empezar por la auditoría<span class="ed-arrow" aria-hidden="true">↗</span></a>
+          </div>
+        </div>
       </div>
+    </header>
+
+    <section class="pg-section" aria-labelledby="vias-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.vias}</p>
+        <div>
+          <h2 id="vias-title">Lo que decide la viabilidad no es tu ERP: es cómo se deja enganchar</h2>
+          <div class="pg-prose">
+            <p>
+              Cuatro escenarios, de mejor a peor. Te decimos en cuál estás antes de comprometer
+              alcance, no a mitad del proyecto.
+            </p>
+          </div>
+        </div>
+      </div>
+      <ol class="pg-patterns pg-vias">
+        {vias.map((v, idx) => (
+          <li>
+            <span class="ed-eyebrow">{String(idx + 1).padStart(2, "0")}</span>
+            <div class="pg-pattern-main"><h3>{v.title}</h3><p>{v.body}</p></div>
+            <div class="pg-pattern-risk"><p class="pg-verdict">{v.veredicto}</p></div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  </div>
+
+  <section class="ed-method pg-method pg-process" aria-labelledby="proceso-title">
+    <div class="ed-container">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.proceso}</p>
+        <div>
+          <h2 id="proceso-title">{SHARED.proceso.title}</h2>
+          <p class="pg-method-lead">{SHARED.proceso.subtitle}</p>
+        </div>
+      </div>
+      <ol class="ed-steps pg-steps-4">
+        {SHARED.proceso.phases.map((phase) => (
+          <li><span class="ed-eyebrow">{phase.code} · {phase.plazo}</span><h3>{phase.title}</h3><p>{phase.body}</p></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <div class="ed-container">
+    <section class="pg-section" aria-labelledby="entregables-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.entrega}</p>
+        <h2 id="entregables-title">Qué te llevas</h2>
+      </div>
+      <ol class="pg-columns">
+        {entregables.map((e, idx) => (
+          <li><span class="ed-eyebrow">{String(idx + 1).padStart(2, "0")}</span><h3>{e.title}</h3><p>{e.body}</p></li>
+        ))}
+      </ol>
     </section>
 
-    <!-- Vías de integración -->
-    <section class="px-4 py-16 bg-white/[0.02] border-y border-white/5">
-      <div class="max-w-5xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">
-          Lo que decide la viabilidad no es tu ERP: es cómo se deja enganchar
-        </h2>
-        <p class="text-gray-400 mb-12 max-w-3xl">
-          Cuatro escenarios, de mejor a peor. Te decimos en cuál estás antes de comprometer
-          alcance, no a mitad del proyecto.
-        </p>
-        <div class="space-y-5">
-          {vias.map((v) => (
-            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 md:p-8">
-              <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-3">
-                <h3 class="text-lg md:text-xl font-semibold">{v.title}</h3>
-                <span class="text-xs uppercase tracking-widest text-orange-400 shrink-0">
-                  {v.veredicto}
-                </span>
-              </div>
-              <p class="text-gray-400 leading-relaxed">{v.body}</p>
-            </div>
-          ))}
+    <section class="pg-section" aria-labelledby="necesitamos-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.necesitamos}</p>
+        <div>
+          <h2 id="necesitamos-title">Qué necesitamos de tu lado</h2>
+          <div class="pg-prose">
+            <p>
+              Poco, pero concreto. La mitad de estos puntos son también el motivo por el que los
+              proyectos se alargan cuando no se preparan.
+            </p>
+          </div>
+          <ul class="pg-checklist">{necesitamos.map((n) => <li>{n}</li>)}</ul>
         </div>
       </div>
     </section>
 
-    <!-- Proceso (compartido con el pilar, resumido y enlazado) -->
-    <section class="px-4 py-16">
-      <div class="max-w-5xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">{SHARED.proceso.title}</h2>
-        <p class="text-gray-400 mb-12 max-w-3xl">{SHARED.proceso.subtitle}</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {SHARED.proceso.phases.map((phase) => (
-            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7">
-              <div class="flex items-baseline justify-between gap-3 mb-3">
-                <span class="text-orange-500 font-bold text-sm tabular-nums">{phase.code}</span>
-                <span class="text-xs uppercase tracking-widest text-gray-500">{phase.plazo}</span>
-              </div>
-              <h3 class="text-lg font-semibold mb-2">{phase.title}</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">{phase.body}</p>
-            </div>
-          ))}
+    <section class="pg-section pg-section-flush" aria-labelledby="casos-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.casos}</p>
+        <div>
+          <h2 id="casos-title">¿Cuál es tu caso?</h2>
+          <div class="pg-prose">
+            <p>Cada escenario tiene su propia trampa. Estas páginas entran en el detalle de cada uno.</p>
+          </div>
         </div>
       </div>
-    </section>
-
-    <!-- Entregables -->
-    <section class="px-4 py-16 bg-white/[0.02] border-y border-white/5">
-      <div class="max-w-5xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-12">Qué te llevas</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {entregables.map((e) => (
-            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 hover:border-orange-500/30 transition-all duration-300">
-              <h3 class="text-base md:text-lg font-semibold mb-3">{e.title}</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">{e.body}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- Qué necesitamos -->
-    <section class="px-4 py-16">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">Qué necesitamos de tu lado</h2>
-        <p class="text-gray-400 mb-8">
-          Poco, pero concreto. La mitad de estos puntos son también el motivo por el que los
-          proyectos se alargan cuando no se preparan.
-        </p>
-        <ul class="space-y-4">
-          {necesitamos.map((n) => (
-            <li class="flex gap-4 items-start">
-              <span class="text-orange-500 mt-1 shrink-0">→</span>
-              <span class="text-gray-300 leading-relaxed">{n}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-
-    <!-- Casos -->
-    <section class="px-4 py-16 bg-white/[0.02] border-y border-white/5">
-      <div class="max-w-5xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">¿Cuál es tu caso?</h2>
-        <p class="text-gray-400 mb-10">
-          Cada escenario tiene su propia trampa. Estas páginas entran en el detalle de cada uno.
-        </p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          {casos.map((c) => (
-            <a
-              href={`${base}${c.slug}/`}
-              class="group bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 hover:border-orange-500/30 transition-all duration-300"
-            >
-              <h3 class="text-lg font-semibold mb-2 group-hover:text-orange-400 transition-colors">
-                {c.nombre}
-              </h3>
-              <p class="text-gray-400 text-sm leading-relaxed">{c.intro}</p>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="px-4 py-16">
-      <div class="max-w-3xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-10">Preguntas frecuentes</h2>
-        <div class="space-y-4">
-          {faq.map((item) => (
-            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-6">
-              <summary class="cursor-pointer font-semibold text-white list-none flex justify-between items-center gap-4">
-                {item.q}
-                <span class="text-orange-500 group-open:rotate-45 transition-transform shrink-0">+</span>
-              </summary>
-              <p class="text-gray-400 mt-4 leading-relaxed">{item.a}</p>
-            </details>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="px-4 py-20">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-3xl md:text-4xl font-bold mb-6">Empecemos por saber qué tienes</h2>
-        <p class="text-gray-400 mb-8">
-          Tres a cinco días de auditoría, informe de brecha y alcance cerrado. Se descuenta de la
-          integración. Si estás en el SII o tributas en territorio foral, te lo decimos en la
-          primera llamada y no hay proyecto.
-        </p>
-        <div class="flex flex-wrap gap-4 justify-center">
-          <a
-            href={contactHref}
-            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
-          >
-            Hablar con un especialista ↗
+      <div class="pg-offers">
+        {casos.map((c, idx) => (
+          <a class="ed-offer" href={`${base}${c.slug}/`}>
+            <span class="ed-eyebrow">{String(idx + 1).padStart(2, "0")}</span><h3>{c.nombre}</h3><p>{c.intro}</p><span class="ed-arrow" aria-hidden="true">↗</span>
           </a>
-          <a
-            href={`${base}api/`}
-            class="inline-flex items-center gap-2 px-8 py-3 rounded-full border border-white/10 text-gray-200 font-medium text-lg hover:border-orange-500/30 transition-all duration-300"
-          >
-            El detalle técnico →
-          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="pg-section pg-faq ed-faq" aria-labelledby="faq-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.faq}</p>
+        <div>
+          <h2 id="faq-title">Preguntas frecuentes</h2>
+          <div class="pg-faq-list">
+            {faq.map((item) => <details><summary>{item.q}</summary><p>{item.a}</p></details>)}
+          </div>
         </div>
-        <p class="text-xs text-gray-600 mt-10 max-w-2xl mx-auto leading-relaxed">{DISCLAIMER}</p>
       </div>
     </section>
   </div>
+
+  <section class="ed-closing" aria-labelledby="integ-closing-title">
+    <div class="ed-container">
+      <p class="ed-eyebrow">{copy.closingLabel}</p>
+      <h2 id="integ-closing-title" class="pg-closing-title">Empecemos por saber qué tienes</h2>
+      <p class="pg-closing-copy">
+        Tres a cinco días de auditoría, informe de brecha y alcance cerrado. Se descuenta de la
+        integración. Si estás en el SII o tributas en territorio foral, te lo decimos en la
+        primera llamada y no hay proyecto.
+      </p>
+      <div class="pg-actions">
+        <a class="ed-button" href={contactHref}>Hablar con un especialista<span class="ed-arrow" aria-hidden="true">↗</span></a>
+        <a class="ed-underlined pg-underlined-ink" href={`${base}api/`}>El detalle técnico <span class="ed-arrow" aria-hidden="true">→</span></a>
+      </div>
+      <p class="pg-disclaimer">{DISCLAIMER}</p>
+    </div>
+  </section>
 </BaseLayout>

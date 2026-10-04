@@ -14,6 +14,11 @@
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { NORMA, DISCLAIMER } from "@/data/verifactu";
+import copy from "@/i18n/locales/es/pagesEditorial.json";
+import "@/styles/editorial-pages.css";
+
+// Rótulos de la versión editorial (oct/2026).
+const L = copy.verifactu;
 
 const locale = "es";
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
@@ -163,141 +168,111 @@ const jsonLd = [
   alternates={[{ lang: "es", href: pageUrl }]}
   xDefaultUrl={pageUrl}
   jsonLd={jsonLd}
+  editorial
 >
-  <div class="bg-transparent text-white">
-    <!-- Hero -->
-    <section class="px-4 pt-28 pb-14">
-      <div class="max-w-4xl mx-auto">
-        <nav class="text-sm text-gray-500 mb-6">
-          <a href={base} class="hover:text-orange-400">Verifactu</a>
-          <span class="mx-2">/</span>
-          <span class="text-gray-400">API</span>
-        </nav>
-        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
-          Conectar tu sistema a la <span class="text-orange-500">API de Verifactu</span>
-        </h1>
-        <p class="text-lg md:text-xl text-gray-300 mb-4">
-          La parte difícil no es enviar el registro. Es que la facturación siga funcionando
-          cuando el envío falla, que la cadena de huellas no se rompa con varios puntos de
-          emisión y que alguien pueda ver el estado sin abrir la base de datos.
-        </p>
-        <p class="text-sm text-gray-500">
-          Esta página describe la arquitectura de la integración. La especificación técnica
-          —campos, formato y condiciones del servicio— está en {NORMA.ordenTecnica} y en la{" "}
-          <a href={NORMA.aeatUrl} rel="noopener" class="text-orange-400 hover:underline">
-            documentación técnica de la AEAT
-          </a>, que es la fuente que seguimos.
-        </p>
-      </div>
-    </section>
-
-    <!-- Las seis capas -->
-    <section class="px-4 py-16 bg-white/[0.02] border-y border-white/5">
-      <div class="max-w-5xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">Qué hay que construir, capa por capa</h2>
-        <p class="text-gray-400 mb-12 max-w-3xl">
-          Cada capa lleva asociada la trampa que hemos visto romper implementaciones reales.
-        </p>
-        <div class="space-y-5">
-          {capas.map((c) => (
-            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 md:p-8">
-              <div class="flex items-baseline gap-4 mb-3">
-                <span class="text-orange-500 font-bold text-sm tabular-nums shrink-0">{c.n}</span>
-                <h3 class="text-lg md:text-xl font-semibold">{c.title}</h3>
-              </div>
-              <p class="text-gray-400 leading-relaxed mb-4 md:pl-10">{c.body}</p>
-              <p class="text-sm text-orange-300/80 leading-relaxed md:pl-10 border-l-2 border-orange-500/20 pl-4">
-                <span class="font-semibold">Dónde se rompe:</span> {c.trampa}
-              </p>
-            </div>
-          ))}
+  <div class="ed-container">
+    <header class="pg-hero pg-hero-compact">
+      <nav class="pf-crumbs ed-eyebrow" aria-label={copy.breadcrumb.label}>
+        <ol>
+          <li><a href="/es/">{copy.breadcrumb.home}</a></li>
+          <li><a href={base}>Verifactu</a></li>
+          <li><span aria-current="page">API</span></li>
+        </ol>
+      </nav>
+      <h1>Conectar tu sistema a la <span>API de Verifactu</span></h1>
+      <div class="pg-hero-bottom">
+        <p class="ed-eyebrow">Verifactu · {L.tecnico}</p>
+        <div>
+          <p class="pg-lead pg-lead-strong">
+            La parte difícil no es enviar el registro. Es que la facturación siga funcionando
+            cuando el envío falla, que la cadena de huellas no se rompa con varios puntos de
+            emisión y que alguien pueda ver el estado sin abrir la base de datos.
+          </p>
+          <p class="pg-lead pg-lead-muted">
+            Esta página describe la arquitectura de la integración. La especificación técnica
+            —campos, formato y condiciones del servicio— está en {NORMA.ordenTecnica} y en la{" "}
+            <a class="pg-inline-link" href={NORMA.aeatUrl} rel="noopener">documentación técnica de la AEAT</a>, que es la fuente que seguimos.
+          </p>
         </div>
       </div>
-    </section>
+    </header>
 
-    <!-- Decisiones de arquitectura -->
-    <section class="px-4 py-16">
-      <div class="max-w-5xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">Las cuatro decisiones que hay que tomar antes</h2>
-        <p class="text-gray-400 mb-12 max-w-3xl">
-          Ninguna se resuelve leyendo el reglamento: dependen de cómo factura tu empresa.
-        </p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {decisiones.map((d) => (
-            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7 hover:border-orange-500/30 transition-all duration-300">
-              <h3 class="text-base md:text-lg font-semibold mb-3">{d.title}</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">{d.body}</p>
-            </div>
-          ))}
+    <section class="pg-section" aria-labelledby="capas-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.capas}</p>
+        <div>
+          <h2 id="capas-title">Qué hay que construir, capa por capa</h2>
+          <div class="pg-prose"><p>Cada capa lleva asociada la trampa que hemos visto romper implementaciones reales.</p></div>
         </div>
       </div>
+      <ol class="pg-patterns">
+        {capas.map((c) => (
+          <li>
+            <span class="ed-eyebrow">{c.n}</span>
+            <div class="pg-pattern-main"><h3>{c.title}</h3><p>{c.body}</p></div>
+            <div class="pg-pattern-risk"><p class="ed-eyebrow">Dónde se rompe:</p><p>{c.trampa}</p></div>
+          </li>
+        ))}
+      </ol>
     </section>
 
-    <!-- Enlace lateral al silo de integración -->
-    <section class="px-4 py-16 bg-white/[0.02] border-y border-white/5">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-medium tracking-tight mb-4">
-          Casi nunca es solo Verifactu
-        </h2>
-        <p class="text-gray-400 leading-relaxed mb-6">
-          Cuando abrimos un sistema de facturación para acoplarle el conector, aparece el resto:
-          el ERP que no habla con el e-commerce, el TPV que exporta a mano, el CRM que vive
-          aparte. El proyecto de cumplimiento suele ser la primera vez que alguien mapea de
-          verdad cómo se mueven los datos.
-        </p>
-        <a
-          href={`/${locale}/integracion/`}
-          class="inline-flex items-center gap-2 text-orange-400 font-medium hover:underline"
-        >
-          Cómo integramos y automatizamos sistemas →
-        </a>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="px-4 py-16">
-      <div class="max-w-3xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-10">Preguntas frecuentes</h2>
-        <div class="space-y-4">
-          {faq.map((item) => (
-            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-6">
-              <summary class="cursor-pointer font-semibold text-white list-none flex justify-between items-center gap-4">
-                {item.q}
-                <span class="text-orange-500 group-open:rotate-45 transition-transform shrink-0">+</span>
-              </summary>
-              <p class="text-gray-400 mt-4 leading-relaxed">{item.a}</p>
-            </details>
-          ))}
+    <section class="pg-section" aria-labelledby="decisiones-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.decisiones}</p>
+        <div>
+          <h2 id="decisiones-title">Las cuatro decisiones que hay que tomar antes</h2>
+          <div class="pg-prose"><p>Ninguna se resuelve leyendo el reglamento: dependen de cómo factura tu empresa.</p></div>
+          <ul class="pg-principles pg-principles-2">
+            {decisiones.map((d) => <li><h3>{d.title}</h3><p>{d.body}</p></li>)}
+          </ul>
         </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="px-4 py-20">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-3xl md:text-4xl font-bold mb-6">
-          Cuéntanos cómo factura tu sistema
-        </h2>
-        <p class="text-gray-400 mb-8">
-          Empezamos por la auditoría: puntos de emisión, series, rectificativas y dónde vive hoy
-          cada dato. De ahí sale el alcance cerrado y la modalidad recomendada.
-        </p>
-        <div class="flex flex-wrap gap-4 justify-center">
-          <a
-            href={contactHref}
-            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
-          >
-            Hablar con un especialista ↗
-          </a>
-          <a
-            href={`${base}integracion/`}
-            class="inline-flex items-center gap-2 px-8 py-3 rounded-full border border-white/10 text-gray-200 font-medium text-lg hover:border-orange-500/30 transition-all duration-300"
-          >
-            Cómo es el proyecto →
-          </a>
-        </div>
-        <p class="text-xs text-gray-600 mt-10 max-w-2xl mx-auto leading-relaxed">{DISCLAIMER}</p>
       </div>
     </section>
   </div>
+
+  <div class="ed-container">
+    <div class="pg-door-wrap pg-door-wrap-tight">
+      <section class="pg-door" aria-labelledby="silo-title">
+        <p class="ed-eyebrow">{L.integracion}</p>
+        <div>
+          <h2 id="silo-title">Casi nunca es solo Verifactu</h2>
+          <p>
+            Cuando abrimos un sistema de facturación para acoplarle el conector, aparece el resto:
+            el ERP que no habla con el e-commerce, el TPV que exporta a mano, el CRM que vive
+            aparte. El proyecto de cumplimiento suele ser la primera vez que alguien mapea de
+            verdad cómo se mueven los datos.
+          </p>
+          <a class="ed-underlined" href={`/${locale}/integracion/`}>Cómo integramos y automatizamos sistemas <span class="ed-arrow" aria-hidden="true">→</span></a>
+        </div>
+      </section>
+    </div>
+
+    <section class="pg-section pg-faq ed-faq" aria-labelledby="faq-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.faq}</p>
+        <div>
+          <h2 id="faq-title">Preguntas frecuentes</h2>
+          <div class="pg-faq-list">
+            {faq.map((item) => <details><summary>{item.q}</summary><p>{item.a}</p></details>)}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="ed-closing" aria-labelledby="api-closing-title">
+    <div class="ed-container">
+      <p class="ed-eyebrow">{copy.closingLabel}</p>
+      <h2 id="api-closing-title" class="pg-closing-title">Cuéntanos cómo factura tu sistema</h2>
+      <p class="pg-closing-copy">
+        Empezamos por la auditoría: puntos de emisión, series, rectificativas y dónde vive hoy
+        cada dato. De ahí sale el alcance cerrado y la modalidad recomendada.
+      </p>
+      <div class="pg-actions">
+        <a class="ed-button" href={contactHref}>Hablar con un especialista<span class="ed-arrow" aria-hidden="true">↗</span></a>
+        <a class="ed-underlined pg-underlined-ink" href={`${base}integracion/`}>Cómo es el proyecto <span class="ed-arrow" aria-hidden="true">→</span></a>
+      </div>
+      <p class="pg-disclaimer">{DISCLAIMER}</p>
+    </div>
+  </section>
 </BaseLayout>
