@@ -28,5 +28,18 @@
     "dias": "días",
     "quien": "A quién aplica",
     "que": "Qué hay que construir"
+  },
+  "casoIntegracion": {
+    "pillar": "01 / Integración",
+    "queEs": "Qué es",
+    "porQue": "Por qué",
+    "patrones": "Flujos",
+    "entrega": "Entrega",
+    "principios": "Principios",
+    "casoReal": "Caso real",
+    "proceso": "Método",
+    "tech": "Tecnología",
+    "puentes": "Relacionado",
+    "faq": "Preguntas"
   }
 }

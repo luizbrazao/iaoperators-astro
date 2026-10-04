@@ -1,0 +1,199 @@
+---
+// Caso del silo de integración (/es/integracion/<caso>/) con el lenguaje editorial.
+// Solo presenta: el texto sale de src/data/casos-integracion/es.ts y de CASO_UI,
+// igual que en la versión anterior, así que H1, H2, H3 y enlaces no cambian.
+// EN y PT siguen con el markup de CasoIntegracion.astro.
+import type { CasoIntegracion, SharedIntegracion } from "@/data/casos-integracion/types";
+import { CASO_UI } from "@/data/integracion";
+import copy from "@/i18n/locales/es/pagesEditorial.json";
+import "@/styles/editorial-pages.css";
+
+interface Props {
+  c: CasoIntegracion;
+  shared: SharedIntegracion;
+  base: string;
+  contactHref: string;
+  otros: { href: string; nombreCorto: string }[];
+}
+const { c, shared, base, contactHref, otros } = Astro.props;
+const ui = CASO_UI.es;
+const L = copy.casoIntegracion;
+// Los textos traen su propia flecha ("… ↗", "… →"); el botón editorial dibuja la suya.
+const bare = (text: string) => text.replace(/\s*[↗→]\s*$/, "");
+const pad = (n: number) => String(n).padStart(2, "0");
+// "Integración de ERP: conectar tu ERP…" → la segunda parte en el tono secundario.
+// El texto del H1 queda idéntico; solo cambia el marcado.
+const split = c.h1.indexOf(": ");
+const h1Lead = split > 0 ? c.h1.slice(0, split + 1) : c.h1;
+const h1Accent = split > 0 ? c.h1.slice(split + 2) : "";
+---
+<div class="ed-container">
+  <header class="pg-hero pg-hero-compact">
+    <nav class="pf-crumbs ed-eyebrow" aria-label={copy.breadcrumb.label}>
+      <ol>
+        <li><a href="/es/">{copy.breadcrumb.home}</a></li>
+        <li><a href={base}>{ui.breadcrumbHub}</a></li>
+        <li><span aria-current="page">{c.nombreCorto}</span></li>
+      </ol>
+    </nav>
+    <h1>{h1Lead}{h1Accent && <> <span>{h1Accent}</span></>}</h1>
+    <div class="pg-hero-bottom">
+      <p class="ed-eyebrow">{L.pillar} · {c.nombreCorto}</p>
+      <div>
+        <p class="pg-lead">{c.intro}</p>
+        {c.heroCta && (
+          <div class="pg-actions">
+            <a class="ed-underlined" href={c.heroCta.href}>{bare(c.heroCta.label)} <span class="ed-arrow" aria-hidden="true">→</span></a>
+          </div>
+        )}
+      </div>
+    </div>
+  </header>
+
+  {c.queEs && (
+    <section class="pg-section" aria-labelledby="que-es-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.queEs}</p>
+        <div>
+          <h2 id="que-es-title">{c.queEs.title}</h2>
+          <div class="pg-prose"><p>{c.queEs.p1}</p><p>{c.queEs.p2}</p></div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="pg-section pg-signal" aria-label={ui.sintoma}>
+    <div class="ed-section-intro">
+      <p class="ed-eyebrow">{ui.sintoma}</p>
+      <p class="pg-signal-text">{c.sintoma}</p>
+    </div>
+  </section>
+
+  <section class="pg-section" aria-labelledby="por-que-title">
+    <div class="ed-section-intro">
+      <p class="ed-eyebrow">{L.porQue}</p>
+      <div>
+        <h2 id="por-que-title">{c.porQue.title}</h2>
+        <div class="pg-prose"><p>{c.porQue.body}</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pg-section" aria-labelledby="patrones-title">
+    <div class="ed-section-intro">
+      <p class="ed-eyebrow">{L.patrones}</p>
+      <div>
+        <h2 id="patrones-title">{ui.patronesTitle}</h2>
+        <div class="pg-prose"><p>{ui.patronesSubtitle}</p></div>
+      </div>
+    </div>
+    <ol class="pg-patterns">
+      {c.patrones.map((p, index) => (
+        <li>
+          <span class="ed-eyebrow">{pad(index + 1)}</span>
+          <div class="pg-pattern-main"><h3>{p.title}</h3><p>{p.body}</p></div>
+          <div class="pg-pattern-risk"><p class="ed-eyebrow">{ui.riesgo}</p><p>{p.riesgo}</p></div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="pg-section pg-split">
+    <div>
+      <p class="ed-eyebrow">{L.entrega}</p>
+      <h2>{ui.entregables}</h2>
+      <ul class="pg-checklist">{c.entregables.map((e) => <li>{e}</li>)}</ul>
+    </div>
+    <div>
+      <p class="ed-eyebrow">{L.principios}</p>
+      <h2>{ui.principios}</h2>
+      <ul class="pg-principles">
+        {shared.principios.map((p) => <li><h3>{p.title}</h3><p>{p.body}</p></li>)}
+      </ul>
+    </div>
+  </section>
+
+  {c.caseStudy && (
+    <section class="pg-proofcase" aria-labelledby="caso-real-title">
+      <p class="ed-eyebrow">{L.casoReal}</p>
+      <div>
+        <h2 id="caso-real-title">{c.caseStudy.title}</h2>
+        <p class="pg-proofcase-context">{c.caseStudy.context}</p>
+        <ul>{c.caseStudy.sistemas.map((s) => <li>{s}</li>)}</ul>
+        <p class="pg-proofcase-result">{c.caseStudy.resultado}</p>
+        <a class="ed-button" href={c.caseStudy.href}>{bare(c.caseStudy.cta)}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  )}
+</div>
+
+<section class="ed-method pg-method pg-process" aria-labelledby="proceso-title">
+  <div class="ed-container">
+    <div class="ed-section-intro">
+      <p class="ed-eyebrow">{L.proceso}</p>
+      <div>
+        <h2 id="proceso-title">{shared.proceso.title}</h2>
+        <p class="pg-method-lead">
+          {shared.proceso.subtitle} {ui.procesoLink.pre}{" "}
+          <a class="pg-inline-link" href={base}>{ui.procesoLink.label}</a>{ui.procesoLink.post}
+        </p>
+      </div>
+    </div>
+    <ol class="ed-steps pg-steps-4">
+      {shared.proceso.phases.map((phase) => (
+        <li>
+          <span class="ed-eyebrow">{phase.code} · {phase.plazo}</span>
+          <p class="pg-step-title">{phase.title}</p>
+          <p>{phase.body}</p>
+        </li>
+      ))}
+    </ol>
+    <ul class="pg-tech" aria-label={L.tech}>{shared.tech.map((t) => <li>{t}</li>)}</ul>
+  </div>
+</section>
+
+<div class="ed-container">
+  <section class="pg-section pg-section-flush" aria-labelledby="puentes-title">
+    <div class="ed-section-intro">
+      <p class="ed-eyebrow">{L.puentes}</p>
+      <div>
+        <h2 id="puentes-title">{c.labels?.puentesTitle ?? ui.puentesTitle}</h2>
+        <div class="pg-prose"><p>{ui.puentesSubtitle}</p></div>
+      </div>
+    </div>
+    <div class="pg-offers">
+      {c.puentes.map((p, index) => (
+        <a class="ed-offer" href={p.href}>
+          <span class="ed-eyebrow">{pad(index + 1)}</span><h3>{p.label}</h3><p>{p.body}</p><span class="ed-arrow" aria-hidden="true">↗</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="pg-section pg-faq ed-faq" aria-labelledby="faq-title">
+    <div class="ed-section-intro">
+      <p class="ed-eyebrow">{L.faq}</p>
+      <div>
+        <h2 id="faq-title">{c.labels?.faqTitle ?? ui.faqTitle}</h2>
+        <div class="pg-faq-list">
+          {c.faq.map((item) => (
+            <details><summary>{item.q}</summary><p>{item.a}</p></details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="ed-closing" aria-labelledby="caso-closing-title">
+  <div class="ed-container">
+    <p class="ed-eyebrow">{copy.closingLabel}</p>
+    <h2 id="caso-closing-title" class="pg-closing-title">{ui.ctaTitle}</h2>
+    <p class="pg-closing-copy">{ui.ctaBody}</p>
+    <a class="ed-button" href={contactHref}>{bare(ui.ctaButton)}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+    <nav class="pg-siblings" aria-label={c.labels?.otros ?? ui.otros}>
+      <p class="ed-eyebrow">{c.labels?.otros ?? ui.otros}</p>
+      <ul>{otros.map((o) => <li><a href={o.href}>{o.nombreCorto}</a></li>)}</ul>
+    </nav>
+  </div>
+</section>

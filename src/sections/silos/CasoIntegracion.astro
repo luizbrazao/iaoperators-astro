@@ -16,6 +16,7 @@
 // `api-e-webhooks`), y `casoAlternates()` la resuelve.
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import CasoIntegracionEditorial from "@/components/editorial/CasoIntegracionEditorial.astro";
 import { ORG_REF } from "@/data/identidad";
 import {
   getShared,
@@ -46,6 +47,8 @@ const hubUrl = new URL(base, site).toString();
 const pageUrl = new URL(casoHref(locale, casoKey), site).toString();
 const homeUrl = new URL(`/${locale}/`, site).toString();
 const contactHref = `/${locale}/contact/`;
+// Rediseño editorial: solo ES. EN/PT conservan el markup de abajo.
+const editorial = locale === "es";
 
 const casos = getCasos(locale);
 const otros = CASO_SLUGS.filter((key) => key !== casoKey).map((key) => ({
@@ -98,7 +101,11 @@ const faqJsonLd = {
   alternates={casoAlternates(casoKey, site)}
   xDefaultUrl={new URL(casoHref("es", casoKey), site).toString()}
   jsonLd={[serviceJsonLd, breadcrumbJsonLd, faqJsonLd]}
+  editorial={editorial}
 >
+  {editorial ? (
+    <CasoIntegracionEditorial c={c} shared={SHARED} base={base} contactHref={contactHref} otros={otros} />
+  ) : (
   <div class="bg-transparent text-white">
     <!-- HERO -->
     <section class="px-4 pt-28 pb-14">
@@ -357,4 +364,5 @@ const faqJsonLd = {
       </div>
     </section>
   </div>
+  )}
 </BaseLayout>
