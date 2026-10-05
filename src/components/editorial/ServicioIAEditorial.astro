@@ -1,0 +1,226 @@
+---
+// Landings de servicio de /es/servicios/* (chatbots, automatización, agencia y
+// consultoría de IA, SEO, diseño web, marketing digital) con el diseño
+// editorial (oct/2026). Recibe el mismo objeto de contenido `c` que ya usaba
+// cada página, así que textos, H1/H2/H3 y enlaces no cambian. EN y PT siguen
+// con el markup oscuro de cada página.
+//
+// Los bloques opcionales (hero.lead, despues, frontera, tech, crossLink,
+// ciudades) solo se pintan si la página los trae.
+import RelatedCases from "@/components/RelatedCases.astro";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-servicios.css";
+
+type Override = Record<number, { tagline?: string; metric?: { value: string; label: string } | null }>;
+type CityLink = { href: string; label: string };
+
+interface Props {
+  c: any;
+  contactHref: string;
+  /** Ruta para RelatedCases (sin idioma). Sin ella, no hay bloque de casos. */
+  relatedPath?: string;
+  relatedOverrides?: Override;
+  /** Las respuestas del FAQ traen HTML (enlaces internos). */
+  faqHtml?: boolean;
+  cities?: { title: string; text: string; links: CityLink[] };
+}
+
+const { c, contactHref, relatedPath, relatedOverrides, faqHtml = false, cities } = Astro.props as Props;
+
+// Los textos de botón traen la flecha incluida ("… ↗", "… →"); aquí la flecha
+// es un elemento aparte, así que se quita del texto.
+const clean = (s: unknown) => String(s ?? "").replace(/\s*[↗→]\s*$/u, "");
+const pad = (n: number) => String(n).padStart(2, "0");
+const phases: any[] = c.process?.phases ?? [];
+---
+
+<div class="ed-container">
+  <header class="pg-hero">
+    <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+      <ol>
+        <li><a href="/es/">Inicio</a></li>
+        <li><a href="/es/servicios/">Servicios</a></li>
+        <li><span aria-current="page">{c.breadcrumb}</span></li>
+      </ol>
+    </nav>
+    <h1>{c.hero.title}</h1>
+    <div class="pg-hero-bottom">
+      <p class="ed-eyebrow">{c.hero.badge}</p>
+      <div>
+        {c.hero.lead && <p class="pg-lead-strong sv-lead">{c.hero.lead}</p>}
+        <p class="pg-lead">{c.hero.subtitle}</p>
+        <div class="pg-actions">
+          <a class="ed-button" href={contactHref}>{clean(c.hero.cta)}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+          <a class="ed-underlined" href="#servicios">{c.services.title} <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {c.problem && (
+    <section class="pg-section" aria-labelledby="sv-problema">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">El problema</p>
+        <div>
+          <h2 id="sv-problema">{c.problem.title}</h2>
+          {c.problem.subtitle && <p class="pg-lead-muted">{c.problem.subtitle}</p>}
+        </div>
+      </div>
+      <ul class="pg-symptoms">
+        {c.problem.items.map((item: string) => <li>{item}</li>)}
+      </ul>
+    </section>
+  )}
+
+  <section id="servicios" class="pg-section sv-before-band" aria-labelledby="sv-servicios">
+    <div class="ed-section-intro">
+      <p class="ed-eyebrow">Servicios</p>
+      <div>
+        <h2 id="sv-servicios">{c.services.title}</h2>
+        {c.services.subtitle && <p class="pg-lead-muted">{c.services.subtitle}</p>}
+      </div>
+    </div>
+    <ul class="pg-columns sv-services">
+      {c.services.items.map((item: any, i: number) => (
+        <li>
+          <span class="ed-eyebrow">{pad(i + 1)}</span>
+          <h3>{item.title}</h3>
+          <p>{item.body}</p>
+          {item.href && (
+            <a class="ed-underlined" href={item.href}>{clean(item.linkLabel ?? item.cta)} <span aria-hidden="true">→</span></a>
+          )}
+        </li>
+      ))}
+    </ul>
+  </section>
+</div>
+
+{c.process && (
+  <section class="ed-method pg-method pg-process" aria-labelledby="sv-proceso">
+    <div class="ed-container">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{c.process.badge}</p>
+        <div>
+          <h2 id="sv-proceso">{c.process.title}</h2>
+          {c.process.subtitle && <p class="pg-method-lead">{c.process.subtitle}</p>}
+        </div>
+      </div>
+      <ol class:list={["ed-steps", { "pg-steps-4": phases.length === 4 }]}>
+        {phases.map((phase: any) => (
+          <li><span class="ed-eyebrow">{phase.code}</span><h3>{phase.title}</h3><p>{phase.body}</p></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+)}
+
+<div class="ed-container">
+  {c.despues && (
+    <section class="pg-section" aria-labelledby="sv-despues">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Después</p>
+        <div>
+          <h2 id="sv-despues">{c.despues.title}</h2>
+          <div class="pg-prose">
+            <p>{c.despues.body}</p>
+            {c.despues.extra && <p>{c.despues.extra}</p>}
+          </div>
+          {c.despues.href && (
+            <p class="sv-link"><a class="ed-underlined" href={c.despues.href}>{clean(c.despues.cta)} <span aria-hidden="true">→</span></a></p>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {c.frontera && (
+    <section class="pg-section" aria-labelledby="sv-frontera">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Frontera</p>
+        <div>
+          <h2 id="sv-frontera">{c.frontera.title}</h2>
+          {c.frontera.subtitle && <p class="pg-lead-muted">{c.frontera.subtitle}</p>}
+        </div>
+      </div>
+      <div class="pg-relations sv-frontera">
+        {c.frontera.items.map((item: any) => (
+          <div class="pg-relation">
+            <p class="ed-eyebrow">{item.label}</p>
+            <p>{item.body}</p>
+            {item.href && <a class="ed-underlined" href={item.href}>{clean(item.cta)} <span aria-hidden="true">→</span></a>}
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {c.tech && (
+    <section class="pg-section sv-tech-section" aria-labelledby="sv-tech">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Stack</p>
+        <div>
+          <h2 id="sv-tech">{c.tech.title}</h2>
+          {c.tech.subtitle && <p class="pg-lead-muted">{c.tech.subtitle}</p>}
+          <ul class="pg-tech">
+            {c.tech.items.map((item: string) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+  )}
+</div>
+
+{relatedPath && (
+  <RelatedCases path={relatedPath} locale="es" overrides={relatedOverrides} variant="editorial" />
+)}
+
+<div class="ed-container">
+  <section class="pg-section pg-faq ed-faq" aria-labelledby="sv-faq">
+    <div class="ed-section-intro">
+      <p class="ed-eyebrow">Preguntas</p>
+      <div>
+        <h2 id="sv-faq">{c.faq.title}</h2>
+        <div class="pg-faq-list">
+          {c.faq.items.map((item: any) => (
+            <details>
+              <summary>{item.q}</summary>
+              {faqHtml ? <p set:html={item.a} /> : <p>{item.a}</p>}
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {cities && (
+    <section class="sv-cities" aria-labelledby="sv-ciudades">
+      <h2 id="sv-ciudades" class="ed-eyebrow">{cities.title}</h2>
+      <p>{cities.text}</p>
+      <ul>
+        {cities.links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+      </ul>
+    </section>
+  )}
+
+  {c.crossLink && (
+    <div class="sv-cross">
+      <section class="pg-door" aria-labelledby="sv-cross">
+        <p class="ed-eyebrow">¿Otra página?</p>
+        <div>
+          <h2 id="sv-cross">{c.crossLink.title}</h2>
+          <p>{c.crossLink.body}</p>
+          <a class="ed-underlined" href={c.crossLink.href}>{clean(c.crossLink.cta)} <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+    </div>
+  )}
+</div>
+
+<section class="ed-closing" aria-labelledby="sv-closing">
+  <div class="ed-container">
+    <p class="ed-eyebrow">Siguiente paso</p>
+    <h2 id="sv-closing" class="pg-closing-title">{c.finalCta.title}</h2>
+    {c.finalCta.subtitle && <p class="pg-closing-copy">{c.finalCta.subtitle}</p>}
+    <a class="ed-button" href={contactHref}>{clean(c.finalCta.cta)}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+  </div>
+</section>

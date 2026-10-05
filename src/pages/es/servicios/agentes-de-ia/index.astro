@@ -15,6 +15,8 @@
 // antes de escribirla (§12). Se miró, y por eso la primaria cambió.
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-servicios.css";
 
 const locale = "es";
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
@@ -168,166 +170,135 @@ const faqJsonLd = {
   alternates={[{ lang: "es", href: pageUrl }]}
   xDefaultUrl={pageUrl}
   jsonLd={[serviceJsonLd, breadcrumbJsonLd, faqJsonLd]}
+  editorial
 >
-  <div class="bg-transparent text-white">
-    <!-- HERO -->
-    <section class="px-4 pt-28 pb-14">
-      <div class="max-w-4xl mx-auto text-center">
-        <a
-          href={`/${locale}/servicios/`}
-          class="inline-block text-xs text-gray-500 hover:text-orange-400 transition-colors mb-6"
-        >
-          ← Servicios
-        </a>
-        <h1 class="text-3xl md:text-5xl font-medium tracking-tight leading-tight mb-6">
-          Agentes de IA para empresas: que hagan el trabajo, no que lo describan
-        </h1>
-        <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-          Montar un agente que impresiona en una demo lleva una tarde. Ponerlo delante de clientes,
-          conectado a tus sistemas y sin que nadie tenga que vigilarlo, es otro proyecto. Este.
-        </p>
-      </div>
-    </section>
-
-    <!-- LA DISTANCIA -->
-    <section class="px-4 pb-16">
-      <div class="max-w-3xl mx-auto">
-        <div class="bg-[#0a0a0a] border-l-2 border-orange-500 rounded-r-2xl p-6 md:p-8">
-          <div class="text-xs font-semibold uppercase tracking-widest text-orange-400 mb-3">
-            La distancia que nadie cuenta
-          </div>
-          <p class="text-gray-200 text-lg leading-relaxed">
-            Casi todas las empresas con las que hablamos ya han probado un agente. Funcionó en la
-            prueba y se quedó ahí. No falló el modelo: faltaban el acceso a los sistemas, los
-            permisos, el estado entre mensajes y una forma de saber si lo estaba haciendo bien.
-            Nada de eso es inteligencia artificial — es ingeniería, y es donde está el trabajo.
+  {/* Diseño editorial (oct/2026). Página ES-only: mismos textos, H1/H2/H3 y
+      enlaces que la versión oscura anterior. */}
+  <div class="ed-container">
+    <header class="pg-hero">
+      <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/es/">Inicio</a></li>
+          <li><a href="/es/servicios/">Servicios</a></li>
+          <li><span aria-current="page">Agentes de IA</span></li>
+        </ol>
+      </nav>
+      <h1>Agentes de IA para empresas: <span>que hagan el trabajo, no que lo describan</span></h1>
+      <div class="pg-hero-bottom">
+        <p class="ed-eyebrow">Agentes de IA</p>
+        <div>
+          <p class="pg-lead">
+            Montar un agente que impresiona en una demo lleva una tarde. Ponerlo delante de clientes,
+            conectado a tus sistemas y sin que nadie tenga que vigilarlo, es otro proyecto. Este.
           </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CHATBOT VS AGENTE -->
-    <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
-      <div class="max-w-5xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold mb-3 text-center">Agente no es sinónimo de chatbot</h2>
-        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-          La confusión es cara, porque lleva a contratar una cosa esperando la otra.
-        </p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {diferencia.map((d) => (
-            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
-              <h3 class="text-lg font-semibold text-white mb-2">{d.title}</h3>
-              <p class="text-gray-400 text-sm leading-relaxed mb-4">{d.body}</p>
-              <a href={d.href} class="text-orange-400 text-sm hover:text-orange-300 underline">
-                {d.linkLabel} →
-              </a>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- REQUISITOS -->
-    <section class="px-4 py-20">
-      <div class="max-w-5xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold mb-3 text-center">
-          Lo que separa un piloto de un proceso
-        </h2>
-        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-          Seis piezas. Ninguna es el modelo.
-        </p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {requisitos.map((r) => (
-            <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
-              <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-orange-500/10 text-orange-400 font-bold text-xs mb-4">
-                {r.num}
-              </span>
-              <h3 class="text-lg font-semibold text-white mb-2">{r.title}</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">{r.body}</p>
-              {r.href && (
-                <a href={r.href} class="inline-block text-orange-400 text-sm mt-3 hover:text-orange-300 underline">
-                  {r.linkLabel} →
-                </a>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- DÓNDE SÍ Y DÓNDE NO -->
-    <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
-      <div class="max-w-5xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold mb-3 text-center">Dónde ponemos agentes y dónde no</h2>
-        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-          Decir que no a la mitad de los casos es lo que hace creíble el sí de la otra mitad.
-        </p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7">
-            <h3 class="text-white font-semibold mb-4">Donde funcionan bien</h3>
-            <ul class="space-y-3">
-              {donde.si.map((item) => (
-                <li class="flex items-start gap-3 text-gray-300 text-sm leading-relaxed">
-                  <span class="text-orange-400 mt-0.5 shrink-0">▪</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-7">
-            <h3 class="text-white font-semibold mb-4">Donde recomendamos no usarlos</h3>
-            <ul class="space-y-3">
-              {donde.no.map((item) => (
-                <li class="flex items-start gap-3 text-gray-400 text-sm leading-relaxed">
-                  <span class="text-gray-600 mt-0.5 shrink-0">▪</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+          <div class="pg-actions">
+            <a class="ed-button" href={contactHref}>Hablar con un especialista<span class="ed-arrow" aria-hidden="true">↗</span></a>
           </div>
         </div>
       </div>
+    </header>
+
+    <section class="pg-section" aria-label="La distancia que nadie cuenta">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">La distancia que nadie cuenta</p>
+        <p class="pg-signal-text">
+          Casi todas las empresas con las que hablamos ya han probado un agente. Funcionó en la
+          prueba y se quedó ahí. No falló el modelo: faltaban el acceso a los sistemas, los
+          permisos, el estado entre mensajes y una forma de saber si lo estaba haciendo bien.
+          Nada de eso es inteligencia artificial — es ingeniería, y es donde está el trabajo.
+        </p>
+      </div>
     </section>
 
-    {/* Bloque "Caso real" eliminado (04/out/2026): no correspondía a un
-        proyecto real. Comentario JSX para que no salga en el HTML público. */}
+    <section class="pg-section" aria-labelledby="ag-diferencia">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Chatbot / agente</p>
+        <div>
+          <h2 id="ag-diferencia">Agente no es sinónimo de chatbot</h2>
+          <p class="pg-lead-muted">La confusión es cara, porque lleva a contratar una cosa esperando la otra.</p>
+        </div>
+      </div>
+      <ul class="pg-columns sv-services">
+        {diferencia.map((d, i) => (
+          <li>
+            <span class="ed-eyebrow">{String(i + 1).padStart(2, "0")}</span>
+            <h3>{d.title}</h3>
+            <p>{d.body}</p>
+            <a class="ed-underlined" href={d.href}>{d.linkLabel} <span aria-hidden="true">→</span></a>
+          </li>
+        ))}
+      </ul>
+    </section>
 
-    <!-- FAQ -->
-    <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
-      <div class="max-w-3xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold mb-10 text-center">Preguntas frecuentes</h2>
-        <div class="space-y-3">
-          {faq.map((item) => (
-            <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-4 hover:border-orange-500/20 transition-all duration-300">
-              <summary class="flex items-center justify-between cursor-pointer list-none">
-                <span class="text-white font-medium pr-4">{item.q}</span>
-                <span class="text-orange-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
-              </summary>
-              <p class="text-gray-400 mt-3 leading-relaxed">{item.a}</p>
-            </details>
-          ))}
+    <section class="pg-section" aria-labelledby="ag-requisitos">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Requisitos</p>
+        <div>
+          <h2 id="ag-requisitos">Lo que separa un piloto de un proceso</h2>
+          <p class="pg-lead-muted">Seis piezas. Ninguna es el modelo.</p>
+        </div>
+      </div>
+      <ol class="pg-phases">
+        {requisitos.map((r) => (
+          <li>
+            <span class="ed-eyebrow">{r.num}</span>
+            <h3>{r.title}</h3>
+            <div>
+              <p>{r.body}</p>
+              {r.href && <a class="ed-underlined" href={r.href}>{r.linkLabel} <span aria-hidden="true">→</span></a>}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="pg-section" aria-labelledby="ag-donde">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Criterio</p>
+        <div>
+          <h2 id="ag-donde">Dónde ponemos agentes y dónde no</h2>
+          <p class="pg-lead-muted">Decir que no a la mitad de los casos es lo que hace creíble el sí de la otra mitad.</p>
+        </div>
+      </div>
+      <div class="sv-donde">
+        <div>
+          <h3>Donde funcionan bien</h3>
+          <ul class="pg-checklist">
+            {donde.si.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <div class="sv-donde-no">
+          <h3>Donde recomendamos no usarlos</h3>
+          <ul class="pg-checklist">
+            {donde.no.map((item) => <li>{item}</li>)}
+          </ul>
         </div>
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="px-4 py-24">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">
-          Empieza por el proceso, no por el modelo
-        </h2>
-        <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
-          Cuéntanos qué tarea repetitiva se come el tiempo del equipo. Salimos de la primera
-          conversación diciéndote si un agente lo resuelve — o si lo resuelve mejor una
-          automatización sin modelo.
-        </p>
-        <a
-          href={contactHref}
-          class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
-        >
-          Hablar con un especialista ↗
-        </a>
+    <section class="pg-section pg-faq ed-faq" aria-labelledby="ag-faq">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Preguntas</p>
+        <div>
+          <h2 id="ag-faq">Preguntas frecuentes</h2>
+          <div class="pg-faq-list">
+            {faq.map((item) => <details><summary>{item.q}</summary><p>{item.a}</p></details>)}
+          </div>
+        </div>
       </div>
     </section>
   </div>
+
+  <section class="ed-closing" aria-labelledby="ag-closing">
+    <div class="ed-container">
+      <p class="ed-eyebrow">Siguiente paso</p>
+      <h2 id="ag-closing" class="pg-closing-title">Empieza por el proceso, no por el modelo</h2>
+      <p class="pg-closing-copy">
+        Cuéntanos qué tarea repetitiva se come el tiempo del equipo. Salimos de la primera
+        conversación diciéndote si un agente lo resuelve — o si lo resuelve mejor una
+        automatización sin modelo.
+      </p>
+      <a class="ed-button" href={contactHref}>Hablar con un especialista<span class="ed-arrow" aria-hidden="true">↗</span></a>
+    </div>
+  </section>
 </BaseLayout>

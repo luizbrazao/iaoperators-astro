@@ -9,6 +9,7 @@ export async function getStaticPaths() {
 
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
 import { getLocale } from "../../../../i18n/ui";
+import ServicioIAEditorial from "@/components/editorial/ServicioIAEditorial.astro";
 
 const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
 
@@ -297,7 +298,24 @@ const faqJsonLd = {
 const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
 ---
 
-<BaseLayout title={c.meta.title} description={c.meta.description} jsonLd={jsonLd}>
+<BaseLayout title={c.meta.title} description={c.meta.description} jsonLd={jsonLd} editorial={locale === "es"}>
+  {/* ES: diseño editorial (oct/2026), mismo contenido `c`. EN/PT, plantilla oscura. */}
+  {locale === "es" ? (
+    <ServicioIAEditorial
+      c={c}
+      contactHref={contactHref}
+      cities={{
+        title: "Agencia de IA por ciudades",
+        text: "¿Buscas una agencia de IA cerca de ti? Trabajamos con empresas de toda España.",
+        links: [
+          { href: "/es/agencia-de-ia/madrid/", label: "IA en Madrid" },
+          { href: "/es/agencia-de-ia/barcelona/", label: "IA en Barcelona" },
+          { href: "/es/agencia-de-ia/valencia/", label: "IA en Valencia" },
+          { href: "/es/agencia-de-ia/", label: "Ver todas" },
+        ],
+      }}
+    />
+  ) : (
   <div class="bg-transparent text-white">
     <!-- HERO -->
     <section class="relative px-4 pt-28 pb-20">
@@ -473,4 +491,5 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
       </div>
     </section>
   </div>
+  )}
 </BaseLayout>

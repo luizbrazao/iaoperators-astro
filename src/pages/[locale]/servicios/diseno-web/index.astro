@@ -9,6 +9,7 @@ export async function getStaticPaths() {
 
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
 import { getLocale } from "../../../../i18n/ui";
+import ServicioIAEditorial from "@/components/editorial/ServicioIAEditorial.astro";
 import RelatedCases from "@/components/RelatedCases.astro";
 
 const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
@@ -281,7 +282,15 @@ const faqJsonLd = {
 const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
 ---
 
-<BaseLayout title={c.meta.title} description={c.meta.description} jsonLd={jsonLd}>
+<BaseLayout title={c.meta.title} description={c.meta.description} jsonLd={jsonLd} editorial={locale === "es"}>
+  {/* ES: diseño editorial (oct/2026), mismo contenido `c`. EN/PT, plantilla oscura. */}
+  {locale === "es" ? (
+    <ServicioIAEditorial
+      c={c}
+      contactHref={contactHref}
+      relatedPath="servicios/diseno-web/"
+    />
+  ) : (
   <div class="bg-transparent text-white">
     <!-- HERO -->
     <section class="relative px-4 pt-28 pb-20">
@@ -426,4 +435,5 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
       </div>
     </section>
   </div>
+  )}
 </BaseLayout>

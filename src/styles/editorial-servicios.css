@@ -1,0 +1,54 @@
+/* Landings de servicio y hub de /es/servicios/ (oct/2026). Prefijo sv-.
+   Reutiliza pg-* de editorial-pages.css. */
+.editorial-shell .sv-lead { margin-bottom: 14px; max-width: 30em; }
+.editorial-shell .sv-before-band { border-bottom: 0; }
+.editorial-shell .sv-services { row-gap: 52px; }
+.editorial-shell .sv-services .ed-underlined { margin-top: 10px; }
+.editorial-shell .sv-link { margin-top: 22px; }
+.editorial-shell .sv-frontera { padding-top: 48px; }
+.editorial-shell .sv-frontera .pg-relation > p.ed-eyebrow { color: #a8401a; margin: 0; }
+.editorial-shell .sv-tech-section .pg-tech { margin-top: 32px; }
+.editorial-shell .sv-tech-section .pg-tech li { border-color: var(--ed-line); color: var(--ed-ink); font-size: 13px; }
+.editorial-shell .sv-cities { padding-block: 0 72px; }
+.editorial-shell .sv-cities h2 { color: var(--ed-muted); }
+.editorial-shell .sv-cities p { font-size: 16px; color: var(--ed-muted); margin-top: 8px; }
+.editorial-shell .sv-cities ul { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 28px; }
+.editorial-shell .sv-cities a { display: inline-flex; align-items: center; min-height: 44px; font-size: 15px; border-bottom: 1px solid var(--ed-line); }
+.editorial-shell .sv-cities a:hover { border-bottom-color: var(--ed-ink); }
+.editorial-shell .sv-cross { padding-bottom: 84px; }
+@media (max-width: 720px) {
+  .editorial-shell .sv-services { row-gap: 30px; }
+  .editorial-shell .sv-cross { padding-bottom: 52px; }
+  .editorial-shell .sv-cities { padding-bottom: 48px; }
+}
+
+/* ---------- Hub /es/servicios/ ---------- */
+.editorial-shell .pg-section h2.sv-kicker { color: var(--ed-muted); font-size: 11px; font-weight: 400; letter-spacing: .06em; line-height: 1.6; max-width: none; }
+.editorial-shell .sv-doors { list-style: none; padding: 0; margin-top: 24px; }
+.editorial-shell .sv-doors a { height: 100%; }
+.editorial-shell .sv-doors .ed-eyebrow { display: block; color: var(--ed-muted); font-size: 11px; margin: 0; }
+.editorial-shell .sv-doors h3 { font-size: 26px; font-weight: 500; letter-spacing: -.04em; line-height: 1.2; margin-top: 12px; }
+.editorial-shell .sv-doors a:hover h3 { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
+.editorial-shell .sv-last { border-bottom: 0; }
+@media (max-width: 720px) {
+  .editorial-shell .sv-doors h3 { font-size: 22px; }
+}
+
+/* ---------- Agentes de IA ---------- */
+.editorial-shell .sv-donde { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; margin-top: 52px; }
+.editorial-shell .sv-donde h3 { font-size: 22px; font-weight: 500; letter-spacing: -.035em; line-height: 1.25; }
+.editorial-shell .sv-donde .pg-checklist { margin-top: 20px; }
+.editorial-shell .sv-donde-no h3 { color: var(--ed-muted); }
+.editorial-shell .sv-donde-no .pg-checklist li { color: var(--ed-muted); }
+.editorial-shell .sv-donde-no .pg-checklist li::before { background: #9a9d93; height: 1px; }
+.editorial-shell .pg-phases li > div .ed-underlined { margin-top: 8px; }
+@media (max-width: 860px) {
+  .editorial-shell .sv-donde { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+}
+@media (max-width: 1050px) {
+  .editorial-shell .pg-phases li > div { grid-column: 2; }
+}
+@media (max-width: 720px) {
+  .editorial-shell .sv-donde { margin-top: 32px; }
+  .editorial-shell .pg-phases li > div { grid-column: 1; }
+}

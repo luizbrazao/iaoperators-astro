@@ -16,6 +16,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getLocale } from "@/i18n/ui";
 import { getServiceGroups, getHubMeta } from "@/data/servicios";
 import { getPilares } from "@/data/navegacion";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-servicios.css";
 
 const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
 const meta = getHubMeta(locale);
@@ -74,7 +76,76 @@ const breadcrumbJsonLd = {
   title={`${meta.title} | IA Operators`}
   description={meta.description}
   jsonLd={[collectionJsonLd, breadcrumbJsonLd]}
+  editorial={locale === "es"}
 >
+  {/* ES: diseño editorial (oct/2026). Mismos H1/H2/H3 y enlaces. */}
+  {locale === "es" ? (
+    <Fragment>
+      <div class="ed-container">
+        <header class="pg-hero">
+          <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+            <ol>
+              <li><a href="/es/">{homeLabel}</a></li>
+              <li><span aria-current="page">{breadcrumbLabel}</span></li>
+            </ol>
+          </nav>
+          <h1>{meta.h1}</h1>
+          <div class="pg-hero-bottom">
+            <p class="ed-eyebrow">{breadcrumbLabel} · {allItems.length}</p>
+            <p class="pg-lead">{meta.intro}</p>
+          </div>
+        </header>
+
+        {pilares.length > 0 && (
+          <section class="pg-section" aria-labelledby="sv-pilares">
+            <h2 id="sv-pilares" class="ed-eyebrow sv-kicker">{pilaresTitle}</h2>
+            <ul class="pg-doors sv-doors">
+              {pilares.map((pilar, i) => (
+                <li>
+                  <a href={pilar.href}>
+                    <span class="ed-eyebrow">{String(i + 1).padStart(2, "0")}</span>
+                    <h3>{pilar.label}</h3>
+                    <p>{pilar.tagline}</p>
+                    <span class="ed-arrow" aria-hidden="true">↗</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {groups.map((group, gi) => (
+          <section class:list={["pg-section", { "sv-last": gi === groups.length - 1 }]} aria-labelledby={`sv-grupo-${gi + 1}`}>
+            <div class="ed-section-intro">
+              <p class="ed-eyebrow">{group.items.length} servicios</p>
+              <div>
+                <h2 id={`sv-grupo-${gi + 1}`}>{group.title}</h2>
+                {group.intro && <p class="pg-lead-muted">{group.intro}</p>}
+              </div>
+            </div>
+            <div class="pg-offers">
+              {group.items.map((item) => (
+                <a class="ed-offer" href={item.href}>
+                  <span class="ed-eyebrow">{item.num}</span>
+                  <h3>{item.label}</h3>
+                  <p>{item.desc}</p>
+                  <span class="ed-arrow" aria-hidden="true">↗</span>
+                </a>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+
+      <section class="ed-closing" aria-label="Contacto">
+        <div class="ed-container">
+          <p class="ed-eyebrow">Siguiente paso</p>
+          <p class="pg-closing-statement">¿No tienes claro qué servicio encaja? En una llamada de 30 minutos lo vemos contigo.</p>
+          <a class="ed-button" href={contactHref}>{ctaLabel}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+    </Fragment>
+  ) : (
   <div class="bg-transparent text-white">
     <section class="px-4 pt-28 pb-16">
       <div class="max-w-4xl mx-auto text-center">
@@ -152,4 +223,5 @@ const breadcrumbJsonLd = {
       </div>
     </section>
   </div>
+  )}
 </BaseLayout>
