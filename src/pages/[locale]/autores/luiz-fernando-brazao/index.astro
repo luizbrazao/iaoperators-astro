@@ -7,6 +7,8 @@ import { getLocale, type Locale } from "../../../../i18n/ui";
 import {
   PERSON_NAME,
   PERSON_PHOTO,
+  PERSON_PHOTO_SIZE,
+  PERSON_AVATAR,
   SAME_AS,
   personNode,
 } from "@/data/identidad";
@@ -187,6 +189,8 @@ const jsonLd = [
   xDefaultUrl={xDefaultUrl}
   jsonLd={jsonLd}
   ogImage={PHOTO}
+  ogImageWidth={PERSON_PHOTO_SIZE}
+  ogImageHeight={PERSON_PHOTO_SIZE}
   ogImageAlt={NAME}
   ogType="profile"
   editorial={locale === "es"}
@@ -203,7 +207,7 @@ const jsonLd = [
         <h1>{NAME}</h1>
         <div class="pg-hero-bottom">
           <div class="au-id">
-            <img src={PHOTO} alt={NAME} width="112" height="112" loading="eager" decoding="async" />
+            <img src={PERSON_AVATAR} alt={NAME} width="112" height="112" loading="eager" decoding="async" />
             <div>
               <p class="ed-eyebrow">{T.role}</p>
               <a class="ed-underlined" href={LINKEDIN_URL} target="_blank" rel="me noopener noreferrer">{T.linkedin} <span class="ed-arrow" aria-hidden="true">↗</span></a>
@@ -263,7 +267,7 @@ const jsonLd = [
       <!-- Profile header -->
       <header class="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-12">
         <img
-          src={PHOTO}
+          src={PERSON_AVATAR}
           alt={NAME}
           width="112"
           height="112"

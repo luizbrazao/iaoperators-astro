@@ -6,6 +6,7 @@ import { ui, getLocale, type Locale } from "../../../i18n/ui";
 import { fetchBlogEntry } from "../../../lib/blog";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
+import { PERSON_AVATAR } from "../../../data/identidad";
 import "../../../styles/editorial-pages.css";
 import "../../../styles/editorial-blog.css";
 
@@ -440,7 +441,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
           </div>
 
           <div class="bp-author">
-            <img src="https://framerusercontent.com/images/F57rOWtJqaFD6Xm3xWmqp6bM.png" alt="Luiz Brazão" width="64" height="64" loading="lazy" decoding="async" />
+            <img src={PERSON_AVATAR} alt="Luiz Brazão" width="64" height="64" loading="lazy" decoding="async" />
             <div>
               <p class="bp-author-name">
                 {entry.data.authorUrl
@@ -754,7 +755,7 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
       <!-- Author bio -->
       <div class="mx-2 md:mx-8 mt-12 flex items-start gap-5 p-6 rounded-2xl bg-white/[0.03] border border-white/5">
         <img
-          src="https://framerusercontent.com/images/F57rOWtJqaFD6Xm3xWmqp6bM.png"
+          src={PERSON_AVATAR}
           alt="Luiz Brazão"
           width="64"
           height="64"

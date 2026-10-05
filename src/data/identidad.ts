@@ -36,8 +36,12 @@ export const ORG_LOGO_SIZE = 512;
 
 export const PERSON_NAME = "Luiz Fernando Brazão";
 export const PERSON_SHORT_NAME = "Luiz Brazão";
-export const PERSON_PHOTO =
-  "https://framerusercontent.com/images/F57rOWtJqaFD6Xm3xWmqp6bM.png";
+/** Foto de perfil. Absoluta para JSON-LD y og:image (cuadrada, 800 px). */
+export const PERSON_PHOTO_PATH = "/brand/luiz-brazao-800.jpg";
+export const PERSON_PHOTO = `${SITE}${PERSON_PHOTO_PATH}`;
+export const PERSON_PHOTO_SIZE = 800;
+/** Miniatura para avatares pequeños (hasta 120 px en pantalla). */
+export const PERSON_AVATAR = "/brand/luiz-brazao-240.jpg";
 
 /** Ruta de la página de autor, sin idioma ni barra inicial. */
 export const AUTHOR_PATH = "autores/luiz-fernando-brazao";
