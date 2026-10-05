@@ -10,6 +10,8 @@ export async function getStaticPaths() {
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getLocale, ui } from "../../../i18n/ui";
 import { organizationNode, ORG_REF } from "@/data/identidad";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-about.css";
 
 const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
 const dict = (ui as any)?.[locale] ?? {};
@@ -71,6 +73,10 @@ const faqJsonLd = Array.isArray(faq?.items) && faq.items.length > 0
     }
   : null;
 
+// ES editorial: el titular "X — Y" se parte en dos líneas (la segunda en gris).
+const [titleMain, titleTail] = String(hero?.title ?? "").split(/\s+—\s+/);
+const pad = (n: number) => String(n).padStart(2, "0");
+
 const jsonLd = [aboutJsonLd, organizationJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [])];
 ---
 
@@ -78,7 +84,149 @@ const jsonLd = [aboutJsonLd, organizationJsonLd, breadcrumbJsonLd, ...(faqJsonLd
   title={meta?.title ?? "Metodología"}
   description={meta?.description}
   jsonLd={jsonLd}
+  editorial={locale === "es"}
 >
+  {/* ES: diseño editorial (oct/2026). Mismos textos y enlaces; EN y PT siguen
+      con la plantilla oscura. */}
+  {locale === "es" ? (
+    <Fragment>
+      <div class="ed-container">
+        <header class="pg-hero">
+          <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+            <ol>
+              <li><a href="/es/">Inicio</a></li>
+              <li><span aria-current="page">{hero?.badge}</span></li>
+            </ol>
+          </nav>
+          <h1>{titleMain}{titleTail && <Fragment> <span>{titleTail}</span></Fragment>}</h1>
+          <div class="pg-hero-bottom">
+            <p class="ed-eyebrow">{hero?.badge}</p>
+            <div class="mt-hero-copy">
+              <p class="pg-lead">{hero?.subtitle}</p>
+              {hero?.intro && <p class="pg-lead-muted">{hero.intro}</p>}
+              <div class="pg-actions">
+                <a class="ed-button" href={contactHref}>{hero?.cta}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {principles?.items?.length > 0 && (
+          <section class="pg-section" aria-labelledby="mt-principios">
+            <div class="ed-section-intro">
+              <p class="ed-eyebrow">{principles.badge}</p>
+              <div>
+                <h2 id="mt-principios">{principles.title}</h2>
+                {principles.subtitle && <p class="pg-lead-muted">{principles.subtitle}</p>}
+              </div>
+            </div>
+            <ol class="pg-phases mt-principles">
+              {principles.items.map((item: any, i: number) => (
+                <li>
+                  <span class="ed-eyebrow">{pad(i + 1)}</span>
+                  <h3>{item?.title}</h3>
+                  <p>{item?.body}</p>
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
+
+        {pillars?.items?.length > 0 && (
+          <section class="pg-section mt-before-band" aria-labelledby="mt-productos">
+            <div class="ed-section-intro">
+              <p class="ed-eyebrow">{pillars.badge}</p>
+              <div>
+                <h2 id="mt-productos">{pillars.title}</h2>
+                {pillars.subtitle && <p class="pg-lead-muted">{pillars.subtitle}</p>}
+              </div>
+            </div>
+            <ul class="pg-doors mt-doors">
+              {pillars.items.map((item: any) => (
+                <li>
+                  <a href={withLocale(item?.href ?? "/")}>
+                    <span class="ed-eyebrow sb-door-label">{item?.code}{item?.duration ? ` · ${item.duration}` : ""}</span>
+                    <h3>{item?.title}</h3>
+                    <p>{item?.summary}</p>
+                    <span class="sb-door-cta">{item?.linkLabel}</span>
+                    <span class="ed-arrow" aria-hidden="true">↗</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </div>
+
+      {flow?.steps?.length > 0 && (
+        <section class="ed-method pg-method pg-process" aria-labelledby="mt-ciclo">
+          <div class="ed-container">
+            <div class="ed-section-intro">
+              <p class="ed-eyebrow">{flow.badge}</p>
+              <div>
+                <h2 id="mt-ciclo">{flow.title}</h2>
+                {flow.subtitle && <p class="pg-method-lead">{flow.subtitle}</p>}
+              </div>
+            </div>
+            <ol class="ed-steps pg-steps-4">
+              {flow.steps.map((step: any) => (
+                <li><span class="ed-eyebrow">{step?.code}</span><h3>{step?.title}</h3><p>{step?.body}</p></li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      )}
+
+      <div class="ed-container">
+        {differentiator?.columns?.length > 0 && (
+          <section class="pg-section" aria-labelledby="mt-modelo">
+            <div class="ed-section-intro">
+              <p class="ed-eyebrow">Comparativa</p>
+              <div>
+                <h2 id="mt-modelo">{differentiator.title}</h2>
+                {differentiator.subtitle && <p class="pg-lead-muted">{differentiator.subtitle}</p>}
+              </div>
+            </div>
+            <div class="mt-compare">
+              {differentiator.columns.map((col: any) => (
+                <div class:list={["mt-col", { "mt-col-accent": col?.tone === "accent" }]}>
+                  <h3>{col?.title}</h3>
+                  <ul>
+                    {(col?.items ?? []).map((it: string) => <li>{it}</li>)}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {faq?.items?.length > 0 && (
+          <section class="pg-section pg-faq ed-faq" aria-labelledby="mt-faq">
+            <div class="ed-section-intro">
+              <p class="ed-eyebrow">Preguntas</p>
+              <div>
+                <h2 id="mt-faq">{faq.title}</h2>
+                <div class="pg-faq-list">
+                  {faq.items.map((item: any) => <details><summary>{item?.q}</summary><p>{item?.a}</p></details>)}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+      </div>
+
+      {finalCta?.title && (
+        <section class="ed-closing" aria-labelledby="mt-closing">
+          <div class="ed-container">
+            <p class="ed-eyebrow">Siguiente paso</p>
+            <h2 id="mt-closing" class="pg-closing-title">{finalCta.title}</h2>
+            {finalCta.subtitle && <p class="pg-closing-copy">{finalCta.subtitle}</p>}
+            <a class="ed-button" href={contactHref}>{finalCta.cta}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+          </div>
+        </section>
+      )}
+    </Fragment>
+  ) : (
   <div class="bg-transparent text-white">
     <!-- HERO -->
     <section class="relative px-4 pt-28 pb-20">
@@ -331,4 +479,5 @@ const jsonLd = [aboutJsonLd, organizationJsonLd, breadcrumbJsonLd, ...(faqJsonLd
       </section>
     )}
   </div>
+  )}
 </BaseLayout>

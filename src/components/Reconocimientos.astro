@@ -7,14 +7,36 @@
 import { RECONOCIMIENTOS, RECONOCIMIENTOS_COPY } from "@/data/reconocimientos";
 import type { Loc } from "@/data/identidad";
 
-type Props = { locale: string };
-const { locale } = Astro.props as Props;
+type Props = { locale: string; variant?: "dark" | "editorial" };
+const { locale, variant = "dark" } = Astro.props as Props;
 
 const loc: Loc = locale === "pt" || locale === "en" ? locale : "es";
 const copy = RECONOCIMIENTOS_COPY[loc];
 ---
 
-{RECONOCIMIENTOS.length > 0 && (
+{RECONOCIMIENTOS.length > 0 && variant === "editorial" && (
+  <section aria-labelledby="reconocimientos-title" class="pg-section sb-recon">
+    <div class="ed-section-intro">
+      <p class="ed-eyebrow">{copy.title.split(" ")[0]}</p>
+      <div>
+        <h2 id="reconocimientos-title">{copy.title}</h2>
+        <p class="pg-lead-muted">{copy.intro}</p>
+        <ul class="pg-linklist sb-recon-list">
+          {RECONOCIMIENTOS.map((item) => (
+            <li>
+              <a href={item.href} target="_blank" rel={item.rel || undefined}>
+                <span><strong>{item.anchor}</strong><small>{item.caption[loc]}</small></span>
+                <span class="ed-arrow" aria-hidden="true">↗</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+)}
+
+{RECONOCIMIENTOS.length > 0 && variant === "dark" && (
   <section aria-labelledby="reconocimientos-title" class="mb-16">
     <h2
       id="reconocimientos-title"

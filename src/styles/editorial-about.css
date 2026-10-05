@@ -1,0 +1,73 @@
+/* Sobre IA Operators y Metodología (ES, oct/2026). Reutiliza pg-* de
+   editorial-pages.css; aquí solo lo que no existe allí. Prefijos: sb- (sobre),
+   mt- (metodología). */
+
+/* ---------- Puertas con H3 (sobre: seguir por aquí · metodología: productos) ---------- */
+.editorial-shell .sb-doors,
+.editorial-shell .mt-doors { list-style: none; padding: 0; }
+.editorial-shell .sb-doors h3,
+.editorial-shell .mt-doors h3 { font-size: 24px; font-weight: 500; letter-spacing: -.035em; line-height: 1.25; margin-top: 12px; }
+.editorial-shell .sb-doors a,
+.editorial-shell .mt-doors a { height: 100%; padding-bottom: 0; display: flex; flex-direction: column; }
+.editorial-shell .sb-doors a > p,
+.editorial-shell .mt-doors a > p { flex: 1; }
+.editorial-shell .sb-door-label { display: block; color: var(--ed-muted); }
+.editorial-shell .sb-door-cta { align-self: flex-start; font-size: 13px; border-bottom: 1px solid var(--ed-line); padding-block: 10px 5px; margin-top: 18px; }
+.editorial-shell .sb-doors a:hover h3,
+.editorial-shell .mt-doors a:hover h3 { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
+.editorial-shell .sb-doors a:hover .sb-door-cta,
+.editorial-shell .mt-doors a:hover .sb-door-cta { border-bottom-color: var(--ed-ink); }
+
+/* ---------- Sobre ---------- */
+.editorial-shell .sb-founder { display: inline-grid; grid-template-columns: 64px auto; gap: 2px 18px; align-items: center; margin-top: 36px; padding: 14px 22px 14px 14px; border: 1px solid var(--ed-line); }
+.editorial-shell .sb-founder img { grid-row: 1 / span 2; width: 64px; height: 64px; border-radius: 50%; object-fit: cover; }
+.editorial-shell .sb-founder strong { font-size: 17px; font-weight: 500; letter-spacing: -.02em; align-self: end; }
+.editorial-shell .sb-founder .ed-eyebrow { color: var(--ed-muted); align-self: start; }
+.editorial-shell .sb-founder:hover { border-color: var(--ed-ink); }
+
+.editorial-shell .sb-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 40px; margin: 40px 0 0; }
+.editorial-shell .sb-facts > div { border-top: 1px solid var(--ed-line); padding-block: 18px 24px; min-width: 0; }
+.editorial-shell .sb-facts dt { color: var(--ed-muted); }
+.editorial-shell .sb-facts dd { margin: 8px 0 0; font-size: 19px; font-weight: 500; letter-spacing: -.025em; line-height: 1.4; overflow-wrap: anywhere; }
+
+.editorial-shell .pg-door .sb-legal-contact { font-size: 14px; margin-block: 18px 0; }
+.editorial-shell .sb-legal-contact a { border-bottom: 1px solid #8e9980; }
+.editorial-shell .sb-legal-contact a:hover { border-bottom-color: var(--ed-ink); }
+
+.editorial-shell .sb-recon { border-bottom: 0; }
+.editorial-shell .sb-recon-list a { padding-block: 16px; }
+.editorial-shell .sb-recon-list strong { display: block; font-size: 19px; font-weight: 500; letter-spacing: -.025em; }
+.editorial-shell .sb-recon-list small { display: block; font-size: 14px; color: var(--ed-muted); margin-top: 4px; }
+
+/* ---------- Metodología ---------- */
+.editorial-shell .mt-before-band { border-bottom: 0; }
+.editorial-shell .mt-hero-copy .pg-lead-muted { max-width: 40em; }
+.editorial-shell .mt-principles h3 { font-size: 21px; }
+
+.editorial-shell .mt-compare { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin-top: 52px; align-items: start; }
+.editorial-shell .mt-col { border-top: 1px solid var(--ed-line); padding-top: 28px; min-width: 0; }
+.editorial-shell .mt-col h3 { font-size: 22px; font-weight: 500; letter-spacing: -.035em; line-height: 1.25; color: var(--ed-muted); }
+.editorial-shell .mt-col ul { list-style: none; margin: 18px 0 0; padding: 0; }
+.editorial-shell .mt-col li { position: relative; padding: 12px 0 12px 26px; border-top: 1px solid var(--ed-line); font-size: 15px; line-height: 1.55; color: var(--ed-muted); }
+.editorial-shell .mt-col li::before { content: ""; position: absolute; left: 0; top: 1.4em; width: 12px; height: 1px; background: #9a9d93; }
+.editorial-shell .mt-col-accent { background: #252923; color: var(--ed-paper); padding: 28px 32px 20px; border-top: 2px solid var(--ed-orange); }
+.editorial-shell .mt-col-accent h3 { color: var(--ed-paper); }
+.editorial-shell .mt-col-accent li { color: #d6dccd; border-top-color: #4b5146; }
+.editorial-shell .mt-col-accent li::before { background: var(--ed-orange); height: 2px; }
+
+@media (max-width: 1050px) {
+  .editorial-shell .sb-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .editorial-shell .mt-compare { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+  .editorial-shell .mt-col-accent { order: -1; }
+}
+@media (max-width: 720px) {
+  .editorial-shell .sb-facts { grid-template-columns: minmax(0, 1fr); margin-top: 28px; }
+  .editorial-shell .sb-facts dd { font-size: 17px; }
+  .editorial-shell .sb-founder { margin-top: 28px; }
+  .editorial-shell .sb-doors h3,
+  .editorial-shell .mt-doors h3 { font-size: 21px; }
+  .editorial-shell .mt-compare { margin-top: 32px; }
+  .editorial-shell .mt-col-accent { padding: 24px 22px 14px; }
+}

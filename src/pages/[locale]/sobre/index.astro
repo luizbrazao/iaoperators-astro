@@ -14,6 +14,8 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getLocale, locales } from "../../../i18n/ui";
 import Reconocimientos from "@/components/Reconocimientos.astro";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-about.css";
 import {
   ORG_ID,
   ORG_NAME,
@@ -21,6 +23,7 @@ import {
   CONTACT,
   FOUNDING_DATE,
   PERSON_NAME,
+  PERSON_AVATAR,
   aboutUrl,
   authorUrl,
   localeUrl,
@@ -365,7 +368,113 @@ const jsonLd = [
   alternates={alternates}
   xDefaultUrl={xDefaultUrl}
   jsonLd={jsonLd}
+  editorial={locale === "es"}
 >
+  {/* ES: diseño editorial (oct/2026). Mismos textos, H1/H2 y enlaces que la
+      versión oscura, que sigue para EN y PT. */}
+  {locale === "es" ? (
+    <Fragment>
+      <div class="ed-container">
+        <header class="pg-hero">
+          <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+            <ol>
+              <li><a href="/es/">{C.breadcrumbHome}</a></li>
+              <li><span aria-current="page">{C.breadcrumbCurrent}</span></li>
+            </ol>
+          </nav>
+          <h1>{C.h1}</h1>
+          <div class="pg-hero-bottom">
+            <p class="ed-eyebrow">Málaga · desde {FOUNDING_DATE}</p>
+            <p class="pg-lead">{C.lead}</p>
+          </div>
+        </header>
+
+        {C.sections.map((section, i) => (
+          <section class="pg-section" aria-labelledby={`sobre-${i + 1}`}>
+            <div class="ed-section-intro">
+              <p class="ed-eyebrow">{String(i + 1).padStart(2, "0")}</p>
+              <div>
+                <h2 id={`sobre-${i + 1}`}>{section.title}</h2>
+                <div class="pg-prose">
+                  {section.paragraphs.map((text) => <p>{text}</p>)}
+                </div>
+                {i === 0 && (
+                  <a class="sb-founder" href={links.author}>
+                    <img src={PERSON_AVATAR} alt="" width="64" height="64" loading="lazy" decoding="async" />
+                    <strong>{PERSON_NAME}</strong>
+                    <span class="ed-eyebrow">Fundador · ver perfil</span>
+                  </a>
+                )}
+              </div>
+            </div>
+          </section>
+        ))}
+
+        <section class="pg-section" aria-labelledby="sobre-datos">
+          <div class="ed-section-intro">
+            <p class="ed-eyebrow">Ficha</p>
+            <div>
+              <h2 id="sobre-datos">{C.factsTitle}</h2>
+              <dl class="sb-facts">
+                {C.facts.map((fact) => (
+                  <div>
+                    <dt class="ed-eyebrow">{fact.label}</dt>
+                    <dd>{fact.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+        </section>
+
+        <section class="pg-section" aria-labelledby="sobre-seguir">
+          <div class="ed-section-intro">
+            <p class="ed-eyebrow">Más</p>
+            <h2 id="sobre-seguir">{C.outLinksTitle}</h2>
+          </div>
+          <ul class="pg-doors sb-doors">
+            {outLinks.map((item) => (
+              <li>
+                <a href={item.href}>
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                  <span class="sb-door-cta">{item.cta}</span>
+                  <span class="ed-arrow" aria-hidden="true">↗</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <div class="pg-door-wrap">
+          <section class="pg-door" aria-labelledby="sobre-legal">
+            <p class="ed-eyebrow">LSSI-CE · art. 10</p>
+            <div>
+              <h2 id="sobre-legal">{C.legalTitle}</h2>
+              <p>{C.legalText}</p>
+              <a class="ed-underlined" href={links.terms}>{C.legalCta} <span aria-hidden="true">→</span></a>
+              <p class="sb-legal-contact">
+                {C.legalContact}:{" "}
+                <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a> ·{" "}
+                <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a>
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <Reconocimientos locale={locale} variant="editorial" />
+      </div>
+
+      <section class="ed-closing" aria-labelledby="sobre-closing">
+        <div class="ed-container">
+          <p class="ed-eyebrow">Siguiente paso</p>
+          <h2 id="sobre-closing" class="pg-closing-title">{C.ctaTitle}</h2>
+          <p class="pg-closing-copy">{C.ctaText}</p>
+          <a class="ed-button" href={links.contact}>{C.ctaButton}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+    </Fragment>
+  ) : (
   <div class="pt-32 pb-20 px-4">
     <div class="max-w-4xl mx-auto">
       <!-- Breadcrumb -->
@@ -483,4 +592,5 @@ const jsonLd = [
       </section>
     </div>
   </div>
+  )}
 </BaseLayout>
