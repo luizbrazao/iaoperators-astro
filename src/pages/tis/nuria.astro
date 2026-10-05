@@ -17,11 +17,12 @@
 // --- Configuración editable ---------------------------------------------------
 // Vídeo: subir el MP4 a /public/video/ y rellenar `src` (y `poster`).
 const VIDEO = {
+  youtube: "wVUZuLMHoyg", // https://youtu.be/wVUZuLMHoyg
   src: "",
   poster: "",
   type: "video/mp4",
   orientation: "horizontal" as "horizontal" | "vertical",
-  duracion: "55 segundos",
+  duracion: "1 min 24 s",
 };
 
 // "Hablar con Luiz": hoy WhatsApp con mensaje preparado. Para Cal.com o
@@ -195,7 +196,7 @@ const planta = [
           <p class="hero-question" data-reveal>¿Y si aplicamos la misma lógica a los procesos y la tecnología del Plaza y del Avenida?</p>
         </div>
 
-        <div class:list={["video", `video-${VIDEO.orientation}`]} data-video data-reveal>
+        <div class:list={["video", `video-${VIDEO.orientation}`]} data-video data-youtube={VIDEO.youtube || undefined} data-reveal>
           {VIDEO.src && (
             <video class="video-el" preload="none" playsinline controls poster={VIDEO.poster || undefined} aria-label="Vídeo de Luiz Brazão para Nuria Blanco">
               <source src={VIDEO.src} type={VIDEO.type} />

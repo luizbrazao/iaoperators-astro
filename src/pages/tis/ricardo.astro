@@ -25,11 +25,12 @@
 // --- Configuración editable ---------------------------------------------------
 // Vídeo: subir el MP4 a /public/video/ y rellenar `src` (y `poster`).
 const VIDEO = {
+  youtube: "wVUZuLMHoyg", // https://youtu.be/wVUZuLMHoyg
   src: "",
   poster: "",
   type: "video/mp4",
   orientation: "horizontal" as "horizontal" | "vertical",
-  duracion: "55 segundos",
+  duracion: "1 min 24 s",
 };
 
 // "Hablar con Luiz": hoy WhatsApp con mensaje preparado. Para Cal.com basta
@@ -188,7 +189,7 @@ const opciones = ["automatizar", "integrar", "rediseñar un proceso", "aprovecha
         </p>
 
         <div class="hero-grid">
-          <div class:list={["video", `video-${VIDEO.orientation}`]} data-video>
+          <div class:list={["video", `video-${VIDEO.orientation}`]} data-video data-youtube={VIDEO.youtube || undefined}>
             {VIDEO.src && (
               <video class="video-el" preload="none" playsinline controls poster={VIDEO.poster || undefined} aria-label="Vídeo de Luiz Brazão para Ricardo Sánchez">
                 <source src={VIDEO.src} type={VIDEO.type} />

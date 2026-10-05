@@ -17,11 +17,12 @@
 // Vídeo: cuando exista, subir el MP4 a /public/video/ y rellenar `src` (y `poster`).
 // `orientation` acepta "horizontal" (16:9) o "vertical" (9:16).
 const VIDEO = {
+  youtube: "wVUZuLMHoyg", // https://youtu.be/wVUZuLMHoyg
   src: "",
   poster: "",
   type: "video/mp4",
   orientation: "horizontal" as "horizontal" | "vertical",
-  duracion: "55 segundos",
+  duracion: "1 min 24 s",
 };
 
 // Destino del CTA "Hablar con Luiz". Hoy abre WhatsApp con un mensaje preparado;
@@ -111,7 +112,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
         <p class="thesis" data-reveal style="--d:180ms">Crecer sin multiplicar la complejidad.</p>
 
         <div class="hero-grid">
-          <div class:list={["video", `video-${VIDEO.orientation}`]} data-video data-reveal style="--d:300ms">
+          <div class:list={["video", `video-${VIDEO.orientation}`]} data-video data-youtube={VIDEO.youtube || undefined} data-reveal style="--d:300ms">
             {VIDEO.src && (
               <video
                 class="video-el"
@@ -279,6 +280,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
       window.__CASA1800_GTM__ = GTM_ID;
     </script>
     <script>
+      import { mountYouTube } from "../../scripts/youtube-video";
       type Params = Record<string, unknown>;
       const w = window as unknown as { dataLayer?: Params[]; __GTM_LOADED__?: boolean; __CASA1800_GTM__?: string };
       const LANDING = "casa1800";
@@ -337,9 +339,17 @@ const pad = (n: number) => String(n).padStart(2, "0");
       const cover = box?.querySelector<HTMLButtonElement>("[data-video-play]");
       const video = box?.querySelector<HTMLVideoElement>("video");
       const note = box?.querySelector<HTMLElement>("[data-video-note]");
+      const youtubeId = box?.dataset.youtube;
       let played = false;
       let completed = false;
       cover?.addEventListener("click", () => {
+        if (youtubeId && box) {
+          mountYouTube(box, youtubeId, {
+            onPlay: () => { if (!played) { played = true; track("video_play", { video_title: "casa1800_luiz" }); } },
+            onEnd: () => { if (!completed) { completed = true; track("video_complete", { video_title: "casa1800_luiz" }); } },
+          });
+          return;
+        }
         if (!video) {
           if (note) note.hidden = false;
           return;

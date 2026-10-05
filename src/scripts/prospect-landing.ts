@@ -7,7 +7,7 @@
 //
 // Eventos (todos con `landing`):
 //   landing_view   al cargar (param `entry` = ?src=, p. ej. "qr")
-//   video_play     primera reproducción
+//   video_play     primera reproducción (vídeo propio o YouTube)
 //   video_complete fin del vídeo
 //   click_cta      clic en cualquier [data-cta] (param `cta_location`)
 //   <evento propio> opcional: si el enlace lleva data-cta-event="click_x",
@@ -17,6 +17,8 @@
 // El page_view lo envía la etiqueta GA4 de GTM. Sin consentimiento no sale
 // nada: los eventos quedan en la cola del dataLayer y GTM los procesa si la
 // persona acepta durante la misma visita.
+
+import { mountYouTube } from "./youtube-video";
 
 type Params = Record<string, unknown>;
 type Win = Window & { dataLayer?: Params[]; __GTM_LOADED__?: boolean };
@@ -76,14 +78,26 @@ export function initProspectLanding(opts: { landing: string; gtmId: string; vide
     });
   });
 
-  // Vídeo: solo se reproduce al pulsar.
+  // Vídeo: solo se reproduce al pulsar. Con data-youtube="<id>" se monta el
+  // reproductor de YouTube (youtube-video.ts); si no, el <video> propio.
   const box = document.querySelector<HTMLElement>("[data-video]");
   const cover = box?.querySelector<HTMLButtonElement>("[data-video-play]");
   const video = box?.querySelector<HTMLVideoElement>("video");
   const note = box?.querySelector<HTMLElement>("[data-video-note]");
+  const youtubeId = box?.dataset.youtube;
   let played = false;
   let completed = false;
+  const onPlay = () => {
+    if (!played) { played = true; track("video_play", { video_title: videoTitle }); }
+  };
+  const onEnd = () => {
+    if (!completed) { completed = true; track("video_complete", { video_title: videoTitle }); }
+  };
   cover?.addEventListener("click", () => {
+    if (youtubeId && box) {
+      mountYouTube(box, youtubeId, { onPlay, onEnd });
+      return;
+    }
     if (!video) {
       if (note) note.hidden = false;
       return;
@@ -93,11 +107,9 @@ export function initProspectLanding(opts: { landing: string; gtmId: string; vide
   });
   video?.addEventListener("play", () => {
     box?.classList.add("is-playing");
-    if (!played) { played = true; track("video_play", { video_title: videoTitle }); }
+    onPlay();
   });
-  video?.addEventListener("ended", () => {
-    if (!completed) { completed = true; track("video_complete", { video_title: videoTitle }); }
-  });
+  video?.addEventListener("ended", onEnd);
 
   // Cabecera: fondo y borde solo cuando ya hay scroll.
   const top = document.querySelector<HTMLElement>("[data-top]");

@@ -21,11 +21,12 @@
 
 // --- Configuración editable ---------------------------------------------------
 const VIDEO = {
+  youtube: "wVUZuLMHoyg", // https://youtu.be/wVUZuLMHoyg
   src: "",
   poster: "",
   type: "video/mp4",
   orientation: "horizontal" as "horizontal" | "vertical",
-  duracion: "55 segundos",
+  duracion: "1 min 24 s",
 };
 
 const CONTACT_HREF = `https://wa.me/34662423523?text=${encodeURIComponent(
@@ -207,7 +208,7 @@ const bands = patrones.map((c) => (c / (COLS - 1)) * 100);
         </p>
 
         <div class="hero-grid">
-          <div class:list={["video", `video-${VIDEO.orientation}`]} data-video>
+          <div class:list={["video", `video-${VIDEO.orientation}`]} data-video data-youtube={VIDEO.youtube || undefined}>
             {VIDEO.src && (
               <video class="video-el" preload="none" playsinline controls poster={VIDEO.poster || undefined} aria-label="Vídeo de Luiz Brazão para Álvaro Carrillo">
                 <source src={VIDEO.src} type={VIDEO.type} />
