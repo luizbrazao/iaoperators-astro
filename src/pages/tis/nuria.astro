@@ -1,4 +1,5 @@
 ---
+import PresenterVideo from "../../components/PresenterVideo.astro";
 // Landing personalizada para Nuria Blanco López, directora general de Hotel
 // Plaza (Hotel & Spa) y Hotel Avenida (A Coruña), grupo Blancohostel. Se llega
 // por el QR de una tarjeta entregada en mano. Privada: noindex,nofollow y fuera
@@ -17,9 +18,9 @@
 // --- Configuración editable ---------------------------------------------------
 // Vídeo: subir el MP4 a /public/video/ y rellenar `src` (y `poster`).
 const VIDEO = {
-  youtube: "wVUZuLMHoyg", // https://youtu.be/wVUZuLMHoyg
-  src: "",
-  poster: "",
+  // Vídeo de Luiz con fondo blanco, fundido con la página (PresenterVideo).
+  src: "/video/luiz-tis.mp4",
+  poster: "/video/luiz-tis-poster.jpg",
   type: "video/mp4",
   orientation: "horizontal" as "horizontal" | "vertical",
   duracion: "1 min 24 s",
@@ -196,20 +197,7 @@ const planta = [
           <p class="hero-question" data-reveal>¿Y si aplicamos la misma lógica a los procesos y la tecnología del Plaza y del Avenida?</p>
         </div>
 
-        <div class:list={["video", `video-${VIDEO.orientation}`]} data-video data-youtube={VIDEO.youtube || undefined} data-reveal>
-          {VIDEO.src && (
-            <video class="video-el" preload="none" playsinline controls poster={VIDEO.poster || undefined} aria-label="Vídeo de Luiz Brazão para Nuria Blanco">
-              <source src={VIDEO.src} type={VIDEO.type} />
-            </video>
-          )}
-          <button class="video-cover" type="button" data-video-play aria-label={`Reproducir el vídeo, ${VIDEO.duracion}`}>
-            <span class="video-play" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
-            </span>
-            <span class="video-time">{VIDEO.duracion}</span>
-          </button>
-          <p class="video-note" data-video-note hidden>El vídeo estará disponible en breve.</p>
-        </div>
+        <PresenterVideo src={VIDEO.src} poster={VIDEO.poster} label="Vídeo de Luiz Brazão para Nuria Blanco" duracion={VIDEO.duracion} />
       </section>
 
       <!-- 01 · Qué merece la pena escalar -->

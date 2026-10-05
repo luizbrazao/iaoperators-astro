@@ -1,4 +1,5 @@
 ---
+import PresenterVideo from "../../components/PresenterVideo.astro";
 // Landing personalizada para la dirección de Hoteles Casa 1800 (Francisca García
 // Moreno y Elisabeth Martínez Santos). Se llega por el QR de una tarjeta entregada
 // en mano. Privada: noindex,nofollow y fuera del sitemap (NOINDEX_PATHS en
@@ -17,9 +18,9 @@
 // Vídeo: cuando exista, subir el MP4 a /public/video/ y rellenar `src` (y `poster`).
 // `orientation` acepta "horizontal" (16:9) o "vertical" (9:16).
 const VIDEO = {
-  youtube: "wVUZuLMHoyg", // https://youtu.be/wVUZuLMHoyg
-  src: "",
-  poster: "",
+  // Vídeo de Luiz con fondo blanco, fundido con la página (PresenterVideo).
+  src: "/video/luiz-tis.mp4",
+  poster: "/video/luiz-tis-poster.jpg",
   type: "video/mp4",
   orientation: "horizontal" as "horizontal" | "vertical",
   duracion: "1 min 24 s",
@@ -112,40 +113,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
         <p class="thesis" data-reveal style="--d:180ms">Crecer sin multiplicar la complejidad.</p>
 
         <div class="hero-grid">
-          <div class:list={["video", `video-${VIDEO.orientation}`]} data-video data-youtube={VIDEO.youtube || undefined} data-reveal style="--d:300ms">
-            {VIDEO.src && (
-              <video
-                class="video-el"
-                preload="none"
-                playsinline
-                controls
-                poster={VIDEO.poster || undefined}
-                aria-label="Vídeo de Luiz Brazão para Casa 1800"
-              >
-                <source src={VIDEO.src} type={VIDEO.type} />
-              </video>
-            )}
-            <button class="video-cover" type="button" data-video-play aria-label={`Reproducir el vídeo, ${VIDEO.duracion}`}>
-              <svg class="video-lines" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-                <g fill="none" stroke="currentColor" stroke-width="1">
-                  <path d="M-10 120 H260 C300 120 300 190 340 190 H820" />
-                  <path d="M-10 230 H180 C220 230 220 300 260 300 H520 C560 300 560 230 600 230 H820" />
-                  <path d="M-10 340 H420 C460 340 460 270 500 270 H820" />
-                </g>
-                <g fill="currentColor">
-                  <circle cx="340" cy="190" r="3" /><circle cx="260" cy="300" r="3" /><circle cx="600" cy="230" r="3" /><circle cx="500" cy="270" r="3" />
-                </g>
-              </svg>
-              <span class="video-play" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="22" height="22"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
-              </span>
-              <span class="video-meta">
-                <span class="video-who">Luiz Brazão · IA Operators</span>
-                <span class="video-time">{VIDEO.duracion}</span>
-              </span>
-            </button>
-            <p class="video-note" data-video-note hidden>El vídeo estará disponible en breve.</p>
-          </div>
+          <PresenterVideo src={VIDEO.src} poster={VIDEO.poster} label="Vídeo de Luiz Brazão para Casa 1800" duracion={VIDEO.duracion} />
 
           <div class="hero-copy" data-reveal style="--d:380ms">
             <p class="lead">Casa 1800 ya ha demostrado que la tecnología puede eliminar límites al crecimiento.</p>
@@ -280,7 +248,6 @@ const pad = (n: number) => String(n).padStart(2, "0");
       window.__CASA1800_GTM__ = GTM_ID;
     </script>
     <script>
-      import { mountYouTube } from "../../scripts/youtube-video";
       type Params = Record<string, unknown>;
       const w = window as unknown as { dataLayer?: Params[]; __GTM_LOADED__?: boolean; __CASA1800_GTM__?: string };
       const LANDING = "casa1800";
@@ -339,17 +306,9 @@ const pad = (n: number) => String(n).padStart(2, "0");
       const cover = box?.querySelector<HTMLButtonElement>("[data-video-play]");
       const video = box?.querySelector<HTMLVideoElement>("video");
       const note = box?.querySelector<HTMLElement>("[data-video-note]");
-      const youtubeId = box?.dataset.youtube;
       let played = false;
       let completed = false;
       cover?.addEventListener("click", () => {
-        if (youtubeId && box) {
-          mountYouTube(box, youtubeId, {
-            onPlay: () => { if (!played) { played = true; track("video_play", { video_title: "casa1800_luiz" }); } },
-            onEnd: () => { if (!completed) { completed = true; track("video_complete", { video_title: "casa1800_luiz" }); } },
-          });
-          return;
-        }
         if (!video) {
           if (note) note.hidden = false;
           return;

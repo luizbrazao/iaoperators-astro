@@ -1,0 +1,138 @@
+---
+// Luiz "dentro" de la página: vídeo con fondo blanco puro fundido con el fondo
+// del hero mediante mix-blend-mode: multiply (blanco × color de la página =
+// color de la página). Un solo MP4 H.264, sin canal alfa, que funciona igual en
+// Safari/iOS. Requisito: colocarlo sobre un fondo claro y fuera de cualquier
+// ancestro con opacity/transform/filter (crearía un contexto aislado y se vería
+// el blanco). Por eso el componente no lleva data-reveal.
+//
+// Sin autoplay: se ve el póster (Luiz recortado) y un botón. Compatible con el
+// script de las landings: [data-video], [data-video-play] y <video> → mismos
+// eventos video_play / video_complete.
+interface Props {
+  src: string;
+  poster: string;
+  label: string;
+  duracion: string;
+}
+const { src, poster, label, duracion } = Astro.props;
+---
+
+<div class="pv" data-video data-presenter>
+  <video class="pv-video" preload="none" playsinline poster={poster} aria-label={label} width="864" height="704">
+    <source src={src} type="video/mp4" />
+  </video>
+  <button class="pv-btn" type="button" data-video-play aria-label={`Reproducir el vídeo de Luiz Brazão, ${duracion}`}>
+    <span class="pv-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="14" height="14"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+    </span>
+    <span class="pv-text">Escúchame<span class="pv-time">{duracion}</span></span>
+  </button>
+  <button class="pv-pause" type="button" data-presenter-toggle aria-label="Pausar el vídeo">
+    <svg class="pv-i-pause" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor" /></svg>
+    <svg class="pv-i-play" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+  </button>
+</div>
+
+<script>
+  // Pausa / reanudación y vuelta al póster al terminar. El arranque (clic en
+  // el botón principal) y la analítica los gestiona el script de la landing.
+  document.querySelectorAll<HTMLElement>("[data-presenter]").forEach((box) => {
+    const video = box.querySelector("video");
+    const toggle = box.querySelector<HTMLButtonElement>("[data-presenter-toggle]");
+    if (!video) return;
+    const sync = () => {
+      box.classList.toggle("is-playing", !video.paused && !video.ended);
+      box.classList.toggle("is-started", !video.ended && (!video.paused || video.currentTime > 0));
+      toggle?.setAttribute("aria-label", video.paused ? "Reanudar el vídeo" : "Pausar el vídeo");
+    };
+    video.addEventListener("play", sync);
+    video.addEventListener("pause", sync);
+    video.addEventListener("ended", () => { video.load(); sync(); });
+    const flip = () => { if (video.paused) void video.play().catch(() => {}); else video.pause(); };
+    toggle?.addEventListener("click", flip);
+    video.addEventListener("click", () => { if (box.classList.contains("is-started")) flip(); });
+  });
+</script>
+
+<style>
+  .pv {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    margin-inline: auto;
+    aspect-ratio: 864 / 704;
+  }
+  .pv-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: bottom center;
+    background: transparent;
+    mix-blend-mode: multiply;
+    -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
+  }
+  .pv.is-started .pv-video { cursor: pointer; }
+  .pv-btn {
+    position: absolute;
+    left: 50%;
+    bottom: 7%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 16px 6px 6px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(17, 17, 17, .9);
+    color: #fff;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+    transition: transform .25s ease, opacity .25s ease;
+  }
+  .pv-btn:hover { transform: translateX(-50%) scale(1.03); }
+  .pv-icon {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #fff;
+    color: #111;
+  }
+  .pv-icon svg { margin-left: 2px; }
+  .pv-time { margin-left: 8px; font-weight: 500; opacity: .7; }
+  .pv.is-started .pv-btn { opacity: 0; pointer-events: none; }
+  .pv-pause {
+    position: absolute;
+    right: 6%;
+    bottom: 12%;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(17, 17, 17, .78);
+    color: #fff;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+  }
+  .pv.is-started .pv-pause { opacity: 1; pointer-events: auto; }
+  .pv-i-play { display: none; margin-left: 2px; }
+  .pv.is-started:not(.is-playing) .pv-i-pause { display: none; }
+  .pv.is-started:not(.is-playing) .pv-i-play { display: block; }
+  .pv-btn:focus-visible, .pv-pause:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) {
+    .pv-btn, .pv-pause { transition: none; }
+  }
+</style>
