@@ -4,6 +4,10 @@ import { Picture } from "astro:assets";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { ui, getLocale, type Locale } from "../../../i18n/ui";
 import { fetchBlogEntry } from "../../../lib/blog";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import "../../../styles/editorial-pages.css";
+import "../../../styles/editorial-blog.css";
 
 export async function getStaticPaths() {
   const locales: Locale[] = ["es", "pt", "en"];
@@ -306,6 +310,17 @@ const ctaSecondaryLinks = [
 
 // Share URLs
 const shareLinkedIn = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonicalFromAlternates)}`;
+// Diseño editorial (solo ES, oct/2026). EN/PT conservan la plantilla oscura.
+const editorial = locale === "es";
+const authorName = entry.data.author ?? "IA Operators";
+// Portada en la variante editorial: si es una ruta local que no existe en
+// public/ (p. ej. /blog/ia-para-arquitectos.jpg), no se pinta el hueco roto.
+const coverSrc = entry.data.cover ?? entry.data.image;
+const coverOk =
+  !!entry.data.image &&
+  (!!entry.data.optimizeImage ||
+    !coverSrc?.startsWith("/") ||
+    existsSync(join(process.cwd(), "public", decodeURIComponent(coverSrc.split("?")[0]))));
 const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(canonicalFromAlternates)}`;
 ---
 
@@ -324,7 +339,143 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
   ogType="article"
   ogPublishedTime={ogPublishedTime}
   ogModifiedTime={ogModifiedTime}
+  editorial={editorial}
 >
+  {editorial ? (
+    <div class="ed-container bp">
+      <header class="bp-hero">
+        <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+          <ol>
+            <li><a href={`/${locale}/`}>{homeLabel}</a></li>
+            <li><a href={`/${locale}/blog/`}>{blogLabel}</a></li>
+            <li><span aria-current="page">{title}</span></li>
+          </ol>
+        </nav>
+        <p class="ed-eyebrow bp-cat">{categoryLabel}</p>
+        <h1>{title}</h1>
+        <p class="ed-eyebrow bp-meta">
+          <time datetime={parsedDate.toISOString()}>{formattedDate}</time>
+          {updatedAt && (
+            <span>{blogPostDict?.updatedLabel ?? "Actualizado"}: <time datetime={updatedAt.toISOString()}>{updatedAt.toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })}</time></span>
+          )}
+          <span>{readingTimeLabel}</span>
+          {entry.data.authorUrl ? <a href={entry.data.authorUrl} rel="author">{authorName}</a> : <span>{authorName}</span>}
+        </p>
+      </header>
+
+      {entry.data.image && entry.data.optimizeImage && (
+        <figure class="bp-cover">
+          <Picture
+            src={entry.data.image}
+            widths={[480, 768, 1200]}
+            sizes={entry.data.imageSizes ?? "(max-width: 768px) 100vw, 1100px"}
+            formats={["avif", "webp"]}
+            fallbackFormat="png"
+            inferSize={true}
+            alt={entry.data.imageAlt ?? title}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </figure>
+      )}
+      {coverOk && !entry.data.optimizeImage && (
+        <figure class="bp-cover">
+          <picture>
+            {entry.data.imageSrcsetAvif && <source type="image/avif" srcset={entry.data.imageSrcsetAvif} sizes={entry.data.imageSizes ?? "(max-width: 768px) 100vw, 1100px"} />}
+            {entry.data.imageSrcsetWebp && <source type="image/webp" srcset={entry.data.imageSrcsetWebp} sizes={entry.data.imageSizes ?? "(max-width: 768px) 100vw, 1100px"} />}
+            <img
+              src={entry.data.cover ?? entry.data.image}
+              srcset={entry.data.imageSrcset}
+              sizes={entry.data.imageSizes ?? "(max-width: 768px) 100vw, 1100px"}
+              width={entry.data.imageWidth}
+              height={entry.data.imageHeight}
+              alt={entry.data.imageAlt ?? title}
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+        </figure>
+      )}
+
+      <div class="bp-body">
+        <aside class="bp-side">
+          <a class="bp-back ed-eyebrow" href={`/${locale}/blog/`}><span aria-hidden="true">←</span> {blogPostDict?.back ?? "Volver al Blog"}</a>
+          <div class="bp-share">
+            <p>{blogPostDict?.shareTitle ?? "Compartir"}</p>
+            <div class="bp-share-links">
+              <button type="button" class="ed-underlined" data-copy-link={canonicalFromAlternates} aria-label={blogPostDict?.copyLink ?? "Copiar link"}>{blogPostDict?.copyLink ?? "Copiar link"}</button>
+              <a class="ed-underlined" href={shareLinkedIn} target="_blank" rel="noopener noreferrer" title={blogPostDict?.shareLinkedIn ?? "Compartir en LinkedIn"}>LinkedIn <span class="ed-arrow" aria-hidden="true">↗</span></a>
+              <a class="ed-underlined" href={shareX} target="_blank" rel="noopener noreferrer" title={blogPostDict?.shareTwitter ?? "Compartir en X"}>X <span class="ed-arrow" aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </aside>
+
+        <div class="bp-main">
+          <div class="bp-prose">
+            <Content />
+          </div>
+
+          {faqItems.length > 0 && (
+            <section class="bp-faq ed-faq" aria-labelledby="preguntas-frecuentes">
+              <h2 id="preguntas-frecuentes">{blogPostDict?.faqTitle ?? "Preguntas frecuentes"}</h2>
+              {faqItems.map((item) => (
+                <details>
+                  <summary>{item.q}</summary>
+                  <p>{item.a}</p>
+                </details>
+              ))}
+            </section>
+          )}
+
+          <div class="bp-cta">
+            <p class="ed-eyebrow">Próximos pasos</p>
+            <p class="bp-cta-title">{ctaTitle}</p>
+            <p class="bp-cta-text">{ctaText}</p>
+            <div class="bp-cta-actions">
+              <a class="ed-button" href={ctaPrimaryHref}>{ctaPrimaryLabel}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+              {ctaSecondaryLinks.map((link) => <a class="ed-underlined" href={link.href}>{link.label}</a>)}
+            </div>
+          </div>
+
+          <div class="bp-author">
+            <img src="https://framerusercontent.com/images/F57rOWtJqaFD6Xm3xWmqp6bM.png" alt="Luiz Brazão" width="64" height="64" loading="lazy" decoding="async" />
+            <div>
+              <p class="bp-author-name">
+                {entry.data.authorUrl
+                  ? <a href={entry.data.authorUrl} rel="author">{entry.data.author ?? "Luiz Brazão"}</a>
+                  : (entry.data.author ?? "Luiz Brazão")}
+              </p>
+              <p class="ed-eyebrow">{entry.data.authorTitle ?? "Fundador, IA Operators"}</p>
+              <p class="bp-author-bio">{entry.data.authorBio ?? "Años liderando equipos en empresas medianas y grandes. Creó IA Operators para diagnosticar ecosistemas tecnológicos, priorizar lo que mueve la aguja y construir soluciones — sin hand-offs entre quien piensa y quien ejecuta."}</p>
+              <a class="ed-underlined" href="https://www.linkedin.com/in/ferbrazao/" target="_blank" rel="noopener noreferrer">LinkedIn <span class="ed-arrow" aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {relatedPosts.length > 0 && (
+        <aside class="bp-related" aria-labelledby="bp-related-title">
+          <h2 id="bp-related-title" class="ed-eyebrow">{relatedLabel}</h2>
+          <ol class="bl-list">
+            {relatedPosts.map((rp) => (
+              <li>
+                <a href={rp.href} class="bl-item bl-item-compact">
+                  <div class="bl-item-copy">
+                    <h3>{rp.title}</h3>
+                    <p class="bl-desc">{rp.description}</p>
+                  </div>
+                  <span class="ed-arrow" aria-hidden="true">↗</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </aside>
+      )}
+    </div>
+  ) : (
+  <Fragment>
   <!-- Back button (fixed desktop) -->
   <div class="fixed top-24 left-4 z-40 hidden xl:block">
     <a
@@ -727,6 +878,8 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
 
     </article>
   </div>
+  </Fragment>
+  )}
 
   <script is:inline>
     (function () {
@@ -738,6 +891,12 @@ const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title
           await navigator.clipboard.writeText(url);
           btn.classList.add("text-white");
           setTimeout(() => btn.classList.remove("text-white"), 900);
+          // Variante editorial (ES): botón de texto, se confirma con el propio texto.
+          if (btn.classList.contains("ed-underlined")) {
+            const label = btn.textContent;
+            btn.textContent = "Copiado";
+            setTimeout(() => { btn.textContent = label; }, 1400);
+          }
         } catch (_) {
           const input = document.createElement("input");
           input.value = url;

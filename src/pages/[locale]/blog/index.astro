@@ -11,6 +11,8 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getLocale, ui } from "../../../i18n/ui";
 import { fetchBlogPosts } from "../../../lib/blog";
 import { SITE, ORG_REF, WEBSITE_REF } from "@/data/identidad";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-blog.css";
 
 const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
 
@@ -131,9 +133,119 @@ const categoryLabel = (key: string) =>
     others: "Others",
   } as any)[key] ||
   key;
+
+// ===== Diseño editorial (solo ES, oct/2026) =====
+// Mismos textos, enlaces y JSON-LD. El primer artículo (el más reciente) va
+// destacado con su imagen; el resto, en lista tipográfica. El filtro solo
+// muestra categorías con artículos, con su recuento.
+const editorial = locale === "es";
+const fmtDate = (iso: string) =>
+  new Date(iso).toLocaleDateString(locale, { year: "numeric", month: "short", day: "numeric" });
+const catCounts = preparedPosts.reduce((acc: Record<string, number>, p: any) => {
+  acc[p.__catId] = (acc[p.__catId] ?? 0) + 1;
+  return acc;
+}, {});
+const filterKeys = CATEGORY_KEYS.filter((k) => k === "all" || (catCounts[k] ?? 0) > 0);
+const [featured, ...restPosts] = preparedPosts;
 ---
 
-<BaseLayout title={pageTitle} description={t.description} jsonLd={blogJsonLd}>
+<BaseLayout title={pageTitle} description={t.description} jsonLd={blogJsonLd} editorial={editorial}>
+  {editorial ? (
+    <div class="ed-container bl">
+      <header class="pg-hero">
+        <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+          <ol>
+            <li><a href="/es/">Inicio</a></li>
+            <li><span aria-current="page">{t.badge}</span></li>
+          </ol>
+        </nav>
+        <h1>{t.title}</h1>
+        <div class="pg-hero-bottom">
+          <p class="ed-eyebrow">{t.badge} · {preparedPosts.length}</p>
+          <p class="pg-lead">{t.intro}</p>
+        </div>
+      </header>
+
+      {preparedPosts.length > 0 ? (
+        <Fragment>
+          <div class="bl-filter" id="blogCategoryBar" role="group" aria-label={categoryLabel("all")}>
+            {filterKeys.map((catId) => (
+              <button type="button" class="bl-chip" data-cat={catId} aria-pressed={catId === "all" ? "true" : "false"}>
+                {categoryLabel(catId)}
+                <span class="bl-count">{catId === "all" ? preparedPosts.length : catCounts[catId]}</span>
+              </button>
+            ))}
+          </div>
+
+          <div class="bl-posts" id="blogGrid">
+            {featured && (
+              <a href={withLocale(`blog/${featured.slug}/`)} class:list={["bl-feature", { "bl-feature-solo": !featured.imageUrl }]} data-cat={featured.__catId}>
+                <div class="bl-feature-copy">
+                  <p class="ed-eyebrow">{categoryLabel(featured.__catId)} · <time datetime={featured.date}>{fmtDate(featured.date)}</time></p>
+                  <h2>{featured.title}</h2>
+                  <p class="bl-desc">{featured.description}</p>
+                  <span class="ed-underlined">{t.readMore}</span>
+                </div>
+                {featured.imageUrl && (
+                  <div class="bl-feature-img">
+                    <img src={featured.imageUrl} alt={featured.imageAlt ?? featured.title} loading="eager" decoding="async" />
+                  </div>
+                )}
+              </a>
+            )}
+            <ol class="bl-list">
+              {restPosts.map((post: any) => (
+                <li data-cat={post.__catId}>
+                  <a href={withLocale(`blog/${post.slug}/`)} class="bl-item">
+                    <time class="ed-eyebrow" datetime={post.date}>{fmtDate(post.date)}</time>
+                    <div class="bl-item-copy">
+                      <h2>{post.title}</h2>
+                      <p class="bl-desc">{post.description}</p>
+                    </div>
+                    <span class="ed-eyebrow bl-cat">{categoryLabel(post.__catId)}</span>
+                    <span class="ed-arrow" aria-hidden="true">↗</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div class="bl-empty" id="blogEmpty" hidden>
+            <p>{t.empty}</p>
+            <button type="button" class="ed-underlined" id="blogViewAll">{t.viewAll}</button>
+          </div>
+        </Fragment>
+      ) : (
+        <p class="bl-empty">{t.empty}</p>
+      )}
+
+      <script is:inline>
+        (function () {
+          var bar = document.getElementById("blogCategoryBar");
+          var grid = document.getElementById("blogGrid");
+          var empty = document.getElementById("blogEmpty");
+          var viewAll = document.getElementById("blogViewAll");
+          if (!bar || !grid) return;
+          var buttons = Array.prototype.slice.call(bar.querySelectorAll("button[data-cat]"));
+          var items = Array.prototype.slice.call(grid.querySelectorAll("[data-cat]"));
+          function apply(cat) {
+            buttons.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.cat === cat ? "true" : "false"); });
+            var visible = 0;
+            items.forEach(function (el) {
+              var show = cat === "all" || (el.dataset.cat || "others") === cat;
+              el.hidden = !show;
+              if (show) visible++;
+            });
+            grid.classList.toggle("is-filtered", cat !== "all");
+            if (empty) empty.hidden = visible !== 0;
+          }
+          buttons.forEach(function (b) { b.addEventListener("click", function () { apply(b.dataset.cat || "all"); }); });
+          if (viewAll) viewAll.addEventListener("click", function () { apply("all"); });
+        })();
+      </script>
+    </div>
+  ) : (
+  <Fragment>
   <div class="bg-transparent text-white min-h-screen font-sans">
     <!-- HEADER DO BLOG -->
     <section class="pt-40 pb-10 px-4 text-center">
@@ -288,4 +400,6 @@ const categoryLabel = (key: string) =>
       viewAll?.addEventListener("click", () => applyFilter("all"));
     })();
   </script>
+  </Fragment>
+  )}
 </BaseLayout>

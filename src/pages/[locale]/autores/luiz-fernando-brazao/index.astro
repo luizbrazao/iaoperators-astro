@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-blog.css";
 import { getLocale, type Locale } from "../../../../i18n/ui";
 import {
   PERSON_NAME,
@@ -187,7 +189,66 @@ const jsonLd = [
   ogImage={PHOTO}
   ogImageAlt={NAME}
   ogType="profile"
+  editorial={locale === "es"}
 >
+  {locale === "es" ? (
+    <div class="ed-container au">
+      <header class="pg-hero">
+        <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+          <ol>
+            <li><a href={`/${locale}/`}>{T.home}</a></li>
+            <li><span aria-current="page">{NAME}</span></li>
+          </ol>
+        </nav>
+        <h1>{NAME}</h1>
+        <div class="pg-hero-bottom">
+          <div class="au-id">
+            <img src={PHOTO} alt={NAME} width="112" height="112" loading="eager" decoding="async" />
+            <div>
+              <p class="ed-eyebrow">{T.role}</p>
+              <a class="ed-underlined" href={LINKEDIN_URL} target="_blank" rel="me noopener noreferrer">{T.linkedin} <span class="ed-arrow" aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+          <p class="pg-lead">{T.intro}</p>
+        </div>
+      </header>
+
+      <section class="pg-section au-cols">
+        <div>
+          <h2>{T.expTitle}</h2>
+          <ul class="au-list">{T.exp.map((item) => <li>{item}</li>)}</ul>
+        </div>
+        <div>
+          <h2>{T.focusTitle}</h2>
+          <ul class="au-list">{T.focus.map((item) => <li>{item}</li>)}</ul>
+        </div>
+      </section>
+
+      {articles.length > 0 && (
+        <section class="pg-section au-articles" aria-labelledby="au-articles-title">
+          <h2 id="au-articles-title">{T.articlesTitle}</h2>
+          <ol class="bl-list">
+            {articles.map((a) => (
+              <li>
+                <a href={a.href} class="bl-item bl-item-compact">
+                  <div class="bl-item-copy">
+                    <h3>{a.title}</h3>
+                    <p class="bl-desc">{a.description}</p>
+                  </div>
+                  <span class="ed-arrow" aria-hidden="true">↗</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      <section class="pg-section au-editorial">
+        <h2>{T.editorialTitle}</h2>
+        <p>{T.editorial}</p>
+      </section>
+    </div>
+  ) : (
   <div class="pt-32 pb-20 px-4">
     <div class="max-w-4xl mx-auto">
       <!-- Breadcrumb -->
@@ -273,4 +334,5 @@ const jsonLd = [
       </section>
     </div>
   </div>
+  )}
 </BaseLayout>
