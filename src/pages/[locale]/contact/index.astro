@@ -10,6 +10,7 @@ export async function getStaticPaths() {
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getLocale, ui } from "../../../i18n/ui";
 import ContactForm from "../../../islands/ContactForm.jsx";
+import "../../../styles/editorial-pages.css";
 
 const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
 const dict = (ui as any)?.[locale] ?? (ui as any)?.es ?? (ui as any)?.en ?? (ui as any)?.pt ?? {};
@@ -19,6 +20,20 @@ const t = {
   badge: contact?.badge ?? "Contact",
   title: contact?.title ?? "Let’s talk",
   subtitle: contact?.subtitle ?? "Tell us what you want to build.",
+};
+
+// ES: diseño editorial (oct/2026). EN/PT siguen con la plantilla oscura.
+// Mismos textos que antes; canales y FAQ pasan de la isla a la página.
+const editorial = locale === "es";
+const side = {
+  whatsapp: contact?.whatsapp ?? "WhatsApp",
+  email: contact?.email ?? "Email",
+  office: contact?.office ?? "Office",
+  faq: contact?.faq ?? "FAQ",
+  whatsappHref: `https://wa.me/34662423523?text=${encodeURIComponent(contact?.whatsappText ?? "")}`,
+  faqs: [1, 2, 3]
+    .map((n) => ({ q: contact?.[`faq${n}q`], a: contact?.[`faq${n}a`] }))
+    .filter((item) => item.q && item.a),
 };
 
 const metaTitle = contact?.metaTitle ?? `${t.title} | IA Operators`;
@@ -54,7 +69,65 @@ const contactJsonLd = {
 };
 ---
 
-<BaseLayout title={metaTitle} description={metaDescription} jsonLd={contactJsonLd}>
+<BaseLayout title={metaTitle} description={metaDescription} jsonLd={contactJsonLd} editorial={editorial}>
+  {editorial ? (
+    <div class="ed-container">
+      <header class="pg-hero ct-hero">
+        <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+          <ol>
+            <li><a href="/es/">Inicio</a></li>
+            <li><span aria-current="page">{t.badge}</span></li>
+          </ol>
+        </nav>
+        <h1>{t.title}</h1>
+        <div class="pg-hero-bottom">
+          <p class="ed-eyebrow">{t.badge}</p>
+          <p class="pg-lead">{t.subtitle}</p>
+        </div>
+      </header>
+
+      <section class="pg-section ct-section">
+        <div class="ct-grid">
+          <ContactForm client:load locale={locale} variant="editorial" />
+          <aside class="ct-aside">
+            <ul class="ct-channels">
+              <li>
+                <a href={side.whatsappHref} target="_blank" rel="noopener noreferrer">
+                  <span class="ed-eyebrow">{side.whatsapp}</span>
+                  <strong>+34 662 423 523</strong>
+                  <span class="ed-arrow" aria-hidden="true">↗</span>
+                </a>
+              </li>
+              <li>
+                <a href="mailto:info@iaoperators.com">
+                  <span class="ed-eyebrow">{side.email}</span>
+                  <strong>info@iaoperators.com</strong>
+                  <span class="ed-arrow" aria-hidden="true">↗</span>
+                </a>
+              </li>
+              <li>
+                <div>
+                  <span class="ed-eyebrow">{side.office}</span>
+                  <strong>Málaga, ES</strong>
+                </div>
+              </li>
+            </ul>
+            {side.faqs.length > 0 && (
+              <div class="ed-faq ct-faq">
+                <h2 class="ed-eyebrow">{side.faq}</h2>
+                {side.faqs.map((item) => (
+                  <details>
+                    <summary>{item.q}</summary>
+                    <p>{item.a}</p>
+                  </details>
+                ))}
+              </div>
+            )}
+          </aside>
+        </div>
+      </section>
+    </div>
+  ) : (
   <div class="bg-transparent text-white min-h-screen">
     <!-- HERO (sem GridSpotlight local, porque já está no BaseLayout) -->
     <section class="relative flex items-center justify-center pt-28 pb-14 px-4 overflow-hidden">
@@ -74,4 +147,5 @@ const contactJsonLd = {
     <!-- Form + Sidebar (island React) -->
     <ContactForm client:load locale={locale} />
   </div>
+  )}
 </BaseLayout>

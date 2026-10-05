@@ -25,7 +25,11 @@ async function safeReadResponse(res) {
   }
 }
 
-export default function ContactForm({ locale: localeProp = "es" }) {
+// variant "editorial": solo el formulario, con el marcado del diseño editorial
+// (clases ct-* en editorial-pages.css). Canales y FAQ los pinta la página.
+// La lógica de envío, el honeypot, el evento generate_lead y el id
+// #msg-sucesso-lead son los mismos en las dos variantes.
+export default function ContactForm({ locale: localeProp = "es", variant = "dark" }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -117,6 +121,74 @@ export default function ContactForm({ locale: localeProp = "es" }) {
       window.clearTimeout(timeoutId);
       setLoading(false);
     }
+  }
+
+  if (variant === "editorial") {
+    if (success) {
+      return (
+        <div className="ct-success" role="status">
+          <h2 id="msg-sucesso-lead">{t.successTitle}</h2>
+          <p>{t.successText}</p>
+          <a className="ed-button" href={`/${locale}/`}>
+            {t.backHome}
+            <span className="ed-arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      );
+    }
+    return (
+      <div className="ct-form">
+        <h2 id="ct-form-title">{t.formTitle}</h2>
+        <form onSubmit={onSubmit} className="ct-fields" aria-labelledby="ct-form-title">
+          <input
+            type="text"
+            name="hp_confirm"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            data-lpignore="true"
+            data-1p-ignore="true"
+            className="ct-hp"
+          />
+          <div className="ct-row">
+            <label className="ct-field">
+              <span className="ed-eyebrow">{t.name} *</span>
+              <input required name="name" type="text" autoComplete="name" placeholder={t.namePlaceholder} />
+            </label>
+            <label className="ct-field">
+              <span className="ed-eyebrow">{t.email} *</span>
+              <input required name="email" type="email" autoComplete="email" placeholder={t.emailPlaceholder} />
+            </label>
+          </div>
+          <div className="ct-row">
+            <label className="ct-field">
+              <span className="ed-eyebrow">{t.company} *</span>
+              <input required name="company" type="text" autoComplete="organization" placeholder={t.companyPlaceholder} />
+            </label>
+            <label className="ct-field">
+              <span className="ed-eyebrow">{t.city}</span>
+              <input name="city" type="text" autoComplete="address-level2" placeholder={t.cityPlaceholder} />
+            </label>
+          </div>
+          <label className="ct-field">
+            <span className="ed-eyebrow">{t.message}</span>
+            <textarea name="message" rows={6} placeholder={t.messagePlaceholder} />
+          </label>
+          {error && (
+            <p className="ct-error" role="alert">
+              {error}
+            </p>
+          )}
+          <div className="ct-submit">
+            <button type="submit" className="ed-button" disabled={loading}>
+              {loading ? t.sending : t.send}
+              <span className="ed-arrow" aria-hidden="true">↗</span>
+            </button>
+            <p className="ct-sla">{t.sla}</p>
+          </div>
+        </form>
+      </div>
+    );
   }
 
   if (success) {
