@@ -12,6 +12,8 @@ const SAC_DEFAULTS = {
   leadEndpoint: "/api/assessment/ley-atencion-cliente/lead",
   legalNote:
     "Resultado orientativo generado por reglas deterministas sobre el texto de la Ley 10/2025",
+  analyticsKey: "ley-10-2025",
+  leadSource: "Test_Ley_10_2025",
 } as const;
 
 export interface AssessmentProps {
@@ -20,6 +22,10 @@ export interface AssessmentProps {
   leadEndpoint?: string;
   /** Frase que precede a "(motor X). Información técnica: no constituye…". */
   legalNote?: string;
+  /** Valor de `assessment` en el evento `assessment_completed` del dataLayer. */
+  analyticsKey?: string;
+  /** Valor de `lead_source` en el evento `generate_lead` del dataLayer. */
+  leadSource?: string;
 }
 
 type Answers = Record<string, string | string[]>;
@@ -58,6 +64,8 @@ export default function Assessment({
   submitEndpoint = SAC_DEFAULTS.submitEndpoint,
   leadEndpoint = SAC_DEFAULTS.leadEndpoint,
   legalNote = SAC_DEFAULTS.legalNote,
+  analyticsKey = SAC_DEFAULTS.analyticsKey,
+  leadSource = SAC_DEFAULTS.leadSource,
 }: AssessmentProps = {}) {
   const QUESTIONS = questions;
   const TOTAL_STEPS = questions.length;
@@ -139,7 +147,7 @@ export default function Assessment({
       setResponseId(data.responseId ?? null);
       pushDataLayer({
         event: "assessment_completed",
-        assessment: "ley-10-2025",
+        assessment: analyticsKey,
         obligado: data.result.obligado,
         sector: data.result.sector,
         risk_level: data.result.riskLevel,
@@ -183,7 +191,7 @@ export default function Assessment({
       setLeadSent(true);
       pushDataLayer({
         event: "generate_lead",
-        lead_source: "Test_Ley_10_2025",
+        lead_source: leadSource,
         obligado: result?.obligado,
         risk_level: result?.riskLevel,
       });
