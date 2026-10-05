@@ -5,6 +5,9 @@ import { getLocalizedQuestions, normalizeSurveyLang, surveyUi } from "@/lib/surv
 type Props = {
   locale?: string;
   thankYouPath: string;
+  /** "editorial": clases sf-* para la página ES en el shell editorial (oct/2026).
+   *  Sin la prop, la plantilla oscura de siempre (EN y PT). */
+  variant?: "dark" | "editorial";
 };
 
 type ConsentState = SurveyConsentPayload;
@@ -46,7 +49,9 @@ function isExclusive(question: SurveyQuestionDefinition, value: string) {
   return question.options.find((option) => option.value === value)?.exclusive === true;
 }
 
-export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
+export default function SurveyForm({ locale = "es", thankYouPath, variant = "dark" }: Props) {
+  const editorial = variant === "editorial";
+  const k = (dark: string, ed: string) => (editorial ? ed : dark);
   const lang = normalizeSurveyLang(locale);
   const t = surveyUi[lang];
   const questions = useMemo(() => getLocalizedQuestions(lang), [lang]);
@@ -313,30 +318,34 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
     const value = answers[question.id];
 
     return (
-      <div className="space-y-5">
-        <header className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-400">
+      <div className={k("space-y-5", "sf-stack")}>
+        <header className={k("space-y-2", "sf-q-head")}>
+          <p className={k("text-xs font-semibold uppercase tracking-[0.24em] text-orange-400", "ed-eyebrow sf-eyebrow")}>
             {stepLabel(currentStep)}
           </p>
-          <h2 className="text-2xl md:text-3xl font-semibold text-white leading-tight">
+          <h2 className={k("text-2xl md:text-3xl font-semibold text-white leading-tight", "sf-q-title")}>
             {question.title}
           </h2>
           {question.description && (
-            <p className="text-sm md:text-base text-white/65">{question.description}</p>
+            <p className={k("text-sm md:text-base text-white/65", "sf-q-desc")}>{question.description}</p>
           )}
         </header>
 
-        <div className="grid gap-3">
+        <div className={k("grid gap-3", "sf-options")}>
           {question.options.map((option) => {
             const checked = Array.isArray(value) ? value.includes(option.value) : value === option.value;
             return (
               <label
                 key={option.value}
-                className={`group flex items-start gap-4 rounded-2xl border p-4 transition ${
-                  checked
-                    ? "border-orange-500 bg-orange-500/10 shadow-[0_0_0_1px_rgba(249,115,22,0.25)]"
-                    : "border-white/10 bg-white/[0.03] hover:border-white/25"
-                }`}
+                className={
+                  editorial
+                    ? `sf-opt ${checked ? "is-selected" : ""}`
+                    : `group flex items-start gap-4 rounded-2xl border p-4 transition ${
+                        checked
+                          ? "border-orange-500 bg-orange-500/10 shadow-[0_0_0_1px_rgba(249,115,22,0.25)]"
+                          : "border-white/10 bg-white/[0.03] hover:border-white/25"
+                      }`
+                }
               >
                 <input
                   type={question.type === "multi" ? "checkbox" : "radio"}
@@ -348,9 +357,9 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
                       ? handleMultiToggle(question, option.value)
                       : handleSingleSelect(question.id, option.value)
                   }
-                  className="mt-1 h-4 w-4 accent-orange-500"
+                  className={k("mt-1 h-4 w-4 accent-orange-500", "sf-input")}
                 />
-                <span className="text-sm md:text-base text-white/88 leading-relaxed">
+                <span className={k("text-sm md:text-base text-white/88 leading-relaxed", "sf-opt-label")}>
                   {option.label}
                 </span>
               </label>
@@ -363,25 +372,25 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
 
   function renderConsentStep() {
     return (
-      <div className="space-y-6">
-        <header className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-400">
+      <div className={k("space-y-6", "sf-stack")}>
+        <header className={k("space-y-2", "sf-q-head")}>
+          <p className={k("text-xs font-semibold uppercase tracking-[0.24em] text-orange-400", "ed-eyebrow sf-eyebrow")}>
             {stepLabel(finalStepIndex)}
           </p>
-          <h2 className="text-2xl md:text-3xl font-semibold text-white leading-tight">
+          <h2 className={k("text-2xl md:text-3xl font-semibold text-white leading-tight", "sf-q-title")}>
             {t.consent.title}
           </h2>
-          <p className="text-sm md:text-base text-white/65">
+          <p className={k("text-sm md:text-base text-white/65", "sf-q-desc")}>
             {t.consent.intro}
           </p>
         </header>
 
-        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-4 text-sm text-white/78">
+        <div className={k("rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-4 text-sm text-white/78", "sf-note")}>
           <p>{t.consent.purpose}</p>
           <p>{t.consent.resultsUse}</p>
           <p>
             {t.consent.deletionPre}
-            <a href="mailto:info@iaoperators.com" className="text-orange-400 underline">
+            <a href="mailto:info@iaoperators.com" className={k("text-orange-400 underline", "sf-link")}>
               info@iaoperators.com
             </a>
             {t.consent.deletionPost}
@@ -389,8 +398,8 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
           <p>{t.consent.emailStorage}</p>
         </div>
 
-        <label className="block">
-          <span className="mb-2 block text-sm font-medium text-white/88">
+        <label className={k("block", "sf-field")}>
+          <span className={k("mb-2 block text-sm font-medium text-white/88", "ed-eyebrow sf-field-label")}>
             {t.consent.emailLabel}
           </span>
           <input
@@ -398,18 +407,18 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             placeholder={t.consent.emailPlaceholder}
-            className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none transition focus:border-orange-500"
+            className={k("w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none transition focus:border-orange-500", "sf-email")}
           />
-          <span className="mt-2 block text-xs text-white/50">
+          <span className={k("mt-2 block text-xs text-white/50", "sf-hint")}>
             {t.consent.emailHint}
           </span>
         </label>
 
-        <div className="space-y-3">
+        <div className={k("space-y-3", "sf-stack-sm")}>
           {t.consent.items.map((item) => (
             <label
               key={item.key}
-              className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-white/85"
+              className={k("flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-white/85", "sf-check")}
             >
               <input
                 type="checkbox"
@@ -420,7 +429,7 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
                     [item.key]: event.target.checked,
                   }))
                 }
-                className="mt-1 h-4 w-4 accent-orange-500"
+                className={k("mt-1 h-4 w-4 accent-orange-500", "sf-input")}
               />
               <span>{item.label}</span>
             </label>
@@ -431,46 +440,46 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
   }
 
   return (
-    <section className="grid gap-6 lg:grid-cols-[0.9fr_1.25fr]">
-      <aside className="rounded-[28px] border border-white/10 bg-linear-to-br from-white/[0.07] to-white/[0.02] p-6 md:p-7">
-        <div className="space-y-5">
-          <span className="inline-flex rounded-full border border-orange-500/30 bg-orange-500/12 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-orange-300">
+    <section className={k("grid gap-6 lg:grid-cols-[0.9fr_1.25fr]", "sf-grid")}>
+      <aside className={k("rounded-[28px] border border-white/10 bg-linear-to-br from-white/[0.07] to-white/[0.02] p-6 md:p-7", "sf-aside")}>
+        <div className={k("space-y-5", "sf-stack")}>
+          <span className={k("inline-flex rounded-full border border-orange-500/30 bg-orange-500/12 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-orange-300", "ed-eyebrow sf-badge")}>
             {t.aside.badge}
           </span>
-          <div className="space-y-3">
-            <h2 className="text-2xl font-semibold text-white">{t.aside.title}</h2>
-            <p className="text-sm leading-relaxed text-white/68">
+          <div className={k("space-y-3", "sf-stack-sm")}>
+            <h2 className={k("text-2xl font-semibold text-white", "sf-aside-title")}>{t.aside.title}</h2>
+            <p className={k("text-sm leading-relaxed text-white/68", "sf-aside-desc")}>
               {t.aside.description}
             </p>
           </div>
 
-          <div className="rounded-2xl border border-white/8 bg-black/25 p-4">
-            <div className="mb-2 flex items-center justify-between text-xs uppercase tracking-[0.18em] text-white/45">
+          <div className={k("rounded-2xl border border-white/8 bg-black/25 p-4", "sf-progress")}>
+            <div className={k("mb-2 flex items-center justify-between text-xs uppercase tracking-[0.18em] text-white/45", "ed-eyebrow sf-progress-head")}>
               <span>{t.aside.progress}</span>
               <span>
                 {started ? `${Math.min(progressCurrent, progressTotal)}/${progressTotal}` : `0/${progressTotal}`}
               </span>
             </div>
-            <div className="h-2 rounded-full bg-white/8">
+            <div className={k("h-2 rounded-full bg-white/8", "sf-track")}>
               <div
-                className="h-2 rounded-full bg-linear-to-r from-orange-500 to-amber-300 transition-all duration-300"
+                className={k("h-2 rounded-full bg-linear-to-r from-orange-500 to-amber-300 transition-all duration-300", "sf-fill")}
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
           </div>
 
-          <dl className="grid gap-3 text-sm">
-            <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
-              <dt className="text-white/50">{t.aside.whatAnswerLabel}</dt>
-              <dd className="mt-1 text-white/88">{t.aside.whatAnswerValue}</dd>
+          <dl className={k("grid gap-3 text-sm", "sf-facts")}>
+            <div className={k("rounded-2xl border border-white/8 bg-white/[0.03] p-4", "sf-fact")}>
+              <dt className={k("text-white/50", "ed-eyebrow sf-dt")}>{t.aside.whatAnswerLabel}</dt>
+              <dd className={k("mt-1 text-white/88", "sf-dd")}>{t.aside.whatAnswerValue}</dd>
             </div>
-            <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
-              <dt className="text-white/50">{t.aside.whatNotShareLabel}</dt>
-              <dd className="mt-1 text-white/88">{t.aside.whatNotShareValue}</dd>
+            <div className={k("rounded-2xl border border-white/8 bg-white/[0.03] p-4", "sf-fact")}>
+              <dt className={k("text-white/50", "ed-eyebrow sf-dt")}>{t.aside.whatNotShareLabel}</dt>
+              <dd className={k("mt-1 text-white/88", "sf-dd")}>{t.aside.whatNotShareValue}</dd>
             </div>
-            <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
-              <dt className="text-white/50">{t.aside.howDataLabel}</dt>
-              <dd className="mt-1 text-white/88">{t.aside.howDataValue}</dd>
+            <div className={k("rounded-2xl border border-white/8 bg-white/[0.03] p-4", "sf-fact")}>
+              <dt className={k("text-white/50", "ed-eyebrow sf-dt")}>{t.aside.howDataLabel}</dt>
+              <dd className={k("mt-1 text-white/88", "sf-dd")}>{t.aside.howDataValue}</dd>
             </div>
           </dl>
 
@@ -479,34 +488,34 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
               type="button"
               onClick={handleStart}
               disabled={loading}
-              className="w-full rounded-full bg-linear-to-r from-orange-500 to-amber-300 px-5 py-3 text-sm font-semibold text-black transition hover:brightness-110 disabled:opacity-60"
+              className={k("w-full rounded-full bg-linear-to-r from-orange-500 to-amber-300 px-5 py-3 text-sm font-semibold text-black transition hover:brightness-110 disabled:opacity-60", "ed-button sf-start")}
             >
               {loading ? t.aside.preparing : t.aside.startButton}
             </button>
           )}
 
-          {sessionError && <p className="text-sm text-red-300">{sessionError}</p>}
+          {sessionError && <p className={k("text-sm text-red-300", "sf-error")}>{sessionError}</p>}
         </div>
       </aside>
 
-      <div className="rounded-[28px] border border-white/10 bg-[#0a0a0a]/90 p-6 md:p-8 shadow-[0_30px_80px_rgba(0,0,0,0.35)]">
+      <div className={k("rounded-[28px] border border-white/10 bg-[#0a0a0a]/90 p-6 md:p-8 shadow-[0_30px_80px_rgba(0,0,0,0.35)]", "sf-main")}>
         {!started ? (
-          <div className="space-y-6">
-            <div className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-400">
+          <div className={k("space-y-6", "sf-stack")}>
+            <div className={k("space-y-3", "sf-stack-sm")}>
+              <p className={k("text-xs font-semibold uppercase tracking-[0.24em] text-orange-400", "ed-eyebrow sf-eyebrow")}>
                 {t.intro.eyebrow}
               </p>
-              <h2 className="text-3xl font-semibold text-white">
+              <h2 className={k("text-3xl font-semibold text-white", "sf-intro-title")}>
                 {t.intro.title}
               </h2>
-              <p className="text-base leading-relaxed text-white/68">
+              <p className={k("text-base leading-relaxed text-white/68", "sf-intro-text")}>
                 {t.intro.text}
               </p>
             </div>
 
-            <ul className="grid gap-3 text-sm text-white/82">
+            <ul className={k("grid gap-3 text-sm text-white/82", "sf-bullets")}>
               {t.intro.bullets.map((item) => (
-                <li key={item} className="rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3">
+                <li key={item} className={k("rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3", "sf-bullet")}>
                   {item}
                 </li>
               ))}
@@ -518,16 +527,16 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
           renderConsentStep()
         )}
 
-        {validationError && <p className="mt-5 text-sm text-red-300">{validationError}</p>}
-        {error && <p className="mt-5 text-sm text-red-300">{error}</p>}
+        {validationError && <p className={k("mt-5 text-sm text-red-300", "sf-error")}>{validationError}</p>}
+        {error && <p className={k("mt-5 text-sm text-red-300", "sf-error")}>{error}</p>}
 
         {started && (
-          <div className="mt-8 flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className={k("mt-8 flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between", "sf-nav")}>
             <button
               type="button"
               onClick={handleBack}
               disabled={loading || currentStep === 0}
-              className="rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-white/82 transition hover:border-white/35 disabled:opacity-40"
+              className={k("rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-white/82 transition hover:border-white/35 disabled:opacity-40", "sf-back")}
             >
               {t.nav.back}
             </button>
@@ -537,7 +546,7 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
                 type="button"
                 onClick={handleNext}
                 disabled={loading}
-                className="rounded-full bg-linear-to-r from-orange-500 to-amber-300 px-5 py-3 text-sm font-semibold text-black transition hover:brightness-110 disabled:opacity-60"
+                className={k("rounded-full bg-linear-to-r from-orange-500 to-amber-300 px-5 py-3 text-sm font-semibold text-black transition hover:brightness-110 disabled:opacity-60", "ed-button sf-next")}
               >
                 {loading ? t.nav.saving : t.nav.next}
               </button>
@@ -546,7 +555,7 @@ export default function SurveyForm({ locale = "es", thankYouPath }: Props) {
                 type="button"
                 onClick={handleSubmit}
                 disabled={loading}
-                className="rounded-full bg-linear-to-r from-orange-500 to-amber-300 px-5 py-3 text-sm font-semibold text-black transition hover:brightness-110 disabled:opacity-60"
+                className={k("rounded-full bg-linear-to-r from-orange-500 to-amber-300 px-5 py-3 text-sm font-semibold text-black transition hover:brightness-110 disabled:opacity-60", "ed-button sf-next")}
               >
                 {loading ? t.nav.sending : t.nav.submit}
               </button>

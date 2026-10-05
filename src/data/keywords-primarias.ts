@@ -608,4 +608,5 @@ export const RUTAS_SIN_KEYWORD: readonly string[] = [
   "politica-de-privacidad/",
   "metodologia/",
   "estudio/segunda-factura-ia/encuesta/",
+  "404/", // página de error, noindex
 ];

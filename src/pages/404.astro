@@ -1,0 +1,41 @@
+---
+// Página 404 (oct/2026). Antes no existía y Vercel servía su página genérica.
+// En español, con enlaces a las tres portadas: la mayoría del tráfico es ES y
+// el visitante de EN/PT encuentra su idioma en una línea.
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-forms.css";
+
+const links = [
+  { href: "/es/servicios/", label: "Servicios" },
+  { href: "/es/portfolio/", label: "Casos" },
+  { href: "/es/blog/", label: "Blog" },
+  { href: "/es/contact/", label: "Contacto" },
+];
+---
+
+<BaseLayout
+  title="Página no encontrada | IA Operators"
+  description="La página que buscas no existe o ha cambiado de dirección."
+  robots="noindex,follow"
+  alternates={[]}
+  editorial
+>
+  <div class="ed-container">
+    <section class="sf-thanks nf-page">
+      <p class="ed-eyebrow">Error 404</p>
+      <h1>Esta página no existe</h1>
+      <p class="pg-lead">
+        Puede que el enlace esté mal escrito o que la página haya cambiado de dirección. Desde aquí
+        llegas a lo principal.
+      </p>
+      <div class="pg-actions">
+        <a class="ed-button" href="/es/">Ir al inicio<span class="ed-arrow" aria-hidden="true">↗</span></a>
+        {links.map((link) => <a class="ed-underlined" href={link.href}>{link.label}</a>)}
+      </div>
+      <p class="nf-langs">
+        <a href="/en/">Go to the English site</a> · <a href="/pt/">Ir para o site em português</a>
+      </p>
+    </section>
+  </div>
+</BaseLayout>

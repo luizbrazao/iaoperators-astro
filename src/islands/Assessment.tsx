@@ -24,11 +24,13 @@ export interface AssessmentProps {
 
 type Answers = Record<string, string | string[]>;
 
-const GAP_STYLES: Record<GapState, { dot: string; label: string; text: string }> = {
-  ok: { dot: "bg-emerald-400", label: "Cubierto", text: "text-emerald-400" },
-  parcial: { dot: "bg-amber-400", label: "Parcial", text: "text-amber-400" },
-  gap: { dot: "bg-red-500", label: "Brecha", text: "text-red-400" },
-  desconocido: { dot: "bg-gray-500", label: "Sin datos", text: "text-gray-400" },
+// Estilos editoriales (oct/2026): la island solo se usa en los dos tests ES,
+// que viven en el shell editorial. Clases en src/styles/editorial-forms.css.
+const GAP_STYLES: Record<GapState, { label: string }> = {
+  ok: { label: "Cubierto" },
+  parcial: { label: "Parcial" },
+  gap: { label: "Brecha" },
+  desconocido: { label: "Sin datos" },
 };
 
 const RISK_LABEL: Record<string, string> = {
@@ -199,154 +201,117 @@ export default function Assessment({
       : 0;
 
     return (
-      <div className="max-w-3xl mx-auto">
-        <div className="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-10">
-          <div className="flex flex-wrap items-center gap-3 mb-6">
-            <span
-              className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                result.obligado === "no"
-                  ? "bg-white/10 text-gray-300"
-                  : "bg-orange-500/10 text-orange-400"
-              }`}
-            >
-              {OBLIGADO_LABEL[result.obligado]}
-            </span>
-            <span className="px-3 py-1 rounded-full bg-white/5 text-gray-300 text-xs font-semibold">
-              {RISK_LABEL[result.riskLevel]}
-            </span>
-            <span className="px-3 py-1 rounded-full bg-white/5 text-gray-300 text-xs font-semibold">
-              {result.sectorLabel}
-            </span>
+      <div className="as-result">
+        <div className="as-tags">
+          <span className={`as-tag ${result.obligado === "no" ? "" : "as-tag-strong"}`}>
+            {OBLIGADO_LABEL[result.obligado]}
+          </span>
+          <span className="as-tag">{RISK_LABEL[result.riskLevel]}</span>
+          <span className="as-tag">{result.sectorLabel}</span>
+        </div>
+
+        <h2 className="as-title">{result.titular}</h2>
+        <p className="as-motivo">{result.motivo}</p>
+
+        <div className="as-meter">
+          <div className="as-meter-head ed-eyebrow">
+            <span>Brecha estimada</span>
+            <span className="pg-tabular">{ratio}%</span>
           </div>
-
-          <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 leading-tight">
-            {result.titular}
-          </h2>
-          <p className="text-gray-400 leading-relaxed mb-8">{result.motivo}</p>
-
-          <div className="mb-10">
-            <div className="flex justify-between text-xs text-gray-500 mb-2">
-              <span>Brecha estimada</span>
-              <span className="tabular-nums">{ratio}%</span>
-            </div>
-            <div className="h-2 rounded-full bg-white/5 overflow-hidden">
-              <div
-                className="h-full rounded-full bg-orange-500"
-                style={{ width: `${Math.max(3, ratio)}%` }}
-              />
-            </div>
+          <div className="as-meter-bar">
+            <span style={{ width: `${Math.max(3, ratio)}%` }} />
           </div>
+        </div>
 
-          <h3 className="text-lg font-semibold text-white mb-4">Obligación por obligación</h3>
-          <ul className="space-y-3 mb-10">
-            {result.gaps.map((gap) => {
-              const style = GAP_STYLES[gap.estado];
-              return (
-                <li key={gap.id} className="bg-white/[0.02] border border-white/5 rounded-2xl p-5">
-                  <div className="flex items-start gap-3 mb-2">
-                    <span className={`w-2.5 h-2.5 rounded-full mt-2 shrink-0 ${style.dot}`} />
-                    <div className="flex-1">
-                      <div className="flex flex-wrap items-baseline gap-x-3">
-                        <span className="text-white font-medium">{gap.obligacion}</span>
-                        <span className={`text-xs font-semibold ${style.text}`}>{style.label}</span>
-                      </div>
-                      <p className="text-gray-400 text-sm leading-relaxed mt-2">{gap.detalle}</p>
-                    </div>
-                  </div>
+        <h3 className="as-h3">Obligación por obligación</h3>
+        <ul className="as-gaps">
+          {result.gaps.map((gap) => (
+            <li key={gap.id} className={`as-gap as-gap-${gap.estado}`}>
+              <span className="as-dot" aria-hidden="true" />
+              <div>
+                <p className="as-gap-head">
+                  <strong>{gap.obligacion}</strong>
+                  <span className="ed-eyebrow as-state">{GAP_STYLES[gap.estado].label}</span>
+                </p>
+                <p className="as-gap-detail">{gap.detalle}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        {result.prioridades.length > 0 && (
+          <>
+            <h3 className="as-h3">Por dónde empezar</h3>
+            <ol className="as-prior">
+              {result.prioridades.map((p, i) => (
+                <li key={p}>
+                  <span className="ed-eyebrow">{String(i + 1).padStart(2, "0")}</span>
+                  <span>{p}</span>
                 </li>
-              );
-            })}
-          </ul>
+              ))}
+            </ol>
+          </>
+        )}
 
-          {result.prioridades.length > 0 && (
-            <>
-              <h3 className="text-lg font-semibold text-white mb-4">Por dónde empezar</h3>
-              <ol className="space-y-2 mb-10">
-                {result.prioridades.map((p, i) => (
-                  <li key={p} className="flex items-start gap-3 text-gray-300 text-sm leading-relaxed">
-                    <span className="text-orange-400 font-bold shrink-0">{i + 1}.</span>
-                    <span>{p}</span>
-                  </li>
-                ))}
-              </ol>
-            </>
-          )}
-
-          {/* Captura de lead */}
-          {leadSent ? (
-            <div className="bg-orange-500/5 border border-orange-500/20 rounded-2xl p-6 text-center">
-              <p className="text-white font-medium mb-2">Informe en camino</p>
-              <p className="text-gray-400 text-sm">
-                Te escribimos con el detalle por obligación y el orden de ejecución recomendado.
-              </p>
-            </div>
-          ) : (
-            <form
-              onSubmit={sendLead}
-              className="bg-white/[0.02] border border-white/10 rounded-2xl p-6"
-            >
-              <p className="text-white font-medium mb-1">Recibe el informe completo</p>
-              <p className="text-gray-400 text-sm mb-5">
-                El detalle por obligación, el checklist de evidencias para la auditoría y una
-                estimación de esfuerzo por cada brecha.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 mb-4">
+        {/* Captura de lead */}
+        {leadSent ? (
+          <div className="as-lead as-lead-done">
+            <p className="as-lead-title">Informe en camino</p>
+            <p>Te escribimos con el detalle por obligación y el orden de ejecución recomendado.</p>
+          </div>
+        ) : (
+          <form onSubmit={sendLead} className="as-lead">
+            <p className="as-lead-title">Recibe el informe completo</p>
+            <p>
+              El detalle por obligación, el checklist de evidencias para la auditoría y una
+              estimación de esfuerzo por cada brecha.
+            </p>
+            <div className="as-lead-row">
+              <label className="as-field">
+                <span className="ed-eyebrow">Email</span>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.currentTarget.value)}
                   placeholder="tu@empresa.com"
-                  className="flex-1 px-4 py-3 rounded-xl bg-black border border-white/10 text-white placeholder:text-gray-600 focus:border-orange-500/50 focus:outline-none"
                 />
-                <button
-                  type="submit"
-                  disabled={leadSending}
-                  className="px-6 py-3 rounded-xl bg-orange-500 text-black font-medium hover:bg-orange-400 transition-colors disabled:opacity-50"
-                >
-                  {leadSending ? "Enviando…" : "Enviar informe"}
-                </button>
-              </div>
-              <label className="flex items-start gap-2 text-xs text-gray-400 mb-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={privacy}
-                  onChange={(e) => setPrivacy(e.currentTarget.checked)}
-                  className="mt-0.5"
-                />
-                <span>
-                  Acepto la{" "}
-                  <a href="/es/politica-de-privacidad/" className="underline hover:text-orange-400">
-                    política de privacidad
-                  </a>{" "}
-                  para recibir el informe.
-                </span>
               </label>
-              <label className="flex items-start gap-2 text-xs text-gray-400 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={contactOptIn}
-                  onChange={(e) => setContactOptIn(e.currentTarget.checked)}
-                  className="mt-0.5"
-                />
-                <span>Quiero que me contactéis para comentar el resultado (opcional).</span>
-              </label>
-              {leadError && <p className="text-red-400 text-sm mt-4">{leadError}</p>}
-            </form>
-          )}
+              <button type="submit" disabled={leadSending} className="ed-button">
+                {leadSending ? "Enviando…" : "Enviar informe"}
+              </button>
+            </div>
+            <label className="as-check">
+              <input
+                type="checkbox"
+                checked={privacy}
+                onChange={(e) => setPrivacy(e.currentTarget.checked)}
+              />
+              <span>
+                Acepto la <a href="/es/politica-de-privacidad/">política de privacidad</a> para
+                recibir el informe.
+              </span>
+            </label>
+            <label className="as-check">
+              <input
+                type="checkbox"
+                checked={contactOptIn}
+                onChange={(e) => setContactOptIn(e.currentTarget.checked)}
+              />
+              <span>Quiero que me contactéis para comentar el resultado (opcional).</span>
+            </label>
+            {leadError && <p className="as-error">{leadError}</p>}
+          </form>
+        )}
 
-          <p className="text-xs text-gray-600 mt-8 leading-relaxed">
-            {legalNote} (motor {result.engineVersion}). Información técnica: no constituye
-            asesoramiento jurídico ni fiscal.
-          </p>
-        </div>
+        <p className="as-legal">
+          {legalNote} (motor {result.engineVersion}). Información técnica: no constituye
+          asesoramiento jurídico ni fiscal.
+        </p>
 
-        <div className="text-center mt-8">
-          <a
-            href="/es/contact/"
-            className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/30 font-medium hover:bg-orange-500 hover:text-black transition-all duration-300"
-          >
-            Hablar con un especialista ↗
+        <div className="as-cta">
+          <a href="/es/contact/" className="ed-button">
+            Hablar con un especialista<span className="ed-arrow" aria-hidden="true">↗</span>
           </a>
         </div>
       </div>
@@ -355,29 +320,24 @@ export default function Assessment({
 
   // ---------- CUESTIONARIO ----------
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="mb-8">
-        <div className="flex justify-between text-xs text-gray-500 mb-2">
+    <div className="as-quiz">
+      <div className="as-progress">
+        <div className="as-meter-head ed-eyebrow">
           <span>
             Pregunta {step + 1} de {TOTAL_STEPS}
           </span>
-          <span className="tabular-nums">{progress}%</span>
+          <span className="pg-tabular">{progress}%</span>
         </div>
-        <div className="h-1 rounded-full bg-white/5 overflow-hidden">
-          <div
-            className="h-full rounded-full bg-orange-500 transition-all duration-300"
-            style={{ width: `${Math.max(4, progress)}%` }}
-          />
+        <div className="as-meter-bar as-meter-thin">
+          <span style={{ width: `${Math.max(4, progress)}%` }} />
         </div>
       </div>
 
-      <div className="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8">
-        <h2 className="text-xl md:text-2xl font-semibold text-white mb-2">{question.title}</h2>
-        {question.description && (
-          <p className="text-gray-500 text-sm mb-6">{question.description}</p>
-        )}
+      <div className="as-card">
+        <h2 className="as-q">{question.title}</h2>
+        {question.description && <p className="as-q-desc">{question.description}</p>}
 
-        <div className="space-y-2">
+        <div className="as-options">
           {question.options.map((option) => {
             const value = answers[question.id];
             const selected =
@@ -388,25 +348,19 @@ export default function Assessment({
               <button
                 key={option.value}
                 type="button"
+                aria-pressed={selected}
                 onClick={() =>
                   question.type === "multi"
                     ? toggleMulti(question.id, option.value)
                     : selectSingle(question.id, option.value)
                 }
-                className={`w-full text-left px-5 py-4 rounded-2xl border transition-all duration-200 ${
-                  selected
-                    ? "bg-orange-500/10 border-orange-500/50 text-white"
-                    : "bg-white/[0.02] border-white/5 text-gray-300 hover:border-white/20"
-                }`}
+                className={`as-opt ${selected ? "is-selected" : ""}`}
               >
-                <span className="flex items-center gap-3">
-                  <span
-                    className={`w-4 h-4 shrink-0 border transition-colors ${
-                      question.type === "multi" ? "rounded" : "rounded-full"
-                    } ${selected ? "bg-orange-500 border-orange-500" : "border-white/20"}`}
-                  />
-                  <span className="text-sm md:text-base">{option.label}</span>
-                </span>
+                <span
+                  className={`as-mark ${question.type === "multi" ? "as-mark-square" : ""}`}
+                  aria-hidden="true"
+                />
+                <span>{option.label}</span>
               </button>
             );
           })}
@@ -422,16 +376,17 @@ export default function Assessment({
           data-lpignore="true"
           data-1p-ignore="true"
           className="hidden"
+          style={{ display: "none" }}
         />
 
-        {error && <p className="text-red-400 text-sm mt-6">{error}</p>}
+        {error && <p className="as-error">{error}</p>}
 
-        <div className="flex items-center justify-between mt-8">
+        <div className="as-nav">
           <button
             type="button"
             onClick={() => setStep((s) => Math.max(0, s - 1))}
             disabled={step === 0 || sending}
-            className="text-sm text-gray-500 hover:text-white transition-colors disabled:opacity-30"
+            className="as-back"
           >
             ← Atrás
           </button>
@@ -441,7 +396,7 @@ export default function Assessment({
               type="button"
               onClick={() => advance()}
               disabled={!canAdvance || sending}
-              className="px-6 py-3 rounded-full bg-orange-500 text-black font-medium hover:bg-orange-400 transition-colors disabled:opacity-40"
+              className="ed-button"
             >
               {sending
                 ? "Calculando…"
@@ -450,14 +405,12 @@ export default function Assessment({
                   : "Continuar"}
             </button>
           ) : (
-            <span className="text-xs text-gray-600">Elige una opción para continuar</span>
+            <span className="as-hint">Elige una opción para continuar</span>
           )}
         </div>
       </div>
 
-      <p className="text-center text-xs text-gray-600 mt-6">
-        Menos de 2 minutos. No pedimos email para ver el resultado.
-      </p>
+      <p className="as-foot">Menos de 2 minutos. No pedimos email para ver el resultado.</p>
     </div>
   );
 }
