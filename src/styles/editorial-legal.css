@@ -1,0 +1,34 @@
+/* Páginas legales ES (términos y privacidad), oct/2026. Prefijo lg-. */
+.editorial-shell .lg-body { padding-bottom: 96px; }
+.editorial-shell .lg-id { display: grid; grid-template-columns: 1fr 2fr; gap: 50px; background: var(--ed-sage); padding: 40px 56px; margin-top: 64px; }
+.editorial-shell .lg-id h2 { font-size: 11px; font-family: "SFMono-Regular", Consolas, monospace; font-weight: 400; letter-spacing: .06em; text-transform: uppercase; color: #515a46; }
+.editorial-shell .lg-id dl { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 12px 36px; }
+.editorial-shell .lg-id dt { color: #515a46; padding-top: 4px; }
+.editorial-shell .lg-id dd { margin: 0; font-size: 17px; font-weight: 500; letter-spacing: -.015em; overflow-wrap: anywhere; }
+.editorial-shell .lg-id a { border-bottom: 1px solid #8e9980; }
+.editorial-shell .lg-blocks { margin-top: 64px; }
+.editorial-shell .lg-block { display: grid; grid-template-columns: 1fr 2fr; gap: 50px; padding-block: 34px; border-top: 1px solid var(--ed-line); }
+.editorial-shell .lg-block:last-child { border-bottom: 1px solid var(--ed-line); }
+.editorial-shell .lg-block h2,
+.editorial-shell .lg-block h3 { font-size: 22px; font-weight: 500; letter-spacing: -.03em; line-height: 1.3; }
+.editorial-shell .lg-block p,
+.editorial-shell .lg-block li { font-size: 16px; line-height: 1.7; color: var(--ed-muted); max-width: 62ch; }
+.editorial-shell .lg-block ul { list-style: none; margin: 0; padding: 0; }
+.editorial-shell .lg-block li { position: relative; padding-left: 26px; }
+.editorial-shell .lg-block li + li { margin-top: 10px; }
+.editorial-shell .lg-block li::before { content: ""; position: absolute; left: 0; top: .85em; width: 12px; height: 2px; background: var(--ed-orange); }
+.editorial-shell .lg-block a { color: var(--ed-ink); border-bottom: 1px solid var(--ed-ink); }
+@media (max-width: 860px) {
+  .editorial-shell .lg-id,
+  .editorial-shell .lg-block { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+}
+@media (max-width: 720px) {
+  .editorial-shell .lg-id { padding: 28px 22px; margin-top: 40px; }
+  .editorial-shell .lg-id dl { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .editorial-shell .lg-id dd + dt { margin-top: 12px; }
+  .editorial-shell .lg-blocks { margin-top: 40px; }
+  .editorial-shell .lg-block { padding-block: 26px; }
+  .editorial-shell .lg-block h2, .editorial-shell .lg-block h3 { font-size: 20px; }
+  .editorial-shell .lg-block p, .editorial-shell .lg-block li { font-size: 15px; }
+  .editorial-shell .lg-body { padding-bottom: 64px; }
+}

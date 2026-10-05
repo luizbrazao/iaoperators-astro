@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getLocale, locales } from "../../../i18n/ui";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-legal.css";
 
 // ✅ obrigatório em rotas dinâmicas
 export const getStaticPaths = () => locales.map((locale) => ({ params: { locale } }));
@@ -87,7 +89,85 @@ const metaDescription =
   "Términos y condiciones de uso de los servicios de IA Operators.";
 ---
 
-<BaseLayout title={pageTitle} description={metaDescription} robots="index,follow">
+<BaseLayout title={pageTitle} description={metaDescription} robots="index,follow" editorial={locale === "es"}>
+  {/* ES: diseño editorial (oct/2026). Mismos textos, H1/H2/H3 y microdatos
+      del bloque de titular (LSSI-CE art. 10). */}
+  {locale === "es" ? (
+    <div class="ed-container lg-body">
+      <header class="pg-hero">
+        <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+          <ol>
+            <li><a href="/es/">Inicio</a></li>
+            <li><span aria-current="page">{t("terms.title", "Términos y Condiciones")}</span></li>
+          </ol>
+        </nav>
+        <h1>{t("terms.title", "Términos y Condiciones")}</h1>
+        <div class="pg-hero-bottom">
+          <p class="ed-eyebrow">Información legal</p>
+          <p class="pg-lead">{t("terms.intro", "")}</p>
+        </div>
+      </header>
+
+      <section class="lg-id" itemscope itemtype="https://schema.org/Organization">
+        <h2>{legalLabels.heading}</h2>
+        <dl>
+          <dt class="ed-eyebrow">{legalLabels.name}</dt>
+          <dd itemprop="legalName">{legal.name}</dd>
+          <dt class="ed-eyebrow">{legalLabels.taxId}</dt>
+          <dd itemprop="taxID">{legal.taxId}</dd>
+          <dt class="ed-eyebrow">{legalLabels.brand}</dt>
+          <dd itemprop="name">{legal.brand}</dd>
+          <dt class="ed-eyebrow">{legalLabels.city}</dt>
+          <dd itemprop="address">{legal.city}</dd>
+          <dt class="ed-eyebrow">{legalLabels.email}</dt>
+          <dd><a href={`mailto:${legal.email}`} itemprop="email">{legal.email}</a></dd>
+        </dl>
+      </section>
+
+      <div class="lg-blocks">
+        <section class="lg-block">
+          <h2>{t("terms.acceptance.title", "Aceptación")}</h2>
+          <p>{t("terms.acceptance.text", "")}</p>
+        </section>
+        <section class="lg-block">
+          <h2>{t("terms.services.title", "Servicios")}</h2>
+          <ul>
+            <li>{t("terms.services.items.automation", "")}</li>
+            <li>{t("terms.services.items.integration", "")}</li>
+            <li>{t("terms.services.items.support", "")}</li>
+          </ul>
+        </section>
+        <section class="lg-block">
+          <h2>{t("terms.userResponsibilities.title", "Responsabilidades del usuario")}</h2>
+          <ul>
+            <li>{t("terms.userResponsibilities.items.accurateInfo", "")}</li>
+            <li>{t("terms.userResponsibilities.items.legalUse", "")}</li>
+            <li>{t("terms.userResponsibilities.items.credentials", "")}</li>
+          </ul>
+        </section>
+        <section class="lg-block">
+          <h2>{t("terms.intellectualProperty.title", "Propiedad intelectual")}</h2>
+          <p>{t("terms.intellectualProperty.text", "")}</p>
+        </section>
+        <section class="lg-block">
+          <h2>{t("terms.liability.title", "Responsabilidad")}</h2>
+          <ul>
+            <li>{t("terms.liability.items.indirectDamages", "")}</li>
+            <li>{t("terms.liability.items.misuse", "")}</li>
+            <li>{t("terms.liability.items.downtime", "")}</li>
+          </ul>
+        </section>
+        <section class="lg-block">
+          <h2>{t("terms.modifications.title", "Modificaciones")}</h2>
+          <p>{t("terms.modifications.text", "")}</p>
+        </section>
+        <section class="lg-block">
+          <h3>{t("contact.title", "Contacto")}</h3>
+          <p>{t("contact.text", "Escríbenos a")} <a href="mailto:info@iaoperators.com">info@iaoperators.com</a></p>
+        </section>
+      </div>
+    </div>
+  ) : (
   <main class="container mx-auto px-4 pt-120px pb-16 max-w-4xl">
     <h1 class="text-3xl font-bold mb-8">
       {t("terms.title", "Términos y Condiciones")}
@@ -193,4 +273,5 @@ const metaDescription =
       </div>
     </section>
   </main>
+  )}
 </BaseLayout>
