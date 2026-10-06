@@ -20,6 +20,26 @@ import PresenterVideo from "../../components/PresenterVideo.astro";
 //   - Nexotur, 2019: IDeaS RMS y análisis de datos para decidir.
 // No se cita el número exacto de hoteles ni de habitaciones.
 //
+// Revisión 07/10/2026, después de la sesión de TIS (06/10/2026, con José
+// Rodríguez Pousa, de Sercotel, y Jairo González, director de expansión de
+// Petit Palace, según la agenda de TIS). Solo se usa lo que con
+// seguridad dijo Juan Carlos según la transcripción, parafraseado: la
+// transcripción automática es imprecisa y no se cita literal salvo «97,3 %».
+//   - Recomendación final: de acuerdo «al 97,3 %» con los cuatro criterios de
+//     Jairo (cliente que paga más, operativa del equipo, costes, escalar 20
+//     hoteles sin que se noten las costuras) y añade uno: si vienen malas,
+//     poder sentarse sobre la caja. La tecnología mola, pero ojo con lo que
+//     está de moda (el WhatsApp con IA) y hay que ir despacio.
+//   - El PMS: caro para un franquiciado con seis hoteles en Bilbao, "de lujo"
+//     para que Casual llegue a República Dominicana.
+//   - Personas: coach en la empresa; un hotel en Cádiz con reservas en libreta
+//     y Google Calendar como PMS; en el TechEx hay inversión en personas.
+//   - CapEx verde: electricidad 100 % verde y un árbol por cada huésped que
+//     renuncia a la limpieza, unos 3.000 en el primer año (España y Portugal).
+// Lo que se atribuye a "la mesa" (CapEx aguanta en el tiempo, la tecnología
+// devuelve antes si cambia la forma de trabajar, hacer los deberes con caja)
+// no se pone en boca de Juan Carlos.
+//
 // Comportamiento compartido en src/scripts/prospect-landing.ts.
 
 // --- Configuración editable ---------------------------------------------------
@@ -33,7 +53,7 @@ const VIDEO = {
 };
 
 const CONTACT_HREF = `https://wa.me/34662423523?text=${encodeURIComponent(
-  "Hola Luiz, soy Juan Carlos Sanjuán, de Casual Hoteles. He visto la página sobre la Radiografía Digital y me gustaría hablarlo.",
+  "Hola Luiz, soy Juan Carlos Sanjuán, de Casual Hoteles. He visto la página que preparaste después de TIS y me gustaría hablarlo.",
 )}`;
 const GTM_ID = "GTM-572KJ7HZ";
 // -----------------------------------------------------------------------------
@@ -42,16 +62,24 @@ const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const pageUrl = new URL("/tis/juan-carlos/", site).toString();
 const ogImage = new URL("/og/juan-carlos.png", site).toString();
 const title = "Juan Carlos Sanjuán × IA Operators | Radiografía Digital";
-const description = "Una reflexión sobre priorización tecnológica preparada por IA Operators para Juan Carlos Sanjuán y Casual Hoteles.";
+const description = "Después de «CapEx or TechEx?» en TIS: dónde invertir primero dentro del TechEx. Una reflexión preparada por IA Operators para Juan Carlos Sanjuán y Casual Hoteles.";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-const valor = [
-  { a: "Una tarea repetitiva", b: "puede merecer automatización." },
-  { a: "Dos sistemas desconectados", b: "quizá solo necesiten integrarse." },
-  { a: "Un proceso lento", b: "quizá haya que rediseñarlo." },
-  { a: "Una decisión compleja", b: "puede beneficiarse de datos o de IA." },
-  { a: "Y a veces", b: "el proceso ya funciona bien." },
+// Los cuatro criterios que planteó Jairo en la mesa y el quinto de Juan Carlos.
+const filtro = [
+  { q: "¿Lo valora el cliente?", d: "Y no solo que lo valore: que esté dispuesto a pagar más por ello.", own: false },
+  { q: "¿Mejora la operativa del equipo?", d: "Que le facilite la vida a quien lo usa cada día.", own: false },
+  { q: "¿Mejora los costes?", d: "Que el euro invertido vuelva a la cuenta de resultados.", own: false },
+  { q: "¿Permite escalar?", d: "Meter otros 20 hoteles sin dramas y sin que se noten las costuras.", own: false },
+  { q: "Y si vienen malas, ¿puedo sentarme sobre la caja?", d: "La que añadiste tú: que la inversión de hoy no se coma el colchón de mañana.", own: true },
+];
+
+const personas = [
+  "qué hace realmente cada día",
+  "dónde pierde tiempo o espera",
+  "qué herramienta le complica el trabajo con el huésped delante",
+  "qué cambio puede asumir sin drama",
 ];
 
 const techex = ["automatización", "IA", "nuevas plataformas", "integraciones", "datos", "experiencia digital"];
@@ -173,16 +201,16 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
     <main>
       <!-- Hero -->
       <section id="inicio" class="hero wrap" aria-labelledby="hero-title">
-        <p class="label">Una idea para Juan Carlos Sanjuán</p>
-        <h1 id="hero-title" class="greeting">Juan Carlos, antes del próximo <b>TechEx</b> hay una pregunta que me parece más importante.</h1>
+        <p class="label">Después de «CapEx or TechEx?» · TIS 2026</p>
+        <h1 id="hero-title" class="greeting">Juan Carlos, en TIS dijiste que la tecnología mola, pero que con la inversión tecnológica <b>hay que ir despacio</b>.</h1>
         <p class="return-q">¿Dónde genera realmente más retorno?</p>
 
         <div class="hero-grid">
           <PresenterVideo src={VIDEO.src} poster={VIDEO.poster} label="Vídeo de Luiz Brazão para Juan Carlos Sanjuán" duracion={VIDEO.duracion} />
 
           <div class="hero-copy">
-            <p>Entre automatización, inteligencia artificial, datos, integraciones y nuevas plataformas, hoy existen más posibilidades tecnológicas que capacidad para implementarlas todas.</p>
-            <p>Por eso quizá la primera decisión no sea</p>
+            <p>Pusiste el ejemplo del WhatsApp con IA: lo que hoy parece imprescindible, a los tres meses puede estar olvidado. Y pediste pensar bien en qué tecnología se invierte de verdad, que sea escalable.</p>
+            <p>Coincido. Por eso quizá la primera decisión no sea</p>
             <p class="hero-not">qué tecnología incorporar,</p>
             <p>sino</p>
             <p class="hero-yes">qué problema merece inversión primero.</p>
@@ -190,22 +218,25 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
         </div>
       </section>
 
-      <!-- Valor -->
-      <section id="valor" class="section wrap" aria-labelledby="va-title">
-        <p class="label" data-reveal>Valor</p>
-        <h2 id="va-title" class="h2" data-reveal>No todas las oportunidades tecnológicas tienen el mismo valor.</h2>
-        <ol class="pairs" data-reveal>
-          {valor.map((v, i) => (
-            <li class:list={{ "pair-last": i === valor.length - 1 }}>
-              <span class="pair-a">{v.a}</span>
-              <span class="pair-arrow" aria-hidden="true">→</span>
-              <span class="pair-b">{v.b}</span>
+      <!-- Filtro -->
+      <section id="filtro" class="section wrap" aria-labelledby="fi-title">
+        <p class="label label-accent" data-reveal>Lo que se dijo en la mesa</p>
+        <h2 id="fi-title" class="h2" data-reveal>Cuatro preguntas antes de invertir un euro. Y la tuya.</h2>
+        <p class="lede" data-reveal>Jairo González, de Petit Palace, propuso pasar cada inversión por cuatro filtros. Dijiste estar de acuerdo «al 97,3 %» y añadiste uno más.</p>
+        <ol class="filter" data-reveal>
+          {filtro.map((f, i) => (
+            <li class:list={{ "filter-own": f.own }}>
+              <span class="n">{pad(i + 1)}</span>
+              <div>
+                <p class="filter-q">{f.q}</p>
+                <p class="filter-d">{f.d}</p>
+              </div>
             </li>
           ))}
         </ol>
         <p class="thesis" data-reveal>
-          <span>El reto no es encontrar tecnología.</span>
-          <span class="thesis-b">El reto es priorizar dónde utilizarla.</span>
+          <span>Es el mismo filtro que usamos.</span>
+          <span class="thesis-b">Aplicado a un proceso real, antes del proyecto.</span>
         </p>
       </section>
 
@@ -213,8 +244,8 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
       <section id="techex" class="night" aria-labelledby="tx-title">
         <div class="wrap section">
           <p class="label label-night" data-reveal>CapEx o TechEx</p>
-          <p class="tx-lead" data-reveal>CapEx o TechEx es una gran pregunta.</p>
-          <p class="tx-lead tx-lead-2" data-reveal>Pero dentro del TechEx aparece otra.</p>
+          <p class="tx-lead" data-reveal>En la mesa nadie respondió en blanco o negro. El CapEx bien hecho aguanta en el tiempo; la tecnología devuelve antes, pero solo cuando cambia la forma de trabajar.</p>
+          <p class="tx-lead tx-lead-2" data-reveal>Y dentro del TechEx aparece otra pregunta.</p>
           <h2 id="tx-title" class="tx-big" data-reveal>¿Qué TechEx primero?</h2>
 
           <div class="tx-body">
@@ -241,6 +272,25 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
         </div>
       </section>
 
+      <!-- Personas -->
+      <section id="personas" class="warm" aria-labelledby="pe-title">
+        <div class="wrap section">
+          <div class="split">
+            <p class="label label-accent" data-reveal>Personas</p>
+            <div>
+              <h2 id="pe-title" class="h2" data-reveal>La parte del TechEx que no viene en la licencia.</h2>
+              <p class="lede" data-reveal>Lo dijiste claro: en el TechEx también hay una inversión en las personas, que tienen que acostumbrarse al cambio.</p>
+              <div class="prose" data-reveal>
+                <p>Contaste el caso de un hotel en Cádiz: reservas en una libreta, Google Calendar como PMS y un equipo para el que la tecnología que llega va a ser un cambio enorme. Y que en Casual tenéis coach para que la gente entienda lo que viene antes de que llegue.</p>
+              </div>
+              <p class="prose-line" data-reveal>Por eso una Radiografía Digital no empieza por los sistemas. Empieza por quien ejecuta el proceso:</p>
+              <ul class="ticks" data-reveal>{personas.map((p) => <li>{p}</li>)}</ul>
+              <p class="statement" data-reveal>Una mejora que el equipo no adopta no tiene retorno.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Casual -->
       <section id="casual" class="section wrap" aria-labelledby="ca-title">
         <div class="split">
@@ -251,14 +301,15 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
               <p><span class="fact-k">Mercados</span><span class="fact-v">España, Portugal, Italia, Grecia y el salto a Bayahíbe</span></p>
               <p><span class="fact-k">Modelos</span><span class="fact-v">propiedad, alquiler, gestión y franquicia</span></p>
               <p><span class="fact-k">Decisiones</span><span class="fact-v">con revenue management y datos desde hace años</span></p>
+              <p><span class="fact-k">Sostenibilidad</span><span class="fact-v">electricidad 100 % verde y un árbol por cada huésped que renuncia a la limpieza: unos 3.000 en el primer año</span></p>
             </div>
             <figure class="quote" data-reveal>
               <blockquote>«Demostrar que el modelo que nació en Valencia puede viajar, adaptarse y seguir creciendo en otros mercados.»</blockquote>
               <figcaption>Juan Carlos Sanjuán · septiembre de 2026</figcaption>
             </figure>
             <div class="prose" data-reveal>
-              <p>Una organización con hoteles en distintos mercados y distintos modelos de explotación tiene una realidad operativa más compleja que la de un único hotel.</p>
-              <p>Una mejora pequeña puede:</p>
+              <p>En TIS lo explicaste con el PMS: para un franquiciado con seis hoteles en Bilbao era caro; para que Casual llegue a República Dominicana, os ha venido de lujo.</p>
+              <p>Lo que se elige pensando en la escala se nota cuando llega la escala. Con hoteles en varios mercados y cuatro modelos de explotación, una mejora pequeña puede:</p>
             </div>
             <ul class="ticks" data-reveal>{multiplica.map((m) => <li>{m}</li>)}</ul>
             <p class="prose-line" data-reveal>Del mismo modo, una ineficiencia pequeña también puede escalar.</p>
@@ -270,6 +321,7 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
       <!-- Escala -->
       <section id="escala" class="warm" aria-labelledby="sc-title">
         <div class="wrap section">
+          <p class="label" data-reveal>El cuarto filtro</p>
           <h2 id="sc-title" class="h2 h2-wide" data-reveal>¿Qué ocurre cuando multiplicamos un proceso por</h2>
           <p class="numbers" data-reveal aria-label="20, 25 o 30 hoteles"><span>20</span><span>25</span><span>30</span><small>hoteles?</small></p>
           <div class="split split-tight">
@@ -394,12 +446,13 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
                 <li>No vendemos un PMS.</li>
                 <li>No vendemos un RMS.</li>
                 <li>No necesitamos colocar un chatbot.</li>
+                <li>Ni un WhatsApp con IA porque esté de moda.</li>
                 <li>Y no necesitamos encontrar artificialmente un caso de uso para la IA.</li>
               </ul>
               <p class="prose-line" data-reveal>Eso permite un análisis independiente.</p>
             </div>
           </div>
-          <p class="euro" data-reveal><span class="euro-n">1 €</span><span class="euro-q">Si tuviéramos 1 € de TechEx para invertir, ¿dónde generaría más valor?</span></p>
+          <p class="euro" data-reveal><span class="euro-n">1 €</span><span class="euro-q">Si tuviéramos 1 € de TechEx, ¿dónde volvería convertido en EBITDA?</span></p>
           <p class="euro-note" data-reveal>Un euro conceptual. No es un cálculo financiero.</p>
         </div>
       </section>
@@ -413,13 +466,13 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
               <span>No empecemos por toda Casual Hoteles.</span>
               <span class="h2-accent">Empecemos por un proceso.</span>
             </h2>
-            <p class="lede" data-reveal>Lo elegiríamos junto con la dirección: un proceso suficientemente relevante y transversal, y lo seguiríamos de principio a fin.</p>
+            <p class="lede" data-reveal>Ir despacio, como planteaste: un solo proceso, relevante y transversal, elegido con la dirección y seguido de principio a fin.</p>
             <p class="prose-line" data-reveal>Podría estar relacionado con:</p>
             <ul class="chips" data-reveal>{ambitos.map((a) => <li>{a}</li>)}</ul>
             <p class="chips-note" data-reveal>Son solo ejemplos. No damos por hecho dónde está la fricción.</p>
             <p class="prose-line" data-reveal>El objetivo:</p>
             <ol class="steps steps-tight" data-reveal>{objetivo.map((o, i) => <li><span class="n">{pad(i + 1)}</span>{o}</li>)}</ol>
-            <p class="prose-line" data-reveal>y responder:</p>
+            <p class="prose-line" data-reveal>y responder, con tus cinco preguntas delante:</p>
             <p class="worth" data-reveal>¿Merece inversión?</p>
           </div>
         </div>
@@ -451,6 +504,7 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
         <p class="cl-1" data-reveal>CapEx o TechEx.</p>
         <p class="cl-2" data-reveal>Y dentro del TechEx:</p>
         <h2 id="ci-title" class="cl-big" data-reveal>¿Dónde primero?</h2>
+        <p class="cl-4" data-reveal>En la mesa se dijo que los deberes se hacen ahora, mientras hay caja. En el TechEx también.</p>
         <p class="cl-3" data-reveal>Esa es la pregunta que me gustaría explorar contigo.</p>
       </section>
 
@@ -458,7 +512,7 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
       <section id="hablar" class="cta" aria-labelledby="cta-title">
         <div class="wrap section">
           <h2 id="cta-title" class="h2 cta-title" data-reveal>Si te parece una conversación interesante, seguimos.</h2>
-          <p class="cta-copy" data-reveal>Puedo enseñarte cómo hacemos una Radiografía Digital y valorar contigo si existe algún proceso de Casual Hoteles que merezca analizar primero.</p>
+          <p class="cta-copy" data-reveal>Puedo enseñarte cómo hacemos una Radiografía Digital y valorar contigo si hay algún proceso de Casual Hoteles que pase tus cinco preguntas.</p>
           <div class="cta-row" data-reveal>
             <a class="button" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="final">Hablar con Luiz <span aria-hidden="true">↗</span></a>
             <div class="signature">
@@ -609,6 +663,15 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
       .thesis span:first-child { color: var(--soft); }
       .thesis-b { position: relative; }
 
+      /* Filtro */
+      .filter { margin-top: 40px; border-top: 1px solid var(--ink); }
+      .filter li { display: flex; gap: 14px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--line); }
+      .filter-q { font-size: clamp(21px, 2.3vw, 30px); font-weight: 500; letter-spacing: -.035em; line-height: 1.18; }
+      .filter-d { margin-top: 4px; max-width: 36em; font-size: 16px; color: var(--muted); }
+      .filter-own { border-bottom: 2px solid var(--orange) !important; }
+      .filter-own .n { color: var(--orange); }
+      .filter-own .filter-q { color: var(--orange-ink); }
+      .tx-lead { max-width: 30em; }
       /* TechEx */
       .tx-lead { margin-top: 18px; font-size: clamp(22px, 2.6vw, 34px); font-weight: 400; letter-spacing: -.035em; line-height: 1.2; color: var(--night-muted); }
       .tx-lead-2 { margin-top: 4px; color: var(--night-text); }
@@ -743,6 +806,8 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
       .cl-1 { font-size: clamp(28px, 3.6vw, 48px); font-weight: 500; letter-spacing: -.045em; color: var(--soft); }
       .cl-2 { margin-top: 28px; font-size: 18px; color: var(--muted); }
       .cl-big { margin-top: 10px; font-size: clamp(56px, 13vw, 190px); font-weight: 500; letter-spacing: -.07em; line-height: .95; }
+      .cl-4 { margin-top: 48px; max-width: 30em; font-size: 18px; color: var(--muted); }
+      .cl-4 + .cl-3 { margin-top: 20px; }
       .cl-3 { margin-top: 64px; font-size: clamp(19px, 1.8vw, 23px); letter-spacing: -.02em; color: var(--text); }
 
       /* Conversación */
