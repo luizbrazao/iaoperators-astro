@@ -25,6 +25,24 @@ import PresenterVideo from "../../components/PresenterVideo.astro";
 // dejar a las personas lo que requiere criterio y empatía la aporta Luiz; no se
 // cita literalmente.
 //
+// Revisión 07/10/2026, después de la sesión "CapEx or TechEx?" de TIS
+// (06/10/2026, con Juan Carlos Sanjuán, de Casual, y Jairo González, de Petit
+// Palace). Solo se usa lo que con seguridad dijo José según la transcripción,
+// parafraseado (la transcripción automática es imprecisa):
+//   - Recomendación sobre IA: plan global, nada de inventos ni de amigos que
+//     vienen a inventarte cosas, inversiones "a performance". Tienen bastantes
+//     agentes de IA; cotizar grupos en 3 horas en lugar de 47, encadenando tres
+//     agentes, es una inversión que se hace. "Si no, lo demás, ya veremos."
+//   - Viene del mundo industrial: allí la clave es la fábrica (un 1 % de
+//     desviación en sus costes puede llevar a números rojos). En hotelería la
+//     clave es la primera línea: web, CMS, CRM, channel manager y RMS. Best of
+//     suite o best of breed; en el segundo el problema es la integración, y la
+//     diferencia entre integraciones bien y mal hechas es "abismal".
+//   - Segunda línea: recursos humanos (el personal ronda el 35 % de la cuenta).
+//     Después, P2P. Implementar, conectar y crecer a la vez es dificilísimo,
+//     "pero se hace".
+// La cifra de ahorro del P2P no se usa: la transcripción no es fiable ahí.
+//
 // Comportamiento compartido en src/scripts/prospect-landing.ts.
 
 // --- Configuración editable ---------------------------------------------------
@@ -39,7 +57,7 @@ const VIDEO = {
 
 const wa = (t: string) => `https://wa.me/34662423523?text=${encodeURIComponent(t)}`;
 // Contacto directo con Luiz.
-const CONTACT_HREF = wa("Hola Luiz, soy José Rodríguez, de Sercotel. He visto la página sobre la Radiografía Digital y me gustaría hablarlo.");
+const CONTACT_HREF = wa("Hola Luiz, soy José Rodríguez, de Sercotel. He visto la página que preparaste después de TIS y me gustaría hablarlo.");
 // Introducción: José presenta a la persona adecuada.
 const INTRO_HREF = wa("Hola Luiz, soy José Rodríguez, de Sercotel. Te pongo en contacto con la persona que debería ver la Radiografía Digital: ");
 // Caso público de referencia (sin nombre de cliente).
@@ -51,9 +69,28 @@ const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const pageUrl = new URL("/tis/jose/", site).toString();
 const ogImage = new URL("/og/jose.png", site).toString();
 const title = "José Rodríguez × IA Operators | Radiografía Digital";
-const description = "Una reflexión sobre operaciones, tecnología y personas preparada por IA Operators para José Rodríguez y Sercotel.";
+const description = "Después de «CapEx or TechEx?» en TIS: dónde está la próxima inversión a performance. Una reflexión preparada por IA Operators para José Rodríguez y Sercotel.";
 
 const pad = (n: number) => String(n).padStart(2, "0");
+
+// Prioridades tecnológicas tal y como las ordenó José en la mesa.
+const lineas = [
+  {
+    k: "Primera línea",
+    t: "La que tienes que tener «súper controlada».",
+    tags: ["web", "CMS", "CRM", "channel manager", "RMS"],
+    d: "Si eliges el mejor de cada vertical, el problema está en la integración.",
+    main: true,
+  },
+  { k: "Segunda línea", t: "Recursos humanos.", tags: [], d: "Porque el personal ronda el 35 % de la cuenta de resultados.", main: false },
+  { k: "Después", t: "P2P.", tags: [], d: "Compras, donde una cadena grande se juega un ahorro de costes muy relevante.", main: false },
+];
+const costuras = [
+  "datos que alguien vuelve a introducir en otro sistema",
+  "conciliaciones hechas a mano",
+  "información que llega tarde a recepción, revenue o a la central",
+  "excepciones que acaban siempre en la misma persona",
+];
 
 const candidatas = [
   "Facturación", "Administración", "Transferencia de información", "Validaciones", "Reporting",
@@ -161,18 +198,47 @@ const piloto = [
     <main>
       <!-- Hero -->
       <section id="inicio" class="hero wrap" aria-labelledby="hero-title">
-        <p class="label">Una reflexión para José Rodríguez</p>
-        <h1 id="hero-title" class="greeting">José, hay una idea tuya con la que coincidimos especialmente.</h1>
-        <p class="free">La tecnología debería liberar a las personas.</p>
-        <p class="first-q">La cuestión es: entre 100 hoteles, <span>¿qué trabajo merece desaparecer primero?</span></p>
+        <p class="label">Después de «CapEx or TechEx?» · TIS 2026</p>
+        <h1 id="hero-title" class="greeting">José, en TIS tu recomendación sobre IA fue clara: plan global, nada de inventos e inversiones a performance.</h1>
+        <p class="free free-num" aria-label="De 47 horas a 3 horas"><span class="was">47 h</span><span class="to" aria-hidden="true">→</span><span>3 h</span></p>
+        <p class="first-q">Esa es la vara de medir. La cuestión es: entre 100 hoteles, <span>¿dónde está la próxima?</span></p>
 
         <div class="hero-grid">
           <PresenterVideo src={VIDEO.src} poster={VIDEO.poster} label="Vídeo de Luiz Brazão para José Rodríguez" duracion={VIDEO.duracion} />
 
           <div class="hero-copy">
-            <p>No para eliminar la hospitalidad.</p>
-            <p>No para sustituir criterio, empatía o sentido común.</p>
-            <p class="hero-strong">Sino para hacer desaparecer trabajo repetitivo que consume tiempo sin aportar valor al huésped.</p>
+            <p>Contaste que en Sercotel tenéis bastantes agentes de IA, pero que cada uno está ahí porque tiene un performance concreto: cotizar grupos en tres horas en lugar de 47, encadenando tres agentes. Si no, lo demás, ya veremos.</p>
+            <p>Coincido. Antes de encadenar ningún agente hay que saber dónde está el siguiente proceso de 47 horas.</p>
+            <p class="hero-strong">Y que lo que se automatice sea trabajo que no necesita ser humano, no criterio, empatía o sentido común.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Primera línea -->
+      <section id="primera-linea" class="section wrap" aria-labelledby="pl-title">
+        <div class="split">
+          <p class="label label-orange" data-reveal>(01) Primera línea</p>
+          <div>
+            <h2 id="pl-title" class="h2 h2-pair" data-reveal><span>En la industria, la clave es la fábrica.</span><span class="h2-wine">En hotelería, la primera línea.</span></h2>
+            <p class="lede" data-reveal>Lo explicaste desde tu experiencia en el mundo industrial: si los costes de la fábrica se desvían un 1 %, toda la compañía puede entrar en números rojos. En un hotel, dijiste, todo se juega en primera línea.</p>
+            <ol class="tiers" data-reveal>
+              {lineas.map((l) => (
+                <li class:list={{ "tier-main": l.main }}>
+                  <span class="tier-k">{l.k}</span>
+                  <div>
+                    <p class="tier-t">{l.t}</p>
+                    {l.tags.length > 0 && <ul class="tags">{l.tags.map((t) => <li>{t}</li>)}</ul>}
+                    <p class="tier-d">{l.d}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <p class="statement" data-reveal>
+              <span class="muted">Entre una integración bien hecha y una mal hecha,</span>
+              <span>la diferencia es abismal.</span>
+            </p>
+            <p class="prose-line" data-reveal>Ahí está buena parte de lo que busca una Radiografía Digital. Rara vez la fricción está dentro de un sistema; suele estar en las costuras entre ellos:</p>
+            <ul class="obs" data-reveal>{costuras.map((c) => <li>{c}</li>)}</ul>
           </div>
         </div>
       </section>
@@ -180,7 +246,7 @@ const piloto = [
       <!-- Priorizar -->
       <section id="priorizar" class="section wrap" aria-labelledby="pr-title">
         <div class="split">
-          <p class="label" data-reveal>(01) Priorizar</p>
+          <p class="label" data-reveal>(02) Priorizar</p>
           <div>
             <h2 id="pr-title" class="h2 h2-pair" data-reveal><span>Automatizar es fácil de decir.</span><span class="h2-wine">Priorizar es más difícil.</span></h2>
             <p class="lede" data-reveal>En una operación de esta escala pueden existir cientos de oportunidades potenciales.</p>
@@ -198,7 +264,7 @@ const piloto = [
       <!-- Escala de la red -->
       <section id="red" class="sand" aria-labelledby="red-title">
         <div class="wrap section">
-          <p class="label" data-reveal>(02) Sercotel</p>
+          <p class="label" data-reveal>(03) Sercotel</p>
           <h2 id="red-title" class="h2 h2-wide" data-reveal>Cuando el modelo llega a 100 hoteles, una pequeña fricción deja de ser pequeña.</h2>
           <div class="mult" data-reveal>
             {factores.map((f, i) => (
@@ -224,12 +290,12 @@ const piloto = [
       <!-- OpenStay Lab -->
       <section id="openstay" class="section wrap" aria-labelledby="os-title">
         <div class="split">
-          <p class="label" data-reveal>(03) OpenStay Lab</p>
+          <p class="label" data-reveal>(04) OpenStay Lab</p>
           <div>
             <h2 id="os-title" class="h2" data-reveal>Sercotel ya sabe probar tecnología.</h2>
             <p class="lede" data-reveal>OpenStay Lab parte de una lógica especialmente interesante:</p>
             <ol class="lab" data-reveal>{lab.map((l, i) => <li><span class="n">{pad(i + 1)}</span>{l}</li>)}</ol>
-            <p class="prose-line" data-reveal>Nuestra pregunta está un paso antes.</p>
+            <p class="prose-line" data-reveal>Encaja con lo que dijiste en TIS: plan global, nada de inventos. Nuestra pregunta está un paso antes.</p>
           </div>
         </div>
         <p class="lab-q" data-reveal>¿Cómo identificamos el problema que merece entrar en el laboratorio?</p>
@@ -247,7 +313,7 @@ const piloto = [
       <!-- Antes del piloto -->
       <section id="antes" class="sand" aria-labelledby="an-title">
         <div class="wrap section">
-          <p class="label" data-reveal>(04) Antes del piloto</p>
+          <p class="label" data-reveal>(05) Antes del piloto</p>
           <h2 id="an-title" class="h2 h2-wide" data-reveal>Antes de probar una solución, necesitamos formular bien el problema.</h2>
           <div class="pipe" data-reveal>
             <ol class="pipe-steps">
@@ -265,7 +331,7 @@ const piloto = [
       <!-- Radiografía -->
       <section id="radiografia" class="section wrap" aria-labelledby="rd-title">
         <div class="split">
-          <p class="label" data-reveal>(05) Radiografía Digital</p>
+          <p class="label" data-reveal>(06) Radiografía Digital</p>
           <div>
             <h2 id="rd-title" class="h2" data-reveal>Ahí entra la Radiografía Digital.</h2>
             <p class="lede" data-reveal>Seguimos el trabajo antes de hablar de tecnología.</p>
@@ -304,7 +370,7 @@ const piloto = [
       <!-- Personas primero -->
       <section id="personas" class="ink" aria-labelledby="pe-title">
         <div class="wrap section">
-          <p class="label label-ink" data-reveal>(06) Personas primero</p>
+          <p class="label label-ink" data-reveal>(07) Personas primero</p>
           <h2 id="pe-title" class="h2 h2-wide" data-reveal>La mejor automatización puede ser la que el huésped nunca ve.</h2>
 
           <figure class="day" data-reveal aria-label="Jornada conceptual: los tramos de trabajo repetitivo se liberan y queda tiempo para el trabajo humano">
@@ -332,7 +398,7 @@ const piloto = [
       <!-- Qué no automatizar -->
       <section id="no-automatizar" class="section wrap" aria-labelledby="na-title">
         <div class="split">
-          <p class="label" data-reveal>(07) Límites</p>
+          <p class="label" data-reveal>(08) Límites</p>
           <div>
             <h2 id="na-title" class="h2" data-reveal>También necesitamos saber qué no automatizar.</h2>
             <p class="lede" data-reveal>Una Radiografía Digital no parte de la premisa de que todo proceso manual sea malo.</p>
@@ -350,7 +416,7 @@ const piloto = [
       <!-- 100 → 160 -->
       <section id="escala" class="sand" aria-labelledby="es-title">
         <div class="wrap section">
-          <p class="label" data-reveal>(08) Escala</p>
+          <p class="label" data-reveal>(09) Escala</p>
           <h2 id="es-title" class="h2 h2-wide" data-reveal>160 hoteles no deberían significar 60 hoteles más de complejidad.</h2>
           <figure class="net" data-reveal aria-label="Cien hoteles hoy y sesenta más en el objetivo de la red">
             <div class="net-grid">{Array.from({ length: 160 }, (_, i) => <i class:list={{ new: i >= 100 }} style={`--r:${Math.floor(i / 20)}`}></i>)}</div>
@@ -366,6 +432,7 @@ const piloto = [
               </ol>
             </div>
           </div>
+          <p class="prose-line prose-ink prose-quote" data-reveal>Lo dijiste en la mesa: implementar, conectar y crecer al mismo tiempo es dificilísimo. Pero se hace.</p>
           <p class="huge" data-reveal>Crecer también es decidir qué no queremos multiplicar.</p>
         </div>
       </section>
@@ -379,6 +446,7 @@ const piloto = [
             <p class="prose-line prose-ink" data-reveal>Podríamos elegir, junto al equipo de Operaciones y Tecnología, un proceso que:</p>
             <ul class="obs" data-reveal>{seleccion.map((s) => <li>{s}</li>)}</ul>
             <p class="prose-line" data-reveal>Y hacer una Radiografía limitada a ese proceso para entender, medir y priorizar. Solo después decidiríamos si hay algo que merezca resolverse.</p>
+            <p class="prose-line prose-ink" data-reveal>Con una vara de medir como la tuya: horas antes, horas después. O la conclusión, también válida, de que no merece inversión.</p>
 
             <figure class="pilot" data-reveal aria-label="Modelo piloto conceptual">
               <ol>
@@ -394,7 +462,7 @@ const piloto = [
       <section id="mirada" class="sand" aria-labelledby="mi-title">
         <div class="wrap section">
           <div class="split">
-            <p class="label" data-reveal>(09) Independencia</p>
+            <p class="label" data-reveal>(10) Independencia</p>
             <div>
               <h2 id="mi-title" class="h2" data-reveal>Una segunda mirada, sin tecnología que defender.</h2>
               <ul class="nots" data-reveal>
@@ -402,6 +470,7 @@ const piloto = [
                 <li>No representa un RMS.</li>
                 <li>No vende una plataforma hotelera concreta.</li>
                 <li>No necesita justificar una herramienta.</li>
+                <li>Y no viene a inventarte cosas: viene a medir.</li>
               </ul>
               <p class="prose-line" data-reveal>Eso permite hacer una pregunta independiente:</p>
               <p class="q-big" data-reveal>¿Qué problema merece que hagamos algo?</p>
@@ -526,6 +595,9 @@ const piloto = [
       .hero { padding-top: 18px; padding-bottom: 72px; }
       .greeting { margin-top: 12px; max-width: 22em; font-size: clamp(19px, 2.2vw, 28px); font-weight: 500; letter-spacing: -.025em; line-height: 1.28; color: var(--text); }
       .free { margin-top: 14px; max-width: 12em; font-size: clamp(34px, 7vw, 100px); font-weight: 500; letter-spacing: -.058em; line-height: 1; color: var(--wine); }
+      .free-num { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 .28em; max-width: none; font-variant-numeric: tabular-nums; }
+      .free-num .was { color: var(--soft); text-decoration: line-through; text-decoration-thickness: .035em; text-decoration-color: var(--line-strong); }
+      .free-num .to { color: var(--orange); font-weight: 300; }
       .first-q { margin-top: 18px; max-width: 24em; font-size: clamp(19px, 2.4vw, 32px); font-weight: 500; letter-spacing: -.03em; line-height: 1.22; color: var(--muted); }
       .first-q span { color: var(--ink); font-weight: 650; }
       .hero-grid { display: grid; gap: 28px; margin-top: 24px; }
@@ -575,6 +647,14 @@ const piloto = [
       .huge-ink .muted { color: var(--dark-muted); }
 
       /* Priorizar */
+      .tiers { margin-top: 36px; border-top: 1px solid var(--ink); }
+      .tiers > li { display: grid; gap: 6px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+      .tier-k { font-size: 12px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+      .tier-main .tier-k { color: var(--orange-ink); }
+      .tier-t { font-size: clamp(20px, 2.1vw, 27px); font-weight: 500; letter-spacing: -.03em; line-height: 1.2; }
+      .tier-d { margin-top: 8px; max-width: 34em; color: var(--muted); }
+      .tiers .tags { margin-top: 10px; }
+      .prose-quote { margin-top: 40px; }
       .cands { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 22px; font-size: clamp(18px, 1.8vw, 23px); letter-spacing: -.025em; }
       .cands li { position: relative; }
       .cands li:not(:last-child)::after { content: "·"; position: absolute; right: -11px; color: var(--soft); }
@@ -733,6 +813,7 @@ const piloto = [
 
       @media (min-width: 720px) {
         :root { --gutter: 36px; }
+        .tiers > li { grid-template-columns: 150px minmax(0, 1fr); align-items: baseline; gap: 24px; }
         .vars { grid-template-columns: repeat(5, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
         .vars li { border-bottom: 0; }
         .pipe-steps { grid-template-columns: repeat(7, minmax(0, 1fr)); }
