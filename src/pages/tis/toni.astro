@@ -1,0 +1,593 @@
+---
+import PresenterVideo from "../../components/PresenterVideo.astro";
+// Landing personalizada para Toni Mascaró, Founder & CEO de eMascaró. Se llega
+// por el QR de una tarjeta. Privada: noindex,nofollow y fuera del sitemap
+// ("/tis/" en NOINDEX_PATHS).
+//
+// Objetivo distinto al resto de /tis/: no es un cliente final, es un posible
+// partner. IA Operators se ofrece como partner tecnológico de eMascaró para
+// llevar el "cerebro" de la marca más allá de la web: a la operación, la
+// atención al cliente y los departamentos internos. No compite con VENTO ni con
+// el trabajo de marca de eMascaró; empieza detrás de la web.
+//
+// Charla de TIS 06/10/2026, "AI doesn't create brands: without WHY there is no
+// WOW" (11:10, Auditorium SAP). Solo habló él, así que la atribución es segura;
+// la transcripción automática es imprecisa y llegó cortada al final. Ideas
+// usadas, parafraseadas:
+//   - Más de 20 años; 15 de las Top 100 marcas turísticas españolas con eMascaró;
+//     más de 1.500 M€ en transacciones por sus proyectos digitales.
+//   - Con IA cualquiera hace un logo o un vídeo en 30 segundos: cuando todo ya
+//     es wow, nada es wow; todo se parece. Hay que trabajar el por qué (Sinek).
+//   - Dos públicos: humanos (clientes, equipos, proveedores, sector) y máquinas.
+//     Un proyecto digital tiene que enamorar al usuario y también a la IA.
+//   - Coherencia de marca en todos los puntos de contacto del viaje:
+//     descubrimiento, decisión, antes, durante y después; online y offline.
+//   - Detrás, CMS, PMS, CRS, chatbot y motor de reservas se comunican, generan
+//     datos y la IA aparece como herramienta de interpretación.
+//   - El documento del WHY (misión, propuesta de valor, valores, segmentos,
+//     insight, promesa, arquetipo, tono, parte sensorial, storytelling, claim,
+//     manifiesto) lo escriben humanos; sin overpromise. No es lo mismo un Only
+//     YOU que un Casual, un Silken o un Room Mate.
+//   - Educar a la IA, "los brains de las marcas", para que todos los
+//     departamentos accedan a esa información de forma ordenada. Hoy hay silos:
+//     marketing con su ChatGPT, otro con Claude, finanzas con otro, RRHH con
+//     otro; no hay un cerebro con los silos bien ordenados.
+//
+// Datos públicos (verificados el 07/10/2026):
+//   - TIS 2026: sesión y horario.
+//   - TecnoHotel, 01/2026 (artículo firmado por Toni): «sin WHY no hay WOW»,
+//     «un cerebro entrenado con su ADN», metodología entender, definir,
+//     transformar ("Educamos a la inteligencia artificial de la marca").
+//   - Portal de América: más de dos décadas, más de 150 proyectos hoteleros,
+//     15 de las 100 principales marcas hoteleras usan VENTO, más de 100
+//     integraciones, VENTO DXP.
+//   - Doonamis: «Somos el HUB que integra a los diferentes proveedores,
+//     integraciones y tecnologías».
+//   - Ley 10/2025 (Hosteltur): grandes empresas, plazo 28/12/2026, sin
+//     aplazamiento a esa fecha.
+// La web de eMascaró no se pudo leer desde aquí: no se citan servicios que no
+// estén en las fuentes anteriores (por eso no se nombra Brand Mind).
+//
+// Comportamiento compartido en src/scripts/prospect-landing.ts.
+
+// --- Configuración editable ---------------------------------------------------
+const VIDEO = {
+  src: "/video/luiz-tis.mp4",
+  poster: "/video/luiz-tis-poster.jpg",
+  duracion: "1 min 24 s",
+};
+
+const CONTACT_HREF = `https://wa.me/34662423523?text=${encodeURIComponent(
+  "Hola Luiz, soy Toni Mascaró, de eMascaró. He visto la página que preparaste después de TIS y me gustaría hablarlo.",
+)}`;
+const CASE_HREF = "/es/portfolio/radiografia-cadena-hotelera-menorca/";
+const GTM_ID = "GTM-572KJ7HZ";
+// -----------------------------------------------------------------------------
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL("/tis/toni/", site).toString();
+const ogImage = new URL("/og/toni.png", site).toString();
+const title = "Toni Mascaró × IA Operators | Partner tecnológico";
+const description = "Después de «sin WHY no hay WOW» en TIS: cómo llevar el cerebro de la marca de la web a toda la operación. Una propuesta de IA Operators para Toni Mascaró y eMascaró.";
+
+const pad = (n: number) => String(n).padStart(2, "0");
+
+const viaje = ["Descubrimiento", "Decisión", "Antes", "Durante", "Después"];
+const fases = ["Descubrir", "Decidir", "Antes", "Durante", "Después"];
+const sistemas = ["CMS", "PMS", "CRS", "Chatbot", "Motor de reservas"];
+const why = [
+  "Misión", "Propuesta de valor", "Valores", "Segmentos", "Insight", "Promesa de marca",
+  "Arquetipo", "Cómo hablar y escribir", "Parte sensorial", "Storytelling", "Claim", "Manifiesto",
+];
+
+// Silos: departamentos, cada uno con su IA.
+const silos = [
+  { d: "Marketing", t: "su ChatGPT" },
+  { d: "Otro equipo", t: "su Claude" },
+  { d: "Finanzas", t: "otra IA" },
+  { d: "RRHH", t: "otra IA" },
+  { d: "Reservas", t: "su herramienta" },
+  { d: "Recepción", t: "nada" },
+];
+
+// Cerebro: nodos alrededor del ADN (ángulos en grados).
+const nodos = [
+  { t: "Marketing", a: -90 }, { t: "Reservas", a: -30 }, { t: "Atención", a: 30 },
+  { t: "Recepción", a: 90 }, { t: "RRHH", a: 150 }, { t: "Finanzas", a: 210 },
+];
+const R = 128;
+const pos = (a: number) => ({ x: 200 + R * Math.cos((a * Math.PI) / 180), y: 190 + R * Math.sin((a * Math.PI) / 180) });
+
+// Capas × fases: quién cubre qué (1 = eMascaró, 2 = IA Operators, 0 = vacío).
+const capas = [
+  { k: "Marca y WHY", q: "eMascaró", c: [1, 1, 1, 1, 1] },
+  { k: "Experiencia digital", q: "eMascaró", c: [1, 1, 1, 1, 1] },
+  { k: "Operación, atención y back-office", q: "IA Operators", c: [0, 2, 2, 2, 2] },
+];
+
+const vosotros = [
+  "El WHY: estrategia, marca, storytelling.",
+  "La experiencia digital y VENTO.",
+  "La relación con el cliente.",
+  "Educar a la IA de la marca.",
+];
+const nosotros = [
+  "Llevar ese cerebro a la operación: atención, reservas, grupos, back-office.",
+  "Integraciones API-first con PMS, CRS, CRM y ticketing.",
+  "Agentes y automatizaciones en producción, con permisos y trazabilidad.",
+  "Evaluación continua: comprobar, con datos, que la IA habla como la marca.",
+];
+
+const ley = [
+  { n: "3 min", d: "para atender al 95 % de las llamadas y de las peticiones de hablar con una persona." },
+  { n: "15 días", d: "hábiles como máximo para resolver consultas y reclamaciones." },
+  { n: "1 clave", d: "única por interacción, con justificante en soporte duradero." },
+  { n: "Anual", d: "la auditoría, verificada por una entidad acreditada por ENAC." },
+];
+
+const pasos = [
+  "Elegimos juntos un cliente vuestro y un caso concreto.",
+  "Vosotros mantenéis la relación, la marca y el criterio.",
+  "Nosotros diseñamos, integramos y lo ponemos en producción.",
+  "Medimos y decidimos juntos si tiene sentido escalarlo.",
+];
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
+    <link rel="canonical" href={pageUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="IA Operators" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Sin WHY no hay WOW. Y sin conexiones, el WHY no llega a toda la operación. Una propuesta para Toni Mascaró." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="theme-color" content="#f8f6f2" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/manrope-latin-variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
+  </head>
+
+  <body data-gtm={GTM_ID}>
+    <header class="top" data-top>
+      <div class="wrap top-inner">
+        <a class="wordmark" href="#inicio" aria-label="IA Operators, volver al inicio de la página"><img src="/brand/ia-operators-logo.png" alt="" width="453" height="82" /></a>
+        <nav class="top-nav" aria-label="Página">
+          <a class="top-link" href="#encaje">Partner tecnológico</a>
+          <a class="top-cta" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="header" data-cta-event="click_contact">Hablar con Luiz</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section id="inicio" class="hero wrap" aria-labelledby="hero-title">
+        <p class="label">TIS 2026 · «Without WHY there is no WOW»</p>
+        <h1 id="hero-title" class="greeting">Toni, estuvimos en la platea de tu charla en TIS.</h1>
+        <p class="whywow"><span class="w1">Sin WHY</span><span class="w2">no hay WOW.</span></p>
+        <p class="sub">Y sin conexiones, el WHY no llega a toda la operación.</p>
+
+        <div class="hero-grid">
+          <PresenterVideo src={VIDEO.src} poster={VIDEO.poster} label="Vídeo de Luiz Brazão para Toni Mascaró" duracion={VIDEO.duracion} />
+
+          <div class="hero-copy">
+            <p>Nos quedamos con una frase: cuando todo ya es wow, nada es wow. Y con otra que nos toca de lleno: hoy marketing tiene su ChatGPT, otro equipo su Claude, finanzas y recursos humanos otra cosa, y no hay un cerebro ordenado.</p>
+            <p>Vosotros sabéis escribir el ADN de una marca. Nosotros nos dedicamos a conectar sistemas, datos e IA en la operación de un hotel.</p>
+            <p class="hero-strong">Esta página es una propuesta para trabajar juntos, como partner tecnológico de eMascaró.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tu charla -->
+      <section id="charla" class="section wrap" aria-labelledby="ch-title">
+        <div class="split">
+          <p class="label" data-reveal>01 · Lo que contaste</p>
+          <div>
+            <h2 id="ch-title" class="h2" data-reveal>Enamorar al usuario. Y también a la IA.</h2>
+            <p class="lede" data-reveal>Hablaste de dos públicos nuevos: los humanos de siempre (clientes, equipos, proveedores, el sector) y las máquinas, que hoy capturan y analizan todo lo que hace una marca.</p>
+
+            <figure class="journey" data-reveal aria-label="El viaje del cliente: cinco fases con la misma marca">
+              <ol class="j-row">{viaje.map((v, i) => <li style={`--i:${i}`}><span class="n">{pad(i + 1)}</span>{v}</li>)}</ol>
+              <p class="j-line"><span>La misma marca en cada punto de contacto, online y offline.</span></p>
+              <ul class="chips">{sistemas.map((s) => <li>{s}</li>)}</ul>
+              <figcaption>Detrás, los sistemas se comunican y generan datos. La IA llega como herramienta de interpretación.</figcaption>
+            </figure>
+
+            <p class="prose-line" data-reveal>Y antes de todo eso, el WHY. Un documento extenso, escrito por personas:</p>
+            <ul class="why" data-reveal>{why.map((w) => <li>{w}</li>)}</ul>
+            <p class="statement" data-reveal>
+              <span class="muted">Sin overpromise.</span>
+              <span>No es lo mismo un Only YOU que un Casual, un Silken o un Room Mate.</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Silos -->
+      <section id="silos" class="night" aria-labelledby="si-title">
+        <div class="wrap section">
+          <p class="label label-night" data-reveal>02 · Los silos</p>
+          <h2 id="si-title" class="h2 h2-wide" data-reveal>«Educar a la IA para que todos los departamentos accedan a esa información de forma ordenada.»</h2>
+          <div class="brain-grid">
+            <figure class="silos" data-reveal aria-label="Hoy: cada departamento con su propia IA">
+              <p class="fig-k">Hoy</p>
+              <ul class="silo-list">
+                {silos.map((s, i) => <li style={`--r:${(i % 3) - 1}`}><b>{s.d}</b><span>{s.t}</span></li>)}
+              </ul>
+              <figcaption class="fig-cap">Los cuatro primeros, como lo contaste. Los otros dos, un ejemplo.</figcaption>
+            </figure>
+            <figure class="brain" data-reveal style="--d:120ms" aria-label="Con un cerebro: todos los departamentos conectados al ADN de la marca">
+              <p class="fig-k fig-k-on">Con un cerebro</p>
+              <svg viewBox="0 0 400 380" role="img" aria-hidden="true">
+                {nodos.map((n, i) => {
+                  const p = pos(n.a);
+                  return <line class="b-line" x1="200" y1="190" x2={p.x} y2={p.y} style={`--i:${i}`} />;
+                })}
+                <circle class="b-core" cx="200" cy="190" r="50" />
+                <text class="b-core-t" x="200" y="186" text-anchor="middle">ADN</text>
+                <text class="b-core-s" x="200" y="204" text-anchor="middle">de la marca</text>
+                {nodos.map((n) => {
+                  const p = pos(n.a);
+                  return (
+                    <g>
+                      <circle class="b-node" cx={p.x} cy={p.y} r="7" />
+                      <text class="b-label" x={p.x} y={p.y + (n.a === 90 ? 26 : n.a === -90 ? -16 : 4)} text-anchor={n.a === 90 || n.a === -90 ? "middle" : Math.cos((n.a * Math.PI) / 180) > 0 ? "start" : "end"} dx={n.a === 90 || n.a === -90 ? 0 : Math.cos((n.a * Math.PI) / 180) > 0 ? 14 : -14}>{n.t}</text>
+                    </g>
+                  );
+                })}
+              </svg>
+            </figure>
+          </div>
+          <p class="huge" data-reveal><span class="muted">El WHY ya está escrito.</span><span>Falta que llegue a cada departamento.</span></p>
+        </div>
+      </section>
+
+      <!-- Encaje -->
+      <section id="encaje" class="section wrap" aria-labelledby="en-title">
+        <div class="split">
+          <p class="label label-accent" data-reveal>03 · Dónde encajamos</p>
+          <div>
+            <h2 id="en-title" class="h2 h2-pair" data-reveal><span>No competimos con VENTO.</span><span class="h2-accent">Trabajamos detrás de la web.</span></h2>
+            <p class="lede" data-reveal>Os definís como el hub que integra proveedores, integraciones y tecnologías. Queremos ser uno de esos proveedores: el que lleva el cerebro de la marca a la operación del hotel.</p>
+
+            <figure class="layers" data-reveal aria-label="Capas por fase del viaje: marca y experiencia digital de eMascaró; operación de IA Operators">
+              <div class="ly-head"><span></span>{fases.map((v) => <span>{v}</span>)}</div>
+              {capas.map((c) => (
+                <div class="ly-row">
+                  <span class="ly-k"><b>{c.k}</b><small>{c.q}</small></span>
+                  {c.c.map((v, i) => <span class:list={["ly-cell", { a: v === 1, b: v === 2 }]} style={`--i:${i}`}></span>)}
+                </div>
+              ))}
+              <figcaption><span class="lg lg-a">eMascaró</span><span class="lg lg-b">IA Operators</span></figcaption>
+            </figure>
+
+            <div class="two">
+              <div data-reveal>
+                <p class="two-k">Vosotros</p>
+                <ul class="two-list">{vosotros.map((v) => <li>{v}</li>)}</ul>
+              </div>
+              <div data-reveal style="--d:120ms">
+                <p class="two-k two-k-on">Nosotros</p>
+                <ul class="two-list two-on">{nosotros.map((v) => <li>{v}</li>)}</ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ley 10/2025 -->
+      <section id="fecha" class="panel" aria-labelledby="fe-title">
+        <div class="wrap section">
+          <div class="split">
+            <p class="label label-accent" data-reveal>04 · Un caso con fecha</p>
+            <div>
+              <h2 id="fe-title" class="h2" data-reveal>28 de diciembre de 2026.</h2>
+              <p class="lede" data-reveal>Es el plazo de la Ley 10/2025 de servicios de atención a la clientela para las grandes empresas: 250 personas o más, más de 50 M€ de facturación o más de 43 M€ de balance. Muchas cadenas con las que trabajáis están dentro.</p>
+              <dl class="law" data-reveal>
+                {ley.map((l) => <div><dt>{l.n}</dt><dd>{l.d}</dd></div>)}
+              </dl>
+              <p class="prose-line" data-reveal>Un chatbot con el tono perfecto de la marca también tiene que dejar pasar a una persona cuando el cliente la pide, registrar cada interacción y llegar a tiempo. Eso ya no es marca ni web: es operación, integración y trazabilidad.</p>
+              <p class="statement" data-reveal>Un buen primer proyecto juntos, con un motivo claro para el cliente.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cómo -->
+      <section id="como" class="section wrap" aria-labelledby="co-title">
+        <div class="split">
+          <p class="label" data-reveal>05 · Cómo lo haríamos</p>
+          <div>
+            <h2 id="co-title" class="h2 h2-pair" data-reveal><span>Sin un gran acuerdo de partida.</span><span class="h2-accent">Con un caso real.</span></h2>
+            <ol class="steps" data-reveal>{pasos.map((p, i) => <li><span class="n">{pad(i + 1)}</span>{p}</li>)}</ol>
+            <p class="prose-line" data-reveal>Con nuestra marca o en marca blanca, como os encaje mejor con cada cliente.</p>
+            <aside class="proof" data-reveal>
+              <p class="proof-k">Experiencia en hotelería</p>
+              <p>IA Operators ya ha realizado análisis tecnológicos y operativos en el sector hotelero, revisando procesos, sistemas e integraciones, y trabaja a diario con WhatsApp Cloud API, agentes de IA, n8n, Supabase y Node/TypeScript en producción.</p>
+              <a href={CASE_HREF} data-cta="case">Ver un caso <span aria-hidden="true">→</span></a>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cierre -->
+      <section id="cierre" class="closing wrap" aria-labelledby="ci-title">
+        <p class="cl-1" data-reveal>Vosotros, el WHY.</p>
+        <h2 id="ci-title" class="cl-big" data-reveal>Nosotros, que llegue a todas partes.</h2>
+      </section>
+
+      <!-- CTA -->
+      <section id="hablar" class="cta" aria-labelledby="cta-title">
+        <div class="wrap section">
+          <h2 id="cta-title" class="h2 cta-title" data-reveal>¿Lo hablamos con un café?</h2>
+          <p class="cta-copy" data-reveal>Me encantaría escuchar en qué clientes veis este problema y enseñaros cómo lo resolveríamos en uno de ellos.</p>
+          <div class="cta-row" data-reveal>
+            <a class="button" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="final" data-cta-event="click_contact">Hablar con Luiz <span aria-hidden="true">↗</span></a>
+            <div class="signature">
+              <p class="signature-name">Luiz Brazão</p>
+              <p class="signature-role">Founder, IA Operators</p>
+              <a class="signature-site" href="https://iaoperators.com/es/" data-cta="site">iaoperators.com</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="wrap foot-inner">
+        <span class="foot-brand"><img src="/brand/ia-operators-logo.png" alt="IA Operators" width="453" height="82" loading="lazy" /></span>
+        <a href="/es/">iaoperators.com</a>
+      </div>
+    </footer>
+
+    <div class="consent" data-consent hidden role="region" aria-label="Cookies">
+      <p>Usamos cookies para medir y mejorar la experiencia. Puedes aceptar o rechazar. <a href="/es/politica-de-privacidad/">Política de Privacidad</a>.</p>
+      <div class="consent-actions">
+        <button type="button" data-consent-reject>Rechazar</button>
+        <button type="button" class="consent-accept" data-consent-accept>Aceptar</button>
+      </div>
+    </div>
+
+    <script>
+      import { initProspectLanding } from "../../scripts/prospect-landing";
+      initProspectLanding({ landing: "toni", gtmId: document.body.dataset.gtm ?? "", videoTitle: "toni_luiz", scrollMarks: [50, 90] });
+    </script>
+
+    <style is:global>
+      @font-face {
+        font-family: "Manrope TM";
+        src: url("/fonts/manrope-latin-variable.woff2") format("woff2");
+        font-weight: 200 800;
+        font-display: swap;
+      }
+      :root {
+        --paper: #f8f6f2;
+        --panel: #efebe4;
+        --ink: #161514;
+        --text: #2f2c29;
+        --muted: #66615b;
+        --soft: #9e978f;
+        --line: #e3ded6;
+        --line-strong: #c8c1b6;
+        --orange: #f16532;
+        --orange-ink: #b4441a;
+        --night: #141312;
+        --night-text: #f3f0eb;
+        --night-muted: #a19a91;
+        --night-line: #2f2c29;
+        --gutter: 20px;
+        --ease: cubic-bezier(.2, .7, .2, 1);
+      }
+      *, *::before, *::after { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 72px; }
+      body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Manrope TM", "Helvetica Neue", Arial, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+      h1, h2, h3, p, ol, ul, dl, dd, figure, blockquote { margin: 0; }
+      ol, ul { padding: 0; list-style: none; }
+      a { color: inherit; text-decoration: none; }
+      a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+      .wrap { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: var(--gutter); }
+      .label { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+      .label::before { content: ""; width: 7px; height: 7px; background: var(--ink); }
+      .label-accent::before { background: var(--orange); }
+      .label-night { color: var(--night-muted); }
+      .label-night::before { background: var(--night-muted); }
+      .muted { color: var(--soft); }
+      .n { flex: 0 0 26px; font-size: 12px; font-weight: 650; color: var(--soft); }
+
+      /* Cabecera */
+      .top { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid transparent; transition: background-color .3s ease, border-color .3s ease; }
+      .top.is-scrolled { background: rgba(248, 246, 242, .9); border-bottom-color: var(--line); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+      .top-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
+      .wordmark img { display: block; width: auto; height: 22px; }
+      .foot-brand img { display: block; width: auto; height: 18px; }
+      .top-nav { display: flex; align-items: center; gap: 22px; font-size: 13px; }
+      .top-link { display: none; color: var(--muted); }
+      .top-link:hover { color: var(--ink); }
+      .top-cta { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border: 1px solid var(--ink); font-weight: 600; white-space: nowrap; transition: background-color .2s ease, color .2s ease; }
+      .top-cta:hover { background: var(--ink); color: var(--paper); }
+
+      /* Hero */
+      .hero { padding-top: 18px; padding-bottom: 72px; }
+      .greeting { margin-top: 14px; max-width: 22em; font-size: clamp(20px, 2.4vw, 30px); font-weight: 500; letter-spacing: -.03em; line-height: 1.25; color: var(--text); }
+      .whywow { display: flex; flex-wrap: wrap; gap: 0 .26em; margin-top: 14px; font-size: clamp(54px, 11.5vw, 170px); font-weight: 600; letter-spacing: -.065em; line-height: .95; }
+      .whywow .w1 { color: var(--ink); }
+      .whywow .w2 { color: var(--soft); }
+      .sub { margin-top: 18px; max-width: 22em; font-size: clamp(20px, 2.4vw, 32px); font-weight: 500; letter-spacing: -.03em; line-height: 1.2; color: var(--orange-ink); }
+      .hero-grid { display: grid; gap: 28px; margin-top: 28px; }
+      .hero-copy { display: grid; gap: 10px; align-content: start; color: var(--muted); }
+      .hero-copy p { max-width: 32em; }
+      .hero-strong { margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--line-strong); font-size: clamp(20px, 2vw, 25px); font-weight: 500; letter-spacing: -.03em; line-height: 1.28; color: var(--ink); }
+
+      /* Secciones */
+      .section { padding-block: 88px; }
+      .panel { background: var(--panel); }
+      .night { background: var(--night); color: var(--night-text); }
+      .split { display: grid; gap: 18px; }
+      .split > .label { align-self: start; padding-top: 10px; }
+      .h2 { font-size: clamp(30px, 4.4vw, 58px); font-weight: 500; letter-spacing: -.05em; line-height: 1.07; max-width: 15em; }
+      section > .wrap > .h2 { margin-top: 16px; }
+      .h2-wide { max-width: 20em; }
+      .h2-pair { display: grid; gap: 4px; }
+      .h2-accent { color: var(--orange-ink); }
+      .lede { margin-top: 20px; max-width: 30em; font-size: clamp(19px, 1.7vw, 22px); line-height: 1.45; letter-spacing: -.018em; color: var(--text); }
+      .prose-line { margin-top: 24px; max-width: 36em; color: var(--muted); }
+      .statement { display: grid; gap: 2px; margin-top: 36px; font-size: clamp(24px, 3vw, 40px); font-weight: 500; letter-spacing: -.045em; line-height: 1.14; max-width: 17em; }
+      .statement::before { content: ""; display: block; width: 40px; height: 3px; margin-bottom: 16px; background: var(--orange); }
+      .huge { display: grid; gap: 4px; margin-top: 72px; font-size: clamp(34px, 6.4vw, 92px); font-weight: 500; letter-spacing: -.06em; line-height: 1; max-width: 13em; }
+      .night .huge .muted { color: var(--night-muted); }
+
+      /* Viaje */
+      .journey { margin-top: 36px; padding: 18px; border: 1px solid var(--line-strong); }
+      .j-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+      .j-row li { display: grid; gap: 4px; padding: 10px 6px; border-top: 3px solid var(--ink); font-size: 13px; font-weight: 600; letter-spacing: -.01em; }
+      .j-line { position: relative; margin-top: 14px; padding: 10px 12px; background: var(--ink); color: var(--paper); font-size: 14px; }
+      .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+      .chips li { padding: 5px 10px; border: 1px solid var(--line-strong); font-size: 13px; }
+      .journey figcaption { margin-top: 12px; font-size: 14px; color: var(--muted); }
+      .why { display: flex; flex-wrap: wrap; gap: 6px 8px; margin-top: 12px; }
+      .why li { padding: 6px 12px; border: 1px solid var(--ink); border-radius: 999px; font-size: 14px; }
+
+      /* Silos */
+      .brain-grid { display: grid; gap: 40px; margin-top: 44px; }
+      .fig-k { margin-bottom: 14px; font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; color: var(--night-muted); }
+      .fig-k-on { color: var(--orange); }
+      .silo-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      .silo-list li { display: grid; gap: 2px; padding: 14px 12px; border: 1px dashed #4a4642; transform: rotate(calc(var(--r) * 1.5deg)); }
+      .fig-cap { margin-top: 14px; font-size: 13px; color: var(--night-muted); }
+      .silo-list b { font-size: 16px; font-weight: 600; }
+      .silo-list span { font-size: 13px; color: var(--night-muted); }
+      .brain svg { display: block; width: 100%; max-width: 440px; height: auto; margin-inline: auto; overflow: visible; }
+      .b-line { stroke: var(--orange); stroke-width: 1.5; }
+      .b-core { fill: var(--orange); }
+      .b-core-t { fill: var(--night); font-size: 20px; font-weight: 700; letter-spacing: -.02em; }
+      .b-core-s { fill: var(--night); font-size: 11px; font-weight: 600; }
+      .b-node { fill: var(--night); stroke: var(--orange); stroke-width: 2; }
+      .b-label { fill: var(--night-text); font-size: 14px; font-weight: 600; font-family: inherit; }
+
+      /* Encaje */
+      .layers { margin-top: 32px; }
+      .ly-head, .ly-row { display: grid; grid-template-columns: minmax(0, 1.6fr) repeat(5, minmax(0, 1fr)); gap: 4px; align-items: stretch; }
+      .ly-head span { padding-bottom: 6px; font-size: 11px; font-weight: 650; color: var(--muted); text-align: center; overflow-wrap: anywhere; }
+      .ly-row { margin-top: 4px; }
+      .ly-k { display: grid; align-content: center; padding-right: 8px; }
+      .ly-k b { font-size: 13px; font-weight: 600; line-height: 1.25; }
+      .ly-k small { font-size: 11px; color: var(--muted); }
+      .ly-cell { min-height: 40px; border: 1px solid var(--line); }
+      .ly-cell.a { background: var(--ink); border-color: var(--ink); }
+      .ly-cell.b { background: var(--orange); border-color: var(--orange); }
+      .layers figcaption { display: flex; gap: 18px; margin-top: 12px; font-size: 13px; color: var(--muted); }
+      .lg::before { content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 8px; vertical-align: -1px; }
+      .lg-a::before { background: var(--ink); }
+      .lg-b::before { background: var(--orange); }
+      .two { display: grid; gap: 24px; margin-top: 40px; }
+      .two-k { font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+      .two-k-on { color: var(--orange-ink); }
+      .two-list { margin-top: 10px; border-top: 1px solid var(--ink); }
+      .two-list li { padding: 11px 0; border-bottom: 1px solid var(--line); font-size: clamp(16px, 1.5vw, 19px); letter-spacing: -.015em; }
+      .two-on { border-top-color: var(--orange); }
+
+      /* Ley */
+      .law { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin-top: 32px; background: var(--line-strong); border: 1px solid var(--line-strong); }
+      .law div { padding: 16px 14px; background: var(--panel); }
+      .law dt { font-size: clamp(28px, 4vw, 48px); font-weight: 500; letter-spacing: -.05em; line-height: 1; color: var(--orange-ink); }
+      .law dd { margin-top: 8px; font-size: 14px; color: var(--text); }
+
+      /* Cómo */
+      .steps { margin-top: 28px; border-top: 1px solid var(--line); }
+      .steps li { display: flex; gap: 14px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: clamp(18px, 1.7vw, 21px); letter-spacing: -.02em; }
+      .proof { margin-top: 40px; padding: 20px 18px; border: 1px solid var(--line-strong); }
+      .proof-k { font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+      .proof p + p { margin-top: 8px; color: var(--text); max-width: 34em; }
+      .proof a { display: inline-block; margin-top: 12px; font-weight: 600; color: var(--orange-ink); }
+
+      /* Cierre */
+      .closing { padding-block: 120px 128px; }
+      .cl-1 { font-size: clamp(30px, 4.4vw, 60px); font-weight: 500; letter-spacing: -.05em; color: var(--soft); }
+      .cl-big { margin-top: 8px; max-width: 11em; font-size: clamp(48px, 9.6vw, 140px); font-weight: 500; letter-spacing: -.065em; line-height: .96; }
+
+      /* CTA */
+      .cta { border-top: 1px solid var(--line); }
+      .cta-title { max-width: 14em; }
+      .cta-copy { margin-top: 20px; max-width: 32em; font-size: 18px; color: var(--muted); }
+      .cta-row { display: grid; gap: 36px; margin-top: 40px; }
+      .button { display: inline-flex; align-items: center; justify-content: space-between; gap: 28px; width: max-content; min-height: 56px; padding: 0 24px; background: var(--ink); color: var(--paper); font-size: 16px; font-weight: 600; transition: background-color .2s ease; }
+      .button:hover { background: var(--orange-ink); }
+      .signature { padding-top: 18px; border-top: 1px solid var(--line); max-width: 280px; }
+      .signature-name { font-size: 18px; font-weight: 650; letter-spacing: -.02em; }
+      .signature-role { font-size: 14px; color: var(--muted); }
+      .signature-site { display: inline-block; margin-top: 6px; font-size: 13px; color: var(--orange-ink); }
+
+      /* Pie y consentimiento */
+      .foot { border-top: 1px solid var(--line); }
+      .foot-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; padding-block: 26px 30px; font-size: 13px; color: var(--muted); }
+      .foot-brand { margin-right: auto; }
+      .foot a:hover { color: var(--ink); }
+      .consent { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 30; display: grid; gap: 12px; padding: 14px 16px; background: var(--night); color: var(--night-text); font-size: 13px; line-height: 1.5; border: 1px solid #3a3734; box-shadow: 0 10px 30px rgba(0, 0, 0, .18); }
+      .consent[hidden] { display: none; }
+      .consent a { text-decoration: underline; }
+      .consent-actions { display: flex; gap: 8px; justify-content: flex-end; }
+      .consent button { min-height: 38px; padding: 0 16px; border: 1px solid #3a3734; background: transparent; color: var(--night-text); font: inherit; cursor: pointer; }
+      .consent .consent-accept { background: var(--night-text); color: var(--night); border-color: var(--night-text); }
+
+      /* Movimiento */
+      .js [data-reveal] { opacity: 0; transform: translateY(10px); transition: opacity .7s ease var(--d, 0ms), transform .7s var(--ease) var(--d, 0ms); }
+      .js [data-reveal].is-in { opacity: 1; transform: none; }
+      .js .brain .b-line { stroke-dasharray: 140; stroke-dashoffset: 140; transition: stroke-dashoffset .7s var(--ease) calc(.3s + var(--i) * 120ms); }
+      .js .brain.is-in .b-line { stroke-dashoffset: 0; }
+      .js .layers .ly-cell.b { background: transparent; border-color: var(--line); transition: background-color .4s ease calc(.4s + var(--i) * 90ms), border-color .4s ease calc(.4s + var(--i) * 90ms); }
+      .js .layers.is-in .ly-cell.b { background: var(--orange); border-color: var(--orange); }
+
+      @media (min-width: 420px) {
+        .top-link { display: inline; }
+        .ly-head span { font-size: 12px; }
+      }
+      @media (min-width: 720px) {
+        :root { --gutter: 36px; }
+        .silo-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .two { grid-template-columns: 1fr 1fr; gap: 36px; }
+        .law { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        .ly-k b { font-size: 15px; }
+        .j-row li { font-size: 15px; }
+        .cta-row { grid-template-columns: auto 1fr; align-items: end; gap: 64px; }
+        .signature { justify-self: end; min-width: 260px; }
+        .consent { left: auto; right: 24px; bottom: 24px; max-width: 560px; grid-template-columns: 1fr auto; align-items: center; }
+      }
+      @media (min-width: 1000px) {
+        body { font-size: 18px; }
+        .top-inner { height: 72px; }
+        .hero { padding-top: 40px; padding-bottom: 116px; }
+        .hero-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 56px; margin-top: 52px; align-items: start; }
+        .section { padding-block: 128px; }
+        .split { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 48px; }
+        .brain-grid { grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+        .closing { padding-block: 180px 190px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+        .js .brain .b-line { stroke-dashoffset: 0; transition: none; }
+        .js .layers .ly-cell.b { background: var(--orange); border-color: var(--orange); transition: none; }
+        .top, .button, .top-cta { transition: none; }
+      }
+    </style>
+  </body>
+</html>
