@@ -2,36 +2,40 @@
 import { getPilares } from "@/data/navegacion";
 import { getArquitectura, getServiceGroups, ARQUITECTURA_TITLE, arquitecturaHubHref, SERVICE_HUB_PATH, hubCtaLabel } from "@/data/servicios";
 import { CONTACT, SOCIAL_PROFILES } from "@/data/identidad";
+import { SHELL, asShellLoc, shellHref } from "@/i18n/editorialShell";
 interface Props { languageLinks: Array<{ locale: string; href: string }> }
 const { languageLinks } = Astro.props;
-const pillars = getPilares("es");
+const locale = asShellLoc(Astro.currentLocale);
+const l = SHELL[locale];
+const h = (path = "") => shellHref(locale, path);
+const pillars = getPilares(locale);
 const integration = pillars.find(pillar => pillar.key === "integracion");
 const compliance = pillars.find(pillar => pillar.key === "cumplimiento");
 const columns = [
-  {title: "Soluciones", items: [
+  {title: l.solutions, items: [
     ...(integration ? [{label: integration.children[0].label, href: integration.href}] : []),
     ...(compliance ? compliance.children.map(({label, href}) => ({label, href})) : []),
-    {label: ARQUITECTURA_TITLE.es, href: arquitecturaHubHref("es")},
-    ...getArquitectura("es").map(({label,href}) => ({label,href})),
+    {label: ARQUITECTURA_TITLE[locale], href: arquitecturaHubHref(locale)},
+    ...getArquitectura(locale).map(({label,href}) => ({label,href})),
   ]},
-  {title: "Integraciones", items: (integration?.children ?? []).filter(item => item.href !== integration?.href && item.href.startsWith(integration?.href ?? "/es/integracion/"))},
-  {title: "Empresa", items: [
-    {label:"Casos",href:"/es/portfolio/"}, {label:"Sobre",href:"/es/sobre/"}, {label:"Metodología",href:"/es/metodologia/"},
-    {label:"Blog",href:"/es/blog/"}, {label:"Contacto",href:"/es/contact/"},
-    {label:"Comunidad",href:"https://www.skool.com/ia-operators-hub-9023/about"},
+  {title: l.integrations, items: (integration?.children ?? []).filter(item => item.href !== integration?.href && item.href.startsWith(integration?.href ?? h("integracion/")))},
+  {title: l.company, items: [
+    {label:l.cases,href:h("portfolio/")}, {label:l.about,href:h("sobre/")}, {label:l.methodology,href:h("metodologia/")},
+    {label:"Blog",href:h("blog/")}, {label:l.contact,href:h("contact/")},
+    {label:l.community,href:"https://www.skool.com/ia-operators-hub-9023/about"},
   ]},
-  {title:"Capacidades",items:[
-    ...getServiceGroups("es").filter(group=>group.key!=="arquitectura").flatMap(group=>group.items).map(({label,href})=>({label,href})),
-    {label:hubCtaLabel("es"),href:`/es/${SERVICE_HUB_PATH}`},
+  {title:l.capabilities,items:[
+    ...getServiceGroups(locale).filter(group=>group.key!=="arquitectura").flatMap(group=>group.items).map(({label,href})=>({label,href})),
+    {label:hubCtaLabel(locale),href:h(SERVICE_HUB_PATH)},
   ]},
 ];
 ---
 <footer class="ed-footer">
   <div class="ed-container">
-    <div class="ed-footer-top"><a class="ed-wordmark" href="/es/"><img src="/brand/ia-operators-logo-white.png" alt="IA Operators" width="453" height="82" loading="lazy" /></a><div><a href={`mailto:${CONTACT.email}`}>{CONTACT.email} <span aria-hidden="true">↗</span></a><a class="ed-footer-phone" href={CONTACT.whatsapp}>WhatsApp · {CONTACT.phoneDisplay}</a></div></div>
-    <nav class="ed-footer-grid" aria-label="Enlaces del sitio">{columns.map(column => <div><h2 class="ed-eyebrow">{column.title}</h2><ul>{column.items.map(item=><li><a href={item.href}>{item.label}</a></li>)}</ul></div>)}</nav>
+    <div class="ed-footer-top"><a class="ed-wordmark" href={h()}><img src="/brand/ia-operators-logo-white.png" alt="IA Operators" width="453" height="82" loading="lazy" /></a><div><a href={`mailto:${CONTACT.email}`}>{CONTACT.email} <span aria-hidden="true">↗</span></a><a class="ed-footer-phone" href={CONTACT.whatsapp}>WhatsApp · {CONTACT.phoneDisplay}</a></div></div>
+    <nav class="ed-footer-grid" aria-label={l.siteLinks}>{columns.map(column => <div><h2 class="ed-eyebrow">{column.title}</h2><ul>{column.items.map(item=><li><a href={item.href}>{item.label}</a></li>)}</ul></div>)}</nav>
     <div class="ed-footer-socials">{SOCIAL_PROFILES.map(profile=><a href={profile.href}>{profile.label} <span aria-hidden="true">↗</span></a>)}</div>
-    <div class="ed-footer-bottom"><span>© {new Date().getFullYear()} IA Operators</span><div><a href="/es/terminos-y-condiciones/">Términos y Condiciones</a><a href="/es/politica-de-privacidad/">Privacidad</a><button id="open-cookies" type="button">Cookies</button></div><nav class="ed-languages" aria-label="Idiomas del sitio">{languageLinks.map(link=><a href={link.href} lang={link.locale} aria-current={link.locale==="es"?"page":undefined}>{link.locale.toUpperCase()}</a>)}</nav><a href="#main-content">Volver arriba ↑</a></div>
+    <div class="ed-footer-bottom"><span>© {new Date().getFullYear()} IA Operators</span><div><a href={h("terminos-y-condiciones/")}>{l.terms}</a><a href={h("politica-de-privacidad/")}>{l.privacy}</a><button id="open-cookies" type="button">Cookies</button></div><nav class="ed-languages" aria-label={l.siteLanguages}>{languageLinks.map(link=><a href={link.href} lang={link.locale} aria-current={link.locale===locale?"page":undefined}>{link.locale.toUpperCase()}</a>)}</nav><a href="#main-content">{l.top}</a></div>
   </div>
 </footer>
 <script>

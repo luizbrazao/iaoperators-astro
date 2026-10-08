@@ -1,0 +1,42 @@
+{
+  "anchor": "projeto-destaque",
+  "eyebrow": "Engenharia de produto e tecnologia",
+  "title": "Conectamos sistemas.",
+  "titleRest": "Automatizamos operações.",
+  "description": "Projetamos e construímos a tecnologia que conecta suas ferramentas, automatiza o trabalho e aplica IA onde ela gera valor.",
+  "cta": "Vamos falar do seu projeto",
+  "projectsCta": "Ver projetos",
+  "signalTitle": "Da complexidade à operação",
+  "signalBody": "Integrações, automação e IA.",
+  "signalDetail": "Do diagnóstico à produção.",
+  "case": {
+    "sectionTitle": "Projeto em destaque",
+    "all": "Todos os cases",
+    "statement": "Antes de automatizar, um mapa completo.",
+    "context": "Radiografia do ecossistema tecnológico de uma rede de quatro hotéis.",
+    "documentTitle": "Um ecossistema. Suas conexões.",
+    "connections": [
+      [
+        "Reservas / PMS",
+        "Channel manager"
+      ],
+      [
+        "CRM / Hóspedes",
+        "Mapa operacional"
+      ],
+      [
+        "Finanças / ERP",
+        "Operações"
+      ]
+    ],
+    "legend": [
+      "Inventário",
+      "Dependências",
+      "Roadmap"
+    ],
+    "disclaimer": "Representação conceitual da entrega; não é uma captura de tela do sistema do cliente.",
+    "caption": "Auditoria + arquitetura tecnológica",
+    "description": "Sistemas, dependências e prioridades documentados antes de construir a próxima camada de tecnologia.",
+    "cta": "Ver o case completo"
+  }
+}

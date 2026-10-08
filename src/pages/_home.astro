@@ -27,11 +27,8 @@ type FaqItem = { q: string; a: string };
 
 const locale = getLocale(Astro.currentLocale);
 
-// Composición editorial exclusiva de ES; EN/PT conservan su contenido actual.
-// Los casos y sus URLs siguen usando la fuente de datos compartida.
-const featuredProject = locale === "es"
-  ? projects.find((project) => project.slugs.es === "radiografia-cadena-hotelera-menorca")
-  : undefined;
+// Oct/2026: la composición editorial pasa a los tres idiomas.
+const featuredProject = projects.find((project) => project.slugs.es === "radiografia-cadena-hotelera-menorca");
 
 // Fallback forte: nunca deixe dict virar undefined
 const dict =
@@ -132,8 +129,8 @@ const metaDescription = meta?.description ?? "";
 <BaseLayout title={metaTitle} description={metaDescription} jsonLd={jsonLd} editorial={Boolean(featuredProject)}>
   {featuredProject ? (
     <>
-      <PremiumHomeIntro project={featuredProject} />
-      <EditorialHomeContent posts={latestPosts} faq={faq} />
+      <PremiumHomeIntro project={featuredProject} locale={locale} />
+      <EditorialHomeContent posts={latestPosts} faq={faq} locale={locale} />
     </>
   ) : (
     <>

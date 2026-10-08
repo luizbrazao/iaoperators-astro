@@ -1,0 +1,91 @@
+{
+  "cases": {
+    "title": "More selected projects",
+    "chat": {
+      "label": "ChatPlug / WhatsApp + Altegio",
+      "message": "Do you have anything available tomorrow afternoon?",
+      "reply": "Here are the available times for your booking.",
+      "bookingLabel": "Altegio · Connected calendar",
+      "slots": "16:00 · 17:30 · 18:00",
+      "hint": "Pick a time",
+      "disclaimer": "Illustrative conversation",
+      "caption": "WhatsApp connected to real availability in Altegio."
+    },
+    "tour": {
+      "label": "Tourism / WhatsApp + n8n",
+      "documentLabel": "Booking engine",
+      "title": "Every variable in its place.",
+      "rows": [
+        [
+          "01 / Experience",
+          "Private tour"
+        ],
+        [
+          "02 / Boat",
+          "Subject to availability"
+        ],
+        [
+          "03 / Duration and guests",
+          "Booking details"
+        ]
+      ],
+      "result": "Price calculated with the business rules",
+      "disclaimer": "Illustrative outline of the process",
+      "caption": "Customer service and pricing connected to the variables of each experience."
+    }
+  },
+  "capabilities": {
+    "label": "02 / What we solve",
+    "title": "Your operation is complex. Your technology should make it easier to run.",
+    "body": "We connect ERP, POS, e-commerce, CRM and WhatsApp. We sort out the dependencies and build the integrations, agents and processes your company needs.",
+    "pillars": {
+      "integracion": {
+        "verb": "Connect",
+        "body": "Data that reaches its destination. Tools that work together. Fewer manual handoffs between teams."
+      },
+      "arquitectura": {
+        "verb": "Build",
+        "body": "A map of what you have, an order for what comes next, and the team that takes it to production."
+      }
+    },
+    "all": "All capabilities"
+  },
+  "method": {
+    "label": "03 / How we work",
+    "title": "From the first map to the system in production. With the same team.",
+    "steps": [
+      {
+        "title": "Understand.",
+        "body": "Applications, data, dependencies and points of failure. First, a reliable view of your operation."
+      },
+      {
+        "title": "Prioritize.",
+        "body": "What to connect, what to automate and what to build. Decisions based on impact, risk and effort."
+      },
+      {
+        "title": "Build.",
+        "body": "Integrations, automations and custom systems. Implementation, testing and go-live."
+      }
+    ]
+  },
+  "team": {
+    "label": "04 / Judgment and execution",
+    "title": "Architecture and implementation are part of the same work.",
+    "body": "IA Operators grew out of Luiz Brazão's experience connecting technology and operations. Understanding the problem and building the solution stay under the same technical direction.",
+    "cta": "Get to know IA Operators",
+    "excerpt": "Excerpt from the published testimonial",
+    "full": "Read the full testimonial"
+  },
+  "blog": {
+    "title": "05 / Ideas from practice",
+    "all": "Visit the blog"
+  },
+  "faq": {
+    "title": "Before we start."
+  },
+  "closing": {
+    "label": "Your next project",
+    "title": "Let's make your systems work as one.",
+    "cta": "Let's talk about your project"
+  }
+}

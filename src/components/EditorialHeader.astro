@@ -1,29 +1,32 @@
 ---
 import { getPilares } from "@/data/navegacion";
+import { SHELL, asShellLoc, shellHref } from "@/i18n/editorialShell";
 interface Props { languageLinks: Array<{ locale: string; href: string }> }
 const { languageLinks } = Astro.props;
+const locale = asShellLoc(Astro.currentLocale);
+const l = SHELL[locale];
 const links = [
-  ...getPilares("es").map(({label, href}) => ({label, href})),
-  {label: "Casos", href: "/es/portfolio/"},
-  {label: "Blog", href: "/es/blog/"},
+  ...getPilares(locale).map(({label, href}) => ({label, href})),
+  {label: l.cases, href: shellHref(locale, "portfolio/")},
+  {label: "Blog", href: shellHref(locale, "blog/")},
 ];
 ---
-<a class="ed-skip" href="#main-content">Saltar al contenido</a>
+<a class="ed-skip" href="#main-content">{l.skip}</a>
 <div class="ed-container">
   <header class="ed-header">
-    <a class="ed-wordmark" href="/es/" aria-label="IA Operators, inicio"><img src="/brand/ia-operators-logo.png" alt="" width="453" height="82" /></a>
-    <nav class="ed-desktop-nav" aria-label="Navegación principal">
+    <a class="ed-wordmark" href={shellHref(locale)} aria-label={l.homeAria}><img src="/brand/ia-operators-logo.png" alt="" width="453" height="82" /></a>
+    <nav class="ed-desktop-nav" aria-label={l.mainNav}>
       {links.map(link => <a href={link.href}>{link.label}</a>)}
-      <a class="ed-nav-contact" href="/es/contact/">¿Hablamos? <span aria-hidden="true">↗</span></a>
-      <div class="ed-languages" aria-label="Idiomas">{languageLinks.map(link => <a href={link.href} lang={link.locale} aria-current={link.locale === "es" ? "page" : undefined}>{link.locale.toUpperCase()}</a>)}</div>
+      <a class="ed-nav-contact" href={shellHref(locale, "contact/")}>{l.talk} <span aria-hidden="true">↗</span></a>
+      <div class="ed-languages" aria-label={l.languages}>{languageLinks.map(link => <a href={link.href} lang={link.locale} aria-current={link.locale === locale ? "page" : undefined}>{link.locale.toUpperCase()}</a>)}</div>
     </nav>
     <details class="ed-mobile-menu">
-      <summary>Menú <span aria-hidden="true">+</span></summary>
-      <nav aria-label="Navegación móvil">
+      <summary>{l.menu} <span aria-hidden="true">+</span></summary>
+      <nav aria-label={l.mobileNav}>
         {links.map(link => <a href={link.href}>{link.label}</a>)}
-        <a href="/es/servicios/">Todas las capacidades</a>
-        <a class="ed-nav-contact" href="/es/contact/">¿Hablamos? <span aria-hidden="true">↗</span></a>
-        <div class="ed-languages" aria-label="Idiomas">{languageLinks.map(link => <a href={link.href} lang={link.locale} aria-current={link.locale === "es" ? "page" : undefined}>{link.locale.toUpperCase()}</a>)}</div>
+        <a href={shellHref(locale, "servicios/")}>{l.allCapabilities}</a>
+        <a class="ed-nav-contact" href={shellHref(locale, "contact/")}>{l.talk} <span aria-hidden="true">↗</span></a>
+        <div class="ed-languages" aria-label={l.languages}>{languageLinks.map(link => <a href={link.href} lang={link.locale} aria-current={link.locale === locale ? "page" : undefined}>{link.locale.toUpperCase()}</a>)}</div>
       </nav>
     </details>
   </header>

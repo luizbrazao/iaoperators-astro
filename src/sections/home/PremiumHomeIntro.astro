@@ -2,12 +2,15 @@
 import type { Project } from "@/data/projects";
 import { createT } from "@/i18n/t";
 import SystemMapDocument from "@/components/editorial/SystemMapDocument.astro";
-import copy from "@/i18n/locales/es/homeIntro.json";
+import { getHomeIntro } from "@/i18n/editorialCopy";
+import { asShellLoc } from "@/i18n/editorialShell";
 
-interface Props { project: Project }
+interface Props { project: Project; locale?: string }
 const { project } = Astro.props;
-const t = await createT("es", { namespaces: ["projects"] });
-const href = `/es/portfolio/${project.slugs.es}/`;
+const locale = asShellLoc(Astro.props.locale);
+const copy = getHomeIntro(locale);
+const t = await createT(locale, { namespaces: ["projects"] });
+const href = `/${locale}/portfolio/${project.slugs[locale]}/`;
 const metric = project.metrics?.[0];
 ---
 
@@ -26,15 +29,15 @@ const metric = project.metrics?.[0];
         <div class="hero-description">
           <p>{copy.description}</p>
           <div class="hero-actions">
-            <a class="primary-cta" href="/es/contact/">{copy.cta}<span class="arrow" aria-hidden="true">↗</span></a>
-            <a class="text-cta" href="#proyecto-destacado">{copy.projectsCta}<span aria-hidden="true">↓</span></a>
+            <a class="primary-cta" href={`/${locale}/contact/`}>{copy.cta}<span class="arrow" aria-hidden="true">↗</span></a>
+            <a class="text-cta" href={`#${copy.anchor}`}>{copy.projectsCta}<span aria-hidden="true">↓</span></a>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="featured-project" id="proyecto-destacado" aria-labelledby="featured-heading">
-      <div class="project-heading"><h2 id="featured-heading"><span class="eyebrow" aria-hidden="true">01 /</span> {copy.case.sectionTitle}</h2><a href="/es/portfolio/">{copy.case.all}<span class="arrow" aria-hidden="true">↗</span></a></div>
+    <section class="featured-project" id={copy.anchor} aria-labelledby="featured-heading">
+      <div class="project-heading"><h2 id="featured-heading"><span class="eyebrow" aria-hidden="true">01 /</span> {copy.case.sectionTitle}</h2><a href={`/${locale}/portfolio/`}>{copy.case.all}<span class="arrow" aria-hidden="true">↗</span></a></div>
       <article>
         <a class="case-link" href={href} aria-labelledby="case-title" aria-describedby="case-description">
           <div class="case-visual">
@@ -44,7 +47,7 @@ const metric = project.metrics?.[0];
               <p class="case-context">{copy.case.context}</p>
               {metric && <div class="case-metric"><p class="metric-value">{metric.value}</p><p class="eyebrow">{t(metric.labelKey)}</p></div>}
             </div>
-            <SystemMapDocument class="case-document" />
+            <SystemMapDocument class="case-document" locale={locale} />
           </div>
           <div class="case-caption">
             <div><h3 id="case-title">{t(project.titleKey)}</h3><p class="eyebrow">{copy.case.caption}</p></div>

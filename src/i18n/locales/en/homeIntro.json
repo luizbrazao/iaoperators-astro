@@ -1,0 +1,42 @@
+{
+  "anchor": "featured-project-section",
+  "eyebrow": "Product and technology engineering",
+  "title": "We connect systems.",
+  "titleRest": "We automate operations.",
+  "description": "We design and build the technology that connects your tools, automates the work and applies AI where it creates value.",
+  "cta": "Let's talk about your project",
+  "projectsCta": "See projects",
+  "signalTitle": "From complexity to operations",
+  "signalBody": "Integrations, automation and AI.",
+  "signalDetail": "From diagnosis to production.",
+  "case": {
+    "sectionTitle": "Featured project",
+    "all": "All cases",
+    "statement": "Before automating, a complete map.",
+    "context": "An X-ray of the technology ecosystem of a four-hotel chain.",
+    "documentTitle": "One ecosystem. Its connections.",
+    "connections": [
+      [
+        "Bookings / PMS",
+        "Channel manager"
+      ],
+      [
+        "CRM / Guests",
+        "Operating map"
+      ],
+      [
+        "Finance / ERP",
+        "Operations"
+      ]
+    ],
+    "legend": [
+      "Inventory",
+      "Dependencies",
+      "Roadmap"
+    ],
+    "disclaimer": "Conceptual representation of the deliverable; not a screenshot of the client's system.",
+    "caption": "Audit + technology architecture",
+    "description": "Systems, dependencies and priorities documented before building the next layer of technology.",
+    "cta": "See the full case"
+  }
+}

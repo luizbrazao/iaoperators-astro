@@ -6,10 +6,11 @@
 // El componente define el documento; quien lo usa decide la caja exterior
 // (ancho, márgenes, hover) a través de `class`. Por eso el margen va en
 // :where(), sin especificidad, para que el padre pueda sobrescribirlo.
-import intro from "@/i18n/locales/es/homeIntro.json";
+import { getHomeIntro } from "@/i18n/editorialCopy";
 
-interface Props { class?: string }
-const { class: className } = Astro.props;
+interface Props { class?: string; locale?: string }
+const { class: className, locale = "es" } = Astro.props;
+const intro = getHomeIntro(locale);
 ---
 <figure class:list={["sm-doc", className]}>
   <div class="sm-head sm-eyebrow"><span>IA Operators</span><span aria-hidden="true">RD / 01</span></div>

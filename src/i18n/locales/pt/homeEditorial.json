@@ -1,0 +1,91 @@
+{
+  "cases": {
+    "title": "Mais projetos selecionados",
+    "chat": {
+      "label": "ChatPlug / WhatsApp + Altegio",
+      "message": "Vocês têm horário amanhã à tarde?",
+      "reply": "Estes são os horários disponíveis para a sua reserva.",
+      "bookingLabel": "Altegio · Agenda conectada",
+      "slots": "16:00 · 17:30 · 18:00",
+      "hint": "Escolha um horário",
+      "disclaimer": "Conversa ilustrativa",
+      "caption": "WhatsApp conectado à disponibilidade real no Altegio."
+    },
+    "tour": {
+      "label": "Turismo / WhatsApp + n8n",
+      "documentLabel": "Motor de reservas",
+      "title": "Cada variável no seu lugar.",
+      "rows": [
+        [
+          "01 / Experiência",
+          "Passeio privado"
+        ],
+        [
+          "02 / Embarcação",
+          "Conforme disponibilidade"
+        ],
+        [
+          "03 / Duração e pessoas",
+          "Dados da reserva"
+        ]
+      ],
+      "result": "Preço calculado com as regras do negócio",
+      "disclaimer": "Esquema ilustrativo do processo",
+      "caption": "Atendimento e cálculo conectados às variáveis de cada experiência."
+    }
+  },
+  "capabilities": {
+    "label": "02 / O que resolvemos",
+    "title": "Sua operação é complexa. Sua tecnologia deveria facilitar a gestão.",
+    "body": "Conectamos ERP, PDV, e-commerce, CRM e WhatsApp. Organizamos as dependências e construímos as integrações, os agentes e os processos de que sua empresa precisa.",
+    "pillars": {
+      "integracion": {
+        "verb": "Conectar",
+        "body": "Dados que chegam ao destino. Ferramentas que trabalham juntas. Menos processos manuais entre equipes."
+      },
+      "arquitectura": {
+        "verb": "Construir",
+        "body": "Um mapa do que você tem, uma ordem para o que vem depois e a equipe que leva tudo para produção."
+      }
+    },
+    "all": "Todas as capacidades"
+  },
+  "method": {
+    "label": "03 / Como trabalhamos",
+    "title": "Do primeiro mapa ao sistema em produção. Com a mesma equipe.",
+    "steps": [
+      {
+        "title": "Entender.",
+        "body": "Aplicações, dados, dependências e pontos de falha. Primeiro, uma visão confiável da sua operação."
+      },
+      {
+        "title": "Priorizar.",
+        "body": "O que conectar, o que automatizar e o que construir. Decisões por impacto, risco e esforço."
+      },
+      {
+        "title": "Construir.",
+        "body": "Integrações, automações e sistemas sob medida. Implementação, testes e entrada em produção."
+      }
+    ]
+  },
+  "team": {
+    "label": "04 / Critério e execução",
+    "title": "Arquitetura e implementação fazem parte do mesmo trabalho.",
+    "body": "A IA Operators nasce da experiência de Luiz Brazão conectando tecnologia e operações. Entender o problema e construir a solução seguem sob a mesma direção técnica.",
+    "cta": "Conheça a IA Operators",
+    "excerpt": "Trecho do depoimento publicado",
+    "full": "Ler o depoimento completo"
+  },
+  "blog": {
+    "title": "05 / Ideias da prática",
+    "all": "Ver o blog"
+  },
+  "faq": {
+    "title": "Antes de começar."
+  },
+  "closing": {
+    "label": "Seu próximo projeto",
+    "title": "Vamos fazer seus sistemas trabalharem como um só.",
+    "cta": "Vamos falar do seu projeto"
+  }
+}

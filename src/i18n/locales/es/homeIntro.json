@@ -14,11 +14,29 @@
     "statement": "Antes de automatizar, un mapa completo.",
     "context": "Radiografía del ecosistema tecnológico de una cadena de cuatro hoteles.",
     "documentTitle": "Un ecosistema. Sus conexiones.",
-    "connections": [["Reservas / PMS", "Channel manager"], ["CRM / Huéspedes", "Mapa operativo"], ["Finanzas / ERP", "Operaciones"]],
-    "legend": ["Inventario", "Dependencias", "Roadmap"],
+    "connections": [
+      [
+        "Reservas / PMS",
+        "Channel manager"
+      ],
+      [
+        "CRM / Huéspedes",
+        "Mapa operativo"
+      ],
+      [
+        "Finanzas / ERP",
+        "Operaciones"
+      ]
+    ],
+    "legend": [
+      "Inventario",
+      "Dependencias",
+      "Roadmap"
+    ],
     "disclaimer": "Representación conceptual del entregable; no es una captura del sistema del cliente.",
     "caption": "Auditoría + arquitectura tecnológica",
     "description": "Sistemas, dependencias y prioridades documentados antes de construir la siguiente capa de tecnología.",
     "cta": "Ver el caso completo"
-  }
+  },
+  "anchor": "proyecto-destacado"
 }
