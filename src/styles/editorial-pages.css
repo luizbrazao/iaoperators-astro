@@ -78,6 +78,8 @@
 
 /* Frentes de cumplimiento (/es/cumplimiento/). */
 .editorial-shell .pg-fronts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; padding-block: 84px; }
+/* Hub de cumplimiento con tres frentes (oct/2026): tres columnas solo con ancho de sobra. */
+.editorial-shell .pg-fronts-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .editorial-shell .pg-front { display: flex; flex-direction: column; background: #e4dfd3; padding: 44px; min-width: 0; }
 .editorial-shell .pg-front-dark { background: #252923; color: var(--ed-paper); }
 .editorial-shell .pg-front-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
@@ -400,3 +402,6 @@
 .editorial-shell .pg-timeline li.pg-timeline-announced { border-top-style: dashed; }
 @media (max-width: 1050px) { .editorial-shell .pg-timeline.pg-timeline-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 720px) { .editorial-shell .pg-timeline.pg-timeline-4 { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 1200px) {
+  .editorial-shell .pg-fronts-3 { grid-template-columns: 1fr; }
+}

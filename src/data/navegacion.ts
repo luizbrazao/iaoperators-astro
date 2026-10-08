@@ -193,6 +193,11 @@ export function getPilares(locale: string): NavPilar[] {
           href: `${CUMPLIMIENTO_BASE}ley-atencion-al-cliente/`,
           desc: "Ley 10/2025 · plazo 28/12/2026",
         },
+        {
+          label: "Factura electrónica",
+          href: `${CUMPLIMIENTO_BASE}factura-electronica/`,
+          desc: "B2B obligatoria · octubre de 2027 y 2028",
+        },
       ],
     });
   }

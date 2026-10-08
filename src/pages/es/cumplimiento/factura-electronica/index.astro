@@ -1,0 +1,232 @@
+---
+// Factura electrónica obligatoria entre empresas (Ley 18/2022 «Crea y Crece»,
+// RD 238/2026, Orden HAC/1028/2026). ES-only: la obligación es española.
+// Keyword primaria: "factura electrónica obligatoria" (Keyword Planner oct/2026:
+// 1 mil–10 mil/mes). Secundarias: factura electrónica b2b, ley crea y crece
+// factura electrónica, solución pública de facturación electrónica.
+//
+// Regla de esta página: NINGUNA fecha ni requisito se escribe a mano. Todo sale de
+// src/data/factura-electronica.ts, donde están las fuentes primarias verificadas.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { FE_NORMA, FE_HITOS, FE_REQUISITOS, FE_FAQ } from "@/data/factura-electronica";
+import { DISCLAIMER } from "@/data/verifactu";
+import { ORG_REF } from "@/data/identidad";
+import copy from "@/i18n/locales/es/pagesEditorial.json";
+import "@/styles/editorial-pages.css";
+
+const L = copy.verifactu;
+const locale = "es";
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(`/${locale}/cumplimiento/factura-electronica/`, site).toString();
+const hubHref = `/${locale}/cumplimiento/`;
+const verifactuHref = `/${locale}/cumplimiento/verifactu/`;
+const contactHref = `/${locale}/contact/`;
+
+const meta = {
+  title: "Factura electrónica obligatoria: fechas e integración | IA Operators",
+  description: `Factura electrónica obligatoria entre empresas: ${FE_NORMA.fechaGrandesLegible} si superas 8 M€ y ${FE_NORMA.fechaRestoLegible} el resto. Formatos y cómo integrarla en tu ERP.`,
+};
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${pageUrl}#service`,
+    name: "Integración de la factura electrónica obligatoria B2B",
+    serviceType: "Integración de factura electrónica con ERP, TPV y e-commerce",
+    provider: ORG_REF,
+    areaServed: "ES",
+    description: meta.description,
+    url: pageUrl,
+    inLanguage: "es-ES",
+    about: {
+      "@type": "Legislation",
+      name: FE_NORMA.rd,
+      legislationIdentifier: FE_NORMA.rdBoeId,
+      legislationJurisdiction: "ES",
+      url: FE_NORMA.rdUrl,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: new URL(`/${locale}/`, site).toString() },
+      { "@type": "ListItem", position: 2, name: "Cumplimiento normativo", item: new URL(hubHref, site).toString() },
+      { "@type": "ListItem", position: 3, name: "Factura electrónica obligatoria", item: pageUrl },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FE_FAQ.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  jsonLd={jsonLd}
+  editorial
+>
+  <div class="ed-container">
+    <header class="pg-hero pg-hero-compact">
+      <nav class="pf-crumbs ed-eyebrow" aria-label={copy.breadcrumb.label}>
+        <ol>
+          <li><a href="/es/">{copy.breadcrumb.home}</a></li>
+          <li><a href={hubHref}>{L.cumplimiento}</a></li>
+          <li><span aria-current="page">Factura electrónica</span></li>
+        </ol>
+      </nav>
+      <h1>Factura electrónica obligatoria: <span>intégrala en el sistema que ya tienes</span></h1>
+      <div class="pg-hero-bottom">
+        <div class="pg-countdown">
+          <p class="ed-eyebrow">Ley «Crea y Crece» · plazos en marcha desde el {FE_NORMA.ordenVigorLegible}</p>
+          <p class="pg-countdown-value">
+            <strong>2027</strong>
+            <span>octubre: obligatoria si facturas<br />más de 8 millones</span>
+          </p>
+        </div>
+        <p class="pg-lead pg-lead-strong">
+          Las facturas entre empresas dejan de ser un PDF. Pasan a ser un mensaje estructurado
+          que se emite, se recibe y se sigue hasta el pago. No hace falta cambiar de programa:
+          hace falta conectar el que tienes.
+        </p>
+      </div>
+    </header>
+
+    <section class="pg-section" aria-labelledby="fechas-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.calendario}</p>
+        <h2 id="fechas-title">Cuándo es obligatoria la factura electrónica</h2>
+      </div>
+      <ol class="pg-timeline">
+        {FE_HITOS.map((h) => (
+          <li class:list={{ "pg-timeline-past": h.pasado }}>
+            <p class="pg-timeline-date">{h.fecha}</p>
+            <p class="ed-eyebrow">{h.pasado ? "Ya en vigor" : "Fecha fijada"}</p>
+            <h3>{h.quien}</h3>
+            <p>{h.que}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="pg-source">
+        Plazos del{" "}
+        <a href={FE_NORMA.rdUrl} rel="noopener">{FE_NORMA.rd}</a>, contados desde la{" "}
+        <a href={FE_NORMA.ordenUrl} rel="noopener">{FE_NORMA.orden}</a>. Fechas confirmadas por la{" "}
+        <a href={FE_NORMA.aeatUrl} rel="noopener">Agencia Tributaria</a>.
+      </p>
+    </section>
+
+    <section class="pg-section" aria-labelledby="quien-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">A quién aplica</p>
+        <div>
+          <h2 id="quien-title">Quién está obligado</h2>
+          <div class="pg-prose">
+            <p>
+              Todo empresario o profesional, autónomos incluidos, cuando factura a otro empresario o
+              profesional establecido en España. La fecha depende de si su volumen de operaciones
+              supera los 8 millones de euros.
+            </p>
+            <p>
+              Quedan fuera las facturas a particulares y las facturas simplificadas, salvo las
+              simplificadas cualificadas. La obligación es emitir y también recibir: tus proveedores
+              te enviarán sus facturas por la misma vía.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-section" aria-labelledby="sistema-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.arquitectura}</p>
+        <div>
+          <h2 id="sistema-title">Qué exige la factura electrónica a tus sistemas</h2>
+          <div class="pg-prose">
+            <p>
+              Cada requisito del reglamento es una pieza de integración. Esto es lo que hay que
+              construir sobre un ERP, TPV o e-commerce que ya funciona.
+            </p>
+          </div>
+        </div>
+      </div>
+      <ol class="pg-patterns pg-obligations">
+        {FE_REQUISITOS.map((r, idx) => (
+          <li>
+            <span class="ed-eyebrow">{String(idx + 1).padStart(2, "0")}</span>
+            <div class="pg-pattern-main">
+              <p class="ed-eyebrow">Lo que exige la norma · {r.articulo}</p>
+              <p class="pg-obligation-law">{r.norma}</p>
+            </div>
+            <div class="pg-pattern-risk">
+              <p class="ed-eyebrow">Lo que hay que construir</p>
+              <p class="pg-obligation-system">{r.sistema}</p>
+              <p class="pg-obligation-risk">{r.trampa}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="pg-section" aria-labelledby="verifactu-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Un solo proyecto</p>
+        <div>
+          <h2 id="verifactu-title">Factura electrónica y Verifactu</h2>
+          <div class="pg-prose">
+            <p>
+              Las dos obligaciones caen sobre el mismo código: el que emite tus facturas. Hacienda
+              anunció el 5 de octubre de 2026 que quiere aplazar Verifactu a octubre de 2028 para
+              que coincida con la factura electrónica de quienes facturan hasta 8 millones. Ese
+              aplazamiento aún no está en el BOE.
+            </p>
+            <p>
+              Si tu sistema tiene que adaptarse a las dos, lo razonable es diseñar un único flujo de
+              emisión que cumpla ambas, en lugar de tocar el mismo código dos veces.
+            </p>
+          </div>
+          <ul class="pg-linklist">
+            <li><a href={verifactuHref}>Verifactu sin cambiar de software <span class="ed-arrow" aria-hidden="true">→</span></a></li>
+            <li><a href={`${verifactuHref}plazos/`}>Plazos de Verifactu y el aplazamiento anunciado <span class="ed-arrow" aria-hidden="true">→</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-section pg-faq ed-faq" aria-labelledby="faq-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{L.faq}</p>
+        <div>
+          <h2 id="faq-title">Preguntas frecuentes</h2>
+          <div class="pg-faq-list">
+            {FE_FAQ.map((item) => <details><summary>{item.q}</summary><p>{item.a}</p></details>)}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="ed-closing" aria-labelledby="fe-closing-title">
+    <div class="ed-container">
+      <p class="ed-eyebrow">{copy.closingLabel}</p>
+      <h2 id="fe-closing-title" class="pg-closing-title">¿Tu ERP está listo para emitir y recibir?</h2>
+      <p class="pg-closing-copy">
+        En una llamada corta revisamos qué datos guarda tu sistema, qué canal te conviene y si
+        tiene sentido resolverlo junto con Verifactu.
+      </p>
+      <a class="ed-button" href={contactHref}>Hablar con un especialista<span class="ed-arrow" aria-hidden="true">↗</span></a>
+      <p class="pg-disclaimer">{DISCLAIMER}</p>
+    </div>
+  </section>
+</BaseLayout>

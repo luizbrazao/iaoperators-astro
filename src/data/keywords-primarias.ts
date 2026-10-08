@@ -118,6 +118,23 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     estimada: true,
   },
   {
+    // Creada 09/oct/2026, cuando la Orden HAC/1028/2026 fijó las fechas (6/10/2027
+    // y 6/10/2028). SERP del head: AEAT, prensa, CaixaBank y vendors de software
+    // (Contasimple, Cegid, Seres) — informativa. La página responde fechas y
+    // obligaciones y vende la integración, no un programa de facturación.
+    path: "cumplimiento/factura-electronica/",
+    locales: ["es"],
+    silo: "cumplimiento",
+    primaria: "factura electrónica obligatoria",
+    secundarias: [
+      "factura electrónica b2b",
+      "ley crea y crece factura electrónica",
+      "solución pública de facturación electrónica",
+      "integrar factura electrónica erp",
+    ],
+    faixa: "d",
+  },
+  {
     path: "cumplimiento/ley-atencion-al-cliente/",
     locales: ["es"],
     silo: "cumplimiento",

@@ -1,10 +1,11 @@
 ---
-// Hub del silo regulatorio. Se crea ahora, con dos pilares: con uno solo habría
+// Hub del silo regulatorio (tres frentes desde oct/2026). Se creó con dos pilares: con uno solo habría
 // sido contenido delgado. ES-only, como todo el silo.
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { LEY } from "@/data/sectores-sac";
 import { NORMA, ANUNCIO } from "@/data/verifactu";
+import { FE_NORMA } from "@/data/factura-electronica";
 import { getPilares } from "@/data/navegacion";
 import copy from "@/i18n/locales/es/pagesEditorial.json";
 import "@/styles/editorial-pages.css";
@@ -56,12 +57,27 @@ const frentes = [
     cta: "Ver Verifactu",
     extra: null,
   },
+  {
+    href: `/${locale}/cumplimiento/factura-electronica/`,
+    badge: "Factura electrónica",
+    title: "Factura electrónica obligatoria entre empresas",
+    plazos: [
+      { fecha: FE_NORMA.fechaGrandesLegible, label: "volumen de operaciones superior a 8 M€" },
+      { fecha: FE_NORMA.fechaRestoLegible, label: "resto de empresas y autónomos" },
+    ],
+    quien:
+      "Empresarios y profesionales, autónomos incluidos, cuando facturan a otro empresario o profesional establecido en España. Quedan fuera las facturas a particulares y las simplificadas no cualificadas.",
+    que:
+      "Facturas estructuradas según el modelo EN 16931, envío por la solución pública de la AEAT o por una plataforma privada, recepción de facturas de proveedores y comunicación de los estados de aceptación y pago.",
+    cta: "Ver factura electrónica",
+    extra: null,
+  },
 ];
 
 const meta = {
   title: "Cumplimiento normativo: Ley 10/2025 y Verifactu | IA Operators",
   description:
-    "Implementación técnica para Ley 10/2025 y RRSIF/VERI*FACTU: atención a la clientela y sistemas de facturación. Sistemas y evidencia, no informes.",
+    "Implementación técnica para la Ley 10/2025, RRSIF/VERI*FACTU y la factura electrónica obligatoria: atención a la clientela y facturación. Sistemas y evidencia, no informes.",
 };
 
 const jsonLd = [
@@ -119,7 +135,7 @@ const jsonLd = [
       <div class="pg-hero-bottom">
         <p class="ed-eyebrow">{L.pillar}{pillar?.tagline ? ` · ${pillar.tagline}` : ""}</p>
         <p class="pg-lead">
-          Dos frentes regulatorios con calendario de adaptación. Traducimos los requisitos
+          Tres frentes regulatorios con calendario de adaptación. Traducimos los requisitos
           aplicables a sistemas, flujos, trazabilidad y evidencia técnica para que la empresa
           pueda operar y demostrar lo implementado.
         </p>
@@ -147,7 +163,7 @@ const jsonLd = [
       </div>
     </section>
 
-    <div class="pg-fronts" role="group" aria-label={L.frentes}>
+    <div class="pg-fronts pg-fronts-3" role="group" aria-label={L.frentes}>
       {frentes.map((f, index) => (
         <article class:list={["pg-front", { "pg-front-dark": index === 0 }]} aria-labelledby={`frente-${index}`}>
           <div class="pg-front-head">
