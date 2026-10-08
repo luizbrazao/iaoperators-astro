@@ -1,7 +1,8 @@
 {
     "badge": "Blog",
-    "title": "Blog",
-    "description": "Welcome to the tech corner where AI, Automation, and the wonders of Low Code join forces. 🌟 Here you get daily golden nuggets, carefully crafted with love and precision by Laura, our trusted AI agent. Yes, she’s a robot — but she’s got more spark than 90% of humans. 🤖✨",
+    "title": "How a company's systems work from the inside",
+    "description": "Analysis of systems integration, architecture, automation, AI and compliance, for the people who decide what to build, connect or change.",
+    "intro": "We write about what we find inside companies that already run: an ERP that doesn't talk to the CRM, processes that depend on a spreadsheet, systems that have been in production for years and regulations with a deadline that force you to touch them. No hype, and with the level of detail needed to understand the problem and decide what to do about it.",
     "readMore": "Read more →",
     "empty": "No articles found in this category.",
     "viewAll": "View all articles"

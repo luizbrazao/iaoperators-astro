@@ -1,7 +1,8 @@
 {
     "badge": "Blog",
-    "title": "Blog",
-    "description": "Bem-vindo ao cantinho tech onde IA, Automação e as maravilhas do Low Code andam de mãos dadas. 🌟 Aqui você recebe pepitas de ouro diariamente, preparadas com carinho e precisão pela Laura, nossa agente de IA de confiança. Sim, ela é um robô — mas tem mais personalidade do que 90% dos humanos. 🤖✨",
+    "title": "Como funcionam por dentro os sistemas de uma empresa",
+    "description": "Análises sobre integração de sistemas, arquitetura, automação, IA e compliance, para quem decide o que construir, conectar ou mudar.",
+    "intro": "Escrevemos sobre o que encontramos dentro de empresas que já funcionam: um ERP que não conversa com o CRM, processos que dependem de uma planilha, sistemas que estão há anos em produção e normas com prazo que obrigam a mexer neles. Sem hype e com o nível de detalhe necessário para entender o problema e decidir o que fazer com ele.",
     "readMore": "Ler mais →",
     "empty": "Nenhum artigo encontrado nesta categoria.",
     "viewAll": "Ver todos os artigos"
