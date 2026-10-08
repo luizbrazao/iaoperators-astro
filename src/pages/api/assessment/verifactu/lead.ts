@@ -22,6 +22,11 @@ const BRAND: AssessmentBrand = {
   cabecera: "Verifactu · Informe de cumplimiento",
   origen:
     "Resultado generado por reglas deterministas sobre el Real Decreto 1007/2023 y su calendario vigente",
+  // Antes el informe de Verifactu mostraba el plazo de la Ley 10/2025 (28/12/2026).
+  // Oct/2026: fechas vigentes + aplazamiento anunciado, sin cuenta atrás.
+  asuntoObligado: () => "Tu informe de Verifactu: qué le falta a tu sistema",
+  plazoHtml: () =>
+    'Fechas vigentes: <strong style="color:#111827;">1 de enero de 2027</strong> (Impuesto sobre Sociedades) y <strong style="color:#111827;">1 de julio de 2027</strong> (resto). Hacienda anunció el 5 de octubre de 2026 su aplazamiento a <strong style="color:#111827;">octubre de 2028</strong>, pendiente de publicación en el BOE.',
 };
 
 // Rate limit best-effort en memoria, mismo patrón que /api/contact.ts. Este

@@ -129,6 +129,10 @@ export interface AssessmentBrand {
   cabecera: string;
   /** Frase de origen del resultado en el pie. */
   origen: string;
+  /** Línea de plazo del informe (HTML ya escapado). Sin ella, la de la Ley 10/2025. */
+  plazoHtml?: (diasRestantes: number) => string;
+  /** Asunto cuando el resultado es "obligado". Sin él, el de la Ley 10/2025. */
+  asuntoObligado?: (diasRestantes: number) => string;
 }
 
 export const DEFAULT_BRAND: AssessmentBrand = {
@@ -148,7 +152,9 @@ export function buildProspectEmail(result: AssessmentResult, brand: AssessmentBr
   const subject =
     result.obligado === "no"
       ? `Tu resultado del test de ${brand.norma}`
-      : `Tu informe de cumplimiento — quedan ${result.diasRestantes} días`;
+      : brand.asuntoObligado
+        ? brand.asuntoObligado(result.diasRestantes)
+        : `Tu informe de cumplimiento — quedan ${result.diasRestantes} días`;
 
   const html = `<!doctype html>
 <html lang="es"><body style="margin:0;padding:0;background:#f6f7f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
@@ -170,8 +176,10 @@ export function buildProspectEmail(result: AssessmentResult, brand: AssessmentBr
       <div style="background:#f9fafb;border-radius:12px;padding:16px;margin-bottom:28px;">
         <div style="color:#6b7280;font-size:13px;">
           Sector declarado: <strong style="color:#111827;">${escapeHtml(result.sectorLabel)}</strong><br />
-          Plazo de adaptación: <strong style="color:#111827;">28 de diciembre de 2026</strong>
-          (quedan ${result.diasRestantes} días)
+          ${brand.plazoHtml
+            ? brand.plazoHtml(result.diasRestantes)
+            : `Plazo de adaptación: <strong style="color:#111827;">28 de diciembre de 2026</strong>
+          (quedan ${result.diasRestantes} días)`}
         </div>
       </div>
 

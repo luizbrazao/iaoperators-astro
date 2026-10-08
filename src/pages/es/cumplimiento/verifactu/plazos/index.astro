@@ -8,7 +8,7 @@
 // en src/data/verifactu.ts, que es donde están las fuentes verificadas.
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { NORMA, DISCLAIMER, EXCLUSIONES } from "@/data/verifactu";
+import { NORMA, DISCLAIMER, EXCLUSIONES, ANUNCIO, FACTURA_ELECTRONICA } from "@/data/verifactu";
 import copy from "@/i18n/locales/es/pagesEditorial.json";
 import "@/styles/editorial-pages.css";
 
@@ -24,9 +24,6 @@ const pillarUrl = new URL(base, site).toString();
 const pageUrl = new URL(`${base}plazos/`, site).toString();
 const contactHref = `/${locale}/contact/`;
 
-const dias = (iso: string) =>
-  Math.max(0, Math.ceil((new Date(`${iso}T00:00:00+01:00`).getTime() - Date.now()) / 86_400_000));
-
 const hitos = [
   {
     fecha: NORMA.fechaFabricantesLegible,
@@ -39,7 +36,7 @@ const hitos = [
     fecha: NORMA.fechaSociedadesLegible,
     iso: NORMA.fechaSociedades,
     quien: "Contribuyentes del Impuesto sobre Sociedades",
-    que: "Sociedades mercantiles y demás sujetos pasivos del Impuesto sobre Sociedades. Si tu empresa es una S.L. o una S.A., esta es tu fecha.",
+    que: "Sociedades mercantiles y demás sujetos pasivos del Impuesto sobre Sociedades. Si tu empresa es una S.L. o una S.A., esta es tu fecha vigente.",
     pasado: false,
   },
   {
@@ -49,25 +46,33 @@ const hitos = [
     que: "Autónomos y demás contribuyentes que no tributan por el Impuesto sobre Sociedades. Seis meses más de margen, no una exención.",
     pasado: false,
   },
+  {
+    fecha: ANUNCIO.nuevaFechaLegible,
+    iso: "",
+    quien: "Todos los obligados (anunciado)",
+    que: `Hacienda anunció el ${ANUNCIO.fechaLegible} que aplaza las obligaciones pendientes hasta ${ANUNCIO.nuevaFechaLegible}, para hacerlas coincidir con la factura electrónica obligatoria. Hasta que se publique en el BOE, las fechas de arriba siguen vigentes.`,
+    pasado: false,
+    anunciado: true,
+  },
 ];
 
 const meta = {
-  title: "¿Cuándo es obligatorio Verifactu? Plazos de 2027 | IA Operators",
-  description: `Verifactu es obligatorio el ${NORMA.fechaSociedadesLegible} para contribuyentes del Impuesto sobre Sociedades y el ${NORMA.fechaRestoLegible} para el resto, incluidos autónomos. Quién queda excluido y qué hacer con el margen que queda.`,
+  title: "¿Cuándo es obligatorio Verifactu? Fechas y aplazamiento a 2028 | IA Operators",
+  description: `Fechas vigentes de Verifactu (${NORMA.fechaSociedadesLegible} y ${NORMA.fechaRestoLegible}), el aplazamiento a ${ANUNCIO.nuevaFechaLegible} anunciado por Hacienda y pendiente del BOE, y a quién no le aplica.`,
 };
 
 const faq = [
   {
     q: "¿Cuándo es obligatorio Verifactu exactamente?",
-    a: `El ${NORMA.fechaSociedadesLegible} para los contribuyentes del Impuesto sobre Sociedades y el ${NORMA.fechaRestoLegible} para el resto de obligados tributarios, autónomos incluidos. Las fechas vigentes son las que fijó el ${NORMA.aplazamiento}.`,
+    a: `Hoy, legalmente, el ${NORMA.fechaSociedadesLegible} para los contribuyentes del Impuesto sobre Sociedades y el ${NORMA.fechaRestoLegible} para el resto de obligados tributarios, autónomos incluidos, según el ${NORMA.aplazamiento}. El ${ANUNCIO.fechaLegible} Hacienda anunció su aplazamiento a ${ANUNCIO.nuevaFechaLegible}; esa será la fecha cuando la norma se publique en el BOE.`,
   },
   {
     q: "¿Verifactu se ha aplazado otra vez?",
-    a: `El calendario ya se ha movido dos veces, la última con el ${NORMA.aplazamiento}. Eso no convierte un tercer aplazamiento en algo con lo que se pueda contar: planificar sobre una prórroga que no existe es la forma más cara de llegar tarde, porque el trabajo real —auditar series, decidir modalidad, construir y probar— no se comprime.`,
+    a: `Sí, está anunciado. El ${ANUNCIO.fechaLegible}, en una ${ANUNCIO.origen}, Hacienda comunicó que aplaza las obligaciones pendientes del Real Decreto 1007/2023 hasta ${ANUNCIO.nuevaFechaLegible}, para que coincidan con la factura electrónica obligatoria de las empresas y profesionales que facturan hasta 8 millones de euros. Mientras no se publique en el BOE, las fechas vigentes son las del ${NORMA.aplazamiento}. Los requisitos técnicos —integridad, conservación, accesibilidad, legibilidad, trazabilidad e inalterabilidad— se mantienen en términos sustancialmente equivalentes, así que el trabajo de adaptación no cambia: cambia el margen.`,
   },
   {
     q: "Soy autónomo, ¿me aplica y desde cuándo?",
-    a: `Sí, salvo que estés en alguno de los supuestos de exclusión. Tu fecha es el ${NORMA.fechaRestoLegible}. Si emites facturas con un programa informático —aunque sea una hoja de cálculo con macros o un software vertical de tu sector—, ese sistema tiene que cumplir.`,
+    a: `Sí, salvo que estés en alguno de los supuestos de exclusión. Tu fecha vigente es el ${NORMA.fechaRestoLegible}, y con el aplazamiento anunciado pasaría a ${ANUNCIO.nuevaFechaLegible}. Si emites facturas con un programa informático —aunque sea una hoja de cálculo con macros o un software vertical de tu sector—, ese sistema tiene que cumplir.`,
   },
   {
     q: "¿Qué pasa si llego tarde?",
@@ -137,15 +142,16 @@ const jsonLd = [
       <h1>Cuándo te obliga <span>Verifactu</span></h1>
       <div class="pg-hero-bottom">
         <div class="pg-countdown">
-          <p class="ed-eyebrow">Verifactu · {NORMA.fechaSociedadesLegible}</p>
+          <p class="ed-eyebrow">Verifactu · aplazamiento anunciado el {ANUNCIO.fechaLegible}</p>
           <p class="pg-countdown-value">
-            <strong data-plazo-countdown data-deadline={NORMA.fechaSociedades}>{dias(NORMA.fechaSociedades)}</strong>
-            <span>días hasta la primera fecha</span>
+            <strong>{ANUNCIO.nuevaFechaCorta}</strong>
+            <span>octubre: nueva fecha anunciada<br />(pendiente de publicación en el BOE)</span>
           </p>
         </div>
         <p class="pg-lead pg-lead-strong">
-          Dos fechas, según cómo tribute tu empresa. Y una tercera, ya pasada, que explica
-          por qué tu proveedor de software lleva meses insistiendo.
+          Dos fechas vigentes según cómo tribute tu empresa, un aplazamiento anunciado a
+          octubre de 2028 que aún no está en el BOE, y una fecha ya pasada que explica por qué tu
+          proveedor de software lleva meses insistiendo.
         </p>
       </div>
     </header>
@@ -153,20 +159,22 @@ const jsonLd = [
     <section class="pg-section" aria-labelledby="fechas-title">
       <div class="ed-section-intro">
         <p class="ed-eyebrow">{L.calendario}</p>
-        <h2 id="fechas-title">Las tres fechas</h2>
+        <h2 id="fechas-title">Las fechas</h2>
       </div>
-      <ol class="pg-timeline">
+      <ol class="pg-timeline pg-timeline-4">
         {hitos.map((h) => (
-          <li class:list={{ "pg-timeline-past": h.pasado }}>
+          <li class:list={{ "pg-timeline-past": h.pasado, "pg-timeline-announced": h.anunciado }}>
             <p class="pg-timeline-date">{h.fecha}</p>
-            <p class="ed-eyebrow">{h.pasado ? "Ya en vigor" : `Faltan ${dias(h.iso)} días`}</p>
+            <p class="ed-eyebrow">{h.pasado ? "Ya en vigor" : h.anunciado ? "Anunciado · pendiente de BOE" : "Fecha vigente"}</p>
             <h3>{h.quien}</h3>
             <p>{h.que}</p>
           </li>
         ))}
       </ol>
       <p class="pg-source">
-        Fechas vigentes tras el {NORMA.aplazamiento}. Norma de referencia:{" "}
+        Fechas vigentes tras el {NORMA.aplazamiento}. Aplazamiento a {ANUNCIO.nuevaFechaLegible}
+        anunciado en {ANUNCIO.origen} del {ANUNCIO.fechaLegible}, pendiente de publicación en el
+        BOE. Norma de referencia:{" "}
         <a href={NORMA.boeUrl} rel="noopener">{NORMA.nombre}</a>{" "}
         · Especificación técnica: {NORMA.ordenTecnica}.
       </p>
@@ -210,6 +218,15 @@ const jsonLd = [
               alarmas. No es una preferencia: depende de si tus puntos de emisión tienen conectividad
               fiable.
             </p>
+            <p>
+              El aplazamiento anunciado da margen, pero no cambia el trabajo. Y se cruza con otra
+              obligación: la factura electrónica entre empresas ({FACTURA_ELECTRONICA.rd}) empieza a
+              contar desde la entrada en vigor de la {FACTURA_ELECTRONICA.orden}, el
+              {" "}{FACTURA_ELECTRONICA.ordenVigorLegible}. Llega en {FACTURA_ELECTRONICA.grandesLegible}
+              para quien supera 8 millones de euros de volumen de operaciones y en
+              {" "}{FACTURA_ELECTRONICA.restoLegible} para el resto. Si tu sistema tiene que adaptarse a las
+              dos, suele salir más barato hacerlo en un solo proyecto.
+            </p>
           </div>
           <ul class="pg-linklist">
             <li><a href={`${base}test/`}>Comprobar mi caso en 2 minutos <span class="ed-arrow" aria-hidden="true">→</span></a></li>
@@ -247,11 +264,4 @@ const jsonLd = [
   </section>
 </BaseLayout>
 
-<script is:inline>
-  (function () {
-    var el = document.querySelector("[data-plazo-countdown]");
-    if (!el) return;
-    var deadline = new Date(el.getAttribute("data-deadline") + "T00:00:00+01:00").getTime();
-    el.textContent = String(Math.max(0, Math.ceil((deadline - Date.now()) / 86400000)));
-  })();
-</script>
+

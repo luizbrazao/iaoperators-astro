@@ -13,6 +13,7 @@ import {
   SHARED,
   CASO_SLUGS,
   CASOS,
+  ANUNCIO,
 } from "@/data/verifactu";
 import { ORG_REF } from "@/data/identidad";
 import copy from "@/i18n/locales/es/pagesEditorial.json";
@@ -25,11 +26,6 @@ const pageUrl = new URL(base, site).toString();
 const contactHref = `/${locale}/contact/`;
 const sacHref = `/${locale}/cumplimiento/ley-atencion-al-cliente/`;
 
-const deadline = new Date(`${NORMA.fechaSociedades}T00:00:00+01:00`);
-const diasRestantes = Math.max(
-  0,
-  Math.ceil((deadline.getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
-);
 
 // Rótulos de la versión editorial (oct/2026).
 const L = copy.verifactu;
@@ -109,12 +105,12 @@ const faqJsonLd = {
       <h1>Verifactu <span>sin cambiar el software que hace funcionar tu negocio</span></h1>
       <div class="pg-hero-bottom">
         <div class="pg-countdown">
-          <p class="ed-eyebrow">Verifactu (RRSIF) · {NORMA.fechaSociedadesLegible} sociedades · {NORMA.fechaRestoLegible} resto de obligados</p>
+          <p class="ed-eyebrow">Verifactu (RRSIF) · aplazamiento anunciado el {ANUNCIO.fechaLegible}</p>
           <p class="pg-countdown-value">
-            <strong id="vf-countdown" data-deadline={NORMA.fechaSociedades}>{diasRestantes}</strong>
-            <span>días para el {NORMA.fechaSociedadesLegible}<br />(Impuesto sobre Sociedades)</span>
+            <strong>{ANUNCIO.nuevaFechaCorta}</strong>
+            <span>octubre: nueva fecha anunciada por Hacienda<br />(pendiente de publicación en el BOE)</span>
           </p>
-          <p class="pg-countdown-note">{NORMA.fechaRestoLegible} — resto de obligados</p>
+          <p class="pg-countdown-note">Fechas vigentes hasta entonces: {NORMA.fechaSociedadesLegible} (sociedades) y {NORMA.fechaRestoLegible} (resto)</p>
         </div>
         <div>
           <p class="pg-lead pg-lead-strong">
@@ -151,7 +147,7 @@ const faqJsonLd = {
         </div>
       </div>
       <div class="pg-doors">
-        <a href={`${base}plazos/`}><h2>Cuándo te obliga</h2><p>Las dos fechas de 2027 y a quién no le aplica.</p><span class="ed-arrow" aria-hidden="true">↗</span></a>
+        <a href={`${base}plazos/`}><h2>Cuándo te obliga</h2><p>Las fechas vigentes, el aplazamiento anunciado a 2028 y a quién no le aplica.</p><span class="ed-arrow" aria-hidden="true">↗</span></a>
         <a href={`${base}integracion/`}><h2>Cómo es el proyecto</h2><p>Vías de integración, fases, entregables y precio.</p><span class="ed-arrow" aria-hidden="true">↗</span></a>
         <a href={`${base}api/`}><h2>El detalle técnico</h2><p>Arquitectura de la conexión con el servicio de la AEAT.</p><span class="ed-arrow" aria-hidden="true">↗</span></a>
       </div>
@@ -179,6 +175,9 @@ const faqJsonLd = {
         Si no estás en ninguno de esos tres casos y emites facturas desde un sistema informático,
         la obligación llega el <strong>{NORMA.fechaSociedadesLegible}</strong> si tributas por el
         Impuesto sobre Sociedades, y el <strong>{NORMA.fechaRestoLegible}</strong> en el resto de casos.
+        Son las fechas vigentes: el {ANUNCIO.fechaLegible} Hacienda anunció su aplazamiento a
+        {ANUNCIO.nuevaFechaLegible} para alinearlas con la factura electrónica obligatoria, pero el
+        cambio aún no está publicado en el BOE.
       </p>
     </section>
 
@@ -363,11 +362,4 @@ const faqJsonLd = {
   </section>
 </BaseLayout>
 
-<script is:inline>
-  (function () {
-    var el = document.getElementById("vf-countdown");
-    if (!el) return;
-    var deadline = new Date(el.getAttribute("data-deadline") + "T00:00:00+01:00").getTime();
-    el.textContent = String(Math.max(0, Math.ceil((deadline - Date.now()) / 86400000)));
-  })();
-</script>
+

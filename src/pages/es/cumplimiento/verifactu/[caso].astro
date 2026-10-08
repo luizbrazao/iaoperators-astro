@@ -9,7 +9,7 @@ export async function getStaticPaths() {
 }
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { NORMA, DISCLAIMER, SHARED, CASOS, CASO_SLUGS, type CasoSlug } from "@/data/verifactu";
+import { NORMA, DISCLAIMER, SHARED, CASOS, CASO_SLUGS, ANUNCIO, type CasoSlug } from "@/data/verifactu";
 import copy from "@/i18n/locales/es/pagesEditorial.json";
 import "@/styles/editorial-pages.css";
 
@@ -27,11 +27,6 @@ const pillarUrl = new URL(base, site).toString();
 const pageUrl = new URL(`${base}${slug}/`, site).toString();
 const contactHref = `/${locale}/contact/`;
 
-const deadline = new Date(`${NORMA.fechaSociedades}T00:00:00+01:00`);
-const diasRestantes = Math.max(
-  0,
-  Math.ceil((deadline.getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
-);
 
 // Rótulos de la versión editorial; el H1 se parte tras "Verifactu" solo en el marcado.
 const L = copy.verifactu;
@@ -113,7 +108,7 @@ const faqJsonLd = {
       </nav>
       <h1>{h1Lead}{h1Accent && <> <span>{h1Accent}</span></>}</h1>
       <div class="pg-hero-bottom">
-        <p class="ed-eyebrow">{c.nombreCorto} · {NORMA.fechaSociedadesLegible}</p>
+        <p class="ed-eyebrow">{c.nombreCorto} · aplazamiento anunciado a {ANUNCIO.nuevaFechaLegible}</p>
         <div>
           <p class="pg-lead">{c.intro}</p>
           <div class="pg-actions">
@@ -138,9 +133,11 @@ const faqJsonLd = {
           <div class="pg-prose">
             <p>{c.porQueNoMigras}</p>
             <p>
-              Quedan <strong class="pg-tabular">{diasRestantes}</strong> días para el 1 de enero de
-              2027, la fecha que aplica a los contribuyentes del Impuesto sobre Sociedades. Para el
-              resto de obligados, el {NORMA.fechaRestoLegible}.
+              Las fechas vigentes son el {NORMA.fechaSociedadesLegible} para los contribuyentes del
+              Impuesto sobre Sociedades y el {NORMA.fechaRestoLegible} para el resto. El
+              {" "}{ANUNCIO.fechaLegible} Hacienda anunció su aplazamiento a {ANUNCIO.nuevaFechaLegible},
+              pendiente de publicación en el BOE. Los requisitos no cambian: cambia el margen para
+              hacerlo bien.
             </p>
           </div>
         </div>

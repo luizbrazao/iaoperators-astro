@@ -130,7 +130,7 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
       },
       {
         title: "Facturación y cobro",
-        body: "Del pedido a la factura y del cobro a la conciliación. Aquí es donde el ERP toca la pasarela de pago, el banco y, para las empresas y profesionales obligados por el RRSIF, los requisitos de los sistemas de facturación aplicables en 2027.",
+        body: "Del pedido a la factura y del cobro a la conciliación. Aquí es donde el ERP toca la pasarela de pago, el banco y, para las empresas y profesionales obligados por el RRSIF, los requisitos de los sistemas de facturación del RRSIF, con fechas vigentes en 2027 y un aplazamiento a octubre de 2028 ya anunciado.",
         riesgo:
           "En los sistemas de facturación sujetos al RRSIF, esta parte de la integración además debe cumplir los requisitos regulatorios y su calendario de adaptación.",
       },
@@ -152,7 +152,7 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
       {
         href: "/es/cumplimiento/verifactu/erp-a-medida/",
         label: "Verifactu sobre un ERP propio",
-        body: "Si tu sistema de facturación está sujeto al RRSIF, deberá adaptarse a los requisitos aplicables en 2027. Es una integración con calendario regulatorio.",
+        body: "Si tu sistema de facturación está sujeto al RRSIF, deberá adaptarse a sus requisitos: fechas vigentes en 2027 y aplazamiento a octubre de 2028 anunciado por Hacienda. Es una integración con calendario regulatorio.",
       },
       {
         href: "/es/auditoria-de-sistemas/",

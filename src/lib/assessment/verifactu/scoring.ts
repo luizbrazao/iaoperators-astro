@@ -22,9 +22,13 @@ import type {
 } from "../types";
 import { SISTEMA_LABELS } from "./questions";
 
-export const ENGINE_VERSION = "verifactu-2026-08-v1";
+export const ENGINE_VERSION = "verifactu-2026-10-v2";
 
-/** Fechas del RD-ley 15/2025. Deben coincidir con NORMA en src/data/verifactu.ts. */
+/** Fechas del RD-ley 15/2025. Deben coincidir con NORMA en src/data/verifactu.ts.
+ *  Oct/2026: Hacienda anunció el aplazamiento a octubre de 2028 (pendiente de
+ *  BOE). Estas siguen siendo las fechas vigentes; el titular ya no cuenta días. */
+const ANUNCIO_TEXTO =
+  "Hacienda anunció el 5 de octubre de 2026 su aplazamiento a octubre de 2028, pendiente de publicación en el BOE.";
 const DEADLINE_SOCIEDADES_ISO = "2027-01-01T00:00:00+01:00";
 const DEADLINE_RESTO_ISO = "2027-07-01T00:00:00+02:00";
 
@@ -107,7 +111,7 @@ function evaluarObligacion(answers: AssessmentAnswers): {
     return {
       obligado: "si",
       motivo:
-        "Te aplica. La forma de tributación solo cambia la fecha: 1 de enero de 2027 para contribuyentes del Impuesto sobre Sociedades y 1 de julio de 2027 para el resto. Hasta confirmarlo, planifica sobre la primera.",
+        `Te aplica. La forma de tributación solo cambia la fecha vigente: 1 de enero de 2027 para contribuyentes del Impuesto sobre Sociedades y 1 de julio de 2027 para el resto. ${ANUNCIO_TEXTO}`,
     };
   }
 
@@ -115,8 +119,8 @@ function evaluarObligacion(answers: AssessmentAnswers): {
     obligado: "si",
     motivo:
       tributacion === "irpf"
-        ? "Te aplica, con fecha 1 de julio de 2027 por tributar en IRPF. Seis meses más de margen que las sociedades, no una exención."
-        : "Te aplica, con fecha 1 de enero de 2027 por ser contribuyente del Impuesto sobre Sociedades. Es la primera de las dos fechas del calendario.",
+        ? `Te aplica, con fecha vigente 1 de julio de 2027 por tributar en IRPF. ${ANUNCIO_TEXTO}`
+        : `Te aplica, con fecha vigente 1 de enero de 2027 por ser contribuyente del Impuesto sobre Sociedades. ${ANUNCIO_TEXTO}`,
   };
 }
 
@@ -368,7 +372,7 @@ function nivelRiesgo(score: number, max: number): RiskLevel {
 function construirTitular(
   obligado: ObligadoVerdict,
   riskLevel: RiskLevel,
-  dias: number,
+  _dias: number,
   viabilidad: string,
 ): string {
   if (obligado === "no") {
@@ -376,17 +380,17 @@ function construirTitular(
   }
 
   if (viabilidad === "caja-negra") {
-    return `Te aplica y quedan ${dias} días, pero antes hay una pregunta que resolver sobre tu software`;
+    return "Te aplica, pero antes hay una pregunta que resolver sobre tu software";
   }
 
   if (riskLevel === "critico") {
-    return `Quedan ${dias} días y hoy no cumple casi ninguna obligación`;
+    return "Te aplica y hoy tu sistema no cumple casi ninguna obligación";
   }
   if (riskLevel === "alto") {
-    return `Quedan ${dias} días y faltan piezas centrales del sistema`;
+    return "Te aplica y faltan piezas centrales del sistema";
   }
   if (riskLevel === "medio") {
-    return `Vas por delante de la media, pero quedan huecos que cerrar en ${dias} días`;
+    return "Vas por delante de la media, pero quedan huecos que cerrar";
   }
   return "Tu sistema está cerca de cumplir: quedan detalles, no cimientos";
 }

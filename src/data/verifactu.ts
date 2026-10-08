@@ -5,6 +5,17 @@
 // - RD 1007/2023 (RRSIF) + RD-ley 15/2025, de 2 de diciembre (BOE 3/12/2025), que
 //   aplaza la obligatoriedad: 1/1/2027 contribuyentes del Impuesto sobre Sociedades,
 //   1/7/2027 el resto (IRPF/autónomos y demás obligados).
+// - ACTUALIZACIÓN 2026-10-08: nota informativa del Ministerio de Hacienda del
+//   5/10/2026 que anuncia el aplazamiento de las obligaciones pendientes del RD
+//   1007/2023 hasta octubre de 2028, para alinearlas con la factura electrónica
+//   obligatoria de quien factura hasta 8 M€. Mantiene en términos sustancialmente
+//   equivalentes los requisitos de integridad, conservación, accesibilidad,
+//   legibilidad, trazabilidad e inalterabilidad. A 8/10/2026 NO está publicado en
+//   el BOE: las fechas vigentes siguen siendo las del RD-ley 15/2025. Cuando se
+//   publique la norma, actualizar fechaSociedades/fechaResto y ANUNCIO.publicado.
+// - Factura electrónica B2B: RD 238/2026, de 25 de marzo (BOE 31/3/2026) y Orden
+//   HAC/1028/2026 (BOE 5/10/2026, en vigor 6/10/2026). Obligación a los 12 meses
+//   para quien supera 8 M€ de volumen de operaciones y a los 24 meses para el resto.
 // - AEAT, "¿Quiénes están obligados?": EXCLUIDOS los adscritos al SII, los residentes
 //   en País Vasco y Navarra (fuera del régimen común, con normativa foral propia como
 //   TicketBAI) y las operaciones que no deban documentarse en factura.
@@ -52,6 +63,26 @@ export const NORMA = {
   // ofrecerse ya conformes.
   fechaFabricantes: "2025-07-29",
   fechaFabricantesLegible: "29 de julio de 2025",
+};
+
+/** Aplazamiento anunciado y aún no publicado. Las landings lo muestran junto a
+ *  las fechas vigentes, nunca en su lugar. */
+export const ANUNCIO = {
+  fecha: "2026-10-05",
+  fechaLegible: "5 de octubre de 2026",
+  origen: "nota informativa del Ministerio de Hacienda",
+  nuevaFechaLegible: "octubre de 2028",
+  nuevaFechaCorta: "2028",
+  publicado: false,
+};
+
+/** Factura electrónica obligatoria entre empresas (Ley 18/2022 «Crea y Crece»). */
+export const FACTURA_ELECTRONICA = {
+  rd: "Real Decreto 238/2026, de 25 de marzo",
+  orden: "Orden HAC/1028/2026",
+  ordenVigorLegible: "6 de octubre de 2026",
+  grandesLegible: "octubre de 2027",
+  restoLegible: "octubre de 2028",
 };
 
 export const DISCLAIMER =

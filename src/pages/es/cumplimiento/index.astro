@@ -4,7 +4,7 @@
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { LEY } from "@/data/sectores-sac";
-import { NORMA } from "@/data/verifactu";
+import { NORMA, ANUNCIO } from "@/data/verifactu";
 import { getPilares } from "@/data/navegacion";
 import copy from "@/i18n/locales/es/pagesEditorial.json";
 import "@/styles/editorial-pages.css";
@@ -47,6 +47,7 @@ const frentes = [
     plazos: [
       { fecha: NORMA.fechaSociedadesLegible, label: "Impuesto sobre Sociedades" },
       { fecha: NORMA.fechaRestoLegible, label: "resto de obligados" },
+      { fecha: ANUNCIO.nuevaFechaLegible, label: "aplazamiento anunciado (pendiente de BOE)" },
     ],
     quien:
       "Empresarios y profesionales incluidos en el ámbito del RRSIF que utilicen sistemas informáticos de facturación, con las exclusiones previstas —entre ellas determinados supuestos de SII y territorios forales—.",

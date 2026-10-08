@@ -187,7 +187,7 @@ export function getPilares(locale: string): NavPilar[] {
       tagline: "Adaptamos tu stack a la norma",
       children: [
         { label: "Cumplimiento tecnológico", href: CUMPLIMIENTO_BASE, desc: "Visión general del pilar" },
-        { label: "Verifactu", href: `${CUMPLIMIENTO_BASE}verifactu/`, desc: "Sistemas de facturación · 2027" },
+        { label: "Verifactu", href: `${CUMPLIMIENTO_BASE}verifactu/`, desc: "Sistemas de facturación · aplazado a 2028" },
         {
           label: "Ley de Atención al Cliente",
           href: `${CUMPLIMIENTO_BASE}ley-atencion-al-cliente/`,

@@ -123,7 +123,7 @@ El orden de trabajo que funciona es este:
 1. **Inventariar los puntos de emisión de verdad.** No las personas: los módulos, cajas, integraciones y procesos automáticos que pueden generar una factura. Casi siempre aparecen dos o tres que nadie tenía en la lista, normalmente automatismos antiguos.
 2. **Justificar cada serie viva.** Si no hay una razón que se pueda decir en voz alta, la serie sobra. Cerrar series es más barato antes de que arranque la cadena.
 3. **Decidir la frontera de sistemas.** Con la asesoría, y por escrito. Esta decisión determina el resto del diseño.
-4. **Fijar el corte.** La fecha en la que la obligación te alcanza —[1 de enero o 1 de julio de 2027 según cómo tributes](/es/cumplimiento/verifactu/plazos/)— es el punto natural para arrancar limpio.
+4. **Fijar el corte.** La fecha en la que la obligación te alcanza —[1 de enero o 1 de julio de 2027 según cómo tributes, u octubre de 2028 si se publica el aplazamiento anunciado](/es/cumplimiento/verifactu/plazos/)— es el punto natural para arrancar limpio.
 
 Nada de esto es trabajo de programación, y ese es justo el motivo por el que se pospone. Pero es el trabajo que determina si la integración dura tres semanas o tres meses. Cuando lo abordamos en un proyecto, es la primera fase de la [integración de Verifactu sobre el sistema que la empresa ya tiene](/es/cumplimiento/verifactu/), antes de escribir una línea del conector.
 

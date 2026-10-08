@@ -158,4 +158,4 @@ Tres situaciones en las que la respuesta correcta es esperar:
 
 ---
 
-**Si el ERP factura, hay una integración con fecha límite.** El reglamento de sistemas de facturación obliga desde 2027, y el detalle de cómo se acopla a un ERP propio está en la [página de Verifactu para ERP a medida](/es/cumplimiento/verifactu/erp-a-medida/). El resto de flujos —pedidos, stock, clientes, reporting— y los patrones concretos de cada uno están en el [servicio de integración de ERP](/es/integracion/erp/).
+**Si el ERP factura, hay una integración con fecha límite.** El reglamento de sistemas de facturación tiene fechas vigentes en 2027 y un aplazamiento a octubre de 2028 anunciado por Hacienda, y el detalle de cómo se acopla a un ERP propio está en la [página de Verifactu para ERP a medida](/es/cumplimiento/verifactu/erp-a-medida/). El resto de flujos —pedidos, stock, clientes, reporting— y los patrones concretos de cada uno están en el [servicio de integración de ERP](/es/integracion/erp/).

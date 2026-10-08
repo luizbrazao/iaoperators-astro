@@ -71,7 +71,7 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     locales: ["es"],
     silo: "cumplimiento",
     primaria: "verifactu obligatorio",
-    secundarias: ["verifactu cuando entra en vigor", "verifactu 2027", "verifactu autónomos"],
+    secundarias: ["verifactu cuando entra en vigor", "verifactu 2027", "verifactu 2028", "aplazamiento verifactu", "verifactu autónomos"],
     faixa: "b",
     estimada: true,
   },

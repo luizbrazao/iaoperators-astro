@@ -37,7 +37,7 @@ export const QUESTIONS: AssessmentQuestion[] = [
     id: "tributacion",
     type: "single",
     title: "¿Cómo tributa la empresa?",
-    description: "Determina cuál de las dos fechas de 2027 te aplica.",
+    description: "Determina cuál de las dos fechas vigentes te aplica.",
     options: [
       { value: "sociedades", label: "Impuesto sobre Sociedades (S.L., S.A., etc.)" },
       { value: "irpf", label: "IRPF — autónomo o entidad en atribución de rentas" },
