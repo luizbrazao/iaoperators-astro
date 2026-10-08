@@ -1,12 +1,13 @@
 ---
-// Hub de integración (/es/integracion/) con el lenguaje editorial.
+// Hub de integración (/es/integracion/, /en/integration/, /pt/integracao/) con el lenguaje editorial.
 // Solo presenta: el texto es el mismo bloque `es` de src/data/hub-integracion.ts
 // que usa la versión anterior, así que título, H1, H2 y enlaces no cambian.
-// EN y PT siguen con el markup de IntegracionHub.astro.
+// EN y PT usan el mismo componente desde el 08/oct/2026.
 import type { HubIntegracionCopy } from "@/data/hub-integracion";
 import RelatedCases from "@/components/RelatedCases.astro";
 import { getPilares } from "@/data/navegacion";
-import copy from "@/i18n/locales/es/pagesEditorial.json";
+import { getPagesEditorial } from "@/i18n/editorialCopy";
+import { asShellLoc } from "@/i18n/editorialShell";
 import "@/styles/editorial-pages.css";
 
 interface Capacidad { key: string; title: string; body: string; href: string | null }
@@ -17,8 +18,10 @@ interface Props {
   auditHref: string;
 }
 const { c, capacidades, contactHref, auditHref } = Astro.props;
+const locale = asShellLoc(Astro.currentLocale);
+const copy = getPagesEditorial(locale);
 const L = copy.integracion;
-const pillar = getPilares("es").find((item) => item.key === "integracion");
+const pillar = getPilares(locale).find((item) => item.key === "integracion");
 // Los CTA del texto traen su propia flecha ("… ↗", "… →"); el botón editorial
 // dibuja la suya, así que se quita para no duplicarla.
 const bare = (text: string) => text.replace(/\s*[↗→]\s*$/, "");
@@ -28,7 +31,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
   <header class="pg-hero">
     <nav class="pf-crumbs ed-eyebrow" aria-label={copy.breadcrumb.label}>
       <ol>
-        <li><a href="/es/">{copy.breadcrumb.home}</a></li>
+        <li><a href={`/${locale}/`}>{copy.breadcrumb.home}</a></li>
         <li><span aria-current="page">{c.breadcrumbSelf}</span></li>
       </ol>
     </nav>
@@ -113,7 +116,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
 <RelatedCases
   path="integracion/"
-  locale="es"
+  locale={locale}
   variant="editorial"
   order={[
     "chatplug-whatsapp-altegio",

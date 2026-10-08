@@ -8,10 +8,9 @@ export async function getStaticPaths() {
 }
 
 import BaseLayout from "../../../layouts/BaseLayout.astro";
-import { getLocale, ui } from "../../../i18n/ui";
-import RelatedCases from "@/components/RelatedCases.astro";
-import PilarArquitectura from "@/components/PilarArquitectura.astro";
 import ServicioArquitecturaEditorial from "@/components/editorial/ServicioArquitecturaEditorial.astro";
+import { getLocale, ui } from "../../../i18n/ui";
+import { integracionHref, casoHref } from "@/data/integracion";
 
 const locale = getLocale((Astro.params.locale as string) ?? Astro.currentLocale ?? "es");
 const dict = (ui as any)?.[locale] ?? {};
@@ -19,45 +18,45 @@ const audit = (dict as any)?.audit ?? {};
 
 const meta = audit?.meta ?? {};
 const hero = audit?.hero ?? {};
-const problem = audit?.problem ?? {};
-const deliverables = audit?.deliverables ?? {};
-const methodology = audit?.methodology ?? {};
-const audience = audit?.audience ?? {};
-const pricing = audit?.pricing ?? {};
 const faq = audit?.faq ?? {};
-const finalCta = audit?.finalCta ?? {};
 
 const contactHref = `/${locale}/contact/`;
 
-// Rediseño editorial: solo ES. EN/PT conservan el markup de abajo.
-const editorial = locale === "es";
 
-// "Qué viene después" (solo ES): el mismo texto que el bloque de abajo, para la
-// versión editorial.
-const NEXT_ES = {
-  title: "Qué viene después del diagnóstico",
-  body: "La Radiografía responde a «qué tengo». Estas son las dos preguntas siguientes, y quien las ejecuta es el mismo equipo.",
-  items: [
-    {
-      href: `/${locale}/roadmap-tecnologico/`,
-      title: "Qué hago primero",
-      body: "El roadmap ordena las iniciativas que salen del diagnóstico por impacto y esfuerzo, con ROI estimado por fase.",
-      cta: "Roadmap tecnológico →",
-    },
-    {
-      href: `/${locale}/integracion/`,
-      title: "Conectar lo que ya existe",
-      body: "La conclusión más frecuente del inventario no es que falte software: es que los sistemas correctos no se hablan entre ellos.",
-      cta: "Integración de sistemas →",
-    },
-    {
-      href: `/${locale}/integracion/sistemas-legados/`,
-      title: "Y si hay un sistema intocable",
-      body: "Cuando el inventario descubre software antiguo del que depende la operación, se moderniza alrededor en lugar de reemplazarlo.",
-      cta: "Sistemas legados →",
-    },
-  ],
-};
+// "Qué viene después": enlaza la Radiografía con los pasos siguientes. Antes
+// era solo ES porque el silo de integración no existía en EN/PT; desde el
+// 08/oct/2026 los tres idiomas lo tienen.
+const NEXT = {
+  es: {
+    title: "Qué viene después del diagnóstico",
+    body: "La Radiografía responde a «qué tengo». Estas son las dos preguntas siguientes, y quien las ejecuta es el mismo equipo.",
+    items: [
+      { title: "Qué hago primero", body: "El roadmap ordena las iniciativas que salen del diagnóstico por impacto y esfuerzo, con ROI estimado por fase.", cta: "Roadmap tecnológico →" },
+      { title: "Conectar lo que ya existe", body: "La conclusión más frecuente del inventario no es que falte software: es que los sistemas correctos no se hablan entre ellos.", cta: "Integración de sistemas →" },
+      { title: "Y si hay un sistema intocable", body: "Cuando el inventario descubre software antiguo del que depende la operación, se moderniza alrededor en lugar de reemplazarlo.", cta: "Sistemas legados →" },
+    ],
+  },
+  en: {
+    title: "What comes after the diagnosis",
+    body: "The Digital X-Ray answers “what do I have”. These are the questions that come next, and the same team executes them.",
+    items: [
+      { title: "What do I do first", body: "The roadmap orders the initiatives that come out of the diagnosis by impact and effort, with estimated ROI per phase.", cta: "Technology roadmap →" },
+      { title: "Connect what already exists", body: "The most common conclusion of the inventory isn't missing software: it's that the right systems don't talk to each other.", cta: "Systems integration →" },
+      { title: "And if there's a system you can't touch", body: "When the inventory uncovers old software the operation depends on, we modernize around it instead of replacing it.", cta: "Legacy systems →" },
+    ],
+  },
+  pt: {
+    title: "O que vem depois do diagnóstico",
+    body: "A Radiografia responde a “o que eu tenho”. Estas são as perguntas seguintes, e quem as executa é a mesma equipe.",
+    items: [
+      { title: "O que faço primeiro", body: "O roadmap ordena as iniciativas que saem do diagnóstico por impacto e esforço, com ROI estimado por fase.", cta: "Roadmap tecnológico →" },
+      { title: "Conectar o que já existe", body: "A conclusão mais frequente do inventário não é que falte software: é que os sistemas certos não conversam entre si.", cta: "Integração de sistemas →" },
+      { title: "E se houver um sistema intocável", body: "Quando o inventário encontra um software antigo do qual a operação depende, modernizamos ao redor dele em vez de substituí-lo.", cta: "Sistemas legados →" },
+    ],
+  },
+}[locale as "es" | "en" | "pt"];
+const NEXT_HREFS = [`/${locale}/roadmap-tecnologico/`, integracionHref(locale), casoHref(locale, "sistemas-legados")];
+const next = { ...NEXT, items: NEXT.items.map((item, index) => ({ ...item, href: NEXT_HREFS[index] })) };
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
 
@@ -117,311 +116,7 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [
   title={meta?.title ?? "Radiografía Digital"}
   description={meta?.description}
   jsonLd={jsonLd}
-  editorial={editorial}
+  editorial
 >
-  {editorial ? (
-    <ServicioArquitecturaEditorial d={audit} current="audit" contactHref={contactHref} heroSecondaryHref="#metodologia" methodologyId="metodologia" relatedPath="auditoria-de-sistemas/" next={NEXT_ES} />
-  ) : (
-  <div class="bg-transparent text-white">
-    <!-- HERO -->
-    <section class="relative px-4 pt-28 pb-20">
-      <div class="max-w-5xl mx-auto text-center">
-        {hero?.badge && (
-          <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-6">
-            {hero.badge}
-          </span>
-        )}
-        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
-          {hero?.title}
-        </h1>
-        {hero?.subtitle && (
-          <p class="text-lg md:text-2xl text-gray-200 mb-6 max-w-3xl mx-auto">
-            {hero.subtitle}
-          </p>
-        )}
-        {hero?.intro && (
-          <p class="text-base md:text-lg text-gray-400 mb-10 max-w-3xl mx-auto leading-relaxed">
-            {hero.intro}
-          </p>
-        )}
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <a
-            href={contactHref}
-            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-base hover:bg-orange-400 hover:scale-105 transition-all duration-300"
-          >
-            {hero?.ctaPrimary}
-          </a>
-          {hero?.ctaSecondary && (
-            <a
-              href="#metodologia"
-              class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-black text-orange-400 border border-orange-500/30 font-medium text-base hover:bg-orange-500/10 transition-all duration-300"
-            >
-              {hero.ctaSecondary}
-            </a>
-          )}
-        </div>
-      </div>
-    </section>
-
-    <!-- PROBLEM -->
-    {problem?.items && problem.items.length > 0 && (
-      <section class="px-4 py-20">
-        <div class="max-w-5xl mx-auto">
-          <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
-            {problem?.title}
-          </h2>
-          {problem?.subtitle && (
-            <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-              {problem.subtitle}
-            </p>
-          )}
-          <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {problem.items.map((item: string) => (
-              <li class="flex items-start gap-3 bg-[#0a0a0a] border border-white/5 rounded-2xl p-5">
-                <span class="text-orange-400 text-xl leading-none mt-0.5">✕</span>
-                <p class="text-gray-200 text-base leading-relaxed">{item}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-    )}
-
-    <!-- DELIVERABLES -->
-    {deliverables?.items && deliverables.items.length > 0 && (
-      <section class="px-4 py-20">
-        <div class="max-w-6xl mx-auto">
-          <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4">
-              {deliverables?.title}
-            </h2>
-            {deliverables?.subtitle && (
-              <p class="text-gray-400 max-w-2xl mx-auto">
-                {deliverables.subtitle}
-              </p>
-            )}
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {deliverables.items.map((item: any, idx: number) => (
-              <div class="bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300">
-                <div class="flex items-center gap-3 mb-4">
-                  <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 font-bold text-sm">
-                    0{idx + 1}
-                  </span>
-                  <h3 class="text-xl font-semibold text-white">{item?.title}</h3>
-                </div>
-                <p class="text-gray-400 text-sm leading-relaxed">{item?.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    )}
-
-    <!-- METHODOLOGY -->
-    {methodology?.phases && methodology.phases.length > 0 && (
-      <section id="metodologia" class="px-4 py-24 bg-white/[0.02] border-y border-white/5">
-        <div class="max-w-6xl mx-auto">
-          <div class="text-center mb-16">
-            {methodology?.badge && (
-              <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
-                {methodology.badge}
-              </span>
-            )}
-            <h2 class="text-3xl md:text-4xl font-bold mb-4">
-              {methodology?.title}
-            </h2>
-            {methodology?.subtitle && (
-              <p class="text-gray-400 max-w-2xl mx-auto">
-                {methodology.subtitle}
-              </p>
-            )}
-          </div>
-          <ol class="space-y-6 max-w-4xl mx-auto">
-            {methodology.phases.map((phase: any) => (
-              <li class="flex flex-col md:flex-row gap-6 bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 md:p-8 hover:border-orange-500/20 transition-all duration-300">
-                <div class="md:w-52 shrink-0">
-                  <div class="text-orange-400 text-xs font-semibold uppercase tracking-widest mb-1">
-                    {phase?.code}
-                  </div>
-                  <h3 class="text-xl font-bold text-white">
-                    {phase?.title}
-                  </h3>
-                </div>
-                <p class="text-gray-300 leading-relaxed flex-1">{phase?.body}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-    )}
-
-    <!-- AUDIENCE -->
-    {audience?.items && audience.items.length > 0 && (
-      <section class="px-4 py-20">
-        <div class="max-w-5xl mx-auto">
-          <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4">
-              {audience?.title}
-            </h2>
-            {audience?.subtitle && (
-              <p class="text-gray-400 max-w-2xl mx-auto">
-                {audience.subtitle}
-              </p>
-            )}
-          </div>
-          <ul class="space-y-3 max-w-3xl mx-auto">
-            {audience.items.map((item: string) => (
-              <li class="flex items-start gap-3 bg-[#0a0a0a] border border-white/5 rounded-2xl px-5 py-4">
-                <span class="text-orange-400 text-xl leading-none mt-0.5">→</span>
-                <p class="text-gray-200">{item}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-    )}
-
-    <!-- PRICING -->
-    {pricing?.title && (
-      <section class="px-4 py-24">
-        <div class="max-w-3xl mx-auto bg-gradient-to-br from-orange-500/10 to-transparent border border-orange-500/20 rounded-3xl p-8 md:p-12 text-center">
-          {pricing?.badge && (
-            <span class="inline-block px-4 py-1 rounded-full bg-orange-500/20 text-orange-300 text-xs font-semibold mb-4 uppercase tracking-widest">
-              {pricing.badge}
-            </span>
-          )}
-          <h2 class="text-4xl md:text-5xl font-bold mb-3 text-white">
-            {pricing.title}
-          </h2>
-          {pricing?.subtitle && (
-            <p class="text-gray-300 mb-8">{pricing.subtitle}</p>
-          )}
-          {pricing?.items && pricing.items.length > 0 && (
-            <ul class="text-left space-y-3 mb-10 max-w-xl mx-auto">
-              {pricing.items.map((item: string) => (
-                <li class="flex items-start gap-3">
-                  <span class="text-orange-400 mt-0.5">✓</span>
-                  <span class="text-gray-200">{item}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-          <a
-            href={contactHref}
-            class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-orange-500 text-black font-medium text-base hover:bg-orange-400 hover:scale-105 transition-all duration-300"
-          >
-            {pricing?.cta}
-          </a>
-        </div>
-      </section>
-    )}
-
-    <!-- Prueba contextual: los casos que respaldan esta página.
-         La lista sale de `provesFor` en src/data/projects.ts, no de aquí. -->
-    <RelatedCases path="auditoria-de-sistemas/" locale={locale} />
-
-    <!-- FAQ -->
-    {faq?.items && faq.items.length > 0 && (
-      <section class="px-4 py-20">
-        <div class="max-w-3xl mx-auto">
-          <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
-            {faq?.title}
-          </h2>
-          <div class="space-y-3">
-            {faq.items.map((item: any) => (
-              <details class="group bg-[#0a0a0a] border border-white/5 rounded-2xl px-6 py-4 hover:border-orange-500/20 transition-all duration-300">
-                <summary class="flex items-center justify-between cursor-pointer list-none">
-                  <span class="text-white font-medium pr-4">{item?.q}</span>
-                  <span class="text-orange-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
-                </summary>
-                <p class="text-gray-400 mt-3 leading-relaxed">{item?.a}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-    )}
-
-    <!-- QUÉ VIENE DESPUÉS — solo ES.
-         La Radiografía pertenece al silo de integración, pero se queda en esta
-         URL: mover /es/auditoria-de-sistemas/ dentro del silo exigía partir la
-         ruta [locale] y montar un hreflang asimétrico con EN y PT, a cambio de
-         nada medible (la página tiene 0 impresiones). La pertenencia al silo se
-         expresa con enlaces, que es lo que el propio plan dice en §8.
-         El hub y sus hijos son ES-only, así que esta sección también.
-         Ver docs/plan-arquitectura-2026-08.md §5.1. -->
-    {locale === "es" && (
-      <section class="px-4 py-20 bg-white/[0.02] border-y border-white/5">
-        <div class="max-w-5xl mx-auto">
-          <h2 class="text-2xl md:text-3xl font-bold mb-3 text-center">Qué viene después del diagnóstico</h2>
-          <p class="text-gray-400 text-center max-w-2xl mx-auto mb-10 leading-relaxed">
-            La Radiografía responde a «qué tengo». Estas son las dos preguntas siguientes, y quien
-            las ejecuta es el mismo equipo.
-          </p>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <a
-              href={`/${locale}/roadmap-tecnologico/`}
-              class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 hover:border-orange-500/30 transition-all duration-300"
-            >
-              <h3 class="text-white font-semibold mb-2 leading-snug">Qué hago primero</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">
-                El roadmap ordena las iniciativas que salen del diagnóstico por impacto y esfuerzo,
-                con ROI estimado por fase.
-              </p>
-              <span class="inline-block text-orange-400 text-sm mt-4 group-hover:translate-x-1 transition-transform">Roadmap tecnológico →</span>
-            </a>
-            <a
-              href={`/${locale}/integracion/`}
-              class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 hover:border-orange-500/30 transition-all duration-300"
-            >
-              <h3 class="text-white font-semibold mb-2 leading-snug">Conectar lo que ya existe</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">
-                La conclusión más frecuente del inventario no es que falte software: es que los
-                sistemas correctos no se hablan entre ellos.
-              </p>
-              <span class="inline-block text-orange-400 text-sm mt-4 group-hover:translate-x-1 transition-transform">Integración de sistemas →</span>
-            </a>
-            <a
-              href={`/${locale}/integracion/sistemas-legados/`}
-              class="group bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 hover:border-orange-500/30 transition-all duration-300"
-            >
-              <h3 class="text-white font-semibold mb-2 leading-snug">Y si hay un sistema intocable</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">
-                Cuando el inventario descubre software antiguo del que depende la operación, se
-                moderniza alrededor en lugar de reemplazarlo.
-              </p>
-              <span class="inline-block text-orange-400 text-sm mt-4 group-hover:translate-x-1 transition-transform">Sistemas legados →</span>
-            </a>
-          </div>
-        </div>
-      </section>
-    )}
-
-    <!-- El pilar al que pertenece esta página: enlaza los tres pasos entre sí. -->
-    <PilarArquitectura current="audit" locale={locale} />
-
-    <!-- FINAL CTA -->
-    {finalCta?.title && (
-      <section class="px-4 py-24">
-        <div class="max-w-3xl mx-auto text-center">
-          <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">
-            {finalCta.title}
-          </h2>
-          {finalCta?.subtitle && (
-            <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
-              {finalCta.subtitle}
-            </p>
-          )}
-          <a
-            href={contactHref}
-            class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
-          >
-            {finalCta?.cta} ↗
-          </a>
-        </div>
-      </section>
-    )}
-  </div>
-  )}
+  <ServicioArquitecturaEditorial d={audit} current="audit" contactHref={contactHref} heroSecondaryHref="#metodologia" methodologyId="metodologia" relatedPath="auditoria-de-sistemas/" next={next} />
 </BaseLayout>

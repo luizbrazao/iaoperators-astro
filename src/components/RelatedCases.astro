@@ -125,7 +125,7 @@ if (limit) matches = matches.slice(0, limit);
         const figure = override && "metric" in override
           ? (override.metric ? { value: override.metric.value, label: override.metric.label, isText: false } : null)
           : (() => {
-              const first = caseFigures(project, "index")[0];
+              const first = caseFigures(project, "index", localeKey)[0];
               return first ? { value: first.value, label: first.labelIsKey ? t(first.label) : first.label, isText: first.isText } : null;
             })();
         return (

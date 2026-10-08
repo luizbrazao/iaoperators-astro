@@ -2,10 +2,11 @@
 // Caso del silo de integración (/es/integracion/<caso>/) con el lenguaje editorial.
 // Solo presenta: el texto sale de src/data/casos-integracion/es.ts y de CASO_UI,
 // igual que en la versión anterior, así que H1, H2, H3 y enlaces no cambian.
-// EN y PT siguen con el markup de CasoIntegracion.astro.
+// EN y PT usan el mismo componente desde el 08/oct/2026.
 import type { CasoIntegracion, SharedIntegracion } from "@/data/casos-integracion/types";
 import { CASO_UI } from "@/data/integracion";
-import copy from "@/i18n/locales/es/pagesEditorial.json";
+import { getPagesEditorial } from "@/i18n/editorialCopy";
+import { asShellLoc } from "@/i18n/editorialShell";
 import "@/styles/editorial-pages.css";
 
 interface Props {
@@ -16,7 +17,9 @@ interface Props {
   otros: { href: string; nombreCorto: string }[];
 }
 const { c, shared, base, contactHref, otros } = Astro.props;
-const ui = CASO_UI.es;
+const locale = asShellLoc(Astro.currentLocale);
+const copy = getPagesEditorial(locale);
+const ui = CASO_UI[locale];
 const L = copy.casoIntegracion;
 // Los textos traen su propia flecha ("… ↗", "… →"); el botón editorial dibuja la suya.
 const bare = (text: string) => text.replace(/\s*[↗→]\s*$/, "");
@@ -31,7 +34,7 @@ const h1Accent = split > 0 ? c.h1.slice(split + 2) : "";
   <header class="pg-hero pg-hero-compact">
     <nav class="pf-crumbs ed-eyebrow" aria-label={copy.breadcrumb.label}>
       <ol>
-        <li><a href="/es/">{copy.breadcrumb.home}</a></li>
+        <li><a href={`/${locale}/`}>{copy.breadcrumb.home}</a></li>
         <li><a href={base}>{ui.breadcrumbHub}</a></li>
         <li><span aria-current="page">{c.nombreCorto}</span></li>
       </ol>

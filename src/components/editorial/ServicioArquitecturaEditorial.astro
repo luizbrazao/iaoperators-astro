@@ -3,12 +3,13 @@
 // tecnológico, Implementación) con el lenguaje editorial. Solo presenta: el
 // texto sale del mismo diccionario (audit / roadmap / implementation) que la
 // versión anterior y el orden de las secciones no cambia, así que H1, H2, H3 y
-// enlaces se mantienen. EN y PT siguen con el markup de cada página.
+// enlaces se mantienen. EN y PT usan este componente desde el 08/oct/2026.
 // Sin bloque de precios: oct/2026 se decidió no publicar importes.
 import RelatedCases from "@/components/RelatedCases.astro";
 import PilarArquitectura from "@/components/PilarArquitectura.astro";
 import { getArquitectura, arquitecturaHubHref, ARQUITECTURA_TITLE } from "@/data/servicios";
-import copy from "@/i18n/locales/es/pagesEditorial.json";
+import { getPagesEditorial } from "@/i18n/editorialCopy";
+import { asShellLoc } from "@/i18n/editorialShell";
 import "@/styles/editorial-pages.css";
 
 type Step = "audit" | "roadmap" | "implementation";
@@ -30,8 +31,10 @@ interface Props {
 }
 const { d, current, contactHref, heroSecondaryHref, deliverablesId, methodologyId, relatedPath, next } = Astro.props;
 const { hero = {}, problem = {}, deliverables = {}, methodology = {}, audience = {}, faq = {}, finalCta = {} } = d ?? {};
+const locale = asShellLoc(Astro.currentLocale);
+const copy = getPagesEditorial(locale);
 const L = copy.servicioArquitectura;
-const paso = getArquitectura("es").find((p) => p.key === current);
+const paso = getArquitectura(locale).find((p) => p.key === current);
 const bare = (text = "") => text.replace(/\s*[↗→←]\s*$/, "").replace(/^\s*←\s*/, "");
 const pad = (n: number) => String(n).padStart(2, "0");
 const title: string = hero.title ?? "";
@@ -43,8 +46,8 @@ const h1Accent = split > 0 ? title.slice(split + 2) : "";
   <header class="pg-hero pg-hero-compact">
     <nav class="pf-crumbs ed-eyebrow" aria-label={copy.breadcrumb.label}>
       <ol>
-        <li><a href="/es/">{copy.breadcrumb.home}</a></li>
-        <li><a href={arquitecturaHubHref("es")}>{ARQUITECTURA_TITLE.es}</a></li>
+        <li><a href={`/${locale}/`}>{copy.breadcrumb.home}</a></li>
+        <li><a href={arquitecturaHubHref(locale)}>{ARQUITECTURA_TITLE[locale]}</a></li>
         <li><span aria-current="page">{paso?.label}</span></li>
       </ol>
     </nav>
@@ -124,7 +127,7 @@ const h1Accent = split > 0 ? title.slice(split + 2) : "";
 
 </div>
 
-{relatedPath && <RelatedCases path={relatedPath} locale="es" variant="editorial" />}
+{relatedPath && <RelatedCases path={relatedPath} locale={locale} variant="editorial" />}
 
 <div class="ed-container">
   {faq.items?.length > 0 && (
@@ -162,7 +165,7 @@ const h1Accent = split > 0 ? title.slice(split + 2) : "";
 </div>
 
 <div class="pg-method-wrap">
-  <PilarArquitectura current={current} locale="es" variant="editorial" />
+  <PilarArquitectura current={current} locale={locale} variant="editorial" />
 </div>
 
 {finalCta.title && (

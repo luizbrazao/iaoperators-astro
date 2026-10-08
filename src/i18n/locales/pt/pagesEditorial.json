@@ -1,0 +1,44 @@
+{
+  "breadcrumb": {
+    "home": "Início",
+    "label": "Trilha de navegação"
+  },
+  "closingLabel": "Seu próximo projeto",
+  "integracion": {
+    "pillar": "01 / Integração",
+    "queEs": "O que é",
+    "problema": "O problema",
+    "metodo": "Método",
+    "capacidades": "Capacidades",
+    "puerta": "Primeiro passo"
+  },
+  "arquitectura": {
+    "pillar": "02 / Arquitetura",
+    "problema": "O problema",
+    "capas": "O que é",
+    "decisiones": "Decisões",
+    "relaciones": "Com os outros pilares"
+  },
+  "casoIntegracion": {
+    "pillar": "01 / Integração",
+    "queEs": "O que é",
+    "porQue": "Por quê",
+    "patrones": "Fluxos",
+    "entrega": "Entrega",
+    "principios": "Princípios",
+    "casoReal": "Case real",
+    "proceso": "Método",
+    "tech": "Tecnologia",
+    "puentes": "Relacionado",
+    "faq": "Perguntas"
+  },
+  "servicioArquitectura": {
+    "pillar": "02 / Arquitetura",
+    "problema": "O problema",
+    "entregables": "Entrega",
+    "metodologia": "Metodologia",
+    "audiencia": "Para quem é",
+    "faq": "Perguntas",
+    "despues": "Depois"
+  }
+}

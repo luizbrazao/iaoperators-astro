@@ -1,0 +1,44 @@
+{
+  "breadcrumb": {
+    "home": "Home",
+    "label": "Breadcrumb"
+  },
+  "closingLabel": "Your next project",
+  "integracion": {
+    "pillar": "01 / Integration",
+    "queEs": "What it is",
+    "problema": "The problem",
+    "metodo": "Method",
+    "capacidades": "Capabilities",
+    "puerta": "First step"
+  },
+  "arquitectura": {
+    "pillar": "02 / Architecture",
+    "problema": "The problem",
+    "capas": "What it is",
+    "decisiones": "Decisions",
+    "relaciones": "With the other pillars"
+  },
+  "casoIntegracion": {
+    "pillar": "01 / Integration",
+    "queEs": "What it is",
+    "porQue": "Why",
+    "patrones": "Flows",
+    "entrega": "Delivery",
+    "principios": "Principles",
+    "casoReal": "Real case",
+    "proceso": "Method",
+    "tech": "Technology",
+    "puentes": "Related",
+    "faq": "Questions"
+  },
+  "servicioArquitectura": {
+    "pillar": "02 / Architecture",
+    "problema": "The problem",
+    "entregables": "Delivery",
+    "metodologia": "Methodology",
+    "audiencia": "Who it's for",
+    "faq": "Questions",
+    "despues": "Next"
+  }
+}
