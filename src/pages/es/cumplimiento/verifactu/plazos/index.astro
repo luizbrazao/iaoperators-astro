@@ -17,6 +17,8 @@ const L = copy.verifactu;
 
 const locale = "es";
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
+// Sin barra final: Astro.site termina en "/" y `${siteRoot}/es/` daba "//es/".
+const siteRoot = site.replace(/\/$/, "");
 const base = `/${locale}/cumplimiento/verifactu/`;
 const pillarUrl = new URL(base, site).toString();
 const pageUrl = new URL(`${base}plazos/`, site).toString();
@@ -97,7 +99,7 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
+      { "@type": "ListItem", position: 1, name: "Inicio", item: `${siteRoot}/${locale}/` },
       { "@type": "ListItem", position: 2, name: "Verifactu", item: pillarUrl },
       { "@type": "ListItem", position: 3, name: "Plazos", item: pageUrl },
     ],

@@ -5,6 +5,10 @@ import "@/styles/editorial-pages.css";
 import "@/styles/editorial-forms.css";
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
+
+// Sin barra final: Astro.site termina en "/" y `${siteRoot}/es/` daba "//es/".
+
+const siteRoot = site.replace(/\/$/, "");
 const canonical = new URL("/es/estudio/segunda-factura-ia/encuesta/", site).toString();
 const ogImage = "/og/es/segunda-factura-ia-encuesta.png";
 
@@ -27,13 +31,13 @@ const breadcrumbJsonLd = {
       "@type": "ListItem",
       position: 1,
       name: "IA Operators",
-      item: `${site}/es/`,
+      item: `${siteRoot}/es/`,
     },
     {
       "@type": "ListItem",
       position: 2,
       name: "Estudio",
-      item: `${site}/es/estudio/segunda-factura-ia/encuesta/`,
+      item: `${siteRoot}/es/estudio/segunda-factura-ia/encuesta/`,
     },
   ],
 };
@@ -48,7 +52,7 @@ const pageJsonLd = {
   isPartOf: {
     "@type": "WebSite",
     name: "IA Operators",
-    url: `${site}/es/`,
+    url: `${siteRoot}/es/`,
   },
 };
 ---

@@ -36,8 +36,12 @@ type Props = { locale: Loc };
 const { locale } = Astro.props as Props;
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
+
+// Sin barra final: Astro.site termina en "/" y `${siteRoot}/es/` daba "//es/".
+
+const siteRoot = site.replace(/\/$/, "");
 // `Astro.site` termina en "/" — todas las URLs absolutas se construyen con
-// `new URL()`, que normaliza y evita dobles barras (`${site}/${locale}/`
+// `new URL()`, que normaliza y evita dobles barras (`${siteRoot}/${locale}/`
 // producía `https://iaoperators.com//es/` en el breadcrumb).
 const base = integracionHref(locale);
 const pageUrl = new URL(base, site).toString();

@@ -39,9 +39,13 @@ const SHARED = getShared(locale);
 const ui = CASO_UI[locale];
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
+
+// Sin barra final: Astro.site termina en "/" y `${siteRoot}/es/` daba "//es/".
+
+const siteRoot = site.replace(/\/$/, "");
 const base = integracionHref(locale);
 // `Astro.site` termina en "/": toda URL absoluta se construye con `new URL()`,
-// que normaliza barras. La concatenación `${site}/${locale}/` producía
+// que normaliza barras. La concatenación `${siteRoot}/${locale}/` producía
 // `https://iaoperators.com//es/` en el breadcrumb (mismo bug que en el hub).
 const hubUrl = new URL(base, site).toString();
 const pageUrl = new URL(casoHref(locale, casoKey), site).toString();

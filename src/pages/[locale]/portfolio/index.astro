@@ -31,6 +31,10 @@ const uniqueVerticalsCount = new Set(
 ).size;
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
+
+// Sin barra final: Astro.site termina en "/" y `${siteRoot}/es/` daba "//es/".
+
+const siteRoot = site.replace(/\/$/, "");
 const portfolioUrl = new URL(`/${locale}/portfolio/`, site).toString();
 const homeLabel = locale === "pt" ? "Início" : locale === "en" ? "Home" : "Inicio";
 
@@ -46,7 +50,7 @@ const portfolioJsonLd: any[] = [
       "@type": "Organization",
       name: "IA Operators",
       url: site,
-      logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+      logo: { "@type": "ImageObject", url: `${siteRoot}/favicon-32x32.png` },
     },
   },
   {

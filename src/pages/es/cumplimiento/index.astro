@@ -11,6 +11,8 @@ import "@/styles/editorial-pages.css";
 
 const locale = "es";
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
+// Sin barra final: Astro.site termina en "/" y `${siteRoot}/es/` daba "//es/".
+const siteRoot = site.replace(/\/$/, "");
 const pageUrl = new URL(`/${locale}/cumplimiento/`, site).toString();
 const contactHref = `/${locale}/contact/`;
 const L = copy.cumplimiento;
@@ -84,7 +86,7 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      // `Astro.site` ya termina en "/": la concatenación `${site}/${locale}/`
+      // `Astro.site` ya termina en "/": la concatenación `${siteRoot}/${locale}/`
       // producía `https://iaoperators.com//es/` (mismo bug que en otros silos).
       { "@type": "ListItem", position: 1, name: "Inicio", item: new URL(`/${locale}/`, site).toString() },
       { "@type": "ListItem", position: 2, name: "Cumplimiento normativo", item: pageUrl },

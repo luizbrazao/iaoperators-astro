@@ -30,6 +30,10 @@ const slug = Astro.params.sector as SectorSlug;
 const c = SECTORES[slug];
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
+
+// Sin barra final: Astro.site termina en "/" y `${siteRoot}/es/` daba "//es/".
+
+const siteRoot = site.replace(/\/$/, "");
 const base = `/${locale}/cumplimiento/ley-atencion-al-cliente/`;
 const pillarUrl = new URL(base, site).toString();
 const pageUrl = new URL(`${base}${slug}/`, site).toString();
@@ -58,7 +62,7 @@ const providerSchema = {
   "@type": ["Organization", "ProfessionalService"],
   name: "IA Operators",
   url: site,
-  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+  logo: { "@type": "ImageObject", url: `${siteRoot}/favicon-32x32.png` },
   address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
 };
 
@@ -86,7 +90,7 @@ const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${siteRoot}/${locale}/` },
     { "@type": "ListItem", position: 2, name: "Ley de atención a la clientela", item: pillarUrl },
     { "@type": "ListItem", position: 3, name: c.nombreCorto, item: pageUrl },
   ],

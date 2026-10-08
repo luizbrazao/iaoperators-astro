@@ -108,6 +108,10 @@ const homeLabel = homeLabelByLocale[locale] ?? "Home";
 const blogLabel = "Blog";
 
 const site = (Astro.site?.toString() ?? "https://iaoperators.com").replace(/\/$/, "");
+
+// Sin barra final: Astro.site termina en "/" y `${siteRoot}/es/` daba "//es/".
+
+const siteRoot = site.replace(/\/$/, "");
 const canonicalPath = Astro.url.pathname.replace(/\/?$/, "/");
 const canonicalUrl = new URL(canonicalPath, site).toString();
 
@@ -219,7 +223,7 @@ const blogPostingJsonLd = {
   isPartOf: {
     "@type": "Blog",
     name: BLOG_NAME[locale] ?? BLOG_NAME.es,
-    url: `${site}/${locale}/blog/`,
+    url: `${siteRoot}/${locale}/blog/`,
   },
   ...(entry.data.about?.length
     ? {
@@ -236,7 +240,7 @@ const blogPostingJsonLd = {
     url: site,
     logo: {
       "@type": "ImageObject",
-      url: `${site}/android-chrome-512x512.png`,
+      url: `${siteRoot}/android-chrome-512x512.png`,
       width: 512,
       height: 512,
     },
@@ -247,8 +251,8 @@ const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: homeLabel, item: `${site}/${locale}/` },
-    { "@type": "ListItem", position: 2, name: blogLabel, item: `${site}/${locale}/blog/` },
+    { "@type": "ListItem", position: 1, name: homeLabel, item: `${siteRoot}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: blogLabel, item: `${siteRoot}/${locale}/blog/` },
     { "@type": "ListItem", position: 3, name: title, item: canonicalFromAlternates },
   ],
 };

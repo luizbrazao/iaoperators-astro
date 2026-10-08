@@ -22,15 +22,19 @@ const locale = getLocale(localeParam as string);
 const defaultLocale: Locale = "es";
 
 const site = (Astro.site?.toString() ?? "https://iaoperators.com").replace(/\/$/, "");
+
+// Sin barra final: Astro.site termina en "/" y `${siteRoot}/es/` daba "//es/".
+
+const siteRoot = site.replace(/\/$/, "");
 const AUTHOR_PATH = "autores/luiz-fernando-brazao";
 
 // hreflang alternates (self in each locale)
 const alternates = (["es", "pt", "en"] as const).map((lang) => ({
   lang,
-  href: `${site}/${lang}/${AUTHOR_PATH}/`,
+  href: `${siteRoot}/${lang}/${AUTHOR_PATH}/`,
 }));
-const canonicalUrl = `${site}/${locale}/${AUTHOR_PATH}/`;
-const xDefaultUrl = `${site}/${defaultLocale}/${AUTHOR_PATH}/`;
+const canonicalUrl = `${siteRoot}/${locale}/${AUTHOR_PATH}/`;
+const xDefaultUrl = `${siteRoot}/${defaultLocale}/${AUTHOR_PATH}/`;
 
 // ─── Author identity ─────────────────────────────────────────────────────────
 // Nombre, foto y perfiles vienen de src/data/identidad.ts: son los mismos que
@@ -174,7 +178,7 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: T.home, item: `${site}/${locale}/` },
+      { "@type": "ListItem", position: 1, name: T.home, item: `${siteRoot}/${locale}/` },
       { "@type": "ListItem", position: 2, name: NAME, item: canonicalUrl },
     ],
   },

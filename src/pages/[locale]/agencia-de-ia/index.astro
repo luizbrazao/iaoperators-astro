@@ -11,6 +11,8 @@ export async function getStaticPaths() {
 
 const locale = getLocale((Astro.params.locale as string) ?? "es");
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
+// Sin barra final: Astro.site termina en "/" y `${siteRoot}/es/` daba "//es/".
+const siteRoot = site.replace(/\/$/, "");
 const pageUrl = new URL(`/${locale}/agencia-de-ia/`, site).toString();
 const alternates = [{ lang: "es", href: pageUrl }];
 
@@ -28,8 +30,8 @@ const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
-    { "@type": "ListItem", position: 2, name: "Agencia de IA", item: `${site}/${locale}/servicios/agencia-ia/` },
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${siteRoot}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: "Agencia de IA", item: `${siteRoot}/${locale}/servicios/agencia-ia/` },
     { "@type": "ListItem", position: 3, name: "Por ciudades", item: pageUrl },
   ],
 };

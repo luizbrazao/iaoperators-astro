@@ -35,6 +35,10 @@ const PILARES_TITLE: Record<string, string> = {
 const pilaresTitle = PILARES_TITLE[locale] ?? PILARES_TITLE.es;
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
+
+// Sin barra final: Astro.site termina en "/" y `${siteRoot}/es/` daba "//es/".
+
+const siteRoot = site.replace(/\/$/, "");
 const pageUrl = new URL(`/${locale}/servicios/`, site).toString();
 const contactHref = `/${locale}/contact/`;
 
@@ -66,7 +70,7 @@ const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: homeLabel, item: `${site}/${locale}/` },
+    { "@type": "ListItem", position: 1, name: homeLabel, item: `${siteRoot}/${locale}/` },
     { "@type": "ListItem", position: 2, name: breadcrumbLabel, item: pageUrl },
   ],
 };

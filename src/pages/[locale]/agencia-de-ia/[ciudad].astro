@@ -20,6 +20,10 @@ const serviceHref = `/${locale}/servicios/agencia-ia/`;
 const pilarHref = `/${locale}/blog/que-es-una-agencia-de-ia/`;
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
+
+// Sin barra final: Astro.site termina en "/" y `${siteRoot}/es/` daba "//es/".
+
+const siteRoot = site.replace(/\/$/, "");
 const pageUrl = new URL(`/${locale}/agencia-de-ia/${ciudad}/`, site).toString();
 
 // hreflang solo ES (no existen versiones pt/en de esta página)
@@ -31,7 +35,7 @@ const providerSchema = {
   "@type": ["Organization", "ProfessionalService"],
   name: "IA Operators",
   url: site,
-  logo: { "@type": "ImageObject", url: `${site}/favicon-32x32.png` },
+  logo: { "@type": "ImageObject", url: `${siteRoot}/favicon-32x32.png` },
   address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
   areaServed: { "@type": "City", name: city.name },
 };
@@ -51,8 +55,8 @@ const breadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Inicio", item: `${site}/${locale}/` },
-    { "@type": "ListItem", position: 2, name: s.labels.breadcrumbBase, item: `${site}/${locale}/servicios/agencia-ia/` },
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${siteRoot}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: s.labels.breadcrumbBase, item: `${siteRoot}/${locale}/servicios/agencia-ia/` },
     { "@type": "ListItem", position: 3, name: city.name, item: pageUrl },
   ],
 };
