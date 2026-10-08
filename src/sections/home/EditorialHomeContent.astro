@@ -19,6 +19,9 @@ const selected = ["chatplug-whatsapp-altegio", "chatbot-reservas-turisticas-what
 const pillars = getPilares(locale);
 const steps = getArquitectura(locale);
 const capabilities = getServiceGroups(locale).filter(group=>group.key!=="arquitectura").flatMap(group=>group.items);
+// Enlaces directos a las páginas de cada obligación (solo ES: el pilar no existe en EN/PT).
+// La tarjeta del pilar es un único <a>, así que los hijos van en la fila de enlaces.
+const complianceLinks = pillars.find(pillar=>pillar.key==="cumplimiento")?.children.slice(1) ?? [];
 const client = home.clientTestimonials.items[0];
 const dateFormatter = new Intl.DateTimeFormat(locale, {day:"numeric",month:"short",year:"numeric",timeZone:"UTC"});
 const formatDate = (date: string) => Number.isNaN(Date.parse(date)) ? "" : dateFormatter.format(new Date(date));
@@ -57,7 +60,7 @@ const formatDate = (date: string) => Number.isNaN(Date.parse(date)) ? "" : dateF
         const detail = copy.capabilities.pillars[pillar.key as keyof typeof copy.capabilities.pillars];
         return <a class="ed-offer" href={pillar.href}><span class="ed-eyebrow">{String(index+1).padStart(2,"0")} / {detail.verb}</span><h3>{pillar.children[0].label}</h3><p>{detail.body}</p><span class="ed-arrow" aria-hidden="true">↗</span></a>;
       })}</div>
-      <div class="ed-capability-links" id="servicios">{capabilities.map(item=><a href={item.href}>{item.label} <span aria-hidden="true">↗</span></a>)}<a href={`/${locale}/${SERVICE_HUB_PATH}`}>{copy.capabilities.all} <span aria-hidden="true">↗</span></a></div>
+      <div class="ed-capability-links" id="servicios">{complianceLinks.map(item=><a href={item.href}>{item.label} <span aria-hidden="true">↗</span></a>)}{capabilities.map(item=><a href={item.href}>{item.label} <span aria-hidden="true">↗</span></a>)}<a href={`/${locale}/${SERVICE_HUB_PATH}`}>{copy.capabilities.all} <span aria-hidden="true">↗</span></a></div>
     </section>
   </div>
   <section class="ed-method" id="services" aria-labelledby="method-title"><div class="ed-container"><div class="ed-section-intro"><p class="ed-eyebrow">{copy.method.label}</p><h2 id="method-title">{copy.method.title}</h2></div><ol class="ed-steps">{steps.map((step,index)=><li><span class="ed-eyebrow">{step.num}</span><h3>{copy.method.steps[index].title}</h3><p>{copy.method.steps[index].body}</p><a href={step.href}>{step.label} <span aria-hidden="true">↗</span></a></li>)}</ol></div></section>

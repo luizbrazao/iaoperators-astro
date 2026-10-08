@@ -133,7 +133,7 @@ La API empieza a compensar cuando aparece al menos una de estas tres cosas:
 
 - **Varias personas atendiendo el mismo número.** La app no lo permite de forma seria, y es el motivo más frecuente para dar el salto.
 - **Necesidad de que el canal hable con tus sistemas.** Consultar un pedido, reservar una cita, escribir en el [CRM](/es/integracion/crm/). Sin esto, un agente automático solo puede dar respuestas genéricas.
-- **Obligación de demostrar tiempos de respuesta.** Si atiendes reclamaciones por WhatsApp, el canal entra en el ámbito de la [Ley 10/2025 de atención a la clientela](/es/cumplimiento/ley-atencion-al-cliente/), y sus plazos hay que poder probarlos con datos. Un número en el móvil de alguien no produce evidencia.
+- **Obligación de demostrar tiempos de respuesta.** Si atiendes reclamaciones por WhatsApp, el canal entra en el ámbito de la [Ley de atención al cliente (Ley 10/2025)](/es/cumplimiento/ley-atencion-al-cliente/), y sus plazos hay que poder probarlos con datos. Un número en el móvil de alguien no produce evidencia.
 
 Y hay un cuarto motivo, menos citado y bastante real: **el número deja de depender de una persona**. Cuando el WhatsApp de la empresa está instalado en un teléfono concreto, el historial de clientes se va el día que se va esa persona. Eso no es un coste que aparezca en ninguna factura, pero es el que más caro sale cuando ocurre.
 

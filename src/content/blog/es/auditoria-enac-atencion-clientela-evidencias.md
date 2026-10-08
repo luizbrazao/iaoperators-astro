@@ -112,6 +112,6 @@ Y hay una segunda razón para no apurar. Un proyecto de este tipo —capa omnica
 
 ---
 
-**Antes de planificar nada, conviene saber dónde estás.** El [test de cumplimiento](/es/cumplimiento/ley-atencion-al-cliente/test/) evalúa tu situación obligación por obligación en dos minutos y te dice qué evidencia te falta hoy. Si prefieres el contexto completo primero, está en la [página sobre la Ley 10/2025](/es/cumplimiento/ley-atencion-al-cliente/).
+**Antes de planificar nada, conviene saber dónde estás.** El [test de cumplimiento](/es/cumplimiento/ley-atencion-al-cliente/test/) evalúa tu situación obligación por obligación en dos minutos y te dice qué evidencia te falta hoy. Si prefieres el contexto completo primero, está en la página sobre la [Ley de atención al cliente](/es/cumplimiento/ley-atencion-al-cliente/).
 
 *Información técnica sobre implementación de sistemas. No constituye asesoramiento jurídico: la interpretación del alcance de la norma y de su régimen sancionador corresponde a tu asesoría o despacho.*

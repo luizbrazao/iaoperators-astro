@@ -57,7 +57,7 @@ La [Ley 10/2025, de 26 de diciembre](https://www.boe.es/buscar/act.php?id=BOE-A-
 
 Dos partes, y la primera se lee poco. No basta con llegar al día quince: la norma pide resolver *en el plazo más breve posible* y fija los quince días como techo, no como objetivo. Una empresa que responda sistemáticamente el día catorce está cumpliendo la letra y tensando el espíritu.
 
-La ley entró en vigor el 28 de diciembre de 2025 y concede doce meses de adaptación. El **28 de diciembre de 2026** el servicio de atención tiene que funcionar así. Si aún no tienes claro si tu empresa está dentro del ámbito de aplicación, en la [página sobre la Ley 10/2025](/es/cumplimiento/ley-atencion-al-cliente/) están las dos vías de entrada —por actividad y por tamaño— con los umbrales exactos.
+La ley entró en vigor el 28 de diciembre de 2025 y concede doce meses de adaptación. El **28 de diciembre de 2026** el servicio de atención tiene que funcionar así. Si aún no tienes claro si tu empresa está dentro del ámbito de aplicación, en la página sobre la [Ley de atención al cliente (Ley 10/2025)](/es/cumplimiento/ley-atencion-al-cliente/) están las dos vías de entrada —por actividad y por tamaño— con los umbrales exactos.
 
 <h2 id="habiles">Hábiles no es lo mismo que naturales</h2>
 
