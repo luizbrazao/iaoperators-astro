@@ -308,6 +308,13 @@ const CONTENT: Record<Loc, Content> = {
 
 const C = CONTENT[loc];
 
+// Rótulos del diseño editorial (ES desde oct/2026, EN/PT desde el 08/oct/2026).
+const ED = {
+  es: { crumbs: "Ruta de navegación", since: "Málaga · desde", founder: "Fundador · ver perfil", facts: "Ficha", more: "Más", next: "Siguiente paso" },
+  en: { crumbs: "Breadcrumb", since: "Málaga · since", founder: "Founder · see profile", facts: "Facts", more: "More", next: "Next step" },
+  pt: { crumbs: "Trilha de navegação", since: "Málaga · desde", founder: "Fundador · ver perfil", facts: "Ficha", more: "Mais", next: "Próximo passo" },
+}[loc];
+
 // Los hrefs dependen del idioma, así que se inyectan aquí y no en el diccionario.
 const outLinks: OutLink[] = [
   { ...C.outLinks[0], href: links.methodology },
@@ -368,229 +375,107 @@ const jsonLd = [
   alternates={alternates}
   xDefaultUrl={xDefaultUrl}
   jsonLd={jsonLd}
-  editorial={locale === "es"}
+  editorial
 >
-  {/* ES: diseño editorial (oct/2026). Mismos textos, H1/H2 y enlaces que la
-      versión oscura, que sigue para EN y PT. */}
-  {locale === "es" ? (
-    <Fragment>
-      <div class="ed-container">
-        <header class="pg-hero">
-          <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
-            <ol>
-              <li><a href="/es/">{C.breadcrumbHome}</a></li>
-              <li><span aria-current="page">{C.breadcrumbCurrent}</span></li>
-            </ol>
-          </nav>
-          <h1>{C.h1}</h1>
-          <div class="pg-hero-bottom">
-            <p class="ed-eyebrow">Málaga · desde {FOUNDING_DATE}</p>
-            <p class="pg-lead">{C.lead}</p>
-          </div>
-        </header>
-
-        {C.sections.map((section, i) => (
-          <section class="pg-section" aria-labelledby={`sobre-${i + 1}`}>
-            <div class="ed-section-intro">
-              <p class="ed-eyebrow">{String(i + 1).padStart(2, "0")}</p>
-              <div>
-                <h2 id={`sobre-${i + 1}`}>{section.title}</h2>
-                <div class="pg-prose">
-                  {section.paragraphs.map((text) => <p>{text}</p>)}
-                </div>
-                {i === 0 && (
-                  <a class="sb-founder" href={links.author}>
-                    <img src={PERSON_AVATAR} alt="" width="64" height="64" loading="lazy" decoding="async" />
-                    <strong>{PERSON_NAME}</strong>
-                    <span class="ed-eyebrow">Fundador · ver perfil</span>
-                  </a>
-                )}
-              </div>
-            </div>
-          </section>
-        ))}
-
-        <section class="pg-section" aria-labelledby="sobre-datos">
-          <div class="ed-section-intro">
-            <p class="ed-eyebrow">Ficha</p>
-            <div>
-              <h2 id="sobre-datos">{C.factsTitle}</h2>
-              <dl class="sb-facts">
-                {C.facts.map((fact) => (
-                  <div>
-                    <dt class="ed-eyebrow">{fact.label}</dt>
-                    <dd>{fact.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          </div>
-        </section>
-
-        <section class="pg-section" aria-labelledby="sobre-seguir">
-          <div class="ed-section-intro">
-            <p class="ed-eyebrow">Más</p>
-            <h2 id="sobre-seguir">{C.outLinksTitle}</h2>
-          </div>
-          <ul class="pg-doors sb-doors">
-            {outLinks.map((item) => (
-              <li>
-                <a href={item.href}>
-                  <h3>{item.title}</h3>
-                  <p>{item.text}</p>
-                  <span class="sb-door-cta">{item.cta}</span>
-                  <span class="ed-arrow" aria-hidden="true">↗</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <div class="pg-door-wrap">
-          <section class="pg-door" aria-labelledby="sobre-legal">
-            <p class="ed-eyebrow">LSSI-CE · art. 10</p>
-            <div>
-              <h2 id="sobre-legal">{C.legalTitle}</h2>
-              <p>{C.legalText}</p>
-              <a class="ed-underlined" href={links.terms}>{C.legalCta} <span aria-hidden="true">→</span></a>
-              <p class="sb-legal-contact">
-                {C.legalContact}:{" "}
-                <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a> ·{" "}
-                <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a>
-              </p>
-            </div>
-          </section>
+  <Fragment>
+    <div class="ed-container">
+      <header class="pg-hero">
+        <nav class="pf-crumbs ed-eyebrow" aria-label={ED.crumbs}>
+          <ol>
+            <li><a href={`/${locale}/`}>{C.breadcrumbHome}</a></li>
+            <li><span aria-current="page">{C.breadcrumbCurrent}</span></li>
+          </ol>
+        </nav>
+        <h1>{C.h1}</h1>
+        <div class="pg-hero-bottom">
+          <p class="ed-eyebrow">{ED.since} {FOUNDING_DATE}</p>
+          <p class="pg-lead">{C.lead}</p>
         </div>
-
-        <Reconocimientos locale={locale} variant="editorial" />
-      </div>
-
-      <section class="ed-closing" aria-labelledby="sobre-closing">
-        <div class="ed-container">
-          <p class="ed-eyebrow">Siguiente paso</p>
-          <h2 id="sobre-closing" class="pg-closing-title">{C.ctaTitle}</h2>
-          <p class="pg-closing-copy">{C.ctaText}</p>
-          <a class="ed-button" href={links.contact}>{C.ctaButton}<span class="ed-arrow" aria-hidden="true">↗</span></a>
-        </div>
-      </section>
-    </Fragment>
-  ) : (
-  <div class="pt-32 pb-20 px-4">
-    <div class="max-w-4xl mx-auto">
-      <!-- Breadcrumb -->
-      <nav aria-label="Breadcrumb" class="mb-8 text-sm text-gray-400">
-        <ol class="flex flex-wrap items-center gap-1">
-          <li>
-            <a href={`/${locale}/`} class="hover:text-orange-400 transition-colors">
-              {C.breadcrumbHome}
-            </a>
-          </li>
-          <li class="text-gray-700">/</li>
-          <li class="text-gray-400" aria-current="page">{C.breadcrumbCurrent}</li>
-        </ol>
-      </nav>
-
-      <!-- Encabezado -->
-      <header class="mb-14">
-        <h1 class="text-3xl md:text-5xl font-bold text-white leading-tight">
-          {C.h1}
-        </h1>
-        <p class="text-lg text-gray-300 leading-relaxed mt-5 max-w-3xl">{C.lead}</p>
       </header>
 
-      <!-- Secciones narrativas -->
-      {C.sections.map((section) => (
-        <section class="mb-14">
-          <h2 class="text-2xl font-bold text-white mb-5 border-l-4 border-orange-500 pl-4">
-            {section.title}
-          </h2>
-          <div class="space-y-4 text-gray-300 leading-relaxed max-w-3xl">
-            {section.paragraphs.map((text) => (
-              <p>{text}</p>
-            ))}
+      {C.sections.map((section, i) => (
+        <section class="pg-section" aria-labelledby={`sobre-${i + 1}`}>
+          <div class="ed-section-intro">
+            <p class="ed-eyebrow">{String(i + 1).padStart(2, "0")}</p>
+            <div>
+              <h2 id={`sobre-${i + 1}`}>{section.title}</h2>
+              <div class="pg-prose">
+                {section.paragraphs.map((text) => <p>{text}</p>)}
+              </div>
+              {i === 0 && (
+                <a class="sb-founder" href={links.author}>
+                  <img src={PERSON_AVATAR} alt="" width="64" height="64" loading="lazy" decoding="async" />
+                  <strong>{PERSON_NAME}</strong>
+                  <span class="ed-eyebrow">{ED.founder}</span>
+                </a>
+              )}
+            </div>
           </div>
         </section>
       ))}
 
-      <!-- Ficha de datos -->
-      <section class="mb-16">
-        <h2 class="text-2xl font-bold text-white mb-6 border-l-4 border-orange-500 pl-4">
-          {C.factsTitle}
-        </h2>
-        <dl class="grid sm:grid-cols-2 gap-px rounded-2xl overflow-hidden bg-white/5 border border-white/5">
-          {C.facts.map((fact) => (
-            <div class="bg-[#0a0a0a] p-5">
-              <dt class="text-xs uppercase tracking-widest text-gray-500 mb-1.5">
-                {fact.label}
-              </dt>
-              <dd class="text-white text-sm font-medium">{fact.value}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
-
-      <!-- Enlaces de salida -->
-      <section class="mb-16">
-        <h2 class="text-2xl font-bold text-white mb-6 border-l-4 border-orange-500 pl-4">
-          {C.outLinksTitle}
-        </h2>
-        <div class="grid sm:grid-cols-3 gap-5">
-          {outLinks.map((item) => (
-            <a
-              href={item.href}
-              class="group flex flex-col p-5 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-orange-500/30 transition-all"
-            >
-              <h3 class="text-white font-semibold leading-snug mb-2 group-hover:text-orange-300 transition-colors">
-                {item.title}
-              </h3>
-              <p class="text-gray-400 text-sm leading-relaxed grow">{item.text}</p>
-              <span class="mt-4 text-orange-400 text-xs font-semibold">
-                {item.cta} →
-              </span>
-            </a>
-          ))}
+      <section class="pg-section" aria-labelledby="sobre-datos">
+        <div class="ed-section-intro">
+          <p class="ed-eyebrow">{ED.facts}</p>
+          <div>
+            <h2 id="sobre-datos">{C.factsTitle}</h2>
+            <dl class="sb-facts">
+              {C.facts.map((fact) => (
+                <div>
+                  <dt class="ed-eyebrow">{fact.label}</dt>
+                  <dd>{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
       </section>
 
-      <!-- Identificación legal: se enlaza, no se duplica -->
-      <section class="mb-16 p-6 rounded-2xl bg-white/[0.03] border border-white/5">
-        <h2 class="text-xl font-bold text-white mb-3 border-l-4 border-orange-500 pl-3">
-          {C.legalTitle}
-        </h2>
-        <p class="text-gray-300 text-sm leading-relaxed max-w-3xl">{C.legalText}</p>
-        <a
-          href={links.terms}
-          class="inline-flex items-center gap-1.5 mt-4 text-sm text-orange-400 hover:text-orange-300 transition-colors font-semibold"
-        >
-          {C.legalCta} →
-        </a>
-        <p class="text-gray-400 text-sm mt-4">
-          {C.legalContact}:{" "}
-          <a href={`mailto:${CONTACT.email}`} class="underline hover:text-orange-400">
-            {CONTACT.email}
-          </a>{" "}
-          ·{" "}
-          <a href={`tel:${CONTACT.phone}`} class="underline hover:text-orange-400">
-            {CONTACT.phoneDisplay}
-          </a>
-        </p>
+      <section class="pg-section" aria-labelledby="sobre-seguir">
+        <div class="ed-section-intro">
+          <p class="ed-eyebrow">{ED.more}</p>
+          <h2 id="sobre-seguir">{C.outLinksTitle}</h2>
+        </div>
+        <ul class="pg-doors sb-doors">
+          {outLinks.map((item) => (
+            <li>
+              <a href={item.href}>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+                <span class="sb-door-cta">{item.cta}</span>
+                <span class="ed-arrow" aria-hidden="true">↗</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </section>
 
-      <!-- Reconocimientos: sólo en esta página -->
-      <Reconocimientos locale={locale} />
+      <div class="pg-door-wrap">
+        <section class="pg-door" aria-labelledby="sobre-legal">
+          <p class="ed-eyebrow">LSSI-CE · art. 10</p>
+          <div>
+            <h2 id="sobre-legal">{C.legalTitle}</h2>
+            <p>{C.legalText}</p>
+            <a class="ed-underlined" href={links.terms}>{C.legalCta} <span aria-hidden="true">→</span></a>
+            <p class="sb-legal-contact">
+              {C.legalContact}:{" "}
+              <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a> ·{" "}
+              <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a>
+            </p>
+          </div>
+        </section>
+      </div>
 
-      <!-- CTA final -->
-      <section class="p-8 rounded-3xl bg-linear-to-b from-white/[0.06] to-transparent border border-white/10 text-center">
-        <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">{C.ctaTitle}</h2>
-        <p class="text-gray-400 leading-relaxed max-w-2xl mx-auto">{C.ctaText}</p>
-        <a
-          href={links.contact}
-          class="inline-block mt-6 px-6 py-3 rounded-full bg-orange-500 text-white font-semibold hover:bg-orange-400 transition-colors"
-        >
-          {C.ctaButton}
-        </a>
-      </section>
+      <Reconocimientos locale={locale} variant="editorial" />
     </div>
-  </div>
-  )}
+
+    <section class="ed-closing" aria-labelledby="sobre-closing">
+      <div class="ed-container">
+        <p class="ed-eyebrow">{ED.next}</p>
+        <h2 id="sobre-closing" class="pg-closing-title">{C.ctaTitle}</h2>
+        <p class="pg-closing-copy">{C.ctaText}</p>
+        <a class="ed-button" href={links.contact}>{C.ctaButton}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </Fragment>
 </BaseLayout>
