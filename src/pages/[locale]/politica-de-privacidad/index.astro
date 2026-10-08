@@ -41,6 +41,67 @@ function t(path: string, fallback: string = ""): string {
 
 const title = `${t("privacyPage.title", "Política de Privacidad")} | IA Operators`;
 
+// ─── Política ES (oct/2026) ──────────────────────────────────────────────────
+// Texto propio de la versión ES, redactado sobre lo que el sitio hace de verdad
+// (formularios en src/pages/api/*, Supabase en la UE, Resend, GTM con GA4,
+// Google Ads, Meta Pixel, LinkedIn Insight y Ahrefs). EN y PT siguen leyendo
+// terms.json. Si cambia un proveedor, una cookie o un plazo, se cambia aquí.
+const RESPONSABLE = {
+  name: "Luiz Fernando Costa Brazao",
+  taxId: "Y8219331L",
+  city: "Málaga, España",
+  email: "info@iaoperators.com",
+};
+
+const TRATAMIENTOS = [
+  {
+    titulo: "Formulario de contacto",
+    datos: "Nombre, email, empresa, ciudad (opcional), el mensaje que escribas y la dirección IP desde la que se envía.",
+    finalidad: "Responder a tu solicitud y, si hay encaje, preparar una propuesta. La IP se usa solo para limitar envíos abusivos.",
+    base: "Aplicación de medidas precontractuales a petición tuya (art. 6.1.b RGPD) y, para la IP, interés legítimo en proteger el formulario (art. 6.1.f).",
+    plazo: "12 meses desde el último contacto si no se inicia una relación. Si pasas a ser cliente, mientras dure la relación y después durante los plazos legales (6 años para la documentación mercantil).",
+  },
+  {
+    titulo: "Tests de cumplimiento (Ley 10/2025 y Verifactu)",
+    datos: "Las respuestas al cuestionario, el resultado, la página de origen, los parámetros de campaña (UTM) y un identificador seudonimizado calculado a partir de la IP, el navegador y el idioma. No se guarda la IP. Si pides el informe: tu email y tus preferencias de contacto.",
+    finalidad: "Calcular y mostrarte el resultado, obtener estadísticas agregadas y evitar envíos duplicados o automatizados. Con el email, enviarte el informe y, si lo marcas, contactarte para comentarlo.",
+    base: "Interés legítimo en prestar la herramienta y medir su uso (art. 6.1.f RGPD). El envío del informe y el contacto posterior, tu consentimiento (art. 6.1.a).",
+    plazo: "Respuestas: 24 meses. Email: hasta que retires el consentimiento o tras 24 meses sin interacción.",
+  },
+  {
+    titulo: "Encuesta «La Segunda Factura de la IA 2026»",
+    datos: "Las respuestas, el idioma, datos técnicos del dispositivo (categoría y huella seudonimizada) y, de forma opcional, tu email, que se guarda separado de las respuestas.",
+    finalidad: "Elaborar un estudio con resultados agregados. Las respuestas individuales no se publican. El email solo sirve para avisarte de los resultados.",
+    base: "Tu consentimiento, que prestas al aceptar las casillas antes de enviar (art. 6.1.a RGPD).",
+    plazo: "Datos individuales: hasta 12 meses después de publicar el estudio; después se conservan solo agregados. Email: hasta enviarte los resultados.",
+  },
+  {
+    titulo: "Navegación y seguridad",
+    datos: "Registros técnicos del servidor (IP, fecha, página solicitada y navegador).",
+    finalidad: "Servir el sitio, detectar errores y prevenir ataques.",
+    base: "Interés legítimo en mantener el sitio seguro y operativo (art. 6.1.f RGPD).",
+    plazo: "El periodo breve que fija el proveedor de alojamiento para sus registros.",
+  },
+];
+
+const PROVEEDORES = [
+  { nombre: "Vercel Inc.", uso: "Alojamiento del sitio y ejecución de los formularios.", ubicacion: "Estados Unidos · encargado del tratamiento" },
+  { nombre: "Supabase Inc.", uso: "Base de datos de los tests y de la encuesta.", ubicacion: "Servidores en la Unión Europea · encargado del tratamiento" },
+  { nombre: "Resend (Plus Five Five, Inc.)", uso: "Envío de los correos del formulario de contacto y de los informes de los tests.", ubicacion: "Estados Unidos · encargado del tratamiento" },
+  { nombre: "Google (Gmail)", uso: "Bandeja en la que se reciben y gestionan los mensajes enviados a info@iaoperators.com.", ubicacion: "Estados Unidos y UE" },
+  { nombre: "Google, Meta, LinkedIn y Ahrefs", uso: "Medición y publicidad, solo si aceptas las cookies. Detalle en el apartado 7.", ubicacion: "UE y Estados Unidos · ver apartado 7" },
+];
+
+const COOKIES = [
+  { nombre: "Preferencia de cookies (propia)", uso: "Recuerda si aceptaste o rechazaste el aviso. Se guarda en el almacenamiento local del navegador. Técnica, no requiere consentimiento.", detalle: "Clave iaoperators_cookie_consent · hasta que la borres" },
+  { nombre: "Google Tag Manager (Google Ireland Ltd.)", uso: "Gestor que carga el resto de etiquetas tras tu consentimiento. No instala cookies propias.", detalle: "Solo tras aceptar" },
+  { nombre: "Google Analytics 4 (Google Ireland Ltd.)", uso: "Medición de audiencia: páginas vistas, origen de las visitas y conversiones.", detalle: "Analítica · _ga, _ga_* · hasta 2 años" },
+  { nombre: "Google Ads (Google Ireland Ltd.)", uso: "Medición de conversiones de anuncios y listas de remarketing.", detalle: "Publicidad · _gcl_au · 90 días" },
+  { nombre: "Píxel de Meta (Meta Platforms Ireland Ltd.)", uso: "Medición de conversiones y públicos para anuncios en Facebook e Instagram.", detalle: "Publicidad · _fbp, _fbc · 90 días" },
+  { nombre: "LinkedIn Insight Tag (LinkedIn Ireland U.C.)", uso: "Medición de conversiones y públicos para anuncios en LinkedIn.", detalle: "Publicidad · li_sugr, bcookie, lidc, UserMatchHistory y otras · entre 1 día y 1 año" },
+  { nombre: "Ahrefs Web Analytics (Ahrefs Pte. Ltd.)", uso: "Medición de audiencia agregada.", detalle: "Analítica · Singapur · según el proveedor, sin cookies" },
+];
+
 // meta description única por idioma (evita duplicados com la página de términos)
 const metaDescription =
   ({
@@ -64,54 +125,176 @@ const metaDescription =
         </nav>
         <h1>{t("privacyPage.title", "Política de Privacidad")}</h1>
         <div class="pg-hero-bottom">
-          <p class="ed-eyebrow">Información legal</p>
-          <p class="pg-lead">{metaDescription}</p>
+          <p class="ed-eyebrow">Última actualización · 8 de octubre de 2026</p>
+          <p class="pg-lead">
+            Qué datos personales tratamos en iaoperators.com, para qué, con qué base legal, durante
+            cuánto tiempo, con quién se comparten y cómo puedes ejercer tus derechos. Esta política
+            cumple el deber de información del Reglamento (UE) 2016/679 (RGPD) y de la Ley Orgánica
+            3/2018 (LOPDGDD).
+          </p>
         </div>
       </header>
 
       <div class="lg-blocks">
-        <section class="lg-block">
-          <h2>{t("privacy.collection.title", "Recopilación de datos")}</h2>
-          <ul>
-            <li>{t("privacy.collection.items.personal", "Datos personales")}</li>
-            <li>{t("privacy.collection.items.usage", "Datos de uso")}</li>
-          </ul>
+        <section class="lg-block" id="responsable">
+          <h2>1. Responsable del tratamiento</h2>
+          <div>
+            <dl class="lg-dl">
+              <dt class="ed-eyebrow">Titular</dt><dd>{RESPONSABLE.name} (nombre comercial: IA Operators)</dd>
+              <dt class="ed-eyebrow">NIF</dt><dd>{RESPONSABLE.taxId}</dd>
+              <dt class="ed-eyebrow">Domicilio</dt><dd>{RESPONSABLE.city}</dd>
+              <dt class="ed-eyebrow">Contacto</dt><dd><a href={`mailto:${RESPONSABLE.email}`}>{RESPONSABLE.email}</a></dd>
+            </dl>
+            <p>
+              No hemos designado delegado de protección de datos porque nuestra actividad no está entre
+              los supuestos que lo exigen (art. 37 RGPD y art. 34 LOPDGDD). Para cualquier cuestión sobre
+              privacidad, escribe al correo anterior.
+            </p>
+          </div>
         </section>
-        <section class="lg-block">
-          <h2>{t("privacy.usage.title", "Uso de datos")}</h2>
-          <ul>
-            <li>{t("privacy.usage.items.improve", "Mejorar el servicio")}</li>
-            <li>{t("privacy.usage.items.personalization", "Personalización")}</li>
-            <li>{t("privacy.usage.items.communication", "Comunicación")}</li>
-          </ul>
+
+        <section class="lg-block" id="tratamientos">
+          <h2>2. Qué datos tratamos y para qué</h2>
+          <div class="lg-subs">
+            {TRATAMIENTOS.map((tr) => (
+              <div class="lg-sub">
+                <h3>{tr.titulo}</h3>
+                <dl class="lg-dl">
+                  <dt class="ed-eyebrow">Datos</dt><dd>{tr.datos}</dd>
+                  <dt class="ed-eyebrow">Finalidad</dt><dd>{tr.finalidad}</dd>
+                  <dt class="ed-eyebrow">Base jurídica</dt><dd>{tr.base}</dd>
+                  <dt class="ed-eyebrow">Conservación</dt><dd>{tr.plazo}</dd>
+                </dl>
+              </div>
+            ))}
+            <p>
+              No vendemos datos personales ni los cedemos a terceros para sus propios fines, salvo
+              obligación legal. Los datos de los formularios no se usan para publicidad.
+            </p>
+          </div>
         </section>
-        <section class="lg-block">
-          <h2>{t("privacy.sharing.title", "Compartir datos")}</h2>
-          <p>{t("privacy.sharing.text", "No compartimos tus datos.")}</p>
+
+        <section class="lg-block" id="destinatarios">
+          <h2>3. Proveedores con acceso a los datos</h2>
+          <div>
+            <p>
+              Para prestar el servicio usamos los siguientes proveedores. Los que actúan como encargados
+              del tratamiento solo tratan los datos siguiendo nuestras instrucciones.
+            </p>
+            <ul class="lg-providers">
+              {PROVEEDORES.map((pr) => (
+                <li>
+                  <strong>{pr.nombre}</strong>
+                  <span>{pr.uso}</span>
+                  <span class="lg-provider-meta">{pr.ubicacion}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
-        <section class="lg-block">
-          <h2>{t("privacy.security.title", "Seguridad")}</h2>
-          <p>{t("privacy.security.text", "Protegemos tu información.")}</p>
+
+        <section class="lg-block" id="transferencias">
+          <h2>4. Transferencias internacionales</h2>
+          <div>
+            <p>
+              Varios de estos proveedores son empresas de Estados Unidos o pueden acceder a los datos
+              desde allí. En esos casos la transferencia se ampara en la Decisión de adecuación del Marco
+              de Privacidad de Datos UE-EE. UU., cuando el proveedor está adherido, o en las cláusulas
+              contractuales tipo aprobadas por la Comisión Europea, que los proveedores incluyen en sus
+              acuerdos de tratamiento de datos.
+            </p>
+            <p>
+              Las respuestas de los tests y de la encuesta se almacenan en servidores de la Unión Europea.
+            </p>
+          </div>
         </section>
-        <section class="lg-block">
-          <h2>{t("privacy.rights.title", "Tus derechos")}</h2>
-          <ul>
-            <li>{t("privacy.rights.items.access", "Acceso")}</li>
-            <li>{t("privacy.rights.items.portability", "Portabilidad")}</li>
-            <li>{t("privacy.rights.items.marketing", "Preferencias de marketing")}</li>
-          </ul>
+
+        <section class="lg-block" id="decisiones">
+          <h2>5. Decisiones automatizadas</h2>
+          <p>
+            El resultado de los tests de cumplimiento se calcula con reglas fijas a partir de tus
+            respuestas. Es orientativo, no produce efectos jurídicos sobre ti y no condiciona ninguna
+            decisión que te afecte. No tomamos decisiones basadas únicamente en tratamientos
+            automatizados en el sentido del art. 22 RGPD.
+          </p>
         </section>
-        <section class="lg-block">
-          <h2>{t("privacy.cookies.title", "Cookies")}</h2>
-          <p>{t("privacy.cookies.text", "Usamos cookies.")}</p>
+
+        <section class="lg-block" id="derechos">
+          <h2>6. Tus derechos</h2>
+          <div>
+            <ul>
+              <li>Acceder a tus datos y saber cómo los tratamos.</li>
+              <li>Rectificar los datos inexactos y suprimirlos cuando ya no sean necesarios.</li>
+              <li>Oponerte al tratamiento basado en interés legítimo y pedir su limitación.</li>
+              <li>Recibir tus datos en un formato estructurado (portabilidad).</li>
+              <li>Retirar tu consentimiento en cualquier momento, sin que afecte a lo tratado antes.</li>
+            </ul>
+            <p>
+              Para ejercerlos, escribe a <a href={`mailto:${RESPONSABLE.email}`}>{RESPONSABLE.email}</a> con
+              el asunto «Protección de datos», indicando qué derecho ejerces. Solo te pediremos datos para
+              verificar tu identidad si hay dudas razonables sobre ella. Respondemos en el plazo de un mes.
+            </p>
+            <p>
+              Si consideras que no hemos atendido bien tu solicitud, puedes reclamar ante la Agencia
+              Española de Protección de Datos en <a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">www.aepd.es</a>.
+            </p>
+          </div>
         </section>
-        <section class="lg-block">
-          <h2>{t("privacy.changes.title", "Cambios")}</h2>
-          <p>{t("privacy.changes.text", "Podemos actualizar esta política.")}</p>
+
+        <section class="lg-block" id="cookies">
+          <h2>7. Cookies y tecnologías similares</h2>
+          <div>
+            <p>
+              Solo usamos sin tu consentimiento lo estrictamente necesario para que el sitio funcione y
+              para recordar tu elección sobre cookies. La medición y la publicidad se cargan únicamente si
+              pulsas «Aceptar» en el aviso; si pulsas «Rechazar», no se carga ninguna.
+            </p>
+            <ul class="lg-providers">
+              {COOKIES.map((ck) => (
+                <li>
+                  <strong>{ck.nombre}</strong>
+                  <span>{ck.uso}</span>
+                  <span class="lg-provider-meta">{ck.detalle}</span>
+                </li>
+              ))}
+            </ul>
+            <p>
+              Las cookies de publicidad permiten mostrarte anuncios de IA Operators en esas plataformas
+              después de visitar el sitio y medir si un anuncio terminó en una solicitud de contacto. En
+              el caso del píxel de Meta, Meta Platforms Ireland actúa como corresponsable de la recogida y
+              transmisión de esos datos.
+            </p>
+            <p>
+              Puedes cambiar tu elección en cualquier momento desde el enlace «Cookies» del pie de página,
+              y borrar las cookies ya instaladas desde la configuración de tu navegador.
+            </p>
+          </div>
         </section>
-        <section class="lg-block">
-          <h2>{t("contact.title", "Contacto")}</h2>
-          <p>{t("contact.text", "Escríbenos a")} <a href="mailto:info@iaoperators.com">info@iaoperators.com</a></p>
+
+        <section class="lg-block" id="menores">
+          <h2>8. Menores</h2>
+          <p>
+            El sitio está dirigido a empresas y profesionales. No recogemos de forma consciente datos de
+            menores de 14 años.
+          </p>
+        </section>
+
+        <section class="lg-block" id="seguridad">
+          <h2>9. Seguridad</h2>
+          <p>
+            Aplicamos medidas técnicas y organizativas proporcionadas al riesgo: conexiones cifradas,
+            acceso restringido a las bases de datos, separación del email respecto de las respuestas en la
+            encuesta y seudonimización del origen de las respuestas de los tests.
+          </p>
+        </section>
+
+        <section class="lg-block" id="cambios">
+          <h2>10. Cambios en esta política</h2>
+          <p>
+            Si cambiamos la forma de tratar tus datos, actualizaremos esta página y su fecha. Si el cambio
+            afecta a un tratamiento basado en tu consentimiento, te lo pediremos de nuevo cuando sea
+            necesario.
+          </p>
         </section>
       </div>
     </div>
