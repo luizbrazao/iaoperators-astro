@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import SurveyForm from "@/islands/SurveyForm";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-forms.css";
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
 
@@ -64,64 +66,55 @@ const pageJsonLd = {
   ogImage={ogImage}
   ogImageAlt="Pesquisa A Segunda Fatura da IA 2026"
   jsonLd={[pageJsonLd, breadcrumbJsonLd]}
+  editorial
 >
-  <div class="min-h-screen bg-transparent text-white">
-    <section class="px-4 pt-28 pb-10">
-      <div class="mx-auto max-w-6xl">
-        <div class="grid gap-10 xl:grid-cols-[1.1fr_0.9fr] xl:items-end">
-          <div class="space-y-6">
-            <span class="inline-flex rounded-full border border-orange-500/25 bg-orange-500/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.28em] text-orange-300">
-              Estudo exploratório 2026
-            </span>
-            <div class="space-y-4">
-              <h1 class="max-w-4xl text-4xl font-semibold leading-tight md:text-6xl md:leading-none">
-                A Segunda Fatura da IA 2026
-              </h1>
-              <p class="max-w-3xl text-lg leading-relaxed text-white/72 md:text-xl">
-                Uma pesquisa breve para entender como empresas e profissionais estão usando IA no trabalho, que controles existem e onde aparecem os riscos menos visíveis: contas pessoais, documentos internos, dependência de um único fornecedor e Shadow AI.
-              </p>
-            </div>
-          </div>
+  <div class="ed-container">
+    <header class="pg-hero">
+      <nav class="pf-crumbs ed-eyebrow" aria-label="Trilha de navegação">
+        <ol>
+          <li><a href="/pt/">Início</a></li>
+          <li><span aria-current="page">Estudo</span></li>
+        </ol>
+      </nav>
+      <h1>A Segunda Fatura da IA 2026</h1>
+      <div class="pg-hero-bottom">
+        <p class="ed-eyebrow">Estudo exploratório 2026</p>
+        <p class="pg-lead">
+          Uma pesquisa breve para entender como empresas e profissionais estão usando IA no trabalho, que controles existem e onde aparecem os riscos menos visíveis: contas pessoais, documentos internos, dependência de um único fornecedor e Shadow AI.
+        </p>
+      </div>
+    </header>
 
-          <div class="rounded-[28px] border border-white/10 bg-linear-to-br from-white/[0.08] to-white/[0.02] p-6">
-            <p class="text-xs font-semibold uppercase tracking-[0.24em] text-white/45">O que vamos obter com esta fase</p>
-            <ul class="mt-4 space-y-3 text-sm leading-relaxed text-white/78">
-              <li class="rounded-2xl border border-white/8 bg-black/20 px-4 py-3">Dados sobre a adoção real de IA no trabalho.</li>
-              <li class="rounded-2xl border border-white/8 bg-black/20 px-4 py-3">Indicadores sobre uso de contas pessoais, exposição documental e práticas de anonimização.</li>
-              <li class="rounded-2xl border border-white/8 bg-black/20 px-4 py-3">Uma base metodológica para o estudo público posterior, sem publicar conclusões antes de reunir amostra suficiente.</li>
-            </ul>
-          </div>
-        </div>
+    <section class="pg-section" aria-label="O que vamos obter com esta fase">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">O que vamos obter com esta fase</p>
+        <ul class="pg-checklist">
+          <li>Dados sobre a adoção real de IA no trabalho.</li>
+          <li>Indicadores sobre uso de contas pessoais, exposição documental e práticas de anonimização.</li>
+          <li>Uma base metodológica para o estudo público posterior, sem publicar conclusões antes de reunir amostra suficiente.</li>
+        </ul>
       </div>
     </section>
 
-    <section class="px-4 pb-12">
-      <div class="mx-auto max-w-6xl">
-        <SurveyForm client:load locale="pt" thankYouPath="/pt/estudio/segunda-factura-ia/encuesta/gracias/" />
-      </div>
-    </section>
+    <div class="sf-section">
+      <SurveyForm client:load locale="pt" variant="editorial" thankYouPath="/pt/estudio/segunda-factura-ia/encuesta/gracias/" />
+    </div>
 
-    <section class="px-4 pb-20">
-      <div class="mx-auto grid max-w-6xl gap-6 lg:grid-cols-3">
-        <article class="rounded-[24px] border border-white/10 bg-white/[0.03] p-6">
-          <h2 class="text-lg font-semibold text-white">Neutralidade metodológica</h2>
-          <p class="mt-3 text-sm leading-relaxed text-white/68">
-            As perguntas são formuladas em linguagem neutra, com opções equilibradas e com “Não sei” quando cabível. A pesquisa não solicita segredos empresariais nem exemplos identificáveis.
-          </p>
-        </article>
-        <article class="rounded-[24px] border border-white/10 bg-white/[0.03] p-6">
-          <h2 class="text-lg font-semibold text-white">Privacidade e tratamento</h2>
-          <p class="mt-3 text-sm leading-relaxed text-white/68">
-            O e-mail é opcional. Quando fornecido, deve ser armazenado separado das respostas comportamentais. As respostas individuais não serão publicadas de forma isolada.
-          </p>
-        </article>
-        <article class="rounded-[24px] border border-white/10 bg-white/[0.03] p-6">
-          <h2 class="text-lg font-semibold text-white">Uso previsto</h2>
-          <p class="mt-3 text-sm leading-relaxed text-white/68">
-            Esta fase serve para validar hipóteses, detectar segmentos relevantes e preparar um estudo público com dados originais, não para afirmar que representa todas as empresas.
-          </p>
-        </article>
-      </div>
+    <section class="pg-section sf-cols-section" aria-label="Metodologia e privacidade">
+      <ul class="pg-columns sf-cols">
+        <li>
+          <h2>Neutralidade metodológica</h2>
+          <p>As perguntas são formuladas em linguagem neutra, com opções equilibradas e com “Não sei” quando cabível. A pesquisa não solicita segredos empresariais nem exemplos identificáveis.</p>
+        </li>
+        <li>
+          <h2>Privacidade e tratamento</h2>
+          <p>O e-mail é opcional. Quando fornecido, deve ser armazenado separado das respostas comportamentais. As respostas individuais não serão publicadas de forma isolada.</p>
+        </li>
+        <li>
+          <h2>Uso previsto</h2>
+          <p>Esta fase serve para validar hipóteses, detectar segmentos relevantes e preparar um estudo público com dados originais, não para afirmar que representa todas as empresas.</p>
+        </li>
+      </ul>
     </section>
   </div>
 </BaseLayout>

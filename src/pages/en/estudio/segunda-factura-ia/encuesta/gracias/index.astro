@@ -1,5 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-forms.css";
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const canonical = new URL("/en/estudio/segunda-factura-ia/encuesta/gracias/", site).toString();
@@ -10,30 +12,19 @@ const canonical = new URL("/en/estudio/segunda-factura-ia/encuesta/gracias/", si
   description="Your response has been recorded."
   canonicalUrl={canonical}
   robots="noindex,follow"
+  editorial
 >
-  <section class="min-h-[70vh] px-4 pt-32 pb-20 text-white">
-    <div class="mx-auto max-w-3xl rounded-[32px] border border-white/10 bg-linear-to-br from-white/[0.06] to-white/[0.02] p-8 text-center md:p-12">
-      <span class="inline-flex rounded-full border border-orange-500/25 bg-orange-500/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.28em] text-orange-300">
-        Survey submitted
-      </span>
-      <h1 class="mt-6 text-4xl font-semibold md:text-5xl">Thanks for taking part</h1>
-      <p class="mt-4 text-lg leading-relaxed text-white/70">
+  <div class="ed-container">
+    <section class="sf-thanks">
+      <p class="ed-eyebrow">Survey submitted</p>
+      <h1>Thanks for taking part</h1>
+      <p class="pg-lead">
         Your response is now part of the study's exploratory phase. If you left your email, we'll let you know when we publish the aggregate results.
       </p>
-      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-        <a
-          href="/en/"
-          class="rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-white/82 transition hover:border-white/35"
-        >
-          Back to the site
-        </a>
-        <a
-          href="/en/blog/"
-          class="rounded-full bg-linear-to-r from-orange-500 to-amber-300 px-5 py-3 text-sm font-semibold text-black transition hover:brightness-110"
-        >
-          Keep reading
-        </a>
+      <div class="pg-actions">
+        <a class="ed-button" href="/en/blog/">Keep reading<span class="ed-arrow" aria-hidden="true">↗</span></a>
+        <a class="ed-underlined" href="/en/">Back to the site <span aria-hidden="true">→</span></a>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </BaseLayout>
