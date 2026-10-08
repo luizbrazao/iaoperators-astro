@@ -25,3 +25,16 @@
 .editorial-shell .pf-crumbs a:hover { border-bottom-color: var(--ed-ink); }
 .editorial-shell .pf-crumbs [aria-current] { color: var(--ed-ink); }
 .editorial-shell .ed-wordmark{display:inline-flex;align-items:center}.editorial-shell .ed-wordmark img{display:block;width:auto;height:30px}.editorial-shell .ed-footer .ed-wordmark img{height:28px}@media(max-width:720px){.editorial-shell .ed-wordmark img{height:25px}}
+/* Banner de cookies (CookieBanner variant="editorial"). Vive fuera de
+   .editorial-shell: colores y fuente declarados aquí, sin variables. */
+.ck-banner{position:fixed;left:24px;bottom:24px;z-index:9999;width:min(460px,calc(100vw - 48px));background:#f3f1eb;color:#22241f;border:1px solid #22241f;box-shadow:10px 10px 0 #22241f1a;padding:22px 24px 20px;font-family:"Manrope Intro","Helvetica Neue",sans-serif;font-size:14px;line-height:1.55}
+.ck-title{margin:0;font:11px/1.6 "SFMono-Regular",Consolas,monospace;letter-spacing:.06em;text-transform:uppercase;color:#666960}
+.ck-text{margin:8px 0 0;color:#22241f}
+.ck-text a{color:inherit;text-decoration:none;border-bottom:1px solid #22241f}
+.ck-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.ck-btn{min-height:44px;padding:10px 16px;border:1px solid #22241f;background:transparent;color:#22241f;font:500 13px/1.2 "Manrope Intro","Helvetica Neue",sans-serif;cursor:pointer;transition:background-color .15s,color .15s}
+.ck-btn:hover{background:#e4dfd3}
+.ck-btn-primary{background:#22241f;color:#f3f1eb}
+.ck-btn-primary:hover{background:#000;color:#f3f1eb}
+.ck-banner a:focus-visible,.ck-btn:focus-visible{outline:3px solid #ae3810;outline-offset:3px}
+@media(max-width:720px){.ck-banner{left:12px;right:12px;bottom:12px;width:auto;padding:18px 18px 16px;box-shadow:none}}

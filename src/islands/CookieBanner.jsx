@@ -55,7 +55,10 @@ function loadGTM() {
 /* ================================
    COMPONENT
    ================================ */
-export default function CookieBanner({ forceOpen = false, onClose } = {}) {
+// variant "editorial": páginas con el shell editorial (oct/2026). El banner se
+// pinta fuera de .editorial-shell, así que sus estilos (ck-*, en
+// editorial-home.css) no dependen de las variables del shell.
+export default function CookieBanner({ forceOpen = false, onClose, variant = "dark" } = {}) {
   const [ready, setReady] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -121,6 +124,26 @@ export default function CookieBanner({ forceOpen = false, onClose } = {}) {
 
   const privacyHref =
     cookiesDict?.privacyHref ?? `/${locale}/politica-de-privacidad/`;
+
+  if (variant === "editorial") {
+    return (
+      <div className="ck-banner" role="region" aria-label={labels.title}>
+        <p className="ck-title">{labels.title}</p>
+        <p className="ck-text">
+          {labels.description}{" "}
+          <a href={privacyHref}>{labels.privacyLink}</a>.
+        </p>
+        <div className="ck-actions">
+          <button type="button" onClick={handleReject} className="ck-btn">
+            {labels.reject}
+          </button>
+          <button type="button" onClick={handleAccept} className="ck-btn ck-btn-primary">
+            {labels.accept}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-9999 px-4 pb-4">
