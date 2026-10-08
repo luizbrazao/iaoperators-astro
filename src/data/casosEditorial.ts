@@ -10,14 +10,16 @@
 // - si su ficha ya usa la plantilla editorial (despliegue incremental: una
 //   ficha se activa cuando se ha revisado visualmente).
 //
-// Solo ES. EN/PT siguen con la plantilla anterior.
+// Oct/2026: la misma capa sirve a ES, EN y PT. Los textos de las sustituciones
+// viven en portfolioEditorial.json (metricOverrides) de cada idioma.
 
 import type { Project, ProjectMetric } from "./projects";
+import { getPortfolioEditorial, type PortfolioEditorialCopy } from "@/i18n/editorialCopy";
 
 export type CaseVisualKind = "system-map" | "chat" | "booking-rules" | "web-vitals";
 export type CaseTone = "graphite" | "sage" | "slate" | "sand";
 
-type MetricOverride = { value: string; label: string };
+type MetricOverride = keyof PortfolioEditorialCopy["metricOverrides"];
 
 export interface CaseEditorialEntry {
   visual: CaseVisualKind;
@@ -84,7 +86,7 @@ const CASE_EDITORIAL_ES: Record<string, CaseEditorialEntry> = {
     visual: "booking-rules",
     tone: "slate",
     featuredMetrics: [0, 2],
-    metricOverrides: { 0: { value: "Precio calculado", label: "Con reglas del negocio" } },
+    metricOverrides: { 0: "tourPrice" },
     editorialDetail: true,
     results: "product",
     // Etiquetas en portfolioEditorial.json (arch.tourBooking), resumidas de
@@ -122,7 +124,8 @@ export const hasEditorialDetail = (project: Project): boolean =>
 export type CaseFigure = { value: string; label: string; labelIsKey: boolean; noteKey?: string; isText: boolean };
 
 /** Cifras de un caso para el índice o para la ficha, con las sustituciones aplicadas. */
-export function caseFigures(project: Project, where: "index" | "detail"): CaseFigure[] {
+export function caseFigures(project: Project, where: "index" | "detail", locale = "es"): CaseFigure[] {
+  const overrides = getPortfolioEditorial(locale).metricOverrides;
   const entry = getCaseEditorial(project);
   const metrics: ProjectMetric[] = project.metrics ?? [];
   const all = metrics.map((_, index) => index);
@@ -132,7 +135,8 @@ export function caseFigures(project: Project, where: "index" | "detail"): CaseFi
   return indexes.flatMap((index) => {
     const metric = metrics[index];
     if (!metric) return [];
-    const override = entry?.metricOverrides?.[index];
+    const overrideKey = entry?.metricOverrides?.[index];
+    const override = overrideKey ? overrides[overrideKey] : undefined;
     return override
       ? [{ value: override.value, label: override.label, labelIsKey: false, noteKey: metric.noteKey, isText: true }]
       : [{ value: metric.value, label: metric.labelKey, labelIsKey: true, noteKey: metric.noteKey, isText: false }];

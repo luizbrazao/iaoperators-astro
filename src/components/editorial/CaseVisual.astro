@@ -10,23 +10,27 @@
 import type { Project } from "@/data/projects";
 import { getCaseEditorial } from "@/data/casosEditorial";
 import { getWebVitals, formatMetric, webVitalsMeta } from "@/data/web-vitals";
-import intro from "@/i18n/locales/es/homeIntro.json";
-import home from "@/i18n/locales/es/homeEditorial.json";
-import copy from "@/i18n/locales/es/portfolioEditorial.json";
+import { getHomeIntro, getHomeEditorial, getPortfolioEditorial } from "@/i18n/editorialCopy";
+import { asShellLoc } from "@/i18n/editorialShell";
 import "@/styles/editorial-cases.css";
 import SystemMapDocument from "./SystemMapDocument.astro";
 
 interface Props {
   project: Project;
   size?: "index" | "detail";
+  locale?: string;
 }
 const { project, size = "index" } = Astro.props;
+const locale = asShellLoc(Astro.props.locale);
+const intro = getHomeIntro(locale);
+const home = getHomeEditorial(locale);
+const copy = getPortfolioEditorial(locale);
 const entry = getCaseEditorial(project);
 const kind = entry?.visual;
 const tone = entry?.tone ?? "sand";
 
 const vitals = kind === "web-vitals" && project.webVitalsKey ? getWebVitals(project.webVitalsKey) : null;
-const dateFormatter = new Intl.DateTimeFormat("es", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+const dateFormatter = new Intl.DateTimeFormat(locale, { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
 const vitalsCaption = vitals
   ? copy.visual.webVitals.caption
       .replace("{date}", dateFormatter.format(new Date(vitals.measuredAt)))
@@ -39,7 +43,7 @@ const vitalsRows = vitals
       [copy.visual.webVitals.rows.accessibility, String(vitals.mobile.scores.accessibility)],
       [copy.visual.webVitals.rows["best-practices"], String(vitals.mobile.scores["best-practices"])],
       [copy.visual.webVitals.rows.seo, String(vitals.mobile.scores.seo)],
-      [copy.visual.webVitals.rows.lcp, formatMetric("lcpMs", vitals.mobile.lab.lcpMs, "es")],
+      [copy.visual.webVitals.rows.lcp, formatMetric("lcpMs", vitals.mobile.lab.lcpMs, locale)],
     ]
   : [];
 const vitalsHost = vitals ? new URL(vitals.url).hostname : "";
@@ -49,7 +53,7 @@ const vitalsHost = vitals ? new URL(vitals.url).hostname : "";
     {kind === "system-map" && (
       <>
         <p class="pf-visual-label ed-eyebrow">{intro.case.caption}</p>
-        <SystemMapDocument class="pf-doc" />
+        <SystemMapDocument class="pf-doc" locale={locale} />
       </>
     )}
 

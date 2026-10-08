@@ -1,22 +1,26 @@
 ---
-// Índice editorial de casos (/es/portfolio/). El orden, los títulos y los
+// Índice editorial de casos (/{locale}/portfolio/). El orden, los títulos y los
 // enlaces salen de projects.ts, igual que el ItemList del JSON-LD de la página.
 import { projects } from "@/data/projects";
 import { caseFigures } from "@/data/casosEditorial";
 import { createT } from "@/i18n/t";
-import copy from "@/i18n/locales/es/portfolioEditorial.json";
-import home from "@/i18n/locales/es/homeEditorial.json";
+import { getHomeEditorial, getPortfolioEditorial } from "@/i18n/editorialCopy";
+import { asShellLoc } from "@/i18n/editorialShell";
 import CaseVisual from "./CaseVisual.astro";
 import "@/styles/editorial-cases.css";
 
-const t = await createT("es", { namespaces: ["portfolio", "projects"] });
+interface Props { locale?: string }
+const locale = asShellLoc(Astro.props.locale);
+const copy = getPortfolioEditorial(locale);
+const home = getHomeEditorial(locale);
+const t = await createT(locale, { namespaces: ["portfolio", "projects"] });
 const total = String(projects.length).padStart(2, "0");
 ---
 <div class="ed-container">
   <section class="pf-hero" aria-labelledby="portfolio-title">
     <nav class="pf-crumbs ed-eyebrow" aria-label={copy.breadcrumb.label}>
       <ol>
-        <li><a href="/es/">{copy.breadcrumb.home}</a></li>
+        <li><a href={`/${locale}/`}>{copy.breadcrumb.home}</a></li>
         <li><span aria-current="page">{t("portfolio:breadcrumb.portfolio")}</span></li>
       </ol>
     </nav>
@@ -26,7 +30,7 @@ const total = String(projects.length).padStart(2, "0");
       <div class="pf-hero-copy">
         <p>{t("portfolio:header.subtitle")}</p>
         <div class="pf-actions">
-          <a class="ed-button" href="/es/contact/">{t("portfolio:actions.talk")}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+          <a class="ed-button" href={`/${locale}/contact/`}>{t("portfolio:actions.talk")}<span class="ed-arrow" aria-hidden="true">↗</span></a>
         </div>
       </div>
     </div>
@@ -34,20 +38,20 @@ const total = String(projects.length).padStart(2, "0");
 
   <ol class="pf-list" aria-label={copy.index.listLabel}>
     {projects.map((project, index) => {
-      const href = `/es/portfolio/${project.slugs.es}/`;
+      const href = `/${locale}/portfolio/${project.slugs[locale]}/`;
       // Mismo criterio que la plantilla anterior: el primer enlace externo marca
       // el caso como online y se conserva como enlace directo desde el índice.
       const liveHref = project.links?.find((link) => link.external)?.href;
-      const figures = caseFigures(project, "index");
+      const figures = caseFigures(project, "index", locale);
       const headingId = `case-${project.id}`;
       return (
         <li class="pf-case">
-          <div class="pf-case-media"><CaseVisual project={project} /></div>
+          <div class="pf-case-media"><CaseVisual project={project} locale={locale} /></div>
           <div class="pf-case-body">
             <p class="pf-case-meta ed-eyebrow">
               <span>{String(index + 1).padStart(2, "0")} / {total}</span>
               <span>{project.categoryKey ? t(project.categoryKey) : project.category}</span>
-              {liveHref && <a class="pf-live" href={liveHref} target="_blank" rel="noopener noreferrer" aria-label={`${copy.index.live}: ${t(project.titleKey)} (abre en una pestaña nueva)`}>{copy.index.live} <span aria-hidden="true">↗</span></a>}
+              {liveHref && <a class="pf-live" href={liveHref} target="_blank" rel="noopener noreferrer" aria-label={`${copy.index.live}: ${t(project.titleKey)} (${copy.index.newTab})`}>{copy.index.live} <span aria-hidden="true">↗</span></a>}
             </p>
             <h2 id={headingId}><a href={href}>{t(project.titleKey)}</a></h2>
             <p class="pf-case-summary">{t(project.taglineKey)}</p>
@@ -70,6 +74,6 @@ const total = String(projects.length).padStart(2, "0");
   <div class="ed-container">
     <p class="ed-eyebrow">{home.closing.label}</p>
     <h2 id="portfolio-closing-title">{t("portfolio:cta.title")}</h2>
-    <a class="ed-button" href="/es/contact/">{home.closing.cta}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+    <a class="ed-button" href={`/${locale}/contact/`}>{home.closing.cta}<span class="ed-arrow" aria-hidden="true">↗</span></a>
   </div>
 </section>

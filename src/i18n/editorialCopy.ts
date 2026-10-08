@@ -10,6 +10,9 @@ import editorialPt from "@/i18n/locales/pt/homeEditorial.json";
 import homeEs from "@/i18n/locales/es/home.json";
 import homeEn from "@/i18n/locales/en/home.json";
 import homePt from "@/i18n/locales/pt/home.json";
+import portfolioEs from "@/i18n/locales/es/portfolioEditorial.json";
+import portfolioEn from "@/i18n/locales/en/portfolioEditorial.json";
+import portfolioPt from "@/i18n/locales/pt/portfolioEditorial.json";
 import { asShellLoc } from "@/i18n/editorialShell";
 
 export type HomeIntroCopy = typeof introEs;
@@ -18,6 +21,10 @@ export type HomeEditorialCopy = typeof editorialEs;
 const INTRO = { es: introEs, en: introEn, pt: introPt } as Record<string, HomeIntroCopy>;
 const EDITORIAL = { es: editorialEs, en: editorialEn, pt: editorialPt } as unknown as Record<string, HomeEditorialCopy>;
 const HOME = { es: homeEs, en: homeEn, pt: homePt } as unknown as Record<string, typeof homeEs>;
+
+export type PortfolioEditorialCopy = typeof portfolioEs;
+const PORTFOLIO = { es: portfolioEs, en: portfolioEn, pt: portfolioPt } as Record<string, PortfolioEditorialCopy>;
+export const getPortfolioEditorial = (locale?: string) => PORTFOLIO[asShellLoc(locale)];
 
 export const getHomeIntro = (locale?: string) => INTRO[asShellLoc(locale)];
 export const getHomeEditorial = (locale?: string) => EDITORIAL[asShellLoc(locale)];

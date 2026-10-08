@@ -9,7 +9,8 @@
     "listLabel": "Casos",
     "figuresLabel": "Datos del caso",
     "open": "Ver el caso",
-    "live": "Online"
+    "live": "Online",
+    "newTab": "abre en una pestaña nueva"
   },
   "visual": {
     "illustration": "Ilustración",
@@ -79,5 +80,11 @@
   },
   "contextTitles": {
     "propiziare": "Un público trilingüe de verdad"
+  },
+  "metricOverrides": {
+    "tourPrice": {
+      "value": "Precio calculado",
+      "label": "Con reglas del negocio"
+    }
   }
 }

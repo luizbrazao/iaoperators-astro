@@ -1,29 +1,40 @@
 ---
-// Ficha editorial de un caso (ES). Solo reorganiza y presenta el contenido que
+// Ficha editorial de un caso (ES, EN y PT). Solo reorganiza y presenta el contenido que
 // ya existe en projects.ts + projects.json: no añade cifras ni afirmaciones.
 // Las secciones opcionales (contexto, entregables, testimonio, FAQ…) solo se
 // pintan si el caso las declara.
 import { projects, type Project } from "@/data/projects";
 import { getCaseEditorial, caseFigures } from "@/data/casosEditorial";
 import { createT } from "@/i18n/t";
-import copy from "@/i18n/locales/es/portfolioEditorial.json";
-import home from "@/i18n/locales/es/homeEditorial.json";
+import { getHomeEditorial, getPortfolioEditorial } from "@/i18n/editorialCopy";
+import { asShellLoc } from "@/i18n/editorialShell";
 import CaseVisual from "./CaseVisual.astro";
 import WebVitalsCard from "@/components/WebVitalsCard.astro";
 import "@/styles/editorial-cases.css";
 
-interface Props { project: Project }
+interface Props { project: Project; locale?: string }
 const { project } = Astro.props;
-const t = await createT("es", { namespaces: ["portfolio", "projects", "portfolioEditorial"] });
+const locale = asShellLoc(Astro.props.locale);
+const copy = getPortfolioEditorial(locale);
+const home = getHomeEditorial(locale);
+// Anclas de las secciones en el idioma de la página. ES conserva las de siempre.
+const ANCHORS = {
+  es: { problema: "problema", contexto: "contexto", solucion: "solucion", entregables: "entregables", resultados: "resultados", precio: "precio", rendimiento: "rendimiento", "para-quien": "para-quien", preguntas: "preguntas" },
+  en: { problema: "problem", contexto: "context", solucion: "solution", entregables: "deliverables", resultados: "results", precio: "pricing", rendimiento: "performance", "para-quien": "who-its-for", preguntas: "faq" },
+  pt: { problema: "problema", contexto: "contexto", solucion: "solucao", entregables: "entregas", resultados: "resultados", precio: "preco", rendimiento: "desempenho", "para-quien": "para-quem", preguntas: "perguntas" },
+} as const;
+const A: Record<string, string> = ANCHORS[locale];
+const t = await createT(locale, { namespaces: ["portfolio", "projects", "portfolioEditorial"] });
 const s = copy.detail.sections;
 const entry = getCaseEditorial(project);
 const isProduct = entry?.results === "product";
 const resultsLabel = isProduct ? copy.detail.productResults.label : s.results;
 const resultsTitle = isProduct ? copy.detail.productResults.title : copy.detail.resultsTitle;
-const metrics = caseFigures(project, "detail");
+const metrics = caseFigures(project, "detail", locale);
 const architecture = entry?.architecture;
-// Los precios se guardan con sufijo en portugués ("€19/mês"); en ES se muestra el sufijo en español.
-const localizePrice = (price: string) => price.replace("/mês", "/mes").replace("/ano", "/año");
+// Los precios se guardan con sufijo en portugués ("€19/mês"); cada idioma muestra el suyo.
+const PRICE_SUFFIX = { es: ["/mes", "/año"], en: ["/month", "/year"], pt: ["/mês", "/ano"] } as const;
+const localizePrice = (price: string) => price.replace("/mês", PRICE_SUFFIX[locale][0]).replace("/ano", PRICE_SUFFIX[locale][1]);
 const plans = project.pricing
   ? ([
       ["monthly", project.pricing.monthly],
@@ -33,22 +44,22 @@ const plans = project.pricing
 
 // Algunos textos del caso están pensados para ir en mitad de una frase
 // ("servicio de auditoría…"); como etiqueta suelta se capitalizan.
-const capitalize = (text: string) => text.charAt(0).toLocaleUpperCase("es") + text.slice(1);
+const capitalize = (text: string) => text.charAt(0).toLocaleUpperCase(locale) + text.slice(1);
 
 const category = project.categoryKey ? t(project.categoryKey) : project.category;
 const title = t(project.titleKey);
 const h1 = t(project.h1Key ?? project.titleKey);
 const liveLink = project.links?.find((link) => link.external)?.href;
-const relatedHref = project.relatedServiceHref ? `/es${project.relatedServiceHref}` : undefined;
+const relatedHref = project.relatedServiceHref ? `/${locale}${project.relatedServiceHref}` : undefined;
 const relatedLabel = project.relatedServiceKey ? capitalize(t(project.relatedServiceKey)) : undefined;
 
 const resolveHref = (href: string, external?: boolean) => {
   if (external || /^(https?:)?\/\//.test(href)) return href;
-  if (href.startsWith("/es/") || href === "/es") return href;
-  return href.startsWith("/") ? `/es${href}` : `/es/${href}`;
+  if (href.startsWith(`/${locale}/`) || href === `/${locale}`) return href;
+  return href.startsWith("/") ? `/${locale}${href}` : `/${locale}/${href}`;
 };
-const contactHref = "/es/contact/";
-const portfolioHref = "/es/portfolio/";
+const contactHref = `/${locale}/contact/`;
+const portfolioHref = `/${locale}/portfolio/`;
 const links = project.links.map((link) => ({
   label: link.labelKey ? t(link.labelKey) : link.label,
   href: resolveHref(link.href, link.external),
@@ -101,7 +112,7 @@ const next = projects[(position + 1) % projects.length];
   <header class="pf-detail-hero">
     <nav class="pf-crumbs ed-eyebrow" aria-label={copy.breadcrumb.label}>
       <ol>
-        <li><a href="/es/">{copy.breadcrumb.home}</a></li>
+        <li><a href={`/${locale}/`}>{copy.breadcrumb.home}</a></li>
         <li><a href={portfolioHref}>{t("portfolio:breadcrumb.portfolio")}</a></li>
         <li class="pf-crumb-current"><span aria-current="page">{title}</span></li>
       </ol>
@@ -121,7 +132,7 @@ const next = projects[(position + 1) % projects.length];
     </div>
   </header>
 
-  <CaseVisual project={project} size="detail" />
+  <CaseVisual project={project} size="detail" locale={locale} />
 
   {metrics.length ? (
     <dl class="pf-metrics" aria-label={copy.detail.metricsLabel} style={`--pf-metric-cols: ${Math.min(metrics.length, 4)}`}>
@@ -139,28 +150,28 @@ const next = projects[(position + 1) % projects.length];
     <aside class="pf-toc">
       <nav aria-label={copy.detail.tocLabel}>
         <p class="ed-eyebrow">{copy.detail.tocLabel}</p>
-        <ol>{sections.map((section, index) => <li><a href={`#${section.id}`}><span>{String(index + 1).padStart(2, "0")}</span>{section.label}</a></li>)}</ol>
+        <ol>{sections.map((section, index) => <li><a href={`#${A[section.id]}`}><span>{String(index + 1).padStart(2, "0")}</span>{section.label}</a></li>)}</ol>
       </nav>
     </aside>
 
     <div class="pf-content">
-      <section class="pf-section" id="problema" aria-labelledby="problema-title">
-        <h2 id="problema-title" class="ed-eyebrow">{number("problema")} / {s.problem}</h2>
+      <section class="pf-section" id={A["problema"]} aria-labelledby={`${A["problema"]}-title`}>
+        <h2 id={`${A["problema"]}-title`} class="ed-eyebrow">{number("problema")} / {s.problem}</h2>
         <p class="pf-statement">{t(project.problemKey)}</p>
       </section>
 
       {project.contextKey && (
-        <section class="pf-section" id="contexto" aria-labelledby="contexto-title">
+        <section class="pf-section" id={A["contexto"]} aria-labelledby={`${A["contexto"]}-title`}>
           <p class="ed-eyebrow">{number("contexto")} / {s.context}</p>
-          <h2 id="contexto-title">{entry?.contextTitleKey ? t(entry.contextTitleKey) : s.context}</h2>
+          <h2 id={`${A["contexto"]}-title`}>{entry?.contextTitleKey ? t(entry.contextTitleKey) : s.context}</h2>
           <div class="pf-prose">{t(project.contextKey).split("\n\n").map((paragraph) => <p>{paragraph}</p>)}</div>
           {relatedHref && relatedLabel && <a class="ed-underlined pf-related" href={relatedHref}>{relatedLabel} <span class="ed-arrow" aria-hidden="true">↗</span></a>}
         </section>
       )}
 
-      <section class="pf-section" id="solucion" aria-labelledby="solucion-title">
+      <section class="pf-section" id={A["solucion"]} aria-labelledby={`${A["solucion"]}-title`}>
         <p class="ed-eyebrow">{number("solucion")} / {s.solution}</p>
-        <h2 id="solucion-title">{copy.detail.solutionTitle}</h2>
+        <h2 id={`${A["solucion"]}-title`}>{copy.detail.solutionTitle}</h2>
         <div class="pf-prose"><p>{t(project.engineeringIntroKey)}</p></div>
 
         {steps.length > 0 && (
@@ -211,11 +222,11 @@ const next = projects[(position + 1) % projects.length];
       </section>
 
       {(deliverables.length > 0 || project.whatItDoesKeys.length > 0) && (
-        <section class="pf-section" id="entregables" aria-labelledby="entregables-title">
+        <section class="pf-section" id={A["entregables"]} aria-labelledby={`${A["entregables"]}-title`}>
           {deliverables.length > 0 ? (
             <>
               <p class="ed-eyebrow">{number("entregables")} / {s.deliverables}</p>
-              <h2 id="entregables-title">{t("portfolio:project.sections.deliverables.title")}</h2>
+              <h2 id={`${A["entregables"]}-title`}>{t("portfolio:project.sections.deliverables.title")}</h2>
               <dl class="pf-deliverables">
                 {deliverables.map((item, index) => (
                   <div>
@@ -229,16 +240,16 @@ const next = projects[(position + 1) % projects.length];
           ) : (
             <>
               <p class="ed-eyebrow">{number("entregables")} / {s.scope}</p>
-              <h2 id="entregables-title">{t("projects:sections.whatItDoes.title")}</h2>
+              <h2 id={`${A["entregables"]}-title`}>{t("projects:sections.whatItDoes.title")}</h2>
               <ul class="pf-dash">{project.whatItDoesKeys.map((key) => <li>{t(key)}</li>)}</ul>
             </>
           )}
         </section>
       )}
 
-      <section class="pf-section" id="resultados" aria-labelledby="resultados-title">
+      <section class="pf-section" id={A["resultados"]} aria-labelledby={`${A["resultados"]}-title`}>
         <p class="ed-eyebrow">{number("resultados")} / {resultsLabel}</p>
-        <h2 id="resultados-title">{resultsTitle}</h2>
+        <h2 id={`${A["resultados"]}-title`}>{resultsTitle}</h2>
         <p class="pf-statement">{t(project.impactKey)}</p>
         {project.testimonial && (
           <blockquote class="pf-quote">
@@ -255,9 +266,9 @@ const next = projects[(position + 1) % projects.length];
       </section>
 
       {plans.length > 0 && (
-        <section class="pf-section" id="precio" aria-labelledby="precio-title">
+        <section class="pf-section" id={A["precio"]} aria-labelledby={`${A["precio"]}-title`}>
           <p class="ed-eyebrow">{number("precio")} / {s.pricing}</p>
-          <h2 id="precio-title">{t("portfolio:project.sections.pricing.title")}</h2>
+          <h2 id={`${A["precio"]}-title`}>{t("portfolio:project.sections.pricing.title")}</h2>
           <div class="pf-plans">
             {plans.map((plan) => (
               <article class:list={["pf-plan", { "pf-plan-accent": plan.key === "annual" }]}>
@@ -272,13 +283,13 @@ const next = projects[(position + 1) % projects.length];
       )}
 
       {project.webVitalsKey && (
-        <WebVitalsCard targetKey={project.webVitalsKey} locale="es" variant="editorial" id="rendimiento" eyebrow={`${number("rendimiento")} / ${s.performance}`} />
+        <WebVitalsCard targetKey={project.webVitalsKey} locale={locale} variant="editorial" id={A.rendimiento} eyebrow={`${number("rendimiento")} / ${s.performance}`} />
       )}
 
       {project.forWho && (
-        <section class="pf-section" id="para-quien" aria-labelledby="para-quien-title">
+        <section class="pf-section" id={A["para-quien"]} aria-labelledby={`${A["para-quien"]}-title`}>
           <p class="ed-eyebrow">{number("para-quien")} / {s.fit}</p>
-          <h2 id="para-quien-title">{t("portfolio:project.sections.forWho.title")}</h2>
+          <h2 id={`${A["para-quien"]}-title`}>{t("portfolio:project.sections.forWho.title")}</h2>
           <div class="pf-fit">
             <div><h3>{t("portfolio:project.sections.forWho.yes")}</h3><ul class="pf-dash">{project.forWho.yesKeys.map((key) => <li>{t(key)}</li>)}</ul></div>
             <div class="pf-fit-no"><h3>{t("portfolio:project.sections.forWho.no")}</h3><ul class="pf-dash">{project.forWho.noKeys.map((key) => <li>{t(key)}</li>)}</ul></div>
@@ -294,9 +305,9 @@ const next = projects[(position + 1) % projects.length];
       )}
 
       {project.faq?.length ? (
-        <section class="pf-section pf-faq" id="preguntas" aria-labelledby="preguntas-title">
+        <section class="pf-section pf-faq" id={A["preguntas"]} aria-labelledby={`${A["preguntas"]}-title`}>
           <p class="ed-eyebrow">{number("preguntas")} / {s.faq}</p>
-          <h2 id="preguntas-title">{t("portfolio:project.sections.faq.title")}</h2>
+          <h2 id={`${A["preguntas"]}-title`}>{t("portfolio:project.sections.faq.title")}</h2>
           <div class="ed-faq">{project.faq.map((item) => <details><summary>{t(item.qKey)}</summary><p>{t(item.aKey)}</p></details>)}</div>
         </section>
       ) : null}
@@ -325,7 +336,7 @@ const next = projects[(position + 1) % projects.length];
     <nav class="pf-next" aria-label={copy.detail.nextLabel}>
       <div>
         <p class="ed-eyebrow">{copy.detail.nextLabel}</p>
-        <a class="pf-next-title" href={`/es/portfolio/${next.slugs.es}/`}>{t(next.titleKey)} <span class="ed-arrow" aria-hidden="true">↗</span></a>
+        <a class="pf-next-title" href={`/${locale}/portfolio/${next.slugs[locale]}/`}>{t(next.titleKey)} <span class="ed-arrow" aria-hidden="true">↗</span></a>
       </div>
       <a class="ed-underlined" href={portfolioHref}>{copy.detail.back} <span aria-hidden="true">→</span></a>
     </nav>

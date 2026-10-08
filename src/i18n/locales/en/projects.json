@@ -267,7 +267,7 @@
     },
     "tourBooking": {
         "title": "Tour Booking Chatbot (WhatsApp + n8n)",
-        "tagline": "24/7 support and bookings with accurate pricing — based on real variables (boat, season, experience, duration and guests).",
+        "tagline": "24/7 WhatsApp support and bookings, with the price calculated by the business rules: boat, season, experience, duration and guests.",
         "category": "Booking Automation / WhatsApp",
         "gallery": {
             "heroAlt": "Tour booking chatbot on WhatsApp powered by n8n"
@@ -280,7 +280,7 @@
             "Understands intent: pricing, questions, booking, changes",
             "Collects variables (experience, boat, date, guests, duration)",
             "Validates duration availability for that experience/date",
-            "Calculates the exact price using the client’s rule set (no guesswork)",
+            "Calculates the price with the client’s rules, in code",
             "Logs leads and conversation into a spreadsheet"
         ],
         "howItWorks": [
@@ -297,7 +297,7 @@
                 "bullets": [
                     "Variables: boat, season, experience, duration, guests",
                     "Validation: only allows durations that truly exist",
-                    "Always exact (no hallucinations)"
+                    "The price is calculated by code, not by the AI"
                 ]
             },
             {

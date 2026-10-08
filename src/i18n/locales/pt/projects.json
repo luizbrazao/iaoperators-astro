@@ -267,7 +267,7 @@
     },
     "tourBooking": {
         "title": "Chatbot de Reservas Turísticas (WhatsApp + n8n)",
-        "tagline": "Atendimento e reservas 24/7 com cálculo de preço 100% correto — baseado em variáveis reais (barco, temporada, experiência, duração e pessoas).",
+        "tagline": "Atendimento e reservas 24/7 pelo WhatsApp, com o preço calculado pelas regras do negócio: barco, temporada, experiência, duração e pessoas.",
         "category": "Automação de Reservas / WhatsApp",
         "gallery": {
             "heroAlt": "Chatbot de reservas turísticas via WhatsApp integrado ao n8n"
@@ -280,7 +280,7 @@
             "Entende intenção: preço, dúvidas, reserva, alteração",
             "Coleta variáveis (experiência, barco, data, pessoas, duração)",
             "Valida duração disponível para aquela experiência/data",
-            "Calcula preço exato com base nas regras do cliente (sem margem de erro)",
+            "Calcula o preço com as regras do cliente, em código",
             "Registra lead e conversa em planilha para acompanhamento"
         ],
         "howItWorks": [
@@ -297,7 +297,7 @@
                 "bullets": [
                     "Variáveis: barco, temporada, experiência, duração, pessoas",
                     "Validação: só permite durações realmente disponíveis",
-                    "Resposta sempre exata (sem chute)"
+                    "O preço é calculado pelo código, não pela IA"
                 ]
             },
             {

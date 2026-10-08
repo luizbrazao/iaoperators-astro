@@ -1,0 +1,90 @@
+{
+  "breadcrumb": {
+    "home": "Início",
+    "label": "Trilha de navegação"
+  },
+  "index": {
+    "eyebrow": "Cases",
+    "countSuffix": "cases documentados",
+    "listLabel": "Cases",
+    "figuresLabel": "Dados do case",
+    "open": "Ver o case",
+    "live": "Online",
+    "newTab": "abre em uma nova aba"
+  },
+  "visual": {
+    "illustration": "Ilustração",
+    "webVitals": {
+      "label": "Web / desempenho medido",
+      "source": "PageSpeed Insights",
+      "strategy": "Mobile",
+      "rows": {
+        "performance": "Desempenho",
+        "accessibility": "Acessibilidade",
+        "best-practices": "Boas práticas",
+        "seo": "SEO",
+        "lcp": "LCP"
+      },
+      "caption": "Medido em {date} com Lighthouse {version}. Desempenho: mediana de {runs} execuções."
+    }
+  },
+  "detail": {
+    "back": "Todos os cases",
+    "factsLabel": "Ficha do case",
+    "facts": {
+      "context": "Contexto",
+      "type": "Tipo de projeto",
+      "service": "Serviço relacionado",
+      "status": "Status"
+    },
+    "tocLabel": "Neste case",
+    "sections": {
+      "problem": "Problema",
+      "context": "Contexto",
+      "solution": "Solução",
+      "deliverables": "Entregas",
+      "scope": "Escopo",
+      "results": "Resultados",
+      "fit": "Para quem é",
+      "faq": "Perguntas",
+      "pricing": "Preço",
+      "performance": "Desempenho"
+    },
+    "solutionTitle": "Como resolvemos",
+    "phasesLabel": "Fases",
+    "stepsLabel": "Fluxo",
+    "pillarsLabel": "Eixos do trabalho",
+    "resultsTitle": "O que mudou",
+    "metricsLabel": "Em números",
+    "securityLabel": "Segurança e confidencialidade",
+    "linksLabel": "Links do case",
+    "nextLabel": "Próximo case",
+    "testimonialLabel": "Depoimento",
+    "productResults": {
+      "label": "Impacto",
+      "title": "O que resolve"
+    },
+    "archOutputsLabel": "Além disso, o sistema",
+    "decisionsLabel": "Decisões técnicas"
+  },
+  "arch": {
+    "tourBooking": {
+      "input": "WhatsApp (texto ou áudio)",
+      "aggregation": "Agregação de mensagens",
+      "agent": "Agente de IA: intenção e variáveis",
+      "tools": "Ferramentas determinísticas: temporada, durações e preço",
+      "reply": "Resposta em partes no WhatsApp",
+      "leads": "Registro de leads e conversa em planilha",
+      "logs": "Logs"
+    }
+  },
+  "contextTitles": {
+    "propiziare": "Um público trilíngue de verdade"
+  },
+  "metricOverrides": {
+    "tourPrice": {
+      "value": "Preço calculado",
+      "label": "Com as regras do negócio"
+    }
+  }
+}

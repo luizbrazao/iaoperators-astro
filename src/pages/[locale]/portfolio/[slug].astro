@@ -23,8 +23,9 @@ const { project } = Astro.props;
 
 const locale = Astro.params.locale!;
 const slug = Astro.params.slug!;
-// Rediseño editorial: solo ES y solo las fichas ya revisadas (casosEditorial.ts).
-const editorial = locale === "es" && hasEditorialDetail(project);
+// Rediseño editorial (ES desde oct/2026, EN/PT desde 08/oct/2026): solo las
+// fichas ya revisadas en casosEditorial.ts.
+const editorial = hasEditorialDetail(project);
 
 // createT agora é async (porque carregamos JSON com import dinâmico)
 const t = await createT(locale, { namespaces: ["portfolio", "projects"] });
@@ -161,7 +162,7 @@ const portfolioSlugJsonLd: any[] = [
   jsonLd={portfolioSlugJsonLd}
   editorial={editorial}
 >
-  {editorial ? <CaseStudyEditorial project={project} /> : (
+  {editorial ? <CaseStudyEditorial project={project} locale={locale} /> : (
   <section class="bg-transparent text-white pt-28 pb-20 px-6">
     <div class="max-w-6xl mx-auto">
       <!-- Top nav -->
