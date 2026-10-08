@@ -10,6 +10,8 @@ export const GET: APIRoute = async () => {
     title: "The Second Bill of AI 2026",
     subtitle:
       "Survey on AI use at work, exposure of internal information and vendor dependency.",
+    kicker: "Survey",
+    footer: "AI use, governance and vendor dependency",
   });
 
   const svg = await satori(element, { width: 1200, height: 630, fonts });

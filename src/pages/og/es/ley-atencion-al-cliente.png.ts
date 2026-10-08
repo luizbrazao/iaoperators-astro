@@ -10,6 +10,8 @@ export const GET: APIRoute = async () => {
     title: "Cumplimiento de la Ley de Atención a la Clientela",
     subtitle:
       "Implementación técnica: SLA medibles, clave identificativa, trazabilidad y evidencia para la auditoría ENAC.",
+    kicker: "Cumplimiento normativo",
+    footer: "Ley 10/2025 de servicios de atención a la clientela",
   });
 
   const svg = await satori(element, { width: 1200, height: 630, fonts });

@@ -14,13 +14,18 @@ export interface SurveyOGProps {
   eyebrow: string;
   title: string;
   subtitle: string;
+  /** Rótulo sobre el título ("Encuesta", "Survey"…). */
+  kicker?: string;
+  /** Texto del pie, a la izquierda de la URL. */
+  footer?: string;
 }
 
 // ─── Font loading (from bundled files — no network dependency) ────────────────
 // process.cwd() is always the project root during `astro build`
 
 let fontRegular: ArrayBuffer | undefined;
-let fontBold: ArrayBuffer | undefined;
+let fontMedium: ArrayBuffer | undefined;
+let fontMono: ArrayBuffer | undefined;
 
 // `readFileSync(...).buffer` NO es el fichero: es el ArrayBuffer subyacente del
 // Buffer, que Node puede compartir con otros datos (pool interno), así que
@@ -33,25 +38,125 @@ function readFont(relativePath: string): ArrayBuffer {
   return file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength) as ArrayBuffer;
 }
 
-// Logo de IA Operators (versión blanca: las tres plantillas tienen fondo oscuro).
-// Se embebe como data URI para que satori no dependa de la red en el build.
-let logoWhiteUri: string | undefined;
+// Diseño editorial (oct/2026): marfil, tinta y naranja, como el sitio. Las
+// tres plantillas comparten marco (barra naranja, logo, etiqueta en mono y pie).
+// Fuentes estáticas en src/assets/fonts: Manrope 400/500 instanciadas de la
+// variable del sitio (satori no lee fuentes variables ni woff2) y un subset
+// latino de DejaVu Sans Mono para las etiquetas (licencia en LICENSE-DejaVu.txt).
+const C = {
+  paper: "#f3f1eb",
+  ink: "#22241f",
+  muted: "#666960",
+  soft: "#74796d",
+  line: "#d0d1c7",
+  orange: "#f16532",
+  rust: "#ae3810",
+};
+
+let logoUri: string | undefined;
 const LOGO_RATIO = 453 / 82;
-function logoWhite(height: number): React.ReactElement {
-  if (!logoWhiteUri) {
-    const file = readFileSync(join(process.cwd(), "public/brand/ia-operators-logo-white.png"));
-    logoWhiteUri = `data:image/png;base64,${file.toString("base64")}`;
+function logo(height: number): React.ReactElement {
+  if (!logoUri) {
+    const file = readFileSync(join(process.cwd(), "public/brand/ia-operators-logo.png"));
+    logoUri = `data:image/png;base64,${file.toString("base64")}`;
   }
-  return <img src={logoWhiteUri} width={Math.round(height * LOGO_RATIO)} height={height} alt="" />;
+  return <img src={logoUri} width={Math.round(height * LOGO_RATIO)} height={height} alt="" />;
 }
 
 export async function getOGFonts() {
-  if (!fontRegular) fontRegular = readFont("src/assets/fonts/inter-400.woff");
-  if (!fontBold) fontBold = readFont("src/assets/fonts/inter-700.woff");
+  if (!fontRegular) fontRegular = readFont("src/assets/fonts/manrope-400.ttf");
+  if (!fontMedium) fontMedium = readFont("src/assets/fonts/manrope-500.ttf");
+  if (!fontMono) fontMono = readFont("src/assets/fonts/dejavu-sans-mono-latin.ttf");
   return [
-    { name: "Inter", data: fontRegular, weight: 400 as const, style: "normal" as const },
-    { name: "Inter", data: fontBold, weight: 700 as const, style: "normal" as const },
+    { name: "Manrope", data: fontRegular, weight: 400 as const, style: "normal" as const },
+    { name: "Manrope", data: fontMedium, weight: 500 as const, style: "normal" as const },
+    { name: "Mono", data: fontMono, weight: 400 as const, style: "normal" as const },
   ];
+}
+
+function eyebrow(text: string, color: string = C.muted, size = 15): React.ReactElement {
+  return (
+    <span
+      style={{
+        fontFamily: "Mono",
+        fontSize: `${size}px`,
+        letterSpacing: "1.4px",
+        textTransform: "uppercase",
+        color,
+        display: "flex",
+      }}
+    >
+      {text}
+    </span>
+  );
+}
+
+function Frame({
+  label,
+  footer,
+  children,
+}: {
+  label: string;
+  footer: string;
+  children: React.ReactNode;
+}): React.ReactElement {
+  return (
+    <div
+      style={{
+        width: "1200px",
+        height: "630px",
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: C.paper,
+        fontFamily: "Manrope",
+        position: "relative",
+      }}
+    >
+      <div style={{ height: "8px", width: "1200px", backgroundColor: C.orange, display: "flex" }} />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
+          padding: "52px 72px 48px",
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          {logo(30)}
+          {eyebrow(label)}
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", flex: 1, justifyContent: "center" }}>
+          {children}
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            borderTop: `1px solid ${C.line}`,
+            paddingTop: "22px",
+          }}
+        >
+          <span style={{ fontSize: "19px", color: C.muted, display: "flex" }}>{footer}</span>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{ width: "10px", height: "10px", backgroundColor: C.orange, display: "flex" }} />
+            <span style={{ fontSize: "19px", fontWeight: 500, color: C.ink, display: "flex" }}>
+              iaoperators.com
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function titleSize(title: string): number {
+  if (title.length > 90) return 50;
+  if (title.length > 65) return 58;
+  if (title.length > 45) return 66;
+  return 74;
 }
 
 // ─── Category labels ──────────────────────────────────────────────────────────
@@ -90,408 +195,79 @@ export const CATEGORY_LABELS: Record<string, Record<string, string>> = {
 // ─── Blog post OG image ───────────────────────────────────────────────────────
 
 export function createBlogOGElement({ title, author, categoryLabel }: BlogOGProps): React.ReactElement {
-  const fontSize = title.length > 70 ? 40 : title.length > 50 ? 48 : 56;
-
+  const size = titleSize(title);
   return (
-    <div
-      style={{
-        width: "1200px",
-        height: "630px",
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: "#0a0a0a",
-        padding: "60px",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      {/* Orange ambient glow — bottom-left */}
-      <div
+    <Frame label={categoryLabel} footer={author}>
+      <span
         style={{
-          position: "absolute",
-          bottom: "-150px",
-          left: "-100px",
-          width: "550px",
-          height: "550px",
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(255,105,0,0.18) 0%, transparent 70%)",
+          fontSize: `${size}px`,
+          fontWeight: 500,
+          lineHeight: 1.08,
+          letterSpacing: `${-size * 0.045}px`,
+          color: C.ink,
+          maxWidth: "1020px",
           display: "flex",
-        }}
-      />
-
-      {/* Subtle glow — top-right */}
-      <div
-        style={{
-          position: "absolute",
-          top: "-80px",
-          right: "-80px",
-          width: "300px",
-          height: "300px",
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(255,105,0,0.07) 0%, transparent 70%)",
-          display: "flex",
-        }}
-      />
-
-      {/* Top bar: logo + category */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "48px",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          {logoWhite(30)}
-        </div>
-
-        <span
-          style={{
-            color: "#FF6900",
-            fontSize: "13px",
-            fontWeight: 600,
-            fontFamily: "Inter",
-            backgroundColor: "rgba(255,105,0,0.1)",
-            border: "1px solid rgba(255,105,0,0.25)",
-            borderRadius: "999px",
-            padding: "6px 18px",
-            letterSpacing: "0.8px",
-            textTransform: "uppercase",
-          }}
-        >
-          {categoryLabel}
-        </span>
-      </div>
-
-      {/* Title */}
-      <div style={{ flex: 1, display: "flex", alignItems: "center" }}>
-        <span
-          style={{
-            color: "white",
-            fontSize: `${fontSize}px`,
-            fontWeight: 700,
-            fontFamily: "Inter",
-            lineHeight: 1.2,
-            letterSpacing: "-1px",
-            maxWidth: "1000px",
-          }}
-        >
-          {title}
-        </span>
-      </div>
-
-      {/* Bottom bar: author + site */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          borderTop: "1px solid rgba(255,255,255,0.07)",
-          paddingTop: "24px",
-          marginTop: "16px",
-        }}
-      >
-        <span
-          style={{
-            color: "#9ca3af",
-            fontSize: "18px",
-            fontFamily: "Inter",
-            fontWeight: 400,
-          }}
-        >
-          {author}
-        </span>
-        <span
-          style={{
-            color: "#FF6900",
-            fontSize: "18px",
-            fontFamily: "Inter",
-            fontWeight: 600,
-          }}
-        >
-          iaoperators.com
-        </span>
-      </div>
-    </div>
+        {title}
+      </span>
+    </Frame>
   );
 }
 
 // ─── Default site OG image ────────────────────────────────────────────────────
+// Mismo mensaje que el hero de la home ES.
 
 export function createDefaultOGElement(): React.ReactElement {
   return (
-    <div
-      style={{
-        width: "1200px",
-        height: "630px",
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: "#0a0a0a",
-        padding: "70px 80px",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      {/* Orange glow — bottom-left */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: "-150px",
-          left: "-100px",
-          width: "600px",
-          height: "600px",
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(255,105,0,0.2) 0%, transparent 70%)",
-          display: "flex",
-        }}
-      />
-
-      {/* Logo */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "12px",
-          marginBottom: "auto",
-        }}
-      >
-        {logoWhite(34)}
-      </div>
-
-      {/* Headline */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          flex: 1,
-          justifyContent: "center",
-        }}
-      >
-        {/* Satori no compone bien texto mezclado con un <span> en línea (el
-            resaltado acababa encima del resto). Cada palabra es su propio
-            bloque dentro de un flex que hace wrap. */}
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            color: "white",
-            fontSize: "64px",
-            fontWeight: 700,
-            fontFamily: "Inter",
-            lineHeight: 1.1,
-            letterSpacing: "-2px",
-            maxWidth: "900px",
-          }}
-        >
-          {["Diagnóstico,", "prioridad", "y", "ejecución", "tecnológica."].map((word) => (
-            <span style={{ marginRight: "18px", color: word === "prioridad" ? "#FF6900" : "white" }}>{word}</span>
-          ))}
-        </div>
-        <span
-          style={{
-            color: "#9ca3af",
-            fontSize: "22px",
-            fontFamily: "Inter",
-            fontWeight: 400,
-            marginTop: "24px",
-            maxWidth: "700px",
-            lineHeight: 1.5,
-          }}
-        >
-          Auditoría, roadmap e implementación para empresas medianas.
+    <Frame label="Ingeniería de producto y tecnología" footer="Málaga, España · ES · PT · EN">
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <span style={{ fontSize: "84px", fontWeight: 500, lineHeight: 1.02, letterSpacing: "-4px", color: C.ink, display: "flex" }}>
+          Conectamos sistemas.
+        </span>
+        <span style={{ fontSize: "84px", fontWeight: 500, lineHeight: 1.02, letterSpacing: "-4px", color: C.soft, display: "flex" }}>
+          Automatizamos operaciones.
+        </span>
+        <span style={{ fontSize: "25px", lineHeight: 1.45, color: C.muted, marginTop: "28px", maxWidth: "820px", display: "flex" }}>
+          Diseñamos y construimos la tecnología que conecta tus herramientas, automatiza el trabajo y aplica IA donde genera valor.
         </span>
       </div>
-
-      {/* Bottom */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          borderTop: "1px solid rgba(255,255,255,0.07)",
-          paddingTop: "24px",
-          marginTop: "32px",
-        }}
-      >
-        <span
-          style={{
-            color: "#6b7280",
-            fontSize: "18px",
-            fontFamily: "Inter",
-          }}
-        >
-          Málaga, España · ES · PT · EN
-        </span>
-        <span
-          style={{
-            color: "#FF6900",
-            fontSize: "18px",
-            fontFamily: "Inter",
-            fontWeight: 600,
-          }}
-        >
-          iaoperators.com
-        </span>
-      </div>
-    </div>
+    </Frame>
   );
 }
 
+// ─── Encuestas y landings con mensaje propio ─────────────────────────────────
+
 export function createSurveyOGElement({
-  eyebrow,
+  eyebrow: label,
   title,
   subtitle,
+  kicker = "Encuesta",
+  footer = "Uso de IA, gobernanza y dependencia de proveedores",
 }: SurveyOGProps): React.ReactElement {
+  const size = titleSize(title);
   return (
-    <div
-      style={{
-        width: "1200px",
-        height: "630px",
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: "#090909",
-        padding: "64px",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          inset: "0",
-          background:
-            "radial-gradient(circle at 15% 85%, rgba(255,105,0,0.28) 0%, transparent 34%), radial-gradient(circle at 82% 18%, rgba(255,180,0,0.12) 0%, transparent 24%)",
-          display: "flex",
-        }}
-      />
-
-      <div
-        style={{
-          position: "absolute",
-          inset: "28px",
-          borderRadius: "28px",
-          border: "1px solid rgba(255,255,255,0.08)",
-          display: "flex",
-        }}
-      />
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          position: "relative",
-          marginBottom: "42px",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          {logoWhite(34)}
-        </div>
-
+    <Frame label={label} footer={footer}>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        {eyebrow(kicker, C.rust, 17)}
         <span
           style={{
-            color: "#fbbf24",
-            fontSize: "14px",
-            fontWeight: 600,
-            fontFamily: "Inter",
-            letterSpacing: "1.1px",
-            textTransform: "uppercase",
-            border: "1px solid rgba(255,255,255,0.12)",
-            borderRadius: "999px",
-            padding: "8px 18px",
-            display: "flex",
-          }}
-        >
-          {eyebrow}
-        </span>
-      </div>
-
-      <div
-        style={{
-          position: "relative",
-          display: "flex",
-          flexDirection: "column",
-          gap: "22px",
-          maxWidth: "900px",
-          marginTop: "20px",
-        }}
-      >
-        <span
-          style={{
-            color: "#FF6900",
-            fontSize: "20px",
-            fontWeight: 600,
-            fontFamily: "Inter",
-            letterSpacing: "0.8px",
-            textTransform: "uppercase",
-          }}
-        >
-          Encuesta
-        </span>
-        <span
-          style={{
-            color: "white",
-            fontSize: "64px",
-            lineHeight: 1.03,
-            fontWeight: 700,
-            fontFamily: "Inter",
-            letterSpacing: "-2.2px",
+            fontSize: `${size}px`,
+            fontWeight: 500,
+            lineHeight: 1.06,
+            letterSpacing: `${-size * 0.045}px`,
+            color: C.ink,
+            marginTop: "18px",
+            maxWidth: "1020px",
             display: "flex",
           }}
         >
           {title}
         </span>
-        <span
-          style={{
-            color: "#cbd5e1",
-            fontSize: "25px",
-            lineHeight: 1.35,
-            fontFamily: "Inter",
-            maxWidth: "820px",
-            display: "flex",
-          }}
-        >
+        <span style={{ fontSize: "25px", lineHeight: 1.45, color: C.muted, marginTop: "22px", maxWidth: "900px", display: "flex" }}>
           {subtitle}
         </span>
       </div>
-
-      <div
-        style={{
-          position: "relative",
-          marginTop: "auto",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          borderTop: "1px solid rgba(255,255,255,0.08)",
-          paddingTop: "24px",
-        }}
-      >
-        <span
-          style={{
-            color: "#94a3b8",
-            fontSize: "18px",
-            fontFamily: "Inter",
-            display: "flex",
-          }}
-        >
-          Uso de IA, gobernanza y dependencia de proveedores
-        </span>
-        <span
-          style={{
-            color: "#FF6900",
-            fontSize: "18px",
-            fontFamily: "Inter",
-            fontWeight: 600,
-            display: "flex",
-          }}
-        >
-          iaoperators.com
-        </span>
-      </div>
-    </div>
+    </Frame>
   );
 }

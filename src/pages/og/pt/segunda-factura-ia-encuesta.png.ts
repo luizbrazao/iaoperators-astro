@@ -10,6 +10,8 @@ export const GET: APIRoute = async () => {
     title: "A Segunda Fatura da IA 2026",
     subtitle:
       "Pesquisa sobre uso de IA no trabalho, exposição de informação interna e dependência de fornecedores.",
+    kicker: "Pesquisa",
+    footer: "Uso de IA, governança e dependência de fornecedores",
   });
 
   const svg = await satori(element, { width: 1200, height: 630, fonts });
