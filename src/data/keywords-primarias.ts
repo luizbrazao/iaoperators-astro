@@ -127,6 +127,7 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
       "nueva ley de atención al cliente",
       "ley de atención a la clientela",
       "ley 10/2025",
+      "ley atención telefónica",
     ],
     faixa: "c",
   },

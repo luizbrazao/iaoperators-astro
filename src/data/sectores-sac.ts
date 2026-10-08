@@ -272,6 +272,10 @@ export const SHARED = {
         a: "La ley entró en vigor el 28 de diciembre de 2025 y concede doce meses de adaptación: el 28 de diciembre de 2026 el servicio de atención tiene que cumplir. Un proyecto de implementación con integración a CRM y telefonía suele estar en producción en cuatro a ocho semanas contando el diagnóstico, así que el margen real para empezar es menor que el del calendario.",
       },
       {
+        q: "¿La ley obliga a atender por teléfono con una persona?",
+        a: "Obliga a que la persona exista cuando el cliente la pide. La ley prohíbe atender exclusivamente con contestadores automáticos (art. 8.1) y fija que el 95 % de las solicitudes de atención personalizada se atiendan, de media, en menos de tres minutos (art. 8.2). Aparte, el 95 % de las llamadas recibidas debe atenderse, de media, en menos de tres minutos (art. 10.3). Un menú o un agente de voz puede resolver lo repetitivo, siempre que la salida a una persona esté disponible y su tiempo se mida. La aplicación concreta a tu empresa debe confirmarse con tu asesoría jurídica.",
+      },
+      {
         q: "¿Puedo cumplir con un chatbot?",
         a: "No por sí solo. Un chatbot puede formar parte del sistema, pero no sustituye las obligaciones de atención personalizada cuando la ley la exige: la norma prohíbe atender exclusivamente con contestadores automáticos y obliga a ofrecer esa vía a quien la pida. La IA sirve para clasificar, enrutar y resolver lo repetitivo dentro del SLA — pero necesita una salida a persona explícita y sin bucles, con registro de que esa salida existió.",
       },

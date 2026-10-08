@@ -25,9 +25,9 @@ const diasRestantes = Math.max(
 );
 
 const meta = {
-  title: "Ley 10/2025 de atención a la clientela: implementación técnica | IA Operators",
+  title: "Ley de atención al cliente (10/2025): adaptación técnica | IA Operators",
   description:
-    "Adaptamos tus sistemas a los requisitos técnicos de la Ley 10/2025: SLA medibles, atención personalizada, trazabilidad y evidencia técnica antes del 28 de diciembre de 2026.",
+    "Qué exige la nueva Ley de atención al cliente (Ley 10/2025) a tus sistemas: atención personal en 3 minutos, 15 días hábiles y trazabilidad. Plazo: 28/12/2026.",
 };
 
 // Rótulos de la versión editorial (oct/2026).
@@ -66,7 +66,7 @@ const breadcrumbJsonLd = {
       name: "Cumplimiento tecnológico",
       item: new URL(`/${locale}/cumplimiento/`, site).toString(),
     },
-    { "@type": "ListItem", position: 3, name: "Ley de atención a la clientela", item: pageUrl },
+    { "@type": "ListItem", position: 3, name: "Ley de atención al cliente", item: pageUrl },
   ],
 };
 
@@ -90,7 +90,7 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
   alternates={[{ lang: "es", href: pageUrl }]}
   xDefaultUrl={pageUrl}
   ogImage="/og/es/ley-atencion-al-cliente.png"
-  ogImageAlt="Ley 10/2025 de servicios de atención a la clientela — implementación técnica"
+  ogImageAlt="Ley de atención al cliente (Ley 10/2025) — adaptación técnica de tus sistemas"
   jsonLd={jsonLd}
   editorial
 >
@@ -103,7 +103,7 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
           <li><span aria-current="page">{LEY.nombreCorto}</span></li>
         </ol>
       </nav>
-      <h1>El 28 de diciembre de 2026 <span>tu atención a la clientela tiene que cumplir la Ley 10/2025</span></h1>
+      <h1>Ley de atención al cliente: <span>el 28 de diciembre de 2026 tus sistemas tienen que cumplirla</span></h1>
       <div class="pg-hero-bottom">
         <div class="pg-countdown">
           <p class="ed-eyebrow">{LEY.nombreCorto} · Plazo: {LEY.plazoAdaptacionLegible}</p>
@@ -182,7 +182,7 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
       <div class="ed-section-intro">
         <p class="ed-eyebrow">El núcleo del proyecto</p>
         <div>
-          <h2 id="ley-sistema-title">De la ley al sistema</h2>
+          <h2 id="ley-sistema-title">Qué exige la Ley de atención al cliente a tus sistemas</h2>
           <div class="pg-prose">
             <p>
               Cada obligación de la norma es, en la práctica, un requisito de arquitectura. Esto es lo
