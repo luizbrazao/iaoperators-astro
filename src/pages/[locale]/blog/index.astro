@@ -11,6 +11,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getLocale, ui } from "../../../i18n/ui";
 import { fetchBlogPosts } from "../../../lib/blog";
 import { SITE, ORG_REF, WEBSITE_REF } from "@/data/identidad";
+import { getPagesEditorial } from "@/i18n/editorialCopy";
 import "@/styles/editorial-pages.css";
 import "@/styles/editorial-blog.css";
 
@@ -134,11 +135,11 @@ const categoryLabel = (key: string) =>
   } as any)[key] ||
   key;
 
-// ===== Diseño editorial (solo ES, oct/2026) =====
+// ===== Diseño editorial (ES desde oct/2026, EN/PT desde el 08/oct/2026) =====
 // Mismos textos, enlaces y JSON-LD. El primer artículo (el más reciente) va
 // destacado con su imagen; el resto, en lista tipográfica. El filtro solo
 // muestra categorías con artículos, con su recuento.
-const editorial = locale === "es";
+const crumbs = getPagesEditorial(locale).breadcrumb;
 const fmtDate = (iso: string) =>
   new Date(iso).toLocaleDateString(locale, { year: "numeric", month: "short", day: "numeric" });
 const catCounts = preparedPosts.reduce((acc: Record<string, number>, p: any) => {
@@ -149,257 +150,98 @@ const filterKeys = CATEGORY_KEYS.filter((k) => k === "all" || (catCounts[k] ?? 0
 const [featured, ...restPosts] = preparedPosts;
 ---
 
-<BaseLayout title={pageTitle} description={t.description} jsonLd={blogJsonLd} editorial={editorial}>
-  {editorial ? (
-    <div class="ed-container bl">
-      <header class="pg-hero">
-        <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
-          <ol>
-            <li><a href="/es/">Inicio</a></li>
-            <li><span aria-current="page">{t.badge}</span></li>
+<BaseLayout title={pageTitle} description={t.description} jsonLd={blogJsonLd} editorial>
+  <div class="ed-container bl">
+    <header class="pg-hero">
+      <nav class="pf-crumbs ed-eyebrow" aria-label={crumbs.label}>
+        <ol>
+          <li><a href={`/${locale}/`}>{crumbs.home}</a></li>
+          <li><span aria-current="page">{t.badge}</span></li>
+        </ol>
+      </nav>
+      <h1>{t.title}</h1>
+      <div class="pg-hero-bottom">
+        <p class="ed-eyebrow">{t.badge} · {preparedPosts.length}</p>
+        <p class="pg-lead">{t.intro}</p>
+      </div>
+    </header>
+
+    {preparedPosts.length > 0 ? (
+      <Fragment>
+        <div class="bl-filter" id="blogCategoryBar" role="group" aria-label={categoryLabel("all")}>
+          {filterKeys.map((catId) => (
+            <button type="button" class="bl-chip" data-cat={catId} aria-pressed={catId === "all" ? "true" : "false"}>
+              {categoryLabel(catId)}
+              <span class="bl-count">{catId === "all" ? preparedPosts.length : catCounts[catId]}</span>
+            </button>
+          ))}
+        </div>
+
+        <div class="bl-posts" id="blogGrid">
+          {featured && (
+            <a href={withLocale(`blog/${featured.slug}/`)} class:list={["bl-feature", { "bl-feature-solo": !featured.imageUrl }]} data-cat={featured.__catId}>
+              <div class="bl-feature-copy">
+                <p class="ed-eyebrow">{categoryLabel(featured.__catId)} · <time datetime={featured.date}>{fmtDate(featured.date)}</time></p>
+                <h2>{featured.title}</h2>
+                <p class="bl-desc">{featured.description}</p>
+                <span class="ed-underlined">{t.readMore}</span>
+              </div>
+              {featured.imageUrl && (
+                <div class="bl-feature-img">
+                  <img src={featured.imageUrl} alt={featured.imageAlt ?? featured.title} loading="eager" decoding="async" />
+                </div>
+              )}
+            </a>
+          )}
+          <ol class="bl-list">
+            {restPosts.map((post: any) => (
+              <li data-cat={post.__catId}>
+                <a href={withLocale(`blog/${post.slug}/`)} class="bl-item">
+                  <time class="ed-eyebrow" datetime={post.date}>{fmtDate(post.date)}</time>
+                  <div class="bl-item-copy">
+                    <h2>{post.title}</h2>
+                    <p class="bl-desc">{post.description}</p>
+                  </div>
+                  <span class="ed-eyebrow bl-cat">{categoryLabel(post.__catId)}</span>
+                  <span class="ed-arrow" aria-hidden="true">↗</span>
+                </a>
+              </li>
+            ))}
           </ol>
-        </nav>
-        <h1>{t.title}</h1>
-        <div class="pg-hero-bottom">
-          <p class="ed-eyebrow">{t.badge} · {preparedPosts.length}</p>
-          <p class="pg-lead">{t.intro}</p>
         </div>
-      </header>
 
-      {preparedPosts.length > 0 ? (
-        <Fragment>
-          <div class="bl-filter" id="blogCategoryBar" role="group" aria-label={categoryLabel("all")}>
-            {filterKeys.map((catId) => (
-              <button type="button" class="bl-chip" data-cat={catId} aria-pressed={catId === "all" ? "true" : "false"}>
-                {categoryLabel(catId)}
-                <span class="bl-count">{catId === "all" ? preparedPosts.length : catCounts[catId]}</span>
-              </button>
-            ))}
-          </div>
-
-          <div class="bl-posts" id="blogGrid">
-            {featured && (
-              <a href={withLocale(`blog/${featured.slug}/`)} class:list={["bl-feature", { "bl-feature-solo": !featured.imageUrl }]} data-cat={featured.__catId}>
-                <div class="bl-feature-copy">
-                  <p class="ed-eyebrow">{categoryLabel(featured.__catId)} · <time datetime={featured.date}>{fmtDate(featured.date)}</time></p>
-                  <h2>{featured.title}</h2>
-                  <p class="bl-desc">{featured.description}</p>
-                  <span class="ed-underlined">{t.readMore}</span>
-                </div>
-                {featured.imageUrl && (
-                  <div class="bl-feature-img">
-                    <img src={featured.imageUrl} alt={featured.imageAlt ?? featured.title} loading="eager" decoding="async" />
-                  </div>
-                )}
-              </a>
-            )}
-            <ol class="bl-list">
-              {restPosts.map((post: any) => (
-                <li data-cat={post.__catId}>
-                  <a href={withLocale(`blog/${post.slug}/`)} class="bl-item">
-                    <time class="ed-eyebrow" datetime={post.date}>{fmtDate(post.date)}</time>
-                    <div class="bl-item-copy">
-                      <h2>{post.title}</h2>
-                      <p class="bl-desc">{post.description}</p>
-                    </div>
-                    <span class="ed-eyebrow bl-cat">{categoryLabel(post.__catId)}</span>
-                    <span class="ed-arrow" aria-hidden="true">↗</span>
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </div>
-
-          <div class="bl-empty" id="blogEmpty" hidden>
-            <p>{t.empty}</p>
-            <button type="button" class="ed-underlined" id="blogViewAll">{t.viewAll}</button>
-          </div>
-        </Fragment>
-      ) : (
-        <p class="bl-empty">{t.empty}</p>
-      )}
-
-      <script is:inline>
-        (function () {
-          var bar = document.getElementById("blogCategoryBar");
-          var grid = document.getElementById("blogGrid");
-          var empty = document.getElementById("blogEmpty");
-          var viewAll = document.getElementById("blogViewAll");
-          if (!bar || !grid) return;
-          var buttons = Array.prototype.slice.call(bar.querySelectorAll("button[data-cat]"));
-          var items = Array.prototype.slice.call(grid.querySelectorAll("[data-cat]"));
-          function apply(cat) {
-            buttons.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.cat === cat ? "true" : "false"); });
-            var visible = 0;
-            items.forEach(function (el) {
-              var show = cat === "all" || (el.dataset.cat || "others") === cat;
-              el.hidden = !show;
-              if (show) visible++;
-            });
-            grid.classList.toggle("is-filtered", cat !== "all");
-            if (empty) empty.hidden = visible !== 0;
-          }
-          buttons.forEach(function (b) { b.addEventListener("click", function () { apply(b.dataset.cat || "all"); }); });
-          if (viewAll) viewAll.addEventListener("click", function () { apply("all"); });
-        })();
-      </script>
-    </div>
-  ) : (
-  <Fragment>
-  <div class="bg-transparent text-white min-h-screen font-sans">
-    <!-- HEADER DO BLOG -->
-    <section class="pt-40 pb-10 px-4 text-center">
-      <div class="max-w-4xl mx-auto">
-        <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/10 text-orange-400 text-xs font-semibold mb-4">
-          {t.badge}
-        </span>
-
-        <h1 class="text-4xl md:text-6xl font-bold mb-6">
-          {t.title}
-        </h1>
-
-        <p class="text-gray-400 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
-          {t.intro}
-        </p>
-      </div>
-    </section>
-
-    <!-- FILTRO DE CATEGORIAS (JS leve) -->
-    <section class="px-4 pb-12">
-      <div class="max-w-6xl mx-auto flex flex-wrap justify-center gap-3" id="blogCategoryBar">
-        {CATEGORY_KEYS.map((catId) => (
-          <button
-            type="button"
-            class:list={[
-              "px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border",
-              "bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:text-white",
-            ]}
-            data-cat={catId}
-          >
-            {categoryLabel(catId)}
-          </button>
-        ))}
-      </div>
-    </section>
-
-    <!-- LISTA DE POSTS -->
-    <section class="px-4 pb-20">
-      <div class="max-w-6xl mx-auto">
-        {preparedPosts.length > 0 ? (
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="blogGrid">
-            {preparedPosts.map((post: any) => (
-              <a
-                href={withLocale(`blog/${post.slug}/`)}
-                class="group bg-[#0a0a0a] border border-white/5 rounded-3xl overflow-hidden hover:border-orange-500/50 transition-all duration-300 hover:-translate-y-1 flex flex-col h-full"
-                data-cat={post.__catId}
-              >
-                <!-- Imagem -->
-                <div class="h-48 overflow-hidden bg-white/5 relative">
-                  {post.imageUrl ? (
-                    <img
-                      src={post.imageUrl}
-                      alt={post.title}
-                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : (
-                    <div class="w-full h-full flex items-center justify-center text-gray-700 font-medium">
-                      IA Operators
-                    </div>
-                  )}
-
-                  <div class="absolute top-4 left-4">
-                    <span class="px-3 py-1 bg-black/60 backdrop-blur-md text-orange-400 text-xs font-bold rounded-full uppercase border border-white/10">
-                      {categoryLabel(post.__catId)}
-                    </span>
-                  </div>
-                </div>
-
-                <!-- Conteúdo -->
-                <div class="p-6 flex flex-col flex-1">
-                  <h3 class="text-xl font-bold mb-3 text-white leading-tight group-hover:text-orange-500 transition-colors">
-                    {post.title}
-                  </h3>
-                  <p class="text-gray-400 text-sm line-clamp-3 mb-4 flex-1">
-                    {post.description}
-                  </p>
-                  <div class="text-gray-400 text-xs mt-auto pt-4 border-t border-white/5 flex justify-between">
-                    <span>{new Date(post.date).toLocaleDateString(locale)}</span>
-                    <span class="group-hover:translate-x-1 transition-transform">
-                      {t.readMore}
-                    </span>
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
-        ) : (
-          <div class="text-center py-20">
-            <p class="text-gray-400 text-lg">{t.empty}</p>
-          </div>
-        )}
-
-        <!-- Empty state quando filtro zera -->
-        <div class="text-center py-20 hidden" id="blogEmpty">
-          <p class="text-gray-400 text-lg">{t.empty}</p>
-          <button type="button" class="mt-4 text-orange-500 hover:underline" id="blogViewAll">
-            {t.viewAll}
-          </button>
+        <div class="bl-empty" id="blogEmpty" hidden>
+          <p>{t.empty}</p>
+          <button type="button" class="ed-underlined" id="blogViewAll">{t.viewAll}</button>
         </div>
-      </div>
-    </section>
-  </div>
+      </Fragment>
+    ) : (
+      <p class="bl-empty">{t.empty}</p>
+    )}
 
-  <script is:inline>
-    (function () {
-      const bar = document.getElementById("blogCategoryBar");
-      const grid = document.getElementById("blogGrid");
-      const empty = document.getElementById("blogEmpty");
-      const viewAll = document.getElementById("blogViewAll");
-
-      if (!bar || !grid) return;
-
-      const buttons = Array.from(bar.querySelectorAll("button[data-cat]"));
-      const cards = Array.from(grid.querySelectorAll("a[data-cat]"));
-
-      const ACTIVE =
-        "bg-orange-500 border-orange-500 text-white shadow-[0_0_15px_rgba(249,115,22,0.4)]";
-      const INACTIVE =
-        "bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:text-white";
-
-      function setButtonState(btn, active) {
-        if (active) {
-          btn.classList.remove(...INACTIVE.split(" "));
-          btn.classList.add(...ACTIVE.split(" "));
-        } else {
-          btn.classList.remove(...ACTIVE.split(" "));
-          btn.classList.add(...INACTIVE.split(" "));
+    <script is:inline>
+      (function () {
+        var bar = document.getElementById("blogCategoryBar");
+        var grid = document.getElementById("blogGrid");
+        var empty = document.getElementById("blogEmpty");
+        var viewAll = document.getElementById("blogViewAll");
+        if (!bar || !grid) return;
+        var buttons = Array.prototype.slice.call(bar.querySelectorAll("button[data-cat]"));
+        var items = Array.prototype.slice.call(grid.querySelectorAll("[data-cat]"));
+        function apply(cat) {
+          buttons.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.cat === cat ? "true" : "false"); });
+          var visible = 0;
+          items.forEach(function (el) {
+            var show = cat === "all" || (el.dataset.cat || "others") === cat;
+            el.hidden = !show;
+            if (show) visible++;
+          });
+          grid.classList.toggle("is-filtered", cat !== "all");
+          if (empty) empty.hidden = visible !== 0;
         }
-      }
-
-      function applyFilter(cat) {
-        buttons.forEach((b) => setButtonState(b, b.dataset.cat === cat));
-
-        let visible = 0;
-        cards.forEach((card) => {
-          const cardCat = card.dataset.cat || "others";
-          const show = cat === "all" || cardCat === cat;
-          card.classList.toggle("hidden", !show);
-          if (show) visible++;
-        });
-
-        if (empty) empty.classList.toggle("hidden", visible !== 0);
-        grid.classList.toggle("hidden", visible === 0);
-      }
-
-      const defaultBtn = buttons.find((b) => b.dataset.cat === "all") || buttons[0];
-      if (defaultBtn) applyFilter(defaultBtn.dataset.cat || "all");
-
-      buttons.forEach((b) => b.addEventListener("click", () => applyFilter(b.dataset.cat || "all")));
-      viewAll?.addEventListener("click", () => applyFilter("all"));
-    })();
-  </script>
-  </Fragment>
-  )}
+        buttons.forEach(function (b) { b.addEventListener("click", function () { apply(b.dataset.cat || "all"); }); });
+        if (viewAll) viewAll.addEventListener("click", function () { apply("all"); });
+      })();
+    </script>
+  </div>
 </BaseLayout>
