@@ -40,5 +40,20 @@
     "audiencia": "Para quem é",
     "faq": "Perguntas",
     "despues": "Depois"
+  },
+  "servicios": {
+    "home": "Início",
+    "hub": "Serviços",
+    "problema": "O problema",
+    "servicios": "Serviços",
+    "despues": "Depois",
+    "frontera": "Fronteira",
+    "stack": "Stack",
+    "faq": "Perguntas",
+    "cross": "Outra página?",
+    "next": "Próximo passo",
+    "count": "serviços",
+    "contactAria": "Contato",
+    "hubClosing": "Não sabe qual serviço se encaixa? Em uma conversa de 30 minutos a gente vê isso com você."
   }
 }

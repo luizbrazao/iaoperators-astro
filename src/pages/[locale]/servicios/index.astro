@@ -16,6 +16,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getLocale } from "@/i18n/ui";
 import { getServiceGroups, getHubMeta } from "@/data/servicios";
 import { getPilares } from "@/data/navegacion";
+import { getPagesEditorial } from "@/i18n/editorialCopy";
 import "@/styles/editorial-pages.css";
 import "@/styles/editorial-servicios.css";
 
@@ -26,13 +27,14 @@ const groups = getServiceGroups(locale);
 // arquitectura) y dos en EN/PT, donde el silo de cumplimiento no existe. El
 // bloque deja de ser ES-only en ago/2026 y la rejilla se ajusta a la cuenta.
 const pilares = getPilares(locale);
-const pilaresCols = pilares.length === 3 ? "md:grid-cols-3" : "md:grid-cols-2";
 const PILARES_TITLE: Record<string, string> = {
   es: "Los tres pilares",
   en: "The two pillars",
   pt: "Os dois pilares",
 };
 const pilaresTitle = PILARES_TITLE[locale] ?? PILARES_TITLE.es;
+const copy = getPagesEditorial(locale);
+const L = copy.servicios;
 
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
 
@@ -80,152 +82,71 @@ const breadcrumbJsonLd = {
   title={`${meta.title} | IA Operators`}
   description={meta.description}
   jsonLd={[collectionJsonLd, breadcrumbJsonLd]}
-  editorial={locale === "es"}
+  editorial
 >
-  {/* ES: diseño editorial (oct/2026). Mismos H1/H2/H3 y enlaces. */}
-  {locale === "es" ? (
-    <Fragment>
-      <div class="ed-container">
-        <header class="pg-hero">
-          <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
-            <ol>
-              <li><a href="/es/">{homeLabel}</a></li>
-              <li><span aria-current="page">{breadcrumbLabel}</span></li>
-            </ol>
-          </nav>
-          <h1>{meta.h1}</h1>
-          <div class="pg-hero-bottom">
-            <p class="ed-eyebrow">{breadcrumbLabel} · {allItems.length}</p>
-            <p class="pg-lead">{meta.intro}</p>
-          </div>
-        </header>
+  <Fragment>
+    <div class="ed-container">
+      <header class="pg-hero">
+        <nav class="pf-crumbs ed-eyebrow" aria-label={copy.breadcrumb.label}>
+          <ol>
+            <li><a href={`/${locale}/`}>{homeLabel}</a></li>
+            <li><span aria-current="page">{breadcrumbLabel}</span></li>
+          </ol>
+        </nav>
+        <h1>{meta.h1}</h1>
+        <div class="pg-hero-bottom">
+          <p class="ed-eyebrow">{breadcrumbLabel} · {allItems.length}</p>
+          <p class="pg-lead">{meta.intro}</p>
+        </div>
+      </header>
 
-        {pilares.length > 0 && (
-          <section class="pg-section" aria-labelledby="sv-pilares">
-            <h2 id="sv-pilares" class="ed-eyebrow sv-kicker">{pilaresTitle}</h2>
-            <ul class="pg-doors sv-doors">
-              {pilares.map((pilar, i) => (
-                <li>
-                  <a href={pilar.href}>
-                    <span class="ed-eyebrow">{String(i + 1).padStart(2, "0")}</span>
-                    <h3>{pilar.label}</h3>
-                    <p>{pilar.tagline}</p>
-                    <span class="ed-arrow" aria-hidden="true">↗</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {groups.map((group, gi) => (
-          <section class:list={["pg-section", { "sv-last": gi === groups.length - 1 }]} aria-labelledby={`sv-grupo-${gi + 1}`}>
-            <div class="ed-section-intro">
-              <p class="ed-eyebrow">{group.items.length} servicios</p>
-              <div>
-                <h2 id={`sv-grupo-${gi + 1}`}>{group.title}</h2>
-                {group.intro && <p class="pg-lead-muted">{group.intro}</p>}
-              </div>
-            </div>
-            <div class="pg-offers">
-              {group.items.map((item) => (
-                <a class="ed-offer" href={item.href}>
-                  <span class="ed-eyebrow">{item.num}</span>
-                  <h3>{item.label}</h3>
-                  <p>{item.desc}</p>
+      {pilares.length > 0 && (
+        <section class="pg-section" aria-labelledby="sv-pilares">
+          <h2 id="sv-pilares" class="ed-eyebrow sv-kicker">{pilaresTitle}</h2>
+          <ul class="pg-doors sv-doors">
+            {pilares.map((pilar, i) => (
+              <li>
+                <a href={pilar.href}>
+                  <span class="ed-eyebrow">{String(i + 1).padStart(2, "0")}</span>
+                  <h3>{pilar.label}</h3>
+                  <p>{pilar.tagline}</p>
                   <span class="ed-arrow" aria-hidden="true">↗</span>
                 </a>
-              ))}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {groups.map((group, gi) => (
+        <section class:list={["pg-section", { "sv-last": gi === groups.length - 1 }]} aria-labelledby={`sv-grupo-${gi + 1}`}>
+          <div class="ed-section-intro">
+            <p class="ed-eyebrow">{group.items.length} {L.count}</p>
+            <div>
+              <h2 id={`sv-grupo-${gi + 1}`}>{group.title}</h2>
+              {group.intro && <p class="pg-lead-muted">{group.intro}</p>}
             </div>
-          </section>
-        ))}
-      </div>
-
-      <section class="ed-closing" aria-label="Contacto">
-        <div class="ed-container">
-          <p class="ed-eyebrow">Siguiente paso</p>
-          <p class="pg-closing-statement">¿No tienes claro qué servicio encaja? En una llamada de 30 minutos lo vemos contigo.</p>
-          <a class="ed-button" href={contactHref}>{ctaLabel}<span class="ed-arrow" aria-hidden="true">↗</span></a>
-        </div>
-      </section>
-    </Fragment>
-  ) : (
-  <div class="bg-transparent text-white">
-    <section class="px-4 pt-28 pb-16">
-      <div class="max-w-4xl mx-auto text-center">
-        <h1 class="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6">
-          {meta.h1}
-        </h1>
-        <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">{meta.intro}</p>
-      </div>
-    </section>
-
-    {pilares.length > 0 && (
-      <section class="px-4 pb-16">
-        <div class="max-w-6xl mx-auto">
-          <h2 class="text-xs font-semibold uppercase tracking-widest text-orange-400 mb-6">
-            {pilaresTitle}
-          </h2>
-          <div class:list={["grid grid-cols-1 gap-5", pilaresCols]}>
-            {pilares.map((pilar) => (
-              <a
-                href={pilar.href}
-                class="group bg-[#0a0a0a] border border-orange-500/20 rounded-3xl p-7 hover:border-orange-500/50 transition-all duration-300 flex flex-col"
-              >
-                <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-orange-400 transition-colors">
-                  {pilar.label}
-                </h3>
-                <p class="text-gray-400 text-sm leading-relaxed flex-1">{pilar.tagline}</p>
-                <span class="text-orange-400 text-sm mt-4 group-hover:translate-x-1 transition-transform inline-block">
-                  →
-                </span>
-              </a>
-            ))}
           </div>
-        </div>
-      </section>
-    )}
-
-    {groups.map((group) => (
-      <section class="px-4 pb-16">
-        <div class="max-w-6xl mx-auto">
-          <h2 class="text-xs font-semibold uppercase tracking-widest text-orange-400 mb-2">
-            {group.title}
-          </h2>
-          <p class="text-gray-400 text-sm mb-6 max-w-2xl">{group.intro}</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div class="pg-offers">
             {group.items.map((item) => (
-              <a
-                href={item.href}
-                class="group bg-[#0a0a0a] border border-white/5 rounded-3xl p-6 hover:border-orange-500/30 transition-all duration-300 flex flex-col"
-              >
-                <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-orange-500/10 text-orange-400 font-bold text-xs mb-4">
-                  {item.num}
-                </span>
-                <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-orange-400 transition-colors">
-                  {item.label}
-                </h3>
-                <p class="text-gray-400 text-sm leading-relaxed flex-1">{item.desc}</p>
-                <span class="text-orange-400 text-sm mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                  →
-                </span>
+              <a class="ed-offer" href={item.href}>
+                <span class="ed-eyebrow">{item.num}</span>
+                <h3>{item.label}</h3>
+                <p>{item.desc}</p>
+                <span class="ed-arrow" aria-hidden="true">↗</span>
               </a>
             ))}
           </div>
-        </div>
-      </section>
-    ))}
+        </section>
+      ))}
+    </div>
 
-    <section class="px-4 py-20">
-      <div class="max-w-3xl mx-auto text-center">
-        <a
-          href={contactHref}
-          class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-orange-500 text-black font-medium text-lg hover:bg-orange-400 hover:scale-105 transition-all duration-300"
-        >
-          {ctaLabel} ↗
-        </a>
+    <section class="ed-closing" aria-label={L.contactAria}>
+      <div class="ed-container">
+        <p class="ed-eyebrow">{L.next}</p>
+        <p class="pg-closing-statement">{L.hubClosing}</p>
+        <a class="ed-button" href={contactHref}>{ctaLabel}<span class="ed-arrow" aria-hidden="true">↗</span></a>
       </div>
     </section>
-  </div>
-  )}
+  </Fragment>
 </BaseLayout>

@@ -40,5 +40,20 @@
     "audiencia": "Who it's for",
     "faq": "Questions",
     "despues": "Next"
+  },
+  "servicios": {
+    "home": "Home",
+    "hub": "Services",
+    "problema": "The problem",
+    "servicios": "Services",
+    "despues": "Next",
+    "frontera": "Boundaries",
+    "stack": "Stack",
+    "faq": "Questions",
+    "cross": "Another page?",
+    "next": "Next step",
+    "count": "services",
+    "contactAria": "Contact",
+    "hubClosing": "Not sure which service fits? We'll work it out with you on a 30-minute call."
   }
 }

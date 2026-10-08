@@ -2,12 +2,14 @@
 // Landings de servicio de /es/servicios/* (chatbots, automatización, agencia y
 // consultoría de IA, SEO, diseño web, marketing digital) con el diseño
 // editorial (oct/2026). Recibe el mismo objeto de contenido `c` que ya usaba
-// cada página, así que textos, H1/H2/H3 y enlaces no cambian. EN y PT siguen
-// con el markup oscuro de cada página.
+// cada página, así que textos, H1/H2/H3 y enlaces no cambian. Desde el
+// 08/oct/2026 sirve también a EN y PT.
 //
 // Los bloques opcionales (hero.lead, despues, frontera, tech, crossLink,
 // ciudades) solo se pintan si la página los trae.
 import RelatedCases from "@/components/RelatedCases.astro";
+import { getPagesEditorial } from "@/i18n/editorialCopy";
+import { asShellLoc } from "@/i18n/editorialShell";
 import "@/styles/editorial-pages.css";
 import "@/styles/editorial-servicios.css";
 
@@ -26,6 +28,9 @@ interface Props {
 }
 
 const { c, contactHref, relatedPath, relatedOverrides, faqHtml = false, cities } = Astro.props as Props;
+const locale = asShellLoc(Astro.currentLocale);
+const copy = getPagesEditorial(locale);
+const L = copy.servicios;
 
 // Los textos de botón traen la flecha incluida ("… ↗", "… →"); aquí la flecha
 // es un elemento aparte, así que se quita del texto.
@@ -36,10 +41,10 @@ const phases: any[] = c.process?.phases ?? [];
 
 <div class="ed-container">
   <header class="pg-hero">
-    <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+    <nav class="pf-crumbs ed-eyebrow" aria-label={copy.breadcrumb.label}>
       <ol>
-        <li><a href="/es/">Inicio</a></li>
-        <li><a href="/es/servicios/">Servicios</a></li>
+        <li><a href={`/${locale}/`}>{L.home}</a></li>
+        <li><a href={`/${locale}/servicios/`}>{L.hub}</a></li>
         <li><span aria-current="page">{c.breadcrumb}</span></li>
       </ol>
     </nav>
@@ -60,7 +65,7 @@ const phases: any[] = c.process?.phases ?? [];
   {c.problem && (
     <section class="pg-section" aria-labelledby="sv-problema">
       <div class="ed-section-intro">
-        <p class="ed-eyebrow">El problema</p>
+        <p class="ed-eyebrow">{L.problema}</p>
         <div>
           <h2 id="sv-problema">{c.problem.title}</h2>
           {c.problem.subtitle && <p class="pg-lead-muted">{c.problem.subtitle}</p>}
@@ -74,7 +79,7 @@ const phases: any[] = c.process?.phases ?? [];
 
   <section id="servicios" class="pg-section sv-before-band" aria-labelledby="sv-servicios">
     <div class="ed-section-intro">
-      <p class="ed-eyebrow">Servicios</p>
+      <p class="ed-eyebrow">{L.servicios}</p>
       <div>
         <h2 id="sv-servicios">{c.services.title}</h2>
         {c.services.subtitle && <p class="pg-lead-muted">{c.services.subtitle}</p>}
@@ -118,7 +123,7 @@ const phases: any[] = c.process?.phases ?? [];
   {c.despues && (
     <section class="pg-section" aria-labelledby="sv-despues">
       <div class="ed-section-intro">
-        <p class="ed-eyebrow">Después</p>
+        <p class="ed-eyebrow">{L.despues}</p>
         <div>
           <h2 id="sv-despues">{c.despues.title}</h2>
           <div class="pg-prose">
@@ -136,7 +141,7 @@ const phases: any[] = c.process?.phases ?? [];
   {c.frontera && (
     <section class="pg-section" aria-labelledby="sv-frontera">
       <div class="ed-section-intro">
-        <p class="ed-eyebrow">Frontera</p>
+        <p class="ed-eyebrow">{L.frontera}</p>
         <div>
           <h2 id="sv-frontera">{c.frontera.title}</h2>
           {c.frontera.subtitle && <p class="pg-lead-muted">{c.frontera.subtitle}</p>}
@@ -157,7 +162,7 @@ const phases: any[] = c.process?.phases ?? [];
   {c.tech && (
     <section class="pg-section sv-tech-section" aria-labelledby="sv-tech">
       <div class="ed-section-intro">
-        <p class="ed-eyebrow">Stack</p>
+        <p class="ed-eyebrow">{L.stack}</p>
         <div>
           <h2 id="sv-tech">{c.tech.title}</h2>
           {c.tech.subtitle && <p class="pg-lead-muted">{c.tech.subtitle}</p>}
@@ -171,13 +176,13 @@ const phases: any[] = c.process?.phases ?? [];
 </div>
 
 {relatedPath && (
-  <RelatedCases path={relatedPath} locale="es" overrides={relatedOverrides} variant="editorial" />
+  <RelatedCases path={relatedPath} locale={locale} overrides={relatedOverrides} variant="editorial" />
 )}
 
 <div class="ed-container">
   <section class="pg-section pg-faq ed-faq" aria-labelledby="sv-faq">
     <div class="ed-section-intro">
-      <p class="ed-eyebrow">Preguntas</p>
+      <p class="ed-eyebrow">{L.faq}</p>
       <div>
         <h2 id="sv-faq">{c.faq.title}</h2>
         <div class="pg-faq-list">
@@ -205,7 +210,7 @@ const phases: any[] = c.process?.phases ?? [];
   {c.crossLink && (
     <div class="sv-cross">
       <section class="pg-door" aria-labelledby="sv-cross">
-        <p class="ed-eyebrow">¿Otra página?</p>
+        <p class="ed-eyebrow">{L.cross}</p>
         <div>
           <h2 id="sv-cross">{c.crossLink.title}</h2>
           <p>{c.crossLink.body}</p>
@@ -218,7 +223,7 @@ const phases: any[] = c.process?.phases ?? [];
 
 <section class="ed-closing" aria-labelledby="sv-closing">
   <div class="ed-container">
-    <p class="ed-eyebrow">Siguiente paso</p>
+    <p class="ed-eyebrow">{L.next}</p>
     <h2 id="sv-closing" class="pg-closing-title">{c.finalCta.title}</h2>
     {c.finalCta.subtitle && <p class="pg-closing-copy">{c.finalCta.subtitle}</p>}
     <a class="ed-button" href={contactHref}>{clean(c.finalCta.cta)}<span class="ed-arrow" aria-hidden="true">↗</span></a>

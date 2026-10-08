@@ -86,5 +86,20 @@
     "capas": "Capas",
     "decisiones": "Decisiones",
     "integracion": "Integración"
+  },
+  "servicios": {
+    "home": "Inicio",
+    "hub": "Servicios",
+    "problema": "El problema",
+    "servicios": "Servicios",
+    "despues": "Después",
+    "frontera": "Frontera",
+    "stack": "Stack",
+    "faq": "Preguntas",
+    "cross": "¿Otra página?",
+    "next": "Siguiente paso",
+    "count": "servicios",
+    "contactAria": "Contacto",
+    "hubClosing": "¿No tienes claro qué servicio encaja? En una llamada de 30 minutos lo vemos contigo."
   }
 }
