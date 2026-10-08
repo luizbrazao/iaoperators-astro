@@ -483,7 +483,16 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     estimada: true,
   },
   {
-    // ⚠️ CONFLICTO PENDIENTE DE DECISIÓN (Sprint 0, 09/ago/2026).
+    // ✅ CONFLICTO RESUELTO (09/oct/2026): esta URL pasa a ser la dueña única de
+    // "agencia de ia" y "agencia de inteligencia artificial" (misma intención).
+    // Datos al cierre de la ventana de 60 días (Search Console, 3 meses):
+    // /es/agencia-de-ia/ 773 impresiones, posición 76; esta URL 17, posición 34.
+    // El rediseño ya había convertido /es/agencia-de-ia/ en hub de ciudades, así
+    // que el head se concentra aquí y el hub queda con la intención local.
+    // Sin 301: el hub sigue vivo y enlaza aquí con el ancla "agencia de IA".
+    // Remedir en dic/2026; si el hub sigue captando el head, revisar el 301.
+    //
+    // Histórico — conflicto abierto en el Sprint 0 (09/ago/2026):
     // Search Console (90 días) muestra que Google sirve /es/agencia-de-ia/ —
     // no esta página — para todo el clúster: "agencia de ia" (146 impresiones),
     // "agencia de inteligencia artificial" (119), "agencia ia" (51),
@@ -506,18 +515,23 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     primaria: "agencia de inteligencia artificial",
     secundarias: [
       "agencia inteligencia artificial",
+      "agencia de ia",
+      "agencia ia",
+      "agencias ia",
+      "agencia con ia",
       "desarrollo de soluciones de ia",
       "implantación de ia en empresas",
     ],
     faixa: "c",
   },
   {
-    // Ver nota en servicios/agencia-ia/. Esta es la URL que Google sirve hoy.
+    // Hub de ciudades (09/oct/2026): cede el head "agencia de ia" a
+    // servicios/agencia-ia/ (ver nota allí) y se queda con la intención local.
     path: "agencia-de-ia/",
     locales: ["es"],
     silo: "local",
-    primaria: "agencia de ia",
-    secundarias: ["agencia ia", "agencias ia", "agencia con ia", "agencia de ia en españa"],
+    primaria: "agencia de ia en españa",
+    secundarias: ["agencias de ia en españa"],
     faixa: "c",
   },
   {
