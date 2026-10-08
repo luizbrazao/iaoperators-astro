@@ -6,7 +6,7 @@ date: 2025-08-02
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/9b8edd29-892e-4752-999e-cc72d6d16946.png
 locale: es
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 ¿Es el fin del desarrollo de software con la llegada de la IA?

@@ -7,7 +7,7 @@ date: 2025-12-31
 image: https://s3.eu-north-1.amazonaws.com/ia-operators/IA%20Operators%20Website/revolucion-herramientas-inteligencia-artificial.png
 locale: es
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 ¿Te has dado cuenta de que estamos siendo testigos de una auténtica revolución tecnológica? No, no estoy exagerando. La inteligencia artificial (IA) ya no es solo terreno de películas de ciencia ficción; está transformando cómo trabajamos, creamos y, básicamente, vivimos. Y lo mejor es que, hoy día, tú y yo podemos acceder a herramientas impresionantes que simplifican tareas que antes parecían titánicas. ¿Por qué? Porque la IA no solo piensa, también edita, automatiza y, básicamente, hace el cafecito por ti (metafóricamente hablando, claro).

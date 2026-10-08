@@ -54,11 +54,3 @@ The architect is no longer just someone who designs; He is a visionary who under
 ## And now what?
 
 If you've made it this far, you're probably as intrigued as I was when I learned about this technology. My recommendation: try that free week now and experience first-hand how this tool can transform your workflow. After all, it never hurts to explore, learn and—who knows—fall in love with technology a little, right?
-
-You may also be interested
-
-        - [Comparativa de IAs para arquitectos: Cling, Luma y Runway](https://www.iaoperators.com/blog/comparativa-ias-arquitectos-cling-luma-runway)
-
-        - [Las innovaciones más impactantes de la tecnología y la ciencia en 2025](https://www.iaoperators.com/blog/innovaciones-impactantes-tecnologia-ciencia-2025)
-
-        - [Mistral: un chatbot más rápido y funcional con IA](https://www.iaoperators.com/blog/mistral-chatbot-mas-rapido-y-funcional)

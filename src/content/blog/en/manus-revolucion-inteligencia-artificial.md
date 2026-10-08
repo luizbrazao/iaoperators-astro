@@ -6,7 +6,7 @@ date: 2025-10-03
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/manus-revolucion-inteligencia-artificial.jpeg
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 The future is already here, knocking on our door and transforming everything we know. Yes, we are talking about artificial intelligence, the great protagonist of technological revolutions. But today it is not just any AI that makes the difference, but a rising star called **Manus**.

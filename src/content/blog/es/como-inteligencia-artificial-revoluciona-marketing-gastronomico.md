@@ -7,7 +7,7 @@ date: 2025-02-14
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/como-inteligencia-artificial-revoluciona-marketing-gastronomico.jpeg
 locale: es
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 ¿Sabías que un restaurante puede ser mucho más eficiente y rentable usando Inteligencia Artificial? Sí, suena a película futurista, pero no, esto no va de robots cocinando (aunque hay quien está en ello). Hoy te traigo todas las claves de cómo la IA puede convertirse en tu nuevo aliado en el marketing gastronómico. Y no, no es tan complicado como parece. Vamos a desmontar ese mito y entrar en el apasionante mundo de la comida combinada con tecnología.

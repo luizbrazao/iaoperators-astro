@@ -7,7 +7,7 @@ date: 2025-02-18
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/77fe5b6b-c368-456a-b4ec-2e9433bca36c.png
 locale: es
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 ¡Vaya, tremenda presentación la de Grok 3! Desde que leí la primera línea, no pude evitar emocionarme. Esto de entender el universo mientras avanzamos en inteligencia artificial suena a un plan sacado directamente de una novela de ciencia ficción increíblemente optimista. Pero lo que realmente me atrapó no fueron solamente las aspiraciones galácticas del equipo, sino también la determinación de construir algo revolucionario, cueste lo que cueste. Si te interesa todo eso de aliens, física difícil de entender y, claro, un poquito de "cómo las máquinas podrían hacernos la vida más fácil", entonces estás en el lugar correcto.

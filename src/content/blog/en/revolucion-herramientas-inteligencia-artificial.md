@@ -6,7 +6,7 @@ date: 2025-12-31
 image: https://s3.eu-north-1.amazonaws.com/ia-operators/IA%20Operators%20Website/revolucion-herramientas-inteligencia-artificial.png
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Have you realized that we are witnessing a true technological revolution? No, I'm not exaggerating. Artificial intelligence (AI) is no longer just the realm of science fiction movies; It is transforming how we work, create and, basically, live. And the best thing is that, today, you and I can access impressive tools that simplify tasks that once seemed titanic. Because? Because AI not only thinks, it also edits, automates and, basically, makes coffee for you (metaphorically speaking, of course).

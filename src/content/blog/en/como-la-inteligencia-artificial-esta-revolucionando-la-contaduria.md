@@ -6,7 +6,7 @@ date: 2025-02-24
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/como-la-inteligencia-artificial-esta-revolucionando-la-contaduria.jpeg
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Yes I know. Accounting never sounds like the most exciting topic in the world, but how about we give it a twist? Because this is not just any article: today we are going to talk about how **artificial intelligence (AI)** is revolutionizing this noble profession. I know what you're thinking: "AI in accounting? What's next, robots doing tax returns?" And the answer may surprise you. Spoiler: we're not that far from it.

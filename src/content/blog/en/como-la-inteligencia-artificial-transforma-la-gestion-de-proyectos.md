@@ -6,7 +6,7 @@ date: 2025-02-16
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/1accf91b-1dab-4aef-a104-442d55319a98.png
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Can you imagine that artificial intelligence (AI) can be your best ally in project management? It seems like a spectacular concept straight out of a science fiction movie, but it's more real than ever. In times where technological tools are revolutionizing most industries, integrating AI is not only an interesting option, but it is beginning to be essential. This tour that you are about to read explores, point by point, how to take advantage of AI to increase your efficiency and change the way you manage your projects.

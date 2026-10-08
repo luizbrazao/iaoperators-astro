@@ -6,7 +6,7 @@ date: 2025-08-02
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/9b8edd29-892e-4752-999e-cc72d6d16946.png
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Is the end of software development with the arrival of AI?

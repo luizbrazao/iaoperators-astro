@@ -7,7 +7,7 @@ date: 2025-04-03
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/ia-para-restaurantes-herramientas-fotografia-gastronomica.jpeg
 locale: es
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 ¡Hola, amigo! Soy Luiz, y hoy quiero contarte cómo la **IA para restaurantes** puede transformar tu negocio, desde la cocina hasta la sala, haciendo que cada proceso sea más ágil y personalizado. Imagina un asistente virtual que atiende a tus clientes a cualquier hora, gestiona reservas, optimiza el menú e incluso transforma tus fotos de comida en imágenes de calidad profesional. Suena a futuro, ¿verdad? Pues ese futuro ya está aquí.

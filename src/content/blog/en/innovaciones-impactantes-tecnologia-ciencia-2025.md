@@ -6,7 +6,7 @@ date: 2025-02-20
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/innovaciones-impactantes-tecnologia-ciencia-2025.jpeg
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 The future is here, and it comes from technology giants like Microsoft, Google and Nvidia. Can you imagine a quantum chip that uses materials that break the known rules of physics? Or an AI model that collaborates with scientists to find medical treatments? Well hold on, because this is not science fiction, it is real science and it is happening right now. Today we are going to dive into four impactful innovations that are marking a before and after in technology and science. Make yourself comfortable, this promises.

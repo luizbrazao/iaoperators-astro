@@ -6,7 +6,7 @@ date: 2025-02-19
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/474764b4-8fe5-4e30-8912-55b804c2e815.png
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Architects interested in technology? Well, friends, if you haven't yet explored the wonders of artificial intelligence for generating videos from images, you are missing out on a silent revolution. Today I bring you a sparkling (and somewhat obsessive, I won't lie) comparison between **Cling, Luma and Runway**, focused precisely on the visual needs of architects who dream of giving movement to their works.

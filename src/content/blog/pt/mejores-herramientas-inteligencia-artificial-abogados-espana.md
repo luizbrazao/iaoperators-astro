@@ -6,7 +6,7 @@ date: 2025-02-13
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/mejores-herramientas-inteligencia-artificial-abogados-espana.webp
 locale: pt
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Quem diria que os advogados espanhóis de hoje carregam mais tecnologia nas suas pastas do que canetas Montblanc? Não, não é uma piada. É uma realidade. Os escritórios de advocacia em Espanha estão a agir em conjunto e a olhar para o futuro com ferramentas de Inteligência Artificial (IA) que prometem revolucionar a forma como trabalham. E aqui estou eu, Luiz, com meu café ao meu lado, pronto para desembaraçar toda essa bagunça tecnológica e contar para você em palavras humanas, e não em bytes chatos.

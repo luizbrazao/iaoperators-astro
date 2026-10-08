@@ -6,7 +6,7 @@ date: 2025-02-13
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/9b9ad974-4678-4df6-ad32-ea8de711a34e.png
 locale: pt
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Vamos falar de algo que parece futurista, mas já faz parte do nosso presente: assistentes inteligentes com IA generativa. Se você faz parte da equipe “Odeio perder tempo com tarefas repetitivas”, isso vai te interessar muito. Porque esses caras não vêm apenas para te dar uma mão... eles vêm para literalmente revolucionar a forma como você trabalha. Então relaxe enquanto eu explico o que você precisa saber sobre essas ferramentas, quais são as melhores opções do mercado e até qual é a melhor para você dependendo do tipo de empresa que você possui. Vamos começar fortes.

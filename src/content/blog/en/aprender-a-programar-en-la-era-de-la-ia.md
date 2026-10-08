@@ -6,7 +6,7 @@ date: 2025-08-02
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/ad1cd5ee-f3b0-4b0a-a400-0e4aaf7bd869.png
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Have you wondered if it's still worth learning to program in the world of giant language models (LLMs) that seem to be stealing the show?

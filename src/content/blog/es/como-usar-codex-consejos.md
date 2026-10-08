@@ -33,9 +33,9 @@ tags:
   - vibe coding
 locale: es
 related:
-  - 9-herramientas-inteligencia-artificial-desarrollo
-  - aprender-a-programar-en-la-era-de-la-ia
-  - fin-desarrollo-software-ia
+  - ia-local-privada-sin-mensualidad-qwen-pc
+  - que-son-los-agentes-de-ia
+  - webhook-vs-api-diferencia
 translationKey: como-usar-codex
 author: "Luiz Fernando Brazão"
 authorTitle: "Fundador de IA Operators"

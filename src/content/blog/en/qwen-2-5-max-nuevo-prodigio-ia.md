@@ -56,11 +56,3 @@ What is interesting is the direction in which Qwen 2.5 Max is pointing. It is no
 Qwen 2.5 Max gives a lot to talk about. Its combination of advanced capabilities, from language processing to multimedia generation (surprisingly decent at times), positions it as a competitive model in the world of AI. Of course, its main focus seems to be not just to impress you with brilliant texts or perfect images, but to offer you a multifunctional suite that is almost like your personal digital assistant.
 
 It's worth it? I would say yes. Especially if you're looking to explore new tools and leverage that million capacity tokens for dense projects. But hey, as with any new technological promise, we have to test it thoroughly, laugh a little at its limitations and get excited for what is to come.
-
-You may also be interested
-
-        - [GPT-4.5: innovaciones y el futuro de la IA en OpenAI](https://www.iaoperators.com/blog/gpt-4-5-innovaciones-futuro-ia-openai)
-
-        - [Claude 3.7: el poderoso avance de las inteligencias artificiales](https://www.iaoperators.com/blog/claude-3-7-el-poderoso-avance-de-las-inteligencias-artificiales)
-
-        - [Gemini 2.0 Pro: el revolucionario modelo de lenguaje de Google](https://www.iaoperators.com/blog/gemini-2-0-pro-revolucionario-modelo-google)

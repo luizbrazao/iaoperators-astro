@@ -29,6 +29,8 @@ faq:
     a: "Como regla general, usa la cuantización más alta que aún quepa con holgura en memoria. Menor cuantización reduce consumo, pero puede afectar calidad en tareas finas."
   - q: "¿La IA local sustituye completamente OpenAI o Anthropic?"
     a: "No. En producción, el mejor resultado suele ser híbrido: local para datos sensibles y tareas repetitivas; cloud para tareas complejas o picos de demanda."
+related:
+  - pagas-la-ia-dos-veces-la-segunda-factura-es-la-mas-cara
 ---
 
 ## IA local, privada y sin mensualidad: cómo ejecutar modelos Qwen en tu PC
@@ -360,6 +362,8 @@ Normalmente el patrón ganador es:
 - tareas multimodales avanzadas  
 
 Cada capa hace lo que mejor sabe hacer.
+
+Si te preocupa qué parte del conocimiento de tu empresa acaba en servicios externos, en [Pagas la IA dos veces](/es/blog/pagas-la-ia-dos-veces-la-segunda-factura-es-la-mas-cara/) explicamos qué datos compartes al usar IA y cómo decidir qué tareas mantener en local.
 
 ---
 

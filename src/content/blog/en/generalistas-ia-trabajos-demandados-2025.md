@@ -6,7 +6,7 @@ date: 2025-02-15
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/786f2f6b-1a46-4ddb-921f-2f9c84a4387e.png
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Have you wondered what the most in-demand jobs will be like in a few years? Surely yes, because we all ask ourselves that question when we see how technology advances by leaps and bounds. And here is the answer that perhaps you did not expect: in 2025, the big winners will not only be the traditional developers, designers or marketers. They will be the AI ​​generalists! So, if you've ever wanted to be like an all-rounder capable of doing a little bit of everything (and more), you're going to love this concept.

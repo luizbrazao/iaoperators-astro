@@ -6,7 +6,7 @@ date: 2025-02-13
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/comparativa-google-deep-research-vs-perplexity.webp
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Let's see, let's put ourselves in a situation: you have two artificial intelligence research assistants in front of you, as if you were in a duel of digital titans. On the one hand, Google Deep Research, the novelty that Google brings us to make us feel like we are elite academic researchers. On the other, Perplexity, the veteran in this field, faster and apparently more dynamic. The only thing missing is the epic soundrack. But no, here it is not a question of action, but of efficiency, flexibility and sources. So which one is best for you? Let's break it down together.

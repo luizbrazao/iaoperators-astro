@@ -33,9 +33,9 @@ tags:
   - vibe coding
 locale: pt
 related:
-  - 9-herramientas-inteligencia-artificial-desarrollo
-  - aprender-a-programar-en-la-era-de-la-ia
-  - fin-desarrollo-software-ia
+  - como-rodar-modelos-qwen-no-seu-pc
+  - n8n-vs-zapier-vs-make-empresas
+  - o-que-e-uma-agencia-de-ia
 translationKey: como-usar-codex
 author: "Luiz Fernando Brazão"
 authorTitle: "Fundador da IA Operators"
@@ -104,7 +104,7 @@ Hoje a OpenAI [separa três experiências principais](https://help.openai.com/en
 
 O Codex nasceu como agente de programação, mas as capacidades cresceram. No aplicativo de desktop ele pode usar Skills, plugins, navegador, Computer Use, voz e outras ferramentas para operar aplicativos e fechar fluxos que vão além de escrever código. Ainda assim, para produzir um relatório, uma apresentação ou uma planilha sem componente técnico relevante, o ChatGPT Work costuma ser a experiência mais natural.
 
-Se você está comparando com outras [ferramentas de IA para desenvolvimento](/pt/blog/9-herramientas-inteligencia-artificial-desarrollo/), a diferença do Codex é essa: ele recebe um objetivo, decide os passos e age sobre as suas ferramentas, em vez de devolver texto para você executar depois.
+Se você está comparando com outras ferramentas de IA para desenvolvimento, a diferença do Codex é essa: ele recebe um objetivo, decide os passos e age sobre as suas ferramentas, em vez de devolver texto para você executar depois.
 
 ## Antes de começar: escolha onde usar o Codex
 

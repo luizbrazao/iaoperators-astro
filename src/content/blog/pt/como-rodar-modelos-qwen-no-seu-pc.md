@@ -28,6 +28,8 @@ faq:
     a: "Como regra geral, use a quantização mais alta que ainda caiba com folga na memória. Quantizações menores reduzem consumo, mas podem afetar a qualidade em tarefas mais sensíveis."
   - q: "A IA local substitui completamente OpenAI ou Anthropic?"
     a: "Não. Em produção, o melhor resultado costuma ser híbrido: local para dados sensíveis e tarefas repetitivas; cloud para tarefas complexas ou picos de demanda."
+related:
+  - voce-paga-ia-duas-vezes-segunda-fatura-cara
 ---
 
 # IA local, privada e sem mensalidade: como executar modelos Qwen no seu PC
@@ -396,6 +398,8 @@ Mais adequada para:
 - picos de demanda  
 
 Esse modelo híbrido permite aproveitar **o melhor dos dois mundos**.
+
+Se a preocupação é quanto do conhecimento da sua empresa acaba em serviços externos, em [Você paga IA duas vezes](/pt/blog/voce-paga-ia-duas-vezes-segunda-fatura-cara/) explicamos que dados você compartilha ao usar IA e como decidir o que manter em local.
 
 ---
 

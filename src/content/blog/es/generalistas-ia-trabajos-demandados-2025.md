@@ -6,7 +6,7 @@ date: 2025-02-15
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/786f2f6b-1a46-4ddb-921f-2f9c84a4387e.png
 locale: es
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 ¿Te has preguntado cómo serán los trabajos más demandados dentro de unos pocos años? Seguro que sí, porque todos nos hacemos esa pregunta cuando vemos cómo la tecnología avanza a pasos agigantados. Y aquí va la respuesta que quizás no esperabas: en 2025, los grandes ganadores no serán solo los tradicionales desarrolladores, diseñadores o mercadólogos. ¡Serán los generalistas de IA! Así que, si alguna vez has querido ser como un todoterreno capaz de hacer un poquito de todo (y más), este concepto te va a encantar.

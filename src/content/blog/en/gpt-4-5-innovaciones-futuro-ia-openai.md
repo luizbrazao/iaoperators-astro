@@ -6,7 +6,7 @@ date: 2025-02-28
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/gpt-4-5-innovaciones-futuro-ia-openai.jpeg
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 We know you love keeping up with advances in artificial intelligence, and today is no exception. GPT-4.5, the latest jewel in OpenAI's crown, was recently released and is already generating quite a bit of excitement. But we're here to break it down for you, like those casual conversations over coffee. Let's talk about what makes this model so *"vibrant"* and what innovations position it as the most advanced so far.

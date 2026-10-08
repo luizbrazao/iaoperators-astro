@@ -6,7 +6,7 @@ date: 2025-12-25
 image: https://s3.eu-north-1.amazonaws.com/ia-operators/IA%20Operators%20Website/gemini-3-flash-inteligencia-artificial-google.png
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 What happens when Google combines speed, economy and absolutely mind-blowing performance? Well, what we have in front of us: **Gemini 3 Flash**. This model is going to give something to talk about.

@@ -6,7 +6,7 @@ date: 2025-12-21
 image: https://s3.eu-north-1.amazonaws.com/ia-operators/IA%20Operators%20Website/Notebook%20LM%20y%20Gemini.png
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Have you ever felt like you're living in a science fiction episode? Don't worry, you are not alone. Welcome to the 21st century, where artificial intelligence (AI) not only lands in our lives, but practically becomes the perfect co-pilot for your most ambitious ideas. Today we are going to talk about how the future (and when I say future, I mean *right now*) looks incredible thanks to the innovations of tools like Notebook LM, Gemini, and a few more gems. Spoiler: if before we wasted time rambling, now the AI ​​gives it back to us in spades.

@@ -6,7 +6,7 @@ date: 2025-02-13
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/mejores-herramientas-inteligencia-artificial-abogados-espana.webp
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Who knew that today's Spanish lawyers carry more technology in their briefcases than Montblanc pens? No, it's not a joke. It's a reality. Law firms in Spain are getting their act together and looking to the future with Artificial Intelligence (AI) tools that promise to revolutionize the way they work. And here I am, Luiz, with my coffee by my side, ready to untangle all this technological mess and tell it to you in human words, not boring bytes.

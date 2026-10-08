@@ -6,7 +6,7 @@ date: 2025-10-02
 image: https://s3.eu-north-1.amazonaws.com/ia-operators/IA%20Operators%20Website/alternativas-gratuitas-a-chatgpt.webp
 locale: pt
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 ## Você também pode estar interessado

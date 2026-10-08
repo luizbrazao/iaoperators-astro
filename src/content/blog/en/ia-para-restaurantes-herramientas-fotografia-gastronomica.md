@@ -6,7 +6,7 @@ date: 2025-04-03
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/ia-para-restaurantes-herramientas-fotografia-gastronomica.jpeg
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Hi, friend! I'm Luiz, and today I want to tell you how **AI for restaurants** can transform your business, from the kitchen to the dining room, making each process more agile and personalized. Imagine a virtual assistant that serves your customers at any time, manages reservations, optimizes the menu and even transforms your food photos into professional quality images. Sounds like the future, right? Well that future is already here.

@@ -7,7 +7,7 @@ date: 2025-08-02
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/9b26e33c-8ce8-467e-b99b-6b8b5ed44c82.png
 locale: es
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 ¿Cuánto apuestas a que los días de pelearte con los mismos problemas una y otra vez como desarrollador están contados? 🛠️

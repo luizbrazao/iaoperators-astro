@@ -6,7 +6,7 @@ date: 2025-12-02
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/6b81d48e-25c1-4cb0-a89b-1fc5a1c62b15.png
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Are you tired of waiting ages while your AI assistant thinks, drinks coffee, meditates, and then gives you an answer? Well, let me introduce you to **Mistral**, the new player in the world of artificial intelligence, which not only promises speed, but also comes strong with a few quite striking abilities. And yes, I know that in a world full of *""GPTs""* you have to stand out to be taken seriously, and it seems that Mistral has done its homework.

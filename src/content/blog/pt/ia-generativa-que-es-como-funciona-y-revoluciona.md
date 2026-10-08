@@ -7,7 +7,7 @@ date: 2025-02-28
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/ia-generativa-que-es-como-funciona-y-revoluciona.jpeg
 locale: pt
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Há algo na inteligência artificial generativa que desperta fascínio. É como se vivêssemos num romance de ficção científica, só que aqui não existem carros voadores (ainda), mas existem máquinas que escrevem, pintam, compõem e até programam. Magia? Não. É a tecnologia no seu melhor.

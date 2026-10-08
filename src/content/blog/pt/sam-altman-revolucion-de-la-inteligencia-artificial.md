@@ -6,7 +6,7 @@ date: 2025-12-02
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/sam-altman-open-ai-portada+(1).jpg
 locale: pt
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Ahh, IA... aquelas siglas que estão na ponta da língua de todo mundo ultimamente. Inteligência Artificial virou o assunto mais quente do momento e, olha, não é à toa. Afinal, temos alguém como Sam Altman, CEO da OpenAI e um dos principais rostos por trás do ChatGPT, compartilhando ideias e reflexões tão profundas que nos fazem coçar a cabeça (ou complicar? Quem sabe!). Recentemente, ele compartilhou algumas reflexões muito interessantes sobre a evolução da IA ​​e seu impacto na sociedade. Vamos destrinchar tudo isso? Prometo que haverá algumas metáforas e cenas imaginárias para tornar a conversa mais leve.

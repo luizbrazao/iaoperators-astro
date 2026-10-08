@@ -6,7 +6,7 @@ date: 2025-08-02
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/La+programacio%CC%81n+en+la+era+de+la+IA.jpeg
 locale: es
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 ## La revolución de la programación: ¿Adiós al código o bienvenida a una nueva era?

@@ -6,7 +6,7 @@ date: 2025-02-15
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/786f2f6b-1a46-4ddb-921f-2f9c84a4387e.png
 locale: pt
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Você já se perguntou como serão os empregos mais procurados daqui a alguns anos? Certamente que sim, porque todos nos fazemos essa pergunta quando vemos como a tecnologia avança a passos largos. E aqui está a resposta que talvez você não esperava: em 2025, os grandes vencedores não serão apenas os desenvolvedores, designers ou profissionais de marketing tradicionais. Eles serão os generalistas da IA! Então, se você sempre quis ser versátil, capaz de fazer um pouco de tudo (e muito mais), vai adorar esse conceito.

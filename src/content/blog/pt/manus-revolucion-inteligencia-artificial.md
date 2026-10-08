@@ -6,7 +6,7 @@ date: 2025-10-03
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/manus-revolucion-inteligencia-artificial.jpeg
 locale: pt
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 O futuro já está aqui, batendo à nossa porta e transformando tudo o que conhecemos. Sim, estamos falando da inteligência artificial, a grande protagonista das revoluções tecnológicas. Mas hoje não é qualquer IA que faz a diferença, mas uma estrela em ascensão chamada **Manus**.

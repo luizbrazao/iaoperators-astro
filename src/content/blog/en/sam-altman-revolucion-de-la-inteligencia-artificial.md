@@ -6,7 +6,7 @@ date: 2025-12-02
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/sam-altman-open-ai-portada+(1).jpg
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Ahh, IA... those acronyms that are on the tip of everyone's tongue lately. Artificial Intelligence has become the hottest topic of the moment and, look, it is no wonder. After all, we have someone like Sam Altman, CEO of OpenAI and one of the main faces behind ChatGPT, sharing ideas and reflections so deep they make us scratch our heads (or complicated? Who knows!). Recently, he shared some very interesting thoughts on the evolution of AI and its impact on society. Let's break this all down? I promise there will be some metaphors and imaginary scenes to make the talk lighter.

@@ -6,7 +6,7 @@ date: 2025-08-02
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/9b26e33c-8ce8-467e-b99b-6b8b5ed44c82.png
 locale: pt
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Quanto você aposta que os dias de lutar continuamente contra os mesmos problemas como desenvolvedor estão contados? 🛠️

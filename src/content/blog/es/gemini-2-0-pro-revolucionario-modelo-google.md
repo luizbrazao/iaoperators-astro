@@ -6,7 +6,7 @@ date: 2025-12-02
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/79ac2907-9b2e-49c7-82e7-9a1a106570d3.png
 locale: es
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Si estás aquí, es porque te apasionan las novedades tecnológicas, y déjame decirte: ¡has llegado al sitio correcto! Hoy vamos a sumergirnos en el emocionante mundo de Gemini 2.0 Pro, el nuevo modelo de lenguaje de Google que está levantando más cejas que una telenovela mexicana. ¿Qué hace a este modelo tan especial? Bueno, imagina un cerebro digital capaz de procesar documentos tan extensos como toda la saga de Harry Potter (sí, los siete libros). Y no, no es broma.

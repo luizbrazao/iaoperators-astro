@@ -6,7 +6,7 @@ date: 2025-02-14
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/mejores-herramientas-ia-tareas-proyectos.jpeg
 locale: pt
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Sabe aquela sensação de abrir a agenda e correr na direção oposta? Sim, estou falando daqueles dias que parecem ter mais tarefas do que horas disponíveis. Mas ei, você não está sozinho nesta guerra contra o caos. No mundo de hoje, a Inteligência Artificial está se tornando nosso herói multitarefa. Desde agendar reuniões até ajudar você a organizar projetos de equipe, existem aplicativos para tudo isso... e muito mais. Então segure firme, hoje vamos explorar ferramentas que farão você dizer: “Por que não usei isso antes?”

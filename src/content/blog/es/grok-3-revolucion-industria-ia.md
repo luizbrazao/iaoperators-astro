@@ -6,7 +6,7 @@ date: 2025-02-19
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/3f7a221e-b14b-4af7-9b7d-30ecaf1c175e.png
 locale: es
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 ¡Ah, Grok 3! El nuevo juguete que está dando vueltas en el mundo de la inteligencia artificial, captando miradas, comentarios y uno que otro "¡wow!" entre expertos y curiosos. La cosa es sencilla: este modelo no solo está jugando en las ligas mayores, sino que, según algunos, ya les está ganando. Si estás aquí, seguro que quieres saber por qué todo el mundo habla de Grok 3, así que, vamos a desmenuzarlo juntos.

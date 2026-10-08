@@ -6,7 +6,7 @@ date: 2025-02-24
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/como-la-inteligencia-artificial-esta-revolucionando-la-contaduria.jpeg
 locale: es
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Sí, lo sé. La contaduría nunca suena como el tema más emocionante del mundo, pero ¿qué tal si le damos un giro? Porque este no es un artículo cualquiera: hoy vamos a hablar de cómo la **inteligencia artificial (IA)** está revolucionando esta noble profesión. Ya sé lo que estás pensando: “¿IA en contaduría? ¿Qué sigue, robots haciendo declaraciones de renta?”. Y la respuesta puede sorprenderte. Spoiler: no estamos tan lejos de eso.

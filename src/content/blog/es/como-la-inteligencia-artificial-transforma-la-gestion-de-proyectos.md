@@ -6,7 +6,7 @@ date: 2025-02-16
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/1accf91b-1dab-4aef-a104-442d55319a98.png
 locale: es
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 ¿Te imaginas que la inteligencia artificial (IA) puede ser tu mejor aliado en la gestión de proyectos? Parece un concepto espectacular sacado de una película de ciencia ficción, pero es más real que nunca. En tiempos donde las herramientas tecnológicas están revolucionando la mayoría de las industrias, integrar la IA no solo es una opción interesante, sino que empieza a ser imprescindible. Este recorrido que estás a punto de leer explora, punto por punto, cómo aprovechar la IA para elevar tu eficiencia y cambiar la forma en que gestionas tus proyectos.

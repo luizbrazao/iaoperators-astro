@@ -6,7 +6,7 @@ date: 2025-02-19
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/3f7a221e-b14b-4af7-9b7d-30ecaf1c175e.png
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Ah, Grok 3! The new toy that is making the rounds in the world of artificial intelligence, capturing looks, comments and the occasional "wow!" between experts and curious. The thing is simple: this model is not only playing in the major leagues, but, according to some, it is already beating them. If you're here, you probably want to know why everyone is talking about Grok 3, so let's break it down together.

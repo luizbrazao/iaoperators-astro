@@ -33,9 +33,9 @@ tags:
   - vibe coding
 locale: en
 related:
-  - 9-herramientas-inteligencia-artificial-desarrollo
-  - aprender-a-programar-en-la-era-de-la-ia
-  - fin-desarrollo-software-ia
+  - run-qwen-models-locally-on-your-pc
+  - n8n-vs-zapier-vs-make
+  - what-is-an-ai-agency
 translationKey: como-usar-codex
 author: "Luiz Fernando Brazão"
 authorTitle: "Founder of IA Operators"
@@ -104,7 +104,7 @@ OpenAI [currently separates three main experiences](https://help.openai.com/en/a
 
 Codex started out as a coding agent, but its capabilities have grown. In the desktop app it can use Skills, plugins, a browser, Computer Use, voice and other tools to work with applications and complete flows that go beyond writing code. Even so, if you need a report, a deck or a spreadsheet with no real technical component, ChatGPT Work is usually the more natural place to start.
 
-If you are still mapping the landscape of [AI tools for development](/en/blog/9-herramientas-inteligencia-artificial-desarrollo/), Codex sits at the far end of it: not a system that suggests, but one that takes a goal, decides the steps and acts on your tools.
+If you are still mapping the landscape of AI tools for development, Codex sits at the far end of it: not a system that suggests, but one that takes a goal, decides the steps and acts on your tools.
 
 ## Before you start: choose where to use Codex
 

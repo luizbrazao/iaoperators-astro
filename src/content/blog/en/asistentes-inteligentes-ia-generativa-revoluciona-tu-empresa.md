@@ -6,7 +6,7 @@ date: 2025-02-13
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/9b9ad974-4678-4df6-ad32-ea8de711a34e.png
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 We are going to talk about something that sounds futuristic, but is already part of our present: intelligent assistants with generative AI. If you are part of the "I hate wasting time with repetitive tasks" team, this is going to interest you a lot. Because these guys don't just come to give you a hand... they come to literally revolutionize how you work. So sit back while I break down what you need to know about these tools, which are the top options on the market and even which one is best for you depending on the type of company you have. Let's start strong.

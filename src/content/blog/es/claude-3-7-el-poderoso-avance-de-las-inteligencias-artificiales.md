@@ -6,7 +6,7 @@ date: 2025-02-25
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/cloud-3-7-el-poderoso-avance-de-las-inteligencias-artificiales.jpeg
 locale: es
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Con cada actualización en el universo de las IAs, nos impresionamos más con los avances de esta tecnología que no deja de evolucionar. Con el lanzamiento del Claude 3.7, surgió una nueva promesa en el horizonte: un modelo poderoso e innovador que busca equilibrar el razonamiento avanzado con respuestas rápidas y prácticas. Esta nueva versión ha sido presentada como un modelo híbrido revolucionario, capaz de combinar la velocidad de respuestas instantáneas con un modo de razonamiento mejorado para soluciones más detalladas y profundas.

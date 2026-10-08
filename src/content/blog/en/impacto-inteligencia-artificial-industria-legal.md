@@ -6,7 +6,7 @@ date: 2025-02-23
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/impacto-inteligencia-artificial-industria-legal.jpeg
 locale: en
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Can you imagine a lawyer who never sleeps, never forgets a detail and is always up to date with the latest legislation? No, it's not a superhero or the most organized lawyer in the world, it's artificial intelligence (AI), which is revolutionizing the legal industry. And let me tell you, this revolution is happening faster than many lawyers would like to admit. So if you've ever been curious about how these "virtual lawyers" work, stick around, because today we're going to unpack how AI has donned its robes and is dominating the courtroom.

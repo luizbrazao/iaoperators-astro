@@ -6,7 +6,7 @@ date: 2025-12-21
 image: https://s3.eu-north-1.amazonaws.com/ia-operators/IA%20Operators%20Website/Notebook%20LM%20y%20Gemini.png
 locale: pt
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Você já se sentiu como se estivesse vivendo um episódio de ficção científica? Não se preocupe, você não está sozinho. Bem-vindo ao século 21, onde a inteligência artificial (IA) não apenas entra em nossas vidas, mas praticamente se torna o copiloto perfeito para suas ideias mais ambiciosas. Hoje vamos falar sobre como o futuro (e quando digo futuro, quero dizer *agora*) parece incrível graças às inovações de ferramentas como Notebook LM, Gemini e mais algumas joias. Spoiler: se antes perdíamos tempo divagando, agora a IA nos devolve tudo.

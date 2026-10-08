@@ -6,7 +6,7 @@ date: 2025-02-23
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/impacto-inteligencia-artificial-industria-legal.jpeg
 locale: pt
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 Já imaginou um advogado que nunca dorme, nunca esquece um detalhe e está sempre atualizado com as últimas legislações? Não, não é um super-herói ou o advogado mais organizado do mundo, é a inteligência artificial (IA), que está revolucionando a indústria jurídica. E deixe-me dizer-lhe que esta revolução está a acontecer mais rapidamente do que muitos advogados gostariam de admitir. Então, se você já ficou curioso sobre como esses “advogados virtuais” funcionam, fique por aqui, porque hoje vamos desvendar como a IA vestiu suas vestes e está dominando o tribunal.

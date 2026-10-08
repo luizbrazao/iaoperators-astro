@@ -7,7 +7,7 @@ date: 2025-08-02
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/ad1cd5ee-f3b0-4b0a-a400-0e4aaf7bd869.png
 locale: es
 author: Luiz Brazão
-draft: false
+draft: true
 ---
 
 ¿Te has preguntado si todavía vale la pena aprender a programar en el mundo de los modelos de lenguaje gigantes (LLMs) que parecen estar robándose el show?
