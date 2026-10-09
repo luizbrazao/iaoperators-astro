@@ -28,7 +28,7 @@ faq:
   - q: "Qual a diferença entre auditoria tecnológica e auditoria de TI?"
     a: "A auditoria de TI tradicional foca em infraestrutura, segurança e conformidade. A auditoria de sistemas tecnológicos analisa também as aplicações de negócio (SaaS, CRMs, ERPs), integrações, Shadow IT e dependências operacionais — não apenas hardware e rede."
   - q: "Quanto custa uma auditoria de sistemas tecnológicos?"
-    a: "Para empresas de 50–500 pessoas, com até 30 sistemas e 8 áreas funcionais, o preço depende do número de sistemas e áreas no escopo, e é fechado numa proposta depois de uma primeira conversa. O retorno é imediato: a maioria das empresas identifica entre €10.000 e €40.000 anuais em licenças subutilizadas ou redundantes na primeira revisão."
+    a: "Para empresas de 50–500 pessoas, com até 30 sistemas e 8 áreas funcionais, o preço depende do número de sistemas e áreas no escopo, e é fechado numa proposta depois de uma primeira conversa. Uma boa referência é o que já se paga em licenças sem uso: a análise da Productiv de 2023 encontrou 53% das licenças SaaS sem utilização."
 ---
 
 Uma auditoria de sistemas tecnológicos é um inventário completo e análise estruturada de todas as aplicações, licenças, integrações e processos digitais que uma empresa opera. O resultado é uma fotografia precisa do parque tecnológico: o que existe, quanto custa, quem usa, como está conectado e quais riscos apresenta.
@@ -41,7 +41,7 @@ A maioria das empresas com mais de 50 pessoas acumula tecnologia sem uma estrat�
 
 O problema não é a tecnologia em si — é que ninguém sabe exatamente o que tem.
 
-Segundo o [State of SaaS Spend 2024 da Productiv](https://productiv.com), empresas de médio porte gerenciam em média mais de 75 aplicações SaaS ativas. Entre 40% e 60% dessas licenças tem adoção baixa ou nula pelos times. Só em licenças subutilizadas ou redundantes, o gasto médio por empresa varia entre €15.000 e €60.000 anuais.
+Os dados de uso real confirmam. Segundo a [análise da Productiv publicada em 2023](https://www.helpnetsecurity.com/2023/07/04/saas-spend-management/), com quase 100 milhões de licenças, as organizações usam em média 371 aplicações SaaS e 53% das licenças não são utilizadas. É uma média de empresas de todos os tamanhos, mas o padrão se repete numa empresa média: paga-se por ferramentas que ninguém abre.
 
 E isso antes de contar o que não está registrado em lugar nenhum: o Shadow IT.
 
@@ -49,7 +49,7 @@ E isso antes de contar o que não está registrado em lugar nenhum: o Shadow IT.
 
 Shadow IT são as ferramentas adotadas sem aprovação do departamento de TI ou sem conhecimento da direção: planilhas que substituem um CRM, apps de mensagens que carregam dados de clientes, scripts de automação que ninguém documentou.
 
-Em empresas de 100–500 pessoas, o Shadow IT representa entre 30% e 40% do total de ferramentas em uso, [segundo estimativas da Gartner](https://www.cio.com/article/234745/how-to-eliminate-enterprise-shadow-it.html). Não aparece em nenhuma fatura. Não tem proprietário formal. E quando a pessoa que criou sai, ninguém sabe como funciona.
+Em grandes empresas, a Gartner estimou que o Shadow IT representa entre 30% e 40% do gasto em tecnologia, [segundo a CIO](https://www.cio.com/article/234745/how-to-eliminate-enterprise-shadow-it.html). Numa empresa média a proporção não está medida, mas o sintoma é o mesmo: não aparece no inventário. Não tem proprietário formal. E quando a pessoa que criou sai, ninguém sabe como funciona.
 
 Uma auditoria de sistemas tecnológicos detecta isso e coloca no mapa.
 
@@ -106,7 +106,7 @@ O entregável final não é uma lista de problemas — é um plano de decisões.
 Define-se o escopo: quais áreas funcionais entram, quem são os stakeholders por área, que informações já existem documentadas. Acorda-se o formato dos entregáveis e a cadência de check-ins. NDAs são assinados antes de qualquer acesso à informação.
 
 ### Fase 1 — Inventário e entrevistas (semanas 1–2)
-Entrevistas estruturadas com responsáveis de cada área. Não se pergunta apenas "quais ferramentas você usa" — cruza-se o declarado com o real: registros de faturamento, logs de acesso, contratos com fornecedores. A diferença entre o que os times dizem que usam e o que realmente usam costuma superar 30%.
+Entrevistas estruturadas com responsáveis de cada área. Não se pergunta apenas "quais ferramentas você usa" — cruza-se o declarado com o real: registros de faturamento, logs de acesso, contratos com fornecedores. A diferença entre o que os times dizem que usam e o que realmente usam costuma ser a primeira descoberta.
 
 ### Fase 2 — Análise de licenças e integrações (semana 2)
 Constrói-se a matriz de custos, mapeiam-se as integrações e detectam-se os pontos de falha manuais. Identificam-se redundâncias, licenças orfãs e Shadow IT não documentado.

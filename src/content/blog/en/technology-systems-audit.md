@@ -27,7 +27,7 @@ faq:
   - q: "What's the difference between a technology audit and an IT audit?"
     a: "A traditional IT audit focuses on infrastructure, security, and compliance. A technology systems audit also analyzes business applications (SaaS, CRMs, ERPs), integrations, Shadow IT, and operational dependencies — not just hardware and networks."
   - q: "How much does a technology systems audit cost?"
-    a: "For companies of 50–500 people, with up to 30 systems and 8 functional areas, the price depends on the number of systems and areas in scope, and is fixed in a proposal after a first conversation. The return is immediate: most companies identify between €10,000 and €40,000 per year in underused or redundant licenses in the first review."
+    a: "For companies of 50–500 people, with up to 30 systems and 8 functional areas, the price depends on the number of systems and areas in scope, and is fixed in a proposal after a first conversation. A useful benchmark is what you already pay for unused licenses: Productiv's 2023 analysis found that 53% of SaaS licenses go unused."
 ---
 
 A technology systems audit is a complete inventory and structured analysis of all the applications, licenses, integrations, and digital processes a company operates. The result is a precise picture of the technology landscape: what exists, how much it costs, who uses it, how it's connected, and what risks it presents.
@@ -40,7 +40,7 @@ Most companies with more than 50 people accumulate technology without a strategy
 
 The problem isn't the technology itself — it's that nobody knows exactly what they have.
 
-According to [Productiv's State of SaaS Spend 2024 report](https://productiv.com), mid-market companies manage an average of more than 75 active SaaS applications. Between 40% and 60% of those licenses have low or zero adoption from teams. In underused or redundant licenses alone, the average annual spend per company ranges from €15,000 to €60,000.
+Real usage data backs this up. According to [Productiv's analysis published in 2023](https://www.helpnetsecurity.com/2023/07/04/saas-spend-management/), based on nearly 100 million licenses, organizations use 371 SaaS apps on average and 53% of licenses go unused. That average covers companies of every size, but the pattern is the same in a mid-sized company: you pay for tools nobody opens.
 
 And that's before counting what isn't registered anywhere: Shadow IT.
 
@@ -48,7 +48,7 @@ And that's before counting what isn't registered anywhere: Shadow IT.
 
 Shadow IT refers to tools adopted without IT department approval or management knowledge: spreadsheets that replace a CRM, messaging apps that carry customer data, automation scripts that nobody documented.
 
-In companies of 100–500 people, Shadow IT represents between 30% and 40% of the total tools in use, according to [Gartner estimates](https://www.cio.com/article/234745/how-to-eliminate-enterprise-shadow-it.html). It doesn't appear on any invoice. It has no formal owner. And when the person who created it leaves, nobody knows how it works.
+In large enterprises, Gartner estimated that Shadow IT accounts for 30% to 40% of IT spending, [as reported by CIO](https://www.cio.com/article/234745/how-to-eliminate-enterprise-shadow-it.html). In a mid-sized company the share isn't measured, but the symptom is the same: it doesn't appear in the inventory. It has no formal owner. And when the person who created it leaves, nobody knows how it works.
 
 A technology systems audit detects it and puts it on the map.
 
@@ -105,7 +105,7 @@ The final deliverable isn't a list of problems — it's a decision plan. What to
 Scope is defined: which functional areas are included, who the stakeholders are per area, what documentation already exists. Deliverable formats and check-in cadence are agreed upon. NDAs are signed before accessing any information.
 
 ### Phase 1 — Inventory and interviews (weeks 1–2)
-Structured interviews with area leads. Not just asking "what tools do you use?" — cross-referencing what's declared with what's real: billing records, access logs, vendor contracts. The gap between what teams say they use and what they actually use typically exceeds 30%.
+Structured interviews with area leads. Not just asking "what tools do you use?" — cross-referencing what's declared with what's real: billing records, access logs, vendor contracts. The gap between what teams say they use and what they actually use is usually the first finding.
 
 ### Phase 2 — License and integration analysis (week 2)
 The cost matrix is built, integrations are mapped, and manual failure points are identified. Redundancies, orphaned licenses, and undocumented Shadow IT are surfaced.
