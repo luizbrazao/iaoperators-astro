@@ -11,7 +11,8 @@
  * - Las variantes y sinónimos van en `secundarias`, no en `primaria`: ahí sí
  *   puede repetirse un término entre páginas vecinas.
  *
- * `faixa` usa la codificación del estudio de agosto de 2026 (Keyword Planner):
+ * `faixa` usa la codificación del Keyword Planner (estudio de ago/2026, re-medido el
+ * 09/oct/2026 para las rutas marcadas sin `estimada`; período set/2025–ago/2026):
  * b = 10–100 · c = 100–1 mil · d = 1 mil–10 mil · e = 10 mil–100 mil.
  * `estimada: true` marca las faixas no medidas directamente.
  */
@@ -72,8 +73,7 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     silo: "cumplimiento",
     primaria: "verifactu obligatorio",
     secundarias: ["verifactu cuando entra en vigor", "verifactu 2027", "verifactu 2028", "aplazamiento verifactu", "verifactu autónomos"],
-    faixa: "b",
-    estimada: true,
+    faixa: "c",
   },
   {
     path: "cumplimiento/verifactu/test/",
@@ -97,8 +97,7 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     locales: ["es"],
     silo: "cumplimiento",
     primaria: "verifactu tpv",
-    faixa: "b",
-    estimada: true,
+    faixa: "c",
   },
   {
     path: "cumplimiento/verifactu/ecommerce-propio/",
@@ -223,8 +222,7 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     silo: "integracion",
     primaria: "integración erp",
     secundarias: ["conectar erp", "integrar erp con ecommerce", "erp para pymes"],
-    faixa: "c",
-    estimada: true,
+    faixa: "b",
   },
   {
     // CORREGIDA 10/ago/2026 tras inspeccionar la SERP. La primaria era
@@ -274,7 +272,6 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     primaria: "software a medida",
     secundarias: ["modernizar sistema legado", "integrar software antiguo", "desarrollo a medida"],
     faixa: "c",
-    estimada: true,
   },
 
   // ----- Los cinco casos traducidos (fase 4, ago/2026) ---------------------
@@ -392,7 +389,6 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
       "arquitectura de integración",
     ],
     faixa: "b",
-    estimada: true,
   },
   // Hubs traducidos (ago/2026). Slug localizado, no espejo del español: una URL
   // en castellano dentro de /en/ contradice la señal de idioma de la ruta.
@@ -448,7 +444,6 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     primaria: "auditoría informática",
     secundarias: ["radiografía digital", "auditoría de sistemas"],
     faixa: "b",
-    estimada: true,
   },
   {
     path: "roadmap-tecnologico/",
@@ -456,7 +451,6 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     silo: "integracion",
     primaria: "roadmap tecnológico",
     faixa: "b",
-    estimada: true,
   },
   {
     path: "implementacion/",
@@ -512,8 +506,7 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     silo: "servicios",
     primaria: "agentes de ia para empresas",
     secundarias: ["agentes de ia empresas", "desarrollo de agentes de ia", "implantar agentes de ia"],
-    faixa: "c",
-    estimada: true,
+    faixa: "b",
   },
   {
     // ✅ CONFLICTO RESUELTO (09/oct/2026): esta URL pasa a ser la dueña única de
@@ -565,7 +558,8 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     silo: "local",
     primaria: "agencia de ia en españa",
     secundarias: ["agencias de ia en españa"],
-    faixa: "c",
+    faixa: "b",
+    estimada: true,
   },
   {
     // Verificado en SERP (09/ago/2026): solo 1 dominio en común en el top 10 con
