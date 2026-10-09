@@ -1,0 +1,335 @@
+---
+// Landing de agentes de voz con IA. ES-only, como agentes-de-ia.
+//
+// Keyword primaria: "agente de voz ia" (Keyword Planner oct/2026: 100–1 mil/mes,
+// +900 % interanual). Secundarias: voicebot, ia atención al cliente, call center ia.
+//
+// SERP inspeccionada el 09/oct/2026 (google.es): plataformas para montarlo uno
+// mismo (Retell, ElevenLabs, CloudTalk, Zadarma, Beam) y una agencia a medida
+// (PotenzzIA) en el #1. Nadie conecta el agente con la Ley 10/2025: ese es el
+// ángulo. La página vende integración y salida a persona medida, no "sustituir
+// al equipo" —que es justo lo que la ley no permite (art. 8.1).
+//
+// Datos legales: solo los ya verificados en src/data/sectores-sac.ts (arts. 8.1,
+// 8.2, 10.3 y 11.1 de la Ley 10/2025). Sin métricas ni casos inventados.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { ORG_REF } from "@/data/identidad";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-servicios.css";
+
+const locale = "es";
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL(`/${locale}/servicios/agente-de-voz-ia/`, site).toString();
+const contactHref = `/${locale}/contact/`;
+const leyHref = `/${locale}/cumplimiento/ley-atencion-al-cliente/`;
+
+const meta = {
+  title: "Agente de voz con IA para empresas | IA Operators",
+  description:
+    "Agentes de voz con IA que atienden llamadas, resuelven lo repetitivo y pasan a una persona a tiempo. Integrados con tu centralita y tu CRM.",
+};
+
+const funciones = [
+  {
+    title: "Atiende y entiende",
+    body: "Coge la llamada, identifica qué necesita la persona y recoge los datos que hacen falta, sin menús de «pulse 1».",
+  },
+  {
+    title: "Resuelve consultando tus sistemas",
+    body: "Estado de un pedido, una cita, una factura o una incidencia. Si el dato está en tu CRM o tu ERP, el agente lo consulta y responde.",
+    href: `/${locale}/integracion/`,
+    linkLabel: "Integración de sistemas",
+  },
+  {
+    title: "Pasa a una persona con contexto",
+    body: "Cuando el cliente lo pide o el caso no es para una máquina, transfiere la llamada con el resumen. Nadie tiene que repetir lo que ya contó.",
+  },
+];
+
+const ley = [
+  {
+    articulo: "Art. 8.1",
+    texto: "Prohíbe atender exclusivamente con contestadores automáticos. Quien pide hablar con una persona tiene que poder hacerlo.",
+  },
+  {
+    articulo: "Art. 8.2",
+    texto: "El 95 % de las solicitudes de atención personalizada tiene que atenderse, de media, en menos de tres minutos.",
+  },
+  {
+    articulo: "Art. 10.3",
+    texto: "El 95 % de las llamadas recibidas tiene que atenderse, de media, en menos de tres minutos.",
+  },
+  {
+    articulo: "Art. 11.1",
+    texto: "Las consultas, quejas, reclamaciones e incidencias reciben una clave identificativa; en las consultas, cuando requieren acciones posteriores.",
+  },
+];
+
+const requisitos = [
+  {
+    num: "01",
+    title: "Conexión con la centralita",
+    body: "El agente vive dentro de tu telefonía actual: recibe la llamada, la transfiere y deja registro. Si la centralita no lo permite, eso se sabe en el diagnóstico, no en la puesta en marcha.",
+  },
+  {
+    num: "02",
+    title: "Acceso al dato real",
+    body: "Un agente de voz que no puede consultar tu CRM o tu ERP solo puede dar respuestas genéricas. La integración va antes que la voz.",
+    href: `/${locale}/servicios/agentes-de-ia/`,
+    linkLabel: "Agentes de IA",
+  },
+  {
+    num: "03",
+    title: "Salida a persona medida",
+    body: "Cada llamada registra cuándo se pidió una persona y cuánto tardó en atenderla. Es el dato que te van a pedir si tu empresa está obligada por la ley.",
+    href: leyHref,
+    linkLabel: "Ley de atención al cliente",
+  },
+  {
+    num: "04",
+    title: "Pruebas con llamadas reales",
+    body: "Un conjunto de llamadas de tu operación con el resultado esperado, que se repite cada vez que cambia el guion o el modelo. Así se mejora sin romper lo que ya funcionaba.",
+  },
+  {
+    num: "05",
+    title: "Trazabilidad de cada llamada",
+    body: "Transcripción, intención detectada, acciones ejecutadas y resultado, conservados según tu política de datos. Sirve para auditar y para mejorar.",
+  },
+  {
+    num: "06",
+    title: "Coste por llamada controlado",
+    body: "Voz y modelo se pagan por uso. Se mide el coste de cada llamada desde el primer día para que el volumen no dé sorpresas.",
+  },
+];
+
+const donde = {
+  si: [
+    "Consultas de estado: pedidos, envíos, citas, facturas, incidencias abiertas.",
+    "Reservas, cambios y cancelaciones de citas con reglas claras.",
+    "Clasificar la llamada y recoger los datos antes de pasarla a la persona correcta.",
+    "Atender fuera de horario y dejar el caso registrado para el día siguiente.",
+  ],
+  no: [
+    "Reclamaciones complejas o con carga emocional, sin una persona disponible.",
+    "Decisiones con consecuencias económicas o legales directas.",
+    "Bloquear o esconder la opción de hablar con una persona.",
+    "Procesos cuyo dato no está en ningún sistema accesible.",
+  ],
+};
+
+const faq = [
+  {
+    q: "¿Qué es un agente de voz con IA?",
+    a: "Un sistema que atiende llamadas en lenguaje natural: entiende lo que dice la persona, consulta tus sistemas para responder o ejecutar una gestión y, cuando hace falta, transfiere la llamada a alguien del equipo con el resumen de lo hablado.",
+  },
+  {
+    q: "¿Puede sustituir a mi equipo de atención telefónica?",
+    a: "No, y no conviene planteárselo así. La Ley de atención al cliente prohíbe atender exclusivamente con contestadores automáticos y obliga a que quien pide una persona la tenga en poco tiempo. El agente quita al equipo lo repetitivo para que pueda atender a tiempo lo que sí necesita a una persona. La aplicación concreta a tu empresa debe confirmarse con tu asesoría jurídica.",
+  },
+  {
+    q: "¿En qué se diferencia de un chatbot?",
+    a: "En el canal y en lo que exige. Un chatbot atiende por escrito, en web o WhatsApp. Un agente de voz atiende por teléfono, donde no hay botones ni tiempo para pensar la respuesta: necesita baja latencia, buena transcripción y una transferencia a persona que funcione dentro de la centralita.",
+  },
+  {
+    q: "¿Funciona con mi centralita actual?",
+    a: "Depende de si permite recibir y transferir llamadas hacia un servicio externo. Muchas centralitas en la nube lo permiten; en algunas instalaciones antiguas hace falta un paso intermedio. Lo comprobamos en el diagnóstico, antes de comprometer nada.",
+  },
+  {
+    q: "¿Cuánto se tarda en tener un agente de voz en producción?",
+    a: "Entre cuatro y ocho semanas para un flujo acotado, según la centralita y los sistemas que haya que consultar. La voz en sí es lo rápido; lo que lleva tiempo es la integración, la salida a persona y las pruebas con llamadas reales.",
+  },
+];
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": `${pageUrl}#service`,
+  name: "Agente de voz con IA para empresas",
+  serviceType: "AI voice agent development and integration",
+  provider: ORG_REF,
+  areaServed: "ES",
+  description: meta.description,
+  url: pageUrl,
+  inLanguage: "es-ES",
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: new URL(`/${locale}/`, site).toString() },
+    { "@type": "ListItem", position: 2, name: "Servicios", item: new URL(`/${locale}/servicios/`, site).toString() },
+    { "@type": "ListItem", position: 3, name: "Agente de voz con IA", item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  jsonLd={[serviceJsonLd, breadcrumbJsonLd, faqJsonLd]}
+  editorial
+>
+  <div class="ed-container">
+    <header class="pg-hero">
+      <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/es/">Inicio</a></li>
+          <li><a href="/es/servicios/">Servicios</a></li>
+          <li><span aria-current="page">Agente de voz con IA</span></li>
+        </ol>
+      </nav>
+      <h1>Agente de voz con IA: <span>atiende lo repetitivo y pasa a una persona cuando hace falta</span></h1>
+      <div class="pg-hero-bottom">
+        <p class="ed-eyebrow">Atención telefónica</p>
+        <div>
+          <p class="pg-lead">
+            Muchas plataformas de voz se venden como un sustituto del equipo. Lo que funciona,
+            y lo que pide la ley, es lo contrario: que la máquina resuelva lo repetitivo y que la
+            persona llegue a tiempo cuando la llaman.
+          </p>
+          <div class="pg-actions">
+            <a class="ed-button" href={contactHref}>Hablar con un especialista<span class="ed-arrow" aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="pg-section" aria-label="Dónde está el trabajo">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Dónde está el trabajo</p>
+        <p class="pg-signal-text">
+          Montar una voz que suena natural ya no es difícil. Lo difícil es que esa voz sepa en qué
+          estado está el pedido, que transfiera la llamada sin perder el contexto y que cada minuto
+          hasta llegar a una persona quede medido. Eso es integración, y es lo que hacemos.
+        </p>
+      </div>
+    </section>
+
+    <section class="pg-section" aria-labelledby="voz-funciones">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Qué hace</p>
+        <div>
+          <h2 id="voz-funciones">Qué hace un agente de voz con IA</h2>
+        </div>
+      </div>
+      <ul class="pg-columns sv-services">
+        {funciones.map((f, i) => (
+          <li>
+            <span class="ed-eyebrow">{String(i + 1).padStart(2, "0")}</span>
+            <h3>{f.title}</h3>
+            <p>{f.body}</p>
+            {f.href && <a class="ed-underlined" href={f.href}>{f.linkLabel} <span aria-hidden="true">→</span></a>}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="pg-section" aria-labelledby="voz-ley">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Ley 10/2025</p>
+        <div>
+          <h2 id="voz-ley">Agentes de voz y Ley de atención al cliente</h2>
+          <div class="pg-prose">
+            <p>
+              Si tu empresa está obligada por la Ley de atención al cliente, el agente de voz tiene
+              que diseñarse alrededor de estas reglas, no al revés.
+            </p>
+          </div>
+        </div>
+      </div>
+      <ol class="pg-columns pg-columns-4">
+        {ley.map((l) => (
+          <li><span class="ed-eyebrow">{l.articulo}</span><p>{l.texto}</p></li>
+        ))}
+      </ol>
+      <p class="pg-source">
+        Plazo de adaptación: 28 de diciembre de 2026. Quién está obligado y qué más exige, en la página de la{" "}
+        <a class="pg-inline-link" href={leyHref}>Ley de atención al cliente</a>.
+      </p>
+    </section>
+
+    <section class="pg-section" aria-labelledby="voz-requisitos">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Requisitos</p>
+        <div>
+          <h2 id="voz-requisitos">Lo que hace falta para que funcione en producción</h2>
+          <p class="pg-lead-muted">Seis piezas. La voz es la más fácil.</p>
+        </div>
+      </div>
+      <ol class="pg-phases">
+        {requisitos.map((r) => (
+          <li>
+            <span class="ed-eyebrow">{r.num}</span>
+            <h3>{r.title}</h3>
+            <div>
+              <p>{r.body}</p>
+              {r.href && <a class="ed-underlined" href={r.href}>{r.linkLabel} <span aria-hidden="true">→</span></a>}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="pg-section" aria-labelledby="voz-donde">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Criterio</p>
+        <div>
+          <h2 id="voz-donde">Dónde ponemos un agente de voz y dónde no</h2>
+        </div>
+      </div>
+      <div class="sv-donde">
+        <div>
+          <h3>Donde funciona bien</h3>
+          <ul class="pg-checklist">
+            {donde.si.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <div class="sv-donde-no">
+          <h3>Donde recomendamos no usarlo</h3>
+          <ul class="pg-checklist">
+            {donde.no.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-section pg-faq ed-faq" aria-labelledby="voz-faq">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Preguntas</p>
+        <div>
+          <h2 id="voz-faq">Preguntas frecuentes</h2>
+          <div class="pg-faq-list">
+            {faq.map((item) => <details><summary>{item.q}</summary><p>{item.a}</p></details>)}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="ed-closing" aria-labelledby="voz-closing">
+    <div class="ed-container">
+      <p class="ed-eyebrow">Siguiente paso</p>
+      <h2 id="voz-closing" class="pg-closing-title">¿Qué llamadas se repiten cada día?</h2>
+      <p class="pg-closing-copy">
+        Cuéntanos qué entra por teléfono y con qué centralita trabajas. En la primera conversación
+        te decimos qué puede resolver un agente de voz y qué tiene que seguir llegando a una persona.
+      </p>
+      <a class="ed-button" href={contactHref}>Hablar con un especialista<span class="ed-arrow" aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</BaseLayout>

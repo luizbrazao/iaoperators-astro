@@ -487,6 +487,16 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     faixa: "c",
   },
   {
+    // Creada 09/oct/2026. SERP: plataformas DIY (Retell, ElevenLabs, CloudTalk) y
+    // una agencia a medida; nadie la conecta con la Ley 10/2025, que es el ángulo.
+    path: "servicios/agente-de-voz-ia/",
+    locales: ["es"],
+    silo: "servicios",
+    primaria: "agente de voz ia",
+    secundarias: ["agentes de voz ia", "voicebot", "ia atención al cliente", "call center ia"],
+    faixa: "c",
+  },
+  {
     // El plan (§6.2) asignaba "agentes de ia" a esta URL. La SERP de esa query
     // en google.es es informativa —Google Cloud, IBM, Salesforce, AWS y Xataka
     // respondiendo "¿qué son?"— y ya la cubre el post del blog. El hueco

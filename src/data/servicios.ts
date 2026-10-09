@@ -137,6 +137,19 @@ export const SERVICES: ServiceDefinition[] = [
     },
   },
   {
+    // ES-only (oct/2026): la demanda medida y el ángulo de la Ley 10/2025 son españoles.
+    key: "voice",
+    path: "servicios/agente-de-voz-ia/",
+    group: "ia",
+    locales: ["es"],
+    label: { es: "Agente de voz con IA", pt: "Agente de voz com IA", en: "AI Voice Agent" },
+    desc: {
+      es: "Atención telefónica con salida a persona",
+      pt: "Atendimento telefônico com transferência humana",
+      en: "Phone support with human handoff",
+    },
+  },
+  {
     key: "chatbots",
     path: "servicios/chatbots/",
     group: "ia",
