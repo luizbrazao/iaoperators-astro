@@ -246,7 +246,13 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     locales: ["es"],
     silo: "integracion",
     primaria: "whatsapp business api",
-    secundarias: ["api de whatsapp business", "automatizar whatsapp", "integrar whatsapp con crm"],
+    secundarias: [
+      "api de whatsapp business",
+      "automatizar whatsapp",
+      "integrar whatsapp con crm",
+      "integración whatsapp erp",
+      "integrar whatsapp con erp",
+    ],
     faixa: "d",
   },
   {

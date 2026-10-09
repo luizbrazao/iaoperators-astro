@@ -309,9 +309,13 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
   "whatsapp-business-api": {
     nombre: "Empresas que atienden y venden por WhatsApp",
     nombreCorto: "WhatsApp Business API",
-    metaTitle: "WhatsApp Business API: integración y automatización",
+    // oct/2026: el title nombra el ERP porque las consultas reales que ya trae
+    // esta URL en Search Console son "integración whatsapp erp" e "integrar
+    // whatsapp con erp" (posiciones 44–54). El head "whatsapp business api" lo
+    // copan Meta y los BSP; la SERP del ERP la ocupan proveedores pequeños.
+    metaTitle: "WhatsApp Business API: integración con tu ERP y CRM",
     metaDescription:
-      "Integramos WhatsApp Business API con tu CRM y tu ERP: plantillas, ventana de 24 horas, agentes con estado y trazabilidad. No es la app de WhatsApp Business.",
+      "Integramos WhatsApp Business API con tu ERP y tu CRM: pedidos, stock, facturas y citas consultados en tiempo real, plantillas y salida a persona.",
     h1: "WhatsApp Business API: integración y automatización",
     labels: {
       back: "← Integración de sistemas",
@@ -372,6 +376,12 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
           "Es el punto donde se pierde la confianza ganada. Un traspaso mal hecho hace que el cliente prefiera el teléfono la próxima vez.",
       },
       {
+        title: "WhatsApp conectado al ERP",
+        body: "Los casos que más tiempo ahorran pasan por el ERP: el cliente pregunta por su pedido y el agente consulta el estado real; el aviso de envío o la factura salen por WhatsApp cuando el ERP cambia de estado; el comercial recibe el pedido ya cargado. Funciona con ERP de mercado o a medida, siempre que permita leer y escribir datos desde fuera.",
+        riesgo:
+          "Copiar en la herramienta de WhatsApp datos que viven en el ERP crea dos versiones de la verdad. El canal consulta y escribe en el ERP; no guarda su propia copia.",
+      },
+      {
         title: "Conexión con el sistema que tiene la respuesta",
         body: "Consultar un pedido, reservar una cita o comprobar disponibilidad exige llegar al ERP, al CRM o al motor de reservas en tiempo real. Sin eso, el agente solo puede hablar de generalidades.",
         riesgo:
@@ -397,6 +407,11 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
         body: "El mismo agente, visto desde el servicio en lugar de desde el canal.",
       },
       {
+        href: "/es/integracion/erp/",
+        label: "Integración de ERP",
+        body: "Cuando el dato que necesita la conversación —pedido, stock, factura— vive en el ERP.",
+      },
+      {
         href: "/es/integracion/crm/",
         label: "Integración de CRM",
         body: "Para que la conversación acabe en la ficha del cliente y no en un móvil.",
@@ -415,6 +430,10 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
       {
         q: "¿Puedo seguir usando mi número actual?",
         a: "En muchos casos sí. Meta ofrece dos caminos: una migración tradicional a la plataforma, en la que el número deja de operar desde la app, o coexistencia entre la app y la plataforma sobre el mismo número, cuando la configuración es compatible. La coexistencia tiene condiciones propias —versión de la app, alta a través de un proveedor y una ventana de tiempo para sincronizar el historial— y no aplica igual a todas las cuentas. Si el número es el móvil personal de alguien, conviene planificar el cambio antes de empezar, no durante. Lo comprobamos en el diagnóstico.",
+      },
+      {
+        q: "¿Se puede integrar WhatsApp con mi ERP?",
+        a: "Sí, si el ERP permite leer y escribir datos desde fuera: por API, por eventos o, en sistemas antiguos, con un acceso controlado a su base de datos. Lo habitual es empezar por consultas —estado de un pedido, stock, facturas pendientes— y pasar después a acciones, como crear un pedido o registrar una incidencia. Lo que no conviene es que WhatsApp guarde su propia copia de los datos: el ERP sigue siendo la fuente.",
       },
       {
         q: "¿Puedo enviar campañas masivas?",
