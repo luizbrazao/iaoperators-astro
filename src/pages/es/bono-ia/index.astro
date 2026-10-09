@@ -1,0 +1,416 @@
+---
+// Landing del bono empresarial de IA (Plan IA360). ES-only: es un programa del
+// Gobierno de España y no tiene sentido en EN/PT.
+//
+// POR QUÉ ESTA PÁGINA Y NO UN AJUSTE EN OTRA (09/oct/2026):
+//   - Ninguna ruta del registro de keywords cubría "bono", "ayuda" o "IA360".
+//   - servicios/consultoria-ia/ es evergreen y trilingüe; el bono es temporal y
+//     su texto cambiará cada vez que haya algo oficial. Mezclarlos ensucia la
+//     intención de una página estable.
+//   - El bono financia diagnóstico + implantación + medición: cruza consultoría
+//     y agencia, así que no cabe entera en ninguna de las dos.
+// Para no duplicar la consultoría, esta página NO describe el método: muestra
+// cómo encaja con lo que exige el plan y enlaza a las páginas de servicio.
+//
+// POR QUÉ EL ÁNGULO DE PROVEEDOR Y NO EL INFORMATIVO: en tres semanas la SERP
+// de "bono ia" / "plan ia360" ya estaba ocupada por guías (Hiberus, IP10,
+// kitdigital.dev, dominios de coincidencia exacta). Competimos por la intención
+// comercial ("proveedor bono ia"), que debería crecer cuando salgan las bases.
+//
+// MANTENIMIENTO: cuando se publiquen bases o convocatoria, actualizar ESTADO,
+// HITOS, la FAQ y `REVISADO`. Todo lo que se afirma sale del PDF oficial.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BonoIaAvisoForm from "@/islands/BonoIaAvisoForm";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-servicios.css";
+
+const locale = "es";
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const siteRoot = site.replace(/\/$/, "");
+const pageUrl = new URL(`/${locale}/bono-ia/`, site).toString();
+const contactHref = `/${locale}/contact/`;
+
+const REVISADO = "9 de octubre de 2026";
+const PLAN = {
+  nombre: "Plan IA360",
+  pdfUrl: "https://www.lamoncloa.gob.es/presidente/actividades/Documents/2026/20260920%20Plan%20IA360.pdf",
+  presentacionUrl: "https://www.lamoncloa.gob.es/presidente/actividades/Paginas/2026/210926-sanchez-plan-ia.aspx",
+};
+
+const meta = {
+  title: "Bono IA: qué exigirá y cómo preparar tu proyecto | IA Operators",
+  description:
+    "El bono IA del Plan IA360 (600 M€) pagará servicios de IA con valor añadido, no licencias. Qué exigirá, cuándo llega y cómo preparar hoy un proyecto.",
+};
+
+// Citas literales del proyecto tractor 11 del PDF (pág. 12).
+const requisitos = [
+  {
+    cita: "Financiará servicios y soluciones basados en IA que sean provistos por empresas tecnológicas europeas y que utilicen los modelos fundacionales como insumo",
+    cubre: "El modelo (GPT, Claude, Llama o ALIA) es la materia prima, no el entregable. Elegimos el que encaja con el caso y con dónde deben quedarse tus datos, y construimos encima.",
+    nota: "Un proyecto que consista solo en dar acceso a un modelo difícilmente encajará.",
+  },
+  {
+    cita: "incorporando valor añadido propio mediante desarrollo, integración, conocimiento sectorial, tratamiento de datos o rediseño de procesos",
+    cubre: "Es nuestro trabajo diario: conectar la IA con tu ERP, CRM o TPV, preparar los datos y rediseñar el proceso para que la IA haga una parte real de él.",
+    nota: "Lo que no lleve trabajo propio del proveedor sobre tus sistemas queda fuera de esta definición.",
+    href: "/es/servicios/agencia-ia/",
+    linkLabel: "Cómo construimos e integramos",
+  },
+  {
+    cita: "El bono no financiará la mera suscripción a licencias",
+    cubre: "No revendemos licencias. Si tu caso se resuelve con una herramienta comercial sin más, te lo decimos y no hace falta proyecto.",
+    nota: "Ofertas del tipo «licencias + formación» o «herramienta no-code con IA» lo tendrán difícil.",
+  },
+  {
+    cita: "La implantación incorporará diagnóstico previo de madurez, identificación de un caso de uso concreto",
+    cubre: "Así empieza cualquier proyecto nuestro: un diagnóstico de procesos, datos y sistemas que acaba en uno o dos casos de uso priorizados, no en un informe genérico.",
+    nota: "El diagnóstico va antes de elegir herramienta, no después.",
+    href: "/es/servicios/consultoria-ia/",
+    linkLabel: "Ver la consultoría de IA",
+  },
+  {
+    cita: "y medición posterior del impacto en productividad",
+    cubre: "Medimos el proceso antes de tocarlo (tiempo por tarea, errores, coste) y lo volvemos a medir en producción. Sin línea base no hay forma honesta de demostrar impacto.",
+    nota: "Es el punto que más se salta: si no se mide el punto de partida, no hay «después» con el que comparar.",
+  },
+  {
+    cita: "El diseño del bono incluiría pagos por hitos y condiciones acerca de formación en IA de los trabajadores",
+    cubre: "Trabajamos por fases, con un criterio de aceptación en cada una, y formamos al equipo que va a usar el sistema, no a un público genérico.",
+    nota: "El plan lo plantea en condicional («incluiría»). Habrá que ver cómo queda en las bases.",
+  },
+];
+
+const expectativas = {
+  si: [
+    "Un proyecto diseñado desde el principio con diagnóstico, caso de uso, hitos y medición, que son las piezas que describe el plan.",
+    "Un aviso cuando se publiquen las bases, con lo que cambia para una pyme.",
+    "Una respuesta clara, cuando haya requisitos, sobre si podemos prestar el servicio dentro del bono.",
+    "Que si tu proyecto se paga solo, te lo digamos, para que no lo congeles esperando una ayuda sin fecha.",
+  ],
+  no: [
+    "Que somos proveedor oficial. Hoy no existe ningún registro ni acreditación de proveedores del bono IA.",
+    "Que tramitamos el bono o te reservamos plaza. Todavía no hay nada que tramitar.",
+    "Importes, porcentajes o requisitos concretos. No se han publicado.",
+    "Que lo que contrates hoy se pueda pagar con el bono. En las ayudas públicas, el gasto anterior a la solicitud no suele ser subvencionable.",
+  ],
+};
+
+const hitos = [
+  {
+    fecha: "21 sep 2026",
+    pasado: true,
+    titulo: "Presentación del Plan IA360",
+    texto: "El Gobierno presenta el plan en la Moncloa y anuncia el bono para pymes y autónomos.",
+  },
+  {
+    fecha: "Final de 2026",
+    pasado: false,
+    titulo: "Piloto de la Red NEURONA",
+    texto: "Primer piloto de los centros de demostración con 100 pymes en dos comunidades autónomas.",
+  },
+  {
+    fecha: "1.er semestre 2027",
+    pasado: false,
+    titulo: "Bases y piloto del bono",
+    texto: "Diseño y preparación normativa, con un piloto controlado ligado a los primeros centros de la Red NEURONA.",
+  },
+  {
+    fecha: "Final de 2027",
+    pasado: false,
+    titulo: "Convocatoria general",
+    texto: "Despliegue con 600 M€ de dotación y el objetivo de 25.000 empresas transformadas.",
+  },
+];
+
+const preparar = [
+  {
+    num: "01",
+    title: "Elige un proceso, no una herramienta",
+    body: "El plan habla de «un caso de uso concreto». Empieza por la tarea que más horas consume o más errores genera, y descríbela tal como se hace hoy.",
+  },
+  {
+    num: "02",
+    title: "Mide cómo funciona ahora",
+    body: "Tiempo por tarea, volumen, errores y coste. Con dos semanas de datos basta. Es la línea base contra la que se medirá el impacto, y no se puede reconstruir después.",
+  },
+  {
+    num: "03",
+    title: "Localiza dónde está el dato",
+    body: "¿En qué sistema vive la información que necesita el proceso? ¿Tiene API? Esa respuesta pesa más en el coste del proyecto que el modelo de IA que se use.",
+    href: "/es/integracion/",
+    linkLabel: "Integración de sistemas",
+  },
+  {
+    num: "04",
+    title: "Separa lo que no puede esperar",
+    body: "Si el caso se amortiza en meses, no tiene sentido congelarlo un año por una ayuda sin bases. Si depende de la ayuda, deja preparada la línea base y espera a la convocatoria.",
+  },
+];
+
+const faq = [
+  {
+    q: "¿Qué es el bono IA?",
+    a: "Es una ayuda anunciada por el Gobierno dentro del Plan IA360, presentado el 21 de septiembre de 2026, para que pymes y autónomos incorporen inteligencia artificial a sus procesos. Tiene una dotación prevista de 600 millones de euros y financiará servicios de IA con valor añadido del proveedor, no licencias de software.",
+  },
+  {
+    q: "¿Ya se puede solicitar?",
+    a: "No. El plan prevé un piloto en el primer semestre de 2027 y la convocatoria general antes de que acabe 2027. Hasta que se publiquen las bases no hay solicitud posible, y apuntarse antes en un registro privado (incluido el nuestro) no da prioridad.",
+  },
+  {
+    q: "¿Cuánto dinero recibirá cada empresa?",
+    a: "No se sabe. Lo único publicado es la dotación total de 600 millones. Los importes por empresa, el porcentaje que cubre la ayuda y los requisitos llegarán con las bases.",
+  },
+  {
+    q: "¿Es lo mismo que el Kit Digital?",
+    a: "No. El Kit Digital funcionaba con un catálogo de soluciones y agentes digitalizadores adheridos. El documento del bono IA no describe, por ahora, ningún sistema de adhesión de proveedores, y deja fuera de forma expresa la mera suscripción a licencias. Las bases dirán cómo se decide quién puede prestar el servicio.",
+  },
+  {
+    q: "¿Qué es la Red NEURONA y qué tiene que ver con el bono?",
+    a: "Es una red público-privada de centros de demostración de IA prevista en el mismo plan, a menos de 50 kilómetros de cada empresa, donde una pyme puede probar la IA con sus propios datos antes de desplegarla. Según el plan, el bono subvencionará las soluciones que ofrezcan esos centros. El primer piloto, con 100 pymes en dos comunidades autónomas, está previsto antes de final de 2026.",
+  },
+  {
+    q: "¿Puedo empezar un proyecto ahora y pagarlo después con el bono?",
+    a: "Lo prudente es asumir que no: en las ayudas públicas, el gasto hecho antes de solicitarlas normalmente no se puede subvencionar. Si el proyecto se justifica por sí solo, adelante. Si depende de la ayuda, prepara la línea base de tu proceso, que te servirá igual, y espera a las bases.",
+  },
+];
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Proyectos de IA preparados para el bono IA",
+  serviceType: "AI implementation for SMEs",
+  provider: {
+    "@type": ["Organization", "ProfessionalService"],
+    name: "IA Operators",
+    url: site,
+    address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+  },
+  areaServed: "ES",
+  description: meta.description,
+  url: pageUrl,
+  inLanguage: "es-ES",
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${siteRoot}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: "Bono IA", item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  jsonLd={[serviceJsonLd, breadcrumbJsonLd, faqJsonLd]}
+  editorial
+>
+  <div class="ed-container">
+    <header class="pg-hero">
+      <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/es/">Inicio</a></li>
+          <li><span aria-current="page">Bono IA</span></li>
+        </ol>
+      </nav>
+      <h1>Bono IA: <span>proyectos preparados para lo que va a exigir</span></h1>
+      <div class="pg-hero-bottom">
+        <p class="ed-eyebrow">Plan IA360 · Bono empresarial de IA</p>
+        <div>
+          <p class="pg-lead">
+            El Gobierno ha anunciado un bono de 600 millones de euros para que pymes y autónomos
+            incorporen inteligencia artificial. Aún no hay bases ni convocatoria. Lo que sí hay es el
+            documento oficial del plan, que dice con bastante precisión qué tipo de proyecto quiere
+            financiar. Y es el tipo de proyecto que ya hacemos.
+          </p>
+          <div class="pg-actions">
+            <a class="ed-button" href="#aviso">Quiero el aviso<span class="ed-arrow" aria-hidden="true">↗</span></a>
+            <a class="ed-underlined" href={contactHref}>Hablar de un proyecto <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="pg-section" aria-label="Estado del bono">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Estado a {REVISADO}</p>
+        <p class="pg-signal-text">
+          Hoy el bono está anunciado, no convocado. No hay requisitos, importes por empresa ni plazos
+          publicados en el BOE, y nadie puede ser todavía «proveedor oficial del bono IA», porque ese
+          registro no existe. Lo que cuenta esta página sale del documento del plan y lo
+          actualizaremos cuando haya bases.
+        </p>
+      </div>
+    </section>
+
+    <section class="pg-section" aria-labelledby="bono-requisitos">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Lo que dice el plan</p>
+        <div>
+          <h2 id="bono-requisitos">Qué tipo de proyecto va a financiar</h2>
+          <p class="pg-lead-muted">
+            Seis frases literales del documento oficial, cada una con lo que significa en la práctica
+            y cómo lo cubrimos.
+          </p>
+        </div>
+      </div>
+      <ol class="pg-patterns pg-obligations">
+        {requisitos.map((r, idx) => (
+          <li>
+            <span class="ed-eyebrow">{String(idx + 1).padStart(2, "0")}</span>
+            <div class="pg-pattern-main">
+              <p class="ed-eyebrow">Lo que dice el plan</p>
+              <p class="pg-obligation-law">«{r.cita}»</p>
+            </div>
+            <div class="pg-pattern-risk">
+              <p class="ed-eyebrow">Cómo lo cubrimos</p>
+              <p class="pg-obligation-system">{r.cubre}</p>
+              <p class="pg-obligation-risk">{r.nota}</p>
+              {r.href && <a class="ed-underlined" href={r.href}>{r.linkLabel} <span aria-hidden="true">→</span></a>}
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="pg-source">
+        Citas literales del proyecto tractor 11, «El bono empresarial de inteligencia artificial», en el{" "}
+        <a href={PLAN.pdfUrl} target="_blank" rel="noopener noreferrer">documento oficial del {PLAN.nombre} (20 de septiembre de 2026)</a>.
+      </p>
+    </section>
+
+    <section class="pg-section" aria-labelledby="bono-promesas">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Sin letra pequeña</p>
+        <div>
+          <h2 id="bono-promesas">Qué puedes esperar de nosotros, y qué no</h2>
+          <p class="pg-lead-muted">
+            Con cada ayuda pública aparecen ofertas que prometen más de lo que hay publicado. Esto es
+            lo que podemos decir hoy con el documento en la mano.
+          </p>
+        </div>
+      </div>
+      <div class="sv-donde">
+        <div>
+          <h3>Lo que sí puedes esperar</h3>
+          <ul class="pg-checklist">
+            {expectativas.si.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <div class="sv-donde-no">
+          <h3>Lo que no te vamos a prometer</h3>
+          <ul class="pg-checklist">
+            {expectativas.no.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-section" aria-labelledby="bono-calendario">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Calendario</p>
+        <div>
+          <h2 id="bono-calendario">Cuándo llega, según el plan</h2>
+          <p class="pg-lead-muted">Solo la primera fecha ha ocurrido. Las demás son previsiones.</p>
+        </div>
+      </div>
+      <ol class="pg-timeline pg-timeline-4">
+        {hitos.map((h) => (
+          <li class:list={{ "pg-timeline-past": h.pasado, "pg-timeline-announced": !h.pasado }}>
+            <p class="pg-timeline-date">{h.fecha}</p>
+            <p class="ed-eyebrow">{h.pasado ? "Ya ocurrido" : "Previsto en el plan"}</p>
+            <h3>{h.titulo}</h3>
+            <p>{h.texto}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="pg-source">
+        Fechas previstas en el{" "}
+        <a href={PLAN.pdfUrl} target="_blank" rel="noopener noreferrer">documento del plan</a>. No son
+        fechas publicadas en el BOE y pueden moverse. Presentación oficial:{" "}
+        <a href={PLAN.presentacionUrl} target="_blank" rel="noopener noreferrer">La Moncloa, 21/09/2026</a>.
+      </p>
+    </section>
+
+    <section class="pg-section" aria-labelledby="bono-preparar">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Mientras tanto</p>
+        <div>
+          <h2 id="bono-preparar">Cuatro cosas que puedes hacer antes de las bases</h2>
+          <p class="pg-lead-muted">Ninguna cuesta dinero y todas te sirven, haya bono o no.</p>
+        </div>
+      </div>
+      <ol class="pg-phases">
+        {preparar.map((p) => (
+          <li>
+            <span class="ed-eyebrow">{p.num}</span>
+            <h3>{p.title}</h3>
+            <div>
+              <p>{p.body}</p>
+              {p.href && <a class="ed-underlined" href={p.href}>{p.linkLabel} <span aria-hidden="true">→</span></a>}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="pg-section" id="aviso" aria-labelledby="bono-aviso">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Aviso</p>
+        <div>
+          <h2 id="bono-aviso">Te avisamos cuando se publiquen las bases</h2>
+          <p class="pg-lead-muted">
+            Un correo cuando haya algo oficial, con un resumen de requisitos e importes. Apuntarte no
+            te da prioridad en la convocatoria: nadie puede dártela.
+          </p>
+          <BonoIaAvisoForm client:visible />
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-section pg-faq ed-faq" aria-labelledby="bono-faq">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Preguntas</p>
+        <div>
+          <h2 id="bono-faq">Preguntas frecuentes sobre el bono IA</h2>
+          <div class="pg-faq-list">
+            {faq.map((item) => <details><summary>{item.q}</summary><p>{item.a}</p></details>)}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="ed-closing" aria-labelledby="bono-closing">
+    <div class="ed-container">
+      <p class="ed-eyebrow">Siguiente paso</p>
+      <h2 id="bono-closing" class="pg-closing-title">¿Tienes un proyecto que se paga sin ayuda?</h2>
+      <p class="pg-closing-copy">
+        Muchos casos de IA bien elegidos recuperan la inversión antes de que llegue ninguna
+        convocatoria. Cuéntanos el proceso y te decimos si es uno de ellos, o si tiene más sentido
+        esperar al bono.
+      </p>
+      <a class="ed-button" href={contactHref}>Hablar de un proyecto<span class="ed-arrow" aria-hidden="true">↗</span></a>
+      <p class="pg-disclaimer">
+        IA Operators no tiene relación con la Administración ni participa en la gestión del bono IA.
+        Información basada en el documento oficial del {PLAN.nombre} (20/09/2026) y en su
+        presentación del 21/09/2026. Última revisión: {REVISADO}.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

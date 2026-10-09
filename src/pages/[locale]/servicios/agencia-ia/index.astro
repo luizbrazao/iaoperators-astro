@@ -92,6 +92,7 @@ const CONTENT: Record<string, any> = {
         { q: "¿Cuánto tarda un proyecto en llegar a producción?", a: "Un caso acotado suele estar funcionando en semanas, no meses. Trabajamos con entregas parciales: preferimos algo pequeño en producción y medido antes que un sistema grande que nadie ha probado contra la realidad." },
         { q: "¿Quién mantiene lo que construís?", a: "Podemos mantenerlo nosotros o entregarlo documentado a vuestro equipo. Construimos sobre herramientas auditables —n8n, Supabase, Node— precisamente para que la segunda opción sea viable y no dependáis de nosotros por diseño." },
         { q: "¿Necesitamos una consultoría antes?", a: "Solo si aún no está claro qué construir ni con qué retorno. Si la decisión ya está tomada, se entra directo por aquí. Si no, el paso previo es la <a href='/es/servicios/consultoria-ia/' class='text-orange-400 hover:underline'>consultoría de IA</a>, que termina en un roadmap priorizado." },
+        { q: "¿Se puede pagar con el bono IA?", a: "Todavía no. El bono IA del Plan IA360 está anunciado, sin bases ni convocatoria; el plan prevé el piloto en el primer semestre de 2027. Sí sabemos que pagará integración, desarrollo y rediseño de procesos, no licencias, que es el trabajo de esta página. Lo que se sabe hoy está en la página del <a href='/es/bono-ia/' class='text-orange-400 hover:underline'>bono IA</a>." },
       ],
     },
     finalCta: {
@@ -295,7 +296,7 @@ const faqJsonLd = {
   mainEntity: c.faq.items.map((item: any) => ({
     "@type": "Question",
     name: item.q,
-    acceptedAnswer: { "@type": "Answer", text: item.a },
+    acceptedAnswer: { "@type": "Answer", text: item.a.replace(/<[^>]+>/g, "") },
   })),
 };
 
@@ -304,9 +305,11 @@ const jsonLd = [serviceJsonLd, breadcrumbJsonLd, faqJsonLd];
 
 <BaseLayout title={c.meta.title} description={c.meta.description} jsonLd={jsonLd} editorial>
   {/* Las páginas por ciudad existen solo en ES. */}
+  {/* faqHtml: las respuestas ES llevan enlaces <a>; sin él se pintaban como texto. */}
   <ServicioIAEditorial
     c={c}
     contactHref={contactHref}
+    faqHtml
     cities={locale === "es" ? {
       title: "Agencia de IA por ciudades",
       text: "¿Buscas una agencia de IA cerca de ti? Trabajamos con empresas de toda España.",

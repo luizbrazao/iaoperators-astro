@@ -583,6 +583,26 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     faixa: "c",
   },
   {
+    // Plan IA360 (09/oct/2026). Programa del Gobierno de España → ES-only.
+    // Ninguna otra ruta declara bono/ayuda/subvención/IA360. Sin medición propia:
+    // el Semrush estaba sin unidades y el término nació el 21/09/2026, así que el
+    // Planner aún no tiene histórico. Revisar la faixa con el GSC a los 60 días.
+    // Frontera con servicios/consultoria-ia/: esta página no describe el método,
+    // solo cómo encaja con lo que exige el bono, y enlaza allí.
+    path: "bono-ia/",
+    locales: ["es"],
+    silo: "servicios",
+    primaria: "bono ia",
+    secundarias: [
+      "bono inteligencia artificial",
+      "plan ia360",
+      "proveedor bono ia",
+      "ayudas ia pymes",
+    ],
+    faixa: "c",
+    estimada: true,
+  },
+  {
     path: "servicios/agencia-seo/",
     locales: ["es", "en", "pt"],
     silo: "servicios",
