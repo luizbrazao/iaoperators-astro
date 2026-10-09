@@ -44,6 +44,16 @@
       "source": "/en/blog/ia-local-privada-sem-mensalidade-qwen-pc/",
       "destination": "/en/blog/run-qwen-models-locally-on-your-pc/",
       "permanent": true
+    },
+    {
+      "source": "/es/blog/comparativa-ias-arquitectos-cling-luma-runway",
+      "destination": "/es/blog/herramientas-ia-arquitectos/",
+      "permanent": true
+    },
+    {
+      "source": "/es/blog/comparativa-ias-arquitectos-cling-luma-runway/",
+      "destination": "/es/blog/herramientas-ia-arquitectos/",
+      "permanent": true
     }
   ],
   "headers": [
