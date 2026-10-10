@@ -13,6 +13,7 @@ IA Operators ayuda a empresas medianas a aplicar inteligencia artificial y marke
 - [Agencia de IA](https://iaoperators.com/es/servicios/agencia-ia/): estrategia, consultoría e implementación de IA a medida.
 - [Auditoría de sistemas (Radiografía Digital)](https://iaoperators.com/es/auditoria-de-sistemas/): inventario y diagnóstico del parque tecnológico.
 - [Roadmap tecnológico](https://iaoperators.com/es/roadmap-tecnologico/): plan de evolución del stack tecnológico.
+- [Tecnología y automatización para hoteles](https://iaoperators.com/es/hoteles/): Radiografía Digital Hotelera, integración de PMS, motor de reservas, channel manager y CRM, y automatización de procesos con IA.
 
 ## Recursos
 - [Blog](https://iaoperators.com/es/blog/): artículos sobre IA, automatización, n8n y tecnología aplicada a empresas.

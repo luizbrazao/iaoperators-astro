@@ -1,0 +1,513 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import "@/styles/editorial-pages.css";
+import "@/styles/hoteles.css";
+
+const locale = "es";
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const siteRoot = site.replace(/\/$/, "");
+const pageUrl = new URL(`/${locale}/hoteles/`, site).toString();
+const contactHref = `/${locale}/contact/`;
+const caseHref = `/${locale}/portfolio/radiografia-cadena-hotelera-menorca/`;
+const methodologyHref = `/${locale}/metodologia/`;
+
+const meta = {
+  title: "Consultoría tecnológica para hoteles | IA Operators",
+  description:
+    "Diagnosticamos procesos, sistemas e integraciones de hoteles y cadenas. Radiografía Digital Hotelera, roadmap e implementación de automatización e IA.",
+};
+
+const frictions = [
+  {
+    area: "Recepción",
+    title: "El huésped ya dio el dato. El equipo vuelve a pedirlo.",
+    body: "La información existe en el PMS, el motor o el CRM, pero no llega al punto donde se presta el servicio.",
+    signal: "Experiencia fragmentada",
+  },
+  {
+    area: "Ventas",
+    title: "Una solicitud de grupo acaba repartida entre correo, PDF y Excel.",
+    body: "Cotizar exige copiar datos, consultar disponibilidad, perseguir aprobaciones y volver a escribir lo que otro sistema ya sabe.",
+    signal: "Respuesta lenta",
+  },
+  {
+    area: "Operaciones",
+    title: "Una petición sencilla necesita tres mensajes y dos departamentos.",
+    body: "Housekeeping, mantenimiento y atención trabajan con herramientas distintas y sin un estado compartido de la incidencia.",
+    signal: "Trabajo invisible",
+  },
+  {
+    area: "Dirección",
+    title: "Se decide sobre informes que no cuentan la misma historia.",
+    body: "Ingresos, costes, reputación y productividad viven en silos. La dirección ve métricas, pero no siempre ve el proceso que las produce.",
+    signal: "Prioridades sin mapa",
+  },
+];
+
+const deliverables = [
+  {
+    num: "01",
+    title: "Inventario real",
+    body: "Aplicaciones, licencias, propietarios, costes, renovaciones y criticidad por sistema.",
+  },
+  {
+    num: "02",
+    title: "Mapa de procesos",
+    body: "Cómo circula hoy el trabajo entre recepción, reservas, ventas, operaciones, marketing, finanzas e IT.",
+  },
+  {
+    num: "03",
+    title: "Mapa de integraciones",
+    body: "Qué conecta con qué, dónde aparece el CSV, el copy-paste, la doble entrada y el dato que llega tarde.",
+  },
+  {
+    num: "04",
+    title: "Riesgos y dependencias",
+    body: "Shadow IT, accesos, procesos sin documentación y tareas que solo sabe resolver una persona.",
+  },
+  {
+    num: "05",
+    title: "Roadmap priorizado",
+    body: "Iniciativas ordenadas por impacto, esfuerzo, dependencia y riesgo. Con responsable y siguiente decisión.",
+  },
+];
+
+const method = [
+  {
+    num: "01",
+    title: "Radiografía",
+    promise: "Entender antes de prescribir.",
+    body: "Entrevistamos a dirección y áreas operativas, inventariamos el stack y seguimos los procesos tal como ocurren, no como deberían ocurrir.",
+  },
+  {
+    num: "02",
+    title: "Roadmap",
+    promise: "Decidir qué merece inversión.",
+    body: "Separamos quick wins, deuda de integración y proyectos estratégicos. Cada iniciativa sale con alcance, dependencias, métricas y orden de ejecución.",
+  },
+  {
+    num: "03",
+    title: "Implementación",
+    promise: "Llevarlo a producción.",
+    body: "Conectamos APIs, automatizamos flujos y construimos agentes cuando el caso necesita interpretación. Con estado, trazabilidad y salida a humano.",
+  },
+];
+
+const useCases = [
+  {
+    title: "Huésped y recepción",
+    body: "Atención por WhatsApp, pre-stay, instrucciones de llegada, preguntas frecuentes, incidencias y handoff humano con contexto.",
+    metric: "Tiempo de respuesta · carga operativa · satisfacción",
+  },
+  {
+    title: "Reservas, grupos y eventos",
+    body: "Captura de solicitudes, extracción de requisitos, cualificación, consulta de disponibilidad, borrador de propuesta y seguimiento.",
+    metric: "Tiempo de cotización · conversión · valor del pipeline",
+  },
+  {
+    title: "Operación interna",
+    body: "Enrutado de peticiones a housekeeping o mantenimiento, alertas, cambios de estado y sincronización entre herramientas.",
+    metric: "Minutos por tarea · incidencias abiertas · retrabajo",
+  },
+  {
+    title: "Dirección y performance",
+    body: "Datos de PMS, RMS, channel manager, CRM y costes reunidos para leer margen, no solo ocupación o ingresos de habitaciones.",
+    metric: "GOPPAR · coste operativo · calidad del dato",
+  },
+];
+
+const principles = [
+  {
+    title: "Código para lo determinista",
+    body: "Tarifas, validaciones, permisos y cálculos no se dejan a criterio de un modelo.",
+  },
+  {
+    title: "LLM donde hay ambigüedad",
+    body: "Texto libre, documentos variables, clasificación y decisiones con contexto sí pueden necesitar IA.",
+  },
+  {
+    title: "Estado fuera del modelo",
+    body: "La conversación y el expediente sobreviven al mensaje, al cambio de turno y al proveedor de IA.",
+  },
+  {
+    title: "Humano en el punto correcto",
+    body: "Lo sensible se confirma. Lo excepcional escala con resumen, histórico y acción recomendada.",
+  },
+];
+
+const audience = {
+  yes: [
+    "Hoteles independientes con varias herramientas y poco equipo interno de tecnología.",
+    "Cadenas con dos o más propiedades, procesos distintos o sistemas heredados.",
+    "Operaciones que preparan una migración, expansión, integración o proyecto de IA.",
+    "Direcciones que sospechan que pagan, copian o corrigen más de lo necesario.",
+  ],
+  no: [
+    "Quien busca comprar un chatbot antes de definir el problema que debe resolver.",
+    "Un proyecto limitado a pentesting, PCI DSS o auditoría de ciberseguridad.",
+    "Una operación sin patrocinio de dirección ni acceso a responsables y documentación.",
+  ],
+};
+
+const faq = [
+  {
+    q: "¿Hay que hacer una auditoría antes de cualquier automatización?",
+    a: "No siempre. Un proceso pequeño, estable y bien documentado puede automatizarse directamente. La Radiografía tiene sentido cuando intervienen varios departamentos, propiedades o sistemas, cuando no existe un inventario fiable o cuando una decisión local puede crear una dependencia nueva en todo el stack.",
+  },
+  {
+    q: "¿Cuánto dura una Radiografía Digital Hotelera?",
+    a: "La referencia para una cadena pequeña es tres semanas desde el kick-off hasta la sesión ejecutiva. El alcance se ajusta al número de propiedades, áreas y sistemas. El trabajo se realiza sin interrumpir la operación diaria.",
+  },
+  {
+    q: "¿Necesitamos cambiar de PMS o de channel manager?",
+    a: "No partimos de esa conclusión. Primero evaluamos si el problema está en la herramienta, en su configuración, en la integración o en el proceso. Muchas mejoras vienen de conectar mejor lo que ya existe; si recomendamos sustituir algo, dejamos explícito el motivo y el coste de transición.",
+  },
+  {
+    q: "¿Podéis implementar las recomendaciones?",
+    a: "Sí. El mismo equipo puede pasar del diagnóstico al roadmap y a la implementación: APIs, webhooks, automatizaciones, agentes de IA, WhatsApp, bases de datos y observabilidad. Los entregables siguen siendo propiedad del hotel aunque la implementación la haga otro proveedor.",
+  },
+  {
+    q: "¿Cómo tratáis los datos y accesos del hotel?",
+    a: "Trabajamos bajo NDA, pedimos el mínimo acceso necesario y priorizamos accesos de solo lectura durante la Radiografía. Documentamos qué datos usa cada solución, dónde persisten y qué permisos necesita antes de llevar cualquier automatización a producción.",
+  },
+  {
+    q: "¿La propuesta sirve para un solo hotel?",
+    a: "Sí. En un hotel independiente el alcance es menor y suele concentrarse en uno o dos procesos críticos. En una cadena añadimos la comparación entre propiedades para distinguir una excepción local de una fricción transversal que merece resolverse una sola vez.",
+  },
+];
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Consultoría tecnológica y automatización para hoteles",
+  serviceType: "Consultoría tecnológica para hoteles",
+  provider: {
+    "@type": ["Organization", "ProfessionalService"],
+    name: "IA Operators",
+    url: site,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Málaga",
+      addressCountry: "ES",
+    },
+  },
+  areaServed: "ES",
+  audience: {
+    "@type": "BusinessAudience",
+    audienceType: "Hoteles independientes y cadenas hoteleras",
+  },
+  description: meta.description,
+  url: pageUrl,
+  inLanguage: "es-ES",
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${siteRoot}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: "Hoteles", item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  ogTitle="Tecnología hotelera que conecta la operación"
+  ogImage="/og/portfolio-radiografia-cadena-hotelera-menorca.png"
+  ogImageAlt="Radiografía Digital Hotelera de IA Operators"
+  jsonLd={[serviceJsonLd, breadcrumbJsonLd, faqJsonLd]}
+  editorial
+>
+  <div class="ed-container">
+    <header class="ht-hero">
+      <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/es/">Inicio</a></li>
+          <li><span aria-current="page">Hoteles</span></li>
+        </ol>
+      </nav>
+
+      <div class="ht-hero-grid">
+        <div class="ht-hero-copy">
+          <p class="ed-eyebrow">Tecnología, automatización e IA para hoteles</p>
+          <h1>Menos sistemas aislados. <span>Más hotel funcionando como uno.</span></h1>
+          <p class="ht-hero-lead">
+            Diagnosticamos procesos, datos e integraciones para que PMS, motor de reservas,
+            channel manager, CRM y equipo trabajen sobre la misma realidad.
+          </p>
+          <div class="pg-actions">
+            <a class="ed-button" href={contactHref}>Solicitar una Radiografía Hotelera<span class="ed-arrow" aria-hidden="true">↗</span></a>
+            <a class="ed-underlined" href={caseHref}>Ver un caso real <span aria-hidden="true">→</span></a>
+          </div>
+          <p class="ht-hero-note">Primera conversación · 30 minutos · sin propuesta de software prefabricada</p>
+        </div>
+
+        <figure class="ht-system-map" aria-label="Mapa conceptual de sistemas de un hotel conectados alrededor de una capa operativa común">
+          <figcaption class="ed-eyebrow">Una operación · una realidad compartida</figcaption>
+          <div class="ht-map-stage">
+            <div class="ht-map-grid" aria-hidden="true"></div>
+            <span class="ht-node ht-node-pms">PMS<small>Sistema de registro</small></span>
+            <span class="ht-node ht-node-booking">Motor<small>Reservas</small></span>
+            <span class="ht-node ht-node-channel">Channel<small>Distribución</small></span>
+            <span class="ht-node ht-node-crm">CRM<small>Huésped</small></span>
+            <span class="ht-node ht-node-whatsapp">WhatsApp<small>Atención</small></span>
+            <span class="ht-node ht-node-rms">RMS<small>Revenue</small></span>
+            <span class="ht-node ht-node-ops">Operación<small>Equipos</small></span>
+            <span class="ht-node ht-node-data">Datos<small>Decisión</small></span>
+            <span class="ht-map-core">Capa de integración<small>estado · permisos · trazabilidad</small></span>
+          </div>
+          <p class="ht-map-caption">La IA va arriba. La base sigue siendo proceso, integración y datos fiables.</p>
+        </figure>
+      </div>
+    </header>
+
+    <section class="ht-proofbar" aria-label="Resultados de un caso real">
+      <p><strong>4</strong><span>hoteles analizados</span></p>
+      <p><strong>47</strong><span>aplicaciones inventariadas</span></p>
+      <p><strong>23%</strong><span>de coste SaaS reducible</span></p>
+      <p><strong>3</strong><span>semanas de diagnóstico</span></p>
+      <a href={caseHref}>Caso de Menorca <span class="ed-arrow" aria-hidden="true">↗</span></a>
+    </section>
+
+    <section class="pg-section" aria-labelledby="ht-friction-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">El problema</p>
+        <div>
+          <h2 id="ht-friction-title">Cada herramienta funciona. La operación se rompe entre ellas.</h2>
+          <p class="pg-lead-muted">
+            La fricción rara vez vive dentro de un solo software. Aparece en el cambio de sistema,
+            departamento, turno o propiedad.
+          </p>
+        </div>
+      </div>
+      <ol class="ht-frictions">
+        {frictions.map((item, index) => (
+          <li>
+            <div class="ht-friction-index">
+              <span class="ed-eyebrow">{String(index + 1).padStart(2, "0")}</span>
+              <span class="ht-area">{item.area}</span>
+            </div>
+            <div>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </div>
+            <p class="ht-signal"><span aria-hidden="true"></span>{item.signal}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="pg-section ht-diagnosis" aria-labelledby="ht-diagnosis-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">La puerta de entrada</p>
+        <div>
+          <h2 id="ht-diagnosis-title">Radiografía Digital Hotelera</h2>
+          <p class="pg-lead-strong">
+            Antes de recomendar otro sistema, construimos el mapa que dirección necesita para decidir.
+          </p>
+          <p class="pg-lead-muted">
+            No vendemos un PMS, un RMS ni un paquete cerrado. Seguimos la operación real, contrastamos
+            entrevistas con documentación y convertimos hallazgos dispersos en un plan ejecutable.
+          </p>
+        </div>
+      </div>
+
+      <ol class="ht-deliverables">
+        {deliverables.map((item) => (
+          <li>
+            <span class="ed-eyebrow">{item.num}</span>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </li>
+        ))}
+      </ol>
+
+      <div class="ht-diagnosis-cta">
+        <p>El resultado no es una lista de ideas. Es una secuencia de decisiones con contexto.</p>
+        <a class="ed-button" href={contactHref}>Evaluar mi operación<span class="ed-arrow" aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </div>
+
+  <section class="ht-case" aria-labelledby="ht-case-title">
+    <div class="ed-container ht-case-grid">
+      <div class="ht-case-intro">
+        <p class="ed-eyebrow">Caso real · Menorca</p>
+        <h2 id="ht-case-title">La dirección declaraba unas 25 herramientas. Encontramos 47.</h2>
+        <p>
+          Una cadena de cuatro hoteles quería avanzar con IA. Primero necesitaba saber qué usaba,
+          cuánto pagaba, cómo circulaban los datos y de qué personas dependía la operación.
+        </p>
+        <a class="ed-button" href={caseHref}>Ver la Radiografía completa<span class="ed-arrow" aria-hidden="true">↗</span></a>
+      </div>
+      <div class="ht-case-results">
+        <dl>
+          <div><dt>Aplicaciones</dt><dd>47</dd><small>12 sin propietario claro</small></div>
+          <div><dt>Coste SaaS</dt><dd>23%</dd><small>redundante o sin uso</small></div>
+          <div><dt>Dependencias</dt><dd>3</dd><small>personas clave documentadas</small></div>
+          <div><dt>Salida</dt><dd>12 meses</dd><small>de roadmap priorizado</small></div>
+        </dl>
+        <blockquote>
+          <p>“Por primera vez teníamos el mapa completo de lo que realmente usábamos.”</p>
+          <footer>Director de Operaciones · cadena hotelera, Menorca · identidad protegida por NDA</footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="ed-method ht-method" aria-labelledby="ht-method-title">
+    <div class="ed-container">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">De diagnóstico a producción</p>
+        <div>
+          <h2 id="ht-method-title">Un mismo equipo para entender, priorizar y construir</h2>
+          <p class="pg-method-lead">
+            La continuidad evita que el contexto recogido en recepción y operaciones se pierda en el handoff a otro proveedor.
+          </p>
+          <a class="ed-underlined" href={methodologyHref}>Conocer la metodología <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <ol class="ed-steps">
+        {method.map((step) => (
+          <li>
+            <span class="ed-eyebrow">{step.num}</span>
+            <h3>{step.title}</h3>
+            <p class="ht-step-promise">{step.promise}</p>
+            <p>{step.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <div class="ed-container">
+    <section class="pg-section" aria-labelledby="ht-usecases-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Dónde suele aparecer valor</p>
+        <div>
+          <h2 id="ht-usecases-title">Casos de uso conectados a una métrica, no a una moda</h2>
+          <p class="pg-lead-muted">La Radiografía decide cuáles aplican. Estos son patrones habituales, no un catálogo que haya que comprar entero.</p>
+        </div>
+      </div>
+      <ul class="ht-usecases">
+        {useCases.map((item, index) => (
+          <li>
+            <span class="ed-eyebrow">0{index + 1}</span>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+            <p class="ht-metric">{item.metric}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="pg-section ht-architecture" aria-labelledby="ht-architecture-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Arquitectura</p>
+        <div>
+          <h2 id="ht-architecture-title">La IA no sustituye una base fragmentada. La amplifica.</h2>
+          <p class="pg-lead-muted">
+            Un agente útil necesita datos fiables, permisos explícitos, estado persistente y una forma de escalar el caso cuando deja de ser rutinario.
+          </p>
+        </div>
+      </div>
+
+      <div class="ht-stack" role="img" aria-label="Arquitectura por capas: sistemas hoteleros, integración, datos y estado, automatización e inteligencia, equipo humano">
+        <div class="ht-stack-layer ht-stack-source">
+          <span class="ed-eyebrow">Sistemas</span>
+          <p>PMS · RMS · CRM · motor · channel · POS</p>
+        </div>
+        <span class="ht-stack-arrow" aria-hidden="true">↓</span>
+        <div class="ht-stack-layer">
+          <span class="ed-eyebrow">Integración</span>
+          <p>APIs · webhooks · eventos · identidad</p>
+        </div>
+        <span class="ht-stack-arrow" aria-hidden="true">↓</span>
+        <div class="ht-stack-layer">
+          <span class="ed-eyebrow">Estado y datos</span>
+          <p>contexto · permisos · histórico · trazabilidad</p>
+        </div>
+        <span class="ht-stack-arrow" aria-hidden="true">↓</span>
+        <div class="ht-stack-layer ht-stack-intelligence">
+          <span class="ed-eyebrow">Automatización + IA</span>
+          <p>workflow determinista donde se puede · agente donde hace falta</p>
+        </div>
+        <span class="ht-stack-arrow" aria-hidden="true">↓</span>
+        <div class="ht-stack-layer ht-stack-human">
+          <span class="ed-eyebrow">Equipo</span>
+          <p>decide la excepción · protege la relación · mejora el sistema</p>
+        </div>
+      </div>
+
+      <ul class="ht-principles">
+        {principles.map((item) => (
+          <li><h3>{item.title}</h3><p>{item.body}</p></li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="pg-section ht-audience" aria-labelledby="ht-audience-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Encaje</p>
+        <div>
+          <h2 id="ht-audience-title">Para quién tiene sentido</h2>
+          <p class="pg-lead-muted">El tamaño importa menos que la cantidad de cruces entre personas, propiedades y sistemas.</p>
+        </div>
+      </div>
+      <div class="ht-audience-grid">
+        <div>
+          <h3>Buen punto de partida</h3>
+          <ul class="pg-checklist">{audience.yes.map((item) => <li>{item}</li>)}</ul>
+        </div>
+        <div class="ht-audience-no">
+          <h3>No es este proyecto</h3>
+          <ul class="pg-checklist">{audience.no.map((item) => <li>{item}</li>)}</ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-section pg-faq ed-faq" aria-labelledby="ht-faq-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Preguntas</p>
+        <div>
+          <h2 id="ht-faq-title">Antes de empezar</h2>
+          <div class="pg-faq-list">
+            {faq.map((item) => (
+              <details>
+                <summary>{item.q}</summary>
+                <p>{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="ed-closing ht-closing" aria-labelledby="ht-closing-title">
+    <div class="ed-container">
+      <p class="ed-eyebrow">Siguiente paso</p>
+      <h2 id="ht-closing-title" class="pg-closing-title">Antes de añadir otra herramienta, encuentra la fricción que merece desaparecer.</h2>
+      <p class="pg-closing-copy">
+        En una primera conversación revisamos el contexto del hotel, el proceso que más pesa y si una Radiografía completa es realmente el siguiente paso.
+      </p>
+      <a class="ed-button" href={contactHref}>Solicitar una Radiografía Hotelera<span class="ed-arrow" aria-hidden="true">↗</span></a>
+      <p class="ht-closing-note">También podemos decirte que no hace falta: un proceso acotado puede empezar directamente por un piloto.</p>
+    </div>
+  </section>
+</BaseLayout>

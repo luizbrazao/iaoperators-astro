@@ -21,6 +21,7 @@ const columns = [
   {title: l.integrations, items: (integration?.children ?? []).filter(item => item.href !== integration?.href && item.href.startsWith(integration?.href ?? h("integracion/")))},
   {title: l.company, items: [
     {label:l.cases,href:h("portfolio/")}, {label:l.about,href:h("sobre/")}, {label:l.methodology,href:h("metodologia/")},
+    ...(locale === "es" ? [{label:"Hoteles",href:h("hoteles/")}] : []),
     {label:"Blog",href:h("blog/")}, {label:l.contact,href:h("contact/")},
     {label:l.community,href:"https://www.skool.com/ia-operators-hub-9023/about"},
   ]},

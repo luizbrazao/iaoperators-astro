@@ -33,6 +33,26 @@ export interface KeywordPrimaria {
 }
 
 export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
+  // --------------------------------------------------------- VERTICAL HOTELERA
+  // SERP inspeccionada 11/oct/2026: intención comercial clara. Aparecen
+  // consultoras e integradores hoteleros, no artículos puramente informativos.
+  // La landing no compite con /auditoria-de-sistemas/: esta página responde al
+  // contexto sectorial completo y usa la Radiografía como puerta de entrada.
+  {
+    path: "hoteles/",
+    locales: ["es"],
+    silo: "servicios",
+    primaria: "consultoría tecnológica para hoteles",
+    secundarias: [
+      "automatización hotelera",
+      "inteligencia artificial para hoteles",
+      "integración de sistemas hoteleros",
+      "auditoría tecnológica hotelera",
+    ],
+    faixa: "b",
+    estimada: true,
+  },
+
   // ---------------------------------------------------------------- SILO 1
   {
     path: "cumplimiento/",

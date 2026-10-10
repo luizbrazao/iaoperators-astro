@@ -156,7 +156,7 @@ export const projects: Project[] = [
         ctaTitleKey: "projects:menorcaHotelChain.ctaTitle",
         ctaSubtitleKey: "projects:menorcaHotelChain.ctaSubtitle",
         relatedServiceKey: "projects:menorcaHotelChain.relatedService",
-        relatedServiceHref: "/auditoria-de-sistemas/",
+        relatedServiceHref: "/hoteles/",
         serviceAudienceKey: "projects:menorcaHotelChain.serviceAudience",
         serviceAreas: ["Menorca", "España"],
 
