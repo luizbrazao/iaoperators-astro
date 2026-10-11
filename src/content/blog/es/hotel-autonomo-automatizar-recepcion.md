@@ -25,7 +25,7 @@ locale: es
 related:
   - integracion-sistemas-hoteleros
   - preparar-datos-hotel-agentes-ia
-  - automatizar-ventas-mice-hoteles
+  - personalizacion-hotelera-ia-datos-huesped
 author: "Luiz Fernando Brazão"
 authorTitle: "Fundador de IA Operators"
 authorUrl: "https://iaoperators.com/es/autores/luiz-fernando-brazao/"

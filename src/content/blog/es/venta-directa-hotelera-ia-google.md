@@ -23,9 +23,9 @@ about:
     name: "Optimización para motores generativos"
 locale: es
 related:
+  - distribucion-contenido-hotelero-agentes-ia
   - preparar-datos-hotel-agentes-ia
   - integracion-sistemas-hoteleros
-  - automatizar-ventas-mice-hoteles
 author: "Luiz Fernando Brazão"
 authorTitle: "Fundador de IA Operators"
 authorUrl: "https://iaoperators.com/es/autores/luiz-fernando-brazao/"

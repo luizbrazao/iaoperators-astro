@@ -24,7 +24,7 @@ about:
 locale: es
 related:
   - preparar-datos-hotel-agentes-ia
-  - hotel-autonomo-automatizar-recepcion
+  - distribucion-contenido-hotelero-agentes-ia
   - venta-directa-hotelera-ia-google
 author: "Luiz Fernando Brazão"
 authorTitle: "Fundador de IA Operators"
