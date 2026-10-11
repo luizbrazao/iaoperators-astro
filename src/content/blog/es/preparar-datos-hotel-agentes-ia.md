@@ -23,9 +23,9 @@ about:
     name: "Property Management System"
 locale: es
 related:
+  - integracion-sistemas-hoteleros
   - automatizar-ventas-mice-hoteles
   - venta-directa-hotelera-ia-google
-  - auditoria-de-sistemas-tecnologicos
 author: "Luiz Fernando Brazão"
 authorTitle: "Fundador de IA Operators"
 authorUrl: "https://iaoperators.com/es/autores/luiz-fernando-brazao/"
