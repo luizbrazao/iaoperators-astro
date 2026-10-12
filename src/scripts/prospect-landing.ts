@@ -18,6 +18,8 @@
 // nada: los eventos quedan en la cola del dataLayer y GTM los procesa si la
 // persona acepta durante la misma visita.
 
+import { grantConsentBeforeGtm } from "../lib/consent-mode";
+
 type Params = Record<string, unknown>;
 type Win = Window & { dataLayer?: Params[]; __GTM_LOADED__?: boolean };
 
@@ -37,6 +39,7 @@ export function initProspectLanding(opts: { landing: string; gtmId: string; vide
     if (w.__GTM_LOADED__ || !gtmId) return;
     w.__GTM_LOADED__ = true;
     w.dataLayer = w.dataLayer || [];
+    grantConsentBeforeGtm();
     w.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
     const s = document.createElement("script");
     s.async = true;

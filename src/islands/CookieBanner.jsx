@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { getLocale, ui } from "../i18n/ui";
+import { grantConsentBeforeGtm, revokeConsent } from "../lib/consent-mode";
 
 const STORAGE_KEY = "iaoperators_cookie_consent"; // "accepted" | "rejected"
 
@@ -42,6 +43,8 @@ function loadGTM() {
   window.__GTM_LOADED__ = true;
 
   window.dataLayer = window.dataLayer || [];
+  // Consent Mode v2: señales explícitas antes de gtm.js (ver lib/consent-mode).
+  grantConsentBeforeGtm();
   window.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
 
   const script = document.createElement("script");
@@ -120,6 +123,13 @@ export default function CookieBanner({ forceOpen = false, onClose, variant = "da
     writeConsent("rejected");
     setOpen(false);
     onClose?.();
+    // Retirada después de haber aceptado (banner reabierto desde el pie): se
+    // avisa a Google y se recarga para descargar las etiquetas de terceros
+    // (píxeles en HTML personalizado) que ya estaban en la página.
+    if (typeof window !== "undefined" && window.__GTM_LOADED__) {
+      revokeConsent();
+      window.location.reload();
+    }
   };
 
   const privacyHref =
