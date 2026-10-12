@@ -1,0 +1,97 @@
+---
+// Zona protegida del comprador. Server-side en cada petición, noindex.
+//
+// Autorización (src/lib/verifactu-kit/auth.ts): cookie firmada válida Y pedido
+// pagado con acceso activo en Supabase. El contenido de pago solo se importa
+// aquí y solo se entrega a la island cuando la autorización es "ok".
+export const prerender = false;
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import KitWorkspace from "@/islands/KitWorkspace";
+import KitAccessRequest from "@/islands/KitAccessRequest";
+import { KIT_CHANGELOG, KIT_PRODUCT } from "@/data/verifactu-kit";
+import { KIT_ANSWER_LABELS, KIT_CONTENT_SENTINEL, KIT_DISCLAIMER, KIT_MODULES } from "@/data/verifactu-kit-content";
+import { getAuthorizedOrder } from "@/lib/verifactu-kit/auth";
+import { requestIdFrom } from "@/lib/verifactu-kit/log";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-forms.css";
+import "@/styles/editorial-kit.css";
+
+Astro.response.headers.set("cache-control", "private, no-store");
+Astro.response.headers.set("x-robots-tag", "noindex, nofollow");
+Astro.response.headers.set("referrer-policy", "same-origin");
+Astro.response.headers.set("x-frame-options", "DENY");
+
+const requestId = requestIdFrom(Astro.request);
+const auth = await getAuthorizedOrder(Astro.cookies, Astro.url, requestId);
+const estado = Astro.url.searchParams.get("estado") ?? "";
+
+const fmt = (iso: string | null | undefined) =>
+  iso
+    ? new Intl.DateTimeFormat("es-ES", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Madrid" }).format(new Date(iso))
+    : "—";
+
+const MENSAJES: Record<string, string> = {
+  "enlace-invalido": "El enlace no es válido. Pide uno nuevo con el email de tu compra.",
+  "enlace-caducado": "Este enlace ya se usó o ha caducado. Cada enlace sirve una sola vez: pide uno nuevo.",
+  "acceso-no-disponible": "El acceso de este pedido no está activo (por ejemplo, porque se reembolsó o ha terminado el periodo de acceso). Si crees que es un error, escríbenos a info@iaoperators.com.",
+  "demasiados-intentos": "Demasiados intentos seguidos. Espera unos minutos y vuelve a probar.",
+  "no-disponible": "No hemos podido abrir tu acceso ahora mismo. Inténtalo de nuevo en unos minutos.",
+  "sesion-cerrada": "Has cerrado la sesión en este navegador.",
+};
+const mensaje = auth.status === "denied" ? MENSAJES["acceso-no-disponible"] : MENSAJES[estado];
+
+if (auth.status === "unavailable") Astro.response.status = 503;
+---
+
+<BaseLayout
+  title={`Acceso · ${KIT_PRODUCT.shortName} | IA Operators`}
+  description="Zona privada del Kit de Preparación VERI*FACTU."
+  robots="noindex, nofollow"
+  editorial
+>
+  <div class="ed-container">
+    {auth.status === "ok" ? (
+      <>
+        <header class="pg-hero pg-hero-compact">
+          <p class="ed-eyebrow">{KIT_PRODUCT.name}</p>
+          <h1>Tu Kit <span>v{KIT_PRODUCT.version}</span></h1>
+          <p class="pg-lead" style="margin-top:20px">
+            Empieza por el módulo 1 o sigue el plan de 30 días (módulo 8). Lo que escribas se guarda solo
+            en este navegador: imprime o exporta lo que quieras conservar.
+          </p>
+        </header>
+        <div data-kit-content={KIT_CONTENT_SENTINEL}>
+          <KitWorkspace
+            client:load
+            modules={KIT_MODULES}
+            answerLabels={KIT_ANSWER_LABELS}
+            changelog={KIT_CHANGELOG}
+            productVersion={KIT_PRODUCT.version}
+            normativeVerifiedAt={fmt(KIT_PRODUCT.normativeBase.verifiedAt)}
+            accessUntil={fmt(auth.order.access_expires_at)}
+            disclaimer={KIT_DISCLAIMER}
+            auditHref={KIT_PRODUCT.paths.auditoria}
+          />
+        </div>
+      </>
+    ) : (
+      <>
+        <header class="pg-hero pg-hero-compact">
+          <p class="ed-eyebrow">{KIT_PRODUCT.shortName}</p>
+          <h1>Acceso al Kit</h1>
+          {mensaje && <p class="vk-status" role="status">{mensaje}</p>}
+          {auth.status === "unavailable" && (
+            <p class="vk-status" role="status">El acceso no está disponible en este momento. Inténtalo de nuevo en unos minutos.</p>
+          )}
+        </header>
+        <section class="pg-section">
+          <KitAccessRequest client:load />
+          <p class="vk-note" style="margin-top:24px">
+            ¿Aún no lo tienes? <a class="pg-inline-link" href={KIT_PRODUCT.paths.landing}>Ver el Kit</a>.
+          </p>
+        </section>
+      </>
+    )}
+  </div>
+</BaseLayout>

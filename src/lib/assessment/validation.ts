@@ -33,6 +33,14 @@ export function sanitizeAnswersWith(
         errors.push(question.id);
         continue;
       }
+      // Una opción exclusiva ("Nada de lo anterior") combinada con otras es una
+      // respuesta contradictoria. No adivinamos cuál de las dos es la buena:
+      // se rechaza y la island, que ya impide esa combinación, nunca la envía.
+      const exclusive = new Set(question.options.filter((o) => o.exclusive).map((o) => o.value));
+      if (clean.length > 1 && clean.some((v) => exclusive.has(v))) {
+        errors.push(question.id);
+        continue;
+      }
       answers[question.id] = clean;
       continue;
     }

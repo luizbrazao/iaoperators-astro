@@ -1,0 +1,352 @@
+---
+// Landing del Kit de Preparación VERI*FACTU. ES-only, indexable, estática.
+//
+// Posicionamiento: el pilar /verifactu/ habla a quien tiene ERP, TPV,
+// e-commerce o software propio (integración). Esta página habla a autónomos y
+// pymes con software estándar o facturación sencilla: preparación, no
+// integración. Las dos se enlazan, no compiten.
+//
+// Nombre, precio, versión y periodo de actualizaciones salen de
+// src/data/verifactu-kit.ts; fechas, de src/data/verifactu.ts.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import KitCheckoutButton from "@/islands/KitCheckoutButton";
+import { KIT_ACCESS_TEXT, KIT_PRODUCT, KIT_PUBLIC_MODULES } from "@/data/verifactu-kit";
+import { ANUNCIO, CALENDARIO, FACTURA_ELECTRONICA, NORMA } from "@/data/verifactu";
+import { ORG_REF } from "@/data/identidad";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-forms.css";
+import "@/styles/editorial-kit.css";
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const siteRoot = site.replace(/\/$/, "");
+const pageUrl = `${siteRoot}${KIT_PRODUCT.paths.landing}`;
+const pillar = "/es/cumplimiento/verifactu/";
+const P = KIT_PRODUCT;
+
+const meta = {
+  title: "Kit VERI*FACTU para autónomos y pymes | IA Operators",
+  description: `Qué te aplica, qué pedir a tu proveedor y qué documentos conservar antes de cambiar de programa. Producto digital, ${P.price.displayFull}.`,
+};
+
+const paraQuien = [
+  "Autónomos y pequeñas empresas que facturan con un programa estándar, una app o una hoja de cálculo.",
+  "Quien necesita confirmar si su proveedor estará preparado, y en qué versión.",
+  "Quien quiere llegar a la gestoría, al proveedor o a un integrador con la información ordenada.",
+  "Quien está pensando en cambiar de programa y quiere comparar con criterio.",
+];
+
+const paraQuienNo = [
+  "Si tu facturación sale de un ERP propio, un TPV con varias tiendas, un e-commerce a medida o un software vertical que no se puede cambiar: necesitas una auditoría técnica.",
+  "Si buscas un programa que emita facturas o envíe registros a la AEAT: el Kit no lo hace.",
+  "Si quieres un certificado de cumplimiento: el Kit no certifica nada.",
+  "Si estás en el SII o tributas en territorio foral: el reglamento no te aplica. Haz el test gratuito antes.",
+];
+
+const comparativa = [
+  {
+    fila: "Para quién",
+    kit: "Autónomos y pymes con software estándar, app u hoja de cálculo.",
+    auditoria: "Empresas con ERP, TPV, e-commerce o software vertical propio o adaptado.",
+    integracion: "Quien ya sabe que su sistema necesita un módulo de cumplimiento.",
+  },
+  {
+    fila: "Qué obtienes",
+    kit: "Diagnóstico orientativo, preguntas, plantillas, inventario, matriz, dossier y plan de 30 días.",
+    auditoria: "Informe de brecha de tu sistema, modalidad recomendada y alcance cerrado.",
+    integracion: "Conector en producción: registros, cadena de huellas, remisión, QR y registro inalterable.",
+  },
+  {
+    fila: "Quién hace el trabajo",
+    kit: "Tú, con el Kit como guía.",
+    auditoria: "IA Operators, con acceso a tu sistema.",
+    integracion: "IA Operators, sobre tu sistema actual.",
+  },
+  {
+    fila: "Duración",
+    kit: "Acceso inmediato. Plan de 30 días.",
+    auditoria: "3 a 5 días.",
+    integracion: "4 a 7 semanas, según el caso.",
+  },
+  {
+    fila: "Precio",
+    kit: `${P.price.displayFull}.`,
+    auditoria: "Presupuesto cerrado. Se descuenta de la integración.",
+    integracion: "Presupuesto cerrado tras la auditoría.",
+  },
+];
+
+const noHace = [
+  "No es un programa de facturación ni emite facturas.",
+  "No genera registros fiscales ni los envía a la AEAT.",
+  "No certifica que tu sistema cumpla: eso lo declara el productor del sistema.",
+  "No es asesoramiento fiscal: la calificación de tu caso es de tu asesoría.",
+];
+
+const faq = [
+  {
+    q: "¿Qué recibo exactamente al comprar?",
+    a: `Un acceso personal a una zona privada con nueve módulos: el árbol «¿Me aplica?», las preguntas y los emails para tu proveedor y tu gestoría, el inventario de facturación, la matriz de proveedores, el dossier de evidencias, el plan de 30 días y los criterios para saber si necesitas una integración. ${KIT_ACCESS_TEXT}`,
+  },
+  {
+    q: "¿Cómo accedo después de pagar?",
+    a: "Te enviamos un enlace de acceso al email de la compra en cuanto Stripe confirma el pago. El enlace es de un solo uso; si caduca o cambias de dispositivo, pides otro con el mismo email desde la página de acceso. No hay contraseñas.",
+  },
+  {
+    q: "¿Me sirve si mi programa ya dice que cumple VERI*FACTU?",
+    a: "Sí, precisamente para comprobarlo con criterio: qué pedirle por escrito, dónde está la declaración responsable de tu versión, qué pasa con tickets, rectificativas o ventas que llegan de otras herramientas, y qué guardar. Una frase en la web del proveedor no es evidencia.",
+  },
+  {
+    q: "Tengo un ERP propio o un TPV con varias tiendas. ¿Me vale el Kit?",
+    a: "Te sirve para ordenar la información, pero tu caso pide una auditoría técnica: el trabajo está en tu sistema, no en elegir proveedor. Si haces el test gratuito, te lo indicamos según tu respuesta.",
+  },
+  {
+    q: "¿Cambia algo el aplazamiento anunciado a 2028?",
+    a: `Hoy las fechas vigentes son el ${NORMA.fechaSociedadesLegible} (Impuesto sobre Sociedades) y el ${NORMA.fechaRestoLegible} (resto). ${ANUNCIO.texto} El Kit explica las dos y se actualiza cuando se publique la norma. El trabajo de preparación es el mismo con una fecha u otra.`,
+  },
+  {
+    q: "¿Recibo factura?",
+    a: "Sí. El pago se gestiona con Stripe y la factura llega por email. Puedes indicar el NIF de tu empresa durante el pago.",
+  },
+  {
+    q: "¿Puedo devolverlo?",
+    a: "Es contenido digital con acceso inmediato. Al comprar solicitas ese acceso inmediato y, conforme a la normativa de consumo, pierdes el derecho de desistimiento una vez empieza. Si tienes un problema técnico para entrar, escríbenos y lo resolvemos.",
+  },
+  {
+    q: "¿Necesito hacer el test antes de comprar?",
+    a: "No es obligatorio, pero es gratuito, dura dos minutos y te dice si el reglamento te aplica. Si concluye que no, no necesitas el Kit.",
+  },
+];
+
+const productJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": `${pageUrl}#product`,
+  name: P.name,
+  description: P.tagline,
+  sku: `${P.key}-${P.version}`,
+  category: "Producto digital · cumplimiento normativo",
+  brand: { "@type": "Brand", name: "IA Operators" },
+  url: pageUrl,
+  offers: {
+    "@type": "Offer",
+    "@id": `${pageUrl}#offer`,
+    url: pageUrl,
+    price: P.price.amount.toFixed(2),
+    priceCurrency: P.price.currency,
+    priceSpecification: {
+      "@type": "UnitPriceSpecification",
+      price: P.price.amount.toFixed(2),
+      priceCurrency: P.price.currency,
+      valueAddedTaxIncluded: false,
+    },
+    availability: "https://schema.org/InStock",
+    itemCondition: "https://schema.org/NewCondition",
+    seller: ORG_REF,
+    areaServed: "ES",
+  },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${siteRoot}/es/` },
+    { "@type": "ListItem", position: 2, name: "Cumplimiento tecnológico", item: `${siteRoot}/es/cumplimiento/` },
+    { "@type": "ListItem", position: 3, name: "Verifactu", item: `${siteRoot}${pillar}` },
+    { "@type": "ListItem", position: 4, name: "Kit de preparación", item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  jsonLd={[productJsonLd, breadcrumbJsonLd, faqJsonLd]}
+  editorial
+>
+  <div class="ed-container">
+    <header class="pg-hero">
+      <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/es/">Inicio</a></li>
+          <li><a href="/es/cumplimiento/">Cumplimiento</a></li>
+          <li><a href={pillar}>Verifactu</a></li>
+          <li><span aria-current="page">Kit</span></li>
+        </ol>
+      </nav>
+      <h1>Kit de Preparación VERI*FACTU <span>para autónomos y pymes</span></h1>
+      <div class="pg-hero-bottom">
+        <div>
+          <p class="ed-eyebrow">Producto digital · acceso inmediato</p>
+          <div class="vk-price" style="margin-top:12px">
+            <strong>{P.price.display}</strong><span>{P.price.taxNote}</span>
+          </div>
+          <p class="vk-note" style="margin-top:10px">{KIT_ACCESS_TEXT}</p>
+        </div>
+        <div>
+          <p class="pg-lead pg-lead-strong">{P.tagline}</p>
+          <div class="pg-actions" style="margin-top:24px">
+            <KitCheckoutButton client:load trackView />
+            <a class="ed-underlined" href={P.paths.test}>¿Te aplica? Test gratuito de 2 min <span class="ed-arrow" aria-hidden="true">↗</span></a>
+          </div>
+          <p class="vk-cancel" id="vk-cancelled" hidden>
+            Has cancelado el pago. No se ha cobrado nada; puedes volver a intentarlo cuando quieras.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <section class="pg-section" aria-labelledby="incluye-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Qué incluye</p>
+        <div>
+          <h2 id="incluye-title">Nueve módulos para pasar de la duda a la decisión</h2>
+          <div class="pg-prose">
+            <p>
+              Cada módulo tiene un objetivo, una checklist, fuentes oficiales y la fecha de su última
+              revisión normativa. Lo que rellenas se queda en tu navegador; puedes imprimir cada módulo
+              en PDF y descargar las tablas en CSV.
+            </p>
+          </div>
+        </div>
+      </div>
+      <ol class="pg-columns">
+        {KIT_PUBLIC_MODULES.map((m, idx) => (
+          <li><span class="ed-eyebrow">{String(idx + 1).padStart(2, "0")}</span><h3>{m.titulo}</h3><p>{m.resumen}</p></li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="pg-section pg-split" aria-label="Para quién es y para quién no">
+      <div>
+        <p class="ed-eyebrow">Para quién es</p>
+        <h2>Si facturas con software estándar o algo más sencillo</h2>
+        <ul class="pg-checklist">{paraQuien.map((t) => <li>{t}</li>)}</ul>
+      </div>
+      <div>
+        <p class="ed-eyebrow">Para quién no es</p>
+        <h2>Si tu caso es otro, te lo decimos antes</h2>
+        <ul class="pg-checklist">{paraQuienNo.map((t) => <li>{t}</li>)}</ul>
+      </div>
+    </section>
+
+    <section class="pg-section" aria-labelledby="comparativa-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Kit, auditoría o integración</p>
+        <div>
+          <h2 id="comparativa-title">Tres niveles, según dónde esté tu trabajo</h2>
+          <div class="pg-prose">
+            <p>
+              Si tu proveedor hace la parte técnica, te basta con prepararte bien. Si la facturación
+              vive en un sistema propio, el trabajo es técnico y empieza por una auditoría.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="vk-scroll">
+        <table class="vk-compare">
+          <thead>
+            <tr><th scope="col"><span class="vk-sr-only">Criterio</span></th><th scope="col" class="is-kit">Kit</th><th scope="col">Auditoría técnica</th><th scope="col">Integración</th></tr>
+          </thead>
+          <tbody>
+            {comparativa.map((r) => (
+              <tr><th scope="row">{r.fila}</th><td class="is-kit">{r.kit}</td><td>{r.auditoria}</td><td>{r.integracion}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div class="pg-actions" style="margin-top:28px">
+        <a class="ed-underlined" href={P.paths.auditoria} data-vk-audit>Solicitar auditoría técnica <span class="ed-arrow" aria-hidden="true">↗</span></a>
+        <a class="ed-underlined" href={`${pillar}integracion/`}>Cómo es un proyecto de integración <span class="ed-arrow" aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <section class="pg-section" aria-labelledby="calendario-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Calendario</p>
+        <div>
+          <h2 id="calendario-title">Fechas vigentes, sin confundir anuncio con norma</h2>
+          <div class="pg-prose">
+            <p>
+              Hoy están en vigor el <strong>{NORMA.fechaSociedadesLegible}</strong> para contribuyentes del
+              Impuesto sobre Sociedades y el <strong>{NORMA.fechaRestoLegible}</strong> para el resto,
+              autónomos incluidos. {ANUNCIO.texto}
+            </p>
+            <p>
+              La factura electrónica entre empresas es otra obligación: la {FACTURA_ELECTRONICA.orden} entró
+              en vigor el {FACTURA_ELECTRONICA.ordenVigorLegible} y es exigible el
+              {" "}{FACTURA_ELECTRONICA.grandesLegible} para quien supera 8 M€ de volumen de operaciones y el
+              {" "}{FACTURA_ELECTRONICA.restoLegible} para el resto.
+            </p>
+          </div>
+          <p class="pg-source">
+            Base normativa revisada el {CALENDARIO.lastVerifiedAtLegible} en
+            {CALENDARIO.fuentes.map((f, i) => (
+              <>{i > 0 ? (i === CALENDARIO.fuentes.length - 1 ? " y " : ", ") : " "}<a href={f.url} target="_blank" rel="noopener noreferrer">{f.titulo}</a></>
+            ))}.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-section" aria-labelledby="nohace-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Lo que no hace</p>
+        <div>
+          <h2 id="nohace-title">Un kit de preparación, no un programa ni un certificado</h2>
+          <ul class="pg-checklist">{noHace.map((t) => <li>{t}</li>)}</ul>
+          <p class="pg-callout">Completar el Kit no acredita que cumplas el reglamento. Te deja preparado para comprobarlo con quien sí puede: tu proveedor y tu asesoría.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-section pg-faq ed-faq" aria-labelledby="faq-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Preguntas frecuentes</p>
+        <div>
+          <h2 id="faq-title">Antes de comprar</h2>
+          <div class="pg-faq-list">
+            {faq.map((item) => <details><summary>{item.q}</summary><p>{item.a}</p></details>)}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="ed-closing" aria-labelledby="kit-closing-title">
+    <div class="ed-container">
+      <p class="ed-eyebrow">{P.shortName}</p>
+      <h2 id="kit-closing-title" class="pg-closing-title">Empieza hoy por lo que puedes hacer tú</h2>
+      <p class="pg-closing-copy">{P.price.displayFull} · producto digital · {KIT_ACCESS_TEXT}</p>
+      <KitCheckoutButton client:visible />
+      <p class="pg-closing-aside">
+        ¿Ya lo compraste? <a href={P.paths.acceso}>Entra o pide un enlace nuevo</a> ·
+        <a href={P.paths.condiciones}>Condiciones de venta</a>
+      </p>
+      <p class="pg-disclaimer">
+        Material orientativo de preparación. No emite facturas, no envía registros a la AEAT, no
+        certifica el cumplimiento y no constituye asesoramiento fiscal ni jurídico.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { pushKitEvent } from "@/lib/verifactu-kit/analytics";
+  if (new URLSearchParams(window.location.search).get("checkout") === "cancelado") {
+    document.getElementById("vk-cancelled")?.removeAttribute("hidden");
+  }
+  document.querySelectorAll<HTMLAnchorElement>("a[data-vk-audit]").forEach((a) =>
+    a.addEventListener("click", () => pushKitEvent("audit_cta_clicked")),
+  );
+</script>

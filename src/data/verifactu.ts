@@ -1,6 +1,24 @@
 // Datos de la Frente B — integración Verifactu (RRSIF) para sistemas propios y legados.
 // Solo ES: obligación española.
 //
+// FUENTE ÚNICA DEL CALENDARIO. Ningún otro módulo (scoring, emails, Kit, landings)
+// debe escribir fechas del RRSIF o de la factura electrónica a mano: se importan
+// de aquí (NORMA, ANUNCIO, FACTURA_ELECTRONICA, CALENDARIO). Las fechas de la
+// factura electrónica viven en ./factura-electronica.ts y se reexportan.
+//
+// ÚLTIMA VERIFICACIÓN: 2026-10-12 (ver CALENDARIO.lastVerifiedAt y CALENDARIO.fuentes)
+// - BOE-A-2023-24840 (texto consolidado): última actualización 03/12/2025 (RD-ley
+//   15/2025). Sin modificaciones en 2026 → 1/1/2027 y 1/7/2027 siguen vigentes.
+// - Sede AEAT VERI*FACTU (página actualizada 08/10/2026): "Comunicación del
+//   Ministerio de Hacienda de 05/10/2026: Previsión de ampliación del plazo de
+//   adaptación de los SIF". Sigue siendo una previsión, no una norma publicada.
+// - Sede AEAT, calendario de factura electrónica (actualizada 09/10/2026): Orden
+//   HAC/1028/2026 en vigor el 06/10/2026; exigible 06/10/2027 (>8 M€) y
+//   06/10/2028 (resto); comunicación de estados de personas físicas 06/10/2029.
+// - AEAT FAQ (cuestiones generales): las facturas expedidas por sujetos que no
+//   utilizan un sistema informático de facturación quedan fuera; la emisión de
+//   documentos sin obligación de expedir factura, por sí sola, no obliga al RRSIF.
+//
 // FUENTES VERIFICADAS (2026-07-26, ampliadas 2026-08-11). No re-investigar sin motivo:
 // - RD 1007/2023 (RRSIF) + RD-ley 15/2025, de 2 de diciembre (BOE 3/12/2025), que
 //   aplaza la obligatoriedad: 1/1/2027 contribuyentes del Impuesto sobre Sociedades,
@@ -42,6 +60,8 @@
 //   hayan producido ventas; apartado 2 (tenencia de sistemas no conformes) 50.000 € por
 //   ejercicio. Su aplicación al caso concreto corresponde a la asesoría del cliente.
 
+import { FE_NORMA } from "./factura-electronica";
+
 export const NORMA = {
   nombre: "Real Decreto 1007/2023 (Reglamento de sistemas informáticos de facturación)",
   nombreCorto: "Verifactu",
@@ -49,10 +69,15 @@ export const NORMA = {
   boeUrl: "https://www.boe.es/buscar/act.php?id=BOE-A-2023-24840",
   aeatUrl:
     "https://sede.agenciatributaria.gob.es/Sede/iva/sistemas-informaticos-facturacion-verifactu.html",
+  boeId: "BOE-A-2023-24840",
   fechaSociedades: "2027-01-01",
   fechaSociedadesLegible: "1 de enero de 2027",
+  /** Medianoche peninsular (CET en enero). La usa el motor del test. */
+  fechaSociedadesISO: "2027-01-01T00:00:00+01:00",
   fechaResto: "2027-07-01",
   fechaRestoLegible: "1 de julio de 2027",
+  /** Medianoche peninsular (CEST en julio). */
+  fechaRestoISO: "2027-07-01T00:00:00+02:00",
   // La especificación técnica (formato de los registros, servicio de remisión)
   // no vive en el RD sino en la orden de desarrollo, citada por la propia sede
   // electrónica de la AEAT. Los detalles de campos y endpoints se toman de ahí:
@@ -74,16 +99,49 @@ export const ANUNCIO = {
   nuevaFechaLegible: "octubre de 2028",
   nuevaFechaCorta: "2028",
   publicado: false,
+  /** Frase lista para informes y emails. Nunca presenta el anuncio como norma vigente. */
+  texto:
+    "Hacienda anunció el 5 de octubre de 2026 su aplazamiento a octubre de 2028, pendiente de publicación en el BOE.",
 };
 
-/** Factura electrónica obligatoria entre empresas (Ley 18/2022 «Crea y Crece»). */
+/** Factura electrónica obligatoria entre empresas (Ley 18/2022 «Crea y Crece»).
+ *  Derivado de ./factura-electronica.ts para que no haya dos fuentes de fechas. */
 export const FACTURA_ELECTRONICA = {
-  rd: "Real Decreto 238/2026, de 25 de marzo",
-  orden: "Orden HAC/1028/2026",
-  ordenVigorLegible: "6 de octubre de 2026",
-  grandesLegible: "octubre de 2027",
-  restoLegible: "octubre de 2028",
+  rd: FE_NORMA.rd,
+  orden: FE_NORMA.orden,
+  ordenVigorLegible: FE_NORMA.ordenVigorLegible,
+  grandesLegible: FE_NORMA.fechaGrandesLegible,
+  restoLegible: FE_NORMA.fechaRestoLegible,
+  grandes: FE_NORMA.fechaGrandes,
+  resto: FE_NORMA.fechaResto,
 };
+
+/** Metadatos de verificación del calendario. Se muestran en el Kit y en la doc. */
+export const CALENDARIO = {
+  lastVerifiedAt: "2026-10-12",
+  lastVerifiedAtLegible: "12 de octubre de 2026",
+  fuentes: [
+    {
+      titulo: "AEAT · Sistemas Informáticos de Facturación y VERI*FACTU",
+      url: "https://sede.agenciatributaria.gob.es/Sede/iva/sistemas-informaticos-facturacion-verifactu.html",
+      nota: "Página actualizada el 08/10/2026. Recoge la comunicación de Hacienda del 05/10/2026 como previsión de ampliación del plazo.",
+    },
+    {
+      titulo: "AEAT · Calendario de implantación de la factura electrónica",
+      url: "https://sede.agenciatributaria.gob.es/Sede/iva/factura-electronica/calendario-implantacion.html",
+      nota: "Página actualizada el 09/10/2026. Orden HAC/1028/2026 en vigor el 06/10/2026.",
+    },
+    {
+      titulo: "BOE · Real Decreto 1007/2023 (texto consolidado)",
+      url: "https://www.boe.es/buscar/act.php?id=BOE-A-2023-24840",
+      nota: "Última actualización del consolidado: 03/12/2025 (RD-ley 15/2025). Sin cambios publicados en 2026.",
+    },
+  ],
+} as const;
+
+/** Formulación prudente sobre quién es productor. Reutilizada en test, Kit y landings. */
+export const DECLARACION_PRUDENTE =
+  "En desarrollos propios o a medida para uso interno, con frecuencia la empresa puede asumir la condición de productora, pero debe identificarse quién responde de la versión concreta del sistema.";
 
 export const DISCLAIMER =
   "Información técnica sobre implementación de sistemas. No constituye asesoramiento fiscal ni jurídico. La calificación de tu caso concreto y la interpretación del régimen sancionador corresponden a tu asesoría.";
@@ -150,8 +208,8 @@ export const REQUISITOS = [
   {
     norma: "Declaración responsable del productor del sistema informático.",
     sistema:
-      "Documentación del sistema, identificación de versión y declaración responsable del productor. Si el desarrollo es propio, la empresa es también productora y asume la declaración; si lo desarrolló o adaptó un tercero, hay que identificar quién asume esa condición para la versión concreta del sistema.",
-    trampa: "Es el punto que casi nadie ve venir: si mantienes tu ERP propio, sueles ser también tú el productor a efectos de esta declaración, no un proveedor.",
+      "Documentación del sistema, identificación de versión y declaración responsable del productor. En desarrollos propios o a medida para uso interno, con frecuencia la empresa puede asumir la condición de productora, pero debe identificarse quién responde de la versión concreta del sistema, sobre todo si un tercero lo desarrolló o lo adaptó.",
+    trampa: "Es el punto que casi nadie ve venir: si mantienes un ERP propio, es posible que la condición de productor recaiga en tu empresa y no en un proveedor. Conviene aclararlo por escrito para cada versión.",
   },
 ];
 
@@ -286,7 +344,7 @@ export const SHARED = {
       },
       {
         q: "¿Quién firma la declaración responsable si mi software es propio?",
-        a: "Depende de quién sea el productor del sistema para tu versión concreta. Si el desarrollo es propio o a medida para uso interno, la empresa suele ser también la productora y asume la declaración responsable. Si el sistema lo desarrolló o lo adaptó un tercero, hay que identificar quién tiene esa condición para esa versión exacta del sistema. Nosotros documentamos el sistema y su conformidad, y ayudamos a identificar quién firma en cada caso.",
+        a: "Depende de quién sea el productor del sistema para tu versión concreta. En desarrollos propios o a medida para uso interno, con frecuencia la empresa puede asumir la condición de productora. Si el sistema lo desarrolló o lo adaptó un tercero, hay que identificar quién tiene esa condición para esa versión exacta del sistema. Nosotros documentamos el sistema y su conformidad, y ayudamos a identificar quién firma en cada caso.",
       },
       {
         q: "¿VERI*FACTU o NO VERI*FACTU?",
@@ -298,7 +356,7 @@ export const SHARED = {
       },
       {
         q: "¿Esto es lo mismo que la factura electrónica obligatoria?",
-        a: "No. Verifactu nace de la Ley Antifraude y regula cómo tu sistema registra y comunica las facturas. La factura electrónica B2B obligatoria viene de la Ley 18/2022 Crea y Crece y persigue la morosidad. Su reglamento ya está publicado —el Real Decreto 238/2026—, pero la aplicación efectiva queda diferida: 12 meses para quien facture más de 8 M€ y 24 meses para el resto, contados desde la entrada en vigor de una orden ministerial de desarrollo que todavía no se ha publicado. Es decir: la obligación está regulada, la fecha concreta aún no. Son dos proyectos distintos con calendarios distintos, aunque conviene diseñar pensando en los dos.",
+        a: `No. Verifactu nace de la Ley Antifraude y regula cómo tu sistema registra y comunica las facturas. La factura electrónica B2B obligatoria viene de la Ley 18/2022 Crea y Crece y persigue la morosidad. Su reglamento es el ${FE_NORMA.rd} y la ${FE_NORMA.orden} entró en vigor el ${FE_NORMA.ordenVigorLegible}: la emisión y recepción en formato electrónico es exigible desde el ${FE_NORMA.fechaGrandesLegible} para quien supera 8 M€ de volumen de operaciones y desde el ${FE_NORMA.fechaRestoLegible} para el resto. Son dos proyectos distintos con calendarios distintos, aunque conviene diseñar pensando en los dos.`,
       },
       {
         q: "¿Cuánto se tarda en tener el conector en producción?",
@@ -359,8 +417,8 @@ export const CASOS: Record<
         body: "El módulo se acopla en el punto donde la factura queda confirmada, no en cada pantalla. Un solo lugar donde se genera el registro reduce a la mitad la superficie de fallo.",
       },
       {
-        title: "La declaración responsable es tuya",
-        body: "Con desarrollo propio, la certificación de conformidad la firma tu empresa. Documentamos el sistema y la versión para que esa firma esté respaldada.",
+        title: "Quién firma la declaración responsable",
+        body: "En un ERP propio o a medida para uso interno, con frecuencia la empresa puede asumir la condición de productora, pero hay que identificar quién responde de la versión concreta, sobre todo si un tercero hizo adaptaciones. Documentamos el sistema y la versión para que esa firma esté respaldada.",
       },
     ],
     faq: [

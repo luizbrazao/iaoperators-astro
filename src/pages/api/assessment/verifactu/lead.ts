@@ -7,27 +7,14 @@ import {
   isAssessmentStorageError,
   isStorageConfigured,
 } from "@/lib/assessment/storage";
-import { sendAssessmentEmails, type AssessmentBrand } from "@/lib/assessment/email";
+import { sendAssessmentEmails } from "@/lib/assessment/email";
+import { VERIFACTU_BRAND } from "@/lib/assessment/verifactu/brand";
 import type { AssessmentRecord } from "@/lib/assessment/types";
 import { ASSESSMENT_KEY, ASSESSMENT_VERSION } from "@/lib/assessment/verifactu/questions";
 import { isValidEmail, sanitizeAnswers, validateConsent } from "@/lib/assessment/verifactu/validation";
 import { scoreAssessment } from "@/lib/assessment/verifactu/scoring";
 
 export const prerender = false;
-
-// Marca del informe: sin esto los correos saldrían con las cabeceras y el
-// asunto del test de la Ley 10/2025, que es el que fija los valores por defecto.
-const BRAND: AssessmentBrand = {
-  norma: "Verifactu",
-  cabecera: "Verifactu · Informe de cumplimiento",
-  origen:
-    "Resultado generado por reglas deterministas sobre el Real Decreto 1007/2023 y su calendario vigente",
-  // Antes el informe de Verifactu mostraba el plazo de la Ley 10/2025 (28/12/2026).
-  // Oct/2026: fechas vigentes + aplazamiento anunciado, sin cuenta atrás.
-  asuntoObligado: () => "Tu informe de Verifactu: qué le falta a tu sistema",
-  plazoHtml: () =>
-    'Fechas vigentes: <strong style="color:#111827;">1 de enero de 2027</strong> (Impuesto sobre Sociedades) y <strong style="color:#111827;">1 de julio de 2027</strong> (resto). Hacienda anunció el 5 de octubre de 2026 su aplazamiento a <strong style="color:#111827;">octubre de 2028</strong>, pendiente de publicación en el BOE.',
-};
 
 // Rate limit best-effort en memoria, mismo patrón que /api/contact.ts. Este
 // endpoint dispara correos a una dirección que llega del cliente: sin límite,
@@ -72,7 +59,7 @@ export const POST: APIRoute = async ({ request, clientAddress, url }) => {
     }
 
     if (!isStorageConfigured()) {
-      console.error("[assessment/verifactu/lead] storage not configured — lead perdido", { email });
+      console.error("[assessment/verifactu/lead] storage not configured — lead perdido");
       return json(
         {
           error:
@@ -125,7 +112,7 @@ export const POST: APIRoute = async ({ request, clientAddress, url }) => {
     // correos repetidos ni sirva de vector de abuso.
     if (!alreadyHadEmail && fallbackRecord) {
       await sendAssessmentEmails({
-        brand: BRAND,
+        brand: VERIFACTU_BRAND,
         email,
         result: fallbackRecord.result,
         answers: fallbackRecord.answers,
@@ -138,7 +125,6 @@ export const POST: APIRoute = async ({ request, clientAddress, url }) => {
       // para no perder el lead de vista.
       console.warn("[assessment/verifactu/lead] lead sin answers válidas — informe no enviado", {
         responseId,
-        email,
       });
     }
 

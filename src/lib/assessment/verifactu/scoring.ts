@@ -21,16 +21,22 @@ import type {
   RiskLevel,
 } from "../types";
 import { SISTEMA_LABELS } from "./questions";
+// Import relativo (no "@/"): el script de regresión lo ejecuta con tsx fuera de Astro.
+import { ANUNCIO, DECLARACION_PRUDENTE, FACTURA_ELECTRONICA, NORMA } from "../../../data/verifactu";
 
-export const ENGINE_VERSION = "verifactu-2026-10-v2";
+// v3 (oct/2026): exclusión por operaciones sin factura, "papel" fuera del ámbito,
+// "no lo sé" en tributación → probable, declaración responsable prudente, fechas
+// desde la fuente central.
+export const ENGINE_VERSION = "verifactu-2026-10-v3";
 
-/** Fechas del RD-ley 15/2025. Deben coincidir con NORMA en src/data/verifactu.ts.
- *  Oct/2026: Hacienda anunció el aplazamiento a octubre de 2028 (pendiente de
- *  BOE). Estas siguen siendo las fechas vigentes; el titular ya no cuenta días. */
-const ANUNCIO_TEXTO =
-  "Hacienda anunció el 5 de octubre de 2026 su aplazamiento a octubre de 2028, pendiente de publicación en el BOE.";
-const DEADLINE_SOCIEDADES_ISO = "2027-01-01T00:00:00+01:00";
-const DEADLINE_RESTO_ISO = "2027-07-01T00:00:00+02:00";
+/** Fechas vigentes del RD-ley 15/2025, desde la fuente central. El aplazamiento
+ *  a octubre de 2028 está anunciado y no publicado: se menciona, no se aplica. */
+const ANUNCIO_TEXTO = ANUNCIO.texto;
+const DEADLINE_SOCIEDADES_ISO = NORMA.fechaSociedadesISO;
+const DEADLINE_RESTO_ISO = NORMA.fechaRestoISO;
+
+/** Motivo de exclusión, para redactar el informe de quien queda fuera. */
+type MotivoExclusion = "sii" | "foral" | "sin-factura" | "papel";
 
 /**
  * Peso de cada obligación. Pesan más las que, si faltan, invalidan el resto:
@@ -65,6 +71,24 @@ function list(value: unknown): string[] {
   return [String(value)];
 }
 
+/**
+ * Estado declarado del sistema. "nada" es exclusiva: la validación ya rechaza
+ * combinarla con otras opciones, pero si llegara una respuesta contradictoria
+ * el motor se queda con la lectura conservadora (nada montado). Dar por
+ * cubierta una obligación por una respuesta incoherente sería peor que no darla.
+ */
+function estadoSistema(answers: AssessmentAnswers): string[] {
+  const declarado = list(answers.estado);
+  return declarado.includes("nada") ? [] : declarado;
+}
+
+function motivoExclusion(answers: AssessmentAnswers): MotivoExclusion | null {
+  const exclusion = first(answers.exclusion);
+  if (exclusion === "sii" || exclusion === "foral" || exclusion === "sin-factura") return exclusion;
+  if (first(answers.sistema) === "papel") return "papel";
+  return null;
+}
+
 export function diasHastaPlazo(
   tributacion: string,
   now: number = Date.now(),
@@ -75,43 +99,59 @@ export function diasHastaPlazo(
   return Math.max(0, Math.ceil((new Date(iso).getTime() - now) / 86_400_000));
 }
 
-/** Ámbito de aplicación: exclusiones del reglamento primero. */
+/** Ámbito de aplicación: exclusiones del reglamento primero.
+ *
+ *  Regla de prudencia: el test no emite un dictamen fiscal. Cuando falta un dato
+ *  que podría cambiar el ámbito ("no lo sé"), el veredicto es "probable" y se
+ *  remite a la asesoría; nunca "si" ni "no".
+ */
 function evaluarObligacion(answers: AssessmentAnswers): {
   obligado: ObligadoVerdict;
   motivo: string;
 } {
   const exclusion = first(answers.exclusion);
   const tributacion = first(answers.tributacion);
+  const fechas = `${NORMA.fechaSociedadesLegible} para contribuyentes del Impuesto sobre Sociedades y ${NORMA.fechaRestoLegible} para el resto`;
 
-  if (exclusion === "sii") {
-    return {
-      obligado: "no",
-      motivo:
-        "Quien lleva los libros registro de IVA a través de la sede electrónica de la AEAT (SII) queda excluido del reglamento. Si el SII cubre toda tu facturación, Verifactu no te aplica y no necesitas hacer nada.",
-    };
-  }
-
-  if (exclusion === "foral") {
-    return {
-      obligado: "no",
-      motivo:
-        "El reglamento alcanza a quienes tributan en territorio español de régimen común. País Vasco y Navarra quedan fuera, con normativa foral propia — TicketBAI y equivalentes —, que tiene sus propias exigencias y plazos.",
-    };
+  switch (motivoExclusion(answers)) {
+    case "sii":
+      return {
+        obligado: "no",
+        motivo:
+          "Quien lleva los libros registro de IVA a través de la sede electrónica de la AEAT (SII) queda excluido del reglamento. Si el SII cubre toda tu facturación, Verifactu no te aplica. Confírmalo con tu asesoría si solo una parte de la actividad está en el SII.",
+      };
+    case "foral":
+      return {
+        obligado: "no",
+        motivo:
+          "El reglamento alcanza a quienes tributan en territorio español de régimen común. País Vasco y Navarra quedan fuera, con normativa foral propia — TicketBAI y equivalentes —, que tiene sus propias exigencias y plazos.",
+      };
+    case "sin-factura":
+      return {
+        obligado: "no",
+        motivo:
+          "La obligación se mide por operación: lo que no debe documentarse en factura queda fuera del reglamento. Si ninguna de tus operaciones obliga a expedir factura (tampoco simplificada, como un ticket), Verifactu no te alcanza. Es una conclusión delicada: confírmala con tu asesoría.",
+      };
+    case "papel":
+      return {
+        obligado: "no",
+        motivo: `El reglamento regula los sistemas informáticos de facturación. Si todas tus facturas se expiden a mano, en papel y sin ningún programa, hoy no te obliga a usar uno. En cuanto factures con cualquier programa, hoja de cálculo incluida, pasa a aplicarte. Y si tus clientes son empresas o profesionales, la factura electrónica B2B será exigible desde el ${FACTURA_ELECTRONICA.restoLegible} (desde el ${FACTURA_ELECTRONICA.grandesLegible} si superas 8 M€ de volumen de operaciones).`,
+      };
+    default:
+      break;
   }
 
   if (exclusion === "no-lo-se") {
     return {
       obligado: "probable",
-      motivo:
-        "Con la información dada, lo más probable es que te aplique: las dos exclusiones relevantes son estar en el SII o tributar en territorio foral, y ninguna es fácil de tener sin saberlo. Conviene confirmarlo con tu asesoría antes de planificar.",
+      motivo: `Con la información dada, lo más probable es que te aplique: las exclusiones son estar en el SII, tributar en territorio foral o no tener operaciones que obliguen a facturar, y ninguna es fácil de tener sin saberlo. Confírmalo con tu asesoría antes de planificar. Fechas vigentes: ${fechas}. ${ANUNCIO_TEXTO}`,
     };
   }
 
   if (tributacion === "no-lo-se") {
     return {
-      obligado: "si",
-      motivo:
-        `Te aplica. La forma de tributación solo cambia la fecha vigente: 1 de enero de 2027 para contribuyentes del Impuesto sobre Sociedades y 1 de julio de 2027 para el resto. ${ANUNCIO_TEXTO}`,
+      obligado: "probable",
+      motivo: `Lo más probable es que te aplique, pero sin saber cómo tributas no podemos decir en qué fecha ni descartar supuestos especiales (por ejemplo, entidades exentas del Impuesto sobre Sociedades). Fechas vigentes: ${fechas}. ${ANUNCIO_TEXTO} Confírmalo con tu asesoría.`,
     };
   }
 
@@ -119,14 +159,14 @@ function evaluarObligacion(answers: AssessmentAnswers): {
     obligado: "si",
     motivo:
       tributacion === "irpf"
-        ? `Te aplica, con fecha vigente 1 de julio de 2027 por tributar en IRPF. ${ANUNCIO_TEXTO}`
-        : `Te aplica, con fecha vigente 1 de enero de 2027 por ser contribuyente del Impuesto sobre Sociedades. ${ANUNCIO_TEXTO}`,
+        ? `Con lo que nos cuentas, te aplica, con fecha vigente ${NORMA.fechaRestoLegible} por tributar en IRPF. ${ANUNCIO_TEXTO}`
+        : `Con lo que nos cuentas, te aplica, con fecha vigente ${NORMA.fechaSociedadesLegible} por ser contribuyente del Impuesto sobre Sociedades. ${ANUNCIO_TEXTO}`,
   };
 }
 
 /** Obligación 1: un registro de alta por factura y de anulación por anulación. */
 function evaluarRegistro(answers: AssessmentAnswers): GapEvaluation {
-  const estado = list(answers.estado);
+  const estado = estadoSistema(answers);
   const sistema = first(answers.sistema);
   const tiene = estado.includes("registro");
 
@@ -147,7 +187,7 @@ function evaluarRegistro(answers: AssessmentAnswers): GapEvaluation {
       obligacion: "Registro de facturación de alta y de anulación por cada factura",
       estado: "gap",
       detalle:
-        "Facturar con hojas de cálculo o plantillas no permite generar el registro exigido. Aquí el trabajo no es adaptar: es dotarse de un sistema de facturación que cumpla.",
+        "Una hoja de cálculo o una plantilla con la que se expiden facturas no genera el registro exigido. Aquí el trabajo no es adaptar: es elegir un programa de facturación cuyo productor declare la conformidad con el reglamento.",
       derivadoDe: ["estado", "sistema"],
     };
   }
@@ -164,7 +204,7 @@ function evaluarRegistro(answers: AssessmentAnswers): GapEvaluation {
 
 /** Obligación 2: encadenamiento por huella. */
 function evaluarEncadenamiento(answers: AssessmentAnswers): GapEvaluation {
-  const estado = list(answers.estado);
+  const estado = estadoSistema(answers);
   const series = first(answers.series);
   const puntos = first(answers.puntos_emision);
   const tiene = estado.includes("encadenamiento");
@@ -217,13 +257,13 @@ function evaluarEncadenamiento(answers: AssessmentAnswers): GapEvaluation {
 
 /** Obligación 3: remisión a la AEAT (modalidad VERI*FACTU) o exigencias locales. */
 function evaluarRemision(answers: AssessmentAnswers): GapEvaluation {
-  const estado = list(answers.estado);
+  const estado = estadoSistema(answers);
   const conectividad = first(answers.conectividad);
   const tiene = estado.includes("remision");
 
   const modalidad =
     conectividad === "offline"
-      ? "Con puntos que trabajan offline con normalidad, la modalidad VERI*FACTU es inviable: toca sistema no verificable, con firma electrónica, registro de eventos, verificación de integridad y gestión de alarmas."
+      ? "Con puntos que trabajan sin conexión con normalidad, VERI*FACTU sigue siendo posible gestionando incidencias y reintentos, pero si trabajar offline es la norma y no la excepción conviene valorar NO VERI*FACTU, que exige firma electrónica, registro de eventos, verificación de integridad y gestión de alarmas."
       : conectividad === "intermitente"
         ? "Con algún punto de conectividad poco fiable, VERI*FACTU sigue siendo posible si la cola tolera cortes largos. Es una decisión de diseño, no de preferencia."
         : "Con conectividad estable, la modalidad VERI*FACTU suele ser el camino más barato: remite en el momento y te ahorra las exigencias locales de firma, eventos y alarmas.";
@@ -260,7 +300,7 @@ function evaluarRemision(answers: AssessmentAnswers): GapEvaluation {
 
 /** Obligación 4: QR verificable y mención en todas las plantillas. */
 function evaluarQr(answers: AssessmentAnswers): GapEvaluation {
-  const estado = list(answers.estado);
+  const estado = estadoSistema(answers);
   const sistema = first(answers.sistema);
   const tiene = estado.includes("qr");
 
@@ -289,7 +329,7 @@ function evaluarQr(answers: AssessmentAnswers): GapEvaluation {
 
 /** Obligación 5: integridad, conservación e inalterabilidad. */
 function evaluarInalterable(answers: AssessmentAnswers): GapEvaluation {
-  const estado = list(answers.estado);
+  const estado = estadoSistema(answers);
   const tiene = estado.includes("inalterable");
 
   if (tiene) {
@@ -323,8 +363,7 @@ function evaluarDeclaracion(answers: AssessmentAnswers): GapEvaluation {
       id: "declaracion",
       obligacion: "Declaración responsable del sistema informático de facturación",
       estado: "gap",
-      detalle:
-        "Con software propio o a medida para uso interno, el productor del sistema eres tú: la declaración responsable la firma tu empresa, no un proveedor. Es el punto que casi nadie ve venir y el que más veces se descubre tarde.",
+      detalle: `${DECLARACION_PRUDENTE} Si un tercero desarrolló o adaptó el sistema, hay que dejar por escrito quién la firma. Es el punto que casi nadie ve venir y el que más veces se descubre tarde.`,
       derivadoDe: ["sistema"],
     };
   }
@@ -369,6 +408,80 @@ function nivelRiesgo(score: number, max: number): RiskLevel {
   return "bajo";
 }
 
+const AMBITO_DETALLE: Record<MotivoExclusion, string> = {
+  sii: "Quedas fuera del RRSIF por estar en el SII, así que las obligaciones de registro, encadenamiento, remisión, QR e inalterabilidad no te alcanzan. Esto no valora si tu facturación es buena o mala: valora si esta norma concreta te obliga.",
+  foral:
+    "Quedas fuera del RRSIF por tributar en territorio foral. Tus obligaciones de facturación las fija la normativa foral (TicketBAI y equivalentes), que este test no evalúa.",
+  "sin-factura":
+    "Si ninguna operación obliga a expedir factura, no hay registros que generar. Revísalo cada vez que cambie tu actividad: basta una operación con factura para que el reglamento te alcance en ella.",
+  papel:
+    "Sin sistema informático de facturación no hay registro que generar. La obligación nace cuando empiezas a facturar con un programa, incluida una hoja de cálculo.",
+};
+
+const AMBITO_PRIORIDADES: Record<MotivoExclusion, string[]> = {
+  sii: [
+    "Confirmar con tu asesoría que la exclusión cubre toda tu facturación, no solo una parte.",
+    "Si en algún momento salís del SII, revisar esta conclusión.",
+  ],
+  foral: [
+    "Confirmar con tu asesoría qué normativa foral te aplica y en qué plazos.",
+    "Si cambia el domicilio fiscal, revisar esta conclusión.",
+  ],
+  "sin-factura": [
+    "Confirmar con tu asesoría que ninguna operación exige factura, tampoco simplificada.",
+    "Revisar la conclusión si incorporas actividades o clientes nuevos.",
+  ],
+  papel: [
+    "Si vas a pasar a facturar con un programa, elegir uno cuyo productor declare la conformidad con el RRSIF para la versión que instales.",
+    "Si facturas a empresas o profesionales, planificar la factura electrónica B2B con tu asesoría.",
+  ],
+};
+
+/**
+ * Con software estándar u hojas de cálculo, el usuario no va a construir
+ * nada: el trabajo es exigírselo a su proveedor o elegir un programa que lo
+ * haga. Los textos de ingeniería (colas, append-only) no le sirven, así que
+ * para esos dos perfiles se sustituye el detalle de cada brecha.
+ */
+const DETALLE_SIN_DESARROLLO: Record<"estandar" | "manual", Partial<Record<string, string>>> = {
+  estandar: {
+    registro:
+      "Es tarea del programa: debe generar un registro por cada factura y por cada anulación en el momento de emitirla. Pide a tu proveedor que te confirme por escrito que su versión conforme lo hace en todas las vías por las que facturas.",
+    encadenamiento:
+      "El programa debe encadenar los registros por huella. Si facturas desde varios puestos o tiendas, pregunta a tu proveedor cómo lo resuelve.",
+    remision:
+      "En modalidad VERI*FACTU el programa envía los registros a la AEAT; en NO VERI*FACTU los firma y lleva un registro de eventos. Pregunta a tu proveedor qué modalidad ofrece y qué pasa si no hay conexión.",
+    inalterable:
+      "El programa debe impedir que los registros se modifiquen y permitir exportarlos. Pide a tu proveedor que te explique cómo lo hace y cómo los exportarías si cambias de programa.",
+    qr: "Las facturas deben llevar el QR y, en VERI*FACTU, la mención correspondiente. Cuando tengas la versión conforme, comprueba cada formato (PDF, ticket, email) leyendo el QR con el móvil.",
+  },
+  manual: {
+    encadenamiento:
+      "Una hoja de cálculo no puede encadenar registros. Lo hará el programa de facturación que elijas: compruébalo antes de contratarlo.",
+    remision:
+      "Una hoja de cálculo no envía registros a la AEAT ni lleva registro de eventos. El programa que elijas debe hacerlo, en modalidad VERI*FACTU o NO VERI*FACTU.",
+    inalterable:
+      "Una hoja de cálculo se puede editar en cualquier momento, así que no sirve como registro inalterable. El programa que elijas debe garantizarlo y permitir exportar los registros.",
+    qr: "Las facturas deberán llevar el QR y, en VERI*FACTU, la mención correspondiente. Será el programa que elijas el que lo genere: compruébalo con una factura de prueba.",
+  },
+};
+
+const PRIORIDADES_SIN_DESARROLLO: Record<"estandar" | "manual", string[]> = {
+  estandar: [
+    "Pedir a tu proveedor la declaración responsable de la versión que usas y la fecha de la versión conforme.",
+    "Confirmar que todas las vías por las que facturas (tickets, tienda online, integraciones) pasan por el programa.",
+    "Preguntar qué modalidad ofrece (VERI*FACTU o NO VERI*FACTU) y qué ocurre si no hay conexión.",
+    "Revisar con tu proveedor cómo gestiona series, anulaciones y rectificativas.",
+    "Cuando tengas la versión conforme, comprobar el QR en cada formato de factura.",
+  ],
+  manual: [
+    "Elegir un programa de facturación cuyo productor declare la conformidad con el reglamento para la versión que instales.",
+    "Hacer inventario de tus series y de cómo anulas y rectificas hoy, para cambiar de herramienta sin perder la numeración.",
+    "Confirmar con tu asesoría la fecha que te aplica y la modalidad que tiene sentido para ti.",
+    "Comprobar con una factura de prueba que el programa elegido genera el QR y la mención.",
+  ],
+};
+
 function construirTitular(
   obligado: ObligadoVerdict,
   riskLevel: RiskLevel,
@@ -377,6 +490,9 @@ function construirTitular(
 ): string {
   if (obligado === "no") {
     return "Por lo que nos cuentas, Verifactu no te aplica";
+  }
+  if (obligado === "probable") {
+    return "Lo más probable es que te aplique: confírmalo y empieza por lo que falta";
   }
 
   if (viabilidad === "caja-negra") {
@@ -400,12 +516,21 @@ function construirPrioridades(
   obligado: ObligadoVerdict,
   viabilidad: string,
   series: string,
+  exclusion: MotivoExclusion | null,
+  sistema: string,
 ): string[] {
   if (obligado === "no") {
-    return [
-      "Confirmar con tu asesoría que la exclusión cubre toda tu facturación, no solo una parte.",
-      "Si en algún momento salís del SII o cambia el domicilio fiscal, revisar esta conclusión.",
-    ];
+    return AMBITO_PRIORIDADES[exclusion ?? "sii"];
+  }
+  if (sistema === "estandar" || sistema === "manual") {
+    // Todo cubierto con software estándar: queda acreditarlo, no construir.
+    if (sistema === "estandar" && gaps.every((g) => g.estado === "ok")) {
+      return [
+        "Guardar la declaración responsable de tu versión y una factura de cada formato con el QR.",
+        "Revisar cada actualización del programa: la conformidad se declara por versión.",
+      ];
+    }
+    return PRIORIDADES_SIN_DESARROLLO[sistema];
   }
 
   const acciones: Record<string, string> = {
@@ -475,6 +600,7 @@ export function scoreAssessment(
   const series = first(answers.series);
 
   const { obligado, motivo } = evaluarObligacion(answers);
+  const exclusion = motivoExclusion(answers);
 
   // Si el reglamento no aplica, no hay obligaciones que incumplir. Listar seis
   // brechas en rojo bajo un titular que dice "no te aplica" sería contradictorio
@@ -487,9 +613,8 @@ export function scoreAssessment(
             id: "ambito",
             obligacion: "Ámbito de aplicación del reglamento",
             estado: "ok",
-            detalle:
-              "Quedas fuera del RRSIF, así que las obligaciones de registro, encadenamiento, remisión, QR e inalterabilidad no te alcanzan. Esto no valora si tu facturación es buena o mala: valora si esta norma concreta te obliga.",
-            derivadoDe: ["exclusion"],
+            detalle: AMBITO_DETALLE[exclusion ?? "sii"],
+            derivadoDe: exclusion === "papel" ? ["sistema"] : ["exclusion"],
           },
         ]
       : [
@@ -500,6 +625,13 @@ export function scoreAssessment(
           evaluarQr(answers),
           evaluarDeclaracion(answers),
         ];
+
+  if ((sistema === "estandar" || sistema === "manual") && obligado !== "no") {
+    for (const g of gaps) {
+      const texto = DETALLE_SIN_DESARROLLO[sistema][g.id];
+      if (texto && g.estado !== "ok") g.detalle = texto;
+    }
+  }
 
   // El `?? 0` no es defensivo por costumbre: el ítem sintético "ambito" que se
   // devuelve a quien está excluido no tiene peso en WEIGHTS, y sin esto el score
@@ -528,7 +660,7 @@ export function scoreAssessment(
     riskLevel,
     diasRestantes,
     titular: construirTitular(obligado, riskLevel, diasRestantes, viabilidad),
-    prioridades: construirPrioridades(gaps, obligado, viabilidad, series),
+    prioridades: construirPrioridades(gaps, obligado, viabilidad, series, exclusion, sistema),
     engineVersion: ENGINE_VERSION,
   };
 }

@@ -11,6 +11,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Assessment from "@/islands/Assessment";
 import "@/styles/editorial-pages.css";
 import "@/styles/editorial-forms.css";
+import "@/styles/editorial-kit.css";
 import { QUESTIONS } from "@/lib/assessment/verifactu/questions";
 import { NORMA, DISCLAIMER, ANUNCIO } from "@/data/verifactu";
 
@@ -80,7 +81,7 @@ const webPageJsonLd = {
       <div class="pg-hero-bottom">
         <p class="ed-eyebrow">Test · 8 preguntas · 2 min</p>
         <p class="pg-lead">
-          Ocho preguntas. Empezamos por si te aplica —hay dos supuestos que te dejan fuera— y
+          Ocho preguntas. Empezamos por si te aplica —hay supuestos que te dejan fuera— y
           seguimos con lo que exige el reglamento, obligación por obligación. Fechas vigentes:
           {" "}{NORMA.fechaSociedadesLegible} y {NORMA.fechaRestoLegible}; Hacienda anunció el
           {" "}{ANUNCIO.fechaLegible} su aplazamiento a {ANUNCIO.nuevaFechaLegible}, pendiente del BOE.
@@ -98,13 +99,16 @@ const webPageJsonLd = {
           legalNote="Resultado orientativo generado por reglas deterministas sobre el Real Decreto 1007/2023 y su calendario vigente"
           analyticsKey="verifactu"
           leadSource="Test_Verifactu"
+          leadPitch="El detalle por obligación, la documentación que conviene pedir o conservar para cada pieza y el orden recomendado."
+          offer="verifactu-kit"
         />
       </div>
       <aside class="as-notes" aria-label="Cómo funciona el test">
         <div>
           <h2>Te decimos si NO te aplica</h2>
-          <p>Si estás en el SII o tributas en territorio foral, el test termina ahí y no hay
-            proyecto. Un diagnóstico que siempre concluye «necesitas ayuda» no es un diagnóstico.</p>
+          <p>Si estás en el SII, tributas en territorio foral, no tienes operaciones que obliguen
+            a facturar o facturas solo en papel, el test lo dice y no te vende nada. Un diagnóstico
+            que siempre concluye «necesitas ayuda» no es un diagnóstico.</p>
         </div>
         <div>
           <h2>Reglas, no adivinanzas</h2>

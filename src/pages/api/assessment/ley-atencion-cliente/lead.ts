@@ -8,6 +8,7 @@ import {
   isStorageConfigured,
 } from "@/lib/assessment/storage";
 import { sendAssessmentEmails } from "@/lib/assessment/email";
+import { SAC_BRAND } from "@/lib/assessment/sac/brand";
 import type { AssessmentRecord } from "@/lib/assessment/types";
 import { ASSESSMENT_KEY, ASSESSMENT_VERSION } from "@/lib/assessment/sac/questions";
 import { isValidEmail, sanitizeAnswers, validateConsent } from "@/lib/assessment/sac/validation";
@@ -58,7 +59,7 @@ export const POST: APIRoute = async ({ request, clientAddress, url }) => {
     }
 
     if (!isStorageConfigured()) {
-      console.error("[assessment/sac/lead] storage not configured — lead perdido", { email });
+      console.error("[assessment/sac/lead] storage not configured — lead perdido");
       return json(
         {
           error:
@@ -111,6 +112,7 @@ export const POST: APIRoute = async ({ request, clientAddress, url }) => {
     // correos repetidos ni sirva de vector de abuso.
     if (!alreadyHadEmail && fallbackRecord) {
       await sendAssessmentEmails({
+        brand: SAC_BRAND,
         email,
         result: fallbackRecord.result,
         answers: fallbackRecord.answers,
@@ -123,7 +125,6 @@ export const POST: APIRoute = async ({ request, clientAddress, url }) => {
       // para no perder el lead de vista.
       console.warn("[assessment/sac/lead] lead sin answers válidas — informe no enviado", {
         responseId,
-        email,
       });
     }
 

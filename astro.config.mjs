@@ -33,6 +33,12 @@ const NOINDEX_PATHS = [
   "/desafio-de-60-dias/",
   // Landings personalizadas de prospección (QR en tarjeta)
   "/tis/",
+  // Kit de Preparación VERI*FACTU: zonas privadas y página legal de apoyo.
+  // (gracias/ y acceso/ son server-side y no entran en el sitemap; se listan
+  // igualmente por si algún día se prerenderizan.)
+  "/es/cumplimiento/verifactu/kit/gracias/",
+  "/es/cumplimiento/verifactu/kit/acceso/",
+  "/es/cumplimiento/verifactu/kit/condiciones/",
 ];
 
 export default defineConfig({

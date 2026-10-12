@@ -51,18 +51,27 @@ const TRATAMIENTOS_ES: Tratamiento[] = [
     base: "Interés legítimo en mantener el sitio seguro y operativo (art. 6.1.f RGPD).",
     plazo: "El periodo breve que fija el proveedor de alojamiento para sus registros.",
   },
+  {
+    titulo: "Compra del Kit de Preparación VERI*FACTU",
+    datos: "Email, nombre y, si los indicas, empresa, NIF y dirección de facturación (los recoge Stripe en el pago); identificadores del pedido y del pago; importe; fecha de acceso; y, si llegas desde el test, el identificador de tu resultado (no las respuestas). No vemos ni guardamos los datos de tu tarjeta.",
+    finalidad: "Cobrar, emitir la factura, darte acceso al Kit con enlaces de un solo uso y enviarte los emails necesarios para el pago y el acceso. Comprar no te suscribe a comunicaciones comerciales.",
+    base: "Ejecución del contrato de compra (art. 6.1.b RGPD) y cumplimiento de obligaciones fiscales y contables (art. 6.1.c).",
+    plazo: "Mientras dure el acceso y después durante los plazos legales de conservación de la documentación contable y fiscal (6 años).",
+  },
 ];
 
 const PROVEEDORES_ES: Proveedor[] = [
   { nombre: "Vercel Inc.", uso: "Alojamiento del sitio y ejecución de los formularios.", ubicacion: "Estados Unidos · encargado del tratamiento" },
   { nombre: "Supabase Inc.", uso: "Base de datos de los tests y de la encuesta.", ubicacion: "Servidores en la Unión Europea · encargado del tratamiento" },
-  { nombre: "Resend (Plus Five Five, Inc.)", uso: "Envío de los correos del formulario de contacto y de los informes de los tests.", ubicacion: "Estados Unidos · encargado del tratamiento" },
+  { nombre: "Resend (Plus Five Five, Inc.)", uso: "Envío de los correos del formulario de contacto, de los informes de los tests y de los enlaces de acceso del Kit.", ubicacion: "Estados Unidos · encargado del tratamiento" },
+  { nombre: "Stripe Payments Europe, Ltd.", uso: "Pago y facturación del Kit de Preparación VERI*FACTU.", ubicacion: "Irlanda (UE) · encargado del tratamiento para el cobro" },
   { nombre: "Google (Gmail)", uso: "Bandeja en la que se reciben y gestionan los mensajes enviados a info@iaoperators.com.", ubicacion: "Estados Unidos y UE" },
   { nombre: "Google, Meta, LinkedIn y Ahrefs", uso: "Medición y publicidad, solo si aceptas las cookies. Detalle en el apartado 7.", ubicacion: "UE y Estados Unidos · ver apartado 7" },
 ];
 
 const COOKIES_ES: CookieItem[] = [
   { nombre: "Preferencia de cookies (propia)", uso: "Recuerda si aceptaste o rechazaste el aviso. Se guarda en el almacenamiento local del navegador. Técnica, no requiere consentimiento.", detalle: "Clave iaoperators_cookie_consent · hasta que la borres" },
+  { nombre: "Sesión del Kit (propia)", uso: "Mantiene abierta tu sesión en la zona privada del Kit tras usar el enlace de acceso. Solo existe si has comprado y entrado. Técnica, no requiere consentimiento.", detalle: "__Host-vfk_session · hasta 30 días o hasta que cierres sesión" },
   { nombre: "Google Tag Manager (Google Ireland Ltd.)", uso: "Gestor que carga el resto de etiquetas tras tu consentimiento. No instala cookies propias.", detalle: "Solo tras aceptar" },
   { nombre: "Google Analytics 4 (Google Ireland Ltd.)", uso: "Medición de audiencia: páginas vistas, origen de las visitas y conversiones.", detalle: "Analítica · _ga, _ga_* · hasta 2 años" },
   { nombre: "Google Ads (Google Ireland Ltd.)", uso: "Medición de conversiones de anuncios y listas de remarketing.", detalle: "Publicidad · _gcl_au · 90 días" },
@@ -72,7 +81,7 @@ const COOKIES_ES: CookieItem[] = [
 ];
 
 const ES = {
-  "updated": "Última actualización · 8 de octubre de 2026",
+  "updated": "Última actualización · 12 de octubre de 2026",
   "lead": "Qué datos personales tratamos en iaoperators.com, para qué, con qué base legal, durante cuánto tiempo, con quién se comparten y cómo puedes ejercer tus derechos. Esta política cumple el deber de información del Reglamento (UE) 2016/679 (RGPD) y de la Ley Orgánica 3/2018 (LOPDGDD).",
   "labels": {
     "holder": "Titular",
@@ -145,7 +154,7 @@ export type PoliticaCopy = typeof ES & { tratamientos: Tratamiento[]; proveedore
 export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
   es: { ...ES, tratamientos: TRATAMIENTOS_ES, proveedores: PROVEEDORES_ES, cookies: COOKIES_ES },
   en: {
-    "updated": "Last updated · 8 October 2026",
+    "updated": "Last updated · 12 October 2026",
     "lead": "What personal data we process on iaoperators.com, why, on what legal basis, for how long, who it is shared with and how you can exercise your rights. This policy meets the information duty under Regulation (EU) 2016/679 (GDPR) and Spanish Organic Law 3/2018 (LOPDGDD).",
     "labels": {
       "holder": "Owner",
@@ -239,6 +248,13 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
         "finalidad": "To serve the site, detect errors and prevent attacks.",
         "base": "Legitimate interest in keeping the site secure and running (art. 6.1.f GDPR).",
         "plazo": "The short period set by the hosting provider for its logs."
+      },
+      {
+        "titulo": "Purchase of the VERI*FACTU Preparation Kit",
+        "datos": "Email, name and, if you provide them, company, tax ID and billing address (collected by Stripe at checkout); order and payment identifiers; amount; access date; and, if you came from the test, the identifier of your result (not your answers). We never see or store your card details.",
+        "finalidad": "To charge you, issue the invoice, give you access to the Kit through single-use links and send the emails needed for payment and access. Buying does not subscribe you to marketing communications.",
+        "base": "Performance of the purchase contract (art. 6.1.b GDPR) and compliance with tax and accounting obligations (art. 6.1.c).",
+        "plazo": "While access lasts and then for the legal retention periods for accounting and tax records (6 years)."
       }
     ],
     "proveedores": [
@@ -253,8 +269,13 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
         "ubicacion": "Servers in the European Union · processor"
       },
       {
+        "nombre": "Stripe Payments Europe, Ltd.",
+        "uso": "Payment and invoicing for the VERI*FACTU Preparation Kit.",
+        "ubicacion": "Ireland (EU) · processor for payments"
+      },
+      {
         "nombre": "Resend (Plus Five Five, Inc.)",
-        "uso": "Sending the contact form emails and the test reports.",
+        "uso": "Sending the contact form emails, the test reports and the Kit access links.",
         "ubicacion": "United States · processor"
       },
       {
@@ -273,6 +294,11 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
         "nombre": "Cookie preference (first-party)",
         "uso": "Remembers whether you accepted or rejected the notice. Stored in the browser's local storage. Technical, does not require consent.",
         "detalle": "Key iaoperators_cookie_consent · until you delete it"
+      },
+      {
+        "nombre": "Kit session (first-party)",
+        "uso": "Keeps you signed in to the private Kit area after you use the access link. Only exists if you bought and signed in. Technical, does not require consent.",
+        "detalle": "__Host-vfk_session · up to 30 days or until you sign out"
       },
       {
         "nombre": "Google Tag Manager (Google Ireland Ltd.)",
@@ -307,7 +333,7 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
     ]
   },
   pt: {
-    "updated": "Última atualização · 8 de outubro de 2026",
+    "updated": "Última atualização · 12 de outubro de 2026",
     "lead": "Quais dados pessoais tratamos em iaoperators.com, para quê, com que base legal, por quanto tempo, com quem são compartilhados e como você pode exercer seus direitos. Esta política cumpre o dever de informação do Regulamento (UE) 2016/679 (RGPD) e da Lei Orgânica espanhola 3/2018 (LOPDGDD).",
     "labels": {
       "holder": "Titular",
@@ -401,6 +427,13 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
         "finalidad": "Servir o site, detectar erros e prevenir ataques.",
         "base": "Interesse legítimo em manter o site seguro e funcionando (art. 6.1.f do RGPD).",
         "plazo": "O prazo curto definido pelo provedor de hospedagem para seus registros."
+      },
+      {
+        "titulo": "Compra do Kit de Preparação VERI*FACTU",
+        "datos": "E-mail, nome e, se você informar, empresa, número fiscal e endereço de cobrança (coletados pela Stripe no pagamento); identificadores do pedido e do pagamento; valor; data de acesso; e, se você veio do teste, o identificador do seu resultado (não as respostas). Não vemos nem guardamos os dados do seu cartão.",
+        "finalidad": "Cobrar, emitir a fatura, dar acesso ao Kit com links de uso único e enviar os e-mails necessários para o pagamento e o acesso. Comprar não inscreve você em comunicações comerciais.",
+        "base": "Execução do contrato de compra (art. 6.1.b do RGPD) e cumprimento de obrigações fiscais e contábeis (art. 6.1.c).",
+        "plazo": "Enquanto durar o acesso e depois durante os prazos legais de conservação da documentação contábil e fiscal (6 anos)."
       }
     ],
     "proveedores": [
@@ -415,8 +448,13 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
         "ubicacion": "Servidores na União Europeia · operador"
       },
       {
+        "nombre": "Stripe Payments Europe, Ltd.",
+        "uso": "Pagamento e faturamento do Kit de Preparação VERI*FACTU.",
+        "ubicacion": "Irlanda (UE) · operador para o pagamento"
+      },
+      {
         "nombre": "Resend (Plus Five Five, Inc.)",
-        "uso": "Envio dos e-mails do formulário de contato e dos relatórios dos testes.",
+        "uso": "Envio dos e-mails do formulário de contato, dos relatórios dos testes e dos links de acesso do Kit.",
         "ubicacion": "Estados Unidos · operador"
       },
       {
@@ -435,6 +473,11 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
         "nombre": "Preferência de cookies (própria)",
         "uso": "Lembra se você aceitou ou rejeitou o aviso. Fica guardada no armazenamento local do navegador. Técnica, não requer consentimento.",
         "detalle": "Chave iaoperators_cookie_consent · até você apagá-la"
+      },
+      {
+        "nombre": "Sessão do Kit (própria)",
+        "uso": "Mantém sua sessão aberta na área privada do Kit depois que você usa o link de acesso. Só existe se você comprou e entrou. Técnica, não requer consentimento.",
+        "detalle": "__Host-vfk_session · até 30 dias ou até você encerrar a sessão"
       },
       {
         "nombre": "Google Tag Manager (Google Ireland Ltd.)",

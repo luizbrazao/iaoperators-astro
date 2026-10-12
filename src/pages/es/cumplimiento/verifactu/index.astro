@@ -16,6 +16,7 @@ import {
   ANUNCIO,
 } from "@/data/verifactu";
 import { ORG_REF } from "@/data/identidad";
+import { KIT_PRODUCT } from "@/data/verifactu-kit";
 import copy from "@/i18n/locales/es/pagesEditorial.json";
 import "@/styles/editorial-pages.css";
 
@@ -353,6 +354,10 @@ const faqJsonLd = {
         ahí; la calificación fiscal de tu caso concreto sigue siendo cosa de tu asesoría.
       </p>
       <a class="ed-button" href={contactHref}>Hablar con un especialista<span class="ed-arrow" aria-hidden="true">↗</span></a>
+      <p class="pg-closing-aside">
+        ¿Facturas con un programa estándar y no necesitas integración?{" "}
+        <a href={KIT_PRODUCT.paths.landing}>Kit de preparación para autónomos y pymes</a>
+      </p>
       <p class="pg-closing-aside">
         ¿Buscabas la otra obligación con plazo?{" "}
         <a href={sacHref}>Ley 10/2025 de atención a la clientela</a>

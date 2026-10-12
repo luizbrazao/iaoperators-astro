@@ -9,13 +9,14 @@
 //
 // Ningún fallo de email debe romper la captación: el lead ya está persistido
 // cuando se llama aquí. Se registra en consola y se sigue.
+//
+// Este módulo es genérico: no contiene ningún texto de una norma concreta. Todo
+// lo específico (pilar, BOE, dossier de evidencias, CTA, plazos, asuntos) llega
+// en AssessmentBrand desde sac/brand.ts o verifactu/brand.ts.
 
 import type { AssessmentAnswers, AssessmentResult, GapState } from "./types";
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
-const SITE = "https://iaoperators.com";
-const PILAR_URL = `${SITE}/es/cumplimiento/ley-atencion-al-cliente/`;
-const CONTACT_URL = `${SITE}/es/contact/`;
 
 function readEnv(name: string) {
   const importMetaEnv =
@@ -48,48 +49,62 @@ const ESTADO_COLOR: Record<GapState, string> = {
   desconocido: "#6b7280",
 };
 
-/**
- * Evidencia que el auditor acreditado va a pedir por cada obligación, y esfuerzo
- * orientativo de implementación. Orientativo a propósito: el número firme sale
- * del diagnóstico de brecha, no de ocho preguntas.
- */
-const DOSSIER: Record<string, { evidencia: string; esfuerzo: string }> = {
-  medicion: {
-    evidencia:
-      "Serie temporal de tiempos de espera con el cálculo de la media y el percentil del 95 %, exportable por periodo.",
-    esfuerzo: "1–2 semanas",
-  },
-  plazos: {
-    evidencia:
-      "Histórico de cada queja con fecha de entrada, fecha de resolución y cómputo en días hábiles.",
-    esfuerzo: "2–3 semanas",
-  },
-  registro: {
-    evidencia:
-      "Log de interacciones y cambios de estado con sellado temporal y prueba de no alteración.",
-    esfuerzo: "2–4 semanas",
-  },
-  clave: {
-    evidencia:
-      "Trazabilidad de la clave: emisión, entrega a la clientela y consultas realizadas por canal.",
-    esfuerzo: "1–2 semanas",
-  },
-  canales: {
-    evidencia:
-      "Inventario de canales con horarios de cobertura y registro de los traspasos de bot a persona.",
-    esfuerzo: "1–3 semanas",
-  },
-  auditoria: {
-    evidencia:
-      "Cuadro de mando anual por obligación, con los datos de origen enlazados y exportables.",
-    esfuerzo: "1 semana (sobre lo anterior)",
-  },
-};
+export interface AssessmentCta {
+  href: string;
+  label: string;
+  note?: string;
+}
 
-function gapsTableHtml(result: AssessmentResult) {
+export interface DossierEntry {
+  /** Qué hay que poder enseñar (o conservar) para acreditar la obligación. */
+  evidencia: string;
+  /** Esfuerzo orientativo de implementación. Opcional: no todas las normas lo admiten. */
+  esfuerzo?: string;
+}
+
+/**
+ * Configuración completa del informe de un test. Todo lo que depende de la
+ * norma vive aquí; el generador de HTML no conoce ninguna ley. Cada test define
+ * la suya (sac/brand.ts, verifactu/brand.ts) y los endpoints la pasan siempre:
+ * no hay valor por defecto, para que un test nuevo no herede textos de otra norma.
+ */
+export interface AssessmentBrand {
+  /** Nombre corto de la norma, para asuntos y cabeceras. */
+  norma: string;
+  /** Etiqueta del informe en la cabecera del correo. */
+  cabecera: string;
+  /** Frase de origen del resultado en el pie. */
+  origen: string;
+  /** Identificador oficial de la norma (p. ej. BOE-A-2023-24840). */
+  legislationId: string;
+  /** Página pilar enlazada desde el pie (URL absoluta). */
+  pillarUrl: string;
+  /** Aviso legal del pie (texto plano). */
+  disclaimer: string;
+  /** Rótulo del perfil detectado ("Sector declarado", "Sistema declarado"). */
+  perfilLabel: string;
+  /** Subtítulo bajo "Obligación por obligación". */
+  evidenceIntro: string;
+  /** Rótulo de la evidencia por obligación ("Evidencia para la auditoría:"). */
+  evidenceLabel: string;
+  /** Evidencia (y esfuerzo opcional) por id de obligación. */
+  dossier: Record<string, DossierEntry>;
+  /** Llamada a la acción principal, según el resultado. */
+  cta: (result: AssessmentResult) => AssessmentCta;
+  /** Bloque HTML opcional bajo la CTA (ya escapado). */
+  extraHtml?: (result: AssessmentResult) => string;
+  /** Línea de plazo del informe (HTML ya escapado). */
+  plazoHtml: (result: AssessmentResult) => string;
+  subjects: {
+    obligado: (result: AssessmentResult) => string;
+    noObligado: (result: AssessmentResult) => string;
+  };
+}
+
+function gapsTableHtml(result: AssessmentResult, brand: AssessmentBrand) {
   return result.gaps
     .map((gap) => {
-      const dossier = DOSSIER[gap.id];
+      const dossier = brand.dossier[gap.id];
       const color = ESTADO_COLOR[gap.estado];
       return `
         <tr>
@@ -106,8 +121,12 @@ function gapsTableHtml(result: AssessmentResult) {
             ${
               dossier
                 ? `<div style="color:#6b7280;font-size:13px;line-height:1.6;">
-                     <strong style="color:#374151;">Evidencia para la auditoría:</strong> ${escapeHtml(dossier.evidencia)}<br />
-                     <strong style="color:#374151;">Esfuerzo orientativo:</strong> ${escapeHtml(dossier.esfuerzo)}
+                     <strong style="color:#374151;">${escapeHtml(brand.evidenceLabel)}</strong> ${escapeHtml(dossier.evidencia)}${
+                       dossier.esfuerzo
+                         ? `<br />
+                     <strong style="color:#374151;">Esfuerzo orientativo:</strong> ${escapeHtml(dossier.esfuerzo)}`
+                         : ""
+                     }
                    </div>`
                 : ""
             }
@@ -117,31 +136,7 @@ function gapsTableHtml(result: AssessmentResult) {
     .join("");
 }
 
-/**
- * Textos de marca del informe. Los valores por defecto son los del test de la
- * Ley 10/2025, que fue el primero: así los correos existentes no cambian ni una
- * coma al añadir el test de Verifactu.
- */
-export interface AssessmentBrand {
-  /** Nombre corto de la norma, para asuntos y cabeceras. */
-  norma: string;
-  /** Etiqueta del informe en la cabecera del correo. */
-  cabecera: string;
-  /** Frase de origen del resultado en el pie. */
-  origen: string;
-  /** Línea de plazo del informe (HTML ya escapado). Sin ella, la de la Ley 10/2025. */
-  plazoHtml?: (diasRestantes: number) => string;
-  /** Asunto cuando el resultado es "obligado". Sin él, el de la Ley 10/2025. */
-  asuntoObligado?: (diasRestantes: number) => string;
-}
-
-export const DEFAULT_BRAND: AssessmentBrand = {
-  norma: "Ley 10/2025",
-  cabecera: "Ley 10/2025 · Informe de cumplimiento",
-  origen: "Resultado generado por reglas deterministas sobre el texto de la Ley 10/2025",
-};
-
-export function buildProspectEmail(result: AssessmentResult, brand: AssessmentBrand = DEFAULT_BRAND) {
+export function buildProspectEmail(result: AssessmentResult, brand: AssessmentBrand) {
   const prioridades = result.prioridades
     .map(
       (p, i) =>
@@ -150,11 +145,8 @@ export function buildProspectEmail(result: AssessmentResult, brand: AssessmentBr
     .join("");
 
   const subject =
-    result.obligado === "no"
-      ? `Tu resultado del test de ${brand.norma}`
-      : brand.asuntoObligado
-        ? brand.asuntoObligado(result.diasRestantes)
-        : `Tu informe de cumplimiento — quedan ${result.diasRestantes} días`;
+    result.obligado === "no" ? brand.subjects.noObligado(result) : brand.subjects.obligado(result);
+  const cta = brand.cta(result);
 
   const html = `<!doctype html>
 <html lang="es"><body style="margin:0;padding:0;background:#f6f7f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
@@ -175,20 +167,17 @@ export function buildProspectEmail(result: AssessmentResult, brand: AssessmentBr
 
       <div style="background:#f9fafb;border-radius:12px;padding:16px;margin-bottom:28px;">
         <div style="color:#6b7280;font-size:13px;">
-          Sector declarado: <strong style="color:#111827;">${escapeHtml(result.sectorLabel)}</strong><br />
-          ${brand.plazoHtml
-            ? brand.plazoHtml(result.diasRestantes)
-            : `Plazo de adaptación: <strong style="color:#111827;">28 de diciembre de 2026</strong>
-          (quedan ${result.diasRestantes} días)`}
+          ${escapeHtml(brand.perfilLabel)}: <strong style="color:#111827;">${escapeHtml(result.sectorLabel)}</strong><br />
+          ${brand.plazoHtml(result)}
         </div>
       </div>
 
       <h2 style="margin:0 0 4px;font-size:18px;color:#111827;">Obligación por obligación</h2>
       <p style="margin:0 0 8px;color:#6b7280;font-size:13px;">
-        Con la evidencia que pedirá la auditoría acreditada y el esfuerzo orientativo de cada pieza.
+        ${escapeHtml(brand.evidenceIntro)}
       </p>
       <table style="width:100%;border-collapse:collapse;margin-bottom:28px;">
-        ${gapsTableHtml(result)}
+        ${gapsTableHtml(result, brand)}
       </table>
 
       ${
@@ -199,23 +188,27 @@ export function buildProspectEmail(result: AssessmentResult, brand: AssessmentBr
       }
 
       <div style="text-align:center;margin:32px 0 8px;">
-        <a href="${CONTACT_URL}" style="display:inline-block;padding:14px 28px;border-radius:9999px;background:#f97316;color:#000000;font-weight:600;font-size:15px;text-decoration:none;">
-          Reservar una llamada de 30 minutos
+        <a href="${escapeHtml(cta.href)}" style="display:inline-block;padding:14px 28px;border-radius:9999px;background:#f97316;color:#000000;font-weight:600;font-size:15px;text-decoration:none;">
+          ${escapeHtml(cta.label)}
         </a>
       </div>
-      <p style="text-align:center;margin:0 0 24px;color:#6b7280;font-size:13px;">
-        Salimos de la llamada con el diagnóstico de brecha acotado y con precio cerrado.
-      </p>
+      ${
+        cta.note
+          ? `<p style="text-align:center;margin:0 0 24px;color:#6b7280;font-size:13px;">
+        ${escapeHtml(cta.note)}
+      </p>`
+          : ""
+      }
+      ${brand.extraHtml ? brand.extraHtml(result) : ""}
 
       <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0;" />
 
       <p style="margin:0 0 8px;color:#9ca3af;font-size:12px;line-height:1.6;">
         ${escapeHtml(brand.origen)}
-        (BOE-A-2025-26698), motor ${escapeHtml(result.engineVersion)}. Información técnica sobre
-        implementación de sistemas: no constituye asesoramiento jurídico.
+        (${escapeHtml(brand.legislationId)}), motor ${escapeHtml(result.engineVersion)}. ${escapeHtml(brand.disclaimer)}
       </p>
       <p style="margin:0;color:#9ca3af;font-size:12px;">
-        IA Operators · Málaga · <a href="${PILAR_URL}" style="color:#ea580c;">iaoperators.com</a>
+        IA Operators · Málaga · <a href="${escapeHtml(brand.pillarUrl)}" style="color:#ea580c;">iaoperators.com</a>
       </p>
     </div>
   </div>
@@ -231,10 +224,10 @@ export function buildInternalEmail(input: {
   responseId: string;
   utmSource?: string;
   utmCampaign?: string;
-  brand?: AssessmentBrand;
+  brand: AssessmentBrand;
 }) {
   const { email, result, answers, responseId } = input;
-  const brand = input.brand ?? DEFAULT_BRAND;
+  const brand = input.brand;
 
   const subject = `[Test ${brand.norma}] ${result.obligado.toUpperCase()} · ${result.riskLevel} · ${result.sectorLabel} — ${email}`;
 
@@ -285,8 +278,8 @@ async function sendViaResend(input: {
 }) {
   const apiKey = readEnv("RESEND_API_KEY");
   if (!apiKey) {
+    // Sin destinatario en el log: es PII.
     console.warn("[assessment/email] RESEND_API_KEY no configurada — email no enviado", {
-      to: input.to,
       subject: input.subject,
     });
     return false;
@@ -325,10 +318,10 @@ export async function sendAssessmentEmails(input: {
   responseId: string;
   utmSource?: string;
   utmCampaign?: string;
-  brand?: AssessmentBrand;
+  brand: AssessmentBrand;
 }): Promise<{ internal: boolean; prospect: boolean }> {
   const internalTo = readEnv("CONTACT_TO_EMAIL") || "info@iaoperators.com";
-  const brand = input.brand ?? DEFAULT_BRAND;
+  const brand = input.brand;
   const internal = buildInternalEmail({ ...input, brand });
   const prospect = buildProspectEmail(input.result, brand);
 
@@ -347,7 +340,6 @@ export async function sendAssessmentEmails(input: {
   if (!ok(internalResult)) {
     // Crítico: hay un lead en base de datos del que nadie se ha enterado.
     console.error("[assessment/email] AVISO INTERNO NO ENVIADO", {
-      email: input.email,
       responseId: input.responseId,
     });
   }

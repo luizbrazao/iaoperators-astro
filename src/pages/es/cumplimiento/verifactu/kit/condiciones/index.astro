@@ -1,0 +1,129 @@
+---
+// Condiciones de venta del Kit. Es la URL que se configura en Stripe como
+// "Terms of service" (consent_collection.terms_of_service = required).
+// noindex: es una página legal de apoyo, no una página de captación.
+//
+// PENDIENTE DE VALIDACIÓN JURÍDICA antes de vender en modo live (ver
+// docs/verifactu-kit.md, «Limitaciones legales»).
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { KIT_ACCESS_TEXT, KIT_PRODUCT } from "@/data/verifactu-kit";
+import { RESPONSABLE } from "@/data/privacidad";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-legal.css";
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = `${site.replace(/\/$/, "")}${KIT_PRODUCT.paths.condiciones}`;
+const P = KIT_PRODUCT;
+const actualizado = "12 de octubre de 2026";
+
+const secciones = [
+  {
+    t: "1. Quién vende",
+    p: [
+      `${RESPONSABLE.name}, profesional autónomo con nombre comercial IA Operators, NIF ${RESPONSABLE.taxId}, con domicilio en ${RESPONSABLE.city}. Contacto: ${RESPONSABLE.email}.`,
+    ],
+  },
+  {
+    t: "2. Qué compras",
+    p: [
+      `El ${P.name} (versión ${P.version}) es un producto digital de preparación: un área privada en iaoperators.com con módulos de diagnóstico orientativo, checklists, plantillas, tablas exportables y un plan de trabajo.`,
+      "El Kit no es un programa de facturación, no emite facturas, no genera ni envía registros a la AEAT, no certifica el cumplimiento del Real Decreto 1007/2023 y no constituye asesoramiento fiscal ni jurídico. Completarlo no acredita que tu sistema cumpla el reglamento.",
+    ],
+  },
+  {
+    t: "3. Precio, impuestos y factura",
+    p: [
+      `El precio es ${P.price.display} más los impuestos aplicables (${P.price.taxNote}). El impuesto se calcula en el pago según tu ubicación y, si eres empresa y facilitas un NIF válido, según tu condición fiscal. El importe final se muestra antes de pagar.`,
+      "Recibirás la factura por email tras el pago.",
+    ],
+  },
+  {
+    t: "4. Pago",
+    p: [
+      "El pago se procesa con Stripe. IA Operators no ve ni guarda los datos de tu tarjeta. La compra se considera hecha cuando Stripe confirma el pago; con métodos de pago diferido, el acceso se activa cuando el pago se confirma.",
+    ],
+  },
+  {
+    t: "5. Acceso",
+    p: [
+      `${KIT_ACCESS_TEXT}`,
+      "Accedes con enlaces personales de un solo uso que enviamos al email de la compra. Puedes pedir un enlace nuevo en cualquier momento desde la página de acceso. Lo que escribes en el Kit se guarda solo en tu navegador: si borras sus datos o cambias de dispositivo, no lo podremos recuperar.",
+    ],
+  },
+  {
+    t: "6. Actualizaciones",
+    p: [
+      `Durante ${P.updatesMonths} meses desde la compra tendrás acceso a las actualizaciones del Kit, por ejemplo cuando se publique una norma que cambie el calendario. El Kit muestra su versión, la fecha de la última revisión normativa y un historial de cambios. No se ofrecen actualizaciones de por vida.`,
+    ],
+  },
+  {
+    t: "7. Derecho de desistimiento",
+    p: [
+      "Si compras como consumidor, en el pago solicitas expresamente el acceso inmediato al contenido digital y reconoces que, una vez iniciado, pierdes el derecho de desistimiento, conforme al artículo 103.m) del Texto Refundido de la Ley General para la Defensa de los Consumidores y Usuarios.",
+      "Si no puedes acceder por un problema técnico atribuible a nosotros y no lo resolvemos, te devolveremos el importe. Un reembolso desactiva el acceso al Kit.",
+    ],
+  },
+  {
+    t: "8. Uso permitido",
+    p: [
+      "La compra te da una licencia de uso para tu empresa o actividad. Puedes imprimir y exportar el contenido para tu uso interno y compartirlo con tu gestoría o tu proveedor de software. No puedes revenderlo ni publicarlo.",
+    ],
+  },
+  {
+    t: "9. Responsabilidad",
+    p: [
+      "El contenido se elabora con cuidado a partir de fuentes oficiales y muestra la fecha de su última revisión, pero la normativa cambia y su aplicación depende de cada caso. Las decisiones fiscales deben confirmarse con tu asesoría. Nada de lo anterior limita los derechos que te reconoce la ley como consumidor.",
+    ],
+  },
+  {
+    t: "10. Datos personales",
+    p: [
+      "Tratamos los datos de la compra para cobrar, facturar y darte acceso. Los detalles están en la política de privacidad.",
+    ],
+  },
+  {
+    t: "11. Ley aplicable",
+    p: [
+      "Estas condiciones se rigen por la legislación española. Si eres consumidor, conservas los derechos y el fuero que te reconozca la normativa de tu lugar de residencia.",
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Condiciones de venta del Kit VERI*FACTU | IA Operators"
+  description="Condiciones de venta del Kit de Preparación VERI*FACTU: precio, acceso, actualizaciones, desistimiento y responsabilidad."
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  robots="noindex, follow"
+  editorial
+>
+  <div class="ed-container">
+    <header class="pg-hero pg-hero-compact">
+      <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/es/">Inicio</a></li>
+          <li><a href={P.paths.landing}>Kit VERI*FACTU</a></li>
+          <li><span aria-current="page">Condiciones de venta</span></li>
+        </ol>
+      </nav>
+      <h1>Condiciones de venta</h1>
+      <p class="ed-eyebrow" style="margin-top:18px">{P.name} · actualizado el {actualizado}</p>
+    </header>
+    <section class="pg-section">
+      <div class="pg-prose" style="max-width:68ch">
+        {secciones.map((s) => (
+          <>
+            <h2 style="font-size:22px;font-weight:500;letter-spacing:-.03em;margin-top:36px">{s.t}</h2>
+            {s.p.map((p) => <p>{p}</p>)}
+          </>
+        ))}
+        <p>
+          <a class="pg-inline-link" href="/es/politica-de-privacidad/">Política de privacidad</a> ·
+          <a class="pg-inline-link" href={P.paths.landing}>Volver al Kit</a>
+        </p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

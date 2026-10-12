@@ -105,6 +105,18 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     estimada: true,
   },
   {
+    // Kit de pago (oct/2026). Intención transaccional de quien NO integra:
+    // autónomo o pyme con software estándar. No compite con "verifactu"
+    // (pilar) ni con "test verifactu" (gratuito).
+    path: "cumplimiento/verifactu/kit/",
+    locales: ["es"],
+    silo: "cumplimiento",
+    primaria: "checklist verifactu",
+    secundarias: ["kit verifactu", "preparar verifactu", "verifactu pymes"],
+    faixa: "b",
+    estimada: true,
+  },
+  {
     path: "cumplimiento/verifactu/erp-a-medida/",
     locales: ["es"],
     silo: "cumplimiento",

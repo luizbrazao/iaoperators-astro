@@ -6,6 +6,7 @@
 import { useMemo, useRef, useState, type FormEvent } from "react";
 import { QUESTIONS as SAC_QUESTIONS } from "@/lib/assessment/sac/questions";
 import type { AssessmentQuestion, AssessmentResult, GapState } from "@/lib/assessment/types";
+import VerifactuKitOffer from "./VerifactuKitOffer";
 
 const SAC_DEFAULTS = {
   submitEndpoint: "/api/assessment/ley-atencion-cliente/submit",
@@ -26,6 +27,14 @@ export interface AssessmentProps {
   analyticsKey?: string;
   /** Valor de `lead_source` en el evento `generate_lead` del dataLayer. */
   leadSource?: string;
+  /** Texto bajo "Recibe el informe completo". Por defecto, el de la Ley 10/2025. */
+  leadPitch?: string;
+  /**
+   * Oferta de siguiente paso bajo el resultado. "verifactu-kit" muestra el Kit
+   * o la auditoría según el segmento (src/lib/verifactu-kit/segment.ts) y
+   * sustituye la CTA genérica. Sin valor, se mantiene la CTA de contacto.
+   */
+  offer?: "verifactu-kit";
 }
 
 type Answers = Record<string, string | string[]>;
@@ -66,6 +75,8 @@ export default function Assessment({
   legalNote = SAC_DEFAULTS.legalNote,
   analyticsKey = SAC_DEFAULTS.analyticsKey,
   leadSource = SAC_DEFAULTS.leadSource,
+  leadPitch = "El detalle por obligación, el checklist de evidencias para la auditoría y una estimación de esfuerzo por cada brecha.",
+  offer,
 }: AssessmentProps = {}) {
   const QUESTIONS = questions;
   const TOTAL_STEPS = questions.length;
@@ -108,9 +119,18 @@ export default function Assessment({
 
   function toggleMulti(id: string, value: string) {
     const current = Array.isArray(answers[id]) ? (answers[id] as string[]) : [];
-    const next = current.includes(value)
-      ? current.filter((v) => v !== value)
-      : [...current, value];
+    const options = QUESTIONS.find((q) => q.id === id)?.options ?? [];
+    const exclusive = new Set(options.filter((o) => o.exclusive).map((o) => o.value));
+    let next: string[];
+    if (current.includes(value)) {
+      next = current.filter((v) => v !== value);
+    } else if (exclusive.has(value)) {
+      // "Nada de lo anterior" limpia todo lo demás.
+      next = [value];
+    } else {
+      // Marcar algo concreto quita cualquier opción exclusiva.
+      next = [...current.filter((v) => !exclusive.has(v)), value];
+    }
     setAnswers({ ...answers, [id]: next });
   }
 
@@ -270,10 +290,7 @@ export default function Assessment({
         ) : (
           <form onSubmit={sendLead} className="as-lead">
             <p className="as-lead-title">Recibe el informe completo</p>
-            <p>
-              El detalle por obligación, el checklist de evidencias para la auditoría y una
-              estimación de esfuerzo por cada brecha.
-            </p>
+            <p>{leadPitch}</p>
             <div className="as-lead-row">
               <label className="as-field">
                 <span className="ed-eyebrow">Email</span>
@@ -317,11 +334,15 @@ export default function Assessment({
           asesoramiento jurídico ni fiscal.
         </p>
 
-        <div className="as-cta">
-          <a href="/es/contact/" className="ed-button">
-            Hablar con un especialista<span className="ed-arrow" aria-hidden="true">↗</span>
-          </a>
-        </div>
+        {offer === "verifactu-kit" ? (
+          <VerifactuKitOffer result={result} responseId={responseId} />
+        ) : (
+          <div className="as-cta">
+            <a href="/es/contact/" className="ed-button">
+              Hablar con un especialista<span className="ed-arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        )}
       </div>
     );
   }

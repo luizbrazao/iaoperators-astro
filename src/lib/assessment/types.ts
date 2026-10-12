@@ -19,6 +19,12 @@ export interface AssessmentOption {
   value: string;
   label: string;
   hint?: string;
+  /**
+   * Solo en preguntas "multi": opción que no se puede combinar con ninguna otra
+   * (p. ej. "Nada de lo anterior"). La island limpia el resto al marcarla y el
+   * servidor rechaza combinaciones contradictorias.
+   */
+  exclusive?: boolean;
 }
 
 export interface AssessmentQuestion {

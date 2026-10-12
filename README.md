@@ -105,3 +105,4 @@ Ambos endpoints requieren autenticación básica cuando `SURVEY_ADMIN_USER` y `S
 ## Documentación adicional
 
 - [Encuesta La Segunda Factura de la IA 2026](./docs/segunda-factura-ia-2026.md)
+- [Kit de Preparación VERI*FACTU (producto de pago)](./docs/verifactu-kit.md)

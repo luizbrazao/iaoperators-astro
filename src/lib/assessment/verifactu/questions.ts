@@ -12,7 +12,9 @@
 import type { AssessmentQuestion } from "../types";
 
 export const ASSESSMENT_KEY = "verifactu-rrsif" as const;
-export const ASSESSMENT_VERSION = "2026-08-v1";
+// 2026-10-v2: exclusión por operaciones sin obligación de factura, opción
+// "papel" separada de "manual" y "nada" exclusiva en el estado del sistema.
+export const ASSESSMENT_VERSION = "2026-10-v2";
 export const ASSESSMENT_PUBLIC_PATH = "/es/cumplimiento/verifactu/test/";
 
 export const QUESTIONS: AssessmentQuestion[] = [
@@ -21,7 +23,7 @@ export const QUESTIONS: AssessmentQuestion[] = [
     type: "single",
     title: "¿Estás en alguno de estos supuestos?",
     description:
-      "El reglamento deja fuera a quien ya suministra sus libros por el SII y a quien tributa en territorio foral.",
+      "El reglamento deja fuera a quien ya suministra sus libros por el SII, a quien tributa en territorio foral y las operaciones que no obligan a expedir factura.",
     options: [
       { value: "sii", label: "Llevamos los libros registro de IVA por el SII" },
       {
@@ -29,7 +31,12 @@ export const QUESTIONS: AssessmentQuestion[] = [
         label: "Tributamos en País Vasco o Navarra",
         hint: "Territorio foral: normativa propia (TicketBAI y equivalentes)",
       },
-      { value: "ninguno", label: "Ninguno de los dos" },
+      {
+        value: "sin-factura",
+        label: "Ninguna de nuestras operaciones nos obliga a expedir factura",
+        hint: "Ojo: un ticket de caja es una factura simplificada. Si emites tickets, esta opción no es la tuya.",
+      },
+      { value: "ninguno", label: "Ninguno de estos supuestos" },
       { value: "no-lo-se", label: "No lo sé con certeza" },
     ],
   },
@@ -55,7 +62,12 @@ export const QUESTIONS: AssessmentQuestion[] = [
       { value: "ecommerce", label: "E-commerce propio o muy personalizado" },
       { value: "vertical", label: "Software vertical de mi sector" },
       { value: "estandar", label: "Software estándar de mercado, sin adaptar" },
-      { value: "manual", label: "Hoja de cálculo, plantillas o a mano" },
+      { value: "manual", label: "Hoja de cálculo, procesador de texto o plantillas" },
+      {
+        value: "papel",
+        label: "Talonario en papel, a mano, sin ningún programa",
+        hint: "Solo si ninguna factura sale de un ordenador, tablet o móvil",
+      },
     ],
   },
   {
@@ -121,7 +133,7 @@ export const QUESTIONS: AssessmentQuestion[] = [
       { value: "remision", label: "Envía registros a la AEAT con cola y reintento" },
       { value: "qr", label: "Imprime el QR y la mención en todas las plantillas" },
       { value: "inalterable", label: "Guarda la evidencia en almacenamiento inalterable" },
-      { value: "nada", label: "Nada de lo anterior" },
+      { value: "nada", label: "Nada de lo anterior", exclusive: true },
     ],
   },
 ];
@@ -141,7 +153,8 @@ export const SISTEMA_LABELS: Record<string, string> = {
   ecommerce: "E-commerce propio",
   vertical: "Software vertical de sector",
   estandar: "Software estándar de mercado",
-  manual: "Facturación manual o por plantillas",
+  manual: "Hoja de cálculo o plantillas",
+  papel: "Facturas en papel, sin programa",
 };
 
 /** Caso del silo al que deriva cada sistema, cuando existe página propia. */
@@ -152,4 +165,5 @@ export const SISTEMA_CASO: Record<string, string | null> = {
   vertical: "software-vertical",
   estandar: null,
   manual: null,
+  papel: null,
 };
