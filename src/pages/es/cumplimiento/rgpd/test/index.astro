@@ -1,0 +1,117 @@
+---
+// Diagnóstico RGPD — ES-only, indexable.
+// Mismo patrón que los tests de la Ley 10/2025 y de Verifactu: el resultado se
+// calcula en el servidor (motor determinista y versionado) y la island cambia
+// de vista en la misma página. La vista es de MADUREZ (inicial / en proceso /
+// operativo), no de obligación.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Assessment from "@/islands/Assessment";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-forms.css";
+import "@/styles/editorial-kit.css";
+import "@/styles/editorial-rgpd.css";
+import { QUESTIONS } from "@/lib/assessment/rgpd/questions";
+import { NORMAS, RGPD_DISCLAIMER, RGPD_VERIFICACION } from "@/data/rgpd";
+import { RGPD_OPS_PRODUCT } from "@/data/rgpd-ops";
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const siteRoot = site.replace(/\/$/, "");
+const P = RGPD_OPS_PRODUCT;
+const pillarUrl = `${siteRoot}${P.paths.pilar}`;
+const pageUrl = `${siteRoot}${P.paths.test}`;
+
+const meta = {
+  title: "Test RGPD gratuito: diagnóstico de protección de datos | IA Operators",
+  description:
+    "Once preguntas para saber cómo de organizada está la protección de datos de tu empresa: tratamientos, proveedores, avisos, derechos e incidentes. Resultado inmediato, sin dar email.",
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${siteRoot}/es/` },
+    { "@type": "ListItem", position: 2, name: "Cumplimiento normativo", item: `${siteRoot}/es/cumplimiento/` },
+    { "@type": "ListItem", position: 3, name: "Protección de datos", item: pillarUrl },
+    { "@type": "ListItem", position: 4, name: "Diagnóstico", item: pageUrl },
+  ],
+};
+
+const webPageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: meta.title,
+  description: meta.description,
+  url: pageUrl,
+  inLanguage: "es-ES",
+  isPartOf: { "@type": "WebSite", name: "IA Operators", url: site },
+  about: { "@type": "Legislation", name: NORMAS.rgpd.nombre, legislationIdentifier: NORMAS.rgpd.identificador, url: NORMAS.rgpd.urlEurLex },
+  dateModified: RGPD_VERIFICACION.lastVerifiedAt,
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  jsonLd={[breadcrumbJsonLd, webPageJsonLd]}
+  editorial
+>
+  <div class="ed-container">
+    <header class="pg-hero">
+      <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/es/">Inicio</a></li>
+          <li><a href={P.paths.pilar}>Protección de datos</a></li>
+          <li><span aria-current="page">Diagnóstico</span></li>
+        </ol>
+      </nav>
+      <h1>¿Cómo de organizada está tu protección de datos?</h1>
+      <div class="pg-hero-bottom">
+        <p class="ed-eyebrow">Diagnóstico orientativo · 11 preguntas · menos de 3 min</p>
+        <p class="pg-lead">
+          Mide la madurez de tu operación área por área: mapa de tratamientos, proveedores, avisos y consentimientos,
+          solicitudes de derechos, incidentes y medidas organizativas. No te dice si cumples: te dice qué está montado,
+          qué falta y si tu caso pide una revisión profesional.
+        </p>
+      </div>
+    </header>
+
+    <div class="as-layout">
+      <div class="as-main">
+        <Assessment
+          client:load
+          questions={QUESTIONS}
+          submitEndpoint="/api/assessment/rgpd/submit"
+          leadEndpoint="/api/assessment/rgpd/lead"
+          legalNote="Diagnóstico orientativo generado por reglas deterministas a partir de tus respuestas"
+          analyticsKey="rgpd-ops"
+          leadSource="Test_RGPD"
+          leadPitch="El detalle por área, qué conviene tener localizado en cada una y el orden recomendado. El resultado completo ya lo tienes arriba: el email es opcional."
+          leadDoneText="Te escribimos con el detalle por área y el orden recomendado."
+          footNote="Menos de 3 minutos. No pedimos email para ver el resultado."
+          startEvent="rgpd_assessment_started"
+          offer="rgpd-ops"
+        />
+      </div>
+      <aside class="as-notes" aria-label="Cómo funciona el diagnóstico">
+        <div>
+          <h2>Madurez, no veredicto</h2>
+          <p>El resultado es inicial, en proceso u operativo. Ninguna herramienta puede decirte que cumples sin conocer tu caso, y esta no lo intenta.</p>
+        </div>
+        <div>
+          <h2>Te decimos cuándo hace falta un profesional</h2>
+          <p>Si tratas datos de salud u otras categorías especiales, datos de menores, ubicación, perfiles, decisiones automatizadas o datos a gran escala, el resultado recomienda una revisión profesional antes de seguir por tu cuenta.</p>
+        </div>
+        <div>
+          <h2>Reglas, no adivinanzas</h2>
+          <p>Las mismas respuestas dan siempre el mismo resultado, y cada área indica de qué pregunta sale. No usamos IA para calcularlo.</p>
+        </div>
+        <p class="as-disclaimer">{RGPD_DISCLAIMER}</p>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>

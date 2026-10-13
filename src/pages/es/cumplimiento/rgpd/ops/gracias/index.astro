@@ -1,0 +1,103 @@
+---
+// Página de vuelta de Stripe Checkout de RGPD Ops. noindex, server-side.
+//
+// No concede acceso: el session_id solo sirve para CONSULTAR el estado del
+// pedido que guardó el webhook. El acceso llega siempre por email. Si el
+// webhook aún no ha llegado, la página se recarga sola unas veces.
+export const prerender = false;
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import RgpdAccessRequest from "@/islands/RgpdAccessRequest";
+import { RGPD_OPS_PRODUCT } from "@/data/rgpd-ops";
+import { errorCode, opsLog, requestIdFrom } from "@/lib/rgpd-ops/log";
+import { isAccessAllowed } from "@/lib/commerce/payment-state";
+import { getOrderBySessionId } from "@/lib/rgpd-ops/orders";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-forms.css";
+import "@/styles/editorial-kit.css";
+import "@/styles/editorial-rgpd.css";
+
+Astro.response.headers.set("cache-control", "private, no-store");
+Astro.response.headers.set("x-robots-tag", "noindex, nofollow");
+Astro.response.headers.set("referrer-policy", "same-origin");
+
+const P = RGPD_OPS_PRODUCT;
+const requestId = requestIdFrom(Astro.request);
+const sessionId = Astro.url.searchParams.get("session_id") ?? "";
+const attempt = Math.min(20, Math.max(0, Number.parseInt(Astro.url.searchParams.get("n") ?? "0", 10) || 0));
+const validSession = /^cs_(test|live)_[A-Za-z0-9]{10,200}$/.test(sessionId);
+
+type Estado = "confirmado" | "procesando" | "fallido" | "reembolsado" | "desconocido" | "error";
+let estado: Estado = "desconocido";
+
+if (validSession) {
+  try {
+    const order = await getOrderBySessionId(sessionId);
+    if (!order) estado = "procesando";
+    else if (isAccessAllowed(order)) estado = "confirmado";
+    else if (order.payment_status === "failed") estado = "fallido";
+    else if (order.payment_status === "refunded") estado = "reembolsado";
+    else estado = "procesando";
+    opsLog({ request_id: requestId, checkout_session_id: sessionId, order_id: order?.id, action: "thanks_status", status: "ok", detail: estado });
+  } catch (error) {
+    estado = "error";
+    opsLog({ request_id: requestId, checkout_session_id: sessionId, action: "thanks_status", status: "error", error_code: errorCode(error) });
+  }
+}
+
+const recargar = estado === "procesando" && attempt < 12;
+const siguiente = recargar ? `${P.paths.gracias}?session_id=${encodeURIComponent(sessionId)}&n=${attempt + 1}` : null;
+if (siguiente) Astro.response.headers.set("refresh", `4;url=${siguiente}`);
+---
+
+<BaseLayout title="Gracias por tu compra | IA Operators" description={`Confirmación de compra de ${P.name}.`} robots="noindex, nofollow" editorial>
+  <div class="ed-container">
+    <header class="pg-hero pg-hero-compact">
+      <p class="ed-eyebrow">{P.name}</p>
+      {estado === "confirmado" && (
+        <>
+          <h1>Pago confirmado. <span>Revisa tu email.</span></h1>
+          <p class="pg-lead" style="margin-top:24px">
+            Tu espacio de trabajo está listo. Te hemos enviado un enlace de acceso de un solo uso al email que usaste en
+            el pago. Si en unos minutos no lo ves, mira en spam o pide uno nuevo aquí abajo.
+          </p>
+        </>
+      )}
+      {estado === "procesando" && (
+        <>
+          <h1>Estamos confirmando tu pago</h1>
+          <p class="pg-lead" style="margin-top:24px" role="status">
+            {recargar
+              ? "Suele tardar unos segundos. Esta página se actualiza sola."
+              : "Está tardando más de lo normal. Algunos métodos de pago tardan en confirmarse: en cuanto se confirme, te llegará el enlace por email."}
+          </p>
+        </>
+      )}
+      {estado === "fallido" && (
+        <>
+          <h1>El pago no se ha completado</h1>
+          <p class="pg-lead" style="margin-top:24px">No se ha concedido acceso. Puedes intentarlo de nuevo desde la <a class="pg-inline-link" href={P.paths.landing}>página del producto</a>.</p>
+        </>
+      )}
+      {estado === "reembolsado" && (
+        <>
+          <h1>Este pedido está reembolsado</h1>
+          <p class="pg-lead" style="margin-top:24px">El acceso asociado ya no está activo. Si crees que es un error, escríbenos a info@iaoperators.com.</p>
+        </>
+      )}
+      {(estado === "desconocido" || estado === "error") && (
+        <>
+          <h1>No encontramos este pago</h1>
+          <p class="pg-lead" style="margin-top:24px">
+            {estado === "error"
+              ? "No podemos consultar el estado ahora mismo. Si has pagado, el enlace te llegará por email igualmente."
+              : "Si has pagado, el enlace de acceso te llegará por email. Si no lo recibes, pídelo aquí abajo."}
+          </p>
+        </>
+      )}
+    </header>
+    <section class="pg-section">
+      <RgpdAccessRequest client:visible title="¿No te ha llegado el enlace?" />
+    </section>
+  </div>
+</BaseLayout>

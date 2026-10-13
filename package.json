@@ -13,11 +13,16 @@
     "assessment:check-supabase": "tsx scripts/check-assessment-supabase.ts",
     "assessment:test-scoring:sac": "tsx scripts/test-scoring-sac.ts",
     "assessment:test-scoring:verifactu": "tsx scripts/test-scoring-verifactu.ts",
+    "assessment:test-scoring:rgpd": "tsx scripts/test-scoring-rgpd.ts",
     "assessment:test-scoring": "npm run assessment:test-scoring:sac && npm run assessment:test-scoring:verifactu",
     "verifactu-kit:test": "tsx scripts/test-verifactu-kit.ts",
     "verifactu-kit:test-sql": "node scripts/test-verifactu-kit-sql.mjs",
     "verifactu-kit:check-bundle": "node scripts/check-client-bundle.mjs",
-    "verifactu-kit:resend-access": "tsx scripts/verifactu-kit-resend-access.ts"
+    "verifactu-kit:resend-access": "tsx scripts/verifactu-kit-resend-access.ts",
+    "rgpd-ops:test": "tsx scripts/test-rgpd-ops.ts",
+    "rgpd-ops:test-sql": "node scripts/test-rgpd-ops-sql.mjs",
+    "rgpd-ops:check-bundle": "node scripts/check-rgpd-ops-bundle.mjs",
+    "rgpd-ops:resend-access": "tsx scripts/rgpd-ops-resend-access.ts"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",

@@ -1,0 +1,341 @@
+---
+// Pilar RGPD — ES-only, indexable, estática.
+//
+// Posicionamiento: protección de datos como OPERACIÓN CONTINUA para pymes que
+// captan clientes con WhatsApp, CRM, formularios, automatizaciones e IA. No
+// compite con las herramientas gratuitas de la AEPD: las presenta como punto
+// de partida. No promete cumplimiento ni usa multas como argumento.
+//
+// Afirmaciones normativas, fuentes y fecha de revisión: src/data/rgpd.ts.
+// Producto, precio y rutas: src/data/rgpd-ops.ts.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { AFIRMACIONES, FUENTES, HERRAMIENTAS_AEPD, NORMAS, RGPD_DISCLAIMER, RGPD_VERIFICACION } from "@/data/rgpd";
+import { RGPD_OPS_PRODUCT, RGPD_OPS_PUBLIC_MODULES } from "@/data/rgpd-ops";
+import { ORG_REF } from "@/data/identidad";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-kit.css";
+import "@/styles/editorial-rgpd.css";
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const siteRoot = site.replace(/\/$/, "");
+const P = RGPD_OPS_PRODUCT;
+const pageUrl = `${siteRoot}${P.paths.pilar}`;
+
+const meta = {
+  title: "Protección de datos para empresas: el RGPD como operación | IA Operators",
+  description:
+    "Protección de datos para empresas que usan WhatsApp, CRM, formularios e IA: tratamientos, proveedores, solicitudes, incidentes y evidencias organizados. Diagnóstico gratuito.",
+};
+
+const paraQuien = [
+  "Agencias, consultorías, inmobiliarias, academias y empresas de servicios que captan clientes por la web, WhatsApp y redes.",
+  "Pequeños negocios digitales con CRM, newsletter, píxeles de publicidad, automatizaciones o funciones de IA.",
+  "Empresas de riesgo bajo o medio que ya tienen algún documento, pero no una forma de mantenerlo al día.",
+];
+
+const paraQuienNo = [
+  "Si tratas categorías especiales de datos de forma intensiva, datos de menores, perfiles con efectos significativos o datos a gran escala: tu caso pide una revisión profesional antes de cualquier herramienta.",
+  "Si necesitas que alguien firme que cumples: ninguna herramienta lo hace y esta tampoco.",
+  "Si buscas un generador de textos legales: aquí se organiza el trabajo, no se redactan políticas automáticas.",
+];
+
+const flujo = [
+  { paso: "Canal o herramienta", texto: "Por dónde entran o circulan los datos: un formulario, WhatsApp, el CRM, un agente de IA." },
+  { paso: "Tratamiento", texto: "Para qué se usan: atender consultas, vender, enviar la newsletter, seleccionar personal." },
+  { paso: "Proveedor", texto: "Quién los trata por tu cuenta: el CRM, la plataforma de mensajería, el hosting." },
+  { paso: "Control", texto: "Qué lo mantiene en orden: aviso por capas, contrato de encargo, accesos revisados, plazo de conservación." },
+  { paso: "Evidencia", texto: "Qué te permite demostrarlo: el contrato localizado, la captura del aviso, el registro con fecha." },
+];
+
+const comparativa = [
+  {
+    fila: "Para qué sirve",
+    aepd: "Punto de partida oficial: orientar, documentar el registro y analizar riesgos o brechas.",
+    ops: "Mantener la operación al día: responsables, plazos, proveedores, revisiones y evidencias.",
+    revision: "Analizar tu caso, sus riesgos y lo que necesita desde el punto de vista jurídico.",
+  },
+  {
+    fila: "Dónde vive la información",
+    aepd: "En tu navegador o en un archivo de tu ordenador.",
+    ops: "En tu espacio privado en el servidor: entras desde cualquier dispositivo y exportas cuando quieras.",
+    revision: "En la documentación que te entregue el profesional.",
+  },
+  {
+    fila: "Plazos y tareas",
+    aepd: "No es su objetivo.",
+    ops: "Plazo orientativo de solicitudes, reloj de 72 horas en incidentes, tareas con vencimiento y revisión trimestral.",
+    revision: "Según el encargo.",
+  },
+  {
+    fila: "Criterio jurídico",
+    aepd: "Orientación general de la autoridad.",
+    ops: "Ninguno: es una herramienta operativa y lo dice en cada módulo.",
+    revision: "Sí: es su función.",
+  },
+  {
+    fila: "Coste",
+    aepd: "Gratuito.",
+    ops: `${P.price.displayFull}, pago único, ${P.accessMonths} meses.`,
+    revision: "Presupuesto según el caso.",
+  },
+];
+
+const faq = [
+  { q: "¿A qué empresas se aplica el RGPD?", a: `${AFIRMACIONES.ambito.texto} En España se complementa con la LOPDGDD (${NORMAS.lopdgdd.identificador}).` },
+  { q: "¿Necesito un registro de actividades de tratamiento si somos menos de 250 personas?", a: AFIRMACIONES.ratExcepcion.texto },
+  { q: "Uso WhatsApp, un CRM y herramientas de IA. ¿Qué cambia?", a: "Cada canal es un punto de captación en el que hay que informar; cada herramienta que trata datos por tu cuenta es un proveedor con su contrato de encargo y su ubicación; y cada uso nuevo de los datos puede ser un tratamiento nuevo en tu mapa. Si la IA puntúa o decide sobre personas, conviene una revisión profesional." },
+  { q: "¿Cuánto tiempo hay para responder a una solicitud de acceso o supresión?", a: AFIRMACIONES.plazoDerechos.texto },
+  { q: "¿Qué hago si se pierde o se expone información personal?", a: `${AFIRMACIONES.brecha72h.texto} ${AFIRMACIONES.brechaDocumentar.texto} La AEPD ofrece las herramientas Asesora Brecha y Comunica-Brecha RGPD para ayudar a decidir.` },
+  { q: "¿En qué se diferencia RGPD Ops de las herramientas gratuitas de la AEPD?", a: "Las herramientas de la AEPD son el punto de partida oficial y conviene usarlas. RGPD Ops se ocupa de lo que viene después: mantener al día tratamientos, proveedores, avisos, solicitudes, incidentes, tareas y evidencias, con fechas, en un espacio que se guarda en el servidor." },
+  { q: "¿Sustituye a un abogado o a un delegado de protección de datos?", a: "No. Es una herramienta operativa y un diagnóstico orientativo. No constituye asesoramiento jurídico, no certifica el cumplimiento y, cuando detecta señales de mayor riesgo, recomienda una revisión profesional." },
+];
+
+const webPageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": `${pageUrl}#webpage`,
+  name: meta.title,
+  description: meta.description,
+  url: pageUrl,
+  inLanguage: "es-ES",
+  isPartOf: { "@type": "WebSite", name: "IA Operators", url: site },
+  about: [
+    { "@type": "Legislation", name: NORMAS.rgpd.nombre, legislationIdentifier: NORMAS.rgpd.identificador, url: NORMAS.rgpd.urlEurLex },
+    { "@type": "Legislation", name: NORMAS.lopdgdd.nombre, legislationIdentifier: NORMAS.lopdgdd.identificador, legislationJurisdiction: "ES", url: NORMAS.lopdgdd.url },
+  ],
+  dateModified: RGPD_VERIFICACION.lastVerifiedAt,
+};
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": `${pageUrl}#service`,
+  name: "Protección de datos como operación continua",
+  serviceType: "Gestión operativa de protección de datos (RGPD)",
+  provider: ORG_REF,
+  areaServed: "ES",
+  url: pageUrl,
+  description: P.promise,
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Protección de datos",
+    itemListElement: [
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Diagnóstico RGPD gratuito" }, price: "0", priceCurrency: "EUR", url: `${siteRoot}${P.paths.test}` },
+      { "@type": "Offer", itemOffered: { "@type": "Product", name: P.name }, price: P.price.amount.toFixed(2), priceCurrency: P.price.currency, url: `${siteRoot}${P.paths.landing}` },
+    ],
+  },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${siteRoot}/es/` },
+    { "@type": "ListItem", position: 2, name: "Cumplimiento normativo", item: `${siteRoot}/es/cumplimiento/` },
+    { "@type": "ListItem", position: 3, name: "Protección de datos", item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+};
+
+const fuentes = FUENTES.filter((f) => f.verificada);
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  jsonLd={[webPageJsonLd, serviceJsonLd, breadcrumbJsonLd, faqJsonLd]}
+  editorial
+>
+  <div class="ed-container">
+    <header class="pg-hero">
+      <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/es/">Inicio</a></li>
+          <li><a href="/es/cumplimiento/">Cumplimiento</a></li>
+          <li><span aria-current="page">Protección de datos</span></li>
+        </ol>
+      </nav>
+      <h1>Protección de datos para empresas <span>como una operación, no como un documento</span></h1>
+      <div class="pg-hero-bottom">
+        <p class="ed-eyebrow">RGPD · LOPDGDD · base revisada el {RGPD_VERIFICACION.lastVerifiedAtLegible}</p>
+        <div>
+          <p class="pg-lead pg-lead-strong">{P.tagline}</p>
+          <p class="pg-lead" style="margin-top:14px">{P.promise}</p>
+          <div class="pg-actions">
+            <a class="ed-button" href={P.paths.test}>Diagnóstico gratuito · 3 min<span class="ed-arrow" aria-hidden="true">↗</span></a>
+            <a class="ed-underlined" href={P.paths.landing}>Ver {P.name} <span class="ed-arrow" aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="pg-section pg-split" aria-label="Para quién es y para quién no">
+      <div>
+        <p class="ed-eyebrow">Para quién es</p>
+        <h2>Empresas que captan clientes con canales digitales</h2>
+        <ul class="pg-checklist">{paraQuien.map((t) => <li>{t}</li>)}</ul>
+      </div>
+      <div>
+        <p class="ed-eyebrow">Para quién no es</p>
+        <h2>Casos que piden otra cosa primero</h2>
+        <ul class="pg-checklist">{paraQuienNo.map((t) => <li>{t}</li>)}</ul>
+      </div>
+    </section>
+
+    <section class="pg-section" aria-labelledby="operacion-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Documentos frente a operación</p>
+        <div>
+          <h2 id="operacion-title">El problema no suele ser el documento, sino mantenerlo vivo</h2>
+          <div class="pg-prose">
+            <p>
+              Muchas pymes tienen una política de privacidad y algún registro hecho hace años. Lo que falla es lo que
+              pasa después: un formulario nuevo sin aviso, un CRM contratado sin revisar su contrato de encargo, una
+              solicitud de supresión que nadie apunta, una herramienta de IA que trata datos fuera del EEE.
+            </p>
+            <p>
+              El cumplimiento del RGPD en una empresa pequeña es, sobre todo, una rutina: saber qué datos tratas,
+              quién los trata por ti, qué se informa en cada canal, cómo respondes a tiempo y qué puedes demostrar.
+              Para eso hace falta un sistema con responsables, fechas y evidencias, no otro PDF.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-section" aria-labelledby="mapa-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">El mapa</p>
+        <div>
+          <h2 id="mapa-title">De cada canal a su evidencia</h2>
+          <div class="pg-prose">
+            <p>Cada pieza de tu operación digital se puede seguir por la misma cadena. Si un eslabón falta, ahí está el trabajo.</p>
+          </div>
+        </div>
+      </div>
+      <ol class="ro-flow">
+        {flujo.map((f, i) => (
+          <li><span class="ed-eyebrow">{String(i + 1).padStart(2, "0")}</span><strong>{f.paso}</strong><p>{f.texto}</p></li>
+        ))}
+      </ol>
+      <p class="ro-flow-example">
+        Ejemplo: <strong>WhatsApp</strong> → atención de consultas → la plataforma de mensajería y, si la hay, la
+        automatización conectada → aviso por capas en el primer mensaje y contrato de encargo localizado → captura del
+        aviso y referencia del contrato con su fecha de revisión.
+      </p>
+    </section>
+
+    <section class="pg-section" aria-labelledby="modulos-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{P.name}</p>
+        <div>
+          <h2 id="modulos-title">Los módulos del espacio de trabajo</h2>
+          <div class="pg-prose"><p>Una herramienta operativa para registrar, revisar y demostrar. Sin uploads ni datos de titulares: solo lo que tu empresa necesita organizar.</p></div>
+        </div>
+      </div>
+      <ol class="pg-columns">
+        {RGPD_OPS_PUBLIC_MODULES.map((m, idx) => (
+          <li><span class="ed-eyebrow">{String(idx + 1).padStart(2, "0")}</span><h3>{m.titulo}</h3><p>{m.resumen}</p></li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="pg-section" aria-labelledby="comparativa-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Tres opciones que se complementan</p>
+        <div>
+          <h2 id="comparativa-title">Herramienta gratuita, RGPD Ops o revisión profesional</h2>
+          <div class="pg-prose">
+            <p>No compiten entre sí. Las herramientas de la AEPD son el punto de partida; RGPD Ops organiza la ejecución continua; la revisión profesional aporta el criterio jurídico que tu caso necesite.</p>
+          </div>
+        </div>
+      </div>
+      <div class="vk-scroll">
+        <table class="vk-compare">
+          <thead>
+            <tr><th scope="col"><span class="vk-sr-only">Criterio</span></th><th scope="col">Herramientas de la AEPD</th><th scope="col" class="is-kit">{P.name}</th><th scope="col">Revisión profesional</th></tr>
+          </thead>
+          <tbody>
+            {comparativa.map((r) => (
+              <tr><th scope="row">{r.fila}</th><td>{r.aepd}</td><td class="is-kit">{r.ops}</td><td>{r.revision}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <ul class="ro-tools-list">
+        {HERRAMIENTAS_AEPD.map((h) => (
+          <li><a href={h.url} target="_blank" rel="noopener noreferrer">{h.nombre}</a>: {h.uso}</li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="pg-section" aria-labelledby="como-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Cómo funciona</p>
+        <div>
+          <h2 id="como-title">Tres pasos</h2>
+        </div>
+      </div>
+      <ol class="pg-columns">
+        <li><span class="ed-eyebrow">01</span><h3>Diagnóstico gratuito</h3><p>Once preguntas, menos de tres minutos. Ves tu nivel de madurez por área sin dar el email, y si hay señales de mayor riesgo te lo decimos.</p></li>
+        <li><span class="ed-eyebrow">02</span><h3>Espacio de trabajo</h3><p>Si te encaja, compras {P.name} y recibes un enlace de acceso. Empiezas por el perfil y las tareas iniciales.</p></li>
+        <li><span class="ed-eyebrow">03</span><h3>Revisión trimestral</h3><p>Cada trimestre repasas una lista de comprobación guiada y exportas lo que necesites. Si tu caso lo pide, revisión especializada o implantación técnica.</p></li>
+      </ol>
+    </section>
+
+    <section class="pg-section" aria-labelledby="fuentes-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Fuentes</p>
+        <div>
+          <h2 id="fuentes-title">Base normativa y fecha de revisión</h2>
+          <div class="pg-prose">
+            <p>
+              Las afirmaciones de esta página y del producto salen de fuentes oficiales, revisadas el
+              {" "}{RGPD_VERIFICACION.lastVerifiedAtLegible}. El RGPD es aplicable desde el {NORMAS.rgpd.aplicableDesdeLegible}
+              {" "}y la LOPDGDD está en vigor desde el {NORMAS.lopdgdd.enVigorDesdeLegible}.
+            </p>
+          </div>
+          <ul class="ro-tools-list">
+            {fuentes.map((f) => (
+              <li><a href={f.url} target="_blank" rel="noopener noreferrer">{f.titulo}</a>{f.nota ? ` · ${f.nota}` : ""}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-section pg-faq ed-faq" aria-labelledby="faq-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Preguntas frecuentes</p>
+        <div>
+          <h2 id="faq-title">Protección de datos en una pyme</h2>
+          <div class="pg-faq-list">
+            {faq.map((item) => <details><summary>{item.q}</summary><p>{item.a}</p></details>)}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="ed-closing" aria-labelledby="rgpd-closing-title">
+    <div class="ed-container">
+      <p class="ed-eyebrow">Empieza por el diagnóstico</p>
+      <h2 id="rgpd-closing-title" class="pg-closing-title">Mira dónde está tu operación antes de decidir nada</h2>
+      <p class="pg-closing-copy">Gratuito, sin email para ver el resultado. Te dice qué falta por área y si tu caso pide una revisión profesional.</p>
+      <a class="ed-button" href={P.paths.test}>Hacer el diagnóstico<span class="ed-arrow" aria-hidden="true">↗</span></a>
+      <p class="pg-closing-aside">
+        <a href={P.paths.landing}>Ver {P.name}</a> · <a href={P.paths.revision}>Solicitar revisión especializada o implantación técnica</a>
+      </p>
+      <p class="pg-disclaimer">{RGPD_DISCLAIMER}</p>
+    </div>
+  </section>
+</BaseLayout>

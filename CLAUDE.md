@@ -8,6 +8,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev        # Start dev server at localhost:4321
 npm run build      # Build production site to ./dist/
 npm run preview    # Preview production build locally
+
+# Compliance tests and paid products (no network, no remote DB)
+npm run assessment:test-scoring        # SAC + Verifactu engines
+npm run assessment:test-scoring:rgpd   # GDPR maturity engine
+npm run verifactu-kit:test && npm run verifactu-kit:test-sql
+npm run rgpd-ops:test && npm run rgpd-ops:test-sql   # RGPD Ops (PGlite for SQL)
+npm run verifactu-kit:check-bundle && npm run rgpd-ops:check-bundle   # after build
 ```
 
 ## Architecture
@@ -79,3 +86,10 @@ faq:                        # renders as collapsible FAQ + FAQPage JSON-LD
 **SEO per post:** `BlogPosting` + `BreadcrumbList` JSON-LD generated automatically. Add `faq` frontmatter to also get `FAQPage` JSON-LD. Canonical, OG, hreflang — all handled by `BaseLayout.astro`.
 
 **Images:** Place images in `public/blog/` and reference as `/blog/filename.jpg`. Alternatively use an external URL.
+
+## Paid products (ES-only, under `/es/cumplimiento/`)
+
+- **Kit VERI*FACTU** — `docs/verifactu-kit.md`. Content in the browser (localStorage), access by magic link.
+- **RGPD Ops Starter** — `docs/rgpd-ops.md`. Server-side workspace in Supabase (`rgpd_ops_*`), all writes through SQL functions with table/column allowlists, `workspace_id` scoping, optimistic `version` and append-only audit. Islands: `RgpdWorkspace`, `RgpdCheckoutButton`, `RgpdAccessRequest`, `RgpdOpsOffer`; styles prefix `ro-`.
+- Shared pure helpers: `src/lib/commerce/` (tokens/HMAC sessions, payment state machine, CSV with formula neutralisation). Storage, Stripe, webhook and email code stay separate per product on purpose.
+- Migrations in `supabase/migrations/` are applied manually, never from code.

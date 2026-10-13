@@ -1,0 +1,306 @@
+---
+// Landing de RGPD Ops Starter. ES-only, indexable, estática.
+//
+// Nombre, precio, versión y periodo de acceso salen de src/data/rgpd-ops.ts;
+// afirmaciones normativas y fuentes, de src/data/rgpd.ts. Sin AggregateRating
+// ni reseñas: no hay valoraciones reales que mostrar.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import RgpdCheckoutButton from "@/islands/RgpdCheckoutButton";
+import { RGPD_OPS_ACCESS_TEXT, RGPD_OPS_PRODUCT, RGPD_OPS_PUBLIC_MODULES } from "@/data/rgpd-ops";
+import { AFIRMACIONES, HERRAMIENTAS_AEPD, RGPD_DISCLAIMER, RGPD_VERIFICACION } from "@/data/rgpd";
+import { ORG_REF } from "@/data/identidad";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-forms.css";
+import "@/styles/editorial-kit.css";
+import "@/styles/editorial-rgpd.css";
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const siteRoot = site.replace(/\/$/, "");
+const P = RGPD_OPS_PRODUCT;
+const pageUrl = `${siteRoot}${P.paths.landing}`;
+
+const meta = {
+  title: "RGPD Ops: gestión RGPD para pymes | IA Operators",
+  description: `Herramienta de gestión RGPD: tratamientos, proveedores, solicitudes, incidentes, tareas y evidencias en un solo lugar. ${P.price.displayFull}, pago único, ${P.accessMonths} meses.`,
+};
+
+const paraQuien = [
+  "Pymes y negocios digitales que captan clientes con web, WhatsApp, CRM, newsletter, píxeles o IA.",
+  "Quien ya tiene algún documento de protección de datos y necesita mantenerlo al día con responsables y fechas.",
+  "Quien quiere llegar a una revisión profesional con la información ordenada.",
+];
+
+const paraQuienNo = [
+  "Si tratas datos de salud u otras categorías especiales de forma intensiva, datos de menores, perfiles con efectos significativos o datos a gran escala: empieza por una revisión profesional.",
+  "Si buscas que alguien certifique que cumples: RGPD Ops no certifica nada.",
+  "Si necesitas varios usuarios con permisos, subir documentos o avisos por email: llegarán después, si el producto se valida.",
+];
+
+const noHace = [
+  "No decide la base jurídica de tus tratamientos: es un campo de trabajo que se valida según el caso.",
+  "No determina si necesitas evaluación de impacto ni delegado de protección de datos.",
+  "No decide si una brecha se notifica ni envía nada a la AEPD.",
+  "No redacta políticas automáticas ni usa IA sobre el contenido de tu espacio.",
+  "No certifica el cumplimiento ni constituye asesoramiento jurídico.",
+];
+
+const privacidad = [
+  "No pide nombres, emails, documentos ni el contenido de las solicitudes de las personas: solo referencias internas y fechas.",
+  "Los responsables de cada tarea se indican por rol (Marketing, Dirección), no por nombre.",
+  "Las evidencias se registran por referencia a dónde están guardadas: no se suben archivos.",
+  "Los incidentes se describen por categorías y alcance aproximado, nunca con los registros afectados.",
+  "El historial de cambios guarda qué se hizo y cuándo, no los valores.",
+  "Tu espacio se guarda en servidores de la UE y puedes exportarlo entero en JSON cuando quieras.",
+];
+
+const faq = [
+  {
+    q: "¿Qué recibo exactamente?",
+    a: `Un espacio de trabajo privado con nueve módulos: panel, perfil y alcance, mapa de tratamientos con borrador de registro de actividades, proveedores, puntos de captación, solicitudes de derechos, incidentes, plan de acción con evidencias y revisión trimestral, y exportaciones. ${RGPD_OPS_ACCESS_TEXT}`,
+  },
+  {
+    q: "¿Por qué pagar si la AEPD tiene herramientas gratuitas?",
+    a: "Las herramientas de la AEPD son el punto de partida oficial y te recomendamos usarlas. RGPD Ops resuelve otra cosa: la ejecución continua. Guarda tu trabajo en el servidor, controla plazos de solicitudes e incidentes, asigna tareas con vencimiento, lleva la revisión de proveedores y el catálogo de evidencias, y te guía en una revisión cada trimestre.",
+  },
+  {
+    q: "¿Cómo accedo y desde qué dispositivos?",
+    a: "Tras el pago recibes un enlace de acceso de un solo uso. No hay contraseñas. Tu espacio se guarda en el servidor: si cambias de navegador o de dispositivo, pides un enlace nuevo con el email de la compra y lo encuentras igual.",
+  },
+  {
+    q: "¿Qué pasa si dos personas lo editan a la vez?",
+    a: "Cada registro tiene versión. Si alguien guarda antes que tú en otra pestaña, verás un aviso de conflicto y decidirás qué versión conservar. Nada se sobrescribe en silencio. En esta versión hay un único acceso por compra.",
+  },
+  {
+    q: "¿Me genera el registro de actividades de tratamiento?",
+    a: `Exporta un borrador a partir de lo que registras, en CSV y en una vista imprimible. Está marcado como borrador y requiere revisión antes de usarse como documentación definitiva. ${AFIRMACIONES.ratContenido.texto}`,
+  },
+  {
+    q: "¿Qué pasa al terminar los 12 meses?",
+    a: `Durante ${P.accessMonths} meses tienes acceso y actualizaciones. Al terminar, conservamos tu espacio ${P.retentionGraceDays} días más para que puedas exportarlo y después se elimina. Ahora mismo no hay renovación automática ni suscripción.`,
+  },
+  {
+    q: "¿Recibo factura?",
+    a: "Sí. El pago se gestiona con Stripe y la factura llega por email. Puedes indicar el NIF de tu empresa durante el pago.",
+  },
+  {
+    q: "¿Puedo devolverlo?",
+    a: "Es un servicio digital con acceso inmediato. Al comprar solicitas ese acceso y, conforme a la normativa de consumo, pierdes el derecho de desistimiento una vez empieza. Si no puedes acceder por un problema técnico nuestro y no lo resolvemos, te devolvemos el importe.",
+  },
+  {
+    q: "¿Y si mi caso necesita más que una herramienta?",
+    a: "El diagnóstico y el panel te lo indican cuando hay señales de mayor riesgo. Puedes pedirnos una revisión especializada o la implantación técnica (WhatsApp, CRM, automatizaciones e IA) desde el formulario de contacto.",
+  },
+];
+
+const productJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": `${pageUrl}#product`,
+  name: P.name,
+  description: P.promise,
+  sku: `${P.key}-${P.version}`,
+  category: "Software · herramienta operativa de protección de datos",
+  brand: { "@type": "Brand", name: "IA Operators" },
+  url: pageUrl,
+  offers: {
+    "@type": "Offer",
+    "@id": `${pageUrl}#offer`,
+    url: pageUrl,
+    price: P.price.amount.toFixed(2),
+    priceCurrency: P.price.currency,
+    priceSpecification: {
+      "@type": "UnitPriceSpecification",
+      price: P.price.amount.toFixed(2),
+      priceCurrency: P.price.currency,
+      valueAddedTaxIncluded: false,
+    },
+    availability: "https://schema.org/InStock",
+    itemCondition: "https://schema.org/NewCondition",
+    seller: ORG_REF,
+    areaServed: "ES",
+  },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${siteRoot}/es/` },
+    { "@type": "ListItem", position: 2, name: "Cumplimiento normativo", item: `${siteRoot}/es/cumplimiento/` },
+    { "@type": "ListItem", position: 3, name: "Protección de datos", item: `${siteRoot}${P.paths.pilar}` },
+    { "@type": "ListItem", position: 4, name: P.name, item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  jsonLd={[productJsonLd, breadcrumbJsonLd, faqJsonLd]}
+  editorial
+>
+  <div class="ed-container">
+    <header class="pg-hero">
+      <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/es/">Inicio</a></li>
+          <li><a href="/es/cumplimiento/">Cumplimiento</a></li>
+          <li><a href={P.paths.pilar}>Protección de datos</a></li>
+          <li><span aria-current="page">{P.name}</span></li>
+        </ol>
+      </nav>
+      <h1>{P.name} <span>gestión RGPD para empresas que usan WhatsApp, CRM e IA</span></h1>
+      <div class="pg-hero-bottom">
+        <div>
+          <p class="ed-eyebrow">Herramienta operativa · acceso inmediato</p>
+          <div class="vk-price" style="margin-top:12px">
+            <strong>{P.price.display}</strong><span>{P.price.taxNote} · pago único</span>
+          </div>
+          <p class="vk-note" style="margin-top:10px">{RGPD_OPS_ACCESS_TEXT}</p>
+        </div>
+        <div>
+          <p class="pg-lead pg-lead-strong">{P.promise}</p>
+          <div class="pg-actions" style="margin-top:24px">
+            <RgpdCheckoutButton client:load trackView />
+            <a class="ed-underlined" href={P.paths.test}>¿Cómo estás hoy? Diagnóstico gratuito <span class="ed-arrow" aria-hidden="true">↗</span></a>
+          </div>
+          <p class="vk-cancel" id="ro-cancelled" hidden>
+            Has cancelado el pago. No se ha cobrado nada; puedes volver a intentarlo cuando quieras.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <section class="pg-section" aria-labelledby="incluye-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Qué incluye</p>
+        <div>
+          <h2 id="incluye-title">Nueve módulos para mapear, ejecutar, registrar, revisar y demostrar</h2>
+          <div class="pg-prose">
+            <p>
+              Todo se guarda en tu espacio privado en el servidor, con autosave y control de versiones. Cada módulo
+              explica qué hacer, cita sus fuentes oficiales y recuerda lo que la herramienta no decide por ti.
+            </p>
+          </div>
+        </div>
+      </div>
+      <ol class="pg-columns">
+        {RGPD_OPS_PUBLIC_MODULES.map((m, idx) => (
+          <li><span class="ed-eyebrow">{String(idx + 1).padStart(2, "0")}</span><h3>{m.titulo}</h3><p>{m.resumen}</p></li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="pg-section" aria-labelledby="aepd-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Herramientas gratuitas de la AEPD</p>
+        <div>
+          <h2 id="aepd-title">Por qué no sustituye a las herramientas de la AEPD (y no lo pretende)</h2>
+          <div class="pg-prose">
+            <p>
+              La AEPD ofrece herramientas gratuitas que son el punto de partida oficial: ayudan a orientarse, a preparar
+              el registro de actividades, a analizar riesgos y a decidir ante una brecha. Úsalas.
+            </p>
+            <p>
+              {P.name} cubre lo que viene después y que ninguna herramienta puntual resuelve: la ejecución continua.
+              Quién se encarga de qué, qué vence esta semana, qué proveedor toca revisar, qué solicitud está cerca de su
+              plazo, qué evidencia tienes de cada cosa y cuándo fue la última revisión.
+            </p>
+          </div>
+          <ul class="ro-tools-list">
+            {HERRAMIENTAS_AEPD.map((h) => (
+              <li><a href={h.url} target="_blank" rel="noopener noreferrer">{h.nombre}</a>: {h.uso}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-section pg-split" aria-label="Para quién es y para quién no">
+      <div>
+        <p class="ed-eyebrow">Para quién es</p>
+        <h2>Si tu protección de datos necesita orden y continuidad</h2>
+        <ul class="pg-checklist">{paraQuien.map((t) => <li>{t}</li>)}</ul>
+      </div>
+      <div>
+        <p class="ed-eyebrow">Para quién no es</p>
+        <h2>Si tu caso es otro, te lo decimos antes</h2>
+        <ul class="pg-checklist">{paraQuienNo.map((t) => <li>{t}</li>)}</ul>
+      </div>
+    </section>
+
+    <section class="pg-section" aria-labelledby="privacidad-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Minimización por diseño</p>
+        <div>
+          <h2 id="privacidad-title">Una herramienta de protección de datos que pide los mínimos</h2>
+          <ul class="pg-checklist">{privacidad.map((t) => <li>{t}</li>)}</ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-section" aria-labelledby="nohace-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Lo que no hace</p>
+        <div>
+          <h2 id="nohace-title">Una herramienta operativa, no un dictamen</h2>
+          <ul class="pg-checklist">{noHace.map((t) => <li>{t}</li>)}</ul>
+          <p class="pg-callout">
+            Cuando tus datos indican mayor riesgo, la herramienta lo marca y recomienda una revisión profesional. Si la
+            necesitas, también podemos hacer la implantación técnica en WhatsApp, CRM, automatizaciones e IA.
+          </p>
+          <div class="pg-actions">
+            <a class="ed-underlined" href={P.paths.revision} data-ro-review>Solicitar revisión especializada o implantación <span class="ed-arrow" aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-section pg-faq ed-faq" aria-labelledby="faq-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Preguntas frecuentes</p>
+        <div>
+          <h2 id="faq-title">Antes de comprar</h2>
+          <div class="pg-faq-list">
+            {faq.map((item) => <details><summary>{item.q}</summary><p>{item.a}</p></details>)}
+          </div>
+          <p class="pg-source">Base normativa revisada el {RGPD_VERIFICACION.lastVerifiedAtLegible}. <a href={P.paths.pilar}>Fuentes oficiales</a>.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="ed-closing" aria-labelledby="ops-closing-title">
+    <div class="ed-container">
+      <p class="ed-eyebrow">{P.name}</p>
+      <h2 id="ops-closing-title" class="pg-closing-title">Deja de depender de un documento que nadie actualiza</h2>
+      <p class="pg-closing-copy">{P.price.displayFull} · pago único · {RGPD_OPS_ACCESS_TEXT}</p>
+      <RgpdCheckoutButton client:visible />
+      <p class="pg-closing-aside">
+        ¿Ya lo compraste? <a href={P.paths.acceso}>Entra o pide un enlace nuevo</a> ·
+        <a href={P.paths.condiciones}>Condiciones de venta</a>
+      </p>
+      <p class="pg-disclaimer">{RGPD_DISCLAIMER}</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { pushRgpdOpsEvent } from "@/lib/rgpd-ops/analytics";
+  if (new URLSearchParams(window.location.search).get("checkout") === "cancelado") {
+    document.getElementById("ro-cancelled")?.removeAttribute("hidden");
+  }
+  document.querySelectorAll<HTMLAnchorElement>("a[data-ro-review]").forEach((a) =>
+    a.addEventListener("click", () => pushRgpdOpsEvent("review_cta_clicked", { module_id: "landing" })),
+  );
+</script>

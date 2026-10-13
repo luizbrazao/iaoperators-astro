@@ -1,0 +1,46 @@
+// CSV para las exportaciones de los productos de pago. Separador ";" (Excel en
+// español abre así sin asistente), BOM UTF-8 para los acentos y neutralización
+// de fórmulas para que una celda escrita por el usuario no se ejecute al abrir
+// el archivo en una hoja de cálculo (CSV injection, OWASP).
+//
+// Se neutralizan las celdas que empiezan por = + - @ tabulador o retorno, y
+// sus variantes de ancho completo (＝ ＋ － ＠), que algunas hojas de cálculo
+// normalizan antes de evaluar.
+
+const FORMULA_START = /^[=+\-@\t\r＝＋－＠]/;
+
+export function csvCell(value: unknown): string {
+  let text = value === null || value === undefined ? "" : String(value);
+  if (FORMULA_START.test(text)) text = `'${text}`;
+  if (/[";\n\r]/.test(text)) text = `"${text.replaceAll('"', '""')}"`;
+  return text;
+}
+
+export interface CsvColumn {
+  key: string;
+  label: string;
+}
+
+/**
+ * @param preamble filas opcionales ANTES de la cabecera (p. ej. versión,
+ * fecha y aviso de borrador). Se escapan igual que el resto de celdas.
+ */
+export function toCsv(columns: CsvColumn[], rows: Record<string, unknown>[], preamble: unknown[][] = []): string {
+  const pre = preamble.map((r) => r.map(csvCell).join(";"));
+  const header = columns.map((c) => csvCell(c.label)).join(";");
+  const body = rows.map((row) => columns.map((c) => csvCell(row[c.key])).join(";"));
+  return `﻿${[...pre, header, ...body].join("\r\n")}\r\n`;
+}
+
+export function csvResponse(filename: string, csv: string): Response {
+  const safe = filename.replace(/[^a-z0-9._-]/gi, "-");
+  return new Response(csv, {
+    status: 200,
+    headers: {
+      "content-type": "text/csv; charset=utf-8",
+      "content-disposition": `attachment; filename="${safe}"`,
+      "cache-control": "private, no-store",
+      "x-robots-tag": "noindex",
+    },
+  });
+}

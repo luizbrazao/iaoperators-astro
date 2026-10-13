@@ -99,6 +99,12 @@ export interface AssessmentBrand {
     obligado: (result: AssessmentResult) => string;
     noObligado: (result: AssessmentResult) => string;
   };
+  /**
+   * Opcionales (test RGPD, oct/2026). Sin valor, el informe usa los rótulos de
+   * siempre: "Obligación por obligación" y Cubierto/Parcial/Brecha/Sin datos.
+   */
+  gapsTitle?: string;
+  stateLabels?: Partial<Record<GapState, string>>;
 }
 
 function gapsTableHtml(result: AssessmentResult, brand: AssessmentBrand) {
@@ -113,7 +119,7 @@ function gapsTableHtml(result: AssessmentResult, brand: AssessmentBrand) {
               ${escapeHtml(gap.obligacion)}
             </div>
             <div style="display:inline-block;padding:2px 8px;border-radius:9999px;background:${color};color:#ffffff;font-size:11px;font-weight:700;margin-bottom:8px;">
-              ${ESTADO_LABEL[gap.estado]}
+              ${escapeHtml(brand.stateLabels?.[gap.estado] ?? ESTADO_LABEL[gap.estado])}
             </div>
             <div style="color:#4b5563;font-size:14px;line-height:1.6;margin-bottom:8px;">
               ${escapeHtml(gap.detalle)}
@@ -172,7 +178,7 @@ export function buildProspectEmail(result: AssessmentResult, brand: AssessmentBr
         </div>
       </div>
 
-      <h2 style="margin:0 0 4px;font-size:18px;color:#111827;">Obligación por obligación</h2>
+      <h2 style="margin:0 0 4px;font-size:18px;color:#111827;">${escapeHtml(brand.gapsTitle ?? "Obligación por obligación")}</h2>
       <p style="margin:0 0 8px;color:#6b7280;font-size:13px;">
         ${escapeHtml(brand.evidenceIntro)}
       </p>
@@ -229,7 +235,10 @@ export function buildInternalEmail(input: {
   const { email, result, answers, responseId } = input;
   const brand = input.brand;
 
-  const subject = `[Test ${brand.norma}] ${result.obligado.toUpperCase()} · ${result.riskLevel} · ${result.sectorLabel} — ${email}`;
+  // Con resultado de madurez (test RGPD) el asunto lleva el nivel en vez del
+  // veredicto de obligación, que en ese test no discrimina.
+  const verdict = result.maturity ? result.maturity.level.toUpperCase() : result.obligado.toUpperCase();
+  const subject = `[Test ${brand.norma}] ${verdict} · ${result.riskLevel} · ${result.sectorLabel} — ${email}`;
 
   const answerRows = Object.entries(answers)
     .map(
@@ -252,7 +261,12 @@ export function buildInternalEmail(input: {
 
   <table style="border-collapse:collapse;margin-bottom:24px;">
     <tr><td style="padding:4px 12px 4px 0;color:#6b7280;font-size:13px;">Email</td><td style="padding:4px 0;font-size:13px;"><strong>${escapeHtml(email)}</strong></td></tr>
-    <tr><td style="padding:4px 12px 4px 0;color:#6b7280;font-size:13px;">Veredicto</td><td style="padding:4px 0;font-size:13px;"><strong>${escapeHtml(result.obligado)}</strong></td></tr>
+    <tr><td style="padding:4px 12px 4px 0;color:#6b7280;font-size:13px;">Veredicto</td><td style="padding:4px 0;font-size:13px;"><strong>${escapeHtml(result.maturity ? result.maturity.label : result.obligado)}</strong></td></tr>${
+      result.review?.recommended
+        ? `
+    <tr><td style="padding:4px 12px 4px 0;color:#6b7280;font-size:13px;">Revisión profesional</td><td style="padding:4px 0;font-size:13px;"><strong>Recomendada</strong> (${escapeHtml(result.review.motivos.length)} motivo/s)</td></tr>`
+        : ""
+    }
     <tr><td style="padding:4px 12px 4px 0;color:#6b7280;font-size:13px;">Riesgo</td><td style="padding:4px 0;font-size:13px;">${escapeHtml(result.riskLevel)} (${result.riskScore}/${result.riskScoreMax})</td></tr>
     <tr><td style="padding:4px 12px 4px 0;color:#6b7280;font-size:13px;">Sector</td><td style="padding:4px 0;font-size:13px;">${escapeHtml(result.sectorLabel)}</td></tr>
     <tr><td style="padding:4px 12px 4px 0;color:#6b7280;font-size:13px;">utm_source</td><td style="padding:4px 0;font-size:13px;">${escapeHtml(input.utmSource || "—")}</td></tr>

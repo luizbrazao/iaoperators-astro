@@ -11,7 +11,7 @@
 // Este módulo nace parametrizado por `assessmentKey` para que el test de Verifactu
 // (Frente B) no requiera duplicar nada de la capa de persistencia.
 
-export type AssessmentKey = "sac-ley-10-2025" | "verifactu-rrsif";
+export type AssessmentKey = "sac-ley-10-2025" | "verifactu-rrsif" | "rgpd-ops";
 
 export type QuestionType = "single" | "multi";
 
@@ -57,6 +57,29 @@ export interface GapEvaluation {
 export type ObligadoVerdict = "si" | "probable" | "no";
 export type RiskLevel = "critico" | "alto" | "medio" | "bajo";
 
+/**
+ * Nivel de madurez (test RGPD, oct/2026). Los tests de la Ley 10/2025 y de
+ * Verifactu no lo usan: su resultado es un veredicto de obligación.
+ */
+export type MaturityLevel = "inicial" | "en_proceso" | "operativo";
+
+export interface MaturityResult {
+  level: MaturityLevel;
+  label: string;
+  /** Puntos obtenidos sobre el máximo (misma escala determinista que los gaps). */
+  score: number;
+  scoreMax: number;
+}
+
+export interface ProfessionalReview {
+  /** true si las respuestas aconsejan revisión profesional antes de seguir solo. */
+  recommended: boolean;
+  /** Motivos legibles, cada uno ligado a una respuesta. */
+  motivos: string[];
+  /** Preguntas de las que salen los motivos (resultado auditable). */
+  derivadoDe: string[];
+}
+
 export interface AssessmentResult {
   obligado: ObligadoVerdict;
   /** Base legal del veredicto, citable por el usuario ante su asesoría. */
@@ -80,6 +103,14 @@ export interface AssessmentResult {
   prioridades: string[];
   /** Versión del motor: si cambian las reglas, los resultados viejos siguen explicables. */
   engineVersion: string;
+  /**
+   * Extensión opcional y retrocompatible (test RGPD). Si existe, la island
+   * muestra la vista de madurez en lugar de la de obligación. Los tests de la
+   * Ley 10/2025 y de Verifactu nunca la rellenan.
+   */
+  maturity?: MaturityResult;
+  /** Recomendación de revisión profesional (test RGPD). */
+  review?: ProfessionalReview;
 }
 
 export interface AssessmentConsent {

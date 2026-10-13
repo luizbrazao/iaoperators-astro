@@ -1,55 +1,31 @@
 // Primitivas criptográficas del Kit: tokens de acceso, hash, sesiones firmadas
-// y claves de rate limit. Sin dependencias: node:crypto.
+// y claves de rate limit.
 //
-// - Token de acceso: 32 bytes aleatorios (256 bits) en base64url. Solo se guarda
-//   su SHA-256. Un token robado de la base de datos no sirve para entrar.
-// - Sesión: payload JSON en base64url + HMAC-SHA256. Verificación con
-//   timingSafeEqual. La cookie no contiene datos personales: solo el id del
-//   pedido y las marcas de tiempo.
+// Desde oct/2026 la implementación vive en src/lib/commerce/tokens.ts
+// (compartida con RGPD Ops). Este wrapper fija los espacios de nombres del Kit
+// ("vfk.session" y "vfk.rl"), de modo que las cookies y claves ya emitidas
+// siguen siendo válidas byte a byte.
+//
+// - Token de acceso: 32 bytes aleatorios en base64url. Solo se guarda su SHA-256.
+// - Sesión: payload JSON en base64url + HMAC-SHA256, verificada con
+//   timingSafeEqual. La cookie no contiene datos personales.
 
-import { createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
+import {
+  rateLimitKeyWith,
+  signSessionWith,
+  verifySessionWith,
+  type SignedSessionPayload,
+} from "../commerce/tokens";
 
-const TOKEN_BYTES = 32;
-/** base64url de 32 bytes = 43 caracteres. */
-export const TOKEN_RE = /^[A-Za-z0-9_-]{43}$/;
-const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+export { TOKEN_RE, isUuid, generateAccessToken, hashAccessToken, safeEqual } from "../commerce/tokens";
 
-export function isUuid(value: unknown): value is string {
-  return typeof value === "string" && UUID_RE.test(value);
-}
+export type KitSessionPayload = SignedSessionPayload;
 
-export function generateAccessToken(): string {
-  return randomBytes(TOKEN_BYTES).toString("base64url");
-}
-
-export function hashAccessToken(token: string): string {
-  return createHash("sha256").update(token, "utf8").digest("hex");
-}
-
-function hmac(secret: string, data: string): Buffer {
-  return createHmac("sha256", secret).update(data, "utf8").digest();
-}
-
-export function safeEqual(a: Buffer, b: Buffer): boolean {
-  if (a.length !== b.length) return false;
-  return timingSafeEqual(a, b);
-}
-
-export interface KitSessionPayload {
-  /** Versión del formato de sesión. */
-  v: 1;
-  /** Id del pedido (uuid). */
-  oid: string;
-  /** Emitida (segundos epoch). */
-  iat: number;
-  /** Caduca (segundos epoch). */
-  exp: number;
-}
+const SESSION_NS = "vfk.session";
+const RATE_LIMIT_NS = "vfk.rl";
 
 export function signSession(payload: KitSessionPayload, secret: string): string {
-  const body = Buffer.from(JSON.stringify(payload), "utf8").toString("base64url");
-  const sig = hmac(secret, `vfk.session.${body}`).toString("base64url");
-  return `${body}.${sig}`;
+  return signSessionWith(SESSION_NS, payload, secret);
 }
 
 export function verifySession(
@@ -57,30 +33,10 @@ export function verifySession(
   secret: string,
   nowSeconds: number = Math.floor(Date.now() / 1000),
 ): KitSessionPayload | null {
-  if (!value || value.length > 1024) return null;
-  const parts = value.split(".");
-  if (parts.length !== 2) return null;
-  const [body, sig] = parts;
-  let given: Buffer;
-  try {
-    given = Buffer.from(sig, "base64url");
-  } catch {
-    return null;
-  }
-  const expected = hmac(secret, `vfk.session.${body}`);
-  if (!safeEqual(given, expected)) return null;
-  try {
-    const payload = JSON.parse(Buffer.from(body, "base64url").toString("utf8")) as KitSessionPayload;
-    if (payload.v !== 1 || !isUuid(payload.oid)) return null;
-    if (typeof payload.exp !== "number" || payload.exp <= nowSeconds) return null;
-    if (typeof payload.iat !== "number" || payload.iat > nowSeconds + 60) return null;
-    return payload;
-  } catch {
-    return null;
-  }
+  return verifySessionWith(SESSION_NS, value, secret, nowSeconds);
 }
 
 /** Clave de rate limit: HMAC del ámbito y el identificador. No guarda IP ni email. */
 export function rateLimitKey(secret: string, scope: string, identifier: string): string {
-  return createHmac("sha256", secret).update(`vfk.rl.${scope}.${identifier}`, "utf8").digest("hex");
+  return rateLimitKeyWith(RATE_LIMIT_NS, secret, scope, identifier);
 }

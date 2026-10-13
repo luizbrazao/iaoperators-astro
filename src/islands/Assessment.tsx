@@ -7,6 +7,7 @@ import { useMemo, useRef, useState, type FormEvent } from "react";
 import { QUESTIONS as SAC_QUESTIONS } from "@/lib/assessment/sac/questions";
 import type { AssessmentQuestion, AssessmentResult, GapState } from "@/lib/assessment/types";
 import VerifactuKitOffer from "./VerifactuKitOffer";
+import RgpdOpsOffer from "./RgpdOpsOffer";
 
 const SAC_DEFAULTS = {
   submitEndpoint: "/api/assessment/ley-atencion-cliente/submit",
@@ -32,9 +33,21 @@ export interface AssessmentProps {
   /**
    * Oferta de siguiente paso bajo el resultado. "verifactu-kit" muestra el Kit
    * o la auditoría según el segmento (src/lib/verifactu-kit/segment.ts) y
-   * sustituye la CTA genérica. Sin valor, se mantiene la CTA de contacto.
+   * sustituye la CTA genérica. "rgpd-ops" muestra RGPD Ops o la revisión
+   * profesional según src/lib/rgpd-ops/segment.ts. Sin valor, se mantiene la
+   * CTA de contacto.
    */
-  offer?: "verifactu-kit";
+  offer?: "verifactu-kit" | "rgpd-ops";
+  /**
+   * Evento de dataLayer al responder la primera pregunta (p. ej.
+   * "rgpd_assessment_started"). Sin valor no se emite nada: los tests
+   * anteriores conservan exactamente sus eventos.
+   */
+  startEvent?: string;
+  /** Pie del cuestionario. Por defecto, el de los tests de 2 minutos. */
+  footNote?: string;
+  /** Texto tras enviar el email. Por defecto, el de los tests de obligación. */
+  leadDoneText?: string;
 }
 
 type Answers = Record<string, string | string[]>;
@@ -53,6 +66,14 @@ const RISK_LABEL: Record<string, string> = {
   alto: "Riesgo alto",
   medio: "Riesgo medio",
   bajo: "Riesgo bajo",
+};
+
+// Vista de madurez (test RGPD): el resultado no es "cumple / no cumple".
+const MATURITY_GAP_LABEL: Record<GapState, string> = {
+  ok: "Operativo",
+  parcial: "En proceso",
+  gap: "Pendiente",
+  desconocido: "Sin confirmar",
 };
 
 const OBLIGADO_LABEL: Record<string, string> = {
@@ -77,6 +98,9 @@ export default function Assessment({
   leadSource = SAC_DEFAULTS.leadSource,
   leadPitch = "El detalle por obligación, el checklist de evidencias para la auditoría y una estimación de esfuerzo por cada brecha.",
   offer,
+  startEvent,
+  footNote = "Menos de 2 minutos. No pedimos email para ver el resultado.",
+  leadDoneText = "Te escribimos con el detalle por obligación y el orden de ejecución recomendado.",
 }: AssessmentProps = {}) {
   const QUESTIONS = questions;
   const TOTAL_STEPS = questions.length;
@@ -97,6 +121,13 @@ export default function Assessment({
 
   const startedAt = useRef(Date.now());
   const honeypot = useRef<HTMLInputElement>(null);
+  const startSent = useRef(false);
+
+  function markStarted() {
+    if (!startEvent || startSent.current) return;
+    startSent.current = true;
+    pushDataLayer({ event: startEvent, assessment: analyticsKey });
+  }
 
   const question = QUESTIONS[step];
   const progress = Math.round((step / TOTAL_STEPS) * 100);
@@ -111,6 +142,7 @@ export default function Assessment({
   }, [answers, question]);
 
   function selectSingle(id: string, value: string) {
+    markStarted();
     const next = { ...answers, [id]: value };
     setAnswers(next);
     // Avance automático en preguntas de opción única: menos clics, más finalización.
@@ -118,6 +150,7 @@ export default function Assessment({
   }
 
   function toggleMulti(id: string, value: string) {
+    markStarted();
     const current = Array.isArray(answers[id]) ? (answers[id] as string[]) : [];
     const options = QUESTIONS.find((q) => q.id === id)?.options ?? [];
     const exclusive = new Set(options.filter((o) => o.exclusive).map((o) => o.value));
@@ -165,13 +198,25 @@ export default function Assessment({
       }
       setResult(data.result as AssessmentResult);
       setResponseId(data.responseId ?? null);
-      pushDataLayer({
-        event: "assessment_completed",
-        assessment: analyticsKey,
-        obligado: data.result.obligado,
-        sector: data.result.sector,
-        risk_level: data.result.riskLevel,
-      });
+      const r = data.result as AssessmentResult;
+      if (r.maturity) {
+        // Test de madurez: nivel y segmento, sin respuestas ni datos personales.
+        pushDataLayer({
+          event: "assessment_completed",
+          assessment: analyticsKey,
+          maturity_level: r.maturity.level,
+          risk_level: r.riskLevel,
+          segment: `${r.sector}:${r.review?.recommended ? "revision" : "ops"}`,
+        });
+      } else {
+        pushDataLayer({
+          event: "assessment_completed",
+          assessment: analyticsKey,
+          obligado: r.obligado,
+          sector: r.sector,
+          risk_level: r.riskLevel,
+        });
+      }
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch {
       setError("Fallo de conexión. Inténtalo de nuevo.");
@@ -209,17 +254,149 @@ export default function Assessment({
         return;
       }
       setLeadSent(true);
-      pushDataLayer({
-        event: "generate_lead",
-        lead_source: leadSource,
-        obligado: result?.obligado,
-        risk_level: result?.riskLevel,
-      });
+      pushDataLayer(
+        result?.maturity
+          ? { event: "generate_lead", lead_source: leadSource, maturity_level: result.maturity.level, risk_level: result.riskLevel }
+          : { event: "generate_lead", lead_source: leadSource, obligado: result?.obligado, risk_level: result?.riskLevel },
+      );
     } catch {
       setLeadError("Fallo de conexión. Inténtalo de nuevo.");
     } finally {
       setLeadSending(false);
     }
+  }
+
+  // ---------- RESULTADO (madurez, test RGPD) ----------
+  if (result && result.maturity) {
+    const m = result.maturity;
+    const ratio = m.scoreMax ? Math.round((m.score / m.scoreMax) * 100) : 0;
+    const areas = result.gaps;
+    return (
+      <div className="as-result">
+        <div className="as-tags">
+          <span className="as-tag as-tag-strong">{m.label}</span>
+          {result.review?.recommended && <span className="as-tag">Revisión profesional recomendada</span>}
+          <span className="as-tag">{result.sectorLabel}</span>
+        </div>
+
+        <h2 className="as-title">{result.titular}</h2>
+        <p className="as-motivo">{result.motivo}</p>
+
+        <div className="as-meter">
+          <div className="as-meter-head ed-eyebrow">
+            <span>Madurez operativa</span>
+            <span className="pg-tabular">{ratio}%</span>
+          </div>
+          <div className="as-meter-bar" role="img" aria-label={`Madurez operativa: ${ratio} %`}>
+            <span style={{ width: `${Math.max(3, ratio)}%` }} />
+          </div>
+        </div>
+
+        {result.review?.recommended && (
+          <div className="as-review" role="note">
+            <p className="as-lead-title">Recomendamos una revisión profesional</p>
+            <ul>
+              {result.review.motivos.map((motivo) => (
+                <li key={motivo}>{motivo}</li>
+              ))}
+            </ul>
+            <p className="as-review-note">
+              El test no determina si necesitas evaluación de impacto, delegado de protección de datos
+              u otras medidas: eso requiere analizar tu caso.
+            </p>
+          </div>
+        )}
+
+        <h3 className="as-h3">Área por área</h3>
+        <ul className="as-gaps">
+          {areas.map((gap) => (
+            <li key={gap.id} className={`as-gap as-gap-${gap.estado}`}>
+              <span className="as-dot" aria-hidden="true" />
+              <div>
+                <p className="as-gap-head">
+                  <strong>{gap.obligacion}</strong>
+                  <span className="ed-eyebrow as-state">{MATURITY_GAP_LABEL[gap.estado]}</span>
+                </p>
+                <p className="as-gap-detail">{gap.detalle}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        {result.prioridades.length > 0 && (
+          <>
+            <h3 className="as-h3">Por dónde empezar</h3>
+            <ol className="as-prior">
+              {result.prioridades.map((p, i) => (
+                <li key={p}>
+                  <span className="ed-eyebrow">{String(i + 1).padStart(2, "0")}</span>
+                  <span>{p}</span>
+                </li>
+              ))}
+            </ol>
+          </>
+        )}
+
+        {leadSent ? (
+          <div className="as-lead as-lead-done" role="status">
+            <p className="as-lead-title">Informe en camino</p>
+            <p>{leadDoneText}</p>
+          </div>
+        ) : (
+          <form onSubmit={sendLead} className="as-lead">
+            <p className="as-lead-title">Recibe el informe por email (opcional)</p>
+            <p>{leadPitch}</p>
+            <div className="as-lead-row">
+              <label className="as-field">
+                <span className="ed-eyebrow">Email</span>
+                <input
+                  type="email"
+                  required
+                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.currentTarget.value)}
+                  placeholder="tu@empresa.com"
+                />
+              </label>
+              <button type="submit" disabled={leadSending} className="ed-button">
+                {leadSending ? "Enviando…" : "Enviar informe"}
+              </button>
+            </div>
+            <label className="as-check">
+              <input type="checkbox" checked={privacy} onChange={(e) => setPrivacy(e.currentTarget.checked)} />
+              <span>
+                Acepto la <a href="/es/politica-de-privacidad/">política de privacidad</a> para
+                recibir el informe.
+              </span>
+            </label>
+            <label className="as-check">
+              <input type="checkbox" checked={contactOptIn} onChange={(e) => setContactOptIn(e.currentTarget.checked)} />
+              <span>Quiero que me contactéis para comentar el resultado (opcional).</span>
+            </label>
+            {leadError && (
+              <p className="as-error" role="alert">
+                {leadError}
+              </p>
+            )}
+          </form>
+        )}
+
+        <p className="as-legal">
+          {legalNote} (motor {result.engineVersion}). Diagnóstico orientativo: no constituye
+          asesoramiento jurídico ni certifica el cumplimiento.
+        </p>
+
+        {offer === "rgpd-ops" ? (
+          <RgpdOpsOffer result={result} responseId={responseId} />
+        ) : (
+          <div className="as-cta">
+            <a href="/es/contact/" className="ed-button">
+              Hablar con un especialista<span className="ed-arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        )}
+      </div>
+    );
   }
 
   // ---------- RESULTADO ----------
@@ -285,7 +462,7 @@ export default function Assessment({
         {leadSent ? (
           <div className="as-lead as-lead-done">
             <p className="as-lead-title">Informe en camino</p>
-            <p>Te escribimos con el detalle por obligación y el orden de ejecución recomendado.</p>
+            <p>{leadDoneText}</p>
           </div>
         ) : (
           <form onSubmit={sendLead} className="as-lead">
@@ -439,7 +616,7 @@ export default function Assessment({
         </div>
       </div>
 
-      <p className="as-foot">Menos de 2 minutos. No pedimos email para ver el resultado.</p>
+      <p className="as-foot">{footNote}</p>
     </div>
   );
 }

@@ -198,6 +198,11 @@ export function getPilares(locale: string): NavPilar[] {
           href: `${CUMPLIMIENTO_BASE}factura-electronica/`,
           desc: "B2B obligatoria · octubre de 2027 y 2028",
         },
+        {
+          label: "Protección de datos (RGPD)",
+          href: `${CUMPLIMIENTO_BASE}rgpd/`,
+          desc: "Operación continua · diagnóstico gratuito",
+        },
       ],
     });
   }

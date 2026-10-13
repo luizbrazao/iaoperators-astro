@@ -31,7 +31,7 @@ const TRATAMIENTOS_ES: Tratamiento[] = [
     plazo: "12 meses desde el último contacto si no se inicia una relación. Si pasas a ser cliente, mientras dure la relación y después durante los plazos legales (6 años para la documentación mercantil).",
   },
   {
-    titulo: "Tests de cumplimiento (Ley 10/2025 y Verifactu)",
+    titulo: "Tests de cumplimiento (Ley 10/2025 y Verifactu) y diagnóstico RGPD",
     datos: "Las respuestas al cuestionario, el resultado, la página de origen, los parámetros de campaña (UTM) y un identificador seudonimizado calculado a partir de la IP, el navegador y el idioma. No se guarda la IP. Si pides el informe: tu email y tus preferencias de contacto.",
     finalidad: "Calcular y mostrarte el resultado, obtener estadísticas agregadas y evitar envíos duplicados o automatizados. Con el email, enviarte el informe y, si lo marcas, contactarte para comentarlo.",
     base: "Interés legítimo en prestar la herramienta y medir su uso (art. 6.1.f RGPD). El envío del informe y el contacto posterior, tu consentimiento (art. 6.1.a).",
@@ -58,13 +58,20 @@ const TRATAMIENTOS_ES: Tratamiento[] = [
     base: "Ejecución del contrato de compra (art. 6.1.b RGPD) y cumplimiento de obligaciones fiscales y contables (art. 6.1.c).",
     plazo: "Mientras dure el acceso y después durante los plazos legales de conservación de la documentación contable y fiscal (6 años).",
   },
+  {
+    titulo: "Compra y uso de RGPD Ops Starter",
+    datos: "De la compra: email, nombre y, si los indicas, empresa, NIF y dirección de facturación (los recoge Stripe en el pago); identificadores del pedido y del pago; importe; fechas de acceso; y, si llegas desde el diagnóstico, el identificador de tu resultado (no las respuestas). Del uso: el contenido que introduces en tu espacio de trabajo (información organizativa de tu empresa: tratamientos, proveedores, puntos de captación, referencias internas y fechas de solicitudes e incidentes, tareas asignadas por rol, referencias a evidencias y revisiones) y un historial de cambios que registra la acción, la fecha y los nombres de los campos, sin sus valores. La herramienta no pide datos de las personas cuyas solicitudes o incidentes gestionas y rechaza emails, teléfonos y documentos de identidad en sus campos de texto.",
+    finalidad: "Cobrar, emitir la factura, darte acceso con enlaces de un solo uso, prestarte el servicio (guardar, mostrar y exportar tu espacio) y enviarte los emails necesarios para el pago y el acceso. No usamos el contenido de tu espacio para otros fines ni lo enviamos a modelos de inteligencia artificial. Comprar no te suscribe a comunicaciones comerciales.",
+    base: "Ejecución del contrato (art. 6.1.b RGPD) y cumplimiento de obligaciones fiscales y contables (art. 6.1.c). Si tu espacio contiene datos personales de terceros, los tratamos como encargados por cuenta de tu empresa, según el encargo incluido en las condiciones de RGPD Ops (art. 28 RGPD).",
+    plazo: "Espacio de trabajo: mientras dure el acceso y hasta 90 días después (también tras un reembolso total), para que puedas exportarlo; después se elimina. Datos del pedido: los plazos legales de conservación de la documentación contable y fiscal (6 años).",
+  },
 ];
 
 const PROVEEDORES_ES: Proveedor[] = [
   { nombre: "Vercel Inc.", uso: "Alojamiento del sitio y ejecución de los formularios.", ubicacion: "Estados Unidos · encargado del tratamiento" },
-  { nombre: "Supabase Inc.", uso: "Base de datos de los tests y de la encuesta.", ubicacion: "Servidores en la Unión Europea · encargado del tratamiento" },
-  { nombre: "Resend (Plus Five Five, Inc.)", uso: "Envío de los correos del formulario de contacto, de los informes de los tests y de los enlaces de acceso del Kit.", ubicacion: "Estados Unidos · encargado del tratamiento" },
-  { nombre: "Stripe Payments Europe, Ltd.", uso: "Pago y facturación del Kit de Preparación VERI*FACTU.", ubicacion: "Irlanda (UE) · encargado del tratamiento para el cobro" },
+  { nombre: "Supabase Inc.", uso: "Base de datos de los tests, de la encuesta, de los pedidos y de los espacios de trabajo de RGPD Ops.", ubicacion: "Servidores en la Unión Europea · encargado del tratamiento" },
+  { nombre: "Resend (Plus Five Five, Inc.)", uso: "Envío de los correos del formulario de contacto, de los informes de los tests y de los enlaces de acceso del Kit y de RGPD Ops.", ubicacion: "Estados Unidos · encargado del tratamiento" },
+  { nombre: "Stripe Payments Europe, Ltd.", uso: "Pago y facturación del Kit de Preparación VERI*FACTU y de RGPD Ops Starter.", ubicacion: "Irlanda (UE) · encargado del tratamiento para el cobro" },
   { nombre: "Google (Gmail)", uso: "Bandeja en la que se reciben y gestionan los mensajes enviados a info@iaoperators.com.", ubicacion: "Estados Unidos y UE" },
   { nombre: "Google, Meta, LinkedIn y Ahrefs", uso: "Medición y publicidad, solo si aceptas las cookies. Detalle en el apartado 7.", ubicacion: "UE y Estados Unidos · ver apartado 7" },
 ];
@@ -72,6 +79,7 @@ const PROVEEDORES_ES: Proveedor[] = [
 const COOKIES_ES: CookieItem[] = [
   { nombre: "Preferencia de cookies (propia)", uso: "Recuerda si aceptaste o rechazaste el aviso. Se guarda en el almacenamiento local del navegador. Técnica, no requiere consentimiento.", detalle: "Clave iaoperators_cookie_consent · hasta que la borres" },
   { nombre: "Sesión del Kit (propia)", uso: "Mantiene abierta tu sesión en la zona privada del Kit tras usar el enlace de acceso. Solo existe si has comprado y entrado. Técnica, no requiere consentimiento.", detalle: "__Host-vfk_session · hasta 30 días o hasta que cierres sesión" },
+  { nombre: "Sesión de RGPD Ops (propia)", uso: "Mantiene abierta tu sesión en tu espacio de RGPD Ops tras usar el enlace de acceso. Solo existe si has comprado y entrado. Técnica, no requiere consentimiento. El espacio guarda además en el navegador el último módulo abierto (rgo:view) y, durante la visita, si ya entraste (rgo:accessed) y el contexto del diagnóstico al ir al pago (rgo_ctx, sin respuestas).", detalle: "__Host-rgo_session · hasta 30 días o hasta que cierres sesión" },
   { nombre: "Google Tag Manager (Google Ireland Ltd.)", uso: "Gestor que carga el resto de etiquetas tras tu consentimiento. No instala cookies propias.", detalle: "Solo tras aceptar" },
   { nombre: "Google Analytics 4 (Google Ireland Ltd.)", uso: "Medición de audiencia: páginas vistas, origen de las visitas y conversiones.", detalle: "Analítica · _ga, _ga_* · hasta 2 años" },
   { nombre: "Google Ads (Google Ireland Ltd.)", uso: "Medición de conversiones de anuncios y listas de remarketing.", detalle: "Publicidad · _gcl_au · 90 días" },
@@ -81,7 +89,7 @@ const COOKIES_ES: CookieItem[] = [
 ];
 
 const ES = {
-  "updated": "Última actualización · 12 de octubre de 2026",
+  "updated": "Última actualización · 13 de octubre de 2026",
   "lead": "Qué datos personales tratamos en iaoperators.com, para qué, con qué base legal, durante cuánto tiempo, con quién se comparten y cómo puedes ejercer tus derechos. Esta política cumple el deber de información del Reglamento (UE) 2016/679 (RGPD) y de la Ley Orgánica 3/2018 (LOPDGDD).",
   "labels": {
     "holder": "Titular",
@@ -154,7 +162,7 @@ export type PoliticaCopy = typeof ES & { tratamientos: Tratamiento[]; proveedore
 export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
   es: { ...ES, tratamientos: TRATAMIENTOS_ES, proveedores: PROVEEDORES_ES, cookies: COOKIES_ES },
   en: {
-    "updated": "Last updated · 12 October 2026",
+    "updated": "Last updated · 13 October 2026",
     "lead": "What personal data we process on iaoperators.com, why, on what legal basis, for how long, who it is shared with and how you can exercise your rights. This policy meets the information duty under Regulation (EU) 2016/679 (GDPR) and Spanish Organic Law 3/2018 (LOPDGDD).",
     "labels": {
       "holder": "Owner",
@@ -229,7 +237,7 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
         "plazo": "12 months from the last contact if no relationship begins. If you become a client, for the duration of the relationship and then for the legal retention periods (6 years for commercial records)."
       },
       {
-        "titulo": "Compliance tests (Ley 10/2025 and Verifactu)",
+        "titulo": "Compliance tests (Ley 10/2025 and Verifactu) and GDPR diagnosis",
         "datos": "Your answers to the questionnaire, the result, the page you came from, campaign parameters (UTM) and a pseudonymized identifier calculated from your IP, browser and language. The IP itself is not stored. If you request the report: your email and your contact preferences.",
         "finalidad": "To calculate and show you the result, produce aggregate statistics and prevent duplicate or automated submissions. With your email, to send you the report and, if you tick the box, to contact you to discuss it.",
         "base": "Legitimate interest in providing the tool and measuring its use (art. 6.1.f GDPR). Sending the report and any follow-up contact: your consent (art. 6.1.a).",
@@ -255,6 +263,13 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
         "finalidad": "To charge you, issue the invoice, give you access to the Kit through single-use links and send the emails needed for payment and access. Buying does not subscribe you to marketing communications.",
         "base": "Performance of the purchase contract (art. 6.1.b GDPR) and compliance with tax and accounting obligations (art. 6.1.c).",
         "plazo": "While access lasts and then for the legal retention periods for accounting and tax records (6 years)."
+      },
+      {
+        "titulo": "Purchase and use of RGPD Ops Starter",
+        "datos": "From the purchase: email, name and, if you provide them, company, tax ID and billing address (collected by Stripe at checkout); order and payment identifiers; amount; access dates; and, if you came from the diagnosis, the identifier of your result (not your answers). From use: the content you enter in your workspace (organisational information about your company: processing activities, providers, collection points, internal references and dates of requests and incidents, tasks assigned by role, references to evidence and reviews) and a change history that records the action, the date and the names of the fields, without their values. The tool does not ask for data about the people whose requests or incidents you manage and rejects emails, phone numbers and ID numbers in its text fields.",
+        "finalidad": "To charge you, issue the invoice, give you access through single-use links, provide the service (store, display and export your workspace) and send the emails needed for payment and access. We do not use your workspace content for any other purpose or send it to artificial intelligence models. Buying does not subscribe you to marketing communications.",
+        "base": "Performance of the contract (art. 6.1.b GDPR) and compliance with tax and accounting obligations (art. 6.1.c). If your workspace contains personal data of third parties, we process it as a processor on behalf of your company, under the processing terms included in the RGPD Ops conditions (art. 28 GDPR).",
+        "plazo": "Workspace: while access lasts and up to 90 days afterwards (also after a full refund), so you can export it; then it is deleted. Order data: the legal retention periods for accounting and tax records (6 years)."
       }
     ],
     "proveedores": [
@@ -265,17 +280,17 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
       },
       {
         "nombre": "Supabase Inc.",
-        "uso": "Database for the tests and the survey.",
+        "uso": "Database for the tests, the survey, the orders and the RGPD Ops workspaces.",
         "ubicacion": "Servers in the European Union · processor"
       },
       {
         "nombre": "Stripe Payments Europe, Ltd.",
-        "uso": "Payment and invoicing for the VERI*FACTU Preparation Kit.",
+        "uso": "Payment and invoicing for the VERI*FACTU Preparation Kit and RGPD Ops Starter.",
         "ubicacion": "Ireland (EU) · processor for payments"
       },
       {
         "nombre": "Resend (Plus Five Five, Inc.)",
-        "uso": "Sending the contact form emails, the test reports and the Kit access links.",
+        "uso": "Sending the contact form emails, the test reports and the access links for the Kit and RGPD Ops.",
         "ubicacion": "United States · processor"
       },
       {
@@ -299,6 +314,11 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
         "nombre": "Kit session (first-party)",
         "uso": "Keeps you signed in to the private Kit area after you use the access link. Only exists if you bought and signed in. Technical, does not require consent.",
         "detalle": "__Host-vfk_session · up to 30 days or until you sign out"
+      },
+      {
+        "nombre": "RGPD Ops session (first-party)",
+        "uso": "Keeps you signed in to your RGPD Ops workspace after you use the access link. Only exists if you bought and signed in. Technical, does not require consent. The workspace also stores in the browser the last module you opened (rgo:view) and, during the visit, whether you already signed in (rgo:accessed) and the diagnosis context when going to checkout (rgo_ctx, no answers).",
+        "detalle": "__Host-rgo_session · up to 30 days or until you sign out"
       },
       {
         "nombre": "Google Tag Manager (Google Ireland Ltd.)",
@@ -333,7 +353,7 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
     ]
   },
   pt: {
-    "updated": "Última atualização · 12 de outubro de 2026",
+    "updated": "Última atualização · 13 de outubro de 2026",
     "lead": "Quais dados pessoais tratamos em iaoperators.com, para quê, com que base legal, por quanto tempo, com quem são compartilhados e como você pode exercer seus direitos. Esta política cumpre o dever de informação do Regulamento (UE) 2016/679 (RGPD) e da Lei Orgânica espanhola 3/2018 (LOPDGDD).",
     "labels": {
       "holder": "Titular",
@@ -408,7 +428,7 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
         "plazo": "12 meses desde o último contato, se não houver início de relação. Se você se tornar cliente, enquanto durar a relação e depois pelos prazos legais (6 anos para a documentação mercantil)."
       },
       {
-        "titulo": "Testes de cumprimento (Ley 10/2025 e Verifactu)",
+        "titulo": "Testes de cumprimento (Ley 10/2025 e Verifactu) e diagnóstico RGPD",
         "datos": "As respostas ao questionário, o resultado, a página de origem, os parâmetros de campanha (UTM) e um identificador pseudonimizado calculado a partir do IP, do navegador e do idioma. O IP não é guardado. Se você pedir o relatório: seu e-mail e suas preferências de contato.",
         "finalidad": "Calcular e mostrar o resultado, obter estatísticas agregadas e evitar envios duplicados ou automatizados. Com o e-mail, enviar o relatório e, se você marcar a opção, entrar em contato para comentá-lo.",
         "base": "Interesse legítimo em oferecer a ferramenta e medir seu uso (art. 6.1.f do RGPD). O envio do relatório e o contato posterior: seu consentimento (art. 6.1.a).",
@@ -434,6 +454,13 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
         "finalidad": "Cobrar, emitir a fatura, dar acesso ao Kit com links de uso único e enviar os e-mails necessários para o pagamento e o acesso. Comprar não inscreve você em comunicações comerciais.",
         "base": "Execução do contrato de compra (art. 6.1.b do RGPD) e cumprimento de obrigações fiscais e contábeis (art. 6.1.c).",
         "plazo": "Enquanto durar o acesso e depois durante os prazos legais de conservação da documentação contábil e fiscal (6 anos)."
+      },
+      {
+        "titulo": "Compra e uso do RGPD Ops Starter",
+        "datos": "Da compra: e-mail, nome e, se você informar, empresa, número fiscal e endereço de cobrança (coletados pela Stripe no pagamento); identificadores do pedido e do pagamento; valor; datas de acesso; e, se você veio do diagnóstico, o identificador do seu resultado (não as respostas). Do uso: o conteúdo que você insere no seu espaço de trabalho (informação organizacional da sua empresa: tratamentos, fornecedores, pontos de captação, referências internas e datas de solicitações e incidentes, tarefas atribuídas por função, referências a evidências e revisões) e um histórico de alterações que registra a ação, a data e os nomes dos campos, sem os seus valores. A ferramenta não pede dados das pessoas cujas solicitações ou incidentes você gere e rejeita e-mails, telefones e documentos de identidade nos campos de texto.",
+        "finalidad": "Cobrar, emitir a fatura, dar acesso com links de uso único, prestar o serviço (guardar, mostrar e exportar o seu espaço) e enviar os e-mails necessários para o pagamento e o acesso. Não usamos o conteúdo do seu espaço para outros fins nem o enviamos a modelos de inteligência artificial. Comprar não inscreve você em comunicações comerciais.",
+        "base": "Execução do contrato (art. 6.1.b do RGPD) e cumprimento de obrigações fiscais e contábeis (art. 6.1.c). Se o seu espaço contiver dados pessoais de terceiros, nós os tratamos como subcontratantes por conta da sua empresa, conforme o encargo incluído nas condições do RGPD Ops (art. 28 do RGPD).",
+        "plazo": "Espaço de trabalho: enquanto durar o acesso e até 90 dias depois (também após um reembolso total), para que você possa exportá-lo; depois é eliminado. Dados do pedido: os prazos legais de conservação da documentação contábil e fiscal (6 anos)."
       }
     ],
     "proveedores": [
@@ -444,17 +471,17 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
       },
       {
         "nombre": "Supabase Inc.",
-        "uso": "Banco de dados dos testes e da pesquisa.",
+        "uso": "Banco de dados dos testes, da pesquisa, dos pedidos e dos espaços de trabalho do RGPD Ops.",
         "ubicacion": "Servidores na União Europeia · operador"
       },
       {
         "nombre": "Stripe Payments Europe, Ltd.",
-        "uso": "Pagamento e faturamento do Kit de Preparação VERI*FACTU.",
+        "uso": "Pagamento e faturamento do Kit de Preparação VERI*FACTU e do RGPD Ops Starter.",
         "ubicacion": "Irlanda (UE) · operador para o pagamento"
       },
       {
         "nombre": "Resend (Plus Five Five, Inc.)",
-        "uso": "Envio dos e-mails do formulário de contato, dos relatórios dos testes e dos links de acesso do Kit.",
+        "uso": "Envio dos e-mails do formulário de contato, dos relatórios dos testes e dos links de acesso do Kit e do RGPD Ops.",
         "ubicacion": "Estados Unidos · operador"
       },
       {
@@ -478,6 +505,11 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
         "nombre": "Sessão do Kit (própria)",
         "uso": "Mantém sua sessão aberta na área privada do Kit depois que você usa o link de acesso. Só existe se você comprou e entrou. Técnica, não requer consentimento.",
         "detalle": "__Host-vfk_session · até 30 dias ou até você encerrar a sessão"
+      },
+      {
+        "nombre": "Sessão do RGPD Ops (própria)",
+        "uso": "Mantém sua sessão aberta no seu espaço do RGPD Ops depois que você usa o link de acesso. Só existe se você comprou e entrou. Técnica, não requer consentimento. O espaço também guarda no navegador o último módulo aberto (rgo:view) e, durante a visita, se você já entrou (rgo:accessed) e o contexto do diagnóstico ao ir para o pagamento (rgo_ctx, sem respostas).",
+        "detalle": "__Host-rgo_session · até 30 dias ou até você encerrar a sessão"
       },
       {
         "nombre": "Google Tag Manager (Google Ireland Ltd.)",

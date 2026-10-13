@@ -1,0 +1,154 @@
+---
+// Condiciones de venta y de servicio de RGPD Ops Starter. El texto de
+// aceptación del Checkout (custom_text.terms_of_service_acceptance, en
+// src/lib/rgpd-ops/stripe.ts) enlaza aquí. Stripe exige además una URL de
+// condiciones a nivel de cuenta (Settings → Public details), que ya existe por
+// el Kit: ver docs/rgpd-ops.md §Stripe.
+// noindex, follow: página legal de apoyo, no de captación.
+//
+// PENDIENTE DE VALIDACIÓN JURÍDICA antes de vender en modo live, en especial
+// la cláusula de encargo del tratamiento (art. 28 RGPD) del apartado 9.
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { RGPD_OPS_ACCESS_TEXT, RGPD_OPS_PRODUCT } from "@/data/rgpd-ops";
+import { RESPONSABLE } from "@/data/privacidad";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-legal.css";
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const P = RGPD_OPS_PRODUCT;
+const pageUrl = `${site.replace(/\/$/, "")}${P.paths.condiciones}`;
+const actualizado = "13 de octubre de 2026";
+
+const secciones = [
+  {
+    t: "1. Quién presta el servicio",
+    p: [
+      `${RESPONSABLE.name}, profesional autónomo con nombre comercial IA Operators, NIF ${RESPONSABLE.taxId}, con domicilio en ${RESPONSABLE.city}. Contacto: ${RESPONSABLE.email}.`,
+    ],
+  },
+  {
+    t: "2. Qué contratas",
+    p: [
+      `${P.name} (versión ${P.version}) es una herramienta operativa en línea: un espacio de trabajo privado en iaoperators.com para organizar la protección de datos de tu empresa (perfil, tratamientos, proveedores, puntos de captación, solicitudes de derechos, incidentes, tareas, evidencias, revisiones y exportaciones).`,
+      "No constituye asesoramiento jurídico, no certifica el cumplimiento del RGPD ni de la LOPDGDD, no decide bases jurídicas, no determina si necesitas evaluación de impacto o delegado de protección de datos, no decide si una brecha se notifica y no envía comunicaciones a la AEPD ni a terceros. Los documentos que exporta son borradores de trabajo que requieren revisión.",
+    ],
+  },
+  {
+    t: "3. Precio, impuestos y factura",
+    p: [
+      `El precio es ${P.price.display} más los impuestos aplicables (${P.price.taxNote}), en un pago único. No es una suscripción y no se renueva automáticamente. El importe final se muestra antes de pagar.`,
+      "Recibirás la factura por email tras el pago.",
+    ],
+  },
+  {
+    t: "4. Pago",
+    p: [
+      "El pago se procesa con Stripe. IA Operators no ve ni guarda los datos de tu tarjeta. La compra se considera hecha cuando Stripe confirma el pago; con métodos de pago diferido, el acceso se activa cuando el pago se confirma.",
+    ],
+  },
+  {
+    t: "5. Acceso y duración",
+    p: [
+      RGPD_OPS_ACCESS_TEXT,
+      "Accedes con enlaces personales de un solo uso que enviamos al email de la compra. Cada compra da un espacio de trabajo con un único acceso; en esta versión no hay usuarios adicionales ni permisos. Lo que guardas se almacena en el servidor y está disponible desde cualquier dispositivo tras pedir un enlace nuevo.",
+    ],
+  },
+  {
+    t: "6. Actualizaciones",
+    p: [
+      `Durante ${P.accessMonths} meses desde la compra tendrás acceso a las actualizaciones del producto, incluidas las de su base normativa. El espacio muestra su versión, la fecha de la última revisión normativa y un historial de cambios.`,
+    ],
+  },
+  {
+    t: "7. Derecho de desistimiento",
+    p: [
+      "Si compras como consumidor, en el pago solicitas expresamente el acceso inmediato al servicio digital y reconoces que, una vez iniciado, pierdes el derecho de desistimiento, conforme al artículo 103 del Texto Refundido de la Ley General para la Defensa de los Consumidores y Usuarios.",
+      "Si no puedes acceder por un problema técnico atribuible a nosotros y no lo resolvemos, te devolveremos el importe. Un reembolso total desactiva el acceso; un reembolso parcial lo mantiene.",
+    ],
+  },
+  {
+    t: "8. Uso permitido",
+    p: [
+      "La compra te da una licencia de uso para tu empresa. Puedes exportar e imprimir tu contenido y compartirlo con tus asesores.",
+      "No introduzcas en el espacio datos de las personas cuyas solicitudes o incidentes gestionas: ni nombres, ni emails, ni teléfonos, ni documentos de identidad, ni el contenido de sus solicitudes, ni registros afectados por un incidente. Usa referencias internas: esa información debe quedarse en tu propio sistema seguro. La herramienta rechaza emails, teléfonos y documentos de identidad en los campos de texto, pero no puede detectar todo.",
+    ],
+  },
+  {
+    t: "9. Datos que introduces: encargo del tratamiento",
+    p: [
+      "Respecto del contenido de tu espacio de trabajo, tu empresa es responsable del tratamiento e IA Operators actúa como encargado del tratamiento en la medida en que ese contenido incluya datos personales (por ejemplo, datos de contacto profesional del propio cliente o referencias que permitan identificar a alguien). Este apartado constituye el contrato de encargo a efectos del artículo 28 del RGPD.",
+      "Objeto, naturaleza y finalidad: alojar, mostrar, modificar, exportar y suprimir el contenido que introduces, con la única finalidad de prestarte el servicio. Duración: mientras dure tu acceso y el periodo de conservación del apartado 10. Tipo de datos y categorías de interesados: los que decidas introducir, que deben limitarse a datos organizativos de tu empresa conforme al apartado 8.",
+      "IA Operators se compromete a: tratar el contenido solo siguiendo tus instrucciones, que son estas condiciones y el uso que hagas de la herramienta; no usarlo para fines propios ni enviarlo a modelos de inteligencia artificial; garantizar la confidencialidad de quien acceda a él; aplicar medidas de seguridad apropiadas (cifrado en tránsito, acceso restringido al servidor, registro de cambios sin valores); ayudarte a atender derechos mediante la exportación y la supresión; avisarte sin dilación indebida si tiene constancia de una brecha que afecte a tu espacio; poner a tu disposición la información necesaria para demostrar estas obligaciones; y suprimir el contenido al terminar, salvo obligación legal de conservarlo.",
+      "Autorizas como subencargados a Supabase (base de datos alojada en la Unión Europea) y a Vercel (alojamiento y ejecución del servicio). Te avisaremos de cualquier cambio de subencargados para que puedas oponerte.",
+    ],
+  },
+  {
+    t: "10. Conservación y exportación",
+    p: [
+      `Puedes exportar tu espacio en cualquier momento (copia JSON y CSV por módulo). Al terminar el acceso, o si se revoca por un reembolso total, conservamos el espacio ${P.retentionGraceDays} días para que puedas exportarlo y después se elimina. Los datos del pedido se conservan aparte durante los plazos legales de la documentación contable y fiscal.`,
+    ],
+  },
+  {
+    t: "11. Disponibilidad",
+    p: [
+      "Trabajamos para que el servicio esté disponible y para que no se pierdan datos, pero no ofrecemos un acuerdo de nivel de servicio. Te recomendamos exportar una copia JSON con regularidad, por ejemplo tras cada revisión trimestral.",
+    ],
+  },
+  {
+    t: "12. Responsabilidad",
+    p: [
+      "El contenido guiado se elabora a partir de fuentes oficiales y muestra la fecha de su última revisión, pero la normativa cambia y su aplicación depende de cada caso. Las decisiones jurídicas deben tomarse con el asesoramiento adecuado. Nada de lo anterior limita los derechos que te reconoce la ley como consumidor.",
+    ],
+  },
+  {
+    t: "13. Datos personales del comprador",
+    p: [
+      "Tratamos los datos de la compra para cobrar, facturar, darte acceso y prestar el servicio. Los detalles están en la política de privacidad.",
+    ],
+  },
+  {
+    t: "14. Ley aplicable",
+    p: [
+      "Estas condiciones se rigen por la legislación española. Si eres consumidor, conservas los derechos y el fuero que te reconozca la normativa de tu lugar de residencia.",
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Condiciones de RGPD Ops | IA Operators"
+  description="Condiciones de venta y de servicio de RGPD Ops Starter: precio, acceso, encargo del tratamiento, conservación, desistimiento y responsabilidad."
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  robots="noindex, follow"
+  editorial
+>
+  <div class="ed-container">
+    <header class="pg-hero pg-hero-compact">
+      <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/es/">Inicio</a></li>
+          <li><a href={P.paths.landing}>{P.name}</a></li>
+          <li><span aria-current="page">Condiciones</span></li>
+        </ol>
+      </nav>
+      <h1>Condiciones de venta y de servicio</h1>
+      <p class="ed-eyebrow" style="margin-top:18px">{P.name} · actualizado el {actualizado}</p>
+    </header>
+    <section class="pg-section">
+      <div class="pg-prose" style="max-width:68ch">
+        {secciones.map((s) => (
+          <>
+            <h2 style="font-size:22px;font-weight:500;letter-spacing:-.03em;margin-top:36px">{s.t}</h2>
+            {s.p.map((p) => <p>{p}</p>)}
+          </>
+        ))}
+        <p>
+          <a class="pg-inline-link" href="/es/politica-de-privacidad/">Política de privacidad</a> ·
+          <a class="pg-inline-link" href={P.paths.landing}>Volver a {P.name}</a>
+        </p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

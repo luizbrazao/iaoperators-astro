@@ -105,6 +105,39 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     estimada: true,
   },
   {
+    // Pilar RGPD (oct/2026). Protección de datos como operación continua para
+    // pymes con canales digitales. Sin plazo legal nuevo: intención
+    // informativa-comercial. Faixas sin medir en el Keyword Planner.
+    path: "cumplimiento/rgpd/",
+    locales: ["es"],
+    silo: "cumplimiento",
+    primaria: "protección de datos empresas",
+    secundarias: ["protección de datos para empresas", "rgpd para pymes", "cumplimiento rgpd", "registro de actividades de tratamiento"],
+    faixa: "c",
+    estimada: true,
+  },
+  {
+    // Diagnóstico gratuito de madurez. No compite con el pilar.
+    path: "cumplimiento/rgpd/test/",
+    locales: ["es"],
+    silo: "cumplimiento",
+    primaria: "test rgpd",
+    secundarias: ["diagnóstico rgpd", "autoevaluación rgpd"],
+    faixa: "b",
+    estimada: true,
+  },
+  {
+    // RGPD Ops Starter (oct/2026). Intención transaccional: herramienta de
+    // gestión. No compite con el pilar ("protección de datos empresas").
+    path: "cumplimiento/rgpd/ops/",
+    locales: ["es"],
+    silo: "cumplimiento",
+    primaria: "gestión rgpd",
+    secundarias: ["herramienta rgpd", "software rgpd pymes"],
+    faixa: "b",
+    estimada: true,
+  },
+  {
     // Kit de pago (oct/2026). Intención transaccional de quien NO integra:
     // autónomo o pyme con software estándar. No compite con "verifactu"
     // (pilar) ni con "test verifactu" (gratuito).

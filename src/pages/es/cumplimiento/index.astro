@@ -193,6 +193,27 @@ const jsonLd = [
         </article>
       ))}
     </div>
+
+    {/* Protección de datos (oct/2026): no es un frente con plazo nuevo —el RGPD
+        es aplicable desde 2018— sino una operación continua. Por eso va fuera
+        de la rejilla de frentes y sin contador de días. */}
+    <div class="pg-door-wrap">
+      <section class="pg-door" aria-labelledby="rgpd-door-title">
+        <p class="ed-eyebrow">Operación continua · RGPD</p>
+        <div>
+          <h2 id="rgpd-door-title">Protección de datos para empresas que usan WhatsApp, CRM, formularios e IA</h2>
+          <p>
+            Sin plazo de adaptación nuevo: el trabajo es mantener al día tratamientos, proveedores, avisos,
+            solicitudes, incidentes y evidencias. Diagnóstico gratuito de madurez y una herramienta operativa
+            para organizarlo.
+          </p>
+          <div class="pg-actions">
+            <a class="ed-button" href={`/${locale}/cumplimiento/rgpd/`}>Ver protección de datos<span class="ed-arrow" aria-hidden="true">↗</span></a>
+            <a class="ed-underlined" href={`/${locale}/cumplimiento/rgpd/test/`}>Diagnóstico RGPD · 3 min <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </section>
+    </div>
   </div>
 
   <section class="ed-closing pg-closing-cumplimiento" aria-label="Contacto">

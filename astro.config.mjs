@@ -39,6 +39,10 @@ const NOINDEX_PATHS = [
   "/es/cumplimiento/verifactu/kit/gracias/",
   "/es/cumplimiento/verifactu/kit/acceso/",
   "/es/cumplimiento/verifactu/kit/condiciones/",
+  // RGPD Ops Starter: zonas privadas (SSR) y página legal de apoyo.
+  "/es/cumplimiento/rgpd/ops/gracias/",
+  "/es/cumplimiento/rgpd/ops/acceso/",
+  "/es/cumplimiento/rgpd/ops/condiciones/",
 ];
 
 export default defineConfig({
