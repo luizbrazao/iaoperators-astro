@@ -32,8 +32,6 @@ related:
   - you-pay-for-ai-twice-the-second-bill-is-the-costliest
 ---
 
-# Local, private AI with no monthly fees: how to run Qwen models on your PC
-
 Let me tell you something that would have sounded pretty strange just a year ago.
 
 Powerful AI…  
@@ -66,7 +64,7 @@ Instead of sending everything to external APIs, you can run part of the pipeline
 
 ---
 
-# Why running Qwen locally is now viable
+## Why running Qwen locally is now viable
 
 For a long time, running models locally had a very obvious problem:
 
@@ -107,7 +105,7 @@ That’s where Qwen starts to shine.
 
 ---
 
-# Minimum requirements: RAM, VRAM, and workload type
+## Minimum requirements: RAM, VRAM, and workload type
 
 Before installing anything, here’s the most important advice in this article.
 
@@ -148,7 +146,7 @@ Your future self will thank you.
 
 ---
 
-# How to choose the right Qwen model
+## How to choose the right Qwen model
 
 When people start experimenting with local models, they usually make the same mistake.
 
@@ -159,11 +157,11 @@ But it’s rarely the best decision.
 
 A smarter strategy looks like this.
 
-## 1. Start with stability
+### 1. Start with stability
 
 A slightly smaller but stable model almost always performs better in production.
 
-## 2. Use quantization wisely
+### 2. Use quantization wisely
 
 Quantization reduces the model size.
 
@@ -174,7 +172,7 @@ For example:
 
 The goal is to find the balance between **quality and resource consumption**.
 
-## 3. Create a small internal benchmark
+### 3. Create a small internal benchmark
 
 Forget academic benchmarks.
 
@@ -187,7 +185,7 @@ Test using:
 
 This kind of benchmark is far more valuable than any leaderboard.
 
-## 4. Measure task latency
+### 4. Measure task latency
 
 Tokens per second are interesting.
 
@@ -199,7 +197,7 @@ That’s what affects operations.
 
 ---
 
-# LM Studio vs Ollama: which one to use
+## LM Studio vs Ollama: which one to use
 
 A very common question is:
 
@@ -207,7 +205,7 @@ A very common question is:
 
 The short answer is: **it depends on who will use it**.
 
-## LM Studio
+### LM Studio
 
 LM Studio is great for:
 
@@ -220,7 +218,7 @@ It has a visual interface and makes it easy to download and test models.
 
 Think of it as a **testing lab**.
 
-## Ollama
+### Ollama
 
 Ollama is better suited for technical integration.
 
@@ -240,19 +238,19 @@ Ollama → production
 
 ---
 
-# Step-by-step: running Qwen with LM Studio
+## Step-by-step: running Qwen with LM Studio
 
 Installing a local model might sound intimidating, but the process is actually straightforward.
 
 Here is the typical workflow.
 
-## 1. Install LM Studio
+### 1. Install LM Studio
 
 Download and install LM Studio.
 
 Make sure your **GPU drivers are updated**.
 
-## 2. Download a Qwen model
+### 2. Download a Qwen model
 
 From the model library, select a version compatible with your hardware.
 
@@ -261,13 +259,13 @@ Look for:
 - quantized models  
 - GPU-friendly versions
 
-## 3. Choose the right quantization
+### 3. Choose the right quantization
 
 Select a quantization level that leaves memory headroom.
 
 If the model uses all available VRAM, performance will become unstable.
 
-## 4. Test simple prompts
+### 4. Test simple prompts
 
 Before running complex workflows, try:
 
@@ -277,7 +275,7 @@ Before running complex workflows, try:
 
 This helps calibrate the model.
 
-## 5. Test real tasks
+### 5. Test real tasks
 
 After validation, you can test:
 
@@ -286,19 +284,19 @@ After validation, you can test:
 - images  
 - code generation  
 
-## 6. Define human validation
+### 6. Define human validation
 
 Any critical workflow should include **human review** before full automation.
 
 ---
 
-# Practical use cases for local AI
+## Practical use cases for local AI
 
 This is where local AI stops being interesting…
 
 and starts being truly useful.
 
-## Image documents → structured data
+### Image documents → structured data
 
 Many companies process documents like:
 
@@ -326,7 +324,7 @@ Taking a pipeline like this from a working test to production, with validation, 
 
 ---
 
-## Rapid generation of internal tools
+### Rapid generation of internal tools
 
 Another interesting use case is generating small internal tools.
 
@@ -341,7 +339,7 @@ Many of these tools can be prototyped in minutes using a local model.
 
 ---
 
-## Long document analysis with governance
+### Long document analysis with governance
 
 Local models also work well for analyzing long documents such as:
 
@@ -363,7 +361,7 @@ Especially when instructed to:
 
 ---
 
-# Common mistakes when running local LLMs
+## Common mistakes when running local LLMs
 
 Some mistakes appear again and again in local AI projects.
 
@@ -378,11 +376,11 @@ In practice, local models work best as part of **a hybrid architecture**.
 
 ---
 
-# Recommended architecture: local + cloud AI
+## Recommended architecture: local + cloud AI
 
 In production, the most effective approach is usually combining both layers.
 
-## Local AI
+### Local AI
 
 Best for:
 
@@ -391,7 +389,7 @@ Best for:
 - low latency workflows  
 - internal automation
 
-## Cloud AI
+### Cloud AI
 
 Better for:
 
@@ -406,7 +404,7 @@ If you're concerned about how much of your company's knowledge ends up in extern
 
 ---
 
-# Conclusion
+## Conclusion
 
 Local AI is no longer just a technical curiosity.
 
@@ -425,7 +423,7 @@ but about **running the right model in the right place**.
 
 ---
 
-# Want to implement local AI in your company?
+## Want to implement local AI in your company?
 
 **IA Operators** designs and implements hybrid AI architectures (local + cloud) for automation, document analysis, and AI agents.
 

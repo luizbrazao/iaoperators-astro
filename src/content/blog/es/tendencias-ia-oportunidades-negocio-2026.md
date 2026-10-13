@@ -1,7 +1,7 @@
 ---
 title: "Las 7 tendencias de IA que crearán las mayores oportunidades de negocio en 2026"
 seoTitle: "7 tendencias de IA para tu negocio en 2026"
-description: "Agentes de IA, n8n, automatización, FinOps y arquitectura de soluciones. Descubre las tendencias que están transformando el mercado y creando una nueva generación de profesionales."
+description: "Agentes de IA, n8n, automatización, FinOps y arquitectura de soluciones: las tendencias que están cambiando el mercado y creando nuevos perfiles."
 category: others
 date: 2026-06-03
 locale: es

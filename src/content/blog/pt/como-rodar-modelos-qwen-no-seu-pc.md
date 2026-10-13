@@ -32,8 +32,6 @@ related:
   - voce-paga-ia-duas-vezes-segunda-fatura-cara
 ---
 
-# IA local, privada e sem mensalidade: como executar modelos Qwen no seu PC
-
 Vou te contar algo que até pouco tempo atrás soaria meio estranho.
 
 IA poderosa…  
@@ -66,7 +64,7 @@ Em vez de enviar tudo para APIs externas, você pode executar parte do pipeline 
 
 ---
 
-# Por que Qwen local já é viável
+## Por que Qwen local já é viável
 
 Durante muito tempo, rodar modelos localmente tinha um problema bastante claro:
 
@@ -106,7 +104,7 @@ E é exatamente aí que Qwen começa a se destacar.
 
 ---
 
-# Requisitos mínimos: RAM, VRAM e tipo de carga
+## Requisitos mínimos: RAM, VRAM e tipo de carga
 
 Antes de instalar qualquer coisa, aqui vai o conselho mais importante deste artigo.
 
@@ -147,7 +145,7 @@ Seu “eu do futuro” vai agradecer.
 
 ---
 
-# Qual modelo Qwen escolher para o seu ambiente
+## Qual modelo Qwen escolher para o seu ambiente
 
 Quando alguém começa a usar modelos locais, costuma cometer um erro clássico.
 
@@ -158,11 +156,11 @@ Mas raramente é a melhor escolha.
 
 Uma estratégia mais inteligente seria algo assim.
 
-## 1. Comece pela estabilidade
+### 1. Comece pela estabilidade
 
 Um modelo um pouco menor, mas estável, quase sempre funciona melhor em produção.
 
-## 2. Use quantização com critério
+### 2. Use quantização com critério
 
 A quantização reduz o tamanho do modelo.
 
@@ -173,7 +171,7 @@ Por exemplo:
 
 O objetivo é encontrar um equilíbrio entre **qualidade e uso de recursos**.
 
-## 3. Crie um pequeno benchmark interno
+### 3. Crie um pequeno benchmark interno
 
 Esqueça benchmarks acadêmicos.
 
@@ -186,7 +184,7 @@ Teste com:
 
 Esse conjunto de testes vale muito mais do que qualquer leaderboard.
 
-## 4. Meça a latência por tarefa
+### 4. Meça a latência por tarefa
 
 Tokens por segundo são interessantes.
 
@@ -198,7 +196,7 @@ Mas o que realmente importa é:
 
 ---
 
-# LM Studio vs Ollama: quando usar cada um
+## LM Studio vs Ollama: quando usar cada um
 
 Uma pergunta muito comum é:
 
@@ -206,7 +204,7 @@ Uma pergunta muito comum é:
 
 A resposta curta é: **depende de quem vai usar**.
 
-## LM Studio
+### LM Studio
 
 LM Studio é excelente para:
 
@@ -219,7 +217,7 @@ Ele tem uma interface visual simples e facilita baixar e testar modelos.
 
 É como um **laboratório de experimentação**.
 
-## Ollama
+### Ollama
 
 Ollama é mais focado em integração técnica.
 
@@ -239,19 +237,19 @@ Ollama → produção
 
 ---
 
-# Passo a passo para rodar Qwen com LM Studio
+## Passo a passo para rodar Qwen com LM Studio
 
 Instalar um modelo local pode parecer complicado, mas na prática o processo é bem direto.
 
 O fluxo básico costuma ser este.
 
-## 1. Instalar o LM Studio
+### 1. Instalar o LM Studio
 
 Baixe o LM Studio e instale no seu computador.
 
 Também é importante garantir que os **drivers da GPU estejam atualizados**.
 
-## 2. Baixar um modelo Qwen
+### 2. Baixar um modelo Qwen
 
 No catálogo de modelos você pode escolher uma versão compatível com seu hardware.
 
@@ -260,13 +258,13 @@ Procure versões:
 - quantizadas  
 - otimizadas para GPU  
 
-## 3. Escolher a quantização
+### 3. Escolher a quantização
 
 Selecione uma quantização que deixe margem de memória.
 
 Se o modelo ocupar toda a VRAM, o desempenho ficará instável.
 
-## 4. Testar prompts simples
+### 4. Testar prompts simples
 
 Antes de carregar tarefas complexas, experimente:
 
@@ -276,7 +274,7 @@ Antes de carregar tarefas complexas, experimente:
 
 Isso ajuda a calibrar o comportamento.
 
-## 5. Testar casos reais
+### 5. Testar casos reais
 
 Depois disso, você pode testar:
 
@@ -285,19 +283,19 @@ Depois disso, você pode testar:
 - imagens  
 - geração de código  
 
-## 6. Definir validação humana
+### 6. Definir validação humana
 
 Qualquer fluxo crítico deve ter **revisão humana** antes de automatizar completamente.
 
 ---
 
-# Casos de uso com retorno direto
+## Casos de uso com retorno direto
 
 É aqui que a IA local deixa de ser interessante…
 
 e passa a ser realmente útil.
 
-## Documento em imagem → dado estruturado
+### Documento em imagem → dado estruturado
 
 Algo muito comum nas empresas:
 
@@ -323,7 +321,7 @@ O resultado:
 
 ---
 
-## Geração rápida de ferramentas internas
+### Geração rápida de ferramentas internas
 
 Outro uso muito interessante é criar pequenas ferramentas internas.
 
@@ -338,7 +336,7 @@ Muitas dessas ferramentas podem ser geradas rapidamente com ajuda de um modelo l
 
 ---
 
-## Análise de documentos longos com governança
+### Análise de documentos longos com governança
 
 Modelos locais também funcionam muito bem para analisar documentos extensos:
 
@@ -360,7 +358,7 @@ Especialmente se for instruído a:
 
 ---
 
-# Erros comuns ao rodar LLM local
+## Erros comuns ao rodar LLM local
 
 Alguns erros aparecem repetidamente em projetos de IA local.
 
@@ -375,11 +373,11 @@ Na prática, modelos locais funcionam melhor quando fazem parte de **uma arquite
 
 ---
 
-# Arquitetura recomendada: IA local + cloud
+## Arquitetura recomendada: IA local + cloud
 
 Em produção, a melhor abordagem costuma ser combinar as duas camadas.
 
-## IA local
+### IA local
 
 Ideal para:
 
@@ -388,7 +386,7 @@ Ideal para:
 - baixa latência  
 - automações internas  
 
-## IA cloud
+### IA cloud
 
 Mais adequada para:
 
@@ -403,7 +401,7 @@ Se a preocupação é quanto do conhecimento da sua empresa acaba em serviços e
 
 ---
 
-# Conclusão
+## Conclusão
 
 A IA local deixou de ser apenas uma curiosidade técnica.
 
@@ -422,7 +420,7 @@ mas sim **executar o modelo certo no lugar certo**.
 
 ---
 
-# Quer implementar IA local na sua operação?
+## Quer implementar IA local na sua operação?
 
 A **IA Operators** projeta e implementa arquiteturas híbridas (local + cloud) para automação, análise documental e agentes de IA.
 

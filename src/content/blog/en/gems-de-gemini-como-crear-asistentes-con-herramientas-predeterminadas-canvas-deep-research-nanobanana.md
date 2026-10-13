@@ -1,6 +1,7 @@
 ---
-title: "Gemini GEMS: How to create wizards with default tools (Canvas, Deep Research, Nanobanana)"
-description: "Gemini GEMS: Learn how to configure wizards with default tools (Canvas, Deep Research, Nanobanana) to save time, standardize processes, and work as a team without repeating instructions."
+title: "Gemini GEMS: How to create assistants with default tools (Canvas, Deep Research, Nanobanana)"
+seoTitle: "Gemini GEMS: build assistants with Canvas and more"
+description: "Set up Gemini GEMS with default tools (Canvas, Deep Research, Nanobanana) to save time, standardize processes and stop repeating the same instructions."
 category: tools
 date: 2026-01-12
 image: https://s3.eu-north-1.amazonaws.com/ia-operators/IA%20Operators%20Website/gems-de-gemini-como-crear-asistentes-con-herramientas-predeterminadas-canvas-deep-research-nanobanana.webp
@@ -11,7 +12,7 @@ draft: false
 
 There is one thing that fascinates me (and makes me a little angry at the same time): how much we get used to doing stupid tasks “because it has always been done that way.” Opening an assistant and having to tell it *every time* “hey, search the internet”, “hey, use Canvas”, “hey, generate images”… is like entering your own house and asking permission to turn on the light.
 
-The brutal update of Gemini with the GEMS comes to tell you: “Cristina, stop begging the robot.” Because now you can **configure a wizard so that it is born with the right tools in place**. And it's not a small change: it's the kind of improvement that turns a "chat" into a coworker with judgment... or at least with clear instructions.
+The brutal update of Gemini with the GEMS comes to tell you: “Cristina, stop begging the robot.” Because now you can **configure an assistant so that it is born with the right tools in place**. And it's not a small change: it's the kind of improvement that turns a "chat" into a coworker with judgment... or at least with clear instructions.
 
 ## The problem from before (and why it was taking up your time)
 
@@ -31,7 +32,7 @@ Now, when creating a new GEM, you can **link tools from the chatbot itself** and
 - **Nanobanana** (image/infographic generation)
 - **Dynamic connection with documents** (Drive/Sheets/Docs “live”)
 
-The best part: creating each wizard can take you **less than 2 minutes**. And yes, GEMS is still a **free** feature.
+The best part: creating each assistant can take you **less than 2 minutes**. And yes, GEMS is still a **free** feature.
 
 ## Example 1: A GEM with Canvas that builds web/app components aligned to your brand
 
@@ -83,7 +84,7 @@ By uploading reference photos into the GEM knowledge, you can generate consisten
 
 ## Example 3: A GEM with Deep Research for deep reports with pinned sources
 
-Here we enter “serious” mode: real research, with a controlled corpus. Instead of having the wizard “look around,” you give him a locked library and tell him to **look inside this**.
+Here we enter “serious” mode: real research, with a controlled corpus. Instead of having the assistant “look around,” you give him a locked library and tell him to **look inside this**.
 
 ### What is charged
 

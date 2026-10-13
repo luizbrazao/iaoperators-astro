@@ -1,7 +1,7 @@
 ---
 title: "IA para Arquitectos: Herramientas que Transforman el Flujo de Trabajo en 2025"
 seoTitle: "IA para arquitectos: herramientas clave en 2025"
-description: "Las mejores herramientas de inteligencia artificial para estudios de arquitectura: desde generación de diseños y renders hasta automatización de presupuestos, documentación y gestión de proyectos."
+description: "Herramientas de IA para estudios de arquitectura: generación de diseños y renders, presupuestos, documentación y gestión de proyectos."
 category: architects
 date: 2025-03-01
 locale: es

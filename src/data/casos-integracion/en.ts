@@ -103,6 +103,14 @@ export const CASOS_EN: Record<CasoKey, CasoIntegracion> = {
     metaDescription:
       "We connect your ERP —in-house, bespoke or off-the-shelf— with e-commerce, POS, CRM and invoicing. No migration, and no writes to your production database.",
     h1: "ERP integration: connecting your ERP to the rest of the business",
+    // Definition and method choice up front (oct/2026): the query is mostly
+    // informational and the SERP answers "what is it / how is it done" before
+    // any offer. The method order matches the first FAQ answer below.
+    queEs: {
+      title: "What ERP integration means",
+      p1: "ERP integration means connecting the ERP to the systems where orders, stock, customers and payments start or end (online shop, POS, CRM, payment gateway, bank) so that data moves between them automatically, exactly once, and with a clear owner for each field, instead of through exports and re-keying.",
+      p2: "How it is done depends on what the ERP exposes. In order of preference: a documented API, events or webhooks, read-only access to a replica of the database, and file exchange. Each step down adds work and fragility, so the method is settled in the diagnosis, before any connector is written.",
+    },
     intro:
       "The ERP is usually the system that holds the most truth in a company and has the fewest connections. Everybody reads from it, almost nobody is allowed to write to it, and so a layer of spreadsheets grows around it doing the work of glue.",
     sintoma:

@@ -107,6 +107,13 @@ export const CASOS_ES: Record<CasoKey, CasoIntegracion> = {
     // proyecto publicable. Revisado 2026-08-11: ningún proyecto de
     // src/data/projects.ts implica ERP de forma directa (Menorca es auditoría,
     // ChatPlug es CRM/reservas sobre Altegio). No inventar prueba.
+    // Definición y elección de método arriba (oct/2026). El orden de métodos
+    // coincide con la primera respuesta del FAQ de este caso.
+    queEs: {
+      title: "Qué significa integrar un ERP",
+      p1: "Integrar un ERP significa conectarlo con los sistemas donde nacen o terminan los pedidos, el stock, los clientes, la facturación y los cobros (tienda online, TPV, CRM, pasarela de pago, banco) para que los datos pasen de uno a otro de forma automática, una sola vez y con un dueño claro para cada campo, en lugar de exportaciones y tecleo manual.",
+      p2: "Cómo se hace depende de lo que el ERP expone. Por orden de preferencia: API documentada, eventos o webhooks, lectura sobre una réplica de la base de datos e intercambio de ficheros. Cada escalón hacia abajo añade trabajo y fragilidad, así que el método se decide en el diagnóstico, antes de escribir ningún conector.",
+    },
     intro:
       "El ERP suele ser el sistema con más verdad de la empresa y con menos conexiones. Todo el mundo lo consulta, casi nadie puede escribir en él, y por eso a su alrededor crece una capa de hojas de cálculo que hace de pegamento.",
     sintoma:

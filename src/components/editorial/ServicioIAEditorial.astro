@@ -5,8 +5,13 @@
 // cada página, así que textos, H1/H2/H3 y enlaces no cambian. Desde el
 // 08/oct/2026 sirve también a EN y PT.
 //
-// Los bloques opcionales (hero.lead, despues, frontera, tech, crossLink,
+// Los bloques opcionales (hero.lead, proof, despues, frontera, tech, crossLink,
 // ciudades) solo se pintan si la página los trae.
+//
+// `proof` (oct/2026): desglose de casos reales por proceso, sistemas, resultado
+// y control. Cuando la página lo declara, sustituye al bloque RelatedCases para
+// no enseñar los mismos casos dos veces; los enlaces a los casos se mantienen.
+// Solo datos ya publicados en src/i18n/locales/<loc>/projects.json.
 import RelatedCases from "@/components/RelatedCases.astro";
 import { getPagesEditorial } from "@/i18n/editorialCopy";
 import { asShellLoc } from "@/i18n/editorialShell";
@@ -100,6 +105,34 @@ const phases: any[] = c.process?.phases ?? [];
   </section>
 </div>
 
+{c.proof && (
+  <div class="ed-container">
+    <section class="pg-section" aria-labelledby="sv-prueba">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">{c.proof.badge}</p>
+        <div>
+          <h2 id="sv-prueba">{c.proof.title}</h2>
+          {c.proof.subtitle && <p class="pg-lead-muted">{c.proof.subtitle}</p>}
+        </div>
+      </div>
+      <div class="pg-relations sv-proof">
+        {c.proof.cases.map((item: any) => (
+          <article class="pg-relation">
+            <p class="ed-eyebrow">{item.label}</p>
+            <h3>{item.title}</h3>
+            <dl class="sv-proof-facts">
+              {item.facts.map((f: any) => (
+                <div><dt>{f.k}</dt><dd>{f.v}</dd></div>
+              ))}
+            </dl>
+            <a class="ed-underlined" href={item.href}>{clean(item.cta)} <span aria-hidden="true">→</span></a>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+)}
+
 {c.process && (
   <section class="ed-method pg-method pg-process" aria-labelledby="sv-proceso">
     <div class="ed-container">
@@ -123,7 +156,7 @@ const phases: any[] = c.process?.phases ?? [];
   {c.despues && (
     <section class="pg-section" aria-labelledby="sv-despues">
       <div class="ed-section-intro">
-        <p class="ed-eyebrow">{L.despues}</p>
+        <p class="ed-eyebrow">{c.despues.eyebrow ?? L.despues}</p>
         <div>
           <h2 id="sv-despues">{c.despues.title}</h2>
           <div class="pg-prose">
@@ -175,7 +208,7 @@ const phases: any[] = c.process?.phases ?? [];
   )}
 </div>
 
-{relatedPath && (
+{relatedPath && !c.proof && (
   <RelatedCases path={relatedPath} locale={locale} overrides={relatedOverrides} variant="editorial" />
 )}
 

@@ -1,6 +1,7 @@
 ---
 title: "Gemini GEMS: Como criar assistentes com ferramentas padrão (Canvas, Deep Research, Nanobanana)"
-description: "Gemini GEMS: Aprenda a configurar assistentes com ferramentas padrão (Canvas, Deep Research, Nanobanana) para economizar tempo, padronizar processos e trabalhar em equipe sem repetir instruções."
+seoTitle: "Gemini GEMS: crie assistentes com Canvas e mais"
+description: "Configure GEMS do Gemini com ferramentas padrão (Canvas, Deep Research, Nanobanana) para ganhar tempo, padronizar processos e não repetir instruções."
 category: tools
 date: 2026-01-12
 image: https://s3.eu-north-1.amazonaws.com/ia-operators/IA%20Operators%20Website/gems-de-gemini-como-crear-asistentes-con-herramientas-predeterminadas-canvas-deep-research-nanobanana.webp

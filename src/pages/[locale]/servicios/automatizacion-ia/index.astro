@@ -149,10 +149,10 @@ const CONTENT: Record<string, any> = {
     faq: {
       title: "Perguntas frequentes",
       items: [
-        { q: "Que processos posso automatizar com IA?", a: "Quase qualquer processo repetitivo baseado em regras ou texto: atendimento, qualificação de leads, entrada de dados, geração de relatórios, follow-up comercial ou classificação de e-mails e documentos. No diagnóstico priorizamos os de maior impacto." },
-        { q: "Vocês usam ferramentas no-code ou desenvolvimento sob medida?", a: "O que o problema pedir. Começamos com n8n e fluxos LLM-first quando dão velocidade, e descemos para código sob medida (Node/TypeScript, APIs) quando é preciso controle, escala ou lógica complexa. Evitamos regras rígidas se uma IA resolve melhor." },
+        { q: "Que processos posso automatizar com IA?", a: "Muitos processos repetitivos baseados em regras, documentos ou texto: atendimento, qualificação de leads, entrada de dados, geração de relatórios, follow-up comercial ou classificação de e-mails e documentos. No diagnóstico priorizamos os de maior impacto." },
+        { q: "Vocês usam ferramentas no-code ou desenvolvimento sob medida?", a: "O que o problema pedir. Começamos com n8n e fluxos LLM-first quando dão velocidade, e descemos para código sob medida (Node/TypeScript, APIs) quando é preciso controle, escala ou lógica complexa. Usamos modelos quando é preciso interpretar informação não estruturada e regras explícitas quando a decisão precisa ser determinística e auditável." },
         { q: "n8n, Make ou Zapier?", a: "Trabalhamos principalmente com n8n pela flexibilidade, self-hosting e custo em escala. Integramos Make ou Zapier se já fazem parte do seu stack. Escolhemos por arquitetura, não por moda." },
-        { q: "É seguro para os dados da minha empresa?", a: "Sim. Projetamos com estado persistente controlado, permissões mínimas e, quando o caso exige, modelos privados ou self-hosted para que seus dados não saiam do seu ambiente." },
+        { q: "É seguro para os dados da minha empresa?", a: "Depende da arquitetura e dos dados que o fluxo processa. Projetamos cada automação com permissões mínimas, controle do estado e uma política explícita sobre quais informações podem ir para serviços externos. Quando o caso exige, podemos usar modelos privados ou componentes self-hosted para manter determinados dados dentro do ambiente controlado pelo cliente." },
         { q: "Quanto tempo leva uma automação?", a: "Um primeiro fluxo de valor costuma entrar em produção em semanas, não meses. Trabalhamos por fases: entregamos algo funcionando cedo e ampliamos a partir daí." },
         { q: "Como começamos?", a: "Uma call de 30 minutos para entender seu processo. Se houver encaixe, propomos um primeiro caso de automação com escopo e resultado claros." },
       ],
@@ -202,6 +202,50 @@ const CONTENT: Record<string, any> = {
         { title: "Reporting & insights", body: "Dashboards and reports that update themselves, with AI summarizing what matters for decisions." },
       ],
     },
+    // Desglose de los dos casos de automatización publicados. Todo sale de
+    // src/i18n/locales/en/projects.json (chatplug, tourBooking): no añadir
+    // métricas que no estén allí. Sustituye al bloque RelatedCases (ver
+    // ServicioIAEditorial). El caso hotelero de Menorca es un diagnóstico, no
+    // una automatización, y por eso no entra aquí.
+    proof: {
+      badge: "In production",
+      title: "Two automations in production, broken down",
+      subtitle: "For each one: the process it took over, the systems it touches, what changed, and where the AI stops.",
+      cases: [
+        {
+          label: "WhatsApp + Altegio",
+          title: "ChatPlug: appointment booking for salons and clinics",
+          facts: [
+            { k: "Process", v: "Answering WhatsApp booking requests and booking, confirming, rescheduling or cancelling appointments, including outside opening hours." },
+            { k: "Systems", v: "WhatsApp Cloud API and Altegio, read and written in real time: services, staff, prices and availability." },
+            { k: "Result", v: "Bookings confirmed in seconds, 24/7, against the real calendar instead of a copy of it, with fewer scheduling conflicts and less repetitive work for the team." },
+            { k: "Where the AI stops", v: "The model detects intent and language. The booking itself is a validated action in Altegio, the team is notified, and anything out of scope is handed to a person." },
+          ],
+          href: "/en/portfolio/chatplug-whatsapp-altegio/",
+          cta: "See the ChatPlug case",
+        },
+        {
+          label: "WhatsApp + n8n",
+          title: "Booking assistant for a boat tour company",
+          facts: [
+            { k: "Process", v: "Answering price and availability questions on WhatsApp, by text or voice, and guiding the customer through to a booking." },
+            { k: "Systems", v: "WhatsApp, an n8n workflow, voice transcription, the season and pricing rules as code, and a spreadsheet that logs leads and conversations." },
+            { k: "Result", v: "Quotes in seconds with the price calculated from the business rules (boat, season, experience, duration and guests), and less manual work on first contact." },
+            { k: "Where the AI stops", v: "The model runs the conversation; code calculates the price. It only quotes once every required variable is present, and it rejects durations that do not exist for that experience and date." },
+          ],
+          href: "/en/portfolio/tourism-booking-chatbot-whatsapp/",
+          cta: "See the tour booking case",
+        },
+      ],
+    },
+    despues: {
+      eyebrow: "Before automating",
+      title: "When to start with a diagnosis instead",
+      body: "Automation pays off when the process is clear and the systems it touches are known. If nobody can say how many tools are involved, which one holds the correct data, or who owns each step, automating first only makes the confusion run faster.",
+      extra: "In that case we start with a Digital X-Ray: an inventory of your applications, integrations and dependencies, with owner, cost and risk for each one. It tells you what is worth automating first and what has to be fixed before anything gets automated.",
+      href: "/en/auditoria-de-sistemas/",
+      cta: "See the Digital X-Ray",
+    },
     process: {
       badge: "How we work",
       title: "Diagnose, design and build — no hand-offs",
@@ -223,10 +267,10 @@ const CONTENT: Record<string, any> = {
       items: [
         { q: "What does an AI automation agency do?", a: "It finds the repetitive processes in your operation and turns them into systems that run on their own: AI agents, workflows (n8n or custom code) and the API integrations they need to act on your CRM, ERP or WhatsApp. Unlike a SaaS tool, it builds around your process; unlike a pure consultancy, it ships to production and keeps it running." },
         { q: "Do you work with companies outside Spain?", a: "Yes. We are based in Spain and work remotely with companies in other countries, in English, Spanish or Portuguese. Calls are scheduled in Central European Time." },
-        { q: "What processes can I automate with AI?", a: "Almost any repetitive, rule- or text-based process: customer support, lead qualification, data entry, reporting, sales follow-up or email and document classification. In the diagnosis we prioritize the highest-impact ones." },
-        { q: "Do you use no-code tools or custom development?", a: "Whatever the problem needs. We start with n8n and LLM-first flows when they add speed, and drop to custom code (Node/TypeScript, APIs) when we need control, scale or complex logic. We avoid rigid rules if an AI solves it better." },
+        { q: "What processes can I automate with AI?", a: "Many repetitive processes based on rules, documents or text: customer support, lead qualification, data entry, reporting, sales follow-up or email and document classification. In the diagnosis we prioritize the highest-impact ones." },
+        { q: "Do you use no-code tools or custom development?", a: "Whatever the problem needs. We start with n8n and LLM-first flows when they add speed, and drop to custom code (Node/TypeScript, APIs) when we need control, scale or complex logic. We use models where unstructured information has to be interpreted, and explicit rules where the decision has to be deterministic and auditable." },
         { q: "n8n, Make or Zapier?", a: "We mostly work with n8n for its flexibility, self-hosting and cost at scale. We integrate Make or Zapier if they're already in your stack. We choose by architecture, not by trend." },
-        { q: "Is it secure for my company's data?", a: "Yes. We design with controlled persistent state, least-privilege access and, when the case requires it, private or self-hosted models so your data never leaves your environment." },
+        { q: "Is it secure for my company's data?", a: "It depends on the architecture and on the data the workflow handles. We design each automation with least-privilege access, controlled state and an explicit policy on which information may be sent to external services. When the case requires it, we can use private models or self-hosted components so that specific data stays inside the environment you control." },
         { q: "How long does an automation take?", a: "A first value-generating workflow is usually in production in weeks, not months. We work in phases: ship something working early and expand from there." },
         { q: "How do we start?", a: "A 30-minute call to understand your process. If it's a fit, we propose a first automation case with clear scope and outcome." },
       ],
