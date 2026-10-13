@@ -12,6 +12,8 @@ import { KIT_PRODUCT } from "@/data/verifactu-kit";
 import { errorCode, kitLog, requestIdFrom } from "@/lib/verifactu-kit/log";
 import { isAccessAllowed } from "@/lib/verifactu-kit/state";
 import { getOrderBySessionId } from "@/lib/verifactu-kit/storage";
+import { getStripe } from "@/lib/verifactu-kit/stripe";
+import { conversionValue } from "@/lib/commerce/purchase";
 import "@/styles/editorial-pages.css";
 import "@/styles/editorial-forms.css";
 import "@/styles/editorial-kit.css";
@@ -35,7 +37,15 @@ if (validSession) {
     if (!order) estado = "procesando";
     else if (isAccessAllowed(order)) {
       estado = "confirmado";
-      purchase = { transaction_id: order.id, value: order.amount_total / 100, currency: order.currency.toUpperCase() };
+      // Valor SIN IVA (neto de la sesión de Stripe; si no responde, precio de lista).
+      // La analítica nunca bloquea la página.
+      let session = null;
+      try {
+        session = await getStripe().checkout.sessions.retrieve(sessionId);
+      } catch (error) {
+        kitLog({ request_id: requestId, order_id: order.id, action: "thanks_value", status: "error", error_code: errorCode(error) });
+      }
+      purchase = { transaction_id: order.id, value: conversionValue(session, KIT_PRODUCT.price.amount), currency: order.currency.toUpperCase() };
     } else if (order.payment_status === "failed") estado = "fallido";
     else if (order.payment_status === "refunded") estado = "reembolsado";
     else estado = "procesando";

@@ -4,6 +4,10 @@
 // No concede acceso: el session_id solo sirve para CONSULTAR el estado del
 // pedido que guardó el webhook. El acceso llega siempre por email. Si el
 // webhook aún no ha llegado, la página se recarga sola unas veces.
+//
+// Conversión: con el pago confirmado emite `purchase_confirmed` al dataLayer,
+// una vez por pedido y pestaña, con valor SIN IVA (neto de la sesión de Stripe)
+// y un id de transacción opaco (HMAC del pedido). Ver src/lib/commerce/purchase.ts.
 export const prerender = false;
 
 import BaseLayout from "@/layouts/BaseLayout.astro";
@@ -12,6 +16,9 @@ import { RGPD_OPS_PRODUCT } from "@/data/rgpd-ops";
 import { errorCode, opsLog, requestIdFrom } from "@/lib/rgpd-ops/log";
 import { isAccessAllowed } from "@/lib/commerce/payment-state";
 import { getOrderBySessionId } from "@/lib/rgpd-ops/orders";
+import { getStripe } from "@/lib/rgpd-ops/stripe";
+import { getSessionSecret } from "@/lib/rgpd-ops/env";
+import { conversionValue, opaqueTransactionId } from "@/lib/commerce/purchase";
 import "@/styles/editorial-pages.css";
 import "@/styles/editorial-forms.css";
 import "@/styles/editorial-kit.css";
@@ -29,13 +36,31 @@ const validSession = /^cs_(test|live)_[A-Za-z0-9]{10,200}$/.test(sessionId);
 
 type Estado = "confirmado" | "procesando" | "fallido" | "reembolsado" | "desconocido" | "error";
 let estado: Estado = "desconocido";
+let purchase: { transaction_id: string; value: number; currency: string } | null = null;
 
 if (validSession) {
   try {
     const order = await getOrderBySessionId(sessionId);
     if (!order) estado = "procesando";
-    else if (isAccessAllowed(order)) estado = "confirmado";
-    else if (order.payment_status === "failed") estado = "fallido";
+    else if (isAccessAllowed(order)) {
+      estado = "confirmado";
+      // La analítica nunca bloquea la página: si Stripe no responde, valor de lista sin IVA.
+      let session = null;
+      try {
+        session = await getStripe().checkout.sessions.retrieve(sessionId);
+      } catch (error) {
+        opsLog({ request_id: requestId, order_id: order.id, action: "thanks_value", status: "error", error_code: errorCode(error) });
+      }
+      try {
+        purchase = {
+          transaction_id: opaqueTransactionId("rgo", getSessionSecret(), order.id),
+          value: conversionValue(session, P.price.amount),
+          currency: (order.currency || P.price.currency).toUpperCase(),
+        };
+      } catch (error) {
+        opsLog({ request_id: requestId, order_id: order.id, action: "thanks_purchase_event", status: "error", error_code: errorCode(error) });
+      }
+    } else if (order.payment_status === "failed") estado = "fallido";
     else if (order.payment_status === "refunded") estado = "reembolsado";
     else estado = "procesando";
     opsLog({ request_id: requestId, checkout_session_id: sessionId, order_id: order?.id, action: "thanks_status", status: "ok", detail: estado });
@@ -100,4 +125,31 @@ if (siguiente) Astro.response.headers.set("refresh", `4;url=${siguiente}`);
       <RgpdAccessRequest client:visible title="¿No te ha llegado el enlace?" />
     </section>
   </div>
+
+  {purchase && (
+    <script is:inline type="application/json" id="rgo-purchase" set:html={JSON.stringify(purchase)} />
+  )}
 </BaseLayout>
+
+<script>
+  import { pushRgpdOpsEvent } from "@/lib/rgpd-ops/analytics";
+  const el = document.getElementById("rgo-purchase");
+  if (el) {
+    try {
+      const p = JSON.parse(el.textContent || "{}") as { transaction_id?: string; value?: number; currency?: string };
+      const key = `rgo_purchase_${p.transaction_id}`;
+      let sent = false;
+      try {
+        sent = window.sessionStorage.getItem(key) === "1";
+        window.sessionStorage.setItem(key, "1");
+      } catch {
+        /* sin almacenamiento: se envía igual; GA4 y Ads deduplican por transaction_id */
+      }
+      if (!sent && p.transaction_id) {
+        pushRgpdOpsEvent("purchase_confirmed", { transaction_id: p.transaction_id, value: p.value, currency: p.currency });
+      }
+    } catch {
+      /* noop */
+    }
+  }
+</script>

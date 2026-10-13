@@ -30,6 +30,7 @@ import { getAuthorizedWorkspace, type AuthDeps } from "../src/lib/rgpd-ops/auth"
 import { buildAccessEmail } from "../src/lib/rgpd-ops/email";
 import { isAllowedOrigin } from "../src/lib/rgpd-ops/origin";
 import { cleanRgpdOpsParams } from "../src/lib/rgpd-ops/analytics";
+import { conversionValue, netAmountCents, opaqueTransactionId } from "../src/lib/commerce/purchase";
 import { ENTITIES, ENTITY_SLUGS, validateCreate, validatePatch, validateProfile, containsContactData, type EntitySlug } from "../src/lib/rgpd-ops/schema";
 import { addMonths } from "../src/lib/rgpd-ops/dates";
 import {
@@ -636,6 +637,15 @@ function sampleSnapshot(): WorkspaceSnapshot {
 {
   const clean = cleanRgpdOpsParams({ module_id: "tratamientos", segment: "agencia:ops", error_code: "ana@empresa.com", ...({ email: "a@b.es", empresa: "Demo" } as object) } as never);
   check("analítica: lista blanca, sin emails ni campos libres", JSON.stringify(clean) === JSON.stringify({ module_id: "tratamientos", segment: "agencia:ops" }));
+  const oid = "6f1c1f3e-8a4b-4c2d-9e1f-0a1b2c3d4e5f";
+  const tx = opaqueTransactionId("rgo", "secreto-a", oid);
+  check("compra: transaction_id opaco, estable y sin el id del pedido", /^rgo_[0-9a-f]{32}$/.test(tx) && tx === opaqueTransactionId("rgo", "secreto-a", oid) && !tx.includes(oid.slice(0, 8)));
+  check("compra: transaction_id distinto por producto y por secreto", tx !== opaqueTransactionId("vfk", "secreto-a", oid) && tx !== opaqueTransactionId("rgo", "secreto-b", oid));
+  const cleanTx = cleanRgpdOpsParams({ transaction_id: tx, value: 149, currency: "EUR" });
+  check("compra: transaction_id, value y currency pasan la lista blanca", cleanTx.transaction_id === tx && cleanTx.value === 149 && cleanTx.currency === "EUR");
+  check("compra: valor sin IVA (180,29 € con 21 % → 149 €)", netAmountCents({ amount_total: 18029, total_details: { amount_tax: 3129 } }) === 14900 && conversionValue({ amount_total: 18029, total_details: { amount_tax: 3129 } }, 149) === 149);
+  check("compra: con código promocional cuenta lo cobrado", conversionValue({ amount_total: 16226, total_details: { amount_tax: 2816 } }, 149) === 134.1);
+  check("compra: sin datos de impuestos o sin sesión → precio de lista, nunca el total con IVA", conversionValue({ amount_total: 18029, total_details: null }, 149) === 149 && conversionValue(null, 149) === 149 && conversionValue({ amount_total: 100, total_details: { amount_tax: 200 } }, 149) === 149);
   const okPrice = { active: true, type: "one_time", currency: "eur", unit_amount: 14900, tax_behavior: "exclusive" } as const;
   check("precio: Price correcto pasa", priceProblems(okPrice, true).length === 0 && priceProblems({ ...okPrice, tax_behavior: "unspecified" } as never, false).length === 0);
   check("precio: importe distinto bloquea la venta", priceProblems({ ...okPrice, unit_amount: 5900 }, true).includes("price_amount_mismatch"));

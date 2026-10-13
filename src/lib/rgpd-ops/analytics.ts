@@ -11,6 +11,7 @@ export type RgpdOpsEvent =
   | "view_item"
   | "begin_checkout"
   | "checkout_error"
+  | "purchase_confirmed"
   | "rgpd_ops_accessed"
   | "rgpd_ops_module_completed"
   | "rgpd_ops_exported"
@@ -25,6 +26,8 @@ export interface RgpdOpsEventParams {
   export_format?: string;
   export_type?: string;
   error_code?: string;
+  /** Opaco (HMAC del pedido, src/lib/commerce/purchase.ts). Nunca el id interno. */
+  transaction_id?: string;
   value?: number;
   currency?: string;
 }
@@ -37,6 +40,7 @@ const ALLOWED = new Set<keyof RgpdOpsEventParams>([
   "export_format",
   "export_type",
   "error_code",
+  "transaction_id",
   "value",
   "currency",
 ]);

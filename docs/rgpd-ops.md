@@ -102,6 +102,7 @@ Espacio: `rgpd_ops_workspaces` (`UNIQUE(order_id)`, `ON DELETE RESTRICT`, `versi
 - Minimización: sin campos para nombres, emails o documentos de titulares; todo texto libre rechaza emails, teléfonos y DNI/NIE; responsables por rol; evidencias por referencia; sin uploads.
 - Logs JSON con campos cerrados (`scope: "rgpd-ops"`): sin email, token, IP, payload ni contenido.
 - Analítica: lista blanca de eventos y parámetros (`src/lib/rgpd-ops/analytics.ts`); nunca respuestas, proveedores, empresa, email, ids ni contenido.
+- Conversión: `/ops/gracias/` emite `purchase_confirmed` (una vez por pedido y pestaña) con `transaction_id` opaco (`rgo_` + HMAC del pedido con `RGPD_OPS_SESSION_SECRET`), `value` **sin IVA** (neto de la sesión de Stripe, con descuentos; si Stripe no responde, precio de lista) y `currency`. Mismo nombre de evento que el Kit: en GTM un solo disparador cubre los dos productos y se distinguen por `product_id` (`src/lib/commerce/purchase.ts`).
 - Página de consumo del magic link: `CSP default-src 'none'`, `X-Frame-Options: DENY`, `Referrer-Policy: same-origin`, `no-store`, sin analítica.
 - Sin IA sobre el contenido del espacio.
 
