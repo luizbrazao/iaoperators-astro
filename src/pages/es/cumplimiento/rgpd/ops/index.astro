@@ -19,6 +19,8 @@ const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const siteRoot = site.replace(/\/$/, "");
 const P = RGPD_OPS_PRODUCT;
 const pageUrl = `${siteRoot}${P.paths.landing}`;
+const productImagePath = "/og/es/rgpd-ops.png";
+const productImageUrl = `${siteRoot}${productImagePath}`;
 
 const meta = {
   title: "RGPD Ops: gestión RGPD para pymes | IA Operators",
@@ -103,6 +105,7 @@ const productJsonLd = {
   category: "Software · herramienta operativa de protección de datos",
   brand: { "@type": "Brand", name: "IA Operators" },
   url: pageUrl,
+  image: [productImageUrl],
   offers: {
     "@type": "Offer",
     "@id": `${pageUrl}#offer`,
@@ -119,6 +122,24 @@ const productJsonLd = {
     itemCondition: "https://schema.org/NewCondition",
     seller: ORG_REF,
     areaServed: "ES",
+    // Contenido digital con acceso inmediato: sin desistimiento una vez iniciado
+    // (ver FAQ "¿Puedo devolverlo?" y condiciones). Mantener coherente con ambos.
+    hasMerchantReturnPolicy: {
+      "@type": "MerchantReturnPolicy",
+      applicableCountry: "ES",
+      returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
+    },
+    // Entrega digital por email (enlace de acceso), sin coste y en el momento.
+    shippingDetails: {
+      "@type": "OfferShippingDetails",
+      shippingRate: { "@type": "MonetaryAmount", value: 0, currency: P.price.currency },
+      shippingDestination: { "@type": "DefinedRegion", addressCountry: "ES" },
+      deliveryTime: {
+        "@type": "ShippingDeliveryTime",
+        handlingTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
+        transitTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
+      },
+    },
   },
 };
 
@@ -147,6 +168,8 @@ const faqJsonLd = {
   alternates={[{ lang: "es", href: pageUrl }]}
   xDefaultUrl={pageUrl}
   jsonLd={[productJsonLd, breadcrumbJsonLd, faqJsonLd]}
+  ogImage={productImagePath}
+  ogImageAlt={P.name}
   editorial
 >
   <div class="ed-container">
