@@ -143,7 +143,7 @@ Para un hotel, las prioridades son:
 
 El contenido debe separar hechos permanentes de estado comercial. “El hotel tiene piscina cubierta” puede publicarse y estructurarse. “Queda una habitación a 220 euros” debe venir de inventario y precio actualizados.
 
-Esta diferencia importa también para asistentes: un modelo puede recomendar una opción con contenido indexado, pero no debe prometer disponibilidad sin llamar a una herramienta transaccional.
+Esta diferencia importa también para asistentes: un modelo puede recomendar una opción con contenido indexado, pero no debe prometer disponibilidad sin llamar a una herramienta transaccional. Es el mismo principio de un buen [asistente de reservas para hoteles](/es/hoteles/reservas-directas-ia/): resuelve dudas y lleva al motor con las fechas preparadas, pero el precio y la disponibilidad los da siempre el motor del hotel.
 
 <h2 id="hotel-center">Google Hotel Center: precio, disponibilidad y enlace</h2>
 

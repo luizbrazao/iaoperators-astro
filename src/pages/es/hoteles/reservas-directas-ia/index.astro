@@ -452,6 +452,19 @@ const faqJsonLd = {
   import { pushHotelRevenueEvent } from "@/lib/hotel-revenue/analytics";
   import type { CtaOrigin } from "@/lib/hotel-revenue/types";
 
+  // UTM de la visita → enlaces a la calculadora en página propia. Sin
+  // almacenamiento: solo se copian los parámetros de la URL actual al href.
+  const utm = new URLSearchParams(
+    [...new URLSearchParams(window.location.search)].filter(([k, v]) => k.startsWith("utm_") && v.length <= 100),
+  );
+  if ([...utm].length) {
+    document.querySelectorAll<HTMLAnchorElement>('a[href^="/es/hoteles/calculadora-ingresos/"]').forEach((a) => {
+      const url = new URL(a.getAttribute("href") ?? "", window.location.origin);
+      utm.forEach((v, k) => url.searchParams.set(k, v));
+      a.setAttribute("href", `${url.pathname}${url.search}`);
+    });
+  }
+
   // CTA pulsado → evento sin PII y origen para el formulario (sin almacenamiento).
   document.querySelectorAll<HTMLElement>("[data-hro-cta]").forEach((el) => {
     el.addEventListener("click", () => {

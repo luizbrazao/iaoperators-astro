@@ -290,15 +290,18 @@ Limitación conocida: en PGlite las llamadas «concurrentes» se serializan en u
 
 ## 14. Backlog post-validación (Fase 1.x)
 
-- Configurar en GTM: tag GA4 de `generate_lead` leyendo `lead_source` de una
-  variable de dataLayer (hoy fijo `Formulario_Contato`); conversión de Google
-  Ads para `lead_source = Hotel_Revenue_Operator`; audiencias por
-  `hotel_revenue_calculator_completed`.
-- Propagar las UTM de la landing a la página de la calculadora (hoy solo se leen
-  de la URL actual; un enlace interno las pierde).
+Hecho el 15/oct/2026: las UTM de la landing se copian a los enlaces hacia la
+calculadora en página propia (sin almacenamiento), y los posts
+`venta-directa-hotelera-ia-google` y `hotel-autonomo-automatizar-recepcion`
+enlazan a la landing con anclas secundarias del registro de keywords.
+GTM v13 publicada: `lead_source` dinámico en GA4 y conversión de Google Ads
+«Lead - Hotel Revenue Operator (web)» (AW-11351547674 / 8SE3CKa1lZ0dEJq-66Qq).
+
+Pendiente:
+
+- Audiencias por `hotel_revenue_calculator_completed` (GA4/Ads) y decidir si
+  las tags de Lead de Meta y LinkedIn deben filtrar por `lead_source`.
 - Purga automática de leads sin relación a los 12 meses (plazo declarado).
-- Enlaces contextuales desde los posts del blog hotelero (venta directa, hotel
-  autónomo) a la landing.
 - Medir la keyword y la faixa reales con el GSC a los 60 días.
 - Decidir precio del piloto y, si se valida, checkout.
 

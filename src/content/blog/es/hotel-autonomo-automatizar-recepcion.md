@@ -225,7 +225,7 @@ Empieza con reserva, registro, pago, habitación, acceso, comunicación y operac
 
 ### 4. Automatizar volumen antes que rareza
 
-Prioriza FAQ, pre-check-in, cobros previsibles, avisos y tareas recurrentes. Calcula frecuencia, minutos actuales, error, impacto y reversibilidad para ordenar el backlog.
+Prioriza FAQ, pre-check-in, cobros previsibles, avisos y tareas recurrentes. Calcula frecuencia, minutos actuales, error, impacto y reversibilidad para ordenar el backlog. Las preguntas previas a la reserva suelen ser el primer bloque: un [chatbot para hoteles](/es/hoteles/reservas-directas-ia/) que responde y deriva al motor de reservas las absorbe sin tocar el PMS.
 
 ### 5. Diseñar la excepción
 
