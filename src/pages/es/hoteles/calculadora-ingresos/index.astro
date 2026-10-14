@@ -1,0 +1,80 @@
+---
+// Calculadora de oportunidad del Hotel Revenue Operator en página propia.
+//
+// noindex, follow (decisión documentada en docs/hotel-revenue-operator.md):
+// - la misma island está incrustada en la landing, que es la URL que persigue
+//   «chatbot para hoteles»; indexar las dos sería contenido funcional duplicado;
+// - la demanda de «calculadora …» para hoteles no está medida y la página no
+//   tiene contenido propio suficiente para competir sola;
+// - su papel es de herramienta de adquisición (anuncios, enlaces directos).
+// Por eso está en NOINDEX_PATHS (astro.config.mjs) y fuera del registro de
+// keywords. Canonical propio: apuntarla a la landing con noindex enviaría
+// señales contradictorias.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import HotelRevenueCalculator from "@/islands/HotelRevenueCalculator";
+import { HOTEL_REVENUE_PRODUCT as P } from "@/data/hotel-revenue";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-hotel-revenue.css";
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const siteRoot = site.replace(/\/$/, "");
+const pageUrl = `${siteRoot}${P.paths.calculator}`;
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${siteRoot}/es/` },
+    { "@type": "ListItem", position: 2, name: "Hoteles", item: `${siteRoot}${P.paths.vertical}` },
+    { "@type": "ListItem", position: 3, name: "Calculadora de ingresos", item: pageUrl },
+  ],
+};
+---
+
+<BaseLayout
+  title="Calculadora de ingresos para hoteles | IA Operators"
+  description="Estima cuánta comisión OTA podrías ahorrar y cuánto ingreso por extras podrías generar con reservas directas. Tres escenarios, sin registro previo."
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  robots="noindex, follow"
+  ogTitle="Calculadora de oportunidad para hoteles · Hotel Revenue Operator"
+  ogImage={P.paths.ogImage}
+  ogImageAlt="Hotel Revenue Operator by IA Operators: calculadora de oportunidad de reservas directas para hoteles"
+  jsonLd={breadcrumbJsonLd}
+  editorial
+>
+  <div class="ed-container">
+    <header class="hro-page-hero">
+      <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/es/">Inicio</a></li>
+          <li><a href={P.paths.vertical}>Hoteles</a></li>
+          <li><span aria-current="page">Calculadora de ingresos</span></li>
+        </ol>
+      </nav>
+      <p class="ed-eyebrow hro-page-eyebrow">{P.name} · {P.endorsement}</p>
+      <h1>¿Cuánto ingreso puede estar dejando escapar tu hotel?</h1>
+      <p class="hro-hero-lead">
+        Estima la comisión que te ahorrarías si una parte de las reservas OTA pasara a directa y lo que podrías ingresar
+        ofreciendo extras en el momento oportuno. Tres escenarios, con la fórmula a la vista.
+      </p>
+      <div class="hro-actions">
+        <a class="ed-underlined" href={P.paths.landing} data-hro-cta="calculator_page">Cómo funciona el {P.name} <span class="ed-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </header>
+
+    <section class="hro-calc-page" aria-label="Calculadora de oportunidad">
+      <HotelRevenueCalculator client:load variant="page" ctaOrigin="calculator_page" headingLevel={2} />
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  import { pushHotelRevenueEvent } from "@/lib/hotel-revenue/analytics";
+
+  document.querySelectorAll<HTMLElement>("[data-hro-cta]").forEach((el) => {
+    el.addEventListener("click", () => pushHotelRevenueEvent("hotel_revenue_cta_clicked", { cta_origin: "calculator_page" }));
+  });
+</script>

@@ -46,6 +46,10 @@ const NOINDEX_PATHS = [
   "/es/cumplimiento/rgpd/ops/gracias/",
   "/es/cumplimiento/rgpd/ops/acceso/",
   "/es/cumplimiento/rgpd/ops/condiciones/",
+  // Hotel Revenue Operator: confirmación tras el formulario y calculadora en
+  // página propia (noindex, follow: comparte island con la landing indexable).
+  "/es/hoteles/reservas-directas-ia/gracias/",
+  "/es/hoteles/calculadora-ingresos/",
 ];
 
 export default defineConfig({

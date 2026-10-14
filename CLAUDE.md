@@ -15,6 +15,8 @@ npm run assessment:test-scoring:rgpd   # GDPR maturity engine
 npm run verifactu-kit:test && npm run verifactu-kit:test-sql
 npm run rgpd-ops:test && npm run rgpd-ops:test-sql   # RGPD Ops (PGlite for SQL)
 npm run verifactu-kit:check-bundle && npm run rgpd-ops:check-bundle   # after build
+npm run hotel-revenue:test && npm run hotel-revenue:test-sql            # Hotel Revenue Operator
+npm run hotel-revenue:check-bundle                                      # after build
 ```
 
 ## Architecture
@@ -93,3 +95,7 @@ faq:                        # renders as collapsible FAQ + FAQPage JSON-LD
 - **RGPD Ops Starter** — `docs/rgpd-ops.md`. Server-side workspace in Supabase (`rgpd_ops_*`), all writes through SQL functions with table/column allowlists, `workspace_id` scoping, optimistic `version` and append-only audit. Islands: `RgpdWorkspace`, `RgpdCheckoutButton`, `RgpdAccessRequest`, `RgpdOpsOffer`; styles prefix `ro-`.
 - Shared pure helpers: `src/lib/commerce/` (tokens/HMAC sessions, payment state machine, CSV with formula neutralisation). Storage, Stripe, webhook and email code stay separate per product on purpose.
 - Migrations in `supabase/migrations/` are applied manually, never from code.
+
+## Hotel Revenue Operator (ES-only, under `/es/hoteles/`)
+
+Phase 1 = lead capture and validation, no SaaS yet — `docs/hotel-revenue-operator.md`. Landing `/es/hoteles/reservas-directas-ia/` (indexable), calculator `/es/hoteles/calculadora-ingresos/` (noindex, follow), `POST /api/hotel-revenue/lead`. Pure calculator in `src/lib/hotel-revenue/calculator.ts` (bump `CALCULATOR_VERSION` on any formula/limit/scenario change); the endpoint always recalculates server-side. Styles prefix `hro-`. Table `hotel_revenue_leads` (service role only).

@@ -1,0 +1,59 @@
+---
+// Confirmación tras enviar la solicitud del Hotel Revenue Operator.
+// noindex (también en NOINDEX_PATHS de astro.config.mjs, fuera del sitemap).
+// Estática y sin datos personales: no muestra nada de lo enviado. El evento
+// generate_lead se dispara en la island antes de llegar aquí, no en esta
+// página, para que una visita directa a la URL no cuente como conversión.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { HOTEL_REVENUE_PRODUCT as P } from "@/data/hotel-revenue";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-hotel-revenue.css";
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = `${site.replace(/\/$/, "")}${P.paths.gracias}`;
+---
+
+<BaseLayout
+  title="Solicitud recibida | Hotel Revenue Operator"
+  description="Hemos recibido tu solicitud para el programa piloto del Hotel Revenue Operator."
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  robots="noindex, nofollow"
+  ogImage={P.paths.ogImage}
+  ogImageAlt="Hotel Revenue Operator by IA Operators"
+  editorial
+>
+  <div class="ed-container">
+    <section class="hro-thanks" aria-labelledby="hro-thanks-title">
+      <p class="ed-eyebrow hro-page-eyebrow hro-page-eyebrow-flush">{P.name} · solicitud recibida</p>
+      <h1 id="hro-thanks-title">Gracias. Ya tenemos los datos de tu hotel.</h1>
+      <p class="hro-hero-lead">
+        Revisaremos lo que nos has enviado, la web y el motor de reservas, y te escribiremos al email que nos has indicado
+        para proponerte una llamada. Si no ves nuestro mensaje, revisa la carpeta de spam.
+      </p>
+      <ol class="hro-next">
+        <li>
+          <span class="ed-eyebrow">01</span>
+          <h2>Revisión</h2>
+          <p>Contrastamos tus cifras con lo que vemos en la web y en el motor de reservas.</p>
+        </li>
+        <li>
+          <span class="ed-eyebrow">02</span>
+          <h2>Llamada de diagnóstico</h2>
+          <p>Treinta minutos para entender cómo atendéis hoy las consultas y qué extras vendéis.</p>
+        </li>
+        <li>
+          <span class="ed-eyebrow">03</span>
+          <h2>Propuesta de piloto</h2>
+          <p>Alcance, calendario y qué vamos a medir. O, si no encaja, te lo diremos.</p>
+        </li>
+      </ol>
+      <div class="hro-actions hro-actions-spaced">
+        <a class="ed-button" href={P.paths.caseMenorca}>Ver un caso hotelero real<span class="ed-arrow" aria-hidden="true">↗</span></a>
+        <a class="ed-underlined" href={P.paths.vertical}>Volver a Hoteles <span class="ed-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

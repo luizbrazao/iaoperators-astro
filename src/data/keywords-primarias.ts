@@ -52,6 +52,28 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     faixa: "b",
     estimada: true,
   },
+  {
+    // Hotel Revenue Operator (14/oct/2026): producto, no consultoría. Intención
+    // transaccional de quien busca la herramienta. No compite con hoteles/
+    // (consultoría y Radiografía) ni con servicios/chatbots/ («chatbot para
+    // empresas», genérico): el calificador sectorial cambia la SERP. Volumen
+    // sin medir (Ahrefs sin plan de Keywords Explorer el 14/oct/2026): revisar
+    // con el GSC a los 60 días. La calculadora (/es/hoteles/calculadora-ingresos/)
+    // es noindex,follow y no declara keyword: comparte island con esta página.
+    path: "hoteles/reservas-directas-ia/",
+    locales: ["es"],
+    silo: "servicios",
+    primaria: "chatbot para hoteles",
+    secundarias: [
+      "asistente de reservas para hoteles",
+      "chatbot hotel whatsapp",
+      "reservas directas hotel",
+      "upselling hotel",
+      "inteligencia artificial para reservas hoteleras",
+    ],
+    faixa: "b",
+    estimada: true,
+  },
 
   // ---------------------------------------------------------------- SILO 1
   {

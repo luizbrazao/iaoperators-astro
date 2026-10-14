@@ -1,0 +1,463 @@
+---
+// Landing del Hotel Revenue Operator (Fase 1). ES-only, indexable, estática.
+//
+// Producto en modo «programa piloto»: no hay precio publicado ni checkout. La
+// hipótesis comercial vive en src/data/hotel-revenue.ts (sin mostrar). Las
+// capacidades se presentan separando lo que entra en el piloto de lo que
+// depende de una integración; no se promete ninguna integración certificada.
+//
+// JSON-LD: Service + BreadcrumbList + FAQPage. Sin Product ni Offer: no hay
+// precio real que declarar. Sin reseñas ni logos: no hay clientes del producto.
+// Keyword primaria «chatbot para hoteles» (src/data/keywords-primarias.ts).
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import HotelRevenueCalculator from "@/islands/HotelRevenueCalculator";
+import { HOTEL_REVENUE_INTEGRATION_NOTE, HOTEL_REVENUE_PRODUCT as P } from "@/data/hotel-revenue";
+import { ORG_REF } from "@/data/identidad";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-hotel-revenue.css";
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const siteRoot = site.replace(/\/$/, "");
+const pageUrl = `${siteRoot}${P.paths.landing}`;
+
+const meta = {
+  title: "Chatbot para hoteles: más reservas directas | IA Operators",
+  description:
+    "Asistente para hoteles que responde en varios idiomas, lleva al huésped a tu motor de reservas y ofrece extras. Sin cambiar de PMS. Piloto en España.",
+};
+
+const problems = [
+  {
+    title: "Consultas que nadie contesta a tiempo",
+    body: "Un mensaje a las 23:40 preguntando por el parking se responde a la mañana siguiente. Para entonces la reserva ya se hizo en otra web.",
+  },
+  {
+    title: "Dependencia de las OTAs",
+    body: "Quien tiene una duda y no obtiene respuesta en tu web vuelve al comparador. Cada una de esas reservas paga comisión.",
+  },
+  {
+    title: "Las mismas preguntas, cada día",
+    body: "Horarios, mascotas, cómo llegar, si hay cuna. Recepción las contesta una y otra vez por web, email y WhatsApp.",
+  },
+  {
+    title: "Extras que el huésped no ve",
+    body: "Parking, desayuno, late checkout o traslado existen, pero no se ofrecen en el momento en que el huésped los necesita.",
+  },
+  {
+    title: "Ninguna atribución",
+    body: "No sabes qué conversación terminó en reserva ni cuánto ingreso adicional generó. Sin ese dato no se puede decidir.",
+  },
+];
+
+const steps = [
+  { title: "Conectar el conocimiento del hotel", body: "Políticas, servicios, horarios, accesos y preguntas reales de tu equipo, revisados contigo antes de publicar nada." },
+  { title: "Atender y cualificar", body: "Responde en el idioma del huésped, entiende qué busca (fechas, ocupantes, motivo) y detecta lo que no debe contestar solo." },
+  { title: "Dirigir a la reserva", body: "Lleva al motor de reservas del hotel con las fechas ya preparadas. Precio y disponibilidad los da siempre el motor." },
+  { title: "Ofrecer extras", body: "Parking, desayuno, early check-in, late checkout, traslado, upgrade o experiencias, cuando encajan con la conversación." },
+  { title: "Medir el resultado", body: "Conversaciones, clics al motor, solicitudes y extras, con la atribución que permita cada integración." },
+];
+
+type Tag = "pilot" | "integration" | "later";
+const TAG_LABEL: Record<Tag, string> = {
+  pilot: "Incluido en el piloto",
+  integration: "Depende de integración",
+  later: "Fase posterior",
+};
+const capabilities: { title: string; body: string; tag: Tag }[] = [
+  { title: "Webchat", body: "Asistente en la web del hotel, en las páginas donde se decide la reserva. Se instala con un fragmento de código.", tag: "pilot" },
+  { title: "Atención multilingüe", body: "Español e inglés de partida. Otros idiomas se activan después de revisar las respuestas con el hotel.", tag: "pilot" },
+  { title: "Handoff humano", body: "Las conversaciones sensibles o excepcionales pasan a recepción con un resumen, por email o por el canal que ya uséis.", tag: "pilot" },
+  { title: "Upsells", body: "Presentar y enlazar los extras del hotel. El cobro automático dentro de la conversación exige integración con pagos o con el PMS.", tag: "pilot" },
+  { title: "Atribución", body: "En el piloto: conversaciones, clics al motor y solicitudes. Reservas e ingresos atribuidos, solo si el motor o el PMS devuelven el dato.", tag: "integration" },
+  { title: "WhatsApp", body: "Requiere WhatsApp Business Platform con número verificado del hotel. Se activa cuando el webchat ya funciona bien.", tag: "integration" },
+  { title: "Integraciones progresivas", body: "PMS, motor, CRM o pagos, una a una y solo cuando el sistema ofrece una API que lo permita.", tag: "later" },
+];
+
+const compat = [
+  { title: "PMS", body: "Datos de estancia para mensajes pre-llegada y ofertas, si el PMS expone API." },
+  { title: "Motor de reservas", body: "Enlaces con fechas preparadas y, si existe, retorno de la reserva para atribuirla." },
+  { title: "CRM", body: "Registro de oportunidades no cerradas para seguimiento del equipo." },
+  { title: "WhatsApp", body: "Mismo asistente en el canal donde ya escriben tus huéspedes." },
+  { title: "Email", body: "Avisos de handoff y resúmenes para recepción y dirección." },
+  { title: "Pagos", body: "Cobro de extras cuando hay pasarela o PMS que lo permitan." },
+];
+
+const pilot = [
+  { title: "Diagnóstico inicial", body: "Revisamos la web, el motor de reservas, las consultas más frecuentes y los extras que ya vendes." },
+  { title: "Configuración del conocimiento", body: "Construimos y validamos contigo la base de respuestas. Nada se publica sin tu revisión." },
+  { title: "Instalación en el sitio", body: "Webchat en tu web, conectado al motor de reservas mediante enlaces. Sin tocar el PMS." },
+  { title: "Acompañamiento", body: "Revisamos conversaciones reales, corregimos respuestas y ajustamos qué pasa a recepción." },
+  { title: "Medición", body: "Informe con conversaciones, clics al motor, solicitudes y extras, y qué parte se puede atribuir con datos." },
+];
+
+const faq = [
+  {
+    q: "¿Tengo que cambiar de PMS?",
+    a: "No. El asistente es una capa de conversación, captación e ingresos que se apoya en lo que ya tienes. No sustituye al PMS ni al motor de reservas. Si más adelante conviene conectar el PMS, se hace solo si su API lo permite.",
+  },
+  {
+    q: "¿El sistema confirma disponibilidad o precios?",
+    a: "No en el piloto. La disponibilidad y la tarifa las da siempre tu motor de reservas en tiempo real: el asistente lleva al huésped allí con las fechas preparadas. Solo con una integración confirmada con el motor podría consultar disponibilidad, y aun así la reserva se cierra en el sistema del hotel.",
+  },
+  {
+    q: "¿Funciona con WhatsApp?",
+    a: "Sí, como segunda fase del piloto. Requiere WhatsApp Business Platform con un número verificado del hotel. Empezamos por el webchat porque es donde se decide la reserva directa y porque no exige trámites con Meta.",
+  },
+  {
+    q: "¿Sustituye a la recepción?",
+    a: "No. Responde lo repetitivo y deja a recepción lo que necesita criterio: peticiones especiales, accesibilidad, quejas, grupos o cualquier caso que el hotel marque como sensible. Esas conversaciones pasan a una persona con un resumen para no volver a preguntar.",
+  },
+  {
+    q: "¿En qué idiomas atiende?",
+    a: "Español e inglés desde el principio. Francés, alemán, italiano o portugués se activan después de revisar con el hotel las respuestas en cada idioma. No publicamos un idioma que nadie haya comprobado.",
+  },
+  {
+    q: "¿Cómo se tratan los datos?",
+    a: "Este formulario solo recoge datos de contacto del hotel y los valores de la calculadora, nunca datos de huéspedes. En el piloto firmamos un contrato de encargo de tratamiento (art. 28 RGPD) antes de activar nada, el asistente no pide documentos ni datos de pago, y las conversaciones se guardan en servidores de la UE con acceso restringido.",
+  },
+  {
+    q: "¿Cuánto tarda una implantación piloto?",
+    a: "Depende sobre todo de dos cosas: lo ordenada que esté la información del hotel y el motor de reservas que uses. En el diagnóstico inicial fijamos un calendario cerrado antes de empezar, con fecha de publicación del webchat y fecha de primera revisión de resultados.",
+  },
+  {
+    q: "¿Sirve para un hotel independiente?",
+    a: "Sí. El piloto está pensado para hoteles independientes, boutique, hostels, aparthoteles y grupos pequeños, aproximadamente de 10 a 100 habitaciones por propiedad, que ya tienen web y motor de reservas.",
+  },
+  {
+    q: "¿Cómo se mide el ingreso atribuido?",
+    a: "Cada conversación tiene un identificador. Cuando el asistente envía al huésped al motor, el enlace lleva ese identificador. Si el motor o el PMS devuelven la reserva con él, la atribuimos; si no, medimos clics al motor y solicitudes, y lo presentamos así, sin convertir clics en ingresos. Los extras cuentan cuando se confirman o se cobran por el canal ofrecido.",
+  },
+];
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": `${pageUrl}#service`,
+  name: `${P.name} — asistente de reservas directas para hoteles`,
+  serviceType: "Chatbot para hoteles",
+  provider: ORG_REF,
+  areaServed: { "@type": "Country", name: "España" },
+  audience: {
+    "@type": "BusinessAudience",
+    audienceType: "Hoteles independientes, boutique, hostels, aparthoteles y pequeños grupos hoteleros",
+  },
+  description: meta.description,
+  url: pageUrl,
+  inLanguage: "es-ES",
+  isRelatedTo: { "@type": "Service", name: "Consultoría tecnológica para hoteles", url: `${siteRoot}${P.paths.vertical}` },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${siteRoot}/es/` },
+    { "@type": "ListItem", position: 2, name: "Hoteles", item: `${siteRoot}${P.paths.vertical}` },
+    { "@type": "ListItem", position: 3, name: "Reservas directas con IA", item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  ogTitle={`${P.name} · ${P.endorsement}`}
+  ogImage={P.paths.ogImage}
+  ogImageAlt="Hotel Revenue Operator by IA Operators: convierte conversaciones en reservas directas e ingresos adicionales para hoteles"
+  jsonLd={[serviceJsonLd, breadcrumbJsonLd, faqJsonLd]}
+  editorial
+>
+  <div class="ed-container">
+    <header class="hro-hero">
+      <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/es/">Inicio</a></li>
+          <li><a href={P.paths.vertical}>Hoteles</a></li>
+          <li><span aria-current="page">Reservas directas con IA</span></li>
+        </ol>
+      </nav>
+
+      <div class="hro-hero-grid">
+        <div class="hro-hero-copy">
+          <p class="ed-eyebrow">Producto para hoteles · {P.endorsement}</p>
+          <h1>Convierte conversaciones en reservas directas. <span>Y cada estancia en una oportunidad de ingreso adicional.</span></h1>
+          <p class="hro-hero-lead">
+            {P.name} atiende las dudas de quien está a punto de reservar, en su idioma y a cualquier hora,
+            lo lleva a tu motor de reservas con las fechas preparadas y le ofrece los servicios adicionales
+            que ya tienes. Trabaja sobre tu PMS y tu motor actuales: no los sustituye.
+          </p>
+          <div class="hro-actions">
+            <a class="ed-button" href="#calculadora" data-hro-cta="hero">Calcular mi oportunidad<span class="ed-arrow" aria-hidden="true">↓</span></a>
+            <a class="hro-button-secondary" href="#hro-solicitud" data-hro-cta="hero">Solicitar acceso al piloto<span class="ed-arrow" aria-hidden="true">↗</span></a>
+          </div>
+          <p class="hro-hero-note">Programa piloto para hoteles independientes y pequeños grupos en España.</p>
+        </div>
+
+        <figure class="hro-demo" aria-labelledby="hro-demo-caption">
+          <div class="hro-demo-head">
+            <span class="ed-eyebrow">Webchat · Hotel de ejemplo</span>
+            <span class="hro-demo-badge">Demostración</span>
+          </div>
+          <ol class="hro-thread">
+            <li class="hro-msg hro-msg-guest">
+              <small>Huésped · 23:41</small>
+              Hola, ¿tenéis habitación doble del 14 al 16 de noviembre? Vamos en coche, ¿hay parking?
+            </li>
+            <li class="hro-msg hro-msg-bot">
+              <small>Asistente</small>
+              Desde aquí no puedo confirmar disponibilidad: la da el motor de reservas en tiempo real.
+              Te dejo el enlace con esas fechas para dos adultos. Sí hay parking propio, cubierto, y se reserva junto a la estancia.
+              <span class="hro-msg-link">Ver disponibilidad 14–16 nov <span aria-hidden="true">↗</span></span>
+            </li>
+            <li class="hro-msg hro-msg-guest">
+              <small>Huésped</small>
+              Genial. El domingo volamos por la tarde, ¿podemos dejar la habitación más tarde?
+            </li>
+            <li class="hro-msg hro-msg-bot">
+              <small>Asistente</small>
+              Puedes añadir salida tardía hasta las 16:00, sujeta a confirmación de recepción el día anterior.
+              <span class="hro-msg-offer"><span>Late checkout 16:00</span><strong>25 €</strong><span>Parking cubierto / noche</span><strong>18 €</strong></span>
+            </li>
+            <li class="hro-msg hro-msg-guest">
+              <small>Huésped</small>
+              Viajo con mi madre, que va en silla de ruedas. ¿La habitación es accesible?
+            </li>
+            <li class="hro-msg hro-msg-system">
+              <small>Handoff a recepción</small>
+              Prefiero que te lo confirme una persona con la habitación concreta. He enviado a recepción tu consulta con fechas y necesidades; te escribirán por aquí o por email.
+            </li>
+          </ol>
+          <figcaption id="hro-demo-caption">
+            Conversación ilustrativa con datos ficticios. No es un hotel real ni una confirmación de disponibilidad.
+          </figcaption>
+        </figure>
+      </div>
+    </header>
+
+    <section class="pg-section" aria-labelledby="hro-problem-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">El problema</p>
+        <div>
+          <h2 id="hro-problem-title">La reserva directa se pierde en la conversación que nadie atiende</h2>
+          <p class="hro-intro">
+            El huésped llega a tu web con una duda. Si no la resuelve en ese momento, vuelve al comparador, reserva allí
+            y tú pagas la comisión. Lo mismo pasa con los extras: nadie los ofrece cuando hacen falta.
+          </p>
+        </div>
+      </div>
+      <ol class="hro-problems">
+        {problems.map((item, idx) => (
+          <li>
+            <span class="ed-eyebrow">{String(idx + 1).padStart(2, "0")}</span>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section id="calculadora" class="hro-calc-section" aria-labelledby="hro-calc-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Calculadora</p>
+        <div>
+          <h2 id="hro-calc-title">¿Cuánto ingreso puede estar dejando escapar tu hotel?</h2>
+          <p class="hro-intro">
+            Introduce tus datos y verás tres escenarios: comisión que se ahorraría si una parte de las reservas OTA pasara
+            a directa y ingreso por extras. También en su <a class="hro-inline-link" href={P.paths.calculator} data-hro-cta="calculator_page">página propia</a>.
+          </p>
+        </div>
+      </div>
+      <HotelRevenueCalculator client:load variant="embedded" ctaOrigin="calculator_embedded" headingLevel={3} />
+    </section>
+  </div>
+
+  <section class="ed-method" aria-labelledby="hro-how-title">
+    <div class="ed-container">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Cómo funciona</p>
+        <div>
+          <h2 id="hro-how-title">Una capa de conversación, captación e ingresos sobre tu stack actual</h2>
+          <p class="pg-method-lead">El código decide precio, disponibilidad y cobro. El modelo de lenguaje entiende, responde y recomienda. Lo sensible pasa a una persona.</p>
+        </div>
+      </div>
+      <ol class="hro-steps">
+        {steps.map((s, idx) => (
+          <li>
+            <span class="ed-eyebrow">{String(idx + 1).padStart(2, "0")}</span>
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <div class="ed-container">
+    <section class="pg-section" aria-labelledby="hro-caps-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Capacidades</p>
+        <div>
+          <h2 id="hro-caps-title">Qué entra en el piloto y qué depende de una integración</h2>
+          <p class="hro-intro">
+            Preferimos decirlo claro desde el principio: el piloto empieza por la web y crece canal a canal.
+          </p>
+        </div>
+      </div>
+      <p class="hro-legend" aria-hidden="true">
+        <span><span class="hro-tag hro-tag-pilot">{TAG_LABEL.pilot}</span></span>
+        <span><span class="hro-tag hro-tag-integration">{TAG_LABEL.integration}</span></span>
+        <span><span class="hro-tag hro-tag-later">{TAG_LABEL.later}</span></span>
+      </p>
+      <ul class="hro-caps">
+        {capabilities.map((c) => (
+          <li class="hro-cap">
+            <h3>{c.title}</h3>
+            <p>{c.body}</p>
+            <span class={`hro-tag hro-tag-${c.tag}`}>{TAG_LABEL[c.tag]}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="pg-section" aria-labelledby="hro-compat-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Compatibilidad</p>
+        <div>
+          <h2 id="hro-compat-title">Pensado para convivir con los sistemas del hotel</h2>
+          <p class="hro-intro">
+            No publicamos una lista de integraciones certificadas porque no la tenemos. Trabajamos por categorías y comprobamos
+            la API de cada sistema antes de prometer nada.
+          </p>
+        </div>
+      </div>
+      <ul class="hro-compat">
+        {compat.map((c) => (
+          <li>
+            <h3>{c.title}</h3>
+            <p>{c.body}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="hro-compat-note">{HOTEL_REVENUE_INTEGRATION_NOTE}</p>
+    </section>
+
+    <section class="pg-section" aria-labelledby="hro-pilot-title">
+      <div class="hro-pilot">
+        <div>
+          <p class="ed-eyebrow">Programa piloto</p>
+          <h2 id="hro-pilot-title">Pocas plazas, trabajo directo con el hotel</h2>
+          <p class="hro-pilot-note">
+            En esta fase no hay pago online ni precio cerrado en la web: las condiciones se acuerdan después del diagnóstico,
+            cuando sabemos qué tiene sentido medir en tu caso.
+          </p>
+          <div class="hro-actions">
+            <a class="ed-button" href="#hro-solicitud" data-hro-cta="pilot">Solicitar acceso al piloto<span class="ed-arrow" aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <ol>
+          {pilot.map((p, idx) => (
+            <li>
+              <span class="ed-eyebrow">{String(idx + 1).padStart(2, "0")}</span>
+              <div>
+                <strong>{p.title}</strong>
+                <p>{p.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section class="pg-section" aria-labelledby="hro-proof-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Experiencia en el sector</p>
+        <div>
+          <h2 id="hro-proof-title">Conocemos la operación hotelera por dentro</h2>
+        </div>
+      </div>
+      <div class="hro-proof">
+        <div>
+          <p class="hro-intro hro-intro-flush">
+            Antes de construir este producto hicimos la Radiografía Digital de una cadena de cuatro hoteles en Menorca:
+            inventario de sistemas, procesos, integraciones y dependencias, con un roadmap priorizado como resultado.
+          </p>
+          <p class="hro-proof-caveat">
+            Fue un proyecto de diagnóstico, no un despliegue del {P.name}. Lo citamos como prueba de que entendemos
+            cómo trabajan recepción, reservas y dirección, no como resultado del producto.
+          </p>
+          <div class="hro-actions">
+            <a class="ed-underlined" href={P.paths.caseMenorca}>Ver el caso de Menorca <span class="ed-arrow" aria-hidden="true">↗</span></a>
+            <a class="ed-underlined" href={P.paths.vertical}>Consultoría tecnológica para hoteles <span class="ed-arrow" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <dl>
+          <div><dt>Hoteles analizados</dt><dd>4</dd></div>
+          <div><dt>Aplicaciones inventariadas</dt><dd>47</dd></div>
+          <div><dt>Coste SaaS redundante o sin uso</dt><dd>23%</dd></div>
+          <div><dt>Semanas de diagnóstico</dt><dd>3</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="pg-section pg-faq ed-faq" aria-labelledby="hro-faq-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Preguntas frecuentes</p>
+        <div>
+          <h2 id="hro-faq-title">Antes de pedir el piloto</h2>
+          <div class="pg-faq-list">
+            {faq.map((item) => (
+              <details>
+                <summary>{item.q}</summary>
+                <p>{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="ed-closing" aria-labelledby="hro-closing-title">
+    <div class="ed-container">
+      <p class="ed-eyebrow">{P.name} · {P.endorsement}</p>
+      <h2 id="hro-closing-title" class="pg-closing-title">Veamos cuánto ingreso puede estar dejando escapar tu hotel.</h2>
+      <p class="pg-closing-copy">Calcula tu escenario y, si los números tienen sentido, pide el análisis. Te diremos también si no lo tienen.</p>
+      <div class="hro-actions">
+        <a class="ed-button" href="#calculadora" data-hro-cta="closing">Calcular mi oportunidad<span class="ed-arrow" aria-hidden="true">↑</span></a>
+        <a class="ed-underlined" href={P.paths.contact} data-hro-cta="closing">Prefiero hablar antes <span class="ed-arrow" aria-hidden="true">↗</span></a>
+      </div>
+      <p class="pg-disclaimer">
+        Programa piloto. Las capacidades descritas dependen de la configuración de cada hotel y no garantizan un aumento de ingresos.
+        Más información en la <a class="hro-inline-link" href={P.paths.privacy}>política de privacidad</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { pushHotelRevenueEvent } from "@/lib/hotel-revenue/analytics";
+  import type { CtaOrigin } from "@/lib/hotel-revenue/types";
+
+  // CTA pulsado → evento sin PII y origen para el formulario (sin almacenamiento).
+  document.querySelectorAll<HTMLElement>("[data-hro-cta]").forEach((el) => {
+    el.addEventListener("click", () => {
+      const origin = (el.dataset.hroCta ?? "unknown") as CtaOrigin;
+      document.documentElement.dataset.hroCta = origin;
+      pushHotelRevenueEvent("hotel_revenue_cta_clicked", { cta_origin: origin });
+    });
+  });
+</script>

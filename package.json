@@ -22,7 +22,10 @@
     "rgpd-ops:test": "tsx scripts/test-rgpd-ops.ts",
     "rgpd-ops:test-sql": "node scripts/test-rgpd-ops-sql.mjs",
     "rgpd-ops:check-bundle": "node scripts/check-rgpd-ops-bundle.mjs",
-    "rgpd-ops:resend-access": "tsx scripts/rgpd-ops-resend-access.ts"
+    "rgpd-ops:resend-access": "tsx scripts/rgpd-ops-resend-access.ts",
+    "hotel-revenue:test": "tsx scripts/test-hotel-revenue.ts",
+    "hotel-revenue:test-sql": "node scripts/test-hotel-revenue-sql.mjs",
+    "hotel-revenue:check-bundle": "node scripts/check-hotel-revenue-bundle.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",

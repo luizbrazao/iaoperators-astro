@@ -65,6 +65,13 @@ const TRATAMIENTOS_ES: Tratamiento[] = [
     base: "Ejecución del contrato (art. 6.1.b RGPD) y cumplimiento de obligaciones fiscales y contables (art. 6.1.c). Si tu espacio contiene datos personales de terceros, los tratamos como encargados por cuenta de tu empresa, según el encargo incluido en las condiciones de RGPD Ops (art. 28 RGPD).",
     plazo: "Espacio de trabajo: mientras dure el acceso y hasta 90 días después (también tras un reembolso total), para que puedas exportarlo; después se elimina. Datos del pedido: los plazos legales de conservación de la documentación contable y fiscal (6 años).",
   },
+  {
+    titulo: "Calculadora y solicitud del piloto Hotel Revenue Operator",
+    datos: "Nombre, email profesional, nombre del hotel o grupo, número de propiedades y de habitaciones y, si los indicas, web y teléfono; los valores que introduces en la calculadora y el resultado recalculado en nuestro servidor; la página de origen, los parámetros de campaña (UTM), el dominio desde el que llegaste (no la dirección completa) y la versión del texto de consentimiento aceptado. No pedimos datos de huéspedes. La calculadora no envía ni guarda nada hasta que mandas el formulario. No se guarda la IP: para limitar envíos abusivos se usa un código cifrado (HMAC) que no permite recuperarla.",
+    finalidad: "Estudiar tu solicitud, contactarte sobre el programa piloto y medir de forma agregada qué campañas y páginas generan solicitudes. Los datos del formulario no se envían a plataformas publicitarias.",
+    base: "Aplicación de medidas precontractuales a petición tuya (art. 6.1.b RGPD) y, para la limitación de envíos y la medición agregada, interés legítimo (art. 6.1.f).",
+    plazo: "12 meses desde el último contacto si no se inicia una relación. Si se pone en marcha un piloto o un contrato, mientras dure la relación y después durante los plazos legales (6 años para la documentación mercantil).",
+  },
 ];
 
 const PROVEEDORES_ES: Proveedor[] = [
@@ -89,7 +96,7 @@ const COOKIES_ES: CookieItem[] = [
 ];
 
 const ES = {
-  "updated": "Última actualización · 13 de octubre de 2026",
+  "updated": "Última actualización · 14 de octubre de 2026",
   "lead": "Qué datos personales tratamos en iaoperators.com, para qué, con qué base legal, durante cuánto tiempo, con quién se comparten y cómo puedes ejercer tus derechos. Esta política cumple el deber de información del Reglamento (UE) 2016/679 (RGPD) y de la Ley Orgánica 3/2018 (LOPDGDD).",
   "labels": {
     "holder": "Titular",
@@ -162,7 +169,7 @@ export type PoliticaCopy = typeof ES & { tratamientos: Tratamiento[]; proveedore
 export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
   es: { ...ES, tratamientos: TRATAMIENTOS_ES, proveedores: PROVEEDORES_ES, cookies: COOKIES_ES },
   en: {
-    "updated": "Last updated · 13 October 2026",
+    "updated": "Last updated · 14 October 2026",
     "lead": "What personal data we process on iaoperators.com, why, on what legal basis, for how long, who it is shared with and how you can exercise your rights. This policy meets the information duty under Regulation (EU) 2016/679 (GDPR) and Spanish Organic Law 3/2018 (LOPDGDD).",
     "labels": {
       "holder": "Owner",
@@ -270,6 +277,13 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
         "finalidad": "To charge you, issue the invoice, give you access through single-use links, provide the service (store, display and export your workspace) and send the emails needed for payment and access. We do not use your workspace content for any other purpose or send it to artificial intelligence models. Buying does not subscribe you to marketing communications.",
         "base": "Performance of the contract (art. 6.1.b GDPR) and compliance with tax and accounting obligations (art. 6.1.c). If your workspace contains personal data of third parties, we process it as a processor on behalf of your company, under the processing terms included in the RGPD Ops conditions (art. 28 GDPR).",
         "plazo": "Workspace: while access lasts and up to 90 days afterwards (also after a full refund), so you can export it; then it is deleted. Order data: the legal retention periods for accounting and tax records (6 years)."
+      },
+      {
+        "titulo": "Hotel Revenue Operator calculator and pilot request",
+        "datos": "Name, work email, hotel or group name, number of properties and rooms and, if you provide them, website and phone; the values you enter in the calculator and the result recalculated on our server; the source page, campaign parameters (UTM), the domain you came from (not the full address) and the version of the consent text you accepted. We do not ask for guest data. The calculator sends and stores nothing until you submit the form. The IP is not stored: to limit abusive submissions we use an encrypted code (HMAC) from which it cannot be recovered.",
+        "finalidad": "To study your request, contact you about the pilot programme and measure, in aggregate, which campaigns and pages generate requests. Form data is not sent to advertising platforms.",
+        "base": "Steps taken at your request before entering into a contract (art. 6.1.b GDPR) and, for submission limiting and aggregate measurement, our legitimate interest (art. 6.1.f).",
+        "plazo": "12 months from the last contact if no relationship begins. If a pilot or contract starts, for the duration of the relationship and then for the legal retention periods (6 years for commercial records)."
       }
     ],
     "proveedores": [
@@ -353,7 +367,7 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
     ]
   },
   pt: {
-    "updated": "Última atualização · 13 de outubro de 2026",
+    "updated": "Última atualização · 14 de outubro de 2026",
     "lead": "Quais dados pessoais tratamos em iaoperators.com, para quê, com que base legal, por quanto tempo, com quem são compartilhados e como você pode exercer seus direitos. Esta política cumpre o dever de informação do Regulamento (UE) 2016/679 (RGPD) e da Lei Orgânica espanhola 3/2018 (LOPDGDD).",
     "labels": {
       "holder": "Titular",
@@ -461,6 +475,13 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
         "finalidad": "Cobrar, emitir a fatura, dar acesso com links de uso único, prestar o serviço (guardar, mostrar e exportar o seu espaço) e enviar os e-mails necessários para o pagamento e o acesso. Não usamos o conteúdo do seu espaço para outros fins nem o enviamos a modelos de inteligência artificial. Comprar não inscreve você em comunicações comerciais.",
         "base": "Execução do contrato (art. 6.1.b do RGPD) e cumprimento de obrigações fiscais e contábeis (art. 6.1.c). Se o seu espaço contiver dados pessoais de terceiros, nós os tratamos como subcontratantes por conta da sua empresa, conforme o encargo incluído nas condições do RGPD Ops (art. 28 do RGPD).",
         "plazo": "Espaço de trabalho: enquanto durar o acesso e até 90 dias depois (também após um reembolso total), para que você possa exportá-lo; depois é eliminado. Dados do pedido: os prazos legais de conservação da documentação contábil e fiscal (6 anos)."
+      },
+      {
+        "titulo": "Calculadora e solicitação do piloto Hotel Revenue Operator",
+        "datos": "Nome, e-mail profissional, nome do hotel ou grupo, número de propriedades e de quartos e, se você informar, site e telefone; os valores que você digita na calculadora e o resultado recalculado no nosso servidor; a página de origem, os parâmetros de campanha (UTM), o domínio de onde você chegou (não o endereço completo) e a versão do texto de consentimento aceito. Não pedimos dados de hóspedes. A calculadora não envia nem guarda nada até você enviar o formulário. O IP não é guardado: para limitar envios abusivos usamos um código cifrado (HMAC) que não permite recuperá-lo.",
+        "finalidad": "Analisar sua solicitação, entrar em contato sobre o programa piloto e medir de forma agregada quais campanhas e páginas geram solicitações. Os dados do formulário não são enviados a plataformas de publicidade.",
+        "base": "Diligências pré-contratuais a seu pedido (art. 6.1.b do RGPD) e, para a limitação de envios e a medição agregada, interesse legítimo (art. 6.1.f).",
+        "plazo": "12 meses desde o último contato, se não houver início de relação. Se um piloto ou contrato começar, enquanto durar a relação e depois pelos prazos legais (6 anos para a documentação mercantil)."
       }
     ],
     "proveedores": [

@@ -2,6 +2,8 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import "@/styles/editorial-pages.css";
 import "@/styles/hoteles.css";
+import "@/styles/editorial-hotel-revenue.css";
+import { HOTEL_REVENUE_PRODUCT as HRO } from "@/data/hotel-revenue";
 
 const locale = "es";
 const site = Astro.site?.toString() ?? "https://iaoperators.com";
@@ -143,7 +145,7 @@ const audience = {
     "Direcciones que sospechan que pagan, copian o corrigen más de lo necesario.",
   ],
   no: [
-    "Quien busca comprar un chatbot antes de definir el problema que debe resolver.",
+    "Quien solo necesita atender consultas y captar reservas directas en la web: para eso está el Hotel Revenue Operator, sin Radiografía previa.",
     "Un proyecto limitado a pentesting, PCI DSS o auditoría de ciberseguridad.",
     "Una operación sin patrocinio de dirección ni acceso a responsables y documentación.",
   ],
@@ -416,6 +418,34 @@ const faqJsonLd = {
       </ul>
     </section>
 
+    <section class="pg-section" aria-labelledby="hro-vertical-title">
+      <div class="hro-vertical">
+        <div>
+          <p class="ed-eyebrow">Producto · {HRO.endorsement}</p>
+          <p class="hro-vertical-name">{HRO.name}</p>
+        </div>
+        <div>
+          <h2 id="hro-vertical-title">¿El problema son las reservas que se escapan a las OTAs? Para eso hay un producto.</h2>
+          <p>
+            Atiende las dudas de quien está a punto de reservar, en su idioma y a cualquier hora, lo lleva a tu motor de
+            reservas y le ofrece los extras que ya vendes. Sin cambiar de PMS. Se ofrece como programa piloto para hoteles
+            independientes y pequeños grupos en España.
+          </p>
+          <dl class="hro-vertical-diff">
+            <div>
+              <dt>Consultoría · Radiografía</dt>
+              <dd>Varios departamentos, sistemas o propiedades. Resultado: mapa de la operación y roadmap priorizado.</dd>
+            </div>
+            <div>
+              <dt>Producto · {HRO.name}</dt>
+              <dd>Un problema acotado: conversaciones que no acaban en reserva directa. Resultado: asistente en tu web y medición.</dd>
+            </div>
+          </dl>
+          <a class="ed-button" href={HRO.paths.landing} data-hro-cta="hoteles_vertical">Conocer {HRO.name}<span class="ed-arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
     <section class="pg-section ht-architecture" aria-labelledby="ht-architecture-title">
       <div class="ed-section-intro">
         <p class="ed-eyebrow">Arquitectura</p>
@@ -511,3 +541,11 @@ const faqJsonLd = {
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  import { pushHotelRevenueEvent } from "@/lib/hotel-revenue/analytics";
+
+  document.querySelectorAll<HTMLElement>("[data-hro-cta]").forEach((el) => {
+    el.addEventListener("click", () => pushHotelRevenueEvent("hotel_revenue_cta_clicked", { cta_origin: "hoteles_vertical" }));
+  });
+</script>
