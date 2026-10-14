@@ -1,0 +1,517 @@
+---
+// Landing personalizada de prospección (Frente A, Ley 10/2025) para el gerente
+// de Comercializadora Eléctrica de Cádiz. Se envía por LinkedIn junto a un
+// mensaje corto. Privada: noindex,nofollow y fuera del sitemap ("/para/" en
+// NOINDEX_PATHS de astro.config.mjs).
+//
+// Promesa del primer contacto: "un esquema de una página con lo que cubre hoy
+// el contrato telefónico y lo que quedaría pendiente según la ley".
+//
+// Hechos públicos usados (verificados el 13-14/10/2026):
+//   - PLACSP, expediente SE25013 "Servicio de atención telefónica a clientes",
+//     Comercializadora Eléctrica de Cádiz S.A., adjudicado a SERVINFORM SA,
+//     formalizado el 22/01/2026.
+//   - Ley 10/2025 (BOE, texto consolidado): arts. 2.1, 5.3, 7, 8, 10, 11, 12,
+//     13, 17, 21, 22 y disposición transitoria única (ap. 1: plazo de doce
+//     meses; ap. 4: comercializadoras de luz, gas y telefonía por debajo del
+//     5 % de cuota nacional).
+// No se citan importes del contrato ni datos internos: la página habla de la
+// ley y del reparto típico de responsabilidades, no de cómo trabajan hoy.
+// Lo que depende de su contrato se formula como pregunta, no como afirmación.
+//
+// Comportamiento compartido en src/scripts/prospect-landing.ts.
+
+// --- Configuración editable ---------------------------------------------------
+const LANDING = "electrica-cadiz";
+const GTM_ID = "GTM-572KJ7HZ";
+const DEADLINE_ISO = "2026-12-28";
+const wa = (t: string) => `https://wa.me/34662423523?text=${encodeURIComponent(t)}`;
+const CONTACT_HREF = wa("Hola Luiz, soy Manuel Sierra, de Eléctrica de Cádiz. He visto el esquema sobre la Ley 10/2025 y me gustaría comentarlo.");
+const INTRO_HREF = wa("Hola Luiz, soy Manuel Sierra, de Eléctrica de Cádiz. Te pongo en contacto con la persona que lleva la atención al cliente: ");
+const MAIL_HREF = "mailto:info@iaoperators.com?subject=" + encodeURIComponent("Ley 10/2025 · Eléctrica de Cádiz");
+// -----------------------------------------------------------------------------
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const pageUrl = new URL("/para/electrica-de-cadiz/", site).toString();
+const ogImage = new URL("/og/electrica-cadiz.png", site).toString();
+const title = "Ley 10/2025 · Eléctrica de Cádiz | IA Operators";
+const description = "Lo que cubre el contrato de atención telefónica y lo que la Ley 10/2025 pide fuera del teléfono. Un esquema preparado por IA Operators para Eléctrica de Cádiz.";
+
+const pad = (n: number) => String(n).padStart(2, "0");
+
+// Obligaciones, con artículo. Solo lo que afecta al día a día.
+const obligaciones = [
+  { art: "Arts. 8.2 y 10.3", t: "Hablar con una persona cuando el cliente lo pida", d: "El 95 % de esas llamadas, atendidas de media en menos de tres minutos. Un contestador no puede ser el único medio." },
+  { art: "Art. 11", t: "Una clave por cada queja, reclamación o incidencia", d: "Se entrega durante la propia interlocución y sirve para seguir el estado de la tramitación." },
+  { art: "Art. 12", t: "Justificante en soporte duradero", d: "Con contenido, fecha y hora, por la misma vía o la que elija el cliente." },
+  { art: "Art. 17", t: "Plazos de respuesta", d: "Quince días hábiles en general, cinco días para facturación y cobros indebidos, dos horas para cortes de suministro." },
+  { art: "Art. 7", t: "Todos los canales cuentan", d: "Teléfono, correo, vía electrónica y oficina física. En la oficina también hay que aceptar la queja y dar la clave." },
+  { art: "Arts. 21 y 22", t: "Evaluación de calidad y auditoría", d: "Medida con un error máximo del 5 %, auditada por una entidad acreditada por ENAC y publicada en la web." },
+];
+
+// El reparto: qué suele vivir en el contrato telefónico y qué no.
+type Estado = "tel" | "fuera" | "pregunta";
+const reparto: { o: string; donde: string; estado: Estado; nota: string }[] = [
+  { o: "95 % de llamadas con persona en menos de 3 minutos", donde: "Proveedor del teléfono", estado: "pregunta", nota: "¿Lo fija su contrato con esa métrica exacta y quién la mide?" },
+  { o: "Clave única por interacción", donde: "Todos los canales", estado: "fuera", nota: "La misma referencia tiene que valer si el cliente llama, escribe o va a la oficina." },
+  { o: "Justificante y seguimiento con la clave", donde: "Oficina virtual y sistema comercial", estado: "fuera", nota: "El cliente debe poder consultar el estado sin volver a explicar el caso." },
+  { o: "Plazos de 15 días, 5 días y 2 horas con alertas", donde: "Back office", estado: "fuera", nota: "El reloj corre desde la entrada, sea cual sea el canal." },
+  { o: "Reclamaciones en la oficina física", donde: "Oficina de atención", estado: "fuera", nota: "También necesitan clave y entran en el mismo cómputo." },
+  { o: "Datos para la evaluación y la auditoría", donde: "Todos los canales", estado: "fuera", nota: "La auditoría mide el conjunto, no solo las llamadas." },
+];
+
+const canales = ["Teléfono", "Correo", "Oficina virtual", "Oficina física"];
+const capas = [
+  { k: "Clave única", d: "una referencia por caso, desde la entrada" },
+  { k: "Plazos", d: "15 días, 5 días y 2 horas, con aviso antes de vencer" },
+  { k: "Evidencias", d: "lo que pedirá la auditoría, ya ordenado" },
+];
+
+const pasos = [
+  { t: "Diagnóstico", d: "Pasamos cada canal por los artículos de la ley y marcamos qué está cubierto, qué depende del proveedor y qué falta." },
+  { t: "Registro común", d: "Una capa ligera que da la clave, controla plazos y avisa. Encima de lo que ya tienen: sin cambiar de proveedor telefónico ni de sistema comercial." },
+  { t: "Evidencias", d: "Los datos de la evaluación anual preparados para que la auditoría sea una revisión, no una búsqueda." },
+];
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
+    <link rel="canonical" href={pageUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="IA Operators" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content="Ley 10/2025: lo que queda fuera del teléfono" />
+    <meta property="og:description" content="Un esquema para Eléctrica de Cádiz." />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Ley 10/2025: lo que cubre el teléfono y lo que queda fuera. Un esquema para Eléctrica de Cádiz." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ley 10/2025: lo que queda fuera del teléfono" />
+    <meta name="twitter:description" content="Un esquema para Eléctrica de Cádiz." />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="theme-color" content="#f6f5f1" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/manrope-latin-variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
+  </head>
+
+  <body data-gtm={GTM_ID} data-deadline={DEADLINE_ISO}>
+    <header class="top" data-top>
+      <div class="wrap top-inner">
+        <a class="wordmark" href="#inicio" aria-label="IA Operators, volver al inicio de la página"><img src="/brand/ia-operators-logo.png" alt="" width="453" height="82" /></a>
+        <nav class="top-nav" aria-label="Página">
+          <a class="top-link" href="#reparto">El reparto</a>
+          <a class="top-cta" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="header" data-cta-event="click_contact">Hablar con Luiz</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section id="inicio" class="hero wrap" aria-labelledby="hero-title">
+        <p class="label">Para Manuel Sierra · Eléctrica de Cádiz</p>
+        <h1 id="hero-title" class="greeting">La Ley 10/2025 de atención a la clientela obliga a las comercializadoras de electricidad <b>sea cual sea su tamaño</b>. El plazo de adaptación termina el 28 de diciembre.</h1>
+        <p class="big">El teléfono ya está contratado.<span>La ley pide más que el teléfono.</span></p>
+
+        <div class="hero-grid">
+          <div class="countdown" aria-live="polite">
+            <p class="cd-n" data-days>28/12</p>
+            <p class="cd-k" data-days-label>fin del plazo de adaptación</p>
+            <p class="cd-s">Disposición transitoria única: doce meses desde la entrada en vigor, el 28/12/2025.</p>
+          </div>
+          <div class="hero-copy">
+            <p>En enero la Comercializadora formalizó el nuevo servicio de atención telefónica a clientes. Es un buen punto de partida.</p>
+            <p>Pero varias obligaciones de la ley no viven en la línea telefónica: la clave única por caso, el control de los plazos y los datos de la auditoría tocan todos los canales a la vez.</p>
+            <p class="hero-strong">Este esquema separa lo que suele cubrir el contrato telefónico de lo que queda entre el proveedor y los sistemas propios.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Obligaciones -->
+      <section id="ley" class="section wrap" aria-labelledby="ley-title">
+        <div class="split">
+          <p class="label label-accent" data-reveal>01 · Lo que pide la ley</p>
+          <div>
+            <h2 id="ley-title" class="h2" data-reveal>Seis obligaciones que se notan en el día a día.</h2>
+            <p class="lede" data-reveal>Resumidas del texto consolidado del BOE. Hay más, pero estas son las que cambian cómo se atiende.</p>
+            <ol class="oblig" data-reveal>
+              {obligaciones.map((o, i) => (
+                <li>
+                  <span class="n">{pad(i + 1)}</span>
+                  <div>
+                    <p class="ob-t">{o.t}</p>
+                    <p class="ob-d">{o.d}</p>
+                  </div>
+                  <span class="ob-art">{o.art}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reparto -->
+      <section id="reparto" class="panel" aria-labelledby="re-title">
+        <div class="wrap section">
+          <p class="label" data-reveal>02 · El reparto</p>
+          <h2 id="re-title" class="h2 h2-wide" data-reveal>Qué cubre el contrato telefónico y qué queda fuera.</h2>
+          <p class="lede" data-reveal>Es el reparto habitual. El de Eléctrica de Cádiz solo se confirma mirando el contrato y los sistemas con ustedes.</p>
+          <div class="legend" data-reveal>
+            <span class="lg lg-pregunta">Depende del contrato</span>
+            <span class="lg lg-fuera">Fuera del teléfono</span>
+          </div>
+          <ol class="rep" data-reveal>
+            {reparto.map((r) => (
+              <li class:list={["rep-row", `is-${r.estado}`]}>
+                <p class="rep-o">{r.o}</p>
+                <p class="rep-w">{r.donde}</p>
+                <p class="rep-n">{r.nota}</p>
+              </li>
+            ))}
+          </ol>
+          <p class="statement" data-reveal>
+            <span class="muted">Una fila depende del proveedor.</span>
+            <span>Cinco dependen de que todos los canales hablen el mismo idioma.</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- La pieza que falta -->
+      <section id="registro" class="section wrap" aria-labelledby="rg-title">
+        <div class="split">
+          <p class="label label-accent" data-reveal>03 · La pieza que falta</p>
+          <div>
+            <h2 id="rg-title" class="h2" data-reveal>Un registro común por encima de los canales.</h2>
+            <p class="lede" data-reveal>No sustituye al proveedor telefónico ni al sistema comercial. Recoge lo que entra por cualquier vía y le pone clave, reloj y rastro.</p>
+            <figure class="flow" data-reveal aria-label="Cuatro canales que entran en un registro común con clave única, plazos y evidencias">
+              <ol class="flow-in">
+                {canales.map((c, i) => <li style={`--i:${i}`}>{c}</li>)}
+              </ol>
+              <div class="flow-join" aria-hidden="true"><i></i></div>
+              <ol class="flow-core">
+                {capas.map((c) => <li><b>{c.k}</b><span>{c.d}</span></li>)}
+              </ol>
+              <figcaption>Esquema conceptual. No describe los sistemas actuales de Eléctrica de Cádiz.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- Matices -->
+      <section id="matices" class="night" aria-labelledby="ma-title">
+        <div class="wrap section">
+          <p class="label label-night" data-reveal>04 · Dos matices a su favor</p>
+          <h2 id="ma-title" class="h2 h2-wide" data-reveal>El alcance para una comercializadora pequeña es menor de lo que parece.</h2>
+          <div class="nuance">
+            <div data-reveal>
+              <p class="nu-k">Disposición transitoria única, apartado 4</p>
+              <p class="nu-t">La atención de incidencias 24 horas y el código numérico específico (arts. 14.2 y 16.2 a 16.4) no se aplican a las comercializadoras de luz, gas y telefonía mientras la empresa o su grupo no alcancen el 5 % del mercado nacional y no sean una gran empresa del art. 2.2.</p>
+            </div>
+            <div data-reveal style="--d:120ms">
+              <p class="nu-k">Art. 21.1</p>
+              <p class="nu-t">Con menos de 250 personas y un volumen de negocios que no supere 50 millones de euros, la evaluación de calidad puede hacerse cada dos años, de forma justificada por el volumen de casos.</p>
+            </div>
+          </div>
+          <p class="prose-line prose-night" data-reveal>Conviene confirmar ambos puntos con su asesoría. Si se confirman, el trabajo se concentra en lo esencial: clave, plazos y evidencias.</p>
+        </div>
+      </section>
+
+      <!-- Propuesta -->
+      <section id="propuesta" class="section wrap" aria-labelledby="pr-title">
+        <div class="split">
+          <p class="label label-accent" data-reveal>Una idea concreta</p>
+          <div>
+            <h2 id="pr-title" class="h2 h2-pair" data-reveal><span>Antes del 28 de diciembre,</span><span class="h2-accent">lo esencial en marcha.</span></h2>
+            <p class="lede" data-reveal>Un primer trabajo acotado, de pocas semanas, en tres pasos.</p>
+            <ol class="steps" data-reveal>
+              {pasos.map((p, i) => (
+                <li><span class="n">{pad(i + 1)}</span><div><p class="st-t">{p.t}</p><p class="st-d">{p.d}</p></div></li>
+              ))}
+            </ol>
+            <ul class="nots" data-reveal>
+              <li>No sustituimos al proveedor telefónico.</li>
+              <li>No vendemos un CRM ni una plataforma cerrada.</li>
+              <li>Integramos con lo que ya funciona.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section id="hablar" class="cta" aria-labelledby="cta-title">
+        <div class="wrap section">
+          <h2 id="cta-title" class="h2 cta-title" data-reveal>¿Lo repasamos en 20 minutos?</h2>
+          <p class="cta-copy" data-reveal>Le enseño cómo quedaría el reparto con sus canales reales. Y si no es usted quien lleva la atención al cliente, encantado de hablar con quien corresponda.</p>
+          <div class="cta-row" data-reveal>
+            <div class="buttons">
+              <a class="button" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="final" data-cta-event="click_contact">Hablar con Luiz <span aria-hidden="true">↗</span></a>
+              <a class="button button-ghost" href={INTRO_HREF} target="_blank" rel="noopener" data-cta="intro" data-cta-event="click_introduction">Presentarme a la persona adecuada <span aria-hidden="true">↗</span></a>
+              <a class="mail" href={MAIL_HREF} data-cta="mail" data-cta-event="click_contact">o escribir a info@iaoperators.com</a>
+            </div>
+            <div class="signature">
+              <p class="signature-name">Luiz Brazão</p>
+              <p class="signature-role">Founder, IA Operators · Málaga</p>
+              <a class="signature-site" href="https://iaoperators.com/es/cumplimiento/ley-atencion-al-cliente/" data-cta="site">Ley 10/2025 en iaoperators.com</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="wrap foot-inner">
+        <span class="foot-brand"><img src="/brand/ia-operators-logo.png" alt="IA Operators" width="453" height="82" loading="lazy" /></span>
+        <p class="foot-note">Elaborado con información pública (BOE y Plataforma de Contratación del Sector Público). No es asesoramiento jurídico.</p>
+        <a href="https://www.boe.es/eli/es/l/2025/12/26/10/con" target="_blank" rel="noopener">Ley 10/2025 en el BOE</a>
+      </div>
+    </footer>
+
+    <div class="consent" data-consent hidden role="region" aria-label="Cookies">
+      <p>Usamos cookies para medir y mejorar la experiencia. Puede aceptarlas o rechazarlas. <a href="/es/politica-de-privacidad/">Política de Privacidad</a>.</p>
+      <div class="consent-actions">
+        <button type="button" data-consent-reject>Rechazar</button>
+        <button type="button" class="consent-accept" data-consent-accept>Aceptar</button>
+      </div>
+    </div>
+
+    <script>
+      import { initProspectLanding } from "../../scripts/prospect-landing";
+      initProspectLanding({ landing: "electrica-cadiz", gtmId: document.body.dataset.gtm ?? "", scrollMarks: [50, 90] });
+
+      // Cuenta atrás calculada al abrir la página (el HTML es estático).
+      const iso = document.body.dataset.deadline;
+      const n = document.querySelector<HTMLElement>("[data-days]");
+      const k = document.querySelector<HTMLElement>("[data-days-label]");
+      if (iso && n && k) {
+        const end = new Date(`${iso}T23:59:59+01:00`).getTime();
+        const days = Math.ceil((end - Date.now()) / 86_400_000);
+        if (days > 1) {
+          n.textContent = String(days);
+          k.textContent = "días para el fin del plazo de adaptación";
+        } else if (days === 1) {
+          n.textContent = "1";
+          k.textContent = "día para el fin del plazo de adaptación";
+        } else {
+          n.textContent = "28/12";
+          k.textContent = "el plazo de adaptación ya ha terminado";
+        }
+      }
+    </script>
+
+    <style is:global>
+      @font-face {
+        font-family: "Manrope EC";
+        src: url("/fonts/manrope-latin-variable.woff2") format("woff2");
+        font-weight: 200 800;
+        font-display: swap;
+      }
+      :root {
+        --paper: #f6f5f1;
+        --panel: #ecebe5;
+        --ink: #15171a;
+        --text: #2c2f33;
+        --muted: #62666b;
+        --soft: #9a9da1;
+        --line: #dfded8;
+        --line-strong: #c3c2bb;
+        --slate: #24425a;
+        --slate-soft: #9fb2c1;
+        --orange: #f16532;
+        --orange-ink: #b4441a;
+        --night: #121417;
+        --night-text: #f1f1ee;
+        --night-line: #2b2f34;
+        --gutter: 20px;
+        --ease: cubic-bezier(.2, .7, .2, 1);
+      }
+      *, *::before, *::after { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 72px; }
+      body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Manrope EC", "Helvetica Neue", Arial, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+      h1, h2, h3, p, ol, ul, dl, dd, figure, blockquote { margin: 0; }
+      ol, ul { padding: 0; list-style: none; }
+      a { color: inherit; text-decoration: none; }
+      a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+      .wrap { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: var(--gutter); }
+      .label { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+      .label::before { content: ""; width: 7px; height: 7px; background: var(--slate); }
+      .label-accent::before { background: var(--orange); }
+      .label-night { color: #9a9ea3; }
+      .label-night::before { background: var(--slate-soft); }
+      .muted { color: var(--soft); }
+      .n { flex: 0 0 26px; font-size: 12px; font-weight: 650; color: var(--soft); }
+
+      /* Cabecera */
+      .top { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid transparent; transition: background-color .3s ease, border-color .3s ease; }
+      .top.is-scrolled { background: rgba(246, 245, 241, .9); border-bottom-color: var(--line); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+      .top-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
+      .wordmark img { display: block; width: auto; height: 22px; }
+      .foot-brand img { display: block; width: auto; height: 18px; }
+      .top-nav { display: flex; align-items: center; gap: 22px; font-size: 13px; }
+      .top-link { display: none; color: var(--muted); }
+      .top-link:hover { color: var(--ink); }
+      .top-cta { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; background: var(--slate); color: var(--night-text); font-weight: 600; white-space: nowrap; transition: background-color .2s ease; }
+      .top-cta:hover { background: var(--ink); }
+
+      /* Hero */
+      .hero { padding-top: 18px; padding-bottom: 72px; }
+      .greeting { margin-top: 14px; max-width: 26em; font-size: clamp(19px, 2.2vw, 28px); font-weight: 500; letter-spacing: -.028em; line-height: 1.28; color: var(--text); }
+      .greeting b { font-weight: 700; color: var(--slate); }
+      .big { display: grid; gap: 2px; margin-top: 22px; max-width: 14em; font-size: clamp(34px, 6.4vw, 92px); font-weight: 500; letter-spacing: -.058em; line-height: 1; color: var(--soft); }
+      .big span { color: var(--ink); }
+      .hero-grid { display: grid; gap: 32px; margin-top: 36px; }
+      .countdown { padding: 22px 20px; background: var(--night); color: var(--night-text); align-self: start; }
+      .cd-n { font-size: clamp(64px, 9vw, 120px); font-weight: 500; letter-spacing: -.06em; line-height: 1; color: var(--orange); }
+      .cd-k { margin-top: 8px; font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
+      .cd-s { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--night-line); font-size: 13px; color: #9a9ea3; }
+      .hero-copy { display: grid; gap: 10px; align-content: start; color: var(--muted); }
+      .hero-copy p { max-width: 32em; }
+      .hero-strong { margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--line-strong); font-size: clamp(20px, 2vw, 25px); font-weight: 500; letter-spacing: -.03em; line-height: 1.28; color: var(--ink); }
+
+      /* Secciones */
+      .section { padding-block: 88px; }
+      .panel { background: var(--panel); }
+      .night { background: var(--night); color: var(--night-text); }
+      .split { display: grid; gap: 18px; }
+      .split > .label { align-self: start; padding-top: 10px; }
+      .h2 { font-size: clamp(30px, 4.4vw, 58px); font-weight: 500; letter-spacing: -.05em; line-height: 1.07; max-width: 15em; }
+      section > .wrap > .h2 { margin-top: 16px; }
+      .h2-wide { max-width: 19em; }
+      .h2-pair { display: grid; gap: 4px; }
+      .h2-accent { color: var(--orange-ink); }
+      .lede { margin-top: 20px; max-width: 32em; font-size: clamp(19px, 1.7vw, 22px); line-height: 1.45; letter-spacing: -.018em; color: var(--text); }
+      .prose-line { margin-top: 28px; max-width: 36em; color: var(--muted); }
+      .prose-night { color: #b9bcc0; }
+      .statement { display: grid; gap: 2px; margin-top: 44px; font-size: clamp(25px, 3.2vw, 42px); font-weight: 500; letter-spacing: -.045em; line-height: 1.12; max-width: 18em; }
+      .statement::before { content: ""; display: block; width: 40px; height: 3px; margin-bottom: 16px; background: var(--orange); }
+
+      /* Obligaciones */
+      .oblig { margin-top: 36px; border-top: 1px solid var(--ink); }
+      .oblig li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 4px 14px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--line); }
+      .ob-t { font-size: clamp(20px, 2.1vw, 27px); font-weight: 500; letter-spacing: -.033em; line-height: 1.2; }
+      .ob-d { margin-top: 6px; max-width: 36em; font-size: 16px; color: var(--muted); }
+      .ob-art { grid-column: 2; font-size: 11px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); }
+
+      /* Reparto */
+      .legend { display: flex; flex-wrap: wrap; gap: 10px 20px; margin-top: 36px; font-size: 12px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+      .lg::before { content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 8px; vertical-align: -1px; border-radius: 50%; }
+      .lg-pregunta::before { background: var(--slate); }
+      .lg-fuera::before { background: var(--orange); }
+      .rep { margin-top: 18px; border-top: 1px solid var(--ink); }
+      .rep-row { position: relative; display: grid; gap: 4px; padding: 18px 0 18px 22px; border-bottom: 1px solid var(--line-strong); }
+      .rep-row::before { content: ""; position: absolute; left: 0; top: 26px; width: 10px; height: 10px; border-radius: 50%; background: var(--orange); }
+      .rep-row.is-pregunta::before { background: var(--slate); }
+      .rep-o { font-size: clamp(18px, 1.8vw, 22px); font-weight: 600; letter-spacing: -.025em; line-height: 1.25; }
+      .rep-w { font-size: 12px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--orange-ink); }
+      .is-pregunta .rep-w { color: var(--slate); }
+      .rep-n { max-width: 34em; font-size: 15px; color: var(--muted); }
+
+      /* Registro común */
+      .flow { margin-top: 36px; display: grid; gap: 0; }
+      .flow-in { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+      .flow-in li { padding: 14px 10px; border: 1px solid var(--slate-soft); border-radius: 8px; background: var(--paper); text-align: center; font-size: 15px; font-weight: 600; color: var(--slate); }
+      .flow-join { display: grid; place-items: center; height: 44px; }
+      .flow-join i { width: 2px; height: 100%; background: var(--orange); position: relative; }
+      .flow-join i::after { content: ""; position: absolute; left: 50%; bottom: -2px; width: 10px; height: 10px; border-right: 2px solid var(--orange); border-bottom: 2px solid var(--orange); transform: translateX(-50%) rotate(45deg); }
+      .flow-core { border: 2px solid var(--orange); border-radius: 12px; background: #fff; }
+      .flow-core li { display: grid; gap: 2px; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+      .flow-core li:last-child { border-bottom: 0; }
+      .flow-core b { font-size: 18px; font-weight: 650; letter-spacing: -.02em; }
+      .flow-core span { font-size: 15px; color: var(--muted); }
+      .flow figcaption { margin-top: 14px; font-size: 13px; color: var(--soft); }
+
+      /* Matices */
+      .nuance { display: grid; gap: 1px; margin-top: 40px; background: var(--night-line); border: 1px solid var(--night-line); }
+      .nuance > div { padding: 22px 18px; background: var(--night); }
+      .nu-k { font-size: 11px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--orange); }
+      .nu-t { margin-top: 10px; font-size: clamp(18px, 1.7vw, 21px); letter-spacing: -.02em; line-height: 1.4; }
+
+      /* Propuesta */
+      .steps { margin-top: 28px; border-top: 1px solid var(--line-strong); }
+      .steps li { display: flex; gap: 14px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line-strong); }
+      .st-t { font-size: clamp(19px, 1.9vw, 24px); font-weight: 600; letter-spacing: -.03em; }
+      .st-d { margin-top: 4px; max-width: 34em; font-size: 16px; color: var(--muted); }
+      .nots { margin-top: 28px; }
+      .nots li { padding: 8px 0; font-size: 16px; color: var(--muted); }
+      .nots li::before { content: "·"; margin-right: 10px; color: var(--slate); font-weight: 700; }
+
+      /* CTA */
+      .cta { border-top: 1px solid var(--line); }
+      .cta-title { max-width: 14em; }
+      .cta-copy { margin-top: 20px; max-width: 32em; font-size: 18px; color: var(--muted); }
+      .cta-row { display: grid; gap: 36px; margin-top: 40px; }
+      .buttons { display: grid; gap: 10px; justify-items: start; }
+      .button { display: inline-flex; align-items: center; justify-content: space-between; gap: 28px; min-height: 56px; padding: 0 24px; background: var(--slate); color: var(--night-text); font-size: 16px; font-weight: 600; transition: background-color .2s ease, color .2s ease; }
+      .button:hover { background: var(--ink); }
+      .button-ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+      .button-ghost:hover { background: var(--ink); color: var(--paper); }
+      .mail { margin-top: 4px; font-size: 14px; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+      .signature { padding-top: 18px; border-top: 1px solid var(--line); max-width: 300px; }
+      .signature-name { font-size: 18px; font-weight: 650; letter-spacing: -.02em; }
+      .signature-role { font-size: 14px; color: var(--muted); }
+      .signature-site { display: inline-block; margin-top: 6px; font-size: 13px; color: var(--slate); }
+
+      /* Pie y consentimiento */
+      .foot { border-top: 1px solid var(--line); }
+      .foot-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; padding-block: 26px 30px; font-size: 13px; color: var(--muted); }
+      .foot-brand { margin-right: auto; }
+      .foot-note { flex-basis: 100%; order: 3; font-size: 12px; color: var(--soft); }
+      .foot a:hover { color: var(--ink); }
+      .consent { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 30; display: grid; gap: 12px; padding: 14px 16px; background: var(--night); color: var(--night-text); font-size: 13px; line-height: 1.5; border: 1px solid #3a3d42; box-shadow: 0 10px 30px rgba(0, 0, 0, .18); }
+      .consent[hidden] { display: none; }
+      .consent a { text-decoration: underline; }
+      .consent-actions { display: flex; gap: 8px; justify-content: flex-end; }
+      .consent button { min-height: 38px; padding: 0 16px; border: 1px solid #3a3d42; background: transparent; color: var(--night-text); font: inherit; cursor: pointer; }
+      .consent .consent-accept { background: var(--night-text); color: var(--night); border-color: var(--night-text); }
+
+      /* Movimiento */
+      .js [data-reveal] { opacity: 0; transform: translateY(10px); transition: opacity .7s ease var(--d, 0ms), transform .7s var(--ease) var(--d, 0ms); }
+      .js [data-reveal].is-in { opacity: 1; transform: none; }
+      .js .flow-in li { opacity: .35; transition: opacity .5s ease calc(.2s + var(--i) * 120ms); }
+      .js .flow.is-in .flow-in li { opacity: 1; }
+
+      @media (min-width: 420px) {
+        .top-link { display: inline; }
+      }
+      @media (min-width: 720px) {
+        :root { --gutter: 36px; }
+        .flow-in { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        .rep-row { grid-template-columns: minmax(0, 5fr) minmax(0, 3fr) minmax(0, 5fr); gap: 20px; align-items: baseline; padding-left: 26px; }
+        .rep-row::before { top: 25px; }
+        .nuance { grid-template-columns: 1fr 1fr; }
+        .nuance > div { padding: 28px 24px; }
+        .cta-row { grid-template-columns: auto 1fr; align-items: end; gap: 64px; }
+        .signature { justify-self: end; min-width: 260px; }
+        .consent { left: auto; right: 24px; bottom: 24px; max-width: 560px; grid-template-columns: 1fr auto; align-items: center; }
+      }
+      @media (min-width: 1000px) {
+        body { font-size: 18px; }
+        .top-inner { height: 72px; }
+        .hero { padding-top: 40px; padding-bottom: 116px; }
+        .hero-grid { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 56px; margin-top: 52px; }
+        .section { padding-block: 128px; }
+        .split { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 48px; }
+        .oblig li { grid-template-columns: 26px minmax(0, 1fr) 150px; }
+        .ob-art { grid-column: 3; grid-row: 1; text-align: right; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+        .js .flow-in li { opacity: 1; transition: none; }
+        .top, .button, .top-cta { transition: none; }
+      }
+    </style>
+  </body>
+</html>

@@ -33,6 +33,9 @@ const NOINDEX_PATHS = [
   "/desafio-de-60-dias/",
   // Landings personalizadas de prospección (QR en tarjeta)
   "/tis/",
+  // Landings personalizadas de prospección de la Frente A (Ley 10/2025),
+  // enviadas por LinkedIn o email: /para/<empresa>/
+  "/para/",
   // Kit de Preparación VERI*FACTU: zonas privadas y página legal de apoyo.
   // (gracias/ y acceso/ son server-side y no entran en el sitemap; se listan
   // igualmente por si algún día se prerenderizan.)
