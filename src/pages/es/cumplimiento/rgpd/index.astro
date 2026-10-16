@@ -117,12 +117,15 @@ const serviceJsonLd = {
   areaServed: "ES",
   url: pageUrl,
   description: P.promise,
+  // El producto se referencia por @id (vive con offers completo en /ops/).
+  // Un "@type": "Product" anónimo aquí lo detecta Google como snippet de
+  // producto sin offers/review/aggregateRating (error crítico en GSC, oct/2026).
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Protección de datos",
     itemListElement: [
       { "@type": "Offer", itemOffered: { "@type": "Service", name: "Diagnóstico RGPD gratuito" }, price: "0", priceCurrency: "EUR", url: `${siteRoot}${P.paths.test}` },
-      { "@type": "Offer", itemOffered: { "@type": "Product", name: P.name }, price: P.price.amount.toFixed(2), priceCurrency: P.price.currency, url: `${siteRoot}${P.paths.landing}` },
+      { "@type": "Offer", itemOffered: { "@id": `${siteRoot}${P.paths.landing}#product`, name: P.name }, price: P.price.amount.toFixed(2), priceCurrency: P.price.currency, url: `${siteRoot}${P.paths.landing}` },
     ],
   },
 };

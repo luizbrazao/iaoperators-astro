@@ -1,5 +1,5 @@
 ---
-import { projects } from "../../../data/projects";
+import { projects, getRelatedServiceHref } from "../../../data/projects";
 import type { Project, ProjectMetric, ProjectPillar } from "../../../data/projects";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { createT } from "../../../i18n/t";
@@ -271,7 +271,7 @@ const portfolioSlugJsonLd: any[] = [
                 ))}
                 {project.relatedServiceKey && project.relatedServiceHref && (
                   <a
-                    href={`/${locale}${project.relatedServiceHref}`}
+                    href={getRelatedServiceHref(project, locale)}
                     class="mt-4 inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 text-sm font-semibold transition-colors"
                   >
                     {t(project.relatedServiceKey)}

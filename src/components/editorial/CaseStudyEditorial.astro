@@ -3,7 +3,7 @@
 // ya existe en projects.ts + projects.json: no añade cifras ni afirmaciones.
 // Las secciones opcionales (contexto, entregables, testimonio, FAQ…) solo se
 // pintan si el caso las declara.
-import { projects, type Project } from "@/data/projects";
+import { projects, getRelatedServiceHref, type Project } from "@/data/projects";
 import { getCaseEditorial, caseFigures } from "@/data/casosEditorial";
 import { createT } from "@/i18n/t";
 import { getHomeEditorial, getPortfolioEditorial } from "@/i18n/editorialCopy";
@@ -50,7 +50,7 @@ const category = project.categoryKey ? t(project.categoryKey) : project.category
 const title = t(project.titleKey);
 const h1 = t(project.h1Key ?? project.titleKey);
 const liveLink = project.links?.find((link) => link.external)?.href;
-const relatedHref = project.relatedServiceHref ? `/${locale}${project.relatedServiceHref}` : undefined;
+const relatedHref = getRelatedServiceHref(project, locale);
 const relatedLabel = project.relatedServiceKey ? capitalize(t(project.relatedServiceKey)) : undefined;
 
 const resolveHref = (href: string, external?: boolean) => {

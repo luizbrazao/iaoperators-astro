@@ -57,6 +57,13 @@ export type Project = {
     ctaSubtitleKey?: string;
     relatedServiceKey?: string;
     relatedServiceHref?: string;
+    /**
+     * Destino por idioma cuando el servicio de `relatedServiceHref` no existe en
+     * ese locale (p. ej. `/hoteles/` es ES-only). Sin esto, EN/PT enlazaban a
+     * `/en/hoteles/` y `/pt/hoteles/`, que dan 404. Leer siempre con
+     * `getRelatedServiceHref()`.
+     */
+    relatedServiceHrefByLocale?: Partial<Record<"es" | "en" | "pt", string>>;
     serviceAudienceKey?: string;
     /** Tipo de servicio para el JSON-LD `Service` de la ficha (antes era "Auditoría tecnológica" para todos). */
     serviceTypeKey?: string;
@@ -114,6 +121,14 @@ export type Project = {
     links: ProjectLink[];
 };
 
+/** Enlace caso → servicio ya con prefijo de locale, o `undefined` si no hay. */
+export function getRelatedServiceHref(project: Project, locale: string): string | undefined {
+    const href =
+        project.relatedServiceHrefByLocale?.[locale as "es" | "en" | "pt"] ??
+        project.relatedServiceHref;
+    return href ? `/${locale}${href}` : undefined;
+}
+
 export const projects: Project[] = [
     // =========================
     // Cadena hotelera Menorca — Radiografía Digital
@@ -157,6 +172,7 @@ export const projects: Project[] = [
         ctaSubtitleKey: "projects:menorcaHotelChain.ctaSubtitle",
         relatedServiceKey: "projects:menorcaHotelChain.relatedService",
         relatedServiceHref: "/hoteles/",
+        relatedServiceHrefByLocale: { en: "/auditoria-de-sistemas/", pt: "/auditoria-de-sistemas/" },
         serviceAudienceKey: "projects:menorcaHotelChain.serviceAudience",
         serviceAreas: ["Menorca", "España"],
 
