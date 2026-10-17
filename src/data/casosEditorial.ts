@@ -16,7 +16,7 @@
 import type { Project, ProjectMetric } from "./projects";
 import { getPortfolioEditorial, type PortfolioEditorialCopy } from "@/i18n/editorialCopy";
 
-export type CaseVisualKind = "system-map" | "chat" | "booking-rules" | "web-vitals";
+export type CaseVisualKind = "system-map" | "chat" | "booking-rules" | "web-vitals" | "spec-sheet";
 export type CaseTone = "graphite" | "sage" | "slate" | "sand";
 
 type MetricOverride = keyof PortfolioEditorialCopy["metricOverrides"];
@@ -59,6 +59,13 @@ export interface CaseEditorialEntry {
    * lo repetía también en Propiziare.
    */
   contextTitleKey?: string;
+  /**
+   * Solo para `visual: "spec-sheet"`: ficha técnica del proyecto (no es una
+   * captura). `caseKey` es el prefijo en projects.json; los valores se leen de
+   * `projects:<caseKey>.sheet.{type,stack,channel,status}` y las etiquetas de
+   * `portfolioEditorial.visual.sheet.rows`.
+   */
+  sheet?: { host: string; caseKey: string };
 }
 
 const CASE_EDITORIAL_ES: Record<string, CaseEditorialEntry> = {
@@ -107,6 +114,65 @@ const CASE_EDITORIAL_ES: Record<string, CaseEditorialEntry> = {
     // howItWorks describe decisiones de construcción, no pasos de un flujo.
     stepsKind: "decisions",
     contextTitleKey: "portfolioEditorial:contextTitles.propiziare",
+  },
+  // Oct/2026: productos propios y webs sin captura publicable. La ficha
+  // técnica dice qué es, con qué está hecho y en qué estado está; no inventa
+  // una interfaz que el visitante no puede comprobar.
+  "hotel-revenue-operator-reservas-directas": {
+    visual: "spec-sheet",
+    tone: "graphite",
+    featuredMetrics: [0, 2],
+    editorialDetail: true,
+    results: "product",
+    sheet: { host: "iaoperators.com/es/hoteles", caseKey: "hotelRevenue" },
+  },
+  "rgpd-ops-starter": {
+    visual: "spec-sheet",
+    tone: "slate",
+    featuredMetrics: [0, 1],
+    editorialDetail: true,
+    results: "product",
+    sheet: { host: "iaoperators.com/es/cumplimiento", caseKey: "rgpdOps" },
+  },
+  "ruta-nacionalidad": {
+    visual: "spec-sheet",
+    tone: "sand",
+    featuredMetrics: [1, 2],
+    editorialDetail: true,
+    results: "product",
+    sheet: { host: "app.propiziareimmigra.com", caseKey: "rutaNacionalidad" },
+  },
+  "un-rato-fontaneria-whatsapp-malaga": {
+    visual: "spec-sheet",
+    tone: "sage",
+    featuredMetrics: [0, 1],
+    editorialDetail: true,
+    results: "product",
+    sheet: { host: "unrato.es", caseKey: "unRato" },
+  },
+  "psicosprint-test-psicotecnicos-oposiciones": {
+    visual: "spec-sheet",
+    tone: "slate",
+    featuredMetrics: [0, 1, 2],
+    editorialDetail: true,
+    results: "product",
+    sheet: { host: "psicosprint.iaoperators.com", caseKey: "psicoSprint" },
+  },
+  "sunday-campers-web-alquiler-campers": {
+    visual: "spec-sheet",
+    tone: "sand",
+    featuredMetrics: [0, 1],
+    editorialDetail: true,
+    results: "measured",
+    sheet: { host: "sundaycampers.es", caseKey: "sundayCampers" },
+  },
+  "renuva-renovaciones-regularizacion-extraordinaria": {
+    visual: "spec-sheet",
+    tone: "graphite",
+    featuredMetrics: [0, 2],
+    editorialDetail: true,
+    results: "product",
+    sheet: { host: "renuva.iaoperators.com", caseKey: "renuva" },
   },
 };
 

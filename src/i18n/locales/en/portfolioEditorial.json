@@ -26,6 +26,17 @@
         "lcp": "LCP"
       },
       "caption": "Measured on {date} with Lighthouse {version}. Performance: median of {runs} runs."
+    },
+    "sheet": {
+      "label": "Project sheet",
+      "head": "Project",
+      "caption": "Project summary. Not a screenshot of the application.",
+      "rows": {
+        "type": "Type",
+        "stack": "Stack",
+        "channel": "Channel",
+        "status": "Status"
+      }
     }
   },
   "detail": {

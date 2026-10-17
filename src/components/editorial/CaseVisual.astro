@@ -14,6 +14,7 @@ import { getHomeIntro, getHomeEditorial, getPortfolioEditorial } from "@/i18n/ed
 import { asShellLoc } from "@/i18n/editorialShell";
 import "@/styles/editorial-cases.css";
 import SystemMapDocument from "./SystemMapDocument.astro";
+import { createT } from "@/i18n/t";
 
 interface Props {
   project: Project;
@@ -47,6 +48,17 @@ const vitalsRows = vitals
     ]
   : [];
 const vitalsHost = vitals ? new URL(vitals.url).hostname : "";
+
+// Ficha técnica: etiquetas comunes en portfolioEditorial, valores por caso en projects.json.
+const sheet = kind === "spec-sheet" ? entry?.sheet : undefined;
+const sheetRows = sheet
+  ? await (async () => {
+      const t = await createT(locale, { namespaces: ["projects"] });
+      return (Object.keys(copy.visual.sheet.rows) as (keyof typeof copy.visual.sheet.rows)[]).map(
+        (row) => [copy.visual.sheet.rows[row], t(`projects:${sheet.caseKey}.sheet.${row}`)] as const,
+      );
+    })()
+  : [];
 ---
 {kind && (
   <div class:list={["pf-visual", `pf-tone-${tone}`, `pf-visual-${size}`]}>
@@ -79,6 +91,18 @@ const vitalsHost = vitals ? new URL(vitals.url).hostname : "";
           <dl>{home.cases.tour.rows.map(([label, value]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
           <p class="ed-ledger-result">{home.cases.tour.result} <span aria-hidden="true">↗</span></p>
           <figcaption>{home.cases.tour.disclaimer}</figcaption>
+        </figure>
+      </>
+    )}
+
+    {kind === "spec-sheet" && sheet && (
+      <>
+        <p class="pf-visual-label ed-eyebrow">{copy.visual.sheet.label}</p>
+        <figure class="pf-sheet pf-spec">
+          <div class="pf-doc-head ed-eyebrow"><span>{copy.visual.sheet.head}</span></div>
+          <p class="pf-sheet-host">{sheet.host}</p>
+          <dl>{sheetRows.map(([label, value]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+          <figcaption>{copy.visual.sheet.caption}</figcaption>
         </figure>
       </>
     )}

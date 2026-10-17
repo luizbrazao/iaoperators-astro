@@ -288,3 +288,7 @@
   .editorial-shell .pf-callout { padding: 26px 22px; }
   .editorial-shell .pf-next { grid-template-columns: 1fr; padding-block: 36px 44px; }
 }
+
+/* Ficha técnica (visual "spec-sheet"): valores de texto, no cifras. */
+.editorial-shell .pf-spec dt { flex-shrink: 0; }
+.editorial-shell .pf-spec dd { text-align: right; font-variant-numeric: normal; }

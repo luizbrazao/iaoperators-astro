@@ -454,5 +454,704 @@
             }
         ],
         "serviceType": "Desarrollo web y SEO técnico"
+    },
+    "hotelRevenue": {
+        "seoTitle": "Hotel Revenue Operator: validar un producto de reservas directas para hoteles | IA Operators",
+        "title": "Hotel Revenue Operator: reservas directas para hoteles independientes",
+        "h1": "Validar un producto de reservas directas antes de construirlo",
+        "subtitle": "Hoteles independientes en España · Fase 1",
+        "tagline": "Landing, calculadora de ingresos y captación de pilotos para comprobar si un hotel pagaría por recuperar reservas de las OTAs, antes de escribir una línea del asistente.",
+        "category": "Producto propio / Hotelería",
+        "signal": "Fase 1 en producción",
+        "relatedService": "Ver Hotel Revenue Operator",
+        "serviceType": "Producto de reservas directas para hoteles",
+        "problem": "Un hotel independiente paga comisión por cada reserva que entra por una OTA como Booking o Expedia, y muchas de esas reservas empiezan con una duda que su web no resolvió a tiempo. Construir un asistente que conteste y lleve al motor de reservas es técnicamente asumible. Lo caro es construirlo y descubrir después que los hoteles no lo quieren pagar.",
+        "context": "La hipótesis de producto tiene cuatro piezas: el hotel pierde reserva directa por dudas sin responder, un asistente que conteste y derive al motor recupera parte, los extras ofrecidos en el momento justo suman ingreso, y el hotel paga si puede ver la atribución. La Fase 1 existe para medir si eso se sostiene con hoteles reales, no para demostrar que el software funciona.",
+        "engineeringIntro": "La Fase 1 es deliberadamente pequeña: una landing indexable, una calculadora de ingresos en su propia página y un formulario que guarda el lead con el cálculo que lo originó. No hay chatbot, ni login, ni integraciones, ni pagos. Lo que sí hay es rigor en lo que se mide: el cálculo vive en funciones puras versionadas, el servidor lo repite siempre en vez de fiarse del navegador y la analítica no lleva datos personales.",
+        "impact": "El producto pasa de idea a experimento medible. Cada lead llega con los datos del hotel, el escenario elegido y la versión de la fórmula, así que en la llamada de diagnóstico se habla de números concretos y se puede preguntar directamente si el hotel aceptaría un piloto y a qué precio. La Fase 2, el asistente operativo, solo se construye si esas respuestas lo justifican.",
+        "whatItDoes": [
+            "Explica la propuesta en una landing pensada para la búsqueda de chatbot para hoteles",
+            "Estima el ahorro en comisiones y el ingreso por extras con los datos del propio hotel",
+            "Muestra tres escenarios (conservador, realista y potencial) y declara sus limitaciones",
+            "Recoge solicitudes de piloto con consentimiento versionado y aviso interno por email",
+            "Mide el embudo completo sin enviar datos personales a la analítica"
+        ],
+        "howItWorks": [
+            "Motor de cálculo en funciones puras: sin estado, sin red, probado de forma aislada",
+            "Límites estrictos en cada dato: lo que está fuera de rango se rechaza, no se recorta",
+            "El endpoint recalcula en el servidor y guarda la versión de la fórmula junto al lead",
+            "Calculadora con noindex y canonical propio para no competir con la landing",
+            "Eventos de embudo en dataLayer con lista cerrada de parámetros"
+        ],
+        "pillars": {
+            "validation": {
+                "title": "Validar antes de construir",
+                "description": "La pregunta de la Fase 1 no es técnica sino comercial: si un hotel acepta un piloto y qué precio le parece razonable. El software se dimensiona para responder eso y nada más.",
+                "bullets": [
+                    "Sin precio publicado mientras no haya conversaciones",
+                    "Hipótesis comercial guardada en código, sin mostrar",
+                    "Estado del lead en base de datos hasta llegar al piloto"
+                ]
+            },
+            "versioned": {
+                "title": "Un cálculo que se puede auditar",
+                "description": "Si la fórmula cambia, cambia la versión. Así un lead de hoy y uno de dentro de tres meses se pueden comparar sabiendo con qué números se calculó cada uno.",
+                "bullets": [
+                    "Fórmulas, límites y escenarios en un único módulo",
+                    "Importes en céntimos enteros para evitar errores de redondeo",
+                    "El servidor nunca acepta el resultado que envía el navegador"
+                ]
+            },
+            "honest": {
+                "title": "Una estimación que dice lo que no es",
+                "description": "La página avisa de que el ahorro es bruto, que no hay estacionalidad y que los porcentajes de escenario son hipótesis de trabajo, no medias del sector.",
+                "bullets": [
+                    "Aviso de estimación orientativa siempre visible",
+                    "Limitaciones del modelo explicadas junto al resultado"
+                ]
+            }
+        },
+        "security": [
+            "La tabla de leads solo es accesible con la clave de servicio del servidor; el navegador no la toca.",
+            "Los logs son estructurados y no contienen datos personales.",
+            "El consentimiento del formulario tiene versión: se sabe qué texto aceptó cada hotel."
+        ],
+        "metrics": [
+            {
+                "label": "Escenarios de cálculo",
+                "note": "Conservador, realista y potencial"
+            },
+            {
+                "label": "Datos que pide al hotel",
+                "note": "Habitaciones, ocupación, ADR, estancia, cuota OTA, comisión y extra"
+            },
+            {
+                "label": "Versión de la calculadora",
+                "note": "Se guarda con cada lead"
+            }
+        ],
+        "faq": [
+            {
+                "q": "¿Por qué no hay chatbot todavía?",
+                "a": "Porque lo primero que hay que demostrar es que existe un hotel dispuesto a pagarlo. Construir el asistente, las integraciones con motores de reservas y la atribución lleva semanas. Medir el interés lleva días. Si la Fase 1 no consigue pilotos, ese tiempo se ha ahorrado."
+            },
+            {
+                "q": "¿De dónde salen los porcentajes de los escenarios?",
+                "a": "Son hipótesis de trabajo, y la página lo dice. No son medias del sector ni resultados de clientes. Sirven para que el hotel vea un rango con sus propios datos, no para prometer una cifra."
+            },
+            {
+                "q": "¿Por qué la calculadora no se indexa?",
+                "a": "La misma herramienta está dentro de la landing. Dos URLs indexables con el mismo contenido funcional se repartirían la búsqueda. La página aparte sirve como destino de anuncios y enlaces directos."
+            }
+        ],
+        "links": [
+            {
+                "label": "Ver Hotel Revenue Operator"
+            },
+            {
+                "label": "Volver al portfolio"
+            }
+        ],
+        "sheet": {
+            "type": "Producto propio",
+            "stack": "Astro · Supabase · Resend",
+            "channel": "Web",
+            "status": "Fase 1: validación"
+        }
+    },
+    "rgpdOps": {
+        "seoTitle": "RGPD Ops Starter: protección de datos como operación continua | IA Operators",
+        "title": "RGPD Ops Starter: el RGPD como operación, no como carpeta",
+        "h1": "Una herramienta para llevar la protección de datos al día",
+        "subtitle": "Pymes españolas que captan clientes online · Pago único",
+        "tagline": "Espacio de trabajo de pago para que una pyme mantenga al día tratamientos, proveedores, solicitudes de derechos, incidentes y evidencias, con exportación del borrador de RAT.",
+        "category": "Producto propio / Cumplimiento",
+        "signal": "En venta",
+        "relatedService": "Ver el pilar de RGPD",
+        "serviceType": "Herramienta de gestión de protección de datos",
+        "problem": "Una pyme que capta clientes con web, WhatsApp, CRM, newsletter y píxeles acumula tratamientos y proveedores sin darse cuenta. El RGPD suele resolverse una vez, con unas plantillas, y luego nadie las actualiza. Cuando llega una solicitud de acceso o una brecha, no hay registro de qué datos hay, dónde están ni quién responde.",
+        "context": "El mercado ofrece dos extremos: documentos genéricos que se quedan en un cajón, o asesoría jurídica que una pyme pequeña no puede pagar cada trimestre. Hacía falta algo intermedio: una herramienta que ordene la operación diaria y que diga con claridad cuándo hace falta un profesional.",
+        "engineeringIntro": "RGPD Ops es un espacio de trabajo en el servidor, no un formulario en el navegador. Todo cambio pasa por funciones SQL que solo aceptan tablas y columnas de una lista cerrada, filtran siempre por el espacio de la sesión y registran el cambio en una auditoría que no admite ediciones. El acceso se compra con Stripe y se entrega por enlace mágico, sin contraseñas.",
+        "impact": "La pyme pasa de tener documentos sueltos a tener un registro vivo: ocho módulos con sus vencimientos, un plan de tareas con evidencias, una revisión trimestral guiada y la posibilidad de exportarlo todo en CSV y JSON. Y sabe qué no hace la herramienta: no da asesoramiento jurídico, no certifica nada y no decide si una brecha se notifica.",
+        "whatItDoes": [
+            "Registra tratamientos y genera un borrador de Registro de Actividades de Tratamiento",
+            "Ordena proveedores, puntos de captación, solicitudes de derechos e incidentes",
+            "Propone un plan de acción con tareas, responsables por rol y evidencias",
+            "Guía una revisión trimestral y muestra el grado de madurez por área",
+            "Exporta cada módulo en CSV y una copia completa en JSON"
+        ],
+        "howItWorks": [
+            "Pago con Stripe Checkout y webhook firmado con idempotencia en base de datos",
+            "Acceso por enlace mágico de un solo uso y sesión firmada con HMAC",
+            "Escrituras solo a través de funciones SQL con lista blanca de tablas y columnas",
+            "Versión optimista en cada registro para que dos pestañas no se pisen",
+            "Auditoría que rechaza ediciones y guarda qué campo cambió, nunca su valor"
+        ],
+        "pillars": {
+            "operation": {
+                "title": "Operación continua, no un documento",
+                "description": "Cada módulo tiene estados y vencimientos. La herramienta está pensada para abrirse cada trimestre, no para rellenarse una vez.",
+                "bullets": [
+                    "Ocho módulos con lista cerrada en código y en SQL",
+                    "Tareas sembradas una sola vez al crear el espacio",
+                    "Revisión trimestral guiada"
+                ]
+            },
+            "minimization": {
+                "title": "Minimización aplicada a la propia herramienta",
+                "description": "Una herramienta de protección de datos no puede convertirse en otro sitio donde acumular datos personales. Por eso no tiene campos para nombres ni documentos de los titulares.",
+                "bullets": [
+                    "El texto libre rechaza emails, teléfonos y DNI/NIE",
+                    "Responsables por rol, evidencias por referencia, sin subida de archivos",
+                    "Sin IA sobre el contenido del espacio"
+                ]
+            },
+            "limits": {
+                "title": "Límites declarados",
+                "description": "La herramienta no decide bases jurídicas ni si hace falta una EIPD. Cuando detecta señales de mayor riesgo, recomienda revisión profesional en vez de improvisar una respuesta.",
+                "bullets": [
+                    "No es asesoramiento jurídico ni certificación",
+                    "Diagnóstico gratuito previo para saber si encaja"
+                ]
+            }
+        },
+        "security": [
+            "Cada petición privada vuelve a comprobar en base de datos que el pedido está pagado, activo y dentro de plazo.",
+            "El identificador del espacio sale siempre de la sesión: un id ajeno devuelve 404.",
+            "Logs con campos cerrados, sin email, token, IP ni contenido. Los espacios se purgan 90 días después del fin del acceso."
+        ],
+        "metrics": [
+            {
+                "label": "Módulos de trabajo",
+                "note": "Tratamientos, proveedores, captación, solicitudes, incidentes, tareas, evidencias y revisiones"
+            },
+            {
+                "label": "Precio",
+                "note": "Pago único, 12 meses de acceso"
+            },
+            {
+                "label": "IA sobre tus datos",
+                "note": "Ninguna: el contenido del espacio no pasa por modelos"
+            }
+        ],
+        "faq": [
+            {
+                "q": "¿Sustituye a un abogado o a un DPD?",
+                "a": "No. Ordena la operación diaria y genera borradores, pero no decide bases jurídicas, no determina si hace falta EIPD o DPD y no decide si una brecha se notifica a la AEPD. Cuando hay señales de riesgo, lo dice y recomienda revisión profesional."
+            },
+            {
+                "q": "¿Por qué no usa IA?",
+                "a": "Porque el contenido del espacio describe cómo una empresa trata datos personales. Enviarlo a un modelo externo añadiría un encargado de tratamiento más sin necesidad. La guía y las alertas son reglas escritas y revisadas."
+            },
+            {
+                "q": "¿Qué pasa cuando termina el año de acceso?",
+                "a": "Se puede exportar todo en JSON y CSV en cualquier momento. Tras el fin del acceso, el espacio se conserva 90 días para exportarlo y después se borra."
+            }
+        ],
+        "links": [
+            {
+                "label": "Ver RGPD Ops Starter"
+            },
+            {
+                "label": "Volver al portfolio"
+            }
+        ],
+        "sheet": {
+            "type": "Producto propio",
+            "stack": "Astro · Supabase · Stripe",
+            "channel": "Web",
+            "status": "En venta"
+        }
+    },
+    "rutaNacionalidad": {
+        "seoTitle": "Ruta Nacionalidad: área privada para la nacionalidad española por residencia | IA Operators",
+        "title": "Ruta Nacionalidad: el expediente de nacionalidad, guardado y acompañado",
+        "h1": "De una calculadora gratuita a un expediente que se sigue paso a paso",
+        "subtitle": "Nacionalidad española por residencia · es · pt-BR",
+        "tagline": "Área privada que guarda el resultado de la calculadora de nacionalidad, convierte el caso en una lista de documentos con fechas y prepara la prueba CCSE, con revisión de un especialista como opción.",
+        "category": "Producto propio / Extranjería",
+        "signal": "En producción",
+        "serviceType": "Producto digital para la nacionalidad española por residencia",
+        "problem": "Pedir la nacionalidad española por residencia es un proceso largo: el plazo depende de la nacionalidad de origen, la residencia tiene que ser legal y continuada, hay exámenes y una lista de documentos que caducan. La mayoría de la gente hace el cálculo una vez en una web, cierra la pestaña y vuelve meses después sin saber en qué punto está.",
+        "context": "Ruta Nacionalidad nace junto a la web de Propiziare Immigra, cuyo público investiga en español y en portugués. La calculadora pública ya resolvía la primera pregunta, cuándo podría solicitarlo. Faltaba lo que viene después: guardar ese resultado y acompañar el expediente hasta presentarlo.",
+        "engineeringIntro": "El producto se divide en dos piezas. La calculadora vive en la web pública, funciona sin registro y hace el cálculo en el navegador aplicando los plazos del artículo 22 del Código Civil. El área privada es una aplicación aparte, sin indexar, donde el usuario entra con su correo y un código, sin contraseña, y guarda su caso. El acceso de pago se activa solo cuando Stripe confirma el cobro, no cuando el usuario vuelve de la página de pago.",
+        "impact": "Lo que antes era un cálculo suelto se convierte en un expediente con estado: documentos con fechas, calendario, plan de estudio de la CCSE, recordatorios y recálculo cuando cambian los datos o las normas. Quien necesita más que orientación puede añadir una revisión escrita de su caso por un especialista en extranjería.",
+        "whatItDoes": [
+            "Guarda el resultado de la calculadora en una cuenta, solo con el correo",
+            "Convierte el caso en una lista de documentos con estados y fechas",
+            "Organiza un calendario y un plan de estudio para la prueba CCSE",
+            "Recalcula cuando cambian los datos del usuario o las reglas",
+            "Exporta el expediente en PDF y JSON"
+        ],
+        "howItWorks": [
+            "Calculadora pública en cinco pasos, con el cálculo hecho en el navegador",
+            "Acceso sin contraseña: enlace y código enviados por correo",
+            "Área privada separada del sitio público y marcada como noindex",
+            "Pago único con Stripe y activación por confirmación del pago",
+            "Interfaz en español y en portugués de Brasil"
+        ],
+        "pillars": {
+            "continuity": {
+                "title": "Del cálculo al seguimiento",
+                "description": "El valor no está en calcular una fecha, que es gratis, sino en no perder el hilo durante los meses que dura preparar el expediente.",
+                "bullets": [
+                    "El diagnóstico gratuito se queda en la cuenta",
+                    "Documentos, calendario y CCSE en un mismo sitio",
+                    "Recordatorios y recálculo automático"
+                ]
+            },
+            "privacy": {
+                "title": "Lo justo para funcionar",
+                "description": "La calculadora no guarda respuestas salvo que el usuario elija guardarlas. El acceso no pide contraseña, así que no hay una más que filtrar.",
+                "bullets": [
+                    "Cálculo en el navegador",
+                    "Login por correo y código de un solo uso"
+                ]
+            },
+            "honest": {
+                "title": "Orientación, no dictamen",
+                "description": "Cada pantalla recuerda que el resultado es orientativo y que la decisión es del Ministerio de Justicia. La revisión de un especialista es un análisis escrito, no una representación ante la administración.",
+                "bullets": [
+                    "Aviso legal fijo en toda el área privada",
+                    "Condiciones de venta versionadas"
+                ]
+            }
+        },
+        "security": [
+            "Acceso sin contraseña con enlace y código de un solo uso enviados al correo.",
+            "Área privada con noindex y política de seguridad de contenido con nonce.",
+            "La calculadora pública no guarda las respuestas salvo que el usuario las guarde en su cuenta."
+        ],
+        "metrics": [
+            {
+                "label": "Pasos de la calculadora",
+                "note": "Nacionalidad, residencia, continuidad, situaciones especiales y exámenes"
+            },
+            {
+                "label": "Días de acceso de Ruta Pro",
+                "note": "Pago único"
+            },
+            {
+                "label": "Idiomas",
+                "note": "Español y portugués de Brasil"
+            }
+        ],
+        "faq": [
+            {
+                "q": "¿La calculadora garantiza la fecha?",
+                "a": "No. Aplica los plazos del Código Civil a lo que responde el usuario y da una fecha orientativa. No consulta ningún registro público y la concesión la decide el Ministerio de Justicia."
+            },
+            {
+                "q": "¿Por qué el área privada es una aplicación aparte?",
+                "a": "Porque tienen trabajos distintos. La web pública tiene que cargar rápido y posicionar; el área privada guarda datos personales, no debe indexarse y necesita sesiones y pagos. Separarlas evita que una arrastre a la otra."
+            }
+        ],
+        "links": [
+            {
+                "label": "Ver Ruta Nacionalidad"
+            },
+            {
+                "label": "Volver al portfolio"
+            }
+        ],
+        "sheet": {
+            "type": "Producto propio",
+            "stack": "Next.js · Stripe",
+            "channel": "Web, es y pt-BR",
+            "status": "En producción"
+        }
+    },
+    "unRato": {
+        "seoTitle": "Un Rato: fontanería en Málaga por WhatsApp con IA y revisión humana | IA Operators",
+        "title": "Un Rato: arreglos del hogar en Málaga, empezando por un WhatsApp",
+        "h1": "Un servicio de fontanería que empieza y se cierra en WhatsApp",
+        "subtitle": "Málaga capital · Fontanería · Fase de validación",
+        "tagline": "El cliente manda un mensaje con una foto, la IA clasifica la avería, una persona aprueba el precio y se busca un profesional verificado de la zona. Sin descargar nada y sin llamar a cinco sitios.",
+        "category": "Producto propio / WhatsApp + IA",
+        "signal": "En validación",
+        "relatedService": "Ver el servicio de chatbots",
+        "serviceType": "Automatización de WhatsApp con IA",
+        "problem": "Encontrar un fontanero para un grifo que gotea es más difícil de lo que debería: llamadas que nadie coge, presupuestos que no llegan y precios que solo se conocen al final. Para el profesional autónomo, el problema es el contrario: le llegan avisos sin foto, sin dirección y sin saber si el cliente aceptará el precio.",
+        "engineeringIntro": "Un Rato funciona sobre la API oficial de WhatsApp, n8n y Postgres. La IA tiene un papel acotado: redacta la conversación, extrae los datos y clasifica la avería a partir de hasta tres fotos. Las decisiones que importan no son suyas. Los cambios de estado los decide código determinista, el precio sale de un catálogo y una persona lo aprueba desde Telegram antes de que llegue al cliente.",
+        "impact": "Hoy están operativos la entrada por WhatsApp, la clasificación con fotos, la revisión humana del precio y el alta de profesionales. La asignación automática al profesional todavía no: las plantillas de oferta y confirmación están en revisión en Meta y, mientras tanto, el operador recibe un aviso para buscarlo. El sistema ya mide lo que hará falta para decidir si escala: tiempo de primera respuesta, precio mantenido y acierto del bot frente al operador.",
+        "whatItDoes": [
+            "Atiende por WhatsApp con texto, fotos, vídeo, audio y ubicación",
+            "Clasifica la avería y propone un precio cerrado del catálogo",
+            "Envía cada precio a revisión humana antes de comunicarlo",
+            "Da de alta a profesionales por WhatsApp con verificación manual de alta y seguro",
+            "Detecta urgencias de gas y remite al 112 en vez de presupuestar"
+        ],
+        "howItWorks": [
+            "Webhook con firma HMAC verificada y deduplicación por id de mensaje",
+            "Bloqueo por teléfono en Postgres para que texto y foto seguidos no abran dos solicitudes",
+            "Seis segundos de espera para agrupar mensajes antes de responder",
+            "Clasificación con visión y salida en JSON con esquema estricto",
+            "Tarjeta en Telegram con aprobar, cambiar precio, visita o rechazar"
+        ],
+        "pillars": {
+            "bounded": {
+                "title": "La IA conversa, el código decide",
+                "description": "El modelo nunca fija precios ni cambia el estado de una solicitud. Devuelve un código de servicio y el sistema busca el precio en el catálogo.",
+                "bullets": [
+                    "Confianza baja: se propone visita de diagnóstico",
+                    "Fuera de catálogo: pasa a una persona",
+                    "Defensa contra instrucciones inyectadas en los mensajes"
+                ]
+            },
+            "human": {
+                "title": "Una persona en el bucle",
+                "description": "Cada precio se aprueba antes de enviarse, y el operador puede tomar la conversación en cualquier momento y devolvérsela al bot después.",
+                "bullets": [
+                    "Aprobación idempotente: solo vale una vez",
+                    "Pausa del bot cuando habla una persona"
+                ]
+            },
+            "trust": {
+                "title": "Profesionales verificados por diseño",
+                "description": "El alta del profesional es una máquina de estados sin IA. El perfil nace inactivo y la base de datos impide activarlo sin alta y seguro de responsabilidad civil verificados por una persona.",
+                "bullets": [
+                    "Ocho pasos de alta por WhatsApp",
+                    "Activación bloqueada si el seguro está vencido"
+                ]
+            }
+        },
+        "security": [
+            "La dirección y el nombre solo se piden después de que el cliente acepta el precio.",
+            "La base de datos guarda la referencia de la foto en Meta, no la imagen.",
+            "Seguridad a nivel de fila activada en todas las tablas y funciones cerradas a los roles públicos."
+        ],
+        "metrics": [
+            {
+                "label": "Servicios con precio cerrado",
+                "note": "Siete reparaciones y la visita de diagnóstico"
+            },
+            {
+                "label": "Códigos postales atendidos",
+                "note": "Málaga capital"
+            },
+            {
+                "label": "Flujos de automatización",
+                "note": "Entrada, conversación, clasificación y revisión"
+            }
+        ],
+        "faq": [
+            {
+                "q": "¿Qué pasa si la IA se equivoca de avería?",
+                "a": "El precio no llega al cliente sin que una persona lo apruebe. Si el modelo tiene poca confianza, el sistema propone una visita de diagnóstico en lugar de un precio, y si la avería no está en el catálogo, la conversación pasa al operador."
+            },
+            {
+                "q": "¿Por qué Telegram para el operador?",
+                "a": "Porque la revisión tiene que hacerse en segundos desde el móvil, con la foto delante y cuatro botones. Montar un panel web para eso habría retrasado el lanzamiento sin mejorar la decisión."
+            }
+        ],
+        "links": [
+            {
+                "label": "Ver Un Rato"
+            },
+            {
+                "label": "Volver al portfolio"
+            }
+        ],
+        "sheet": {
+            "type": "Producto propio",
+            "stack": "n8n · Supabase · OpenAI",
+            "channel": "WhatsApp",
+            "status": "En validación"
+        }
+    },
+    "psicoSprint": {
+        "seoTitle": "PsicoSprint: test psicotécnicos con plan adaptativo para oposiciones | IA Operators",
+        "title": "PsicoSprint: test psicotécnicos con plan adaptativo para oposiciones",
+        "h1": "Entrenar psicotécnicos con un plan que se ajusta a cada respuesta",
+        "subtitle": "Oposiciones a Policía Nacional, Guardia Civil y Ejército",
+        "tagline": "Plataforma de práctica de psicotécnicos con test de nivel gratuito, resultados por competencia y un motor adaptativo determinista que ajusta la dificultad y repasa los errores.",
+        "category": "Producto propio / Formación",
+        "signal": "En producción",
+        "serviceType": "Plataforma de entrenamiento de psicotécnicos",
+        "problem": "Quien prepara una oposición con psicotécnicos suele practicar con baterías fijas de preguntas: repite lo que ya domina, no sabe en qué competencia falla y no tiene forma de medir si avanza. Las academias resuelven parte del problema, pero a un precio y con un horario que no encajan con todo el mundo.",
+        "engineeringIntro": "PsicoSprint separa con claridad lo que hace la IA y lo que no. El banco de preguntas se redactó con ayuda de un modelo, fuera de línea, y se revisó antes de publicarse. El motor que decide qué pregunta viene después es determinista: estima el dominio de cada competencia, sube o baja la dificultad según la racha y programa repasos espaciados. En tiempo real, la IA solo reformula explicaciones, con caché, validación y una alternativa sin modelo si falla.",
+        "impact": "El opositor sabe en quince minutos dónde está, por competencia, y recibe un plan que insiste donde falla. Cada sesión guarda la semilla y la versión del motor y de la puntuación, así que cualquier resultado se puede reproducir y explicar. El acceso de pago es un pago único, sin renovación automática.",
+        "whatItDoes": [
+            "Test de nivel gratuito de 15 ejercicios, sin registro para empezar",
+            "Resultados por competencia con precisión, velocidad y áreas prioritarias",
+            "Plan adaptativo que ajusta la dificultad y refuerza los puntos débiles",
+            "Simulacros cronometrados y revisión de errores con explicación",
+            "Historial de progreso y planes de pago único de 30 o 180 días"
+        ],
+        "howItWorks": [
+            "Dominio por competencia actualizado con una curva logística",
+            "Dificultad de 1 a 5: sube tras tres aciertos seguidos y baja tras dos fallos",
+            "Repaso espaciado a 1, 3, 7 y 14 días",
+            "Tiempo medido en el servidor, no en el navegador",
+            "Webhooks de Stripe idempotentes y acceso concedido una sola vez por compra"
+        ],
+        "pillars": {
+            "deterministic": {
+                "title": "Un motor adaptativo que se puede explicar",
+                "description": "Sin aleatoriedad libre ni modelo de lenguaje en la decisión. La selección usa un generador con semilla y cada sesión guarda su versión.",
+                "bullets": [
+                    "Excluye las 30 preguntas más recientes",
+                    "Versiones del motor, la puntuación y el plan registradas por sesión"
+                ]
+            },
+            "content": {
+                "title": "Contenido con trazabilidad",
+                "description": "Cada pregunta declara que se redactó con asistencia de IA y su procedencia. Las versiones publicadas no se pueden modificar: un cambio crea una versión nueva.",
+                "bullets": [
+                    "Seis competencias y ocho tipos de ejercicio",
+                    "Verificación automática de respuestas donde es posible",
+                    "Comprobación de términos prohibidos como apto o diagnóstico"
+                ]
+            },
+            "trust": {
+                "title": "Promesas que se pueden cumplir",
+                "description": "La plataforma dice lo que no es: no está vinculada a ningún cuerpo público, sus resultados no son una evaluación psicológica y su uso no garantiza aprobar.",
+                "bullets": [
+                    "Confirmación de mayoría de edad en el registro y el pago",
+                    "Reembolso en 14 días"
+                ]
+            }
+        },
+        "security": [
+            "Seguridad a nivel de fila en todas las tablas: las respuestas correctas nunca son legibles desde el cliente.",
+            "La autorización se resuelve en el servidor; el acceso de administración exige rol en base de datos y correo autorizado.",
+            "Analítica solo con consentimiento, exportación y borrado de cuenta y retenciones definidas por tipo de dato."
+        ],
+        "metrics": [
+            {
+                "label": "Competencias evaluadas",
+                "note": "Numérica, verbal, abstracta, espacial, atención y lógica"
+            },
+            {
+                "label": "Preguntas en el banco",
+                "note": "Revisadas antes de publicarse"
+            },
+            {
+                "label": "Ejercicios del test de nivel",
+                "note": "Unos 15 minutos, gratis"
+            }
+        ],
+        "faq": [
+            {
+                "q": "¿Las preguntas las genera una IA en el momento?",
+                "a": "No. El banco se redactó con asistencia de IA antes del lanzamiento, se revisó y se publica en versiones que no cambian. Lo que ocurre en tiempo real lo decide un motor determinista."
+            },
+            {
+                "q": "¿Sirve para Guardia Civil y Ejército?",
+                "a": "Las competencias son comunes y se pueden entrenar hoy. El contenido específico de cada cuerpo se está preparando; la plataforma lo indica en cada caso."
+            }
+        ],
+        "links": [
+            {
+                "label": "Ver PsicoSprint"
+            },
+            {
+                "label": "Volver al portfolio"
+            }
+        ],
+        "sheet": {
+            "type": "Producto propio",
+            "stack": "Next.js · Supabase · Stripe",
+            "channel": "Web",
+            "status": "En producción"
+        }
+    },
+    "sundayCampers": {
+        "seoTitle": "Sunday Campers: web de alquiler de campers con reservas y SEO en 9 idiomas | IA Operators",
+        "title": "Sunday Campers: web de alquiler de campers en Málaga con reserva online",
+        "h1": "Web, reservas y rendimiento para un alquiler de campers en Málaga",
+        "subtitle": "Alquiler de campers · Málaga · 9 idiomas",
+        "tagline": "Sitio con disponibilidad en tiempo real, pago online y rutas por Andalucía en nueve idiomas, optimizado después de una auditoría de rendimiento móvil que encontró dónde se perdían los segundos.",
+        "category": "Web + reservas / Turismo",
+        "signal": "En producción",
+        "relatedService": "Ver el servicio de diseño web",
+        "serviceType": "Desarrollo web, reservas online y SEO técnico",
+        "problem": "Un alquiler de campers vende sobre todo a turistas extranjeros que comparan desde el móvil, a veces desde el extranjero y con prisa. Necesita mostrar disponibilidad real, cobrar sin intermediarios y aparecer en varios idiomas. Y la auditoría móvil de agosto de 2026 mostró que la imagen principal tardaba casi cinco segundos en pintarse, no por su peso sino por esperas evitables.",
+        "context": "La auditoría separó el problema en partes medibles. El 65 % del retraso era tiempo esperando a que la imagen principal empezara a cargarse, porque el elemento no existía hasta que la página se hidrataba. A eso se sumaban dos contenedores de analítica en paralelo, una redirección de la raíz al español que costaba unos 700 ms e imágenes enlazadas desde dominios ajenos.",
+        "engineeringIntro": "La web está construida con Next.js sobre Supabase y Stripe. La disponibilidad se lee de una vista diaria por vehículo y se sincroniza con calendarios externos por iCal. El precio se recalcula en el servidor antes de crear el pago, y la base de datos impide por sí misma que dos reservas se solapen. Tras la auditoría se corrigieron en el código las causas encontradas, una por una.",
+        "impact": "La imagen principal ya se renderiza en el servidor con prioridad alta, queda un único contenedor de analítica cargado de forma diferida, la raíz se resuelve con una reescritura en vez de una redirección y todas las imágenes se sirven desde el propio dominio. Falta volver a medir con la misma metodología para publicar las cifras de después; cuando estén, aparecerán aquí con su fecha.",
+        "whatItDoes": [
+            "Muestra la disponibilidad de cada camper con días bloqueados en el calendario",
+            "Calcula el precio con extras y cobra con Stripe Checkout",
+            "Sincroniza reservas de otros canales mediante iCal",
+            "Publica rutas por Andalucía y páginas de vehículo en varios idiomas",
+            "Ofrece contacto directo por WhatsApp desde cada vehículo"
+        ],
+        "howItWorks": [
+            "Restricción de exclusión en Postgres para que dos reservas no puedan solaparse",
+            "Precio recalculado en el servidor, sin fiarse del total que envía el navegador",
+            "Checkout con clave de idempotencia y webhook con firma verificada",
+            "Hero renderizado en el servidor con prioridad alta en lugar de esperar a la hidratación",
+            "Hreflang por idioma con x-default y sitemap con fecha de modificación real"
+        ],
+        "pillars": {
+            "booking": {
+                "title": "Reservas que no se pisan",
+                "description": "El overbooking se evita en la base de datos, no en la interfaz. Aunque dos pagos lleguen a la vez, Postgres rechaza el segundo.",
+                "bullets": [
+                    "Rangos de fechas con restricción de exclusión",
+                    "Sincronización iCal idempotente con otros canales",
+                    "Reservas pendientes de pago reutilizadas, no duplicadas"
+                ]
+            },
+            "performance": {
+                "title": "Rendimiento atacado por causas",
+                "description": "Cada corrección responde a un hallazgo medido de la auditoría, no a una lista genérica de buenas prácticas.",
+                "bullets": [
+                    "Un solo contenedor de analítica en lugar de dos",
+                    "Reescritura en la raíz en lugar de redirección 307",
+                    "Polyfills antiguos eliminados con una lista de navegadores actual"
+                ]
+            },
+            "international": {
+                "title": "Internacional de verdad",
+                "description": "El público llega en muchos idiomas, así que las rutas, los vehículos y las páginas de destino tienen versión propia y hreflang recíproco.",
+                "bullets": [
+                    "Nueve idiomas en la interfaz",
+                    "Datos estructurados de empresa de alquiler, rutas y preguntas frecuentes"
+                ]
+            }
+        },
+        "security": [
+            "Seguridad a nivel de fila en las tablas de Supabase.",
+            "El webhook de Stripe verifica la firma de cada evento antes de confirmar una reserva.",
+            "Las imágenes de terceros se sustituyeron por imágenes propias alojadas en el dominio."
+        ],
+        "metrics": [
+            {
+                "label": "Idiomas",
+                "note": "Interfaz y contenido localizados"
+            },
+            {
+                "label": "Páginas de ruta",
+                "note": "Seis rutas por Andalucía en ocho idiomas"
+            },
+            {
+                "label": "Contenedores de analítica",
+                "note": "Antes eran dos en paralelo"
+            }
+        ],
+        "faq": [
+            {
+                "q": "¿Por qué no se publican todavía las cifras de rendimiento?",
+                "a": "Porque solo publicamos números medidos con método y fecha. Las correcciones están en el código; la nueva medición con PageSpeed Insights, con mediana de varias ejecuciones, se publicará en esta ficha cuando esté hecha."
+            },
+            {
+                "q": "¿Por qué el problema no era el peso de la imagen?",
+                "a": "La descarga de la imagen tardaba unos 126 ms. El tiempo se iba en esperar: casi 1,8 segundos hasta empezar a cargarla, porque el elemento no existía en el HTML inicial, y otros 0,8 segundos hasta poder pintarla."
+            }
+        ],
+        "links": [
+            {
+                "label": "Ver el sitio en producción"
+            },
+            {
+                "label": "Volver al portfolio"
+            }
+        ],
+        "sheet": {
+            "type": "Web + reservas",
+            "stack": "Next.js · Supabase · Stripe",
+            "channel": "Web, 9 idiomas",
+            "status": "En producción"
+        }
+    },
+    "renuva": {
+        "seoTitle": "Renuva: renovaciones de la regularización extraordinaria para despachos | IA Operators",
+        "title": "Renuva: renovaciones de la regularización, organizadas por despacho",
+        "h1": "Una herramienta para que ningún cliente del despacho pierda su renovación",
+        "subtitle": "Despachos de extranjería · Regularización extraordinaria",
+        "tagline": "Aplicación para despachos de extranjería que gestiona la ventana de renovación de cada cliente regularizado, avisa por WhatsApp o email y recoge la documentación en un portal multilingüe.",
+        "category": "Producto propio / Extranjería",
+        "signal": "En piloto",
+        "serviceType": "Software de gestión para despachos de extranjería",
+        "problem": "La regularización extraordinaria deja a cada despacho con decenas o cientos de autorizaciones que vencen en fechas distintas. Cada renovación tiene su ventana: se abre antes del vencimiento, hay un periodo de gracia después y, pasado ese plazo, el cliente se arriesga a un procedimiento sancionador. Llevarlo en una hoja de cálculo funciona hasta que alguien se pasa de fecha.",
+        "engineeringIntro": "Renuva es una aplicación multi-despacho sobre Next.js y Supabase, alojada en la Unión Europea. El despacho importa su cartera desde CSV o Excel, el sistema valida cada NIE y calcula el estado de la ventana de renovación de cada caso. Los avisos salen por la API oficial de WhatsApp cuando hay consentimiento y plantilla aprobada, y si no, por email. El cliente sube sus documentos a un portal en español, árabe o francés.",
+        "impact": "El despacho ve en un panel qué renovaciones están abiertas, cuáles en periodo de gracia y cuáles fuera de plazo, y deja de perseguir a cada cliente a mano. Hoy Renuva está en fase piloto: las listas de documentos por vía deben revisarse por un abogado y las traducciones al árabe y al francés son provisionales antes de abrirla a despachos reales.",
+        "whatItDoes": [
+            "Importa la cartera desde CSV o Excel con validación del NIE y detección de duplicados",
+            "Muestra la ventana de renovación de cada caso: abierta, en gracia o fuera de plazo",
+            "Asigna una vía de renovación con su lista de documentos",
+            "Avisa al cliente por WhatsApp o email, de forma manual, en lote o programada",
+            "Recoge documentos en un portal del cliente en español, árabe y francés"
+        ],
+        "howItWorks": [
+            "La fecha de vencimiento la aporta el despacho, con su origen registrado",
+            "La ventana se calcula igual en la base de datos y en la aplicación",
+            "Primer aviso a partir de 75 días antes y recordatorio semanal, como máximo uno al día",
+            "El portal se abre con un enlace de un solo uso y un código o la fecha de nacimiento",
+            "El caso pasa a listo cuando el profesional acepta todos los documentos obligatorios"
+        ],
+        "pillars": {
+            "tenancy": {
+                "title": "Cada despacho, aislado en la base de datos",
+                "description": "El aislamiento no depende de que la aplicación filtre bien. Las claves compuestas y un disparador impiden mezclar o mover datos entre despachos.",
+                "bullets": [
+                    "Seguridad a nivel de fila en todas las tablas",
+                    "Doble factor exigido también desde Postgres",
+                    "Tres roles: administrador, profesional y asistente"
+                ]
+            },
+            "sensitive": {
+                "title": "Datos sensibles tratados como tales",
+                "description": "NIE y pasaportes se cifran por campo y los documentos de categoría especial quedan ocultos para el asistente.",
+                "bullets": [
+                    "Cifrado AES-256-GCM con subclave por finalidad",
+                    "Archivos privados con URL firmada de 60 segundos",
+                    "Retención configurable y borrado al cerrar el caso"
+                ]
+            },
+            "whatsapp": {
+                "title": "WhatsApp con el número del despacho",
+                "description": "Cada despacho conecta su propio número mediante el alta integrada de Meta. Sin consentimiento o sin acuerdo de encargado firmado, no sale ningún dato hacia Meta ni hacia el proveedor de email.",
+                "bullets": [
+                    "Plantillas de utilidad aprobadas por Meta",
+                    "Consentimiento que solo se puede revocar"
+                ]
+            }
+        },
+        "security": [
+            "NIE, pasaporte y credenciales de WhatsApp cifrados con AES-256-GCM; los duplicados se detectan por HMAC sin descifrar.",
+            "El enlace del portal guarda solo su huella SHA-256, caduca y admite cinco intentos de verificación.",
+            "Registro de actividad de solo inserción que sobrevive al borrado del despacho."
+        ],
+        "metrics": [
+            {
+                "label": "Tablas con seguridad a nivel de fila",
+                "note": "Todas las del modelo de datos"
+            },
+            {
+                "label": "Pruebas de reglas de base de datos",
+                "note": "Ejecutadas contra Postgres con todas las migraciones"
+            },
+            {
+                "label": "Idiomas del portal del cliente",
+                "note": "Español, árabe y francés"
+            }
+        ],
+        "faq": [
+            {
+                "q": "¿Renuva calcula la fecha de vencimiento?",
+                "a": "No. La fecha la aporta el despacho a partir de la resolución o la TIE, y el sistema registra de dónde salió. Renuva calcula la ventana de renovación a partir de esa fecha, que es donde se producen los olvidos."
+            },
+            {
+                "q": "¿Usa IA con los datos de los clientes?",
+                "a": "No. Renuva no envía datos a ningún modelo de lenguaje. Las reglas de plazos y avisos están escritas y probadas."
+            }
+        ],
+        "links": [
+            {
+                "label": "Ver Renuva"
+            },
+            {
+                "label": "Volver al portfolio"
+            }
+        ],
+        "sheet": {
+            "type": "Producto propio",
+            "stack": "Next.js · Supabase · WhatsApp API",
+            "channel": "Web y WhatsApp",
+            "status": "En piloto"
+        }
     }
 }

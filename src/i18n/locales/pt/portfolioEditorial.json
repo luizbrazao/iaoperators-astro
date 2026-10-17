@@ -26,6 +26,17 @@
         "lcp": "LCP"
       },
       "caption": "Medido em {date} com Lighthouse {version}. Desempenho: mediana de {runs} execuções."
+    },
+    "sheet": {
+      "label": "Ficha técnica",
+      "head": "Projeto",
+      "caption": "Ficha do projeto. Não é uma captura da aplicação.",
+      "rows": {
+        "type": "Tipo",
+        "stack": "Stack",
+        "channel": "Canal",
+        "status": "Status"
+      }
     }
   },
   "detail": {

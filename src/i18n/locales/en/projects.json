@@ -454,5 +454,704 @@
             }
         ],
         "serviceType": "Web development and technical SEO"
+    },
+    "hotelRevenue": {
+        "seoTitle": "Hotel Revenue Operator: validating a direct-booking product for hotels | IA Operators",
+        "title": "Hotel Revenue Operator: direct bookings for independent hotels",
+        "h1": "Validating a direct-booking product before building it",
+        "subtitle": "Independent hotels in Spain · Phase 1",
+        "tagline": "A landing page, a revenue calculator and pilot sign-ups to test whether a hotel would pay to win bookings back from the OTAs, before writing a single line of the assistant.",
+        "category": "Own product / Hospitality",
+        "signal": "Phase 1 in production",
+        "relatedService": "See Hotel Revenue Operator",
+        "serviceType": "Direct-booking product for hotels",
+        "problem": "An independent hotel pays commission on every booking that comes through an OTA such as Booking or Expedia, and many of those bookings start with a question its website did not answer in time. Building an assistant that answers and sends guests to the booking engine is technically manageable. The expensive part is building it and then finding out hotels will not pay for it.",
+        "context": "The product hypothesis has four parts: the hotel loses direct bookings to unanswered questions, an assistant that answers and hands off to the booking engine wins some of them back, extras offered at the right moment add revenue, and the hotel pays if it can see the attribution. Phase 1 exists to test whether that holds up with real hotels, not to prove the software works.",
+        "engineeringIntro": "Phase 1 is deliberately small: an indexable landing page, a revenue calculator on its own page and a form that stores the lead together with the calculation behind it. There is no chatbot, no login, no integrations and no payments. What there is, is rigour in what gets measured: the calculation lives in versioned pure functions, the server always repeats it instead of trusting the browser, and analytics carry no personal data.",
+        "impact": "The product moves from idea to measurable experiment. Each lead arrives with the hotel's data, the chosen scenario and the formula version, so the diagnostic call is about concrete numbers and can ask directly whether the hotel would accept a pilot and at what price. Phase 2, the working assistant, only gets built if those answers justify it.",
+        "whatItDoes": [
+            "Explains the offer on a landing page built for searches about chatbots for hotels",
+            "Estimates commission savings and revenue from extras using the hotel's own data",
+            "Shows three scenarios (conservative, realistic and potential) and states their limitations",
+            "Collects pilot requests with versioned consent and an internal email alert",
+            "Measures the whole funnel without sending personal data to analytics"
+        ],
+        "howItWorks": [
+            "Calculation engine in pure functions: no state, no network, tested in isolation",
+            "Strict limits on every input: anything out of range is rejected, not clipped",
+            "The endpoint recalculates on the server and stores the formula version with the lead",
+            "Calculator set to noindex with its own canonical so it does not compete with the landing page",
+            "Funnel events in the dataLayer with a closed list of parameters"
+        ],
+        "pillars": {
+            "validation": {
+                "title": "Validate before building",
+                "description": "The Phase 1 question is commercial, not technical: whether a hotel will accept a pilot and what price it considers reasonable. The software is sized to answer that and nothing more.",
+                "bullets": [
+                    "No published price until there have been conversations",
+                    "Commercial hypothesis kept in code, not shown",
+                    "Lead status tracked in the database through to pilot"
+                ]
+            },
+            "versioned": {
+                "title": "A calculation that can be audited",
+                "description": "If the formula changes, the version changes. That way a lead from today and one from three months on can be compared, knowing which numbers each was calculated with.",
+                "bullets": [
+                    "Formulas, limits and scenarios in a single module",
+                    "Amounts in whole cents to avoid rounding errors",
+                    "The server never accepts the result sent by the browser"
+                ]
+            },
+            "honest": {
+                "title": "An estimate that says what it is not",
+                "description": "The page states that the savings are gross, that there is no seasonality and that the scenario percentages are working hypotheses, not industry averages.",
+                "bullets": [
+                    "Indicative-estimate notice always visible",
+                    "Model limitations explained next to the result"
+                ]
+            }
+        },
+        "security": [
+            "The leads table is only accessible with the server's service key; the browser never touches it.",
+            "Logs are structured and contain no personal data.",
+            "The form consent is versioned: it is known which text each hotel accepted."
+        ],
+        "metrics": [
+            {
+                "label": "Calculation scenarios",
+                "note": "Conservative, realistic and potential"
+            },
+            {
+                "label": "Data requested from the hotel",
+                "note": "Rooms, occupancy, ADR, length of stay, OTA share, commission and extras"
+            },
+            {
+                "label": "Calculator version",
+                "note": "Stored with every lead"
+            }
+        ],
+        "faq": [
+            {
+                "q": "Why is there no chatbot yet?",
+                "a": "Because the first thing to prove is that there is a hotel willing to pay for it. Building the assistant, the booking-engine integrations and the attribution takes weeks. Measuring interest takes days. If Phase 1 does not land pilots, that time has been saved."
+            },
+            {
+                "q": "Where do the scenario percentages come from?",
+                "a": "They are working hypotheses, and the page says so. They are not industry averages or client results. They let the hotel see a range based on its own data, not a promised figure."
+            },
+            {
+                "q": "Why is the calculator not indexed?",
+                "a": "The same tool sits inside the landing page. Two indexable URLs with the same functional content would split the search traffic. The separate page serves as a destination for ads and direct links."
+            }
+        ],
+        "links": [
+            {
+                "label": "See Hotel Revenue Operator"
+            },
+            {
+                "label": "Back to portfolio"
+            }
+        ],
+        "sheet": {
+            "type": "Own product",
+            "stack": "Astro · Supabase · Resend",
+            "channel": "Web",
+            "status": "Phase 1: validation"
+        }
+    },
+    "rgpdOps": {
+        "seoTitle": "RGPD Ops Starter: data protection as an ongoing operation | IA Operators",
+        "title": "RGPD Ops Starter: GDPR as an operation, not a folder",
+        "h1": "A tool for keeping data protection up to date",
+        "subtitle": "Spanish SMEs that win customers online · One-off payment",
+        "tagline": "A paid workspace where an SME keeps its processing activities, suppliers, rights requests, incidents and evidence up to date, with export of a draft Record of Processing Activities (RoPA).",
+        "category": "Own product / Compliance",
+        "signal": "On sale",
+        "relatedService": "See the GDPR pillar",
+        "serviceType": "Data protection management tool",
+        "problem": "An SME that wins customers through a website, WhatsApp, a CRM, a newsletter and tracking pixels builds up processing activities and suppliers without noticing. GDPR is usually dealt with once, with a set of templates, and then nobody updates them. When an access request or a breach arrives, there is no record of what data exists, where it is or who is responsible.",
+        "context": "The market offers two extremes: generic documents that end up in a drawer, or legal advice that a small SME cannot pay for every quarter. Something in between was needed: a tool that organises day-to-day operations and says clearly when a professional is required.",
+        "engineeringIntro": "RGPD Ops is a server-side workspace, not a form in the browser. Every change goes through SQL functions that only accept tables and columns from a closed list, always filter by the session's workspace and record the change in an audit log that cannot be edited. Access is bought through Stripe and delivered by magic link, with no passwords.",
+        "impact": "The SME goes from loose documents to a living record: eight modules with their due dates, a task plan with evidence, a guided quarterly review and the option to export everything as CSV and JSON. It also knows what the tool does not do: it gives no legal advice, certifies nothing and does not decide whether a breach must be notified.",
+        "whatItDoes": [
+            "Records processing activities and generates a draft Record of Processing Activities (RoPA)",
+            "Organises suppliers, data collection points, rights requests and incidents",
+            "Proposes an action plan with tasks, owners by role and evidence",
+            "Guides a quarterly review and shows the maturity level by area",
+            "Exports each module as CSV and a full copy as JSON"
+        ],
+        "howItWorks": [
+            "Payment through Stripe Checkout and a signed webhook with idempotency in the database",
+            "Access by single-use magic link and an HMAC-signed session",
+            "Writes only through SQL functions with an allowlist of tables and columns",
+            "Optimistic versioning on every record so two tabs do not overwrite each other",
+            "An audit log that rejects edits and stores which field changed, never its value"
+        ],
+        "pillars": {
+            "operation": {
+                "title": "An ongoing operation, not a document",
+                "description": "Each module has statuses and due dates. The tool is meant to be opened every quarter, not filled in once.",
+                "bullets": [
+                    "Eight modules on a closed list in both code and SQL",
+                    "Tasks seeded once when the workspace is created",
+                    "Guided quarterly review"
+                ]
+            },
+            "minimization": {
+                "title": "Data minimisation applied to the tool itself",
+                "description": "A data protection tool cannot become one more place where personal data piles up. That is why it has no fields for data subjects' names or documents.",
+                "bullets": [
+                    "Free text rejects emails, phone numbers and DNI/NIE numbers",
+                    "Owners by role, evidence by reference, no file uploads",
+                    "No AI on the workspace content"
+                ]
+            },
+            "limits": {
+                "title": "Stated limits",
+                "description": "The tool does not decide legal bases or whether a DPIA is needed. When it detects signs of higher risk, it recommends a professional review instead of improvising an answer.",
+                "bullets": [
+                    "It is not legal advice or certification",
+                    "A free diagnostic first to check whether it fits"
+                ]
+            }
+        },
+        "security": [
+            "Every private request checks again in the database that the order is paid, active and within its term.",
+            "The workspace ID always comes from the session: someone else's ID returns a 404.",
+            "Logs with closed fields, no email, token, IP or content. Workspaces are purged 90 days after access ends."
+        ],
+        "metrics": [
+            {
+                "label": "Work modules",
+                "note": "Processing activities, suppliers, data collection, requests, incidents, tasks, evidence and reviews"
+            },
+            {
+                "label": "Price",
+                "note": "One-off payment, 12 months of access"
+            },
+            {
+                "label": "AI on your data",
+                "note": "None: the workspace content is never sent to models"
+            }
+        ],
+        "faq": [
+            {
+                "q": "Does it replace a lawyer or a DPO?",
+                "a": "No. It organises day-to-day operations and produces drafts, but it does not decide legal bases, does not determine whether a DPIA or a DPO is needed and does not decide whether a breach is notified to the AEPD. When there are signs of risk, it says so and recommends a professional review."
+            },
+            {
+                "q": "Why does it not use AI?",
+                "a": "Because the workspace content describes how a company processes personal data. Sending it to an external model would add one more processor for no reason. The guidance and alerts are written, reviewed rules."
+            },
+            {
+                "q": "What happens when the year of access ends?",
+                "a": "Everything can be exported as JSON and CSV at any time. After access ends, the workspace is kept for 90 days for export and then deleted."
+            }
+        ],
+        "links": [
+            {
+                "label": "See RGPD Ops Starter"
+            },
+            {
+                "label": "Back to portfolio"
+            }
+        ],
+        "sheet": {
+            "type": "Own product",
+            "stack": "Astro · Supabase · Stripe",
+            "channel": "Web",
+            "status": "On sale"
+        }
+    },
+    "rutaNacionalidad": {
+        "seoTitle": "Ruta Nacionalidad: private area for Spanish nationality by residence | IA Operators",
+        "title": "Ruta Nacionalidad: the nationality application, saved and supported",
+        "h1": "From a free calculator to an application followed step by step",
+        "subtitle": "Spanish nationality by residence · es · pt-BR",
+        "tagline": "A private area that saves the nationality calculator result, turns the case into a dated document checklist and prepares for the CCSE test, with an optional review by a specialist.",
+        "category": "Own product / Immigration",
+        "signal": "In production",
+        "serviceType": "Digital product for Spanish nationality by residence",
+        "problem": "Applying for Spanish nationality by residence is a long process: the waiting period depends on the country of origin, residence has to be legal and continuous, there are exams and a list of documents that expire. Most people do the calculation once on a website, close the tab and come back months later with no idea where they stand.",
+        "context": "Ruta Nacionalidad was built alongside the Propiziare Immigra website, whose audience researches in Spanish and Portuguese. The public calculator already answered the first question, when they could apply. What was missing was the next step: saving that result and supporting the application until it is submitted.",
+        "engineeringIntro": "The product is split into two parts. The calculator lives on the public website, works without sign-up and runs the calculation in the browser, applying the periods in article 22 of the Spanish Civil Code. The private area is a separate, non-indexed application where users sign in with their email and a code, with no password, and save their case. Paid access is activated only when Stripe confirms the charge, not when the user returns from the payment page.",
+        "impact": "What used to be a one-off calculation becomes an application with a status: dated documents, a calendar, a CCSE study plan, reminders and recalculation when the user's data or the rules change. Anyone who needs more than guidance can add a written review of their case by an immigration specialist.",
+        "whatItDoes": [
+            "Saves the calculator result to an account, using only an email address",
+            "Turns the case into a document checklist with statuses and dates",
+            "Organises a calendar and a study plan for the CCSE test",
+            "Recalculates when the user's data or the rules change",
+            "Exports the application as PDF and JSON"
+        ],
+        "howItWorks": [
+            "Public five-step calculator, with the calculation done in the browser",
+            "Passwordless access: link and code sent by email",
+            "Private area separate from the public site and set to noindex",
+            "One-off payment through Stripe, activated on payment confirmation",
+            "Interface in Spanish and Brazilian Portuguese"
+        ],
+        "pillars": {
+            "continuity": {
+                "title": "From calculation to follow-up",
+                "description": "The value is not in calculating a date, which is free, but in not losing track during the months it takes to prepare the application.",
+                "bullets": [
+                    "The free diagnosis stays in the account",
+                    "Documents, calendar and CCSE in one place",
+                    "Reminders and automatic recalculation"
+                ]
+            },
+            "privacy": {
+                "title": "Only what it needs to work",
+                "description": "The calculator does not store answers unless the user chooses to save them. Sign-in needs no password, so there is no extra one to leak.",
+                "bullets": [
+                    "Calculation in the browser",
+                    "Sign-in by email and single-use code"
+                ]
+            },
+            "honest": {
+                "title": "Guidance, not a ruling",
+                "description": "Every screen reminds users that the result is indicative and that the decision belongs to the Ministry of Justice. The specialist review is a written analysis, not representation before the authorities.",
+                "bullets": [
+                    "Fixed legal notice throughout the private area",
+                    "Versioned terms of sale"
+                ]
+            }
+        },
+        "security": [
+            "Passwordless access with a single-use link and code sent by email.",
+            "Private area set to noindex, with a nonce-based content security policy.",
+            "The public calculator does not store answers unless the user saves them to their account."
+        ],
+        "metrics": [
+            {
+                "label": "Calculator steps",
+                "note": "Nationality, residence, continuity, special circumstances and exams"
+            },
+            {
+                "label": "Days of Ruta Pro access",
+                "note": "One-off payment"
+            },
+            {
+                "label": "Languages",
+                "note": "Spanish and Brazilian Portuguese"
+            }
+        ],
+        "faq": [
+            {
+                "q": "Does the calculator guarantee the date?",
+                "a": "No. It applies the Civil Code periods to the user's answers and gives an indicative date. It does not check any public register, and the grant is decided by the Ministry of Justice."
+            },
+            {
+                "q": "Why is the private area a separate application?",
+                "a": "Because they do different jobs. The public website has to load fast and rank; the private area stores personal data, must not be indexed and needs sessions and payments. Keeping them apart stops one from dragging the other down."
+            }
+        ],
+        "links": [
+            {
+                "label": "See Ruta Nacionalidad"
+            },
+            {
+                "label": "Back to portfolio"
+            }
+        ],
+        "sheet": {
+            "type": "Own product",
+            "stack": "Next.js · Stripe",
+            "channel": "Web, es and pt-BR",
+            "status": "In production"
+        }
+    },
+    "unRato": {
+        "seoTitle": "Un Rato: plumbing in Málaga via WhatsApp with AI and human review | IA Operators",
+        "title": "Un Rato: home repairs in Málaga, starting with a WhatsApp message",
+        "h1": "A plumbing service that starts and ends on WhatsApp",
+        "subtitle": "Málaga city · Plumbing · Validation phase",
+        "tagline": "The customer sends a message with a photo, the AI classifies the fault, a person approves the price and a verified local tradesperson is found. Nothing to download and no ringing round five companies.",
+        "category": "Own product / WhatsApp + AI",
+        "signal": "In validation",
+        "relatedService": "See the chatbot service",
+        "serviceType": "WhatsApp automation with AI",
+        "problem": "Finding a plumber for a dripping tap is harder than it should be: calls nobody answers, quotes that never arrive and prices you only learn at the end. For the self-employed tradesperson, the problem is the reverse: jobs come in with no photo, no address and no idea whether the customer will accept the price.",
+        "engineeringIntro": "Un Rato runs on the official WhatsApp API, n8n and Postgres. The AI has a narrow role: it writes the conversation, extracts the data and classifies the fault from up to three photos. The decisions that matter are not its to make. Status changes are decided by deterministic code, the price comes from a catalogue and a person approves it from Telegram before it reaches the customer.",
+        "impact": "Today, WhatsApp intake, photo classification, human price review and tradesperson onboarding are all live. Automatic assignment to a tradesperson is not yet: the offer and confirmation templates are under review at Meta and, in the meantime, the operator gets an alert to find one. The system already measures what will be needed to decide whether to scale: time to first response, price held and bot accuracy against the operator.",
+        "whatItDoes": [
+            "Handles WhatsApp text, photos, video, audio and location",
+            "Classifies the fault and proposes a fixed price from the catalogue",
+            "Sends every price for human review before it is communicated",
+            "Onboards tradespeople via WhatsApp with manual checks of their self-employed registration and insurance",
+            "Detects gas emergencies and refers them to 112 instead of quoting"
+        ],
+        "howItWorks": [
+            "Webhook with verified HMAC signature and deduplication by message ID",
+            "Per-phone lock in Postgres so a text and a photo sent together do not open two requests",
+            "A six-second wait to group messages before replying",
+            "Vision-based classification with JSON output against a strict schema",
+            "A Telegram card with approve, change price, visit or reject"
+        ],
+        "pillars": {
+            "bounded": {
+                "title": "The AI talks, the code decides",
+                "description": "The model never sets prices or changes a request's status. It returns a service code and the system looks up the price in the catalogue.",
+                "bullets": [
+                    "Low confidence: a diagnostic visit is proposed",
+                    "Not in the catalogue: handed to a person",
+                    "Defence against instructions injected into messages"
+                ]
+            },
+            "human": {
+                "title": "A person in the loop",
+                "description": "Every price is approved before it is sent, and the operator can take over the conversation at any time and hand it back to the bot afterwards.",
+                "bullets": [
+                    "Idempotent approval: it only counts once",
+                    "The bot pauses when a person is talking"
+                ]
+            },
+            "trust": {
+                "title": "Verified tradespeople by design",
+                "description": "Tradesperson onboarding is a state machine with no AI. The profile starts inactive and the database blocks activation until a person has verified the self-employed registration and public liability insurance.",
+                "bullets": [
+                    "Eight onboarding steps via WhatsApp",
+                    "Activation blocked if the insurance has expired"
+                ]
+            }
+        },
+        "security": [
+            "The address and name are only requested after the customer accepts the price.",
+            "The database stores the photo's reference at Meta, not the image.",
+            "Row-level security enabled on every table, with functions closed to public roles."
+        ],
+        "metrics": [
+            {
+                "label": "Fixed-price services",
+                "note": "Seven repairs and the diagnostic visit"
+            },
+            {
+                "label": "Postcodes covered",
+                "note": "Málaga city"
+            },
+            {
+                "label": "Automation flows",
+                "note": "Intake, conversation, classification and review"
+            }
+        ],
+        "faq": [
+            {
+                "q": "What happens if the AI gets the fault wrong?",
+                "a": "The price does not reach the customer until a person approves it. If the model has low confidence, the system proposes a diagnostic visit instead of a price, and if the fault is not in the catalogue, the conversation goes to the operator."
+            },
+            {
+                "q": "Why Telegram for the operator?",
+                "a": "Because the review has to happen in seconds from a phone, with the photo in front of you and four buttons. Building a web dashboard for that would have delayed launch without improving the decision."
+            }
+        ],
+        "links": [
+            {
+                "label": "See Un Rato"
+            },
+            {
+                "label": "Back to portfolio"
+            }
+        ],
+        "sheet": {
+            "type": "Own product",
+            "stack": "n8n · Supabase · OpenAI",
+            "channel": "WhatsApp",
+            "status": "In validation"
+        }
+    },
+    "psicoSprint": {
+        "seoTitle": "PsicoSprint: adaptive psychometric test practice for Spanish civil-service exams | IA Operators",
+        "title": "PsicoSprint: adaptive psychometric test practice for Spanish civil-service exams",
+        "h1": "Psychometric practice with a plan that adjusts to every answer",
+        "subtitle": "Civil-service exams for the National Police, Guardia Civil and the Army",
+        "tagline": "A psychometric practice platform with a free level test, results by skill and a deterministic adaptive engine that adjusts difficulty and revisits mistakes.",
+        "category": "Own product / Training",
+        "signal": "In production",
+        "serviceType": "Psychometric training platform",
+        "problem": "Candidates preparing for a civil-service exam with psychometric tests usually practise with fixed question sets: they repeat what they already know, do not know which skill they are failing and have no way of measuring progress. Academies solve part of the problem, but at a price and on a timetable that do not suit everyone.",
+        "engineeringIntro": "PsicoSprint draws a clear line between what the AI does and what it does not. The question bank was drafted with help from a model, offline, and reviewed before publication. The engine that picks the next question is deterministic: it estimates mastery of each skill, raises or lowers difficulty based on the streak and schedules spaced reviews. In real time, the AI only rewords explanations, with caching, validation and a model-free fallback if it fails.",
+        "impact": "In fifteen minutes candidates know where they stand, skill by skill, and get a plan that focuses on their weak points. Each session stores the seed and the versions of the engine and scoring, so any result can be reproduced and explained. Paid access is a one-off payment with no automatic renewal.",
+        "whatItDoes": [
+            "Free 15-exercise level test, no sign-up needed to start",
+            "Results by skill with accuracy, speed and priority areas",
+            "Adaptive plan that adjusts difficulty and reinforces weak points",
+            "Timed mock exams and error review with explanations",
+            "Progress history and one-off 30-day or 180-day plans"
+        ],
+        "howItWorks": [
+            "Per-skill mastery updated with a logistic curve",
+            "Difficulty from 1 to 5: goes up after three correct answers in a row and down after two mistakes",
+            "Spaced review at 1, 3, 7 and 14 days",
+            "Time measured on the server, not in the browser",
+            "Idempotent Stripe webhooks and access granted only once per purchase"
+        ],
+        "pillars": {
+            "deterministic": {
+                "title": "An adaptive engine that can be explained",
+                "description": "No unconstrained randomness and no language model in the decision. Selection uses a seeded generator and every session stores its version.",
+                "bullets": [
+                    "Excludes the 30 most recent questions",
+                    "Engine, scoring and plan versions recorded per session"
+                ]
+            },
+            "content": {
+                "title": "Traceable content",
+                "description": "Every question states that it was drafted with AI assistance and where it came from. Published versions cannot be modified: a change creates a new version.",
+                "bullets": [
+                    "Six skills and eight exercise types",
+                    "Automatic answer checking where possible",
+                    "Checks for banned terms such as pass or diagnosis"
+                ]
+            },
+            "trust": {
+                "title": "Promises that can be kept",
+                "description": "The platform says what it is not: it is not linked to any public body, its results are not a psychological assessment and using it does not guarantee a pass.",
+                "bullets": [
+                    "Confirmation of legal age at sign-up and payment",
+                    "14-day refund"
+                ]
+            }
+        },
+        "security": [
+            "Row-level security on every table: correct answers are never readable from the client.",
+            "Authorisation is resolved on the server; admin access requires a database role and an authorised email.",
+            "Analytics only with consent, account export and deletion, and retention periods set by data type."
+        ],
+        "metrics": [
+            {
+                "label": "Skills assessed",
+                "note": "Numerical, verbal, abstract, spatial, attention and logic"
+            },
+            {
+                "label": "Questions in the bank",
+                "note": "Reviewed before publication"
+            },
+            {
+                "label": "Level test exercises",
+                "note": "About 15 minutes, free"
+            }
+        ],
+        "faq": [
+            {
+                "q": "Are the questions generated by an AI on the spot?",
+                "a": "No. The bank was drafted with AI assistance before launch, reviewed and published in versions that do not change. What happens in real time is decided by a deterministic engine."
+            },
+            {
+                "q": "Does it work for the Guardia Civil and the Army?",
+                "a": "The skills are shared and can be trained today. Content specific to each force is being prepared; the platform flags this in each case."
+            }
+        ],
+        "links": [
+            {
+                "label": "See PsicoSprint"
+            },
+            {
+                "label": "Back to portfolio"
+            }
+        ],
+        "sheet": {
+            "type": "Own product",
+            "stack": "Next.js · Supabase · Stripe",
+            "channel": "Web",
+            "status": "In production"
+        }
+    },
+    "sundayCampers": {
+        "seoTitle": "Sunday Campers: campervan hire website with bookings and SEO in 9 languages | IA Operators",
+        "title": "Sunday Campers: campervan hire website in Málaga with online booking",
+        "h1": "Website, bookings and performance for a campervan hire business in Málaga",
+        "subtitle": "Campervan hire · Málaga · 9 languages",
+        "tagline": "A site with real-time availability, online payment and routes across Andalusia in nine languages, optimised after a mobile performance audit that found where the seconds were being lost.",
+        "category": "Website + bookings / Tourism",
+        "signal": "In production",
+        "relatedService": "See the web design service",
+        "serviceType": "Web development, online booking and technical SEO",
+        "problem": "A campervan hire business sells mainly to foreign tourists comparing options on their phones, sometimes from abroad and in a hurry. It needs to show real availability, take payment without intermediaries and appear in several languages. The mobile audit in August 2026 showed that the main image took almost five seconds to render, not because of its size but because of avoidable waits.",
+        "context": "The audit broke the problem into measurable parts. 65% of the delay was time spent waiting for the main image to start loading, because the element did not exist until the page hydrated. On top of that came two analytics containers running in parallel, a redirect from the root to the Spanish version costing around 700 ms and images linked from third-party domains.",
+        "engineeringIntro": "The website is built with Next.js on Supabase and Stripe. Availability is read from a daily view per vehicle and synced with external calendars via iCal. The price is recalculated on the server before the payment is created, and the database itself prevents two bookings from overlapping. After the audit, each cause it found was fixed in the code, one by one.",
+        "impact": "The main image is now rendered on the server with high priority, a single analytics container remains and loads deferred, the root resolves with a rewrite instead of a redirect and all images are served from the site's own domain. The site still needs to be re-measured with the same method before the after figures are published; once they are, they will appear here with their date.",
+        "whatItDoes": [
+            "Shows each campervan's availability with blocked days on the calendar",
+            "Calculates the price with extras and takes payment through Stripe Checkout",
+            "Syncs bookings from other channels via iCal",
+            "Publishes routes across Andalusia and vehicle pages in several languages",
+            "Offers direct WhatsApp contact from each vehicle page"
+        ],
+        "howItWorks": [
+            "Exclusion constraint in Postgres so two bookings cannot overlap",
+            "Price recalculated on the server, without trusting the total sent by the browser",
+            "Checkout with an idempotency key and a webhook with a verified signature",
+            "Hero rendered on the server with high priority instead of waiting for hydration",
+            "Per-language hreflang with x-default and a sitemap with real modification dates"
+        ],
+        "pillars": {
+            "booking": {
+                "title": "Bookings that never clash",
+                "description": "Overbooking is prevented in the database, not in the interface. Even if two payments arrive at once, Postgres rejects the second.",
+                "bullets": [
+                    "Date ranges with an exclusion constraint",
+                    "Idempotent iCal sync with other channels",
+                    "Bookings awaiting payment reused, not duplicated"
+                ]
+            },
+            "performance": {
+                "title": "Performance tackled at the cause",
+                "description": "Each fix responds to a measured audit finding, not to a generic list of best practices.",
+                "bullets": [
+                    "One analytics container instead of two",
+                    "A rewrite at the root instead of a 307 redirect",
+                    "Legacy polyfills removed with an up-to-date browser list"
+                ]
+            },
+            "international": {
+                "title": "Properly international",
+                "description": "Visitors arrive in many languages, so routes, vehicles and landing pages each have their own version with reciprocal hreflang.",
+                "bullets": [
+                    "Nine interface languages",
+                    "Structured data for the rental business, routes and FAQs"
+                ]
+            }
+        },
+        "security": [
+            "Row-level security on the Supabase tables.",
+            "The Stripe webhook verifies each event's signature before confirming a booking.",
+            "Third-party images were replaced with the business's own images hosted on its domain."
+        ],
+        "metrics": [
+            {
+                "label": "Languages",
+                "note": "Localised interface and content"
+            },
+            {
+                "label": "Route pages",
+                "note": "Six routes across Andalusia in eight languages"
+            },
+            {
+                "label": "Analytics containers",
+                "note": "Previously two running in parallel"
+            }
+        ],
+        "faq": [
+            {
+                "q": "Why have the performance figures not been published yet?",
+                "a": "Because we only publish numbers measured with a stated method and date. The fixes are in the code; the new PageSpeed Insights measurement, using the median of several runs, will be published on this page once it is done."
+            },
+            {
+                "q": "Why was the image size not the problem?",
+                "a": "Downloading the image took about 126 ms. The time went on waiting: almost 1.8 seconds before it started loading, because the element was not in the initial HTML, and another 0.8 seconds before it could be painted."
+            }
+        ],
+        "links": [
+            {
+                "label": "See the live site"
+            },
+            {
+                "label": "Back to portfolio"
+            }
+        ],
+        "sheet": {
+            "type": "Website + bookings",
+            "stack": "Next.js · Supabase · Stripe",
+            "channel": "Web, 9 languages",
+            "status": "In production"
+        }
+    },
+    "renuva": {
+        "seoTitle": "Renuva: extraordinary regularisation renewals for immigration law firms | IA Operators",
+        "title": "Renuva: regularisation renewals, organised by firm",
+        "h1": "A tool so that no client of the firm misses their renewal",
+        "subtitle": "Immigration law firms · Extraordinary regularisation",
+        "tagline": "An application for immigration law firms that manages each regularised client's renewal window, sends alerts by WhatsApp or email and collects documents through a multilingual portal.",
+        "category": "Own product / Immigration",
+        "signal": "In pilot",
+        "serviceType": "Management software for immigration law firms",
+        "problem": "The extraordinary regularisation leaves each firm with dozens or hundreds of permits expiring on different dates. Each renewal has its own window: it opens before expiry, there is a grace period afterwards and, once that has passed, the client risks penalty proceedings. Tracking it in a spreadsheet works until someone misses a date.",
+        "engineeringIntro": "Renuva is a multi-firm application on Next.js and Supabase, hosted in the European Union. The firm imports its client list from CSV or Excel, the system validates each NIE and works out the renewal window status for each case. Alerts go out through the official WhatsApp API when there is consent and an approved template, and by email otherwise. Clients upload their documents to a portal in Spanish, Arabic or French.",
+        "impact": "The firm sees on a dashboard which renewals are open, which are in the grace period and which are out of time, and no longer chases each client by hand. Renuva is currently in a pilot phase: the document lists for each route need review by a lawyer and the Arabic and French translations are provisional before it opens to real firms.",
+        "whatItDoes": [
+            "Imports the client list from CSV or Excel with NIE validation and duplicate detection",
+            "Shows each case's renewal window: open, in grace period or out of time",
+            "Assigns a renewal route with its document list",
+            "Alerts the client by WhatsApp or email, manually, in bulk or on a schedule",
+            "Collects documents through a client portal in Spanish, Arabic and French"
+        ],
+        "howItWorks": [
+            "The expiry date is supplied by the firm, with its source recorded",
+            "The window is calculated the same way in the database and in the application",
+            "First alert from 75 days before and a weekly reminder, at most one a day",
+            "The portal opens with a single-use link and a code or the date of birth",
+            "A case is marked ready when the professional accepts all required documents"
+        ],
+        "pillars": {
+            "tenancy": {
+                "title": "Each firm isolated in the database",
+                "description": "Isolation does not depend on the application filtering correctly. Composite keys and a trigger prevent data from being mixed or moved between firms.",
+                "bullets": [
+                    "Row-level security on every table",
+                    "Two-factor authentication also enforced from Postgres",
+                    "Three roles: administrator, professional and assistant"
+                ]
+            },
+            "sensitive": {
+                "title": "Sensitive data treated as such",
+                "description": "NIE and passport numbers are encrypted per field, and special category documents are hidden from the assistant role.",
+                "bullets": [
+                    "AES-256-GCM encryption with a subkey per purpose",
+                    "Private files with signed URLs valid for 60 seconds",
+                    "Configurable retention and deletion when the case is closed"
+                ]
+            },
+            "whatsapp": {
+                "title": "WhatsApp from the firm's own number",
+                "description": "Each firm connects its own number through Meta's embedded signup. Without consent or a signed data processing agreement, no data goes to Meta or to the email provider.",
+                "bullets": [
+                    "Utility templates approved by Meta",
+                    "Consent that can only be revoked"
+                ]
+            }
+        },
+        "security": [
+            "NIE, passport and WhatsApp credentials encrypted with AES-256-GCM; duplicates are detected by HMAC without decrypting.",
+            "The portal link stores only its SHA-256 fingerprint, expires and allows five verification attempts.",
+            "An insert-only activity log that survives deletion of the firm."
+        ],
+        "metrics": [
+            {
+                "label": "Tables with row-level security",
+                "note": "Every table in the data model"
+            },
+            {
+                "label": "Database rule tests",
+                "note": "Run against Postgres with all migrations applied"
+            },
+            {
+                "label": "Client portal languages",
+                "note": "Spanish, Arabic and French"
+            }
+        ],
+        "faq": [
+            {
+                "q": "Does Renuva calculate the expiry date?",
+                "a": "No. The firm supplies the date from the decision or the TIE, and the system records where it came from. Renuva calculates the renewal window from that date, which is where things get forgotten."
+            },
+            {
+                "q": "Does it use AI with client data?",
+                "a": "No. Renuva does not send data to any language model. The deadline and alert rules are written and tested."
+            }
+        ],
+        "links": [
+            {
+                "label": "See Renuva"
+            },
+            {
+                "label": "Back to portfolio"
+            }
+        ],
+        "sheet": {
+            "type": "Own product",
+            "stack": "Next.js · Supabase · WhatsApp API",
+            "channel": "Web and WhatsApp",
+            "status": "In pilot"
+        }
     }
 }
