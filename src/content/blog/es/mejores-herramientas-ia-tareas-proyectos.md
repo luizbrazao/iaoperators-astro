@@ -69,8 +69,8 @@ Y hasta aquí el viaje. Recuerda, las herramientas están ahí, pero todo empiez
 
 También te puede interesar
 
-        - [Cómo la inteligencia artificial transforma la gestión de proyectos](https://www.iaoperators.com/blog/como-la-inteligencia-artificial-transforma-la-gestion-de-proyectos)
+        - [Cómo la inteligencia artificial transforma la gestión de proyectos](/es/blog/como-la-inteligencia-artificial-transforma-la-gestion-de-proyectos/)
 
-        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](https://www.iaoperators.com/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa)
+        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](/es/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa/)
 
-        - [Los generalistas de IA: los trabajos más demandados en 2025](https://www.iaoperators.com/blog/generalistas-ia-trabajos-demandados-2025)
+        - [Los generalistas de IA: los trabajos más demandados en 2025](/es/blog/generalistas-ia-trabajos-demandados-2025/)

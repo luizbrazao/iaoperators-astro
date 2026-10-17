@@ -52,6 +52,6 @@ What really stands out about all these tools is the democratization of access to
 Do you dare to try these tools? Believe me, once you take the leap, there is no turning back. More than artificial intelligence, what we are seeing is pure magic available to anyone.
 
 You may also be interested
-[Gemini 3 Flash: El modelo de inteligencia artificial rápido, eficiente y económico de Google](https://www.iaoperators.com/blog/gemini-3-flash-inteligencia-artificial-google)
-- [Notebook LM y Gemini: Revolucionando la creatividad y la productividad con IA](https://www.iaoperators.com/blog/notebook-lm-gemini-revolucion-creatividad-productividad-ia)
-- [Manus: La Revolución de la Inteligencia Artificial en Acción](https://www.iaoperators.com/blog/manus-revolucion-inteligencia-artificial)
+[Gemini 3 Flash: El modelo de inteligencia artificial rápido, eficiente y económico de Google](/en/blog/gemini-3-flash-inteligencia-artificial-google/)
+- [Notebook LM y Gemini: Revolucionando la creatividad y la productividad con IA](/en/blog/notebook-lm-gemini-revolucion-creatividad-productividad-ia/)
+- [Manus: La Revolución de la Inteligencia Artificial en Acción](/en/blog/manus-revolucion-inteligencia-artificial/)

@@ -61,8 +61,8 @@ Agora, me conta: você já utiliza algumas dessas ferramentas? O que você acha 
 
 Você também pode estar interessado
 
-        - [El impacto de la inteligencia artificial en la industria legal](https://www.iaoperators.com/blog/impacto-inteligencia-artificial-industria-legal)
+        - [El impacto de la inteligencia artificial en la industria legal](/pt/blog/impacto-inteligencia-artificial-industria-legal/)
 
-        - [Cómo la inteligencia artificial transforma la gestión de proyectos](https://www.iaoperators.com/blog/como-la-inteligencia-artificial-transforma-la-gestion-de-proyectos)
+        - [Cómo la inteligencia artificial transforma la gestión de proyectos](/pt/blog/como-la-inteligencia-artificial-transforma-la-gestion-de-proyectos/)
 
-        - [Las mejores herramientas de IA para tareas y gestión de proyectos](https://www.iaoperators.com/blog/mejores-herramientas-ia-tareas-proyectos)
+        - [Las mejores herramientas de IA para tareas y gestión de proyectos](/pt/blog/mejores-herramientas-ia-tareas-proyectos/)

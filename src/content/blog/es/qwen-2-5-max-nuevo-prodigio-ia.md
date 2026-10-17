@@ -1,10 +1,14 @@
 ---
 title: "Qwen 2.5 Max: el nuevo prodigio de la inteligencia artificial"
+seoTitle: "Qwen 2.5 Max: funciones y comparación con ChatGPT"
 description: "Qwen 2.5 Max llega como el nuevo prodigio de la inteligencia artificial, mostrando capacidades avanzadas en generación de texto, multimedia y razonamiento lógico."
 category: tools
 date: 2025-10-02
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/624a7890-796b-4361-9195-9e07c92a5b00.png
 locale: es
+related:
+  - ia-local-privada-sin-mensualidad-qwen-pc
+  - kimi-k3-waico-nueva-disputa-ia-empresas
 author: Luiz Brazão
 draft: false
 ---

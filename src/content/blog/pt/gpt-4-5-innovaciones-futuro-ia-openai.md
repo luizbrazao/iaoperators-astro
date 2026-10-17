@@ -55,8 +55,8 @@ Então, minha recomendação? Se você tiver a oportunidade de experimentar, fa�
 
 Você também pode estar interessado
 
-        - [Claude 3.7: el poderoso avance de las inteligencias artificiales](https://www.iaoperators.com/blog/claude-3-7-el-poderoso-avance-de-las-inteligencias-artificiales)
+        - [Claude 3.7: el poderoso avance de las inteligencias artificiales](/pt/blog/claude-3-7-el-poderoso-avance-de-las-inteligencias-artificiales/)
 
-        - [Grok 3: la revolución que está sacudiendo la industria de la IA](https://www.iaoperators.com/blog/grok-3-revolucion-industria-ia)
+        - [Grok 3: la revolución que está sacudiendo la industria de la IA](/pt/blog/grok-3-revolucion-industria-ia/)
 
-        - [Gemini 2.0 Pro: el revolucionario modelo de inteligencia artificial de Google](https://www.iaoperators.com/blog/gemini-2-0-pro-revolucionario-modelo-google)
+        - [Gemini 2.0 Pro: el revolucionario modelo de inteligencia artificial de Google](/pt/blog/gemini-2-0-pro-revolucionario-modelo-google/)

@@ -44,6 +44,8 @@ tags:
   - arquitectura multimodelo
   - automatización con IA
 locale: es
+related:
+  - qwen-2-5-max-nuevo-prodigio-ia
 translationKey: kimi-k3-waico
 author: "Luiz Fernando Brazão"
 authorTitle: "Fundador de IA Operators"

@@ -65,8 +65,8 @@ Pero no me quedo solo con mi opinión (aunque siempre tengo algo que decir, ya s
 
 También te puede interesar
 
-        - [Las mejores herramientas de inteligencia artificial para abogados en España](https://www.iaoperators.com/blog/mejores-herramientas-inteligencia-artificial-abogados-espana)
+        - [Las mejores herramientas de inteligencia artificial para abogados en España](/es/blog/mejores-herramientas-inteligencia-artificial-abogados-espana/)
 
-        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](https://www.iaoperators.com/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa)
+        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](/es/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa/)
 
-        - [Innovaciones impactantes en tecnología y ciencia que marcarán 2025](https://www.iaoperators.com/blog/innovaciones-impactantes-tecnologia-ciencia-2025)
+        - [Innovaciones impactantes en tecnología y ciencia que marcarán 2025](/es/blog/innovaciones-impactantes-tecnologia-ciencia-2025/)

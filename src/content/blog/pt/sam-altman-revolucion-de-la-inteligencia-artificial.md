@@ -55,8 +55,8 @@ Bem, se há uma coisa que toda essa conversa de Sam deixa claro é que estamos t
 
 Você também pode estar interessado
 
-        - [GPT-4.5: innovaciones y el futuro de la IA en OpenAI](https://www.iaoperators.com/blog/gpt-4-5-innovaciones-futuro-ia-openai)
+        - [GPT-4.5: innovaciones y el futuro de la IA en OpenAI](/pt/blog/gpt-4-5-innovaciones-futuro-ia-openai/)
 
-        - [Claude 3.7: el poderoso avance de las inteligencias artificiales](https://www.iaoperators.com/blog/claude-3-7-el-poderoso-avance-de-las-inteligencias-artificiales)
+        - [Claude 3.7: el poderoso avance de las inteligencias artificiales](/pt/blog/claude-3-7-el-poderoso-avance-de-las-inteligencias-artificiales/)
 
-        - [Las innovaciones más impactantes de la tecnología y la ciencia en 2025](https://www.iaoperators.com/blog/innovaciones-impactantes-tecnologia-ciencia-2025)
+        - [Las innovaciones más impactantes de la tecnología y la ciencia en 2025](/pt/blog/innovaciones-impactantes-tecnologia-ciencia-2025/)

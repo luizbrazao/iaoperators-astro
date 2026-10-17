@@ -69,8 +69,8 @@ And there you have it. Grok is not just a model of AI, it is a bold statement of
 
 You may also be interested
 
-        - [GPT-4.5: innovaciones y el futuro de la IA en OpenAI](https://www.iaoperators.com/blog/gpt-4-5-innovaciones-futuro-ia-openai)
+        - [GPT-4.5: innovaciones y el futuro de la IA en OpenAI](/en/blog/gpt-4-5-innovaciones-futuro-ia-openai/)
 
-        - [Gemini 2.0 Pro: el revolucionario modelo de inteligencia artificial de Google](https://www.iaoperators.com/blog/gemini-2-0-pro-revolucionario-modelo-google)
+        - [Gemini 2.0 Pro: el revolucionario modelo de inteligencia artificial de Google](/en/blog/gemini-2-0-pro-revolucionario-modelo-google/)
 
-        - [Las innovaciones más impactantes de la tecnología y la ciencia en 2025](https://www.iaoperators.com/blog/innovaciones-impactantes-tecnologia-ciencia-2025)
+        - [Las innovaciones más impactantes de la tecnología y la ciencia en 2025](/en/blog/innovaciones-impactantes-tecnologia-ciencia-2025/)

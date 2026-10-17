@@ -85,8 +85,8 @@ Y lo mejor de todo: no es una cuestión de "si deberías" adoptar uno de estos, 
 
 También te puede interesar
 
-        - [Las mejores herramientas de IA para gestionar tareas y proyectos](https://www.iaoperators.com/blog/mejores-herramientas-ia-tareas-proyectos)
+        - [Las mejores herramientas de IA para gestionar tareas y proyectos](/es/blog/mejores-herramientas-ia-tareas-proyectos/)
 
-        - [Cómo la inteligencia artificial transforma la gestión de proyectos](https://www.iaoperators.com/blog/como-la-inteligencia-artificial-transforma-la-gestion-de-proyectos)
+        - [Cómo la inteligencia artificial transforma la gestión de proyectos](/es/blog/como-la-inteligencia-artificial-transforma-la-gestion-de-proyectos/)
 
-        - [Los generalistas de IA: los trabajos más demandados en 2025](https://www.iaoperators.com/blog/generalistas-ia-trabajos-demandados-2025)
+        - [Los generalistas de IA: los trabajos más demandados en 2025](/es/blog/generalistas-ia-trabajos-demandados-2025/)

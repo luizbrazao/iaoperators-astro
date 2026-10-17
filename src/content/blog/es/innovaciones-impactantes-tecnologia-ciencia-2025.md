@@ -55,8 +55,8 @@ Si algo nos queda claro tras explorar estos proyectos, es que estamos viviendo u
 
 También te puede interesar
 
-        - [Generalistas en IA: los trabajos más demandados en 2025](https://www.iaoperators.com/blog/generalistas-ia-trabajos-demandados-2025)
+        - [Generalistas en IA: los trabajos más demandados en 2025](/es/blog/generalistas-ia-trabajos-demandados-2025/)
 
-        - [Grok 3: la revolución que está transformando la industria de la IA](https://www.iaoperators.com/blog/grok-3-revolucion-industria-ia)
+        - [Grok 3: la revolución que está transformando la industria de la IA](/es/blog/grok-3-revolucion-industria-ia/)
 
-        - [Comparativa: Google Deep Research vs Perplexity](https://www.iaoperators.com/blog/comparativa-google-deep-research-vs-perplexity)
+        - [Comparativa: Google Deep Research vs Perplexity](/es/blog/comparativa-google-deep-research-vs-perplexity/)

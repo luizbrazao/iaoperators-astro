@@ -1,5 +1,6 @@
 ---
 title: "Cómo usar Codex: 15 consejos para resultados reales"
+seoTitle: "Cómo usar Codex de OpenAI: guía con 15 consejos"
 description: "Aprende cómo usar Codex de OpenAI con 15 consejos prácticos para programar, automatizar tareas, trabajar con archivos y ejecutar con seguridad."
 category: tools
 articleSection: "Herramientas de IA"

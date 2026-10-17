@@ -429,4 +429,4 @@ but about **running the right model in the right place**.
 
 If you’d like to evaluate how this could work in your organization:
 
-https://iaoperators.com/en/contact/
+[Talk to us about your use case](/en/contact/)

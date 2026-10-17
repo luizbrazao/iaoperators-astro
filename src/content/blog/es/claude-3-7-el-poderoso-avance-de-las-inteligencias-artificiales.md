@@ -49,8 +49,8 @@ Si trabajas con tecnología o simplemente tienes curiosidad por entender las ten
 
 También te puede interesar
 
-        - [Grok 3: la IA que revoluciona nuestra comprensión del universo](https://www.iaoperators.com/blog/grok-3-ia-revoluciona-entendimiento-universo)
+        - [Grok 3: la IA que revoluciona nuestra comprensión del universo](/es/blog/grok-3-ia-revoluciona-entendimiento-universo/)
 
-        - [Comparativa: Google Deep Research vs Perplexity](https://www.iaoperators.com/blog/comparativa-google-deep-research-vs-perplexity)
+        - [Comparativa: Google Deep Research vs Perplexity](/es/blog/comparativa-google-deep-research-vs-perplexity/)
 
-        - [Qwen 2.5 Max: el nuevo prodigio de la inteligencia artificial](https://www.iaoperators.com/blog/qwen-2-5-max-nuevo-prodigio-ia)
+        - [Qwen 2.5 Max: el nuevo prodigio de la inteligencia artificial](/es/blog/qwen-2-5-max-nuevo-prodigio-ia/)

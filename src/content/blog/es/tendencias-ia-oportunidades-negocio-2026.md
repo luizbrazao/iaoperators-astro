@@ -5,6 +5,8 @@ description: "Agentes de IA, n8n, automatización, FinOps y arquitectura de solu
 category: others
 date: 2026-06-03
 locale: es
+related:
+  - gems-de-gemini-como-crear-asistentes-con-herramientas-predeterminadas-canvas-deep-research-nanobanana
 translationKey: ai-trends-2026
 image: /images/blog/7-tendencias-ia-2026.png
 imageAlt: "Agentes de IA conectados por flujos de automatización"
@@ -251,7 +253,7 @@ La pregunta es:
 
 Si deseas desarrollar competencias como agentes de IA, n8n, automatización, arquitectura de soluciones e implementación de sistemas inteligentes, conoce el Desafío de 60 Días de IA Operators HUB.
 
-👉 [https://www.skool.com/ia-operators-hub-4762/about](https://www.skool.com/ia-operators-hub-4762/about)
+👉 [Conoce el Desafío de 60 Días en IA Operators HUB](https://www.skool.com/ia-operators-hub-4762/about)
 
 El mejor momento para empezar fue ayer.
 

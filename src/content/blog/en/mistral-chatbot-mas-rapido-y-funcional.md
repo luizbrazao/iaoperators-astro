@@ -59,8 +59,8 @@ In the end, the choice will depend on what you value most in an artificial intel
 
 You may also be interested
 
-        - [Qwen 2.5 Max: el nuevo prodigio de la inteligencia artificial](https://www.iaoperators.com/blog/qwen-2-5-max-nuevo-prodigio-ia)
+        - [Qwen 2.5 Max: el nuevo prodigio de la inteligencia artificial](/en/blog/qwen-2-5-max-nuevo-prodigio-ia/)
 
-        - [Grok 3: el modelo de IA que está revolucionando la industria](https://www.iaoperators.com/blog/grok-3-revolucion-industria-ia)
+        - [Grok 3: el modelo de IA que está revolucionando la industria](/en/blog/grok-3-revolucion-industria-ia/)
 
-        - [GPT-4.5: innovaciones y el futuro de la IA en OpenAI](https://www.iaoperators.com/blog/gpt-4-5-innovaciones-futuro-ia-openai)
+        - [GPT-4.5: innovaciones y el futuro de la IA en OpenAI](/en/blog/gpt-4-5-innovaciones-futuro-ia-openai/)

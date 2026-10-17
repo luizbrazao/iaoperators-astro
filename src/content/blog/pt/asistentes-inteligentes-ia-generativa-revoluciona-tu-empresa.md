@@ -85,8 +85,8 @@ Eles te convenceram? Se você ainda tiver reservas, nada acontece. Dê uma olhad
 
 Você também pode estar interessado
 
-        - [As melhores ferramentas de IA para gerenciar tarefas e projetos](https://www.iaoperators.com/blog/mejores-herramientas-ia-tareas-proyectos)
+        - [As melhores ferramentas de IA para gerenciar tarefas e projetos](/pt/blog/mejores-herramientas-ia-tareas-proyectos/)
 
-        - [Como a inteligência artificial transforma o gerenciamento de projetos](https://www.iaoperators.com/blog/como-la-inteligencia-artificial-transforma-la-gestion-de-proyectos)
+        - [Como a inteligência artificial transforma o gerenciamento de projetos](/pt/blog/como-la-inteligencia-artificial-transforma-la-gestion-de-proyectos/)
 
-        - [Generalistas de IA: os empregos mais procurados em 2025](https://www.iaoperators.com/blog/generalistas-ia-trabajos-demandados-2025)
+        - [Generalistas de IA: os empregos mais procurados em 2025](/pt/blog/generalistas-ia-trabajos-demandados-2025/)

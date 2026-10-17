@@ -30,5 +30,11 @@
     "faq2a": "Depende do seu ponto de partida. Sem clareza sobre seu ecossistema, começamos com a Radiografia Digital. Se já tem diagnóstico, vamos direto ao Roadmap ou à Implementação.",
     "faq3q": "Trabalham com NDA?",
     "faq3a": "Sim, por padrão. Assinamos NDA antes da primeira sessão de descoberta.",
+    "faq4q": "Quanto tempo vocês levam para responder?",
+    "faq4a": "Respondemos em no máximo 24 horas. Se for urgente, o canal mais rápido é o WhatsApp.",
+    "faq5q": "Em quais idiomas podemos trabalhar?",
+    "faq5a": "Em português, espanhol e inglês: reuniões, documentação e entregáveis no idioma que sua equipe preferir.",
+    "faq6q": "O que vale incluir na primeira mensagem?",
+    "faq6a": "Quantas pessoas tem a empresa, quais sistemas vocês usam (ERP, CRM, PMS, PDV ou software próprio) e qual é o problema operacional que mais pesa hoje. Assim a primeira conversa já parte do seu caso, e não de uma apresentação genérica.",
     "whatsappText": "Olá, venho do site e gostaria de falar sobre um projeto de automação."
 }

@@ -55,8 +55,8 @@ So, my recommendation? If you have the opportunity to try it, do it. Because the
 
 You may also be interested
 
-        - [Claude 3.7: el poderoso avance de las inteligencias artificiales](https://www.iaoperators.com/blog/claude-3-7-el-poderoso-avance-de-las-inteligencias-artificiales)
+        - [Claude 3.7: el poderoso avance de las inteligencias artificiales](/en/blog/claude-3-7-el-poderoso-avance-de-las-inteligencias-artificiales/)
 
-        - [Grok 3: la revolución que está sacudiendo la industria de la IA](https://www.iaoperators.com/blog/grok-3-revolucion-industria-ia)
+        - [Grok 3: la revolución que está sacudiendo la industria de la IA](/en/blog/grok-3-revolucion-industria-ia/)
 
-        - [Gemini 2.0 Pro: el revolucionario modelo de inteligencia artificial de Google](https://www.iaoperators.com/blog/gemini-2-0-pro-revolucionario-modelo-google)
+        - [Gemini 2.0 Pro: el revolucionario modelo de inteligencia artificial de Google](/en/blog/gemini-2-0-pro-revolucionario-modelo-google/)

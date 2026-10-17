@@ -53,8 +53,8 @@ It's available for free, so the barrier to entry is non-existent. Try it, integr
 
 You may also be interested
 
-        - [Notebook LM y Gemini: Revolucionando la creatividad y la productividad con IA](https://www.iaoperators.com/blog/notebook-lm-gemini-revolucion-creatividad-productividad-ia)
+        - [Notebook LM y Gemini: Revolucionando la creatividad y la productividad con IA](/en/blog/notebook-lm-gemini-revolucion-creatividad-productividad-ia/)
 
-        - [Manus: La Revolución de la Inteligencia Artificial en Acción](https://www.iaoperators.com/blog/manus-revolucion-inteligencia-artificial)
+        - [Manus: La Revolución de la Inteligencia Artificial en Acción](/en/blog/manus-revolucion-inteligencia-artificial/)
 
-        - [IA para Restaurantes: Transforma tu Negocio con Herramientas Inteligentes y Fotografía Gastronómica Profesional](https://www.iaoperators.com/blog/ia-para-restaurantes-herramientas-fotografia-gastronomica)
+        - [IA para Restaurantes: Transforma tu Negocio con Herramientas Inteligentes y Fotografía Gastronómica Profesional](/en/blog/ia-para-restaurantes-herramientas-fotografia-gastronomica/)

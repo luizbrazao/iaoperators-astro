@@ -59,8 +59,8 @@ The debate is open: reflect, comment and join the conversation. Because, whether
 
 You may also be interested
 
-        - [IA generativa: qué es, cómo funciona y por qué está revolucionando todo](https://www.iaoperators.com/blog/ia-generativa-que-es-como-funciona-y-revoluciona)
+        - [IA generativa: qué es, cómo funciona y por qué está revolucionando todo](/en/blog/ia-generativa-que-es-como-funciona-y-revoluciona/)
 
-        - [Claude 3.7: el poderoso avance de las inteligencias artificiales](https://www.iaoperators.com/blog/claude-3-7-el-poderoso-avance-de-las-inteligencias-artificiales)
+        - [Claude 3.7: el poderoso avance de las inteligencias artificiales](/en/blog/claude-3-7-el-poderoso-avance-de-las-inteligencias-artificiales/)
 
-        - [Cómo la inteligencia artificial transforma la gestión de proyectos](https://www.iaoperators.com/blog/como-la-inteligencia-artificial-transforma-la-gestion-de-proyectos)
+        - [Cómo la inteligencia artificial transforma la gestión de proyectos](/en/blog/como-la-inteligencia-artificial-transforma-la-gestion-de-proyectos/)

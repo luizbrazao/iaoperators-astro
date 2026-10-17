@@ -52,8 +52,8 @@ La inteligencia artificial sigue rompiendo barreras y haciéndonos la vida más 
 
 También te puede interesar
 
-        - [Manus: La Revolución de la Inteligencia Artificial en Acción](https://www.iaoperators.com/blog/manus-revolucion-inteligencia-artificial)
+        - [Manus: La Revolución de la Inteligencia Artificial en Acción](/es/blog/manus-revolucion-inteligencia-artificial/)
 
-        - [IA para Restaurantes: Transforma tu Negocio con Herramientas Inteligentes y Fotografía Gastronómica Profesional](https://www.iaoperators.com/blog/ia-para-restaurantes-herramientas-fotografia-gastronomica)
+        - [IA para Restaurantes: Transforma tu Negocio con Herramientas Inteligentes y Fotografía Gastronómica Profesional](/es/blog/ia-para-restaurantes-herramientas-fotografia-gastronomica/)
 
-        - [IA Generativa: Qué es, cómo funciona y cómo está revolucionando el mundo](https://www.iaoperators.com/blog/ia-generativa-que-es-como-funciona-y-revoluciona)
+        - [IA Generativa: Qué es, cómo funciona y cómo está revolucionando el mundo](/es/blog/ia-generativa-que-es-como-funciona-y-revoluciona/)

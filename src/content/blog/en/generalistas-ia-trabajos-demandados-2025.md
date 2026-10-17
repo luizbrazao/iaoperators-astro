@@ -69,8 +69,8 @@ Ready to join this revolution? You just need curiosity, desire to learn and the 
 
 You may also be interested
 
-        - [Las innovaciones más impactantes de la tecnología y la ciencia en 2025](https://www.iaoperators.com/blog/innovaciones-impactantes-tecnologia-ciencia-2025)
+        - [Las innovaciones más impactantes de la tecnología y la ciencia en 2025](/en/blog/innovaciones-impactantes-tecnologia-ciencia-2025/)
 
-        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](https://www.iaoperators.com/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa)
+        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](/en/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa/)
 
-        - [IA generativa: qué es, cómo funciona y por qué está revolucionando todo](https://www.iaoperators.com/blog/ia-generativa-que-es-como-funciona-y-revoluciona)
+        - [IA generativa: qué es, cómo funciona y por qué está revolucionando todo](/en/blog/ia-generativa-que-es-como-funciona-y-revoluciona/)

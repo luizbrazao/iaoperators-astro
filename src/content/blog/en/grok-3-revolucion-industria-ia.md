@@ -49,8 +49,8 @@ Oh, and don't forget: this is a good time to revisit that *“Hitchhiker's Guide
 
 You may also be interested
 
-        - [Grok 3: la IA que revoluciona nuestra comprensión del universo](https://www.iaoperators.com/blog/grok-3-ia-revoluciona-entendimiento-universo)
+        - [Grok 3: la IA que revoluciona nuestra comprensión del universo](/en/blog/grok-3-ia-revoluciona-entendimiento-universo/)
 
-        - [Gemini 2.0 Pro: el revolucionario modelo de inteligencia artificial de Google](https://www.iaoperators.com/blog/gemini-2-0-pro-revolucionario-modelo-google)
+        - [Gemini 2.0 Pro: el revolucionario modelo de inteligencia artificial de Google](/en/blog/gemini-2-0-pro-revolucionario-modelo-google/)
 
-        - [Qwen 2.5 Max: el nuevo prodigio de la inteligencia artificial](https://www.iaoperators.com/blog/qwen-2-5-max-nuevo-prodigio-ia)
+        - [Qwen 2.5 Max: el nuevo prodigio de la inteligencia artificial](/en/blog/qwen-2-5-max-nuevo-prodigio-ia/)

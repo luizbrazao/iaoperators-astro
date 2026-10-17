@@ -85,8 +85,8 @@ Did they convince you? If you still have reservations, nothing happens. Take a l
 
 You may also be interested
 
-        - [The best AI tools to manage tasks and projects](https://www.iaoperators.com/blog/mejores-herramientas-ia-tareas-proyectos)
+        - [The best AI tools to manage tasks and projects](/en/blog/mejores-herramientas-ia-tareas-proyectos/)
 
-        - [How artificial intelligence transforms project management](https://www.iaoperators.com/blog/como-la-inteligencia-artificial-transforma-la-gestion-de-proyectos)
+        - [How artificial intelligence transforms project management](/en/blog/como-la-inteligencia-artificial-transforma-la-gestion-de-proyectos/)
 
-        - [AI generalists: the most in-demand jobs in 2025](https://www.iaoperators.com/blog/generalistas-ia-trabajos-demandados-2025)
+        - [AI generalists: the most in-demand jobs in 2025](/en/blog/generalistas-ia-trabajos-demandados-2025/)

@@ -139,6 +139,18 @@ const breadcrumbJsonLd = {
           </div>
         </section>
       ))}
+
+      {meta.start && (
+        <section class="pg-section" aria-labelledby="sv-empezar">
+          <div class="ed-section-intro">
+            <p class="ed-eyebrow">{breadcrumbLabel}</p>
+            <div>
+              <h2 id="sv-empezar">{meta.start.title}</h2>
+              {meta.start.paragraphs.map((para) => <p class="pg-lead-muted">{para}</p>)}
+            </div>
+          </div>
+        </section>
+      )}
     </div>
 
     <section class="ed-closing" aria-label={L.contactAria}>

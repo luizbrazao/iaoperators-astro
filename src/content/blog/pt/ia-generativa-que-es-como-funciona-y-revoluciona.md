@@ -82,8 +82,8 @@ E você, já utiliza IA generativa no seu dia a dia? Se não, talvez seja hora d
 
 Você também pode estar interessado
 
-        - [GPT-4.5: innovaciones y el futuro de la inteligencia artificial según OpenAI](https://www.iaoperators.com/blog/gpt-4-5-innovaciones-futuro-ia-openai)
+        - [GPT-4.5: innovaciones y el futuro de la inteligencia artificial según OpenAI](/pt/blog/gpt-4-5-innovaciones-futuro-ia-openai/)
 
-        - [Claude 3.7: el poderoso avance de las inteligencias artificiales](https://www.iaoperators.com/blog/claude-3-7-el-poderoso-avance-de-las-inteligencias-artificiales)
+        - [Claude 3.7: el poderoso avance de las inteligencias artificiales](/pt/blog/claude-3-7-el-poderoso-avance-de-las-inteligencias-artificiales/)
 
-        - [Gemini 2.0 Pro: el revolucionario modelo de inteligencia artificial de Google](https://www.iaoperators.com/blog/gemini-2-0-pro-revolucionario-modelo-google)
+        - [Gemini 2.0 Pro: el revolucionario modelo de inteligencia artificial de Google](/pt/blog/gemini-2-0-pro-revolucionario-modelo-google/)

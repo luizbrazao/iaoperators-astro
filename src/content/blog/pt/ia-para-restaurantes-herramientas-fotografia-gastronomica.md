@@ -137,8 +137,8 @@ Se você é proprietário ou gerente de um restaurante e quer estar na vanguarda
 
 Você também pode estar interessado
 
-        - [Cómo la inteligencia artificial está revolucionando el marketing gastronómico](https://www.iaoperators.com/blog/como-inteligencia-artificial-revoluciona-marketing-gastronomico)
+        - [Cómo la inteligencia artificial está revolucionando el marketing gastronómico](/pt/blog/como-inteligencia-artificial-revoluciona-marketing-gastronomico/)
 
-        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](https://www.iaoperators.com/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa)
+        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](/pt/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa/)
 
-        - [IA generativa: qué es, cómo funciona y por qué está revolucionando todo](https://www.iaoperators.com/blog/ia-generativa-que-es-como-funciona-y-revoluciona)
+        - [IA generativa: qué es, cómo funciona y por qué está revolucionando todo](/pt/blog/ia-generativa-que-es-como-funciona-y-revoluciona/)

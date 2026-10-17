@@ -6,6 +6,9 @@ category: tools
 date: 2025-12-02
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/goku-generador-videos-open-source.jpeg
 locale: es
+related:
+  - modelos-ia-abiertos-carta-nvidia
+  - tendencias-ia-oportunidades-negocio-2026
 author: Luiz Brazão
 draft: false
 ---

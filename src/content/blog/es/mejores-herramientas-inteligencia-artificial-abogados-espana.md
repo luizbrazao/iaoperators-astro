@@ -80,8 +80,8 @@ Vamos, que si tus clientes confían en ti, no será porque tengas un programa qu
 
 También te puede interesar
 
-        - [El impacto de la inteligencia artificial en la industria legal](https://www.iaoperators.com/blog/impacto-inteligencia-artificial-industria-legal)
+        - [El impacto de la inteligencia artificial en la industria legal](/es/blog/impacto-inteligencia-artificial-industria-legal/)
 
-        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](https://www.iaoperators.com/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa)
+        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](/es/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa/)
 
-        - [Los generalistas de IA: los trabajos más demandados en 2025](https://www.iaoperators.com/blog/generalistas-ia-trabajos-demandados-2025)
+        - [Los generalistas de IA: los trabajos más demandados en 2025](/es/blog/generalistas-ia-trabajos-demandados-2025/)

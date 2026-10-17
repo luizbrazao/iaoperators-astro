@@ -65,8 +65,8 @@ What are you saying? Do you give either of these two a chance? I, you, tried the
 
 You may also be interested
 
-        - [Gemini 2.0 Pro: el revolucionario modelo de inteligencia artificial de Google](https://www.iaoperators.com/blog/gemini-2-0-pro-revolucionario-modelo-google)
+        - [Gemini 2.0 Pro: el revolucionario modelo de inteligencia artificial de Google](/en/blog/gemini-2-0-pro-revolucionario-modelo-google/)
 
-        - [Comparativa de IAs para arquitectos: Cling, Luma y Runway](https://www.iaoperators.com/blog/comparativa-ias-arquitectos-cling-luma-runway)
+        - [Comparativa de IAs para arquitectos: Cling, Luma y Runway](/en/blog/comparativa-ias-arquitectos-cling-luma-runway/)
 
-        - [Qwen 2.5 Max: el nuevo prodigio de la inteligencia artificial](https://www.iaoperators.com/blog/qwen-2-5-max-nuevo-prodigio-ia)
+        - [Qwen 2.5 Max: el nuevo prodigio de la inteligencia artificial](/en/blog/qwen-2-5-max-nuevo-prodigio-ia/)

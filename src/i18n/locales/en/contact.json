@@ -30,5 +30,11 @@
     "faq2a": "Depends on your starting point. Without clarity on your tech ecosystem, we start with a Digital Radiography. If you already have a diagnosis, we go straight to Roadmap or Implementation.",
     "faq3q": "Do you work with NDA?",
     "faq3a": "Yes, by default. We sign an NDA before the first discovery session.",
+    "faq4q": "How fast do you reply?",
+    "faq4a": "We reply within 24 hours at most. If it's urgent, WhatsApp is the fastest channel.",
+    "faq5q": "Which languages can we work in?",
+    "faq5a": "Spanish, Portuguese and English: meetings, documentation and deliverables in whichever language your team prefers.",
+    "faq6q": "What should I include in my first message?",
+    "faq6a": "How many people work at the company, which systems you use (ERP, CRM, PMS, POS or in-house software) and which operational problem costs you the most today. That way the first conversation starts from your case, not from a generic pitch.",
     "whatsappText": "Hi, I’m coming from the website and would like to discuss an automation project."
 }

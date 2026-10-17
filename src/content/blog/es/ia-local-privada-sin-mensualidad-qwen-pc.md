@@ -31,6 +31,7 @@ faq:
     a: "No. En producción, el mejor resultado suele ser híbrido: local para datos sensibles y tareas repetitivas; cloud para tareas complejas o picos de demanda."
 related:
   - pagas-la-ia-dos-veces-la-segunda-factura-es-la-mas-cara
+  - qwen-2-5-max-nuevo-prodigio-ia
 ---
 
 ## IA local, privada y sin mensualidad: cómo ejecutar modelos Qwen en tu PC
@@ -398,4 +399,4 @@ IA Operators diseña e implementa arquitecturas híbridas (local + cloud) para a
 
 Si quieres evaluar cómo aplicarlo en tu empresa:
 
-https://iaoperators.com/es/contact/
+[Habla con nosotros sobre tu caso](/es/contact/)

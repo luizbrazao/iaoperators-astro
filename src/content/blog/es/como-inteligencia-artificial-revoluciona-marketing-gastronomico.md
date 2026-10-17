@@ -82,8 +82,8 @@ Eso sí, no olvides que nada reemplaza la intuición y la validación humana. Us
 
 ¡Ahora te toca! ¿Qué herramienta o estrategia de las que mencioné te llama más la atención? Déjamelo en los comentarios o ven y discutámoslo en redes. Y si tienes dudas o quieres empezar con algo más personalizado, no me lo pienso dos veces para echarte una mano.     También te puede interesar
 
-        - [IA para restaurantes: herramientas de fotografía gastronómica profesional](https://www.iaoperators.com/blog/ia-para-restaurantes-herramientas-fotografia-gastronomica)
+        - [IA para restaurantes: herramientas de fotografía gastronómica profesional](/es/blog/ia-para-restaurantes-herramientas-fotografia-gastronomica/)
 
-        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](https://www.iaoperators.com/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa)
+        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](/es/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa/)
 
-        - [IA generativa: qué es, cómo funciona y por qué está revolucionando todo](https://www.iaoperators.com/blog/ia-generativa-que-es-como-funciona-y-revoluciona)
+        - [IA generativa: qué es, cómo funciona y por qué está revolucionando todo](/es/blog/ia-generativa-que-es-como-funciona-y-revoluciona/)

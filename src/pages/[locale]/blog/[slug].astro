@@ -227,10 +227,14 @@ const blogPostingJsonLd = {
   },
   ...(entry.data.about?.length
     ? {
-        about: entry.data.about.map((item) => ({
-          "@type": item.type,
-          name: item.name,
-        })),
+        // SoftwareApplication se publica como Thing + additionalType: como nodo
+        // de primer nivel Google lo trata como rich result "Software App" y
+        // exige offers + aggregateRating/review, que un artículo no tiene.
+        about: entry.data.about.map((item) =>
+          item.type === "SoftwareApplication"
+            ? { "@type": "Thing", additionalType: "https://schema.org/SoftwareApplication", name: item.name }
+            : { "@type": item.type, name: item.name },
+        ),
       }
     : {}),
   author: authorSchema,

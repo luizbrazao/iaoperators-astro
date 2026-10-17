@@ -79,8 +79,8 @@ Come on, if your clients trust you, it will not be because you have a program th
 
 You may also be interested
 
-        - [El impacto de la inteligencia artificial en la industria legal](https://www.iaoperators.com/blog/impacto-inteligencia-artificial-industria-legal)
+        - [El impacto de la inteligencia artificial en la industria legal](/en/blog/impacto-inteligencia-artificial-industria-legal/)
 
-        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](https://www.iaoperators.com/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa)
+        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](/en/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa/)
 
-        - [Los generalistas de IA: los trabajos más demandados en 2025](https://www.iaoperators.com/blog/generalistas-ia-trabajos-demandados-2025)
+        - [Los generalistas de IA: los trabajos más demandados en 2025](/en/blog/generalistas-ia-trabajos-demandados-2025/)

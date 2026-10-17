@@ -83,8 +83,8 @@ Se você é arquiteto e está pensando em dar o salto para essa tecnologia, meu 
 
 Você também pode estar interessado
 
-        - [Cómo Architechtures revoluciona el diseño arquitectónico con IA](https://www.iaoperators.com/blog/como-architechtures-revoluciona-diseno-arquitectonico-ia)
+        - [Cómo Architechtures revoluciona el diseño arquitectónico con IA](/pt/blog/como-architechtures-revoluciona-diseno-arquitectonico-ia/)
 
-        - [Gemini 2.0 Pro: el revolucionario modelo de inteligencia artificial de Google](https://www.iaoperators.com/blog/gemini-2-0-pro-revolucionario-modelo-google)
+        - [Gemini 2.0 Pro: el revolucionario modelo de inteligencia artificial de Google](/pt/blog/gemini-2-0-pro-revolucionario-modelo-google/)
 
-        - [Innovaciones impactantes en tecnología y ciencia que marcarán 2025](https://www.iaoperators.com/blog/innovaciones-impactantes-tecnologia-ciencia-2025)
+        - [Innovaciones impactantes en tecnología y ciencia que marcarán 2025](/pt/blog/innovaciones-impactantes-tecnologia-ciencia-2025/)

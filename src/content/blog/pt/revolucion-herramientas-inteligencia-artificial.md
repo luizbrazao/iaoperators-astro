@@ -52,6 +52,6 @@ O que realmente chama a atenção em todas essas ferramentas é a democratizaç�
 Você tem coragem de experimentar essas ferramentas? Acredite em mim, depois de dar o salto, não há como voltar atrás. Mais do que inteligência artificial, o que vemos é pura magia ao alcance de qualquer pessoa.
 
 Você também pode estar interessado
-[Gemini 3 Flash: El modelo de inteligencia artificial rápido, eficiente y económico de Google](https://www.iaoperators.com/blog/gemini-3-flash-inteligencia-artificial-google)
-- [Notebook LM y Gemini: Revolucionando la creatividad y la productividad con IA](https://www.iaoperators.com/blog/notebook-lm-gemini-revolucion-creatividad-productividad-ia)
-- [Manus: La Revolución de la Inteligencia Artificial en Acción](https://www.iaoperators.com/blog/manus-revolucion-inteligencia-artificial)
+[Gemini 3 Flash: El modelo de inteligencia artificial rápido, eficiente y económico de Google](/pt/blog/gemini-3-flash-inteligencia-artificial-google/)
+- [Notebook LM y Gemini: Revolucionando la creatividad y la productividad con IA](/pt/blog/notebook-lm-gemini-revolucion-creatividad-productividad-ia/)
+- [Manus: La Revolución de la Inteligencia Artificial en Acción](/pt/blog/manus-revolucion-inteligencia-artificial/)

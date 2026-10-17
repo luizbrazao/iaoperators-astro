@@ -40,6 +40,9 @@ tags:
   - arquitectura de IA
   - vendor lock-in
 locale: es
+related:
+  - qwen-2-5-max-nuevo-prodigio-ia
+  - goku-generador-videos-open-source
 translationKey: modelos-ia-abiertos-carta-nvidia
 author: "Luiz Fernando Brazão"
 authorTitle: "Fundador de IA Operators"

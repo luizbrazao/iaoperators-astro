@@ -63,8 +63,8 @@ Así que ahí lo tienes: una tecnología avanzada que promete no solo respondert
 
 También te puede interesar
 
-        - [Qwen 2.5 Max: el nuevo prodigio de la inteligencia artificial](https://www.iaoperators.com/blog/qwen-2-5-max-nuevo-prodigio-ia)
+        - [Qwen 2.5 Max: el nuevo prodigio de la inteligencia artificial](/es/blog/qwen-2-5-max-nuevo-prodigio-ia/)
 
-        - [GPT-4.5: innovaciones y el futuro de la IA en OpenAI](https://www.iaoperators.com/blog/gpt-4-5-innovaciones-futuro-ia-openai)
+        - [GPT-4.5: innovaciones y el futuro de la IA en OpenAI](/es/blog/gpt-4-5-innovaciones-futuro-ia-openai/)
 
-        - [Claude 3.7: el poderoso avance de las inteligencias artificiales](https://www.iaoperators.com/blog/claude-3-7-el-poderoso-avance-de-las-inteligencias-artificiales)
+        - [Claude 3.7: el poderoso avance de las inteligencias artificiales](/es/blog/claude-3-7-el-poderoso-avance-de-las-inteligencias-artificiales/)

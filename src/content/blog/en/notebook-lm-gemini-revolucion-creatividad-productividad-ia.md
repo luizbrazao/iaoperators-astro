@@ -51,8 +51,8 @@ Ready to adopt these new tools into your life? Believe me, once you try them, th
 
 You may also be interested
 
-        - [Manus: La Revolución de la Inteligencia Artificial en Acción](https://www.iaoperators.com/blog/manus-revolucion-inteligencia-artificial)
+        - [Manus: La Revolución de la Inteligencia Artificial en Acción](/en/blog/manus-revolucion-inteligencia-artificial/)
 
-        - [IA para Restaurantes: Transforma tu Negocio con Herramientas Inteligentes y Fotografía Gastronómica Profesional](https://www.iaoperators.com/blog/ia-para-restaurantes-herramientas-fotografia-gastronomica)
+        - [IA para Restaurantes: Transforma tu Negocio con Herramientas Inteligentes y Fotografía Gastronómica Profesional](/en/blog/ia-para-restaurantes-herramientas-fotografia-gastronomica/)
 
-        - [IA Generativa: Qué es, cómo funciona y cómo está revolucionando el mundo](https://www.iaoperators.com/blog/ia-generativa-que-es-como-funciona-y-revoluciona)
+        - [IA Generativa: Qué es, cómo funciona y cómo está revolucionando el mundo](/en/blog/ia-generativa-que-es-como-funciona-y-revoluciona/)

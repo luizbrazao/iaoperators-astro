@@ -1,5 +1,6 @@
 ---
 title: "Qué es un roadmap tecnológico: guía para empresas medianas"
+seoTitle: "Roadmap tecnológico: qué es y cómo priorizarlo con ROI"
 description: "Qué es un roadmap tecnológico, qué contiene y cómo priorizarlo con ROI. Guía práctica para empresas medianas que quieren alinear tecnología con negocio."
 category: others
 date: 2026-04-30

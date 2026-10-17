@@ -372,30 +372,57 @@ export function hubCtaLabel(locale: string) {
   return HUB_CTA[asLoc(locale)];
 }
 
-export const HUB_META: Record<Loc, { title: string; description: string; h1: string; intro: string }> = {
+export const HUB_META: Record<
+  Loc,
+  { title: string; description: string; h1: string; intro: string; start?: { title: string; paragraphs: string[] } }
+> = {
   es: {
-    title: "Servicios de arquitectura tecnológica, IA y crecimiento digital",
+    title: "Servicios de arquitectura tecnológica e IA",
     description:
       "Arquitectura tecnológica, automatización con IA, chatbots, diseño web, SEO y marketing. Diagnosticamos, priorizamos y construimos — sin hand-offs entre consultora y proveedor.",
     h1: "Nuestros servicios",
     intro:
       "El trabajo principal es de arquitectura: entender el parque tecnológico, decidir qué cambiar y construirlo. Alrededor de eso prestamos capacidades de IA y servicios digitales, que usamos dentro de los proyectos y también por separado.",
+    start: {
+      title: "Por dónde empezar",
+      paragraphs: [
+        "Si no tienes claro qué sistemas usa tu empresa, cómo se conectan entre sí ni dónde se pierde el tiempo, empieza por la Radiografía Digital. Es el inventario y el diagnóstico sobre el que se decide todo lo demás.",
+        "Si ya sabes qué quieres cambiar, el Roadmap tecnológico ordena las prioridades por impacto y coste, y la Implementación las construye. Cuando el problema es concreto, como atender WhatsApp fuera de horario o conectar el CRM con el ERP, se puede entrar directamente por el servicio correspondiente.",
+        "En todos los casos trabajamos sobre tus sistemas reales. La IA y las automatizaciones se apoyan en los datos y procesos que ya existen, no en una herramienta paralela que alguien tendrá que mantener aparte.",
+      ],
+    },
   },
   pt: {
-    title: "Serviços de arquitetura tecnológica, IA e crescimento digital",
+    title: "Serviços de arquitetura tecnológica e IA",
     description:
       "Arquitetura tecnológica, automação com IA, chatbots, criação de sites, SEO e marketing. Diagnosticamos, priorizamos e construímos — sem hand-offs entre consultoria e fornecedor.",
     h1: "Nossos serviços",
     intro:
       "O trabalho principal é de arquitetura: entender o parque tecnológico, decidir o que mudar e construir. Em volta disso prestamos capacidades de IA e serviços digitais, que usamos dentro dos projetos e também separadamente.",
+    start: {
+      title: "Por onde começar",
+      paragraphs: [
+        "Se você não tem claro quais sistemas sua empresa usa, como eles se conectam nem onde o tempo se perde, comece pela Radiografia Digital. É o inventário e o diagnóstico sobre o qual se decide todo o resto.",
+        "Se já sabe o que quer mudar, o Roadmap tecnológico ordena as prioridades por impacto e custo, e a Implementação as constrói. Quando o problema é pontual, como atender o WhatsApp fora do horário ou conectar o CRM ao ERP, dá para entrar direto pelo serviço correspondente.",
+        "Em todos os casos trabalhamos sobre os seus sistemas reais. A IA e as automações se apoiam nos dados e processos que já existem, não em uma ferramenta paralela que alguém vai ter que manter à parte.",
+      ],
+    },
   },
   en: {
-    title: "Technology architecture, AI and digital growth services",
+    title: "Technology architecture and AI services",
     description:
       "Technology architecture, AI automation, chatbots, web design, SEO and marketing. We diagnose, prioritize and build — no hand-offs between consultancy and vendor.",
     h1: "Our services",
     intro:
       "The core work is architectural: understand the technology stack, decide what to change, and build it. Around that we provide AI capabilities and digital services, used inside projects and also on their own.",
+    start: {
+      title: "Where to start",
+      paragraphs: [
+        "If it isn't clear which systems your company runs, how they connect, or where time is being lost, start with the Digital X-Ray. It is the inventory and diagnosis that every other decision rests on.",
+        "If you already know what you want to change, the Technology roadmap ranks priorities by impact and cost, and Implementation builds them. When the problem is specific, such as answering WhatsApp after hours or connecting your CRM to your ERP, you can go straight to the matching service.",
+        "Either way, we work on your real systems. AI and automations sit on the data and processes you already have, not on a parallel tool someone will have to maintain separately.",
+      ],
+    },
   },
 };
 

@@ -81,8 +81,8 @@ Of course, don't forget that nothing replaces human intuition and validation. Us
 
 Now it's your turn! Which tool or strategy that I mentioned stands out to you the most? Leave it to me in the comments or come and let's discuss it online. And if you have questions or want to start with something more personalized, I don't think twice to give you a hand.     You may also be interested
 
-        - [IA para restaurantes: herramientas de fotografía gastronómica profesional](https://www.iaoperators.com/blog/ia-para-restaurantes-herramientas-fotografia-gastronomica)
+        - [IA para restaurantes: herramientas de fotografía gastronómica profesional](/en/blog/ia-para-restaurantes-herramientas-fotografia-gastronomica/)
 
-        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](https://www.iaoperators.com/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa)
+        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](/en/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa/)
 
-        - [IA generativa: qué es, cómo funciona y por qué está revolucionando todo](https://www.iaoperators.com/blog/ia-generativa-que-es-como-funciona-y-revoluciona)
+        - [IA generativa: qué es, cómo funciona y por qué está revolucionando todo](/en/blog/ia-generativa-que-es-como-funciona-y-revoluciona/)

@@ -69,8 +69,8 @@ E aqui está a jornada. Lembre-se, as ferramentas estão aí, mas tudo começa c
 
 Você também pode estar interessado
 
-        - [Cómo la inteligencia artificial transforma la gestión de proyectos](https://www.iaoperators.com/blog/como-la-inteligencia-artificial-transforma-la-gestion-de-proyectos)
+        - [Cómo la inteligencia artificial transforma la gestión de proyectos](/pt/blog/como-la-inteligencia-artificial-transforma-la-gestion-de-proyectos/)
 
-        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](https://www.iaoperators.com/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa)
+        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](/pt/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa/)
 
-        - [Los generalistas de IA: los trabajos más demandados en 2025](https://www.iaoperators.com/blog/generalistas-ia-trabajos-demandados-2025)
+        - [Los generalistas de IA: los trabajos más demandados en 2025](/pt/blog/generalistas-ia-trabajos-demandados-2025/)

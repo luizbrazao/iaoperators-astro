@@ -137,8 +137,8 @@ If you are the owner or manager of a restaurant and want to be at the forefront,
 
 You may also be interested
 
-        - [Cómo la inteligencia artificial está revolucionando el marketing gastronómico](https://www.iaoperators.com/blog/como-inteligencia-artificial-revoluciona-marketing-gastronomico)
+        - [Cómo la inteligencia artificial está revolucionando el marketing gastronómico](/en/blog/como-inteligencia-artificial-revoluciona-marketing-gastronomico/)
 
-        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](https://www.iaoperators.com/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa)
+        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](/en/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa/)
 
-        - [IA generativa: qué es, cómo funciona y por qué está revolucionando todo](https://www.iaoperators.com/blog/ia-generativa-que-es-como-funciona-y-revoluciona)
+        - [IA generativa: qué es, cómo funciona y por qué está revolucionando todo](/en/blog/ia-generativa-que-es-como-funciona-y-revoluciona/)

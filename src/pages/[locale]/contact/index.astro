@@ -32,7 +32,7 @@ const side = {
   office: contact?.office ?? "Office",
   faq: contact?.faq ?? "FAQ",
   whatsappHref: `https://wa.me/34662423523?text=${encodeURIComponent(contact?.whatsappText ?? "")}`,
-  faqs: [1, 2, 3]
+  faqs: [1, 2, 3, 4, 5, 6]
     .map((n) => ({ q: contact?.[`faq${n}q`], a: contact?.[`faq${n}a`] }))
     .filter((item) => item.q && item.a),
 };

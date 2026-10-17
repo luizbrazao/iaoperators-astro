@@ -85,8 +85,8 @@ En resumen, la IA está aquí para quedarse. Aprovechar sus beneficios está al 
 
 También te puede interesar
 
-        - [Las mejores herramientas de IA para tareas y gestión de proyectos](https://www.iaoperators.com/blog/mejores-herramientas-ia-tareas-proyectos)
+        - [Las mejores herramientas de IA para tareas y gestión de proyectos](/es/blog/mejores-herramientas-ia-tareas-proyectos/)
 
-        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](https://www.iaoperators.com/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa)
+        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](/es/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa/)
 
-        - [Generalistas en IA: los trabajos más demandados en 2025](https://www.iaoperators.com/blog/generalistas-ia-trabajos-demandados-2025)
+        - [Generalistas en IA: los trabajos más demandados en 2025](/es/blog/generalistas-ia-trabajos-demandados-2025/)

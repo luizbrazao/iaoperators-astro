@@ -79,8 +79,8 @@ Vamos lá, se seus clientes confiam em você, não será porque você tem um pro
 
 Você também pode estar interessado
 
-        - [El impacto de la inteligencia artificial en la industria legal](https://www.iaoperators.com/blog/impacto-inteligencia-artificial-industria-legal)
+        - [El impacto de la inteligencia artificial en la industria legal](/pt/blog/impacto-inteligencia-artificial-industria-legal/)
 
-        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](https://www.iaoperators.com/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa)
+        - [Asistentes inteligentes: cómo la IA generativa revoluciona tu empresa](/pt/blog/asistentes-inteligentes-ia-generativa-revoluciona-tu-empresa/)
 
-        - [Los generalistas de IA: los trabajos más demandados en 2025](https://www.iaoperators.com/blog/generalistas-ia-trabajos-demandados-2025)
+        - [Los generalistas de IA: los trabajos más demandados en 2025](/pt/blog/generalistas-ia-trabajos-demandados-2025/)

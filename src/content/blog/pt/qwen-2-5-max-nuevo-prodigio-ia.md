@@ -5,6 +5,9 @@ category: tools
 date: 2025-10-02
 image: https://ia-operators.s3.eu-north-1.amazonaws.com/624a7890-796b-4361-9195-9e07c92a5b00.png
 locale: pt
+related:
+  - como-rodar-modelos-qwen-no-seu-pc
+  - kimi-k3-waico-disputa-global-ia-empresas
 author: Luiz Brazão
 draft: false
 ---

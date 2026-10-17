@@ -251,7 +251,7 @@ Do you intend to just watch this change, or do you intend to take part in it?
 
 If you want to develop skills such as AI agents, n8n, automation, solution architecture, and the implementation of intelligent systems, check out the IA Operators HUB 60-Day Challenge.
 
-👉 [https://www.skool.com/ia-operators-hub-4762/about](https://www.skool.com/ia-operators-hub-4762/about)
+👉 [Join the 60-Day Challenge at IA Operators HUB](https://www.skool.com/ia-operators-hub-4762/about)
 
 The best time to start was yesterday.
 

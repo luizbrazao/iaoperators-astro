@@ -6,6 +6,8 @@ category: others
 date: 2026-07-17
 updatedAt: 2026-07-17
 locale: es
+related:
+  - gems-de-gemini-como-crear-asistentes-con-herramientas-predeterminadas-canvas-deep-research-nanobanana
 translationKey: que-son-los-agentes-de-ia
 image: /images/blog/7-tendencias-ia-2026.png
 imageAlt: "Representación abstracta de agentes de IA conectados sobre fondo oscuro"

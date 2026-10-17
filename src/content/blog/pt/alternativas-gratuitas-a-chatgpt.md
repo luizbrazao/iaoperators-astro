@@ -11,11 +11,11 @@ draft: true
 
 ## Você também pode estar interessado
 
-  - [GPT-4.5: inovações e o futuro da IA em OpenAI](https://www.iaoperators.com/blog/gpt-4-5-innovaciones-futuro-ia-openai)
+  - [GPT-4.5: inovações e o futuro da IA em OpenAI](/pt/blog/gpt-4-5-innovaciones-futuro-ia-openai/)
 
-  - [Claude 3.7: o poderoso avanço das inteligências artificiais](https://www.iaoperators.com/blog/claude-3-7-el-poderoso-avance-de-las-inteligencias-artificiales)
+  - [Claude 3.7: o poderoso avanço das inteligências artificiais](/pt/blog/claude-3-7-el-poderoso-avance-de-las-inteligencias-artificiales/)
 
-  - [Comparação: Google Deep Research vs Perplexity](https://www.iaoperators.com/blog/comparativa-google-deep-research-vs-perplexity)
+  - [Comparação: Google Deep Research vs Perplexity](/pt/blog/comparativa-google-deep-research-vs-perplexity/)
 
 E aqui estamos, no meio do drama tecnológico: ChatGPT aumentando os preços? A pesquisa profunda é o futuro? Pois bem, enquanto nós, mortais, continuamos ajustando nossos orçamentos para que a inteligência artificial não nos leve à falência, aparecem aquelas alternativas gratuitas que vêm para salvar o dia (e a nossa autoestima tecnológica). Vamos explorar essas opções juntos, que, alerta de spoiler, não são nada desprezíveis.
 

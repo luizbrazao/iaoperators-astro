@@ -251,7 +251,7 @@ Você pretende apenas observar essa mudança ou pretende participar dela?
 
 Se deseja desenvolver competências como agentes de IA, n8n, automação, arquitetura de soluções e implementação de sistemas inteligentes, conheça o Desafio de 60 Dias da IA Operators HUB.
 
-👉 [https://www.skool.com/ia-operators-hub-4762/about](https://www.skool.com/ia-operators-hub-4762/about)
+👉 [Conheça o Desafio de 60 Dias no IA Operators HUB](https://www.skool.com/ia-operators-hub-4762/about)
 
 O melhor momento para começar foi ontem.
 
