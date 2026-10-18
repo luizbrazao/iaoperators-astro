@@ -977,6 +977,121 @@ export const projects: Project[] = [
     },
 
     // =========================
+    // Kit de Preparación VERI*FACTU — producto de pago (ES-only)
+    // =========================
+    // Precio sin IVA, igual que KIT_PRODUCT en src/data/verifactu-kit.ts. Sin fechas normativas en el copy: viven en src/data/verifactu.ts.
+    {
+        id: 12,
+        slugs: {
+            es: "kit-preparacion-verifactu",
+            en: "verifactu-readiness-kit",
+            pt: "kit-preparacao-verifactu",
+        },
+        publishedAt: "2026-10-12",
+
+        category: "Producto propio / Cumplimiento",
+        categoryKey: "projects:verifactuKit.category",
+        heroImage: "/og/es/kit-verifactu.png",
+        ogImage: "/og/es/kit-verifactu.png",
+
+        seoTitleKey: "projects:verifactuKit.seoTitle",
+        titleKey: "projects:verifactuKit.title",
+        serviceTypeKey: "projects:verifactuKit.serviceType",
+        h1Key: "projects:verifactuKit.h1",
+        subtitleKey: "projects:verifactuKit.subtitle",
+        taglineKey: "projects:verifactuKit.tagline",
+        signalKey: "projects:verifactuKit.signal",
+        relatedServiceKey: "projects:verifactuKit.relatedService",
+        relatedServiceHref: "/cumplimiento/verifactu/",
+        // Página ES-only: en EN/PT no hay destino equivalente.
+        relatedServiceHrefByLocale: { en: null, pt: null },
+        serviceAreas: ["España"],
+
+        problemKey: "projects:verifactuKit.problem",
+        contextKey: "projects:verifactuKit.context",
+        engineeringIntroKey: "projects:verifactuKit.engineeringIntro",
+        impactKey: "projects:verifactuKit.impact",
+
+        whatItDoesKeys: [
+            "projects:verifactuKit.whatItDoes.0",
+            "projects:verifactuKit.whatItDoes.1",
+            "projects:verifactuKit.whatItDoes.2",
+            "projects:verifactuKit.whatItDoes.3",
+            "projects:verifactuKit.whatItDoes.4",
+        ],
+
+        howItWorksKeys: [
+            "projects:verifactuKit.howItWorks.0",
+            "projects:verifactuKit.howItWorks.1",
+            "projects:verifactuKit.howItWorks.2",
+            "projects:verifactuKit.howItWorks.3",
+            "projects:verifactuKit.howItWorks.4",
+        ],
+
+        pillars: [
+            {
+                titleKey: "projects:verifactuKit.pillars.decision.title",
+                descriptionKey: "projects:verifactuKit.pillars.decision.description",
+                bulletsKeys: [
+                    "projects:verifactuKit.pillars.decision.bullets.0",
+                    "projects:verifactuKit.pillars.decision.bullets.1",
+                    "projects:verifactuKit.pillars.decision.bullets.2",
+                ],
+            },
+            {
+                titleKey: "projects:verifactuKit.pillars.delivery.title",
+                descriptionKey: "projects:verifactuKit.pillars.delivery.description",
+                bulletsKeys: [
+                    "projects:verifactuKit.pillars.delivery.bullets.0",
+                    "projects:verifactuKit.pillars.delivery.bullets.1",
+                    "projects:verifactuKit.pillars.delivery.bullets.2",
+                ],
+            },
+            {
+                titleKey: "projects:verifactuKit.pillars.funnel.title",
+                descriptionKey: "projects:verifactuKit.pillars.funnel.description",
+                bulletsKeys: [
+                    "projects:verifactuKit.pillars.funnel.bullets.0",
+                    "projects:verifactuKit.pillars.funnel.bullets.1",
+                ],
+            },
+        ],
+
+        securityKeys: [
+            "projects:verifactuKit.security.0",
+            "projects:verifactuKit.security.1",
+            "projects:verifactuKit.security.2",
+        ],
+        securityStack: ["HMAC-SHA256", "RLS (solo service role)"],
+
+        metrics: [
+            { labelKey: "projects:verifactuKit.metrics.0.label", value: "9", noteKey: "projects:verifactuKit.metrics.0.note" },
+            { labelKey: "projects:verifactuKit.metrics.1.label", value: "15", noteKey: "projects:verifactuKit.metrics.1.note" },
+            { labelKey: "projects:verifactuKit.metrics.2.label", value: "59 €", noteKey: "projects:verifactuKit.metrics.2.note" },
+        ],
+
+        faq: [
+            { qKey: "projects:verifactuKit.faq.0.q", aKey: "projects:verifactuKit.faq.0.a" },
+            { qKey: "projects:verifactuKit.faq.1.q", aKey: "projects:verifactuKit.faq.1.a" },
+            { qKey: "projects:verifactuKit.faq.2.q", aKey: "projects:verifactuKit.faq.2.a" },
+        ],
+
+        links: [
+            {
+                label: "Ver el Kit VERI*FACTU",
+                labelKey: "projects:verifactuKit.links.0.label",
+                href: "https://iaoperators.com/es/cumplimiento/verifactu/kit/",
+                external: true,
+            },
+            {
+                label: "Volver al portfolio",
+                labelKey: "projects:verifactuKit.links.1.label",
+                href: "/portfolio",
+            },
+        ],
+    },
+
+    // =========================
     // Ruta Nacionalidad — área privada (por Propiziare Immigra)
     // =========================
     // Sin repo local en esta sesión: todo lo afirmado sale de las páginas públicas (app, condiciones y calculadora).

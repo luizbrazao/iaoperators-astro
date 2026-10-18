@@ -134,6 +134,14 @@ const CASE_EDITORIAL_ES: Record<string, CaseEditorialEntry> = {
     results: "product",
     sheet: { host: "iaoperators.com/es/cumplimiento", caseKey: "rgpdOps" },
   },
+  "kit-preparacion-verifactu": {
+    visual: "spec-sheet",
+    tone: "sand",
+    featuredMetrics: [0, 1],
+    editorialDetail: true,
+    results: "product",
+    sheet: { host: "iaoperators.com/es/cumplimiento", caseKey: "verifactuKit" },
+  },
   "ruta-nacionalidad": {
     visual: "spec-sheet",
     tone: "sand",

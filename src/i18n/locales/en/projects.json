@@ -1153,5 +1153,109 @@
             "channel": "Web and WhatsApp",
             "status": "In pilot"
         }
+    },
+    "verifactuKit": {
+        "seoTitle": "VERI*FACTU Readiness Kit: decide before you switch software | IA Operators",
+        "title": "VERI*FACTU Readiness Kit for the self-employed and SMEs",
+        "h1": "A kit to decide what to do about VERI*FACTU before paying for it",
+        "subtitle": "Self-employed and SMEs on standard software · One-off payment",
+        "tagline": "A paid digital product with nine modules to find out whether VERI*FACTU applies to you, what to ask your software provider and which records to keep, before switching software or hiring an integration.",
+        "category": "Own product / Compliance",
+        "signal": "On sale",
+        "relatedService": "See the VERI*FACTU section",
+        "serviceType": "Digital readiness product for VERI*FACTU",
+        "problem": "A self-employed professional or a small business hears about VERI*FACTU, Spain's new invoicing software rules, and does not know whether it applies, from when, or whether their invoicing software already handles it. Most answers come from people selling software, and the timetable has already moved more than once. With that much noise, the usual outcome is to put the decision off or to switch software for no reason.",
+        "context": "The Kit sits in the middle of IA Operators' VERI*FACTU funnel: free content, an indicative test, the paid Kit, a technical audit and, only when needed, an integration project. It is built for people on standard software. Anyone with their own ERP, POS or e-commerce needs something else, and the Kit tells them when.",
+        "engineeringIntro": "The Kit is sold through Stripe and delivered by magic link, with no passwords. The paid content lives only on the server and is served after checking, on every request, that the order is paid, active and within its access period. The buyer's progress, on the other hand, stays in their browser: the Kit does not need to store it on any server to work. Regulatory dates come from a single data module, the same one the rest of the VERI*FACTU section uses.",
+        "impact": "The buyer ends up with an indicative answer on whether it applies, fifteen closed questions for their provider, a matrix to compare alternatives, two emails ready to send and a four-week plan. They also know what the Kit does not do: it does not issue invoices, does not send records to the Spanish Tax Agency (AEAT) and does not certify compliance.",
+        "whatItDoes": [
+            "Indicative decision tree with exclusions and the date that applies to each case",
+            "Provider questions and an alternatives matrix, exportable as CSV",
+            "Invoicing inventory: software, series, corrective invoices and owners",
+            "Email templates for the provider and for the accountant",
+            "Evidence file, 30-day plan and criteria for when an integration is needed"
+        ],
+        "howItWorks": [
+            "Checkout confirms that the Stripe price matches the advertised one; if not, it does not charge",
+            "Signed, idempotent webhook: a paid order grants access exactly once",
+            "Opening the access link does not use it up, because email virus scanners open it too",
+            "Session in an HMAC-signed cookie, with the order revalidated on every request",
+            "Progress in the browser, PDF via print and CSV with formulas neutralised"
+        ],
+        "pillars": {
+            "decision": {
+                "title": "Preparation, not software",
+                "description": "The Kit does not compete with invoicing software or with the AEAT's free application. It helps decide whether to stay, upgrade or switch, using the same criteria for every option.",
+                "bullets": [
+                    "Nine modules in decision order",
+                    "Official AEAT and BOE sources linked",
+                    "Version and regulatory check date published"
+                ]
+            },
+            "delivery": {
+                "title": "Delivery that does not fail silently",
+                "description": "If the access email does not go out, the order stays valid, an internal alert is sent and the buyer can request another link. A full refund revokes access.",
+                "bullets": [
+                    "Order states that only move forward",
+                    "Stripe retries made safe by idempotency",
+                    "The same response whether or not a purchase exists, so buyers are not revealed"
+                ]
+            },
+            "funnel": {
+                "title": "One piece of a funnel",
+                "description": "People arriving from the free test see an offer matched to their profile without their answers travelling in the URL or to Stripe. Only the test identifier is stored.",
+                "bullets": [
+                    "Test context kept in the browser session",
+                    "Analytics with a closed list of events and no personal data"
+                ]
+            }
+        },
+        "security": [
+            "The orders, tokens and events tables are only reachable with the service key; row-level security with no public policies.",
+            "Only the SHA-256 hash of the access link is stored, and the link expires and works once.",
+            "A post-build check confirms that neither secrets nor paid content reach the browser."
+        ],
+        "metrics": [
+            {
+                "label": "Modules",
+                "note": "From the decision tree to the 30-day plan"
+            },
+            {
+                "label": "Questions for your provider",
+                "note": "Yes, no, pending or not applicable"
+            },
+            {
+                "label": "Price",
+                "note": "Plus VAT. One-off payment with 12 months of updates"
+            }
+        ],
+        "faq": [
+            {
+                "q": "Is the Kit useful if I have my own ERP or POS?",
+                "a": "It helps you understand the problem, but it does not solve it. One module explains when an ERP, a POS, an e-commerce store or vertical software needs technical work. In those cases the next step is an audit, not a kit."
+            },
+            {
+                "q": "Why is progress saved in the browser?",
+                "a": "Because the Kit does not need to know the buyer's answers to work. Storing them on a server would only add data to protect. To keep them, each module can be printed to PDF and the tables exported as CSV."
+            },
+            {
+                "q": "What happens if the VERI*FACTU dates change?",
+                "a": "Dates live in a single data module that feeds the Kit and the rest of the section. The Kit publishes its version and the date of the last regulatory check, and updates are included for 12 months."
+            }
+        ],
+        "links": [
+            {
+                "label": "See the VERI*FACTU Kit"
+            },
+            {
+                "label": "Back to portfolio"
+            }
+        ],
+        "sheet": {
+            "type": "Own product",
+            "stack": "Astro · Supabase · Stripe",
+            "channel": "Web",
+            "status": "On sale"
+        }
     }
 }

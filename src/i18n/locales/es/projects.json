@@ -1153,5 +1153,109 @@
             "channel": "Web y WhatsApp",
             "status": "En piloto"
         }
+    },
+    "verifactuKit": {
+        "seoTitle": "Kit de Preparación VERI*FACTU: decidir antes de cambiar de programa | IA Operators",
+        "title": "Kit de Preparación VERI*FACTU para autónomos y pymes",
+        "h1": "Un kit para decidir qué hacer con VERI*FACTU antes de pagar por ello",
+        "subtitle": "Autónomos y pymes con software estándar · Pago único",
+        "tagline": "Producto digital de pago con nueve módulos para saber si te aplica VERI*FACTU, qué preguntar a tu proveedor y qué documentación conservar, antes de cambiar de programa o contratar una integración.",
+        "category": "Producto propio / Cumplimiento",
+        "signal": "En venta",
+        "relatedService": "Ver el silo de VERI*FACTU",
+        "serviceType": "Producto digital de preparación para VERI*FACTU",
+        "problem": "Un autónomo o una pyme oye hablar de VERI*FACTU y no sabe si le aplica, desde cuándo ni si su programa de facturación ya lo resuelve. Las respuestas que encuentra vienen casi siempre de quien vende software, y el calendario ya se ha movido más de una vez. Con ese ruido, lo habitual es aplazar la decisión o cambiar de programa sin necesidad.",
+        "context": "El Kit ocupa el centro del embudo de VERI*FACTU de IA Operators: contenido gratuito, un test orientativo, el Kit de pago, una auditoría técnica y, solo cuando hace falta, un proyecto de integración. Está pensado para quien usa software estándar. Quien tiene un ERP, un TPV o un e-commerce propios necesita otra cosa, y el propio Kit le dice cuándo.",
+        "engineeringIntro": "El Kit se vende con Stripe y se entrega por enlace mágico, sin contraseñas. El contenido de pago vive solo en el servidor y se sirve tras comprobar en cada petición que el pedido está pagado, activo y dentro de plazo. El progreso del comprador, en cambio, se queda en su navegador: no hace falta guardarlo en ningún servidor para que el Kit funcione. Las fechas normativas salen de un único módulo de datos, el mismo que usa el resto del silo de VERI*FACTU.",
+        "impact": "El comprador termina con una respuesta orientativa sobre si le aplica, quince preguntas cerradas para su proveedor, una matriz para comparar alternativas, dos emails listos para enviar y un plan de cuatro semanas. Y sabe lo que el Kit no hace: no emite facturas, no envía registros a la AEAT y no certifica el cumplimiento.",
+        "whatItDoes": [
+            "Árbol de decisión orientativo con exclusiones y la fecha que corresponde a cada caso",
+            "Preguntas al proveedor y matriz de alternativas exportables en CSV",
+            "Inventario de facturación: programas, series, rectificativas y responsables",
+            "Plantillas de email para el proveedor y para la gestoría",
+            "Dossier de evidencias, plan de 30 días y criterios para saber cuándo hace falta una integración"
+        ],
+        "howItWorks": [
+            "El checkout comprueba que el precio de Stripe coincide con el anunciado; si no, no cobra",
+            "Webhook firmado e idempotente: un pedido pagado concede acceso exactamente una vez",
+            "El enlace de acceso no se consume al abrirlo, porque los antivirus del correo también lo abren",
+            "Sesión en cookie firmada con HMAC y revalidación del pedido en cada petición",
+            "Progreso en el navegador, PDF por impresión y CSV con fórmulas neutralizadas"
+        ],
+        "pillars": {
+            "decision": {
+                "title": "Preparación, no software",
+                "description": "El Kit no compite con los programas de facturación ni con la aplicación gratuita de la AEAT. Ayuda a decidir si quedarse, actualizar o cambiar, con criterios iguales para todas las opciones.",
+                "bullets": [
+                    "Nueve módulos en orden de decisión",
+                    "Fuentes oficiales de la AEAT y el BOE enlazadas",
+                    "Versión y fecha de verificación normativa publicadas"
+                ]
+            },
+            "delivery": {
+                "title": "Una entrega que no falla en silencio",
+                "description": "Si el email de acceso no sale, el pedido sigue siendo válido, llega un aviso interno y el comprador puede pedir otro enlace. Un reembolso total revoca el acceso.",
+                "bullets": [
+                    "Estados de pedido que solo avanzan",
+                    "Reintentos de Stripe seguros gracias a la idempotencia",
+                    "Respuesta igual exista o no la compra, para no revelar quién compró"
+                ]
+            },
+            "funnel": {
+                "title": "Una pieza de un embudo",
+                "description": "Quien llega desde el test gratuito ve una oferta según su perfil sin que sus respuestas viajen en la URL ni a Stripe. Solo se guarda el identificador del test.",
+                "bullets": [
+                    "Contexto del test en la sesión del navegador",
+                    "Analítica con lista cerrada de eventos y sin datos personales"
+                ]
+            }
+        },
+        "security": [
+            "Las tablas de pedidos, tokens y eventos solo son accesibles con la clave de servicio; seguridad a nivel de fila sin políticas públicas.",
+            "Del enlace de acceso solo se guarda su huella SHA-256, caduca y es de un solo uso.",
+            "Una comprobación tras el build verifica que ni los secretos ni el contenido de pago llegan al navegador."
+        ],
+        "metrics": [
+            {
+                "label": "Módulos",
+                "note": "Del árbol de decisión al plan de 30 días"
+            },
+            {
+                "label": "Preguntas para el proveedor",
+                "note": "Con sí, no, pendiente o no aplica"
+            },
+            {
+                "label": "Precio",
+                "note": "Más IVA. Pago único con 12 meses de actualizaciones"
+            }
+        ],
+        "faq": [
+            {
+                "q": "¿El Kit sirve si tengo un ERP o un TPV propios?",
+                "a": "Sirve para entender el problema, pero no lo resuelve. Uno de los módulos explica cuándo un ERP, un TPV, un e-commerce o un software vertical piden trabajo técnico. En esos casos el siguiente paso es una auditoría, no un kit."
+            },
+            {
+                "q": "¿Por qué el progreso se guarda en el navegador?",
+                "a": "Porque el Kit no necesita conocer las respuestas del comprador para funcionar. Guardarlas en un servidor solo añadiría datos que proteger. Para conservarlas, cada módulo se imprime en PDF y las tablas se exportan en CSV."
+            },
+            {
+                "q": "¿Qué pasa si cambian las fechas de VERI*FACTU?",
+                "a": "Las fechas viven en un único módulo de datos que alimenta el Kit y el resto del silo. El Kit publica su versión y la fecha de la última verificación normativa, y las actualizaciones están incluidas durante 12 meses."
+            }
+        ],
+        "links": [
+            {
+                "label": "Ver el Kit VERI*FACTU"
+            },
+            {
+                "label": "Volver al portfolio"
+            }
+        ],
+        "sheet": {
+            "type": "Producto propio",
+            "stack": "Astro · Supabase · Stripe",
+            "channel": "Web",
+            "status": "En venta"
+        }
     }
 }
