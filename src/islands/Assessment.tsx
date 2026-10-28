@@ -82,6 +82,20 @@ const OBLIGADO_LABEL: Record<string, string> = {
   no: "Fuera del ámbito, con matices",
 };
 
+const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"] as const;
+
+/** UTMs de la URL de la página. El endpoint no las ve: su URL es la de la API. */
+function readUtm(): Record<string, string> {
+  if (typeof window === "undefined") return {};
+  const params = new URLSearchParams(window.location.search);
+  const out: Record<string, string> = {};
+  for (const key of UTM_KEYS) {
+    const value = params.get(key);
+    if (value) out[key] = value;
+  }
+  return out;
+}
+
 function pushDataLayer(payload: Record<string, unknown>) {
   if (typeof window === "undefined") return;
   const w = window as unknown as { dataLayer?: Record<string, unknown>[] };
@@ -188,6 +202,7 @@ export default function Assessment({
           durationMs: Date.now() - startedAt.current,
           landingPath: window.location.pathname,
           referrer: document.referrer,
+          utm: readUtm(),
           hp_confirm: honeypot.current?.value ?? "",
         }),
       });
@@ -245,6 +260,7 @@ export default function Assessment({
           durationMs: Date.now() - startedAt.current,
           landingPath: window.location.pathname,
           referrer: document.referrer,
+          utm: readUtm(),
           hp_confirm: honeypot.current?.value ?? "",
         }),
       });

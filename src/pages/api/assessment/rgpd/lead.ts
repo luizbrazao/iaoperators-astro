@@ -80,6 +80,7 @@ export const POST: APIRoute = async ({ request, clientAddress, url }) => {
       url,
       landingPath: body?.landingPath,
       referrer: body?.referrer,
+      utm: body?.utm,
     });
 
     // Solo se acepta un UUID: response_id es la clave de la fila y nada más

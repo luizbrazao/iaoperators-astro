@@ -79,6 +79,7 @@ export const POST: APIRoute = async ({ request, clientAddress, url }) => {
       url,
       landingPath: body?.landingPath,
       referrer: body?.referrer,
+      utm: body?.utm,
     });
 
     let fallbackRecord: AssessmentRecord | undefined;
