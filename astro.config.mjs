@@ -31,6 +31,7 @@ const NOINDEX_PATHS = [
   "/roadmap-datadicoco/",
   "/agencia-lanza-ghl/",
   "/desafio-de-60-dias/",
+  "/embrujo-agente-pedidos/",
   // Landings personalizadas de prospección (QR en tarjeta)
   "/tis/",
   // Landings personalizadas de prospección de la Frente A (Ley 10/2025),
