@@ -48,6 +48,14 @@ export interface AssessmentProps {
   footNote?: string;
   /** Texto tras enviar el email. Por defecto, el de los tests de obligación. */
   leadDoneText?: string;
+  /**
+   * Bloqueo parcial (nov/2026, test Ley 10/2025). Si el resultado es "si" o
+   * "probable", se enseñan veredicto, riesgo y estado de cada obligación, y el
+   * porqué de cada brecha y el orden de ejecución se desbloquean con el email.
+   * Sin valor (Verifactu, RGPD) el resultado se ve entero, como antes.
+   * Es un bloqueo de interfaz: el detalle viaja igualmente en la respuesta.
+   */
+  gateDetail?: boolean;
 }
 
 type Answers = Record<string, string | string[]>;
@@ -115,6 +123,7 @@ export default function Assessment({
   startEvent,
   footNote = "Menos de 2 minutos. No pedimos email para ver el resultado.",
   leadDoneText = "Te escribimos con el detalle por obligación y el orden de ejecución recomendado.",
+  gateDetail = false,
 }: AssessmentProps = {}) {
   const QUESTIONS = questions;
   const TOTAL_STEPS = questions.length;
@@ -136,6 +145,7 @@ export default function Assessment({
   const startedAt = useRef(Date.now());
   const honeypot = useRef<HTMLInputElement>(null);
   const startSent = useRef(false);
+  const detailRef = useRef<HTMLHeadingElement>(null);
 
   function markStarted() {
     if (!startEvent || startSent.current) return;
@@ -270,6 +280,13 @@ export default function Assessment({
         return;
       }
       setLeadSent(true);
+      if (gateDetail && result?.obligado !== "no") {
+        // El detalle aparece encima del formulario: llevamos la vista hasta él.
+        window.setTimeout(
+          () => detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }),
+          60,
+        );
+      }
       pushDataLayer(
         result?.maturity
           ? { event: "generate_lead", lead_source: leadSource, maturity_level: result.maturity.level, risk_level: result.riskLevel }
@@ -421,6 +438,14 @@ export default function Assessment({
       ? Math.round((result.riskScore / result.riskScoreMax) * 100)
       : 0;
 
+    // Bloqueo parcial: solo a quien sale obligado, y solo hasta que deja el email.
+    const gateApplies = gateDetail && result.obligado !== "no";
+    const gated = gateApplies && !leadSent;
+    const nGap = result.gaps.filter((g) => g.estado === "gap").length;
+    const nParcial = result.gaps.filter((g) => g.estado === "parcial").length;
+    const nOk = result.gaps.filter((g) => g.estado === "ok").length;
+    const plural = (n: number, uno: string, varios: string) => `${n} ${n === 1 ? uno : varios}`;
+
     return (
       <div className="as-result">
         <div className="as-tags">
@@ -444,7 +469,13 @@ export default function Assessment({
           </div>
         </div>
 
-        <h3 className="as-h3">Obligación por obligación</h3>
+        <h3 className="as-h3" ref={detailRef}>Obligación por obligación</h3>
+        {gated && (
+          <p className="as-gap-summary">
+            De {result.gaps.length} obligaciones: {plural(nGap, "brecha", "brechas")},{" "}
+            {plural(nParcial, "parcial", "parciales")} y {plural(nOk, "cubierta", "cubiertas")}.
+          </p>
+        )}
         <ul className="as-gaps">
           {result.gaps.map((gap) => (
             <li key={gap.id} className={`as-gap as-gap-${gap.estado}`}>
@@ -454,13 +485,13 @@ export default function Assessment({
                   <strong>{gap.obligacion}</strong>
                   <span className="ed-eyebrow as-state">{GAP_STYLES[gap.estado].label}</span>
                 </p>
-                <p className="as-gap-detail">{gap.detalle}</p>
+                {!gated && <p className="as-gap-detail">{gap.detalle}</p>}
               </div>
             </li>
           ))}
         </ul>
 
-        {result.prioridades.length > 0 && (
+        {!gated && result.prioridades.length > 0 && (
           <>
             <h3 className="as-h3">Por dónde empezar</h3>
             <ol className="as-prior">
@@ -477,13 +508,23 @@ export default function Assessment({
         {/* Captura de lead */}
         {leadSent ? (
           <div className="as-lead as-lead-done">
-            <p className="as-lead-title">Informe en camino</p>
-            <p>{leadDoneText}</p>
+            <p className="as-lead-title">{gateApplies ? "Detalle desbloqueado" : "Informe en camino"}</p>
+            <p>
+              {gateApplies
+                ? "Lo tienes arriba. Te lo enviamos también por email, con el checklist de evidencias para la auditoría."
+                : leadDoneText}
+            </p>
           </div>
         ) : (
-          <form onSubmit={sendLead} className="as-lead">
-            <p className="as-lead-title">Recibe el informe completo</p>
-            <p>{leadPitch}</p>
+          <form onSubmit={sendLead} className={`as-lead${gated ? " as-lead-gate" : ""}`}>
+            <p className="as-lead-title">
+              {gated ? "Desbloquea el detalle de cada brecha" : "Recibe el informe completo"}
+            </p>
+            <p>
+              {gated
+                ? "Qué falla en cada obligación, por dónde empezar y el checklist de evidencias que pedirá el auditor ENAC. Lo ves aquí al momento y te lo enviamos por email."
+                : leadPitch}
+            </p>
             <div className="as-lead-row">
               <label className="as-field">
                 <span className="ed-eyebrow">Email</span>
@@ -496,7 +537,7 @@ export default function Assessment({
                 />
               </label>
               <button type="submit" disabled={leadSending} className="ed-button">
-                {leadSending ? "Enviando…" : "Enviar informe"}
+                {leadSending ? "Enviando…" : gated ? "Ver el detalle" : "Enviar informe"}
               </button>
             </div>
             <label className="as-check">

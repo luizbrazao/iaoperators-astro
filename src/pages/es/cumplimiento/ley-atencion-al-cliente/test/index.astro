@@ -26,7 +26,7 @@ const diasRestantes = Math.max(
 const meta = {
   title: "Test de cumplimiento de la Ley 10/2025 en 2 minutos | IA Operators",
   description:
-    "Comprueba si tu empresa está obligada por la Ley 10/2025 de atención a la clientela y qué brechas tienes por obligación. 8 preguntas, resultado inmediato, sin dar email.",
+    "Comprueba si tu empresa está obligada por la Ley 10/2025 de atención a la clientela y qué brechas tienes por obligación. 8 preguntas y veredicto inmediato.",
 };
 
 const breadcrumbJsonLd = {
@@ -91,7 +91,11 @@ const webPageJsonLd = {
 
     <div class="as-layout">
       <div class="as-main">
-        <Assessment client:load />
+        <Assessment
+          client:load
+          gateDetail
+          footNote="Menos de 2 minutos. El veredicto es inmediato y sin email."
+        />
       </div>
       <aside class="as-notes" aria-label="Cómo funciona el test">
         <div>
@@ -100,9 +104,10 @@ const webPageJsonLd = {
             respuesta da siempre el mismo veredicto, y cada brecha indica de qué pregunta sale.</p>
         </div>
         <div>
-          <h2>Sin muro de email</h2>
-          <p>Ves el resultado completo sin dejar datos. El email solo es necesario si quieres el
-            informe ampliado con el checklist de evidencias.</p>
+          <h2>Veredicto sin email</h2>
+          <p>Sabes al momento si estáis obligados y en qué estado está cada obligación. El detalle
+            de cada brecha y el orden de ejecución te los enviamos por email, con el checklist de
+            evidencias para la auditoría.</p>
         </div>
         <div>
           <h2>No es asesoramiento jurídico</h2>

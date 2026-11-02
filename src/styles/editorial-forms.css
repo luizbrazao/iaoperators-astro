@@ -168,3 +168,6 @@
 .editorial-shell .nf-langs { font-size: 13px; color: var(--ed-muted); margin-top: 40px; }
 .editorial-shell .nf-langs a { border-bottom: 1px solid var(--ed-line); }
 .editorial-shell .nf-langs a:hover { border-bottom-color: var(--ed-ink); }
+/* Bloqueo parcial del test Ley 10/2025 (nov/2026) */
+.editorial-shell .as-gap-summary { font-size: 15px; color: var(--ed-muted); margin: -6px 0 14px; }
+.editorial-shell .as-lead-gate { margin-top: 28px; border-left: 4px solid var(--ed-orange); }
