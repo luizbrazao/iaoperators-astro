@@ -15,6 +15,7 @@
 // en AssessmentBrand desde sac/brand.ts o verifactu/brand.ts.
 
 import type { AssessmentAnswers, AssessmentResult, GapState } from "./types";
+import { buildAssessmentPdf } from "./pdf";
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 
@@ -105,6 +106,11 @@ export interface AssessmentBrand {
    */
   gapsTitle?: string;
   stateLabels?: Partial<Record<GapState, string>>;
+  /**
+   * Informe en PDF adjunto al email del prospecto (nov/2026, test Ley 10/2025).
+   * Sin valor no se genera PDF: Verifactu y RGPD siguen enviando solo HTML.
+   */
+  pdfAttachment?: { filename: string };
 }
 
 function gapsTableHtml(result: AssessmentResult, brand: AssessmentBrand) {
@@ -142,7 +148,11 @@ function gapsTableHtml(result: AssessmentResult, brand: AssessmentBrand) {
     .join("");
 }
 
-export function buildProspectEmail(result: AssessmentResult, brand: AssessmentBrand) {
+export function buildProspectEmail(
+  result: AssessmentResult,
+  brand: AssessmentBrand,
+  options: { withPdf?: boolean } = {},
+) {
   const prioridades = result.prioridades
     .map(
       (p, i) =>
@@ -178,6 +188,13 @@ export function buildProspectEmail(result: AssessmentResult, brand: AssessmentBr
         </div>
       </div>
 
+      ${
+        options.withPdf
+          ? `<p style="margin:0 0 24px;color:#4b5563;font-size:14px;line-height:1.6;">
+        Te adjuntamos este mismo informe en PDF, para que puedas reenviarlo a dirección, a tu asesoría o al auditor.
+      </p>`
+          : ""
+      }
       <h2 style="margin:0 0 4px;font-size:18px;color:#111827;">${escapeHtml(brand.gapsTitle ?? "Obligación por obligación")}</h2>
       <p style="margin:0 0 8px;color:#6b7280;font-size:13px;">
         ${escapeHtml(brand.evidenceIntro)}
@@ -289,6 +306,8 @@ async function sendViaResend(input: {
   subject: string;
   html: string;
   replyTo?: string;
+  /** Adjuntos en base64, formato de la API REST de Resend. */
+  attachments?: { filename: string; content: string }[];
 }) {
   const apiKey = readEnv("RESEND_API_KEY");
   if (!apiKey) {
@@ -310,6 +329,7 @@ async function sendViaResend(input: {
       reply_to: input.replyTo,
       subject: input.subject,
       html: input.html,
+      ...(input.attachments?.length ? { attachments: input.attachments } : {}),
     }),
   });
 
@@ -337,7 +357,21 @@ export async function sendAssessmentEmails(input: {
   const internalTo = readEnv("CONTACT_TO_EMAIL") || "info@iaoperators.com";
   const brand = input.brand;
   const internal = buildInternalEmail({ ...input, brand });
-  const prospect = buildProspectEmail(input.result, brand);
+
+  // El PDF es un extra: si falla, el informe sale igual en HTML.
+  let attachments: { filename: string; content: string }[] | undefined;
+  if (brand.pdfAttachment) {
+    try {
+      const bytes = await buildAssessmentPdf(input.result, brand);
+      attachments = [{ filename: brand.pdfAttachment.filename, content: Buffer.from(bytes).toString("base64") }];
+    } catch (error) {
+      console.error("[assessment/email] PDF no generado, se envía solo HTML", {
+        responseId: input.responseId,
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  }
+  const prospect = buildProspectEmail(input.result, brand, { withPdf: Boolean(attachments) });
 
   const [internalResult, prospectResult] = await Promise.allSettled([
     sendViaResend({
@@ -346,7 +380,7 @@ export async function sendAssessmentEmails(input: {
       html: internal.html,
       replyTo: input.email,
     }),
-    sendViaResend({ to: input.email, subject: prospect.subject, html: prospect.html }),
+    sendViaResend({ to: input.email, subject: prospect.subject, html: prospect.html, attachments }),
   ]);
 
   const ok = (r: PromiseSettledResult<boolean>) => r.status === "fulfilled" && r.value;

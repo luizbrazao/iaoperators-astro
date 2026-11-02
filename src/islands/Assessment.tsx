@@ -511,7 +511,7 @@ export default function Assessment({
             <p className="as-lead-title">{gateApplies ? "Detalle desbloqueado" : "Informe en camino"}</p>
             <p>
               {gateApplies
-                ? "Lo tienes arriba. Te lo enviamos también por email, con el checklist de evidencias para la auditoría."
+                ? "Lo tienes arriba. Te enviamos también el informe en PDF por email, con el checklist de evidencias para la auditoría."
                 : leadDoneText}
             </p>
           </div>
@@ -522,7 +522,7 @@ export default function Assessment({
             </p>
             <p>
               {gated
-                ? "Qué falla en cada obligación, por dónde empezar y el checklist de evidencias que pedirá el auditor ENAC. Lo ves aquí al momento y te lo enviamos por email."
+                ? "Qué falla en cada obligación, por dónde empezar y el checklist de evidencias que pedirá el auditor ENAC. Lo ves aquí al momento y te enviamos el informe en PDF."
                 : leadPitch}
             </p>
             <div className="as-lead-row">

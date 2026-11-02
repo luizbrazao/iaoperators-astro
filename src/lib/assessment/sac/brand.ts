@@ -61,6 +61,7 @@ export const SAC_BRAND: AssessmentBrand = {
   plazoHtml: (result) =>
     `Plazo de adaptación: <strong style="color:#111827;">28 de diciembre de 2026</strong>
           (quedan ${result.diasRestantes} días)`,
+  pdfAttachment: { filename: "informe-ley-10-2025-iaoperators.pdf" },
   subjects: {
     obligado: (result) => `Tu informe de cumplimiento — quedan ${result.diasRestantes} días`,
     noObligado: () => "Tu resultado del test de Ley 10/2025",
