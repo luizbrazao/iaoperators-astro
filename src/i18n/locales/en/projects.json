@@ -1257,5 +1257,113 @@
             "channel": "Web",
             "status": "On sale"
         }
+    },
+    "sinteclear": {
+        "seoTitle": "Sinteclear: customer orders matched to the right catalogue reference | IA Operators",
+        "title": "Sinteclear: customer orders with the right catalogue reference",
+        "h1": "Customer orders with the right reference, without retyping them",
+        "subtitle": "Industrial distribution · Sage 200 and a3ERP",
+        "tagline": "Product for distributors that reads the orders arriving by email, PDF, Excel or scan, finds the catalogue item the customer meant and leaves them ready to review and enter into the ERP.",
+        "category": "Own product / Industrial distribution",
+        "signal": "MVP in validation",
+        "serviceType": "AI order automation for distributors",
+        "relatedService": "See the AI automation service",
+        "problem": "At many industrial distributors, someone types every order into the ERP. Customers rarely write the distributor's reference: they use the manufacturer's, their own code, an abbreviation or the ISO standard instead of the DIN one. With thousands of near-identical items, such as the same bolt in zinc-plated, A2 and A4, the costly mistake is not misreading. It is picking a similar item that nobody notices until the order reaches the customer wrong.",
+        "engineeringIntro": "Sinteclear splits two jobs that usually go together. A language model (Claude Haiku) reads the document and copies the order as written, without correcting anything. The catalogue search is code: trigrams compatible with pg_trgm, plus dimensions, standard, finish and grade. The model comes back at the end to choose among that search's candidates and state its confidence. That way every error can be traced to one stage. Embeddings were tested and did not improve accuracy, so the MVP does not use them.",
+        "impact": "The team stops typing orders and only reviews the doubtful lines. The figures on this page come from synthetic test orders: we wrote them and know their traps, so real orders will give a different number. That is why Sinteclear is in validation and the first conversation with a distributor is measuring accuracy on its own catalogue and recent orders, before talking about price.",
+        "whatItDoes": [
+            "Reads orders arriving by email, PDF, Excel or scan",
+            "Extracts the header: customer, order number, date and delivery address",
+            "Looks up each line in the catalogue by reference, EAN, manufacturer reference or description",
+            "Tags each line with a confidence level and one sentence explaining the choice",
+            "Exports the approved order as a CSV to import into the ERP"
+        ],
+        "howItWorks": [
+            "The document is turned into text; for a scan, the model reads the image of each page",
+            "The model copies the header and lines exactly as the customer wrote them",
+            "The search proposes up to ten candidate catalogue items per line",
+            "The model picks one, or none, with its confidence and the reason",
+            "A person reviews the doubtful lines and approves; corrections are stored in that customer's memory"
+        ],
+        "pillars": {
+            "catalog": {
+                "title": "The model chooses, the catalogue decides",
+                "description": "The reference always comes from the distributor's catalogue. The model can only choose among the search candidates, and the code checks the choice again. If none fits, the line goes to review.",
+                "bullets": [
+                    "Exact match on reference, EAN and manufacturer reference, checked against the description",
+                    "Dimensions, standard, finish and grade compared attribute by attribute",
+                    "If what the customer wrote contradicts the chosen item, the line goes to review even if the model is sure"
+                ]
+            },
+            "measure": {
+                "title": "Measured before it is sold",
+                "description": "Every change to the search or to the model's instructions is measured before and after. The public figures come from a set of orders that was never used for tuning.",
+                "bullets": [
+                    "Development set and held-out set, kept apart",
+                    "Three runs without cache; the worst is published for each figure",
+                    "Baseline: matching by exact reference only"
+                ]
+            },
+            "review": {
+                "title": "Reviewing instead of typing",
+                "description": "The review screen shows the original order next to the lines, coloured by confidence. Approved lines feed a per-customer memory.",
+                "bullets": [
+                    "Lines with confidence of 0.9 or more go through without review",
+                    "The memory keeps each customer's own codes and how they write each item",
+                    "Each approved order stores what the system suggested and what the person approved"
+                ]
+            }
+        },
+        "security": [
+            "Before receiving a real catalogue or order, a data processing agreement (GDPR art. 28) is signed. Test data is used only for the test and deleted afterwards.",
+            "Files arrive through a private link, not as email attachments, and customer data never enters the code repository.",
+            "The model can be called through Amazon Bedrock with an EU inference profile, which routes calls only to EU regions."
+        ],
+        "metrics": [
+            {
+                "label": "Lines with the right reference in the first suggestion",
+                "note": "28 unseen synthetic orders, 445 lines; worst of three runs"
+            },
+            {
+                "label": "Lines that need no review",
+                "note": "Confidence of 0.9 or more; worst of three runs"
+            },
+            {
+                "label": "Errors among the lines that skipped review",
+                "note": "1,167 lines across the three runs"
+            },
+            {
+                "label": "Accuracy matching by exact reference only",
+                "note": "Baseline on the same set, without search or model"
+            }
+        ],
+        "faq": [
+            {
+                "q": "Does Sinteclear connect directly to the ERP?",
+                "a": "Not yet. Today it delivers the approved order as a CSV with the data import formats ask for. The exact Sage 200 or a3ERP format will be built with the first distributor, on its own data."
+            },
+            {
+                "q": "Where do the accuracy figures come from?",
+                "a": "From 28 synthetic test orders the system had not seen, with 445 lines, measured three times on 30 October 2026. The worst run is published for each figure. Real orders will give a different number, which is why measuring on the distributor's data comes before any quote."
+            },
+            {
+                "q": "Can it make up an item?",
+                "a": "No. The model only chooses among the candidates the search pulls from the catalogue, and the code checks the choice. If none fits, the line goes to review instead of passing with a similar item."
+            }
+        ],
+        "links": [
+            {
+                "label": "See Sinteclear"
+            },
+            {
+                "label": "Back to portfolio"
+            }
+        ],
+        "sheet": {
+            "type": "Own product",
+            "stack": "Python · Claude · Streamlit",
+            "channel": "Email, PDF and Excel",
+            "status": "MVP in validation"
+        }
     }
 }

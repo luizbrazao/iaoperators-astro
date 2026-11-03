@@ -1643,4 +1643,122 @@ export const projects: Project[] = [
         ],
     },
 
+    // =========================
+    // Sinteclear — lectura de pedidos y cruce con el catálogo para distribuidores (MVP)
+    // =========================
+    // Cifras de pedidos SINTÉTICOS (holdout v2, 30/10/2026, peor de tres mediciones), las mismas que
+    // publica sinteclear.iaoperators.com. Si se mide con pedidos reales, actualizar aquí y en la landing.
+    {
+        id: 13,
+        slugs: {
+            es: "sinteclear-pedidos-distribuidores-erp",
+            en: "sinteclear-distributor-order-entry",
+            pt: "sinteclear-pedidos-distribuidores-erp",
+        },
+
+        provesFor: ["servicios/automatizacion-ia/"],
+        publishedAt: "2026-11-03",
+
+        category: "Producto propio / Distribución industrial",
+        categoryKey: "projects:sinteclear.category",
+        heroImage: "/og/portfolio/sinteclear-pedidos-distribuidores-erp.png",
+        ogImage: "/og/portfolio/sinteclear-pedidos-distribuidores-erp.png",
+
+        seoTitleKey: "projects:sinteclear.seoTitle",
+        titleKey: "projects:sinteclear.title",
+        serviceTypeKey: "projects:sinteclear.serviceType",
+        h1Key: "projects:sinteclear.h1",
+        subtitleKey: "projects:sinteclear.subtitle",
+        taglineKey: "projects:sinteclear.tagline",
+        signalKey: "projects:sinteclear.signal",
+        relatedServiceKey: "projects:sinteclear.relatedService",
+        relatedServiceHref: "/servicios/automatizacion-ia/",
+        serviceAreas: ["España"],
+
+        problemKey: "projects:sinteclear.problem",
+        engineeringIntroKey: "projects:sinteclear.engineeringIntro",
+        impactKey: "projects:sinteclear.impact",
+
+        whatItDoesKeys: [
+            "projects:sinteclear.whatItDoes.0",
+            "projects:sinteclear.whatItDoes.1",
+            "projects:sinteclear.whatItDoes.2",
+            "projects:sinteclear.whatItDoes.3",
+            "projects:sinteclear.whatItDoes.4",
+        ],
+
+        howItWorksKeys: [
+            "projects:sinteclear.howItWorks.0",
+            "projects:sinteclear.howItWorks.1",
+            "projects:sinteclear.howItWorks.2",
+            "projects:sinteclear.howItWorks.3",
+            "projects:sinteclear.howItWorks.4",
+        ],
+
+        pillars: [
+            {
+                titleKey: "projects:sinteclear.pillars.catalog.title",
+                descriptionKey: "projects:sinteclear.pillars.catalog.description",
+                bulletsKeys: [
+                    "projects:sinteclear.pillars.catalog.bullets.0",
+                    "projects:sinteclear.pillars.catalog.bullets.1",
+                    "projects:sinteclear.pillars.catalog.bullets.2",
+                ],
+            },
+            {
+                titleKey: "projects:sinteclear.pillars.measure.title",
+                descriptionKey: "projects:sinteclear.pillars.measure.description",
+                bulletsKeys: [
+                    "projects:sinteclear.pillars.measure.bullets.0",
+                    "projects:sinteclear.pillars.measure.bullets.1",
+                    "projects:sinteclear.pillars.measure.bullets.2",
+                ],
+            },
+            {
+                titleKey: "projects:sinteclear.pillars.review.title",
+                descriptionKey: "projects:sinteclear.pillars.review.description",
+                bulletsKeys: [
+                    "projects:sinteclear.pillars.review.bullets.0",
+                    "projects:sinteclear.pillars.review.bullets.1",
+                    "projects:sinteclear.pillars.review.bullets.2",
+                ],
+            },
+        ],
+
+        securityKeys: [
+            "projects:sinteclear.security.0",
+            "projects:sinteclear.security.1",
+            "projects:sinteclear.security.2",
+        ],
+        // Sin AES-GCM ni RLS en el MVP (datos en ficheros locales fuera de git): no se afirma.
+        securityStack: [],
+
+        metrics: [
+            { labelKey: "projects:sinteclear.metrics.0.label", value: "98%", noteKey: "projects:sinteclear.metrics.0.note" },
+            { labelKey: "projects:sinteclear.metrics.1.label", value: "86%", noteKey: "projects:sinteclear.metrics.1.note" },
+            { labelKey: "projects:sinteclear.metrics.2.label", value: "0", noteKey: "projects:sinteclear.metrics.2.note" },
+            { labelKey: "projects:sinteclear.metrics.3.label", value: "40%", noteKey: "projects:sinteclear.metrics.3.note" },
+        ],
+
+        faq: [
+            { qKey: "projects:sinteclear.faq.0.q", aKey: "projects:sinteclear.faq.0.a" },
+            { qKey: "projects:sinteclear.faq.1.q", aKey: "projects:sinteclear.faq.1.a" },
+            { qKey: "projects:sinteclear.faq.2.q", aKey: "projects:sinteclear.faq.2.a" },
+        ],
+
+        links: [
+            {
+                label: "Ver Sinteclear",
+                labelKey: "projects:sinteclear.links.0.label",
+                href: "https://sinteclear.iaoperators.com/",
+                external: true,
+            },
+            {
+                label: "Volver al portfolio",
+                labelKey: "projects:sinteclear.links.1.label",
+                href: "/portfolio",
+            },
+        ],
+    },
+
 ];

@@ -1257,5 +1257,113 @@
             "channel": "Web",
             "status": "À venda"
         }
+    },
+    "sinteclear": {
+        "seoTitle": "Sinteclear: pedidos de clientes com a referência certa para distribuidores | IA Operators",
+        "title": "Sinteclear: pedidos de clientes com a referência certa do catálogo",
+        "h1": "Os pedidos dos clientes, com a referência certa e sem digitá-los",
+        "subtitle": "Distribuição industrial · Sage 200 e a3ERP",
+        "tagline": "Produto para distribuidores que lê os pedidos que chegam por email, PDF, Excel ou digitalizados, encontra o artigo do catálogo que o cliente queria dizer e os deixa prontos para revisar e lançar no ERP.",
+        "category": "Produto próprio / Distribuição industrial",
+        "signal": "MVP em validação",
+        "serviceType": "Automação de pedidos com IA para distribuidores",
+        "relatedService": "Ver o serviço de automação com IA",
+        "problem": "Em muitos distribuidores industriais, alguém digita cada pedido no ERP. O cliente raramente escreve a referência do distribuidor: usa a do fabricante, um código próprio, uma abreviação ou a norma ISO no lugar da DIN. Com milhares de artigos quase iguais, como o mesmo parafuso em zincado, A2 e A4, o erro caro não é de leitura. É escolher um artigo parecido, que ninguém vê até o pedido chegar errado ao cliente.",
+        "engineeringIntro": "O Sinteclear separa dois trabalhos que costumam andar juntos. Um modelo de linguagem (Claude Haiku) lê o documento e copia o pedido como veio, sem corrigir nada. A busca no catálogo é código: trigramas compatíveis com pg_trgm, mais medidas, norma, acabamento e classe. O modelo volta no fim para escolher entre os candidatos dessa busca e dizer com que confiança. Assim cada erro pode ser atribuído a uma fase. Os embeddings foram testados e não melhoraram o acerto, então o MVP não os usa.",
+        "impact": "Quem lançava pedidos à mão passa a revisar só as linhas duvidosas. Os números desta ficha vêm de pedidos de teste sintéticos: fomos nós que os escrevemos e conhecemos as armadilhas, então com pedidos reais o número será outro. Por isso o Sinteclear está em validação e a primeira conversa com um distribuidor é medir o acerto com o catálogo e os últimos pedidos dele, antes de falar de preço.",
+        "whatItDoes": [
+            "Lê pedidos que chegam por email, PDF, Excel ou digitalizados",
+            "Extrai o cabeçalho: cliente, número do pedido, data e endereço de entrega",
+            "Procura cada linha no catálogo por referência, EAN, referência do fabricante ou descrição",
+            "Marca cada linha com o grau de confiança e uma frase que explica a escolha",
+            "Exporta o pedido aprovado num CSV para importar no ERP"
+        ],
+        "howItWorks": [
+            "O documento vira texto; se for digitalizado, o modelo lê a imagem de cada página",
+            "O modelo copia o cabeçalho e as linhas exatamente como o cliente escreveu",
+            "A busca propõe até dez artigos candidatos do catálogo por linha",
+            "O modelo escolhe um, ou nenhum, com a confiança e o motivo",
+            "Uma pessoa revisa o que está em dúvida e aprova; as correções ficam na memória daquele cliente"
+        ],
+        "pillars": {
+            "catalog": {
+                "title": "O modelo escolhe, o catálogo decide",
+                "description": "A referência sempre sai do catálogo do distribuidor. O modelo só pode escolher entre os candidatos da busca, e o código confere a escolha de novo. Se nenhum serve, a linha vai para revisão.",
+                "bullets": [
+                    "Correspondência exata por referência, EAN e referência do fabricante, conferida contra a descrição",
+                    "Medidas, norma, acabamento e classe comparados atributo por atributo",
+                    "Se o que o cliente escreveu contradiz o artigo escolhido, a linha vai para revisão mesmo com o modelo seguro"
+                ]
+            },
+            "measure": {
+                "title": "Medido antes de ser vendido",
+                "description": "Cada mudança na busca ou nas instruções do modelo é medida antes e depois. Os números públicos vêm de um conjunto de pedidos que nunca foi usado para ajustar nada.",
+                "bullets": [
+                    "Conjunto de desenvolvimento e conjunto reservado, separados",
+                    "Três medições sem cache; de cada número se publica a pior",
+                    "Linha de base: cruzamento só por referência exata"
+                ]
+            },
+            "review": {
+                "title": "Revisar em vez de digitar",
+                "description": "A tela de revisão mostra o pedido original ao lado das linhas, com uma cor por grau de confiança. O que é aprovado alimenta uma memória por cliente.",
+                "bullets": [
+                    "Com confiança de 0,9 ou mais, a linha sai sem revisão",
+                    "A memória guarda os códigos próprios de cada cliente e como ele escreve cada artigo",
+                    "Cada pedido aprovado guarda o que o sistema sugeriu e o que a pessoa aprovou"
+                ]
+            }
+        },
+        "security": [
+            "Antes de receber um catálogo ou pedido real, assina-se um acordo de tratamento de dados (art. 28 do RGPD). Os dados do teste servem só para ele e são apagados no fim.",
+            "Os dados chegam por um link privado, não como anexo de email, e dados de clientes nunca entram no repositório do código.",
+            "O modelo pode ser chamado pelo Amazon Bedrock com um perfil de inferência da UE, que distribui as chamadas só entre regiões da União."
+        ],
+        "metrics": [
+            {
+                "label": "Linhas com a referência certa na primeira sugestão",
+                "note": "28 pedidos sintéticos não vistos, 445 linhas; a pior de três medições"
+            },
+            {
+                "label": "Linhas que saem sem precisar de revisão",
+                "note": "Confiança de 0,9 ou mais; a pior de três medições"
+            },
+            {
+                "label": "Erros entre as linhas que saíram sem revisão",
+                "note": "1.167 linhas, somando as três medições"
+            },
+            {
+                "label": "Acerto cruzando só por referência exata",
+                "note": "Linha de base no mesmo conjunto, sem busca nem modelo"
+            }
+        ],
+        "faq": [
+            {
+                "q": "O Sinteclear se conecta direto ao ERP?",
+                "a": "Ainda não. Hoje ele entrega o pedido aprovado num CSV com os dados que os formatos de importação pedem. O formato exato do Sage 200 ou do a3ERP será montado com o primeiro distribuidor, sobre os dados dele."
+            },
+            {
+                "q": "De onde vêm os números de acerto?",
+                "a": "De 28 pedidos de teste sintéticos que o sistema não tinha visto, com 445 linhas, medidos três vezes em 30 de outubro de 2026. De cada número se publica a pior medição. Com pedidos reais o número será outro, e por isso a medição com os dados do distribuidor vem antes de qualquer orçamento."
+            },
+            {
+                "q": "Ele pode inventar um artigo?",
+                "a": "Não. O modelo só escolhe entre os candidatos que a busca tira do catálogo, e o código confere a escolha. Se nenhum serve, a linha vai para revisão em vez de passar com um artigo parecido."
+            }
+        ],
+        "links": [
+            {
+                "label": "Ver Sinteclear"
+            },
+            {
+                "label": "Voltar ao portfólio"
+            }
+        ],
+        "sheet": {
+            "type": "Produto próprio",
+            "stack": "Python · Claude · Streamlit",
+            "channel": "Email, PDF e Excel",
+            "status": "MVP em validação"
+        }
     }
 }

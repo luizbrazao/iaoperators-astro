@@ -182,6 +182,16 @@ const CASE_EDITORIAL_ES: Record<string, CaseEditorialEntry> = {
     results: "product",
     sheet: { host: "renuva.iaoperators.com", caseKey: "renuva" },
   },
+  // Producto propio con cifras medidas sobre pedidos sintéticos: "product", no "measured",
+  // porque no hay un cliente detrás del número. Las notas de cada cifra lo dicen.
+  "sinteclear-pedidos-distribuidores-erp": {
+    visual: "spec-sheet",
+    tone: "sage",
+    featuredMetrics: [0, 2],
+    editorialDetail: true,
+    results: "product",
+    sheet: { host: "sinteclear.iaoperators.com", caseKey: "sinteclear" },
+  },
 };
 
 export const getCaseEditorial = (project: Project): CaseEditorialEntry | undefined =>
