@@ -34,6 +34,7 @@ import {
   ARQUITECTURA_TITLE,
   arquitecturaHubHref,
 } from "@/data/servicios";
+import { PROBLEMA_PROGRAM } from "@/data/problema-resuelto";
 
 export interface NavChild {
   label: string;
@@ -230,6 +231,30 @@ export function getPilares(locale: string): NavPilar[] {
   });
 
   return pilares;
+}
+
+export interface NavPromo {
+  label: string;
+  /** Etiqueta corta junto al rótulo en la cabecera. */
+  badge: string;
+  href: string;
+  /** Rótulo en el footer, donde no hay etiqueta visual. */
+  footerLabel: string;
+}
+
+/**
+ * Programa «Problema Resuelto» (04/nov/2026): enlace destacado en la cabecera
+ * y en el footer. ES-only, como el programa. Fuera de los pilares a propósito:
+ * es una puerta de entrada, no una línea de negocio.
+ */
+export function getNavPromo(locale: string): NavPromo | null {
+  if (asLoc(locale) !== "es") return null;
+  return {
+    label: PROBLEMA_PROGRAM.name,
+    badge: "Gratis",
+    href: PROBLEMA_PROGRAM.paths.landing,
+    footerLabel: `${PROBLEMA_PROGRAM.name} (gratis)`,
+  };
 }
 
 /**

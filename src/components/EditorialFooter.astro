@@ -1,5 +1,5 @@
 ---
-import { getPilares } from "@/data/navegacion";
+import { getNavPromo, getPilares } from "@/data/navegacion";
 import { getArquitectura, getServiceGroups, ARQUITECTURA_TITLE, arquitecturaHubHref, SERVICE_HUB_PATH, hubCtaLabel } from "@/data/servicios";
 import { CONTACT, SOCIAL_PROFILES } from "@/data/identidad";
 import { SHELL, asShellLoc, shellHref } from "@/i18n/editorialShell";
@@ -9,6 +9,7 @@ const locale = asShellLoc(Astro.currentLocale);
 const l = SHELL[locale];
 const h = (path = "") => shellHref(locale, path);
 const pillars = getPilares(locale);
+const promo = getNavPromo(locale);
 const integration = pillars.find(pillar => pillar.key === "integracion");
 const compliance = pillars.find(pillar => pillar.key === "cumplimiento");
 const columns = [
@@ -22,6 +23,7 @@ const columns = [
   {title: l.company, items: [
     {label:l.cases,href:h("portfolio/")}, {label:l.about,href:h("sobre/")}, {label:l.methodology,href:h("metodologia/")},
     ...(locale === "es" ? [{label:"Hoteles",href:h("hoteles/")}] : []),
+    ...(promo ? [{label:promo.footerLabel,href:promo.href}] : []),
     {label:"Blog",href:h("blog/")}, {label:l.contact,href:h("contact/")},
     {label:l.community,href:"https://www.skool.com/ia-operators-hub-9023/about"},
   ]},

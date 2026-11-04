@@ -9,7 +9,7 @@ import {
   SERVICE_HUB_PATH,
   hubCtaLabel,
 } from "@/data/servicios";
-import { getPilares } from "@/data/navegacion";
+import { getNavPromo, getPilares } from "@/data/navegacion";
 import { integracionHref } from "@/data/integracion";
 
 type Props = { languageLinks?: Array<{ locale: string; href: string }> };
@@ -60,6 +60,7 @@ const links = {
 //     (`CASOS_LOCALES`). En EN/PT hoy sale vacía y se filtra: el footer pasa a
 //     tener tres columnas en vez de cuatro, sin huecos.
 const pilares = getPilares(locale);
+const promo = getNavPromo(locale);
 const integracionPilar = pilares.find((p) => p.key === "integracion");
 const cumplimientoPilar = pilares.find((p) => p.key === "cumplimiento");
 const arquitecturaPasos = getArquitectura(locale);
@@ -127,6 +128,7 @@ const columnas = [
       // entrante frente a los 70 de EN/PT).
       { label: nav?.methodology ?? "Methodology", href: links.methodology },
       { label: "Blog", href: links.blog },
+      ...(promo ? [{ label: promo.footerLabel, href: promo.href }] : []),
       { label: t.cta, href: links.contact },
     ],
   },

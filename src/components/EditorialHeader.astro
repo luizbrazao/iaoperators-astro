@@ -1,10 +1,11 @@
 ---
-import { getPilares } from "@/data/navegacion";
+import { getNavPromo, getPilares } from "@/data/navegacion";
 import { SHELL, asShellLoc, shellHref } from "@/i18n/editorialShell";
 interface Props { languageLinks: Array<{ locale: string; href: string }> }
 const { languageLinks } = Astro.props;
 const locale = asShellLoc(Astro.currentLocale);
 const l = SHELL[locale];
+const promo = getNavPromo(locale);
 const links = [
   ...getPilares(locale).map(({label, href}) => ({label, href})),
   {label: l.cases, href: shellHref(locale, "portfolio/")},
@@ -17,6 +18,7 @@ const links = [
     <a class="ed-wordmark" href={shellHref(locale)} aria-label={l.homeAria}><img src="/brand/ia-operators-logo.png" alt="" width="453" height="82" /></a>
     <nav class="ed-desktop-nav" aria-label={l.mainNav}>
       {links.map(link => <a href={link.href}>{link.label}</a>)}
+      {promo && <a class="ed-nav-promo" href={promo.href}>{promo.label} <span class="ed-nav-badge">{promo.badge}</span></a>}
       <a class="ed-nav-contact" href={shellHref(locale, "contact/")}>{l.talk} <span aria-hidden="true">↗</span></a>
       <div class="ed-languages" aria-label={l.languages}>{languageLinks.map(link => <a href={link.href} lang={link.locale} aria-current={link.locale === locale ? "page" : undefined}>{link.locale.toUpperCase()}</a>)}</div>
     </nav>
@@ -24,6 +26,7 @@ const links = [
       <summary>{l.menu} <span aria-hidden="true">+</span></summary>
       <nav aria-label={l.mobileNav}>
         {links.map(link => <a href={link.href}>{link.label}</a>)}
+        {promo && <a class="ed-nav-promo" href={promo.href}>{promo.label} <span class="ed-nav-badge">{promo.badge}</span></a>}
         <a href={shellHref(locale, "servicios/")}>{l.allCapabilities}</a>
         <a class="ed-nav-contact" href={shellHref(locale, "contact/")}>{l.talk} <span aria-hidden="true">↗</span></a>
         <div class="ed-languages" aria-label={l.languages}>{languageLinks.map(link => <a href={link.href} lang={link.locale} aria-current={link.locale === locale ? "page" : undefined}>{link.locale.toUpperCase()}</a>)}</div>

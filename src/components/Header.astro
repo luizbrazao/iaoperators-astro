@@ -2,7 +2,7 @@
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import { getLocale, ui } from "../i18n/ui";
 import { getServiceGroups, hubCtaLabel, SERVICE_HUB_PATH } from "@/data/servicios";
-import { getPilares } from "@/data/navegacion";
+import { getNavPromo, getPilares } from "@/data/navegacion";
 
 type Props = { languageLinks?: Array<{ locale: string; href: string }>; solidSurface?: boolean };
 const { languageLinks, solidSurface = false } = Astro.props as Props;
@@ -27,6 +27,8 @@ const hubCta = hubCtaLabel(locale);
 // rótulo nuevo. Son tres en ES (integración · cumplimiento · arquitectura) y
 // dos en EN/PT, donde el silo de cumplimiento no existe por decisión.
 const pilares = getPilares(locale);
+// Programa «Problema Resuelto»: ES-only, enlace destacado (navegacion.ts).
+const promo = getNavPromo(locale);
 
 const labels = {
   services: nav?.services ?? "Services",
@@ -67,6 +69,7 @@ const mobileLinks = [
   ...pilares.map((p) => ({ key: p.key, href: p.href, label: p.label, external: false })),
   { key: "portfolio", href: links.portfolio, label: labels.portfolio, external: false },
   { key: "blog", href: links.blog, label: labels.blog, external: false },
+  ...(promo ? [{ key: "promo", href: promo.href, label: promo.footerLabel, external: false }] : []),
   { key: "servicesHub", href: links.servicesHub, label: hubCta, external: false },
   { key: "community", href: links.community, label: labels.community, external: true },
 ];
@@ -223,6 +226,15 @@ const mobileLinks = [
         <a href={links.blog} class="hover:text-white transition-colors">
           {labels.blog}
         </a>
+
+        {promo && (
+          <a href={promo.href} class="inline-flex items-center gap-2 hover:text-white transition-colors">
+            {promo.label}
+            <span class="rounded-full bg-orange-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-orange-300">
+              {promo.badge}
+            </span>
+          </a>
+        )}
       </nav>
 
       <!-- Actions -->
