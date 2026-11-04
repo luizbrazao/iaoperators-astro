@@ -1,0 +1,89 @@
+/* Programa Pyme Digital (nov/2026): landing /es/pyme-digital/ e island
+   PymeDigitalSimulador. Prefijo pd-, todo bajo .editorial-shell. Reutiliza
+   tokens y piezas de editorial-home.css, editorial-pages.css y
+   editorial-servicios.css (ed-container, ed-eyebrow, ed-button,
+   ed-section-intro, pg-section, pg-phases, pg-checklist, sv-donde, ct-*).
+   Texto acentuado en #ae3810 (AA sobre papel); el naranja solo como detalle. */
+
+/* ---------- Módulos ---------- */
+.editorial-shell .pd-modules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; margin-top: 52px; }
+.editorial-shell .pd-module { display: flex; flex-direction: column; background: #e4dfd3; padding: 40px; min-width: 0; }
+.editorial-shell .pd-module-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.editorial-shell .pd-module-head .ed-eyebrow { color: #5b5f53; }
+.editorial-shell .pd-module-price { font-size: 34px; font-weight: 500; letter-spacing: -.05em; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.editorial-shell .pd-module h3 { font-size: clamp(24px, 2.4vw, 32px); font-weight: 500; letter-spacing: -.045em; line-height: 1.18; margin-block: 24px 8px; }
+.editorial-shell .pd-module-item { font: 12px/1.5 "SFMono-Regular", Consolas, monospace; letter-spacing: .04em; color: #ae3810; }
+.editorial-shell .pd-module-summary { font-size: 16px; line-height: 1.6; margin-top: 18px; }
+.editorial-shell .pd-module-for { font-size: 14px; line-height: 1.6; color: #3f4238; margin-top: 10px; }
+.editorial-shell .pd-module .pg-checklist { margin-top: 22px; }
+.editorial-shell .pd-module .pg-checklist li { font-size: 15px; padding-block: 10px; border-top-color: #c9c2b2; }
+.editorial-shell .pd-module-limits { font-size: 14px; line-height: 1.6; color: #3f4238; border-top: 1px solid #c9c2b2; padding-top: 14px; margin-top: 4px; }
+.editorial-shell .pd-module-breakdown { margin: 22px 0 0; display: grid; gap: 6px; flex: 1; align-content: end; }
+.editorial-shell .pd-module-breakdown > div { display: flex; justify-content: space-between; gap: 16px; border-top: 1px solid #c9c2b2; padding-top: 8px; font-size: 14px; }
+.editorial-shell .pd-module-breakdown dt { color: #5b5f53; }
+.editorial-shell .pd-module-breakdown dd { margin: 0; font-weight: 500; text-align: right; font-variant-numeric: tabular-nums; }
+.editorial-shell .pd-module-renewal { font-size: 13px; line-height: 1.55; color: #5b5f53; margin-top: 16px; }
+
+/* ---------- Simulador ---------- */
+.editorial-shell .pd-sim { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "picker result" "form form"; gap: 28px; margin-top: 52px; }
+.editorial-shell .pd-sim-picker { grid-area: picker; border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 10px; align-content: start; }
+.editorial-shell .pd-sim-picker legend { color: var(--ed-muted); margin-bottom: 14px; padding: 0; }
+.editorial-shell .pd-sim-option { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 14px; align-items: center; border: 1px solid var(--ed-line); padding: 16px 18px; cursor: pointer; background: #fbfaf6; transition: border-color .2s, background .2s; min-height: 64px; }
+.editorial-shell .pd-sim-option.is-checked { border-color: var(--ed-ink); background: #fff; }
+.editorial-shell .pd-sim-option:focus-within { outline: 3px solid #ae3810; outline-offset: 2px; }
+.editorial-shell .pd-sim-option input { width: 20px; height: 20px; accent-color: var(--ed-ink); margin: 0; }
+.editorial-shell .pd-sim-option-text { display: grid; gap: 2px; min-width: 0; }
+.editorial-shell .pd-sim-option-name { font-size: 17px; font-weight: 500; letter-spacing: -.02em; }
+.editorial-shell .pd-sim-option-item { font: 11px/1.4 "SFMono-Regular", Consolas, monospace; letter-spacing: .04em; color: var(--ed-muted); }
+.editorial-shell .pd-sim-option-price { font-size: 17px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.editorial-shell .pd-sim-result { grid-area: result; background: #252923; color: var(--ed-paper); padding: 32px; display: grid; gap: 18px; align-content: start; }
+.editorial-shell .pd-sim-result > .ed-eyebrow { color: #c2cab9; }
+.editorial-shell .pd-sim-empty { color: #d6dccd; }
+.editorial-shell .pd-sim-figures { margin: 0; display: grid; gap: 8px; }
+.editorial-shell .pd-sim-figures > div { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; border-top: 1px solid #4b5146; padding-top: 12px; }
+.editorial-shell .pd-sim-figures dt { color: #c2cab9; font-size: 15px; }
+.editorial-shell .pd-sim-figures dd { margin: 0; font-size: 20px; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.editorial-shell .pd-sim-net dd { font-size: 44px; font-weight: 500; letter-spacing: -.05em; line-height: 1; color: var(--ed-orange); }
+.editorial-shell .pd-sim-net dd small { display: block; font-size: 13px; letter-spacing: 0; color: #c2cab9; margin-top: 8px; font-weight: 400; }
+.editorial-shell .pd-sim-note { font-size: 14px; line-height: 1.6; color: #d6dccd; }
+.editorial-shell .pd-sim-warn { font-size: 14px; line-height: 1.55; border-left: 3px solid var(--ed-orange); padding-left: 14px; color: var(--ed-paper); }
+
+.editorial-shell .pd-sim-form { grid-area: form; background: var(--ed-sage); padding: 36px; scroll-margin-top: 24px; }
+.editorial-shell .pd-sim-form > .ed-eyebrow { color: #4c5145; }
+.editorial-shell .pd-sim-form .ct-fields { margin-top: 24px; }
+.editorial-shell .pd-sim-form .ct-success { padding: 0; margin-top: 20px; }
+.editorial-shell .pd-sim-form select { width: 100%; border: 0; border-bottom: 1px solid #a9ae9f; border-radius: 0; background: transparent; color: var(--ed-ink); font: inherit; font-size: 18px; line-height: 1.5; padding: 10px 0 12px; cursor: pointer; }
+.editorial-shell .pd-sim-form select:focus-visible { outline: 3px solid #ae3810; outline-offset: 2px; }
+.editorial-shell .pd-sim-form .ct-field input,
+.editorial-shell .pd-sim-form .ct-field textarea { border-bottom-color: #a9ae9f; }
+
+/* ---------- Tabla de combinaciones ---------- */
+.editorial-shell .pd-combos { width: 100%; border-collapse: collapse; margin-top: 40px; font-variant-numeric: tabular-nums; }
+.editorial-shell .pd-combos th,
+.editorial-shell .pd-combos td { text-align: left; padding: 14px 12px 14px 0; border-top: 1px solid var(--ed-line); font-size: 15px; vertical-align: baseline; }
+.editorial-shell .pd-combos thead th { font: 11px/1.4 "SFMono-Regular", Consolas, monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--ed-muted); font-weight: 400; border-top: 0; }
+.editorial-shell .pd-combos td:not(:first-child),
+.editorial-shell .pd-combos th:not(:first-child) { text-align: right; white-space: nowrap; }
+.editorial-shell .pd-combos td:last-child { font-weight: 600; color: #ae3810; }
+.editorial-shell .pd-combos caption { caption-side: top; text-align: left; padding-bottom: 12px; color: var(--ed-muted); }
+.editorial-shell .pd-combos tbody th { font-weight: 400; }
+.editorial-shell .pd-combos-wrap { overflow-x: auto; }
+
+@media (max-width: 960px) {
+  .editorial-shell .pd-modules { grid-template-columns: minmax(0, 1fr); }
+  .editorial-shell .pd-sim { grid-template-columns: minmax(0, 1fr); grid-template-areas: "picker" "result" "form"; }
+}
+@media (max-width: 720px) {
+  .editorial-shell .pd-modules { margin-top: 32px; gap: 20px; }
+  .editorial-shell .pd-module { padding: 26px; }
+  .editorial-shell .pd-module-price { font-size: 28px; }
+  .editorial-shell .pd-sim { margin-top: 32px; }
+  .editorial-shell .pd-sim-result,
+  .editorial-shell .pd-sim-form { padding: 24px; }
+  .editorial-shell .pd-sim-net dd { font-size: 36px; }
+  .editorial-shell .pd-combos th,
+  .editorial-shell .pd-combos td { font-size: 14px; padding-right: 8px; }
+  .editorial-shell .pd-combos th:nth-child(3),
+  .editorial-shell .pd-combos td:nth-child(3) { display: none; }
+}

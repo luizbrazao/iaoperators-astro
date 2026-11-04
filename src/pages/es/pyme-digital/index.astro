@@ -1,0 +1,422 @@
+---
+// Landing de proveedor para el Programa Pyme Digital de las Cámaras de Comercio
+// (fase II de ayudas, FEDER 2021-2027). ES-only: es un programa español.
+//
+// POR QUÉ EXISTE (04/nov/2026): las Cámaras publican las listas de empresas
+// admitidas, que ya tienen ayuda aprobada y eligen proveedor libremente. Esta
+// página es el destino de la prospección a esas empresas y, a la vez, la prueba
+// de «precio de mercado» que la Cámara valida: precios públicos, iguales con o
+// sin ayuda, y desglosados por los componentes que admite el Anexo II.
+//
+// POR QUÉ UNA PÁGINA CON MÓDULOS Y NO UNA LANDING POR SERVICIO: la empresa decide
+// con el plan de implantación en la mano y necesita comparar y combinar hasta el
+// tope de 7.000 €. El tráfico llega por prospección, no por búsqueda; si un
+// módulo demuestra demanda propia, tendrá su página.
+//
+// QUÉ NO SE OFRECE AQUÍ: Ley 10/2025, Verifactu y RGPD. El Anexo II excluye las
+// «actividades necesarias para cumplir la normativa».
+//
+// MANTENIMIENTO: precios, límites y reglas viven en src/data/pyme-digital.ts.
+// Si cambia algo del programa, actualizar allí, aquí la FAQ y `REVISADO`.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PymeDigitalSimulador from "@/islands/PymeDigitalSimulador";
+import {
+  COMPONENTE_LABEL,
+  MODULOS,
+  PYME_DIGITAL_RULES,
+  PYME_DIGITAL_SOURCES,
+  calcularSeleccion,
+  formatEur,
+  precioModuloCents,
+  type ComponenteKey,
+  type ModuloId,
+} from "@/data/pyme-digital";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-servicios.css";
+import "@/styles/editorial-pyme-digital.css";
+
+const locale = "es";
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const siteRoot = site.replace(/\/$/, "");
+const pageUrl = new URL(`/${locale}/pyme-digital/`, site).toString();
+const contactHref = `/${locale}/contact/`;
+
+const REVISADO = "4 de noviembre de 2026";
+const R = PYME_DIGITAL_RULES;
+
+const meta = {
+  title: "Pyme Digital: soluciones de IA subvencionables al 85 % | IA Operators",
+  description:
+    "Asistente de atención, CRM, automatización y panel de gestión para empresas admitidas en Pyme Digital. Precios públicos y coste neto de unos cientos de euros.",
+};
+
+const ORDEN_COMPONENTES: ComponenteKey[] = ["consultoria", "implantacion", "saas", "capacitacion"];
+
+const fases = [
+  {
+    num: "01",
+    title: "Diagnóstico con la Cámara",
+    body: "Fase I, gratuita. Un asesor de la Cámara analiza tu empresa y prepara un plan de implantación con las soluciones del catálogo del programa.",
+  },
+  {
+    num: "02",
+    title: "Eliges proveedor",
+    body: "El programa no tiene proveedores homologados: eliges libremente, siempre que no tenga vinculación con tu empresa y cobre a precio de mercado. La Cámara revisa los costes.",
+  },
+  {
+    num: "03",
+    title: "Implantación",
+    body: `Fase II. Hasta ${formatEur(R.maxDirectCents)} sin IVA de coste directo, en un plazo de ${R.phaseMonths} meses. Facturas y pagos tienen que caer dentro de las fechas del convenio DECA que firmas con la Cámara.`,
+  },
+  {
+    num: "04",
+    title: "Justificación y cobro",
+    body: `Presentas facturas, pagos y evidencias. La Cámara paga el ${R.aidPct} % del coste elegible, que es lo facturado más un ${R.indirectPct} % de costes indirectos, con un máximo de ${formatEur(R.maxAidCents)}.`,
+  },
+];
+
+const combinaciones: { label: string; ids: ModuloId[] }[] = [
+  { label: "Asistente + Automatización", ids: ["asistente", "automatizacion"] },
+  { label: "Asistente + Panel", ids: ["asistente", "panel"] },
+  { label: "Automatización + Panel", ids: ["automatizacion", "panel"] },
+  { label: "Asistente + CRM", ids: ["asistente", "crm"] },
+  { label: "CRM + Automatización", ids: ["crm", "automatizacion"] },
+  { label: "CRM + Panel", ids: ["crm", "panel"] },
+  { label: "Solo Asistente", ids: ["asistente"] },
+].map((c) => ({ ...c, calc: calcularSeleccion(c.ids) }));
+
+const kit = [
+  "Facturas desglosadas por componente elegible (consultoría, implantación, licencia y capacitación)",
+  "Capturas de pantalla fechadas del antes y el después",
+  "Informe técnico de la implantación",
+  "Declaración de no vinculación con tu empresa",
+  "Cartel A3 con el logo FEDER y captura de tu web con la mención de la ayuda",
+];
+
+const expectativas = {
+  si: [
+    "Precios cerrados y públicos, los mismos con o sin ayuda.",
+    "Facturas desglosadas como pide el Anexo II, para que la Cámara pueda revisar cada línea.",
+    "La documentación técnica que necesitas para justificar, preparada por nosotros.",
+    "Que te digamos si un módulo no encaja con tu plan o repite algo que ya pagó el Kit Digital.",
+  ],
+  no: [
+    "Que somos proveedor oficial. El programa no tiene registro de proveedores: tú eliges.",
+    "Que tramitamos tu ayuda o te asesoramos sobre la subvención. Eso lo llevas tú con la Cámara.",
+    "Una cuantía de ayuda garantizada. Nuestros cálculos son estimaciones y la cuantía la fija la Cámara.",
+    "Facturar antes de tu admisión en la fase II. Ese gasto no sería subvencionable.",
+  ],
+};
+
+const sinChatbotA = calcularSeleccion(["crm", "automatizacion"]);
+const sinChatbotB = calcularSeleccion(["automatizacion", "panel"]);
+const euroRedondo = (cents: number) => formatEur(Math.round(cents / 100) * 100);
+
+const faq = [
+  {
+    q: "¿Qué es el programa Pyme Digital?",
+    a: "Es un programa de las Cámaras de Comercio, cofinanciado por el FEDER, para que pymes y autónomos se digitalicen. Tiene dos fases: un diagnóstico gratuito con un asesor de la Cámara y una ayuda para implantar las soluciones del plan, con el proveedor que elija la empresa. En las convocatorias andaluzas de 2026 la ayuda es del 85 % del coste elegible, con un máximo de 6.366,50 € por empresa.",
+  },
+  {
+    q: "Ya tengo un chatbot. ¿Qué puedo pedir?",
+    a: `Cualquiera de los otros tres módulos. Por ejemplo, CRM + Automatización (${formatEur(sinChatbotA.facturadoCents)} facturados, unos ${euroRedondo(sinChatbotA.netoCents)} netos) o Automatización + Panel (${formatEur(sinChatbotB.facturadoCents)}, unos ${euroRedondo(sinChatbotB.netoCents)} netos).`,
+  },
+  {
+    q: "Recibí el Kit Digital. ¿Puedo contratar estos módulos?",
+    a: "Sí, siempre que el módulo no repita una solución que ya te financió el Kit Digital, porque el programa no la volvería a pagar. Lo revisamos contigo antes de preparar la propuesta.",
+  },
+  {
+    q: "Mi plan de implantación no menciona estos módulos. ¿Qué hago?",
+    a: "Si todavía estás en el diagnóstico, díselo a tu asesor de la Cámara para que los incluya en el plan. Si el plan ya está cerrado, las actuaciones que no figuran en él necesitan autorización previa de la Cámara.",
+  },
+  {
+    q: "¿Tengo que adelantar el dinero?",
+    a: "Sí. La empresa paga el 100 % al proveedor y la Cámara ingresa la ayuda después de revisar la justificación. Por eso cobramos en dos partes: la mitad a la firma y la otra mitad en la puesta en marcha.",
+  },
+  {
+    q: "¿Qué pasa cuando acaban los 12 meses de licencia?",
+    a: "Puedes seguir con la cuota mensual de cada módulo, sin permanencia, o darlo de baja con 30 días de preaviso. El CRM no tiene cuota y los datos son siempre de tu empresa.",
+  },
+  {
+    q: "¿Por qué no ofrecéis aquí Ley 10/2025, Verifactu o RGPD?",
+    a: "Porque el programa excluye expresamente las actividades necesarias para cumplir la normativa. Esos proyectos los hacemos, pero no se pueden pagar con esta ayuda.",
+  },
+];
+
+const catalogJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Soluciones subvencionables Pyme Digital",
+  serviceType: "Digitalización de pymes con IA",
+  provider: {
+    "@type": ["Organization", "ProfessionalService"],
+    name: "IA Operators",
+    url: site,
+    address: { "@type": "PostalAddress", addressLocality: "Málaga", addressCountry: "ES" },
+  },
+  areaServed: "ES",
+  description: meta.description,
+  url: pageUrl,
+  inLanguage: "es-ES",
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Módulos Pyme Digital",
+    itemListElement: MODULOS.map((m) => ({
+      "@type": "Offer",
+      name: m.nombre,
+      description: m.resumen,
+      price: (precioModuloCents(m) / 100).toFixed(2),
+      priceCurrency: "EUR",
+      priceSpecification: {
+        "@type": "PriceSpecification",
+        price: (precioModuloCents(m) / 100).toFixed(2),
+        priceCurrency: "EUR",
+        valueAddedTaxIncluded: false,
+      },
+    })),
+  },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${siteRoot}/${locale}/` },
+    { "@type": "ListItem", position: 2, name: "Pyme Digital", item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  jsonLd={[catalogJsonLd, breadcrumbJsonLd, faqJsonLd]}
+  editorial
+>
+  <div class="ed-container">
+    <header class="pg-hero">
+      <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/es/">Inicio</a></li>
+          <li><span aria-current="page">Pyme Digital</span></li>
+        </ol>
+      </nav>
+      <h1>Pyme Digital: <span>soluciones de IA subvencionables al {R.aidPct} %</span></h1>
+      <div class="pg-hero-bottom">
+        <p class="ed-eyebrow">Cámaras de Comercio · Fase II de ayudas</p>
+        <div>
+          <p class="pg-lead">
+            Si tu empresa ha sido admitida en el programa Pyme Digital de su Cámara de Comercio, puede
+            implantar hasta {formatEur(R.maxDirectCents)} en soluciones digitales y recuperar más del 90 %.
+            Estos son nuestros cuatro módulos, con precio público, y lo que te costaría cada combinación
+            después de la ayuda.
+          </p>
+          <div class="pg-actions">
+            <a class="ed-button" href="#simulador">Calcula tu coste<span class="ed-arrow" aria-hidden="true">↗</span></a>
+            <a class="ed-underlined" href="#modulos">Ver los módulos <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="pg-section" aria-label="A quién va dirigida esta página">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Para quién</p>
+        <p class="pg-signal-text">
+          Para empresas admitidas en Pyme Digital 2026 que están haciendo el diagnóstico o ya tienen
+          el plan de implantación. Si todavía estás en el diagnóstico, es el mejor momento: puedes
+          pedir a tu asesor que incluya en el plan lo que necesitas.
+        </p>
+      </div>
+    </section>
+
+    <section class="pg-section" aria-labelledby="pd-programa">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Cómo funciona</p>
+        <div>
+          <h2 id="pd-programa">El programa, en cuatro pasos</h2>
+          <p class="pg-lead-muted">Tal como lo describen las convocatorias de 2026 de las Cámaras andaluzas.</p>
+        </div>
+      </div>
+      <ol class="pg-phases">
+        {fases.map((f) => (
+          <li>
+            <span class="ed-eyebrow">{f.num}</span>
+            <h3>{f.title}</h3>
+            <div><p>{f.body}</p></div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="pg-section" id="modulos" aria-labelledby="pd-modulos">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Módulos</p>
+        <div>
+          <h2 id="pd-modulos">Cuatro módulos, combinables hasta el tope</h2>
+          <p class="pg-lead-muted">
+            Cada módulo corresponde a un ítem del catálogo del programa y se factura por los
+            componentes que este admite. Precios sin IVA.
+          </p>
+        </div>
+      </div>
+      <div class="pd-modules">
+        {MODULOS.map((m) => (
+          <article class="pd-module" aria-labelledby={`pd-mod-${m.id}`}>
+            <div class="pd-module-head">
+              <span class="ed-eyebrow">Módulo {m.num}</span>
+              <span class="pd-module-price">{formatEur(precioModuloCents(m))}</span>
+            </div>
+            <h3 id={`pd-mod-${m.id}`}>{m.nombre}</h3>
+            <p class="pd-module-item">Ítem {m.item}</p>
+            <p class="pd-module-summary">{m.resumen}</p>
+            <p class="pd-module-for">{m.paraQuien}</p>
+            <ul class="pg-checklist">
+              {m.incluye.map((i) => <li>{i}</li>)}
+            </ul>
+            <p class="pd-module-limits"><strong>Límites:</strong> {m.limites}</p>
+            <dl class="pd-module-breakdown">
+              {ORDEN_COMPONENTES.filter((k) => m.componentes[k]).map((k) => (
+                <div>
+                  <dt>{COMPONENTE_LABEL[k]}</dt>
+                  <dd>{formatEur(m.componentes[k] ?? 0)}</dd>
+                </div>
+              ))}
+            </dl>
+            <p class="pd-module-renewal">
+              {m.renovacionMensualCents > 0
+                ? `Desde el mes 13: ${formatEur(m.renovacionMensualCents)}/mes + IVA, sin permanencia. Puesta en marcha en ${m.semanas} semanas.`
+                : `${m.renovacionNota} Puesta en marcha en ${m.semanas} semanas.`}
+            </p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="pg-section" id="simulador" aria-labelledby="pd-simulador">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Simulador</p>
+        <div>
+          <h2 id="pd-simulador">Cuánto te costaría, después de la ayuda</h2>
+          <p class="pg-lead-muted">
+            Marca los módulos y verás lo facturado, la ayuda estimada y lo que pagas en neto. Si te
+            encaja, pide la propuesta desde el mismo sitio.
+          </p>
+        </div>
+      </div>
+      <PymeDigitalSimulador client:visible />
+      <div class="pd-combos-wrap">
+        <table class="pd-combos">
+          <caption class="ed-eyebrow">Combinaciones habituales</caption>
+          <thead>
+            <tr>
+              <th scope="col">Combinación</th>
+              <th scope="col">Facturado</th>
+              <th scope="col">Ayuda estimada</th>
+              <th scope="col">Coste neto</th>
+            </tr>
+          </thead>
+          <tbody>
+            {combinaciones.map((c) => (
+              <tr>
+                <th scope="row">{c.label}</th>
+                <td>{formatEur(c.calc.facturadoCents, true)}</td>
+                <td>{formatEur(c.calc.ayudaCents, true)}</td>
+                <td>{formatEur(c.calc.netoCents, true)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="pg-source">
+        Cálculo: coste elegible = facturado × 1,{String(R.indirectPct).padStart(2, "0")}; ayuda = {R.aidPct} % del
+        coste elegible, con un máximo de {formatEur(R.maxAidCents)}. Porcentajes de las convocatorias
+        andaluzas de 2026; en otras comunidades pueden ser distintos. Fuentes:{" "}
+        <a href={PYME_DIGITAL_SOURCES.anexoII.url} target="_blank" rel="noopener noreferrer">{PYME_DIGITAL_SOURCES.anexoII.label}</a>{" "}
+        y <a href={PYME_DIGITAL_SOURCES.convocatoria.url} target="_blank" rel="noopener noreferrer">{PYME_DIGITAL_SOURCES.convocatoria.label}</a>.
+      </p>
+    </section>
+
+    <section class="pg-section" aria-labelledby="pd-kit">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Justificación</p>
+        <div>
+          <h2 id="pd-kit">Te dejamos la justificación preparada</h2>
+          <p class="pg-lead-muted">
+            Al terminar recibes la documentación técnica que pide la Cámara. La presentas tú; nosotros
+            no asesoramos sobre la subvención.
+          </p>
+          <ul class="pg-checklist">
+            {kit.map((k) => <li>{k}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-section" aria-labelledby="pd-promesas">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Sin letra pequeña</p>
+        <div>
+          <h2 id="pd-promesas">Qué puedes esperar de nosotros, y qué no</h2>
+        </div>
+      </div>
+      <div class="sv-donde">
+        <div>
+          <h3>Lo que sí puedes esperar</h3>
+          <ul class="pg-checklist">
+            {expectativas.si.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <div class="sv-donde-no">
+          <h3>Lo que no te vamos a prometer</h3>
+          <ul class="pg-checklist">
+            {expectativas.no.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-section pg-faq ed-faq" aria-labelledby="pd-faq">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Preguntas</p>
+        <div>
+          <h2 id="pd-faq">Preguntas frecuentes sobre Pyme Digital</h2>
+          <div class="pg-faq-list">
+            {faq.map((item) => <details><summary>{item.q}</summary><p>{item.a}</p></details>)}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="ed-closing" aria-labelledby="pd-closing">
+    <div class="ed-container">
+      <p class="ed-eyebrow">Siguiente paso</p>
+      <h2 id="pd-closing" class="pg-closing-title">¿Tu plan pide algo que no está aquí?</h2>
+      <p class="pg-closing-copy">
+        Cuéntanos qué dice tu plan de implantación y te decimos si podemos hacerlo dentro del programa
+        y por cuánto.
+      </p>
+      <a class="ed-button" href={contactHref}>Hablar con nosotros<span class="ed-arrow" aria-hidden="true">↗</span></a>
+      <p class="pg-disclaimer">
+        IA Operators no tiene relación con las Cámaras de Comercio ni participa en la gestión del
+        programa Pyme Digital. La ayuda la concede y la cuantifica cada Cámara. Precios sin IVA.
+        Última revisión: {REVISADO}.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

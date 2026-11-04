@@ -708,6 +708,25 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     estimada: true,
   },
   {
+    // Programa Pyme Digital de las Cámaras de Comercio (04/nov/2026): landing de
+    // proveedor para empresas ya admitidas en la fase II de ayudas. ES-only.
+    // No compite con bono-ia/ (Plan IA360, otro programa y otra SERP) ni con
+    // las landings de servicio: aquí la intención es «qué puedo comprar con esta
+    // ayuda concreta». El tráfico principal llega por prospección a las listas
+    // de admitidas. Volumen sin medir: revisar con el GSC a los 60 días.
+    path: "pyme-digital/",
+    locales: ["es"],
+    silo: "servicios",
+    primaria: "programa pyme digital",
+    secundarias: [
+      "pyme digital cámara de comercio",
+      "proveedor pyme digital",
+      "ayudas pyme digital",
+    ],
+    faixa: "b",
+    estimada: true,
+  },
+  {
     path: "servicios/agencia-seo/",
     locales: ["es", "en", "pt"],
     silo: "servicios",
