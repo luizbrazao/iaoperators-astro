@@ -139,8 +139,10 @@ npm run build && npm run problema-resuelto:check-bundle
 
 ## 8. Pendiente / no verificado
 
-- El turno real contra la API de Anthropic no se ha probado: no había clave en
-  el entorno de desarrollo. Los flujos están probados con un doble.
+- `temperature` no se envía: `claude-haiku-5-5` lo rechaza con 400
+  («deprecated for this model», comprobado el 04/nov/2026 en producción). Los
+  errores de la API se registran clasificados (`llm_http_400_param_<x>`,
+  `_no_credit`, `_model`…) sin el texto del proveedor.
 - La política de privacidad declara a Anthropic como encargado con ubicación
   en Estados Unidos. Confirmar en la consola de Anthropic la entidad con la que
   se contrata y que el DPA aplica a la cuenta.

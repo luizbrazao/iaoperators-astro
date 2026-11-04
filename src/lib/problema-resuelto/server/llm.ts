@@ -13,7 +13,6 @@ export interface LlmRequest {
   messages: ChatMessage[];
   maxTokens: number;
   timeoutMs: number;
-  temperature?: number;
 }
 
 export type LlmResult = { ok: true; text: string; stopReason: string | null } | { ok: false; code: string };
@@ -24,6 +23,25 @@ export interface LlmClient {
 }
 
 const ENDPOINT = "https://api.anthropic.com/v1/messages";
+
+/**
+ * Código estable a partir de un error de la API. El mensaje del proveedor no
+ * se propaga (podría citar la entrada): solo se clasifica por palabras clave
+ * conocidas. Ej.: llm_http_400_param_temperature, llm_http_400_no_credit.
+ */
+export function classifyApiError(status: number, body: unknown): string {
+  const error = body && typeof body === "object" ? (body as { error?: { type?: unknown; message?: unknown } }).error : undefined;
+  const message = typeof error?.message === "string" ? error.message.toLowerCase() : "";
+  const base = `llm_http_${status}`;
+  if (/credit balance/.test(message)) return `${base}_no_credit`;
+  const param = /`([a-z_]{2,30})`/.exec(message)?.[1];
+  if (param && /(deprecated|not supported|unsupported|unexpected|extra inputs)/.test(message)) return `${base}_param_${param}`;
+  if (/model/.test(message)) return `${base}_model`;
+  if (/(too long|context|max_tokens)/.test(message)) return `${base}_length`;
+  const type = typeof error?.type === "string" && /^[a-z_]{2,40}$/.test(error.type) ? error.type : "";
+  return type ? `${base}_${type}` : base;
+}
+
 const API_VERSION = "2023-06-01";
 
 export function createAnthropicClient(config: LlmConfig, fetchImpl: typeof fetch = fetch): LlmClient {
@@ -40,14 +58,18 @@ export function createAnthropicClient(config: LlmConfig, fetchImpl: typeof fetch
           },
           body: JSON.stringify({
             model: config.model,
+            // Sin `temperature`: los modelos actuales lo rechazan con 400
+            // ("`temperature` is deprecated for this model", 04/nov/2026).
             max_tokens: request.maxTokens,
-            temperature: request.temperature ?? 0.3,
             system: request.system,
             messages: request.messages.map((m) => ({ role: m.role, content: m.content })),
           }),
           signal: AbortSignal.timeout(request.timeoutMs),
         });
-        if (!response.ok) return { ok: false, code: `llm_http_${response.status}` };
+        if (!response.ok) {
+          const body = await response.json().catch(() => null);
+          return { ok: false, code: classifyApiError(response.status, body) };
+        }
         const data = (await response.json().catch(() => null)) as {
           content?: { type?: string; text?: string }[];
           stop_reason?: string | null;

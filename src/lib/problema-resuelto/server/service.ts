@@ -358,7 +358,6 @@ async function generateFicha(
       messages: [{ role: "user", content: fichaUserMessage(sub) }],
       maxTokens: LLM_LIMITS.ficha.maxTokens,
       timeoutMs: LLM_LIMITS.ficha.timeoutMs,
-      temperature: 0,
     });
     if (result.ok) {
       ficha = parseFicha(result.text);

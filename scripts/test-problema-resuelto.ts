@@ -28,7 +28,7 @@ import {
   validateSubmission,
 } from "../src/lib/problema-resuelto/validation";
 import { buildInternalCasoEmail } from "../src/lib/problema-resuelto/server/email";
-import type { LlmClient, LlmRequest, LlmResult } from "../src/lib/problema-resuelto/server/llm";
+import { classifyApiError, createAnthropicClient, type LlmClient, type LlmRequest, type LlmResult } from "../src/lib/problema-resuelto/server/llm";
 import { formatLogLine, type ProblemaLogFields } from "../src/lib/problema-resuelto/server/log";
 import { PROMPT_VERSION, triageSystemPrompt } from "../src/lib/problema-resuelto/server/prompts";
 import { chatTurn, submitCaso, type CasoRow, type CasoStore, type ChatDeps, type SubmitDeps } from "../src/lib/problema-resuelto/server/service";
@@ -130,6 +130,23 @@ ok("json: sin objeto → null", extractJsonObject("sin json") === null);
   ok("ficha: sin resumen → null", parseFicha('{"encaje_sugerido":"encaja"}') === null);
 }
 ok("prompt: último turno obliga a cerrar", triageSystemPrompt(PROBLEMA_LIMITS.userTurns).includes("último mensaje") && !triageSystemPrompt(2).includes("último mensaje"));
+
+// =============================================================== cliente de Anthropic
+ok("api: temperature descontinuada → código con el parámetro", classifyApiError(400, { error: { type: "invalid_request_error", message: "`temperature` is deprecated for this model." } }) === "llm_http_400_param_temperature");
+ok("api: sin crédito", classifyApiError(400, { error: { type: "invalid_request_error", message: "Your credit balance is too low to access the Anthropic API." } }) === "llm_http_400_no_credit");
+ok("api: modelo", classifyApiError(404, { error: { type: "not_found_error", message: "model: claude-x" } }) === "llm_http_404_model");
+ok("api: tipo genérico", classifyApiError(529, { error: { type: "overloaded_error", message: "Overloaded" } }) === "llm_http_529_overloaded_error");
+ok("api: cuerpo ilegible", classifyApiError(500, null) === "llm_http_500");
+{
+  let sentBody: Record<string, unknown> = {};
+  const fakeFetch = (async (_url: string, init: RequestInit) => {
+    sentBody = JSON.parse(String(init.body));
+    return new Response(JSON.stringify({ content: [{ type: "text", text: "hola" }], stop_reason: "end_turn" }), { status: 200 });
+  }) as unknown as typeof fetch;
+  const r = await createAnthropicClient({ apiKey: "k", model: "claude-haiku-5-5" }, fakeFetch).complete({ system: "s", messages: [{ role: "user", content: "hola hola" }], maxTokens: 10, timeoutMs: 1000 });
+  ok("api: no se envía temperature", !("temperature" in sentBody) && sentBody.model === "claude-haiku-5-5" && sentBody.system === "s");
+  ok("api: texto de la respuesta", r.ok && r.text === "hola");
+}
 
 // =============================================================== dobles
 function fakeStore(opts: { rateLimitFails?: boolean; insertFails?: boolean; limits?: Record<string, number>; saveFichaFails?: boolean } = {}) {
