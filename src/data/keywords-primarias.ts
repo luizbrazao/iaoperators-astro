@@ -690,6 +690,24 @@ export const KEYWORDS_PRIMARIAS: readonly KeywordPrimaria[] = [
     estimada: true,
   },
   {
+    // Programa «Problema Resuelto» (04/nov/2026): captación por un caso pequeño
+    // gratis. Intención de quien busca probar la IA sin pagar antes. No compite
+    // con servicios/automatizacion-ia/ ni con servicios/agencia-ia/ (intención
+    // de contratar): el calificador «gratis» cambia la SERP. Volumen sin medir:
+    // revisar con el GSC a los 60 días. El tráfico principal llega por contenido.
+    path: "problema-resuelto/",
+    locales: ["es"],
+    silo: "servicios",
+    primaria: "proyecto de ia gratis",
+    secundarias: [
+      "automatización con ia gratis",
+      "solución de ia gratis para empresas",
+      "prueba de ia para empresas",
+    ],
+    faixa: "b",
+    estimada: true,
+  },
+  {
     path: "servicios/agencia-seo/",
     locales: ["es", "en", "pt"],
     silo: "servicios",

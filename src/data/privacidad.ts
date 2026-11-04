@@ -72,12 +72,20 @@ const TRATAMIENTOS_ES: Tratamiento[] = [
     base: "Aplicación de medidas precontractuales a petición tuya (art. 6.1.b RGPD) y, para la limitación de envíos y la medición agregada, interés legítimo (art. 6.1.f).",
     plazo: "12 meses desde el último contacto si no se inicia una relación. Si se pone en marcha un piloto o un contrato, mientras dure la relación y después durante los plazos legales (6 años para la documentación mercantil).",
   },
+  {
+    titulo: "Programa «Problema Resuelto» (envío de un problema y asistente de triaje)",
+    datos: "Lo que escribes sobre el problema (en la conversación con el asistente o en el formulario), nombre, email de empresa, empresa, cargo, tamaño de la empresa y si tu responsable sabe que nos escribes; la página de origen, los parámetros de campaña (UTM), el dominio desde el que llegaste (no la dirección completa) y las versiones del consentimiento y de las bases aceptadas. Mientras conversas con el asistente no se guarda nada en nuestra base de datos: la conversación solo se guarda cuando envías tus datos. Antes de procesarlo, el servidor oculta automáticamente emails, teléfonos y otros números largos, DNI/NIE e IBAN. Lo que escribes lo procesa un modelo de lenguaje de Anthropic para hacerte las preguntas y preparar una ficha interna del caso. No se guarda la IP: para limitar envíos abusivos se usa un código cifrado (HMAC) que no permite recuperarla.",
+    finalidad: "Evaluar tu caso, decidir si entra en el programa, responderte y, si se acepta, organizar las llamadas y la entrega. La ficha que prepara el modelo es una sugerencia interna: la decisión la toma siempre una persona, no un tratamiento automatizado. Si el caso se elige, se publica de forma anónima, sin datos que te identifiquen ni a ti ni a tu empresa, y te enseñamos el texto antes. Los datos del formulario no se envían a plataformas publicitarias.",
+    base: "Aplicación de medidas precontractuales y prestación del programa a petición tuya (art. 6.1.b RGPD) y, para la limitación de envíos, interés legítimo (art. 6.1.f).",
+    plazo: "12 meses desde el último contacto si el caso no se acepta o no se inicia una relación. Si se acepta o se contrata un proyecto, mientras dure la relación y después durante los plazos legales (6 años para la documentación mercantil).",
+  },
 ];
 
 const PROVEEDORES_ES: Proveedor[] = [
   { nombre: "Vercel Inc.", uso: "Alojamiento del sitio y ejecución de los formularios.", ubicacion: "Estados Unidos · encargado del tratamiento" },
   { nombre: "Supabase Inc.", uso: "Base de datos de los tests, de la encuesta, de los pedidos y de los espacios de trabajo de RGPD Ops.", ubicacion: "Servidores en la Unión Europea · encargado del tratamiento" },
   { nombre: "Resend (Plus Five Five, Inc.)", uso: "Envío de los correos del formulario de contacto, de los informes de los tests y de los enlaces de acceso del Kit y de RGPD Ops.", ubicacion: "Estados Unidos · encargado del tratamiento" },
+  { nombre: "Anthropic", uso: "Modelo de lenguaje que procesa la conversación del asistente de triaje y prepara la ficha interna del programa «Problema Resuelto». Según sus condiciones comerciales, no usa estos datos para entrenar sus modelos.", ubicacion: "Estados Unidos · encargado del tratamiento" },
   { nombre: "Stripe Payments Europe, Ltd.", uso: "Pago y facturación del Kit de Preparación VERI*FACTU y de RGPD Ops Starter.", ubicacion: "Irlanda (UE) · encargado del tratamiento para el cobro" },
   { nombre: "Google (Gmail)", uso: "Bandeja en la que se reciben y gestionan los mensajes enviados a info@iaoperators.com.", ubicacion: "Estados Unidos y UE" },
   { nombre: "Google, Meta, LinkedIn y Ahrefs", uso: "Medición y publicidad, solo si aceptas las cookies. Detalle en el apartado 7.", ubicacion: "UE y Estados Unidos · ver apartado 7" },
@@ -96,7 +104,7 @@ const COOKIES_ES: CookieItem[] = [
 ];
 
 const ES = {
-  "updated": "Última actualización · 14 de octubre de 2026",
+  "updated": "Última actualización · 4 de noviembre de 2026",
   "lead": "Qué datos personales tratamos en iaoperators.com, para qué, con qué base legal, durante cuánto tiempo, con quién se comparten y cómo puedes ejercer tus derechos. Esta política cumple el deber de información del Reglamento (UE) 2016/679 (RGPD) y de la Ley Orgánica 3/2018 (LOPDGDD).",
   "labels": {
     "holder": "Titular",
@@ -169,7 +177,7 @@ export type PoliticaCopy = typeof ES & { tratamientos: Tratamiento[]; proveedore
 export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
   es: { ...ES, tratamientos: TRATAMIENTOS_ES, proveedores: PROVEEDORES_ES, cookies: COOKIES_ES },
   en: {
-    "updated": "Last updated · 14 October 2026",
+    "updated": "Last updated · 4 November 2026",
     "lead": "What personal data we process on iaoperators.com, why, on what legal basis, for how long, who it is shared with and how you can exercise your rights. This policy meets the information duty under Regulation (EU) 2016/679 (GDPR) and Spanish Organic Law 3/2018 (LOPDGDD).",
     "labels": {
       "holder": "Owner",
@@ -284,6 +292,13 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
         "finalidad": "To study your request, contact you about the pilot programme and measure, in aggregate, which campaigns and pages generate requests. Form data is not sent to advertising platforms.",
         "base": "Steps taken at your request before entering into a contract (art. 6.1.b GDPR) and, for submission limiting and aggregate measurement, our legitimate interest (art. 6.1.f).",
         "plazo": "12 months from the last contact if no relationship begins. If a pilot or contract starts, for the duration of the relationship and then for the legal retention periods (6 years for commercial records)."
+      },
+      {
+        "titulo": "«Problema Resuelto» programme (submitting a problem and triage assistant)",
+        "datos": "What you write about the problem (in the conversation with the assistant or in the form), name, work email, company, job title, company size and whether your manager knows you are writing to us; the source page, campaign parameters (UTM), the domain you came from (not the full address) and the versions of the consent and of the programme rules you accepted. Nothing is stored in our database while you talk to the assistant: the conversation is only stored when you submit your details. Before processing, the server automatically hides emails, phone and other long numbers, Spanish ID numbers (DNI/NIE) and IBANs. What you write is processed by an Anthropic language model to ask you questions and prepare an internal case summary. The IP is not stored: to limit abusive submissions we use an encrypted code (HMAC) from which it cannot be recovered.",
+        "finalidad": "To assess your case, decide whether it enters the programme, reply to you and, if accepted, organise the calls and the delivery. The summary prepared by the model is an internal suggestion: the decision is always taken by a person, not by automated processing. If the case is chosen, it is published anonymously, with nothing that identifies you or your company, and we show you the text first. Form data is not sent to advertising platforms.",
+        "base": "Steps taken at your request before entering into a contract and provision of the programme you requested (art. 6.1.b GDPR) and, for submission limiting, our legitimate interest (art. 6.1.f).",
+        "plazo": "12 months from the last contact if the case is not accepted or no relationship begins. If it is accepted or a project is contracted, for the duration of the relationship and then for the legal retention periods (6 years for commercial records)."
       }
     ],
     "proveedores": [
@@ -305,6 +320,11 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
       {
         "nombre": "Resend (Plus Five Five, Inc.)",
         "uso": "Sending the contact form emails, the test reports and the access links for the Kit and RGPD Ops.",
+        "ubicacion": "United States · processor"
+      },
+      {
+        "nombre": "Anthropic",
+        "uso": "Language model that processes the triage assistant conversation and prepares the internal case summary of the «Problema Resuelto» programme. Under its commercial terms, it does not use this data to train its models.",
         "ubicacion": "United States · processor"
       },
       {
@@ -367,7 +387,7 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
     ]
   },
   pt: {
-    "updated": "Última atualização · 14 de outubro de 2026",
+    "updated": "Última atualização · 4 de novembro de 2026",
     "lead": "Quais dados pessoais tratamos em iaoperators.com, para quê, com que base legal, por quanto tempo, com quem são compartilhados e como você pode exercer seus direitos. Esta política cumpre o dever de informação do Regulamento (UE) 2016/679 (RGPD) e da Lei Orgânica espanhola 3/2018 (LOPDGDD).",
     "labels": {
       "holder": "Titular",
@@ -482,6 +502,13 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
         "finalidad": "Analisar sua solicitação, entrar em contato sobre o programa piloto e medir de forma agregada quais campanhas e páginas geram solicitações. Os dados do formulário não são enviados a plataformas de publicidade.",
         "base": "Diligências pré-contratuais a seu pedido (art. 6.1.b do RGPD) e, para a limitação de envios e a medição agregada, interesse legítimo (art. 6.1.f).",
         "plazo": "12 meses desde o último contato, se não houver início de relação. Se um piloto ou contrato começar, enquanto durar a relação e depois pelos prazos legais (6 anos para a documentação mercantil)."
+      },
+      {
+        "titulo": "Programa «Problema Resuelto» (envio de um problema e assistente de triagem)",
+        "datos": "O que você escreve sobre o problema (na conversa com o assistente ou no formulário), nome, e-mail da empresa, empresa, cargo, porte da empresa e se o seu responsável sabe que você nos escreve; a página de origem, os parâmetros de campanha (UTM), o domínio de onde você chegou (não o endereço completo) e as versões do consentimento e das bases aceitas. Enquanto você conversa com o assistente nada é guardado no nosso banco de dados: a conversa só é guardada quando você envia os seus dados. Antes do processamento, o servidor oculta automaticamente e-mails, telefones e outros números longos, documentos de identidade espanhóis (DNI/NIE) e IBAN. O que você escreve é processado por um modelo de linguagem da Anthropic para fazer as perguntas e preparar uma ficha interna do caso. O IP não é guardado: para limitar envios abusivos usamos um código cifrado (HMAC) que não permite recuperá-lo.",
+        "finalidad": "Avaliar o seu caso, decidir se entra no programa, responder e, se for aceito, organizar as chamadas e a entrega. A ficha preparada pelo modelo é uma sugestão interna: a decisão é sempre tomada por uma pessoa, não por um tratamento automatizado. Se o caso for escolhido, é publicado de forma anônima, sem dados que identifiquem você ou a sua empresa, e mostramos o texto antes. Os dados do formulário não são enviados a plataformas de publicidade.",
+        "base": "Diligências pré-contratuais e prestação do programa a seu pedido (art. 6.1.b do RGPD) e, para a limitação de envios, interesse legítimo (art. 6.1.f).",
+        "plazo": "12 meses desde o último contato, se o caso não for aceito ou não houver início de relação. Se for aceito ou um projeto for contratado, enquanto durar a relação e depois pelos prazos legais (6 anos para a documentação mercantil)."
       }
     ],
     "proveedores": [
@@ -503,6 +530,11 @@ export const POLITICA: Record<PoliticaLoc, PoliticaCopy> = {
       {
         "nombre": "Resend (Plus Five Five, Inc.)",
         "uso": "Envio dos e-mails do formulário de contato, dos relatórios dos testes e dos links de acesso do Kit e do RGPD Ops.",
+        "ubicacion": "Estados Unidos · operador"
+      },
+      {
+        "nombre": "Anthropic",
+        "uso": "Modelo de linguagem que processa a conversa do assistente de triagem e prepara a ficha interna do programa «Problema Resuelto». Segundo as suas condições comerciais, não usa esses dados para treinar os seus modelos.",
         "ubicacion": "Estados Unidos · operador"
       },
       {

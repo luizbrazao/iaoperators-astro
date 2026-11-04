@@ -1,0 +1,365 @@
+---
+// Landing del programa «Problema Resuelto». ES-only, indexable, estática.
+//
+// Una persona que trabaja en una empresa cuenta un problema, el agente de
+// triaje (island ProblemIntake → /api/problema-resuelto/chat) hace unas
+// preguntas y el caso se envía con sus datos (/api/problema-resuelto/submit).
+// Hasta 10 casos al mes; la decisión la toma siempre Luiz.
+//
+// JSON-LD: Service + BreadcrumbList + FAQPage. Sin Offer: no hay precio.
+// Keyword primaria «proyecto de ia gratis» (src/data/keywords-primarias.ts).
+// Documentación: docs/problema-resuelto.md.
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PresenterVideo from "@/components/PresenterVideo.astro";
+import ProblemIntake from "@/islands/ProblemIntake";
+import { PROBLEMA_BASES, PROBLEMA_PROGRAM as P } from "@/data/problema-resuelto";
+import { ORG_REF } from "@/data/identidad";
+import "@/styles/editorial-pages.css";
+import "@/styles/editorial-problema-resuelto.css";
+
+// --- Vídeo de Luiz ------------------------------------------------------------
+// Mientras no esté grabado, `src` queda en null y el hero se muestra sin vídeo.
+// Grabación: fondo blanco puro (PresenterVideo funde el blanco con la página),
+// MP4 H.264, proporción cercana a 864×704. Guion en el doc del programa.
+const VIDEO: { src: string | null; poster: string; duracion: string } = {
+  src: null,
+  poster: "/video/luiz-problema-resuelto-poster.jpg",
+  duracion: "1:30",
+};
+// -----------------------------------------------------------------------------
+
+const site = Astro.site?.toString() ?? "https://iaoperators.com";
+const siteRoot = site.replace(/\/$/, "");
+const pageUrl = `${siteRoot}${P.paths.landing}`;
+
+const meta = {
+  title: "Proyecto de IA gratis para tu empresa | IA Operators",
+  description:
+    "Describe la tarea manual que os quita horas. Cada mes elegimos hasta 10 problemas de empresas y construimos gratis una solución con IA que funciona.",
+};
+
+const fits = [
+  "Una tarea repetitiva que hoy se hace a mano",
+  "Clasificar, resumir o sacar datos de correos, PDFs o formularios",
+  "Conectar dos herramientas que ya usáis y que tienen API",
+  "Un asistente que responde con la información de vuestra empresa",
+  "Un informe que hoy se monta copiando y pegando",
+];
+
+const notFits = [
+  "«Queremos una estrategia de IA» (eso es consultoría)",
+  "Apps completas o plataformas nuevas",
+  "Integraciones que exigen acceso a sistemas en producción",
+  "Trabajos académicos, problemas personales o ideas de negocio",
+  "Cualquier cosa que se salte las normas de tu empresa",
+];
+
+const steps = [
+  { title: "Lo cuentas", body: "Escribes el problema y nuestro asistente te hace unas preguntas para entenderlo. Unos cinco minutos." },
+  {
+    title: "Lo revisamos",
+    body: `Leemos cada caso y te respondemos en un máximo de ${P.responseDays} días laborables: aceptado, aceptado en una versión más pequeña, o no encaja (y entonces te damos una recomendación).`,
+  },
+  { title: "Lo construimos", body: "Hacemos una llamada de 20 minutos para entrar en detalle y nos ponemos con ello." },
+  {
+    title: "Te lo entregamos en una llamada",
+    body: "Te enseñamos cómo funciona, te lo quedas y, si os interesa, te contamos qué haría falta para llevarlo más lejos.",
+  },
+];
+
+const deliverables = [
+  "Un flujo automatizado listo para importar (n8n o Make).",
+  "Un asistente configurado con vuestras instrucciones y documentos de ejemplo.",
+  "Un script o una hoja de cálculo automatizada.",
+  "Un prototipo funcionando con datos de ejemplo.",
+  "Una guía breve: qué hace, cómo se usa y qué límites tiene.",
+];
+
+const proof = [
+  {
+    title: "Sinteclear: pedidos de clientes con la referencia correcta del catálogo",
+    meta: "Distribución industrial · Sage 200 y a3ERP",
+    href: "/es/portfolio/sinteclear-pedidos-distribuidores-erp/",
+  },
+  {
+    title: "Radiografía digital de una cadena hotelera en Menorca",
+    meta: "4 hoteles · 47 aplicaciones inventariadas",
+    href: "/es/portfolio/radiografia-cadena-hotelera-menorca/",
+  },
+  {
+    title: "ChatPlug: WhatsApp integrado con Altegio",
+    meta: "Salones y clínicas estéticas · SaaS propio",
+    href: "/es/portfolio/chatplug-whatsapp-altegio/",
+  },
+];
+
+const faq = [
+  { q: "¿De verdad es gratis?", a: "Sí. No pedimos tarjeta ni firmas nada para la parte gratuita. A cambio, si elegimos tu caso, nos dejas contarlo sin nombres." },
+  {
+    q: "¿Tengo que daros acceso a los sistemas de mi empresa?",
+    a: "No. Construimos con datos de ejemplo o con lo que nos pases sin datos personales. Llevarlo a vuestros sistemas en producción sería otro proyecto.",
+  },
+  { q: "¿Necesito permiso de mi empresa?", a: "Te recomendamos que tu responsable lo sepa. La llamada de entrega es un buen momento para que esté." },
+  { q: "¿De quién es la solución?", a: "Vuestra. La podéis usar libremente dentro de la empresa." },
+  {
+    q: "¿Qué hacéis con lo que escribo?",
+    a: "Lo usamos solo para evaluar tu caso y responderte. Mientras hablas con el asistente no se guarda nada: solo cuando envías tus datos. Ocultamos automáticamente emails, teléfonos, DNI e IBAN que se cuelen. El detalle está en la política de privacidad.",
+  },
+  { q: "¿Quién decide si se acepta?", a: "Una persona. El asistente solo ordena la información; Luiz lee cada caso y decide." },
+  { q: "¿Y si este mes ya están las 10 plazas?", a: "Te avisamos y, si quieres, lo pasamos al mes siguiente." },
+];
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": `${pageUrl}#service`,
+  name: `${P.name}: un problema de tu empresa resuelto con IA`,
+  serviceType: "Automatización con inteligencia artificial",
+  provider: ORG_REF,
+  areaServed: { "@type": "Country", name: "España" },
+  audience: { "@type": "BusinessAudience", audienceType: "Personas que trabajan en empresas con actividad en España" },
+  description: meta.description,
+  url: pageUrl,
+  inLanguage: "es-ES",
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${siteRoot}/es/` },
+    { "@type": "ListItem", position: 2, name: P.name, item: pageUrl },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } })),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalUrl={pageUrl}
+  alternates={[{ lang: "es", href: pageUrl }]}
+  xDefaultUrl={pageUrl}
+  ogTitle={`${P.name} · IA Operators`}
+  ogImage={P.paths.ogImage}
+  ogImageAlt="Problema Resuelto by IA Operators: cuéntanos un problema de tu empresa y lo resolvemos gratis con IA"
+  jsonLd={[serviceJsonLd, breadcrumbJsonLd, faqJsonLd]}
+  editorial
+>
+  <div class="ed-container">
+    <header class:list={["pr-hero", { "pr-hero-video": !!VIDEO.src }]}>
+      <nav class="pf-crumbs ed-eyebrow" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/es/">Inicio</a></li>
+          <li><span aria-current="page">{P.name}</span></li>
+        </ol>
+      </nav>
+
+      <div class="pr-hero-grid">
+        <div class="pr-hero-copy">
+          <p class="ed-eyebrow">Programa {P.name} · Hasta {P.monthlySlots} problemas al mes</p>
+          <h1>Cuéntanos la tarea que te roba horas. <span>Si se resuelve con IA, la construimos gratis.</span></h1>
+          <p class="pr-hero-lead">
+            Para personas que trabajan en una empresa y ven cada semana la misma tarea manual, el mismo error o el mismo cuello de
+            botella. Elegimos hasta {P.monthlySlots} problemas al mes y entregamos una solución que funciona.
+          </p>
+        </div>
+
+        <div class="pr-hero-intake" id="contar">
+          <ProblemIntake client:load variant="hero" />
+        </div>
+
+        {VIDEO.src && (
+          <div class="pr-hero-video-box">
+            <PresenterVideo src={VIDEO.src} poster={VIDEO.poster} label="Vídeo de Luiz Brazão explicando el programa Problema Resuelto" duracion={VIDEO.duracion} />
+            <p class="pr-video-caption">En minuto y medio te explico cómo funciona y por qué es gratis.</p>
+          </div>
+        )}
+      </div>
+    </header>
+
+    <section class="pg-section" aria-labelledby="pr-fit-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Qué encaja</p>
+        <div>
+          <h2 id="pr-fit-title">Un problema concreto, que se repite y que hoy cuesta horas</h2>
+          <p class="pr-intro">Si dudas, cuéntalo igual. El asistente te ayuda a acotarlo y, si es grande, vemos si cabe una primera parte.</p>
+        </div>
+      </div>
+      <div class="pr-fit">
+        <div class="pr-fit-col pr-fit-yes">
+          <h3>Encaja</h3>
+          <ul>{fits.map((f) => <li>{f}</li>)}</ul>
+        </div>
+        <div class="pr-fit-col pr-fit-no">
+          <h3>No encaja</h3>
+          <ul>{notFits.map((f) => <li>{f}</li>)}</ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="ed-method" aria-labelledby="pr-how-title">
+    <div class="ed-container">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Cómo funciona</p>
+        <div>
+          <h2 id="pr-how-title">Cuatro pasos, dos llamadas cortas</h2>
+          <p class="pg-method-lead">El asistente ordena la información. La decisión y la construcción las hace una persona.</p>
+        </div>
+      </div>
+      <ol class="pr-steps">
+        {steps.map((s, idx) => (
+          <li>
+            <span class="ed-eyebrow">{String(idx + 1).padStart(2, "0")}</span>
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <div class="ed-container">
+    <section class="pg-section" aria-labelledby="pr-get-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Qué recibes</p>
+        <div>
+          <h2 id="pr-get-title">Algo que funciona, no una presentación</h2>
+        </div>
+      </div>
+      <div class="pr-get">
+        <ul class="pr-deliverables">{deliverables.map((d) => <li>{d}</li>)}</ul>
+        <p class="pr-bigger">
+          <strong>Si tu problema es más grande:</strong> te entregamos gratis la primera parte que ya funciona y un presupuesto cerrado
+          para el resto. Sin compromiso.
+        </p>
+      </div>
+    </section>
+
+    <section class="pg-section" aria-labelledby="pr-why-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Por qué es gratis</p>
+        <div>
+          <h2 id="pr-why-title">Queremos conocer problemas reales, y que tú veas cómo trabajamos</h2>
+          <p class="pr-intro">
+            Antes de hablar de dinero. A cambio, nos dejas contar el caso sin nombres. Algunos de estos problemas acabarán siendo
+            proyectos más grandes. Otros no, y no pasa nada.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-section" aria-labelledby="pr-who-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Quién está detrás</p>
+        <div>
+          <h2 id="pr-who-title">Luiz Brazão, ingeniero de automatización con IA</h2>
+          <p class="pr-intro">
+            Fundador de IA Operators, en Málaga. Construye integraciones, automatizaciones y agentes que funcionan en producción.
+            Algunos de los sistemas en los que ha trabajado:
+          </p>
+        </div>
+      </div>
+      <ul class="pr-proof">
+        {proof.map((item) => (
+          <li>
+            <a href={item.href}>
+              <span class="pr-proof-title">{item.title}</span>
+              <span class="pr-proof-meta">{item.meta}</span>
+              <span class="ed-arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="pr-intro pr-about"><a class="ed-underlined" href={P.paths.about}>Más sobre IA Operators <span class="ed-arrow" aria-hidden="true">→</span></a></p>
+    </section>
+
+    <section id="bases" class="pg-section" aria-labelledby="pr-bases-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Bases del programa</p>
+        <div>
+          <h2 id="pr-bases-title">Las reglas, claras desde el principio</h2>
+          <ol class="pr-bases">
+            {PROBLEMA_BASES.map((b) => (
+              <li>
+                <strong>{b.title}.</strong> {b.body}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-section pg-faq ed-faq" aria-labelledby="pr-faq-title">
+      <div class="ed-section-intro">
+        <p class="ed-eyebrow">Preguntas frecuentes</p>
+        <div>
+          <h2 id="pr-faq-title">Antes de contar tu problema</h2>
+          <div class="pg-faq-list">
+            {faq.map((item) => (
+              <details>
+                <summary>{item.q}</summary>
+                <p>{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="ed-closing" aria-labelledby="pr-closing-title">
+    <div class="ed-container">
+      <p class="ed-eyebrow">{P.name} · IA Operators</p>
+      <h2 id="pr-closing-title" class="pg-closing-title">¿Qué tarea dejarías de hacer mañana si pudieras?</h2>
+      <p class="pg-closing-copy">Cuéntanosla. Son cinco minutos y, si no encaja, te llevas igualmente una recomendación.</p>
+      <div class="pr-actions">
+        <a class="ed-button" href="#contar">Contar mi problema<span class="ed-arrow" aria-hidden="true">↑</span></a>
+      </div>
+      <p class="pg-disclaimer">
+        Plazas limitadas. Enviar un problema no garantiza que se acepte. Más información en la
+        <a class="pr-inline-link" href={P.paths.privacy}>política de privacidad</a> y en las <a class="pr-inline-link" href="#bases">bases</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Vídeo (si existe): arranque con el botón y eventos video_play / video_complete.
+  const box = document.querySelector<HTMLElement>("[data-video]");
+  const video = box?.querySelector<HTMLVideoElement>("video");
+  const play = box?.querySelector<HTMLButtonElement>("[data-video-play]");
+  let played = false;
+  let completed = false;
+  const dl = () => ((window as unknown as { dataLayer?: Record<string, unknown>[] }).dataLayer ??= []);
+  play?.addEventListener("click", () => {
+    video?.play().catch(() => {});
+  });
+  video?.addEventListener("play", () => {
+    box?.classList.add("is-started");
+    if (!played) {
+      played = true;
+      dl().push({ event: "video_play", video_title: "problema_resuelto_luiz" });
+    }
+  });
+  video?.addEventListener("ended", () => {
+    if (!completed) {
+      completed = true;
+      dl().push({ event: "video_complete", video_title: "problema_resuelto_luiz" });
+    }
+  });
+
+  // El CTA final lleva al cuadro del hero y lo enfoca.
+  document.querySelectorAll<HTMLAnchorElement>('a[href="#contar"]').forEach((a) => {
+    a.addEventListener("click", () => {
+      window.setTimeout(() => document.querySelector<HTMLTextAreaElement>("#contar textarea")?.focus({ preventScroll: true }), 400);
+    });
+  });
+</script>

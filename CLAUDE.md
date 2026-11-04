@@ -17,6 +17,8 @@ npm run rgpd-ops:test && npm run rgpd-ops:test-sql   # RGPD Ops (PGlite for SQL)
 npm run verifactu-kit:check-bundle && npm run rgpd-ops:check-bundle   # after build
 npm run hotel-revenue:test && npm run hotel-revenue:test-sql            # Hotel Revenue Operator
 npm run hotel-revenue:check-bundle                                      # after build
+npm run problema-resuelto:test && npm run problema-resuelto:test-sql   # Problema Resuelto
+npm run problema-resuelto:check-bundle                                  # after build
 ```
 
 ## Architecture
@@ -99,3 +101,7 @@ faq:                        # renders as collapsible FAQ + FAQPage JSON-LD
 ## Hotel Revenue Operator (ES-only, under `/es/hoteles/`)
 
 Phase 1 = lead capture and validation, no SaaS yet — `docs/hotel-revenue-operator.md`. Landing `/es/hoteles/reservas-directas-ia/` (indexable), calculator `/es/hoteles/calculadora-ingresos/` (noindex, follow), `POST /api/hotel-revenue/lead`. Pure calculator in `src/lib/hotel-revenue/calculator.ts` (bump `CALCULATOR_VERSION` on any formula/limit/scenario change); the endpoint always recalculates server-side. Styles prefix `hro-`. Table `hotel_revenue_leads` (service role only).
+
+## Problema Resuelto (ES-only, `/es/problema-resuelto/`)
+
+Free small-case acquisition programme — `docs/problema-resuelto.md`. Island `ProblemIntake` → `POST /api/problema-resuelto/chat` (triage agent, Anthropic REST, nothing stored; transcript signed with HMAC `state`) → `POST /api/problema-resuelto/submit` (idempotent insert, LLM-generated internal `ficha`, Resend notification). Falls back to a plain form when the agent is unavailable. Bump `PROMPT_VERSION` in `src/lib/problema-resuelto/server/prompts.ts` on any prompt change. Styles prefix `pr-`. Table `problema_resuelto_casos` (service role only).
