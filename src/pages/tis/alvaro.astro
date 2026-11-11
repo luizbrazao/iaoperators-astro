@@ -13,6 +13,27 @@ import PresenterVideo from "../../components/PresenterVideo.astro";
 // proceso y patrones que aparecen al comparar. Petróleo para el método, ámbar
 // solo para la fricción. Etiquetas en monoespaciada ("Fig.", "H-A").
 //
+// v2 (11/11/2026): alineada con la mesa de TIS «De los datos a la estrategia:
+// ecosistemas Big Data» (06/10/2026, moderó Mayte García, de HOSBEC; con
+// Pablo Hernández, de Hoteles RH, y Daniel Caro, de Andalucía Nexus).
+// Verificado contra la transcripción oficial. De Álvaro:
+//   - 06:12: «lo complicado es empezar»; convencer cuando la plataforma
+//     «está todavía en un PowerPoint. Esto ya no es un PowerPoint».
+//   - 07:10–07:57: convencer al hotelero de conectar su PMS, sin «renglón de
+//     Excel de ajustes»; «Los datos son del hotelero» y solo se usan de forma
+//     agregada; «Nadie jamás nunca ve los datos del hotel excepto el propio
+//     hotelero»; lo difícil es cambiar la mentalidad.
+//   - 08:47: «Para utilizar la inteligencia artificial, lo primero que tienes
+//     que tener son datos»; ordenarlos (conectar con el PMS) y luego «juntarte
+//     con amigos» para ponerle «un poquito más de salsa».
+//   - 29:07: expandir el proyecto «para que no se reinvente la rueda».
+//   - 30:31: que los hoteleros «cambien el chip»; que dejen de decidir solo
+//     llamando a «dos o tres colegas de confianza».
+//   - 35:05: «El momento era ayer»; la principal barrera es que los hoteleros
+//     cambien el chip; con datos, decidir aperturas, cierres y plantillas.
+// Mayte lo presentó como director de ITH, «precursor también» de Biontrend.
+// LinkedIn: Álvaro y Luiz son contactos de primer grado.
+//
 // Verificado a 04/10/2026:
 // - Álvaro Carrillo de Albornoz dirige ITH desde 2008 (ithotelero.com/quienes-somos).
 // - Pedro Fernández, responsable de Transformación Digital e IA de ITH, en
@@ -31,7 +52,7 @@ const VIDEO = {
 };
 
 const CONTACT_HREF = `https://wa.me/34662423523?text=${encodeURIComponent(
-  "Hola Luiz, soy Álvaro Carrillo, de ITH. He visto la propuesta de la Radiografía Digital Hotelera y me gustaría hablarlo.",
+  "Hola Luiz, soy Álvaro Carrillo, de ITH. He visto la página que preparaste después de TIS y me gustaría hablarlo.",
 )}`;
 const CASE_HREF = "/es/portfolio/radiografia-cadena-hotelera-menorca/";
 const QUOTE_SRC = "https://www.hosteltur.com/178682_nueva-etapa-de-la-ia-en-los-hoteles-el-verdadero-reto-no-es-tecnologico.html";
@@ -42,7 +63,7 @@ const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const pageUrl = new URL("/tis/alvaro/", site).toString();
 const ogImage = new URL("/og/alvaro.png", site).toString();
 const title = "Álvaro Carrillo × IA Operators | Radiografía Digital Hotelera";
-const description = "Una propuesta de piloto de Radiografía Digital Hotelera preparada por IA Operators para ITH.";
+const description = "Después de «De los datos a la estrategia» en TIS: antes de la IA, datos ordenados; antes de la solución, el problema. Una propuesta de piloto de Radiografía Digital Hotelera para ITH.";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -202,8 +223,8 @@ const bands = patrones.map((c) => (c / (COLS - 1)) * 100);
     <main>
       <!-- Hero -->
       <section id="inicio" class="hero wrap" aria-labelledby="hero-title">
-        <p class="mono eyebrow">Una idea para Álvaro Carrillo e ITH</p>
-        <p class="greeting">Álvaro, tengo una propuesta que empieza antes de la tecnología.</p>
+        <p class="mono eyebrow">Después de «De los datos a la estrategia» · TIS 2026</p>
+        <p class="greeting">Álvaro, en TIS dijiste que para usar la inteligencia artificial lo primero que tienes que tener son datos. Y ordenados.</p>
         <h1 id="hero-title" class="question">¿Y si buscamos los problemas antes de buscar las soluciones?</h1>
         <p class="sample">
           <span class="sample-dots" aria-hidden="true">{muestra.map((m, i) => <i class:list={{ opt: i > 2 }}></i>)}</span>
@@ -214,8 +235,8 @@ const bands = patrones.map((c) => (c / (COLS - 1)) * 100);
           <PresenterVideo src={VIDEO.src} poster={VIDEO.poster} label="Vídeo de Luiz Brazão para Álvaro Carrillo" duracion={VIDEO.duracion} />
 
           <div class="hero-copy">
-            <p>ITH lleva años acercando innovación, tecnología y proyectos piloto al sector hotelero.</p>
-            <p>La idea que quiero proponerte empieza un paso antes:</p>
+            <p>ITH lleva años acercando innovación, tecnología y proyectos piloto al sector hotelero, y fue precursor de Biontrend, que ya ordena los datos de mercado de cientos de hoteles.</p>
+            <p>La idea que quiero proponerte aplica esa misma lógica a la operación, un paso antes:</p>
             <ol class="hero-steps">{pasoAntes.map((p) => <li>{p}</li>)}</ol>
           </div>
         </div>
@@ -386,7 +407,7 @@ const bands = patrones.map((c) => (c / (COLS - 1)) * 100);
           <div>
             <p class="pre" data-reveal>Después viene la parte interesante.</p>
             <h2 id="comparar-title" class="mega" data-reveal>Comparar.</h2>
-            <p class="lede" data-reveal>Con los diagnósticos individuales hechos, anonimizaríamos los resultados y buscaríamos patrones.</p>
+            <p class="lede" data-reveal>Con los diagnósticos individuales hechos, anonimizaríamos los resultados y buscaríamos patrones. Con la regla que diste en la mesa: los datos son del hotelero, y nadie ve los de otro hotel, solo el agregado.</p>
             <p class="mono label q-k" data-reveal>Preguntas que el piloto podría responder</p>
             <ol class="questions" data-reveal>{preguntas.map((q, i) => <li style={`--i:${i}`}><span class="mono">Q{i + 1}</span>{q}</li>)}</ol>
             <p class="note" data-reveal>Hoy no tenemos estas respuestas. Son las preguntas que el piloto intentaría contestar.</p>
@@ -453,7 +474,7 @@ const bands = patrones.map((c) => (c / (COLS - 1)) * 100);
             <p class="mono label" data-reveal>09 · Ecosistema</p>
             <div>
               <h2 id="eco-title" class="h2" data-reveal>Del problema al ecosistema.</h2>
-              <p class="lede" data-reveal>Una vez identificada una oportunidad real, ITH tiene algo que IA Operators por sí sola no tiene: un ecosistema amplio de hoteles, especialistas y proveedores tecnológicos.</p>
+              <p class="lede" data-reveal>Una vez identificada una oportunidad real, ITH tiene algo que IA Operators por sí sola no tiene: un ecosistema amplio de hoteles, especialistas y proveedores tecnológicos. Es lo que en la mesa llamaste «juntarte con amigos»: primero ordenar lo propio, después sumar a otros, sin reinventar la rueda.</p>
             </div>
           </div>
 
@@ -518,7 +539,7 @@ const bands = patrones.map((c) => (c / (COLS - 1)) * 100);
           <p class="mono label" data-reveal>12 · Primer paso</p>
           <div>
             <h2 id="paso-title" class="h2" data-reveal>Empecemos pequeño.</h2>
-            <p class="lede" data-reveal>No hace falta lanzar un programa nacional. Podríamos empezar con:</p>
+            <p class="lede" data-reveal>Como dijiste de Biontrend, lo complicado es empezar, y que deje de ser un PowerPoint. No hace falta lanzar un programa nacional. Podríamos empezar con:</p>
           </div>
         </div>
         <p class="one" data-reveal><span class="one-dot" aria-hidden="true"></span>1 hotel.</p>
