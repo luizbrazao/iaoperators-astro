@@ -24,7 +24,7 @@ import PresenterVideo from "../../components/PresenterVideo.astro";
 //     descubrimiento, decisión, antes, durante y después; online y offline.
 //   - Detrás, CMS, PMS, CRS, chatbot y motor de reservas se comunican, generan
 //     datos y la IA aparece como herramienta de interpretación.
-//   - El documento del WHY (misión, propuesta de valor, valores, segmentos,
+//   - El documento del WHY (visión, propuesta de valor, valores, segmentos,
 //     insight, promesa, arquetipo, tono, parte sensorial, storytelling, claim,
 //     manifiesto) lo escriben humanos; sin overpromise. No es lo mismo un Only
 //     YOU que un Casual, un Silken o un Room Mate.
@@ -32,6 +32,16 @@ import PresenterVideo from "../../components/PresenterVideo.astro";
 //     departamentos accedan a esa información de forma ordenada. Hoy hay silos:
 //     marketing con su ChatGPT, otro con Claude, finanzas con otro, RRHH con
 //     otro; no hay un cerebro con los silos bien ordenados.
+//
+// Verificado contra la transcripción oficial de TIS (vídeo de 10:28, 11/11/2026):
+//   - El WHY empieza por la visión (no "misión").
+//   - 06:32: «toda compañía tendrá como su IA corporativa, donde va a almacenar
+//     ese ADN propio». 07:15: «target agéntico», APIs, «el llamado MCP».
+//   - 09:09: anunció la nueva productora de eMascaró (STUDIOS, según LinkedIn).
+// LinkedIn (11/11/2026): Toni y Luiz ya son contactos de primer grado. Vento
+// DXP «más de 150 clientes activos», usado por «15 de las principales cadenas
+// hoteleras de España»; foco reciente en campings (Samay Resorts).
+// Ley 10/2025: plazo 28/12/2026 sigue vigente (consultado 11/11/2026).
 //
 // Datos públicos (verificados el 07/10/2026):
 //   - TIS 2026: sesión y horario.
@@ -76,7 +86,7 @@ const viaje = ["Descubrimiento", "Decisión", "Antes", "Durante", "Después"];
 const fases = ["Descubrir", "Decidir", "Antes", "Durante", "Después"];
 const sistemas = ["CMS", "PMS", "CRS", "Chatbot", "Motor de reservas"];
 const why = [
-  "Misión", "Propuesta de valor", "Valores", "Segmentos", "Insight", "Promesa de marca",
+  "Visión", "Propuesta de valor", "Valores", "Segmentos", "Insight", "Promesa de marca",
   "Arquetipo", "Cómo hablar y escribir", "Parte sensorial", "Storytelling", "Claim", "Manifiesto",
 ];
 
@@ -113,7 +123,7 @@ const vosotros = [
 ];
 const nosotros = [
   "Llevar ese cerebro a la operación: atención, reservas, grupos, back-office.",
-  "Integraciones API-first con PMS, CRS, CRM y ticketing.",
+  "Integraciones API-first y MCP con PMS, CRS, CRM y ticketing.",
   "Agentes y automatizaciones en producción, con permisos y trazabilidad.",
   "Evaluación continua: comprobar, con datos, que la IA habla como la marca.",
 ];
@@ -213,6 +223,7 @@ const pasos = [
               <ul class="chips">{sistemas.map((s) => <li>{s}</li>)}</ul>
               <figcaption>Detrás, los sistemas se comunican y generan datos. La IA llega como herramienta de interpretación.</figcaption>
             </figure>
+            <p class="prose-line" data-reveal>Y hablaste del target agéntico: las herramientas de IA que leen la web, el contenido, el SEO de siempre, las APIs y «el llamado MCP».</p>
 
             <p class="prose-line" data-reveal>Y antes de todo eso, el WHY. Un documento extenso, escrito por personas:</p>
             <ul class="why" data-reveal>{why.map((w) => <li>{w}</li>)}</ul>
@@ -228,7 +239,8 @@ const pasos = [
       <section id="silos" class="night" aria-labelledby="si-title">
         <div class="wrap section">
           <p class="label label-night" data-reveal>02 · Los silos</p>
-          <h2 id="si-title" class="h2 h2-wide" data-reveal>«Educar a la IA para que todos los departamentos accedan a esa información de forma ordenada.»</h2>
+          <h2 id="si-title" class="h2 h2-wide" data-reveal>Educar a la IA de la marca «para que todos los departamentos de esa empresa tengan acceso a esa información de una forma ordenada».</h2>
+          <p class="lede silos-lede" data-reveal>Y lo llevaste más lejos: en pocos años, toda compañía tendrá su IA corporativa, con su propio ADN.</p>
           <div class="brain-grid">
             <figure class="silos" data-reveal aria-label="Hoy: cada departamento con su propia IA">
               <p class="fig-k">Hoy</p>
@@ -594,6 +606,7 @@ const pasos = [
       @media (min-width: 900px) {
         .top-nav .top-link-x { display: inline; }
       }
+      .night .silos-lede { color: var(--night-text); }
     </style>
   </body>
 </html>
