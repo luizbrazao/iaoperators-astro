@@ -4,6 +4,30 @@ import PresenterVideo from "../../components/PresenterVideo.astro";
 // el QR de una tarjeta entregada en mano. Privada: noindex,nofollow y fuera del
 // sitemap ("/tis/" en NOINDEX_PATHS de astro.config.mjs).
 //
+// v2 (11/11/2026): alineada con su sesión de TIS (07/10/2026, «Tecnología con
+// impacto», con Manolo Díaz, de Canary; moderó Mar López, de TecnoHotel),
+// verificada contra la transcripción oficial del vídeo. De Javier:
+//   - 03:29: la IA no va en contra de la parte humana; ha venido a potenciarla.
+//     Todo empezó por la atención telefónica: llamadas simultáneas en picos de
+//     trabajo de recepción y reservas; lo midieron antes del proyecto con
+//     Canary: unas 18.000 llamadas al año sin atender.
+//   - 05:08: muchas soluciones en el mercado; buscaban una plataforma integral,
+//     que compartiera el dato y se integrara rápido con PMS y motor.
+//   - 11:22: una media de unos 125.000 € de venta con la herramienta de
+//     cross-selling y upselling de Canary; lo importante es la personalización
+//     («no disparamos con bala gorda»).
+//   - 12:59: para elegir partner: una realidad testada, que conociera el hotel y
+//     rapidez de integración («suele ser un calvario»).
+//   - 14:53: no aplicar IA por aplicar; ver si soluciona algo no resuelto, sin
+//     fricciones; mejor servicio al cliente interno y externo, ventaja para los
+//     equipos, mejor EBITDA; con una de las tres ya merece mirarse.
+//   - LinkedIn (antes de TIS): IA «sólo con el mejor Partner, identificando
+//     donde lo necesitas y devolviendo tiempo a tu equipo para que se lo dedique
+//     al cliente». Javier y Luiz son contactos de primer grado.
+// Alianza Hotelera: sigue sin mencionarse (decisión de Luiz).
+// Sin enlace a /es/hoteles/reservas-directas-ia/ en el cuerpo: Canary es su
+// partner elegido para voz, chat y upselling.
+//
 // Concepto: deLuna ya ha construido un modelo preparado para crecer. Lo que
 // también escala, si nadie lo mira, son los detalles: tareas, transferencias,
 // excepciones. El lenguaje visual es la multiplicación (1 → 2 → 4 → 8) de un
@@ -41,7 +65,7 @@ const VIDEO = {
 // "Hablar con Luiz": hoy WhatsApp con mensaje preparado. Para Cal.com basta
 // con sustituir la URL.
 const CONTACT_HREF = `https://wa.me/34662423523?text=${encodeURIComponent(
-  "Hola Luiz, soy Javier Tausía, de deLuna Hotels. He visto la página sobre la Radiografía Digital y me gustaría hablarlo.",
+  "Hola Luiz, soy Javier Tausía, de deLuna Hotels. He visto la página que preparaste después de TIS y me gustaría hablarlo.",
 )}`;
 const GTM_ID = "GTM-572KJ7HZ";
 // -----------------------------------------------------------------------------
@@ -50,7 +74,7 @@ const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const pageUrl = new URL("/tis/javier/", site).toString();
 const ogImage = new URL("/og/javier.png", site).toString();
 const title = "Javier Tausía × IA Operators | Radiografía Digital";
-const description = "Una reflexión sobre crecimiento, operaciones y tecnología preparada por IA Operators para Javier Tausía y deLuna Hotels.";
+const description = "Después de «Tecnología con impacto» en TIS: cuál es la próxima fricción que merece medirse. Una reflexión preparada por IA Operators para Javier Tausía y deLuna Hotels.";
 
 const invisibles = ["pequeñas tareas", "transferencias", "excepciones", "dependencias", "decisiones manuales"];
 
@@ -66,7 +90,7 @@ const detalles = [
 const modelo = [
   { k: "Procedimientos, reporting y formación", v: "Tres años de trabajo para tener equipos capaces de acompañar los lanzamientos en nuevos destinos." },
   { k: "Tesipro", v: "Parte de la arquitectura de gestión sobre la que crece el modelo." },
-  { k: "Canary", v: "Mensajería, webchat, voz, check-in y check-out digitales: la relación con el huésped evoluciona." },
+  { k: "Canary", v: "Una sola plataforma para voz con IA, mensajería, check-in, upselling y check-out, integrada con PMS y motor. Una media de unos 125.000 € de venta en cross-selling y upselling, según contaste en TIS." },
   { k: "Robotización", v: "En el back-office de restauración, 2.690 horas al año que ya no se dedican a tareas repetitivas." },
   { k: "Inteligencia artificial", v: "Ya forma parte de la conversación operativa." },
 ];
@@ -158,16 +182,17 @@ const replicar = [
     <main>
       <!-- Hero -->
       <section id="inicio" class="hero wrap" aria-labelledby="hero-title">
-        <p class="label">Una idea para Javier Tausía</p>
-        <h1 id="hero-title" class="greeting">Javier, habéis construido un modelo preparado para crecer.</h1>
-        <p class="aside-q">¿Y las fricciones?</p>
-        <p class="big-q">¿Cómo detectáis la próxima fricción antes de que también escale?</p>
+        <p class="label">Después de «Tecnología con impacto» · TIS 2026</p>
+        <h1 id="hero-title" class="greeting">Javier, en TIS contaste que todo empezó por un número: unas 18.000 llamadas al año que no se atendían.</h1>
+        <p class="aside-q">Lo medisteis antes de empezar.</p>
+        <p class="big-q">¿Cuál es la próxima fricción que merece medirse así?</p>
 
         <div class="hero-grid">
           <PresenterVideo src={VIDEO.src} poster={VIDEO.poster} label="Vídeo de Luiz Brazão para Javier Tausía" duracion={VIDEO.duracion} />
 
           <div class="hero-copy">
-            <p>Cuando crecen los hoteles, los clientes, los canales y las interacciones, también puede crecer algo mucho menos visible:</p>
+            <p>Era una fricción que no se veía: llamadas simultáneas que coincidían con los picos de trabajo en recepción y reservas. Mala experiencia para el huésped y reservas que se perdían.</p>
+            <p>Cuando crecen los hoteles, los clientes y los canales, aparecen otras igual de silenciosas:</p>
             <ul class="quiet-list">
               {invisibles.map((t) => <li>{t}</li>)}
             </ul>
@@ -217,7 +242,7 @@ const replicar = [
                   </div>
                 ))}
               </dl>
-              <p class="src" data-reveal>Según lo publicado en Hosteltur (2025), TecnoHotel (2024 y 2025) y Canary Technologies (diciembre de 2025).</p>
+              <p class="src" data-reveal>Según lo publicado en Hosteltur (2025), TecnoHotel (2024 y 2025) y Canary Technologies (diciembre de 2025), y lo que contaste en TIS.</p>
               <p class="prose-line" data-reveal>Por eso no tendría mucho sentido preguntaros qué tecnología os falta.</p>
               <p class="statement" data-reveal>La pregunta interesante es qué fricción aparece después.</p>
             </div>
@@ -237,6 +262,7 @@ const replicar = [
               <blockquote>«Es imprescindible liberar a los profesionales de tareas rutinarias para que se centren en actividades más creativas, empáticas y de mayor valor añadido.»</blockquote>
               <figcaption>Javier Tausía · TecnoHotel, agosto de 2025</figcaption>
             </figure>
+            <p class="prose-line" data-reveal>En TIS lo dijiste de otra forma: la inteligencia artificial no va en contra de la parte humana; ha venido a potenciarla. Y unos días antes, en LinkedIn: IA sí, «pero sólo con el mejor Partner, identificando donde lo necesitas y devolviendo tiempo a tu equipo para que se lo dedique al cliente».</p>
             <p class="prose-line" data-reveal>Es también un principio central de IA Operators.</p>
             <p class="pair" data-reveal>
               <span>Automatizar lo repetitivo.</span>
@@ -255,6 +281,7 @@ const replicar = [
             <div>
               <h2 id="rd-title" class="h2" data-reveal>Para eso utilizamos la Radiografía Digital.</h2>
               <p class="not-q" data-reveal>No empezamos preguntando <span>«¿Dónde podemos poner IA?»</span></p>
+              <p class="prose-line" data-reveal>Fue también tu consejo al cerrar la sesión: no aplicar inteligencia artificial por aplicar, sino ver si resuelve algo que todavía no está resuelto, y sin fricciones.</p>
               <p class="prose-line" data-reveal>Empezamos observando:</p>
               <ul class="observe" data-reveal>
                 {observar.map((o, i) => <li style={`--i:${i}`}>{o}</li>)}
@@ -341,6 +368,7 @@ const replicar = [
               {despues.map((d) => <li>{d}</li>)}
               <li class="choice-keep">¿O dejarlo exactamente como está?</li>
             </ul>
+            <p class="prose-line" data-reveal>Y pasar cada opción por tus tres preguntas de TIS: ¿mejora el servicio al cliente interno y externo?, ¿da a los equipos una ventaja que no tienen?, ¿mejora el EBITDA? Si cumple al menos una, merece mirarse.</p>
           </div>
         </div>
       </section>
@@ -354,6 +382,7 @@ const replicar = [
               <h2 id="mi-title" class="h2" data-reveal>Una mirada externa, sin plataforma que defender.</h2>
               <div class="prose prose-greenbg" data-reveal>
                 <p>IA Operators no representa un PMS. No vende una plataforma hotelera. No necesita introducir una solución determinada.</p>
+                <p>Cuando elegisteis partner pediste tres cosas: que fuera una realidad ya probada, que conociera el hotel y que se integrara rápido, porque «todo esto suele ser un calvario». Una Radiografía va un paso antes: decide qué problema merece un partner.</p>
                 <p>Eso permite analizar la operación desde fuera y hacer una pregunta sencilla:</p>
               </div>
             </div>
