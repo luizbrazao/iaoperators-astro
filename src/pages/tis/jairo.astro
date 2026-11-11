@@ -36,11 +36,17 @@ import PresenterVideo from "../../components/PresenterVideo.astro";
 //     sirve la mejor bomba de calor si el sistema de control no funciona
 //     (un Ferrari conducido como un utilitario).
 //   - Las cuatro preguntas de cada inversión (cliente que paga más, operativa,
-//     costes, escalar otros 20 hoteles sin que se noten las costuras); el euro
+//     EBITDA, escalar otros 20 hoteles sin que se noten las costuras); el euro
 //     que paga el cliente y se convierte entero en EBITDA. Juan Carlos dijo
 //     estar de acuerdo «al 97,3 %».
-// Atribución media, no usada: la apertura con 53 hoteles abiertos y 25 en
-// camino (solo "unos 25 en camino", como lo que contó); "propiedad de un fondo".
+// Verificado contra la transcripción oficial de TIS (vídeo, 11/11/2026):
+//   - Apertura (00:51): 53 hoteles abiertos, unos 25 en camino asegurados,
+//     fondo Kartesia, 25 años, nueve en Sevilla y 25 en Madrid.
+//   - 06:37-11:48: «no hay un algoritmo que arregle un mal colchón»; 60 M€
+//     en el quinquenio (más de 20 ya) en reposicionamiento; «el techo de
+//     precio lo marca el CapEx», la cuenta de resultados la tecnología.
+//   - 32:44: «o tiene una columna que le permite escalar fácilmente o está
+//     muerta». Tercera pregunta del filtro: EBITDA (no "costes").
 //
 // Datos públicos (verificados el 07/10/2026):
 //   - TIS 2026: Jairo González, Expansion Director, Petit Palace Hotels.
@@ -83,8 +89,8 @@ const pad = (n: number) => String(n).padStart(2, "0");
 // Las cuatro preguntas que planteó Jairo para cada inversión.
 const filtro = [
   { q: "¿Lo valora el cliente?", d: "Y no solo que lo valore: que esté dispuesto a pagar más por ello." },
-  { q: "¿Mejora la operativa del equipo?", d: "Que le facilite la vida a quien lo usa cada día." },
-  { q: "¿Mejora los costes?", d: "Que el euro invertido vuelva a la cuenta de resultados." },
+  { q: "¿Mejora la operativa del equipo?", d: "Que le facilite la vida a quien lo usa cada día y abarate costes." },
+  { q: "¿Mejora el EBITDA?", d: "Por ingresos o por costes, que el euro invertido se note en la cuenta de resultados." },
   { q: "¿Permite escalar?", d: "Meter otros 20 hoteles sin dramas y sin que se noten las costuras." },
 ];
 
@@ -175,7 +181,7 @@ const friccion: Record<number, number[]> = { 0: [], 1: [1, 4], 2: [0, 2, 4] };
       <!-- Hero -->
       <section id="inicio" class="hero wrap" aria-labelledby="hero-title">
         <p class="label">Después de «CapEx or TechEx?» · TIS 2026</p>
-        <h1 id="hero-title" class="greeting">Jairo, en TIS lo dijiste sin rodeos: una compañía que quiere crecer o tiene una <b>columna vertebral digital</b> que le permite escalar, o no escala.</h1>
+        <h1 id="hero-title" class="greeting">Jairo, en TIS lo dijiste sin rodeos: una compañía que quiere crecer o tiene una <b>columna vertebral digital</b> que le permite escalar, o está muerta.</h1>
         <p class="big">Lo que cruje al crecer no suelen ser las piezas.<span>Son las uniones.</span></p>
 
         <div class="hero-grid">
@@ -288,7 +294,7 @@ const friccion: Record<number, number[]> = { 0: [], 1: [1, 4], 2: [0, 2, 4] };
                 <blockquote>«Tenemos capacidad para fondear el CAPEX y seleccionamos solo proyectos que aporten una rentabilidad que permita una expansión sólida y sostenible.»</blockquote>
                 <figcaption>Jairo González · septiembre de 2025</figcaption>
               </figure>
-              <p class="prose-line prose-night" data-reveal>En TIS lo llevaste al TechEx: en la columna digital no quitarías nada, porque es lo que sostiene un crecimiento de años. Pero también dijiste que hay capas de tecnología superpuestas y que alguna sobra.</p>
+              <p class="prose-line prose-night" data-reveal>En TIS lo resumiste así: no hay algoritmo que arregle un mal colchón, y el techo de precio lo marca el CapEx, pero la cuenta de resultados la marca la tecnología. En la columna digital no quitarías nada, porque es lo que sostiene un crecimiento de años. Pero también dijiste que hay capas de tecnología superpuestas y que alguna sobra.</p>
               <p class="prose-line prose-night" data-reveal>Sunotel en 2024, la marca única en 2025, doce hoteles Soho ahora y el resto antes de que acabe 2027. Cada integración trae sus sistemas, sus procesos y sus costumbres.</p>
             </div>
           </div>
