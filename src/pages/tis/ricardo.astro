@@ -11,6 +11,31 @@ import PresenterVideo from "../../components/PresenterVideo.astro";
 // si existe, en las líneas entre ellos. El naranja de marca se reserva para
 // esos puntos de paso; el azul es el de las cúpulas de Altea.
 //
+// v2 (12/11/2026): alineada con su mesa de TIS «Dirigir un hotel en 2026:
+// tecnología, talento y rentabilidad desde diferentes perspectivas»
+// (06/10/2026, 12:55; moderó Cinta Massó, de James and Rita; con Nuria Blanco,
+// de Hotel Plaza y Hotel Avenida, y Víctor Sánchez, de Tres Reyes). Verificado
+// contra la transcripción oficial. De Ricardo:
+//   - 07:30: cicloturismo; antes cerraba meses, ahora solo 15 días; plantilla
+//     mínima de 110 a 120 trabajadores; en Altea, «somos la fábrica del
+//     pueblo»; «de perder hasta los calcetines a ser rentable»; el ciclista
+//     viene de siete a 10 días.
+//   - 17:44: «labor mesiánica» con el personal (buffet 10 horas al día);
+//     escucha activa: nutricionistas de equipos, porridge, desayunos a las 7.
+//   - 31:36: profesión vocacional; abrir todo el año retiene talento (fijos
+//     discontinuos que ahora trabajan todo el año); cocina «una fábrica desde
+//     las cinco de la mañana hasta las 11 de la noche».
+//   - 34:21: app para gestionar el sueldo, plataforma de formación, incentivos
+//     escalonados; cerró 2025 con un 0,68 % de rotación; «orgullo de
+//     pertenencia».
+//   - 40:17 (cierre): «la tecnología está para ayudarnos»; «yo que soy de
+//     letras, contrato a gente de ciencias»; «nos están saturando con tanta
+//     herramienta, tanta app»; el PMS cubre esto, otro también, «y estoy
+//     pagando una cuota por aquí»; «popurrí»; paso atrás: «¿qué estoy pagando?
+//     ¿Qué me está ofreciendo cada uno? ¿En qué me están ayudando?»; «o nos
+//     echan una mano o estamos perdidos. Habrá que subcontratar alguna IT».
+// LinkedIn: invitación de Luiz pendiente (12/11/2026).
+//
 // Datos públicos usados (verificados el 04/10/2026):
 //   - Web de Cap Negret, sostenibilidad: Power BI para datos de negocio y de
 //     consumo energético, Niikiis (fichajes y comunicación interna), app Salto
@@ -37,7 +62,7 @@ const VIDEO = {
 // "Hablar con Luiz": hoy WhatsApp con mensaje preparado. Para Cal.com basta
 // con sustituir la URL.
 const CONTACT_HREF = `https://wa.me/34662423523?text=${encodeURIComponent(
-  "Hola Luiz, soy Ricardo Sánchez, de Cap Negret. He visto la página sobre la Radiografía Digital y me gustaría hablarlo.",
+  "Hola Luiz, soy Ricardo Sánchez, de Cap Negret. He visto la página que preparaste después de TIS y me gustaría hablarlo.",
 )}`;
 const GTM_ID = "GTM-572KJ7HZ";
 // -----------------------------------------------------------------------------
@@ -46,7 +71,7 @@ const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const pageUrl = new URL("/tis/ricardo/", site).toString();
 const ogImage = new URL("/og/ricardo.png", site).toString();
 const title = "Ricardo Sánchez × IA Operators | Radiografía Digital";
-const description = "Una propuesta de Radiografía Digital preparada por IA Operators para Hotel Cap Negret.";
+const description = "Después de «Dirigir un hotel en 2026» en TIS: antes de otra herramienta, saber qué estás pagando y en qué te ayuda. Una propuesta de Radiografía Digital para Hotel Cap Negret.";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -184,8 +209,8 @@ const opciones = ["automatizar", "integrar", "rediseñar un proceso", "aprovecha
     <main>
       <!-- Hero -->
       <section id="inicio" class="hero wrap" aria-labelledby="hero-title">
-        <p class="label">Una idea para Ricardo Sánchez</p>
-        <h1 id="hero-title" class="greeting">Ricardo, por lo que he visto, en Cap Negret la tecnología ya forma parte de la operación.</h1>
+        <p class="label">Después de «Dirigir un hotel en 2026» · TIS 2026</p>
+        <h1 id="hero-title" class="greeting">Ricardo, en TIS lo dijiste claro: nos están saturando con tanta herramienta y tanta app que toca parar y preguntarse «¿qué estoy pagando?».</h1>
         <p class="thesis">
           <span class="thesis-a">La tecnología ya está.</span>
           <span class="thesis-b">La pregunta es si todo funciona como un sistema.</span>
@@ -195,8 +220,8 @@ const opciones = ["automatizar", "integrar", "rediseñar un proceso", "aprovecha
           <PresenterVideo src={VIDEO.src} poster={VIDEO.poster} label="Vídeo de Luiz Brazão para Ricardo Sánchez" duracion={VIDEO.duracion} />
 
           <div class="hero-copy">
-            <p>Power BI, herramientas de gestión, comunicación interna, eficiencia energética, sostenibilidad y nuevas soluciones operativas ya forman parte del día a día.</p>
-            <p>Cuando una organización llega a ese nivel de madurez, aparece una pregunta diferente:</p>
+            <p>En Cap Negret la tecnología ya forma parte de la operación: Power BI, herramientas de gestión, comunicación interna, eficiencia energética, sostenibilidad.</p>
+            <p>Por eso tu pregunta del cierre es la buena: «¿qué me está ofreciendo cada uno? ¿En qué me están ayudando?». Y lleva a otra:</p>
             <p class="hero-q">¿Dónde siguen existiendo fricciones entre personas, procesos, datos y tecnología?</p>
           </div>
         </div>
@@ -366,6 +391,7 @@ const opciones = ["automatizar", "integrar", "rediseñar un proceso", "aprovecha
                 <p class="maxim-a">Más tecnología no siempre significa mejor operación.</p>
                 <p class="maxim-b">A veces la mejor decisión es conectar mejor lo que ya existe.</p>
               </div>
+              <p class="prose-line" data-reveal>O dar de baja lo que no aporta. Cuando el PMS ya cubre algo y otra herramienta hace lo mismo con su propia cuota, el «popurrí» que describiste en TIS no se arregla con una app más.</p>
             </div>
           </div>
         </div>
@@ -422,6 +448,7 @@ const opciones = ["automatizar", "integrar", "rediseñar un proceso", "aprovecha
                 {flujos.map((f) => <li>{f}</li>)}
               </ul>
               <p class="chips-note" data-reveal>Cuál conviene mirar primero es algo que preferimos decidir contigo.</p>
+              <p class="prose-line" data-reveal>Con el cicloturismo contaste que lo que más os funcionó fue escuchar: a los nutricionistas de los equipos, el porridge, los desayunos a las siete. Una Radiografía hace lo mismo con la operación: escuchar a quien la ejecuta antes de proponer nada.</p>
             </div>
           </div>
 
@@ -456,6 +483,7 @@ const opciones = ["automatizar", "integrar", "rediseñar un proceso", "aprovecha
             </ul>
             <p class="options-last" data-reveal>o, simplemente, no cambiar nada.</p>
             <p class="principle" data-reveal>La tecnología es una consecuencia del diagnóstico, no el punto de partida.</p>
+            <p class="prose-line" data-reveal>Lo dijiste al cerrar la mesa: «o nos echan una mano o estamos perdidos». Tú eres de letras y contratas a gente de ciencias para entender la tecnología. Esa mano externa, sin cuota que defender, es lo que ofrecemos.</p>
           </div>
         </div>
       </section>
