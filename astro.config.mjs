@@ -16,22 +16,8 @@ const NOINDEX_PATHS = [
   "/es/admin/",
   // Páginas de "gracias" de la encuesta Segunda Factura IA
   "/estudio/segunda-factura-ia/encuesta/gracias/",
-  // Propuestas comerciales privadas
-  "/marfa-fase-2/",
-  "/propuesta-kpmg/",
-  "/propuesta-automatizacion-ia/",
-  "/es/proposta-technical-partner/",
-  "/pablo-tovar/",
-  "/sandra-g-design/",
-  "/salones-lume/",
-  "/salao-malaga/",
-  "/rapiplaga/",
-  "/recepcionista-virtual/",
-  "/asistente-ia-apartamentos-turisticos/",
-  "/roadmap-datadicoco/",
-  "/agencia-lanza-ghl/",
+  // Grade curricular del Desafío de 60 días (privada)
   "/desafio-de-60-dias/",
-  "/embrujo-agente-pedidos/",
   // Landings personalizadas de prospección (QR en tarjeta)
   "/tis/",
   // Landings personalizadas de prospección de la Frente A (Ley 10/2025),
@@ -122,17 +108,6 @@ export default defineConfig({
   redirects: {
     "/": "/es/",
     "/sitemap.xml": "/sitemap-index.xml",
-
-    // Tracker del proyecto Datadicoco (cliente, mayo-junio 2026). Vivia en
-    // /{es,en,pt}/roadmap/ con robots="index,follow" explicito, en el sitemap
-    // y con hreflang reciproco: contenido de cliente (con precios) indexable
-    // por triplicado, colisionando con el cluster "roadmap" del blog. Las tres
-    // rutas se eliminan (archivos en _to_delete/rotas-roadmap-datadicoco/) y
-    // cualquier marcador del cliente cae en la unica URL que queda, que ya es
-    // noindex.
-    "/es/roadmap/": "/roadmap-datadicoco/",
-    "/en/roadmap/": "/roadmap-datadicoco/",
-    "/pt/roadmap/": "/roadmap-datadicoco/",
 
     // Árbol de blog sin prefijo de idioma. `src/pages/blog.astro` generaba
     // /blog/ con el mismo contenido que /es/blog/: dos árboles para la misma

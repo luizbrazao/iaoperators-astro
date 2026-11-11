@@ -6,16 +6,6 @@
       "permanent": true
     },
     {
-      "source": "/:locale(es|en|pt)/roadmap",
-      "destination": "/roadmap-datadicoco/",
-      "permanent": true
-    },
-    {
-      "source": "/:locale(es|en|pt)/roadmap/",
-      "destination": "/roadmap-datadicoco/",
-      "permanent": true
-    },
-    {
       "source": "/en/portfolio/radiografia-cadena-hotelera-menorca/",
       "destination": "/en/portfolio/hotel-chain-digital-audit-menorca/",
       "permanent": true
