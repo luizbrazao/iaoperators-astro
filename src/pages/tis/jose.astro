@@ -25,20 +25,23 @@ import PresenterVideo from "../../components/PresenterVideo.astro";
 // dejar a las personas lo que requiere criterio y empatía la aporta Luiz; no se
 // cita literalmente.
 //
+// Verificado contra la transcripción oficial de TIS (vídeo, 11/11/2026).
+//   - Apertura (04:44): «más que en maquinitas, en cerebro»; tecnología sin
+//     talento no es nada; primero la capa de talento.
 // Revisión 07/10/2026, después de la sesión "CapEx or TechEx?" de TIS
 // (06/10/2026, con Juan Carlos Sanjuán, de Casual, y Jairo González, de Petit
 // Palace). Solo se usa lo que con seguridad dijo José según la transcripción,
 // parafraseado (la transcripción automática es imprecisa):
-//   - Recomendación sobre IA: plan global, nada de inventos ni de amigos que
-//     vienen a inventarte cosas, inversiones "a performance". Tienen bastantes
+//   - Recomendación sobre IA: plan global, nada de inventos, no fiarse de los
+//     amigos que siempre quieren venderte cosas, inversiones "a performance". Tienen bastantes
 //     agentes de IA; cotizar grupos en 3 horas en lugar de 47, encadenando tres
 //     agentes, es una inversión que se hace. "Si no, lo demás, ya veremos."
 //   - Viene del mundo industrial: allí la clave es la fábrica (un 1 % de
 //     desviación en sus costes puede llevar a números rojos). En hotelería la
-//     clave es la primera línea: web, CMS, CRM, channel manager y RMS. Best of
+//     clave es la primera línea: web, CRS, CRM, channel manager y RMS. Best of
 //     suite o best of breed; en el segundo el problema es la integración, y la
 //     diferencia entre integraciones bien y mal hechas es "abismal".
-//   - Segunda línea: recursos humanos (el personal ronda el 35 % de la cuenta).
+//   - Segunda línea: recursos humanos (el personal, entre el 30 y el 35 %).
 //     Después, P2P. Implementar, conectar y crecer a la vez es dificilísimo,
 //     "pero se hace".
 // La cifra de ahorro del P2P no se usa: la transcripción no es fiable ahí.
@@ -78,11 +81,11 @@ const lineas = [
   {
     k: "Primera línea",
     t: "La que tienes que tener «súper controlada».",
-    tags: ["web", "CMS", "CRM", "channel manager", "RMS"],
+    tags: ["web", "CRS", "CRM", "channel manager", "RMS"],
     d: "Si eliges el mejor de cada vertical, el problema está en la integración.",
     main: true,
   },
-  { k: "Segunda línea", t: "Recursos humanos.", tags: [], d: "Porque el personal ronda el 35 % de la cuenta de resultados.", main: false },
+  { k: "Segunda línea", t: "Recursos humanos.", tags: [], d: "Porque el personal pesa entre un 30 y un 35 % de la cuenta de resultados.", main: false },
   { k: "Después", t: "P2P.", tags: [], d: "Compras, donde una cadena grande se juega un ahorro de costes muy relevante.", main: false },
 ];
 const costuras = [
@@ -372,6 +375,7 @@ const piloto = [
         <div class="wrap section">
           <p class="label label-ink" data-reveal>(07) Personas primero</p>
           <h2 id="pe-title" class="h2 h2-wide" data-reveal>La mejor automatización puede ser la que el huésped nunca ve.</h2>
+          <p class="lede pe-lede" data-reveal>Abriste la mesa así: más que en maquinitas, en cerebro. La tecnología sin talento no es nada; antes de meter software, la capa de talento.</p>
 
           <figure class="day" data-reveal aria-label="Jornada conceptual: los tramos de trabajo repetitivo se liberan y queda tiempo para el trabajo humano">
             <p class="day-label">Una jornada, conceptualmente</p>
@@ -470,7 +474,7 @@ const piloto = [
                 <li>No representa un RMS.</li>
                 <li>No vende una plataforma hotelera concreta.</li>
                 <li>No necesita justificar una herramienta.</li>
-                <li>Y no viene a inventarte cosas: viene a medir.</li>
+                <li>Y no viene a venderte cosas: viene a medir.</li>
               </ul>
               <p class="prose-line" data-reveal>Eso permite hacer una pregunta independiente:</p>
               <p class="q-big" data-reveal>¿Qué problema merece que hagamos algo?</p>
@@ -641,6 +645,7 @@ const piloto = [
       .prose p { color: var(--muted); }
       .prose-line { margin-top: 22px; max-width: 36em; color: var(--muted); }
       .prose-ink { color: var(--text); font-size: 18px; }
+      .ink .pe-lede { color: var(--dark-text); max-width: 34em; }
       .statement { display: grid; gap: 2px; margin-top: 44px; font-size: clamp(25px, 3.2vw, 42px); font-weight: 500; letter-spacing: -.045em; line-height: 1.12; max-width: 17em; }
       .huge { margin-top: 64px; font-size: clamp(38px, 7.6vw, 108px); font-weight: 500; letter-spacing: -.062em; line-height: .98; max-width: 12em; }
       .huge-pair { display: grid; gap: 4px; }
