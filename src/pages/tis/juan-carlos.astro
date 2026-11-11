@@ -20,16 +20,18 @@ import PresenterVideo from "../../components/PresenterVideo.astro";
 //   - Nexotur, 2019: IDeaS RMS y análisis de datos para decidir.
 // No se cita el número exacto de hoteles ni de habitaciones.
 //
+// Verificado contra la transcripción oficial de TIS (vídeo, 11/11/2026).
 // Revisión 07/10/2026, después de la sesión de TIS (06/10/2026, con José
 // Rodríguez Pousa, de Sercotel, y Jairo González, director de expansión de
 // Petit Palace, según la agenda de TIS). Solo se usa lo que con
 // seguridad dijo Juan Carlos según la transcripción, parafraseado: la
 // transcripción automática es imprecisa y no se cita literal salvo «97,3 %».
 //   - Recomendación final: de acuerdo «al 97,3 %» con los cuatro criterios de
-//     Jairo (cliente que paga más, operativa del equipo, costes, escalar 20
+//     Jairo (cliente que paga más, operativa y costes, EBITDA, escalar 20
 //     hoteles sin que se noten las costuras) y añade uno: si vienen malas,
-//     poder sentarse sobre la caja. La tecnología mola, pero ojo con lo que
-//     está de moda (el WhatsApp con IA) y hay que ir despacio.
+//     poder sentarse sobre la caja. La tecnología mola, pero ojo con las
+//     inversiones: el WhatsApp con IA por escrito se quedó atrás en tres meses
+//     (la gente manda audios). Ir despacio; que sea escalable y durable.
 //   - El PMS: caro para un franquiciado con seis hoteles en Bilbao, "de lujo"
 //     para que Casual llegue a República Dominicana.
 //   - Personas: coach en la empresa; un hotel en Cádiz con reservas en libreta
@@ -69,8 +71,8 @@ const pad = (n: number) => String(n).padStart(2, "0");
 // Los cuatro criterios que planteó Jairo en la mesa y el quinto de Juan Carlos.
 const filtro = [
   { q: "¿Lo valora el cliente?", d: "Y no solo que lo valore: que esté dispuesto a pagar más por ello.", own: false },
-  { q: "¿Mejora la operativa del equipo?", d: "Que le facilite la vida a quien lo usa cada día.", own: false },
-  { q: "¿Mejora los costes?", d: "Que el euro invertido vuelva a la cuenta de resultados.", own: false },
+  { q: "¿Mejora la operativa del equipo?", d: "Que le facilite la vida a quien lo usa cada día y abarate costes.", own: false },
+  { q: "¿Mejora el EBITDA?", d: "Por ingresos o por costes, que el euro invertido se note en la cuenta de resultados.", own: false },
   { q: "¿Permite escalar?", d: "Meter otros 20 hoteles sin dramas y sin que se noten las costuras.", own: false },
   { q: "Y si vienen malas, ¿puedo sentarme sobre la caja?", d: "La que añadiste tú: que la inversión de hoy no se coma el colchón de mañana.", own: true },
 ];
@@ -209,7 +211,7 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
           <PresenterVideo src={VIDEO.src} poster={VIDEO.poster} label="Vídeo de Luiz Brazão para Juan Carlos Sanjuán" duracion={VIDEO.duracion} />
 
           <div class="hero-copy">
-            <p>Pusiste el ejemplo del WhatsApp con IA: lo que hoy parece imprescindible, a los tres meses puede estar olvidado. Y pediste pensar bien en qué tecnología se invierte de verdad, que sea escalable.</p>
+            <p>Contaste que pusisteis un WhatsApp con IA por escrito y que a los tres meses ya se había quedado atrás, porque la gente va por la calle mandando audios. Y pediste mirar bien si la tecnología en la que se invierte es escalable y durable.</p>
             <p>Coincido. Por eso quizá la primera decisión no sea</p>
             <p class="hero-not">qué tecnología incorporar,</p>
             <p>sino</p>
@@ -244,7 +246,7 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
       <section id="techex" class="night" aria-labelledby="tx-title">
         <div class="wrap section">
           <p class="label label-night" data-reveal>CapEx o TechEx</p>
-          <p class="tx-lead" data-reveal>En la mesa nadie respondió en blanco o negro. El CapEx bien hecho aguanta en el tiempo; la tecnología devuelve antes, pero solo cuando cambia la forma de trabajar.</p>
+          <p class="tx-lead" data-reveal>En la mesa, a la pregunta de CapEx o TechEx, todos queríais «a papá y a mamá por igual». El CapEx bien hecho aguanta en el tiempo; la tecnología devuelve antes, pero solo cuando cambia la forma de trabajar.</p>
           <p class="tx-lead tx-lead-2" data-reveal>Y dentro del TechEx aparece otra pregunta.</p>
           <h2 id="tx-title" class="tx-big" data-reveal>¿Qué TechEx primero?</h2>
 
@@ -281,7 +283,7 @@ const opciones = ["automatizar", "integrar", "aplicar IA", "cambiar una herramie
               <h2 id="pe-title" class="h2" data-reveal>La parte del TechEx que no viene en la licencia.</h2>
               <p class="lede" data-reveal>Lo dijiste claro: en el TechEx también hay una inversión en las personas, que tienen que acostumbrarse al cambio.</p>
               <div class="prose" data-reveal>
-                <p>Contaste el caso de un hotel en Cádiz: reservas en una libreta, Google Calendar como PMS y un equipo para el que la tecnología que llega va a ser un cambio enorme. Y que en Casual tenéis coach para que la gente entienda lo que viene antes de que llegue.</p>
+                <p>Contaste el caso de un hotel en Cádiz que estáis a punto de incorporar: reservas en una libreta, Google Calendar como PMS y una recepción para la que la tecnología que llega va a ser un cambio enorme. Y que en Casual tenéis coach para que la gente entienda lo que viene antes de que llegue.</p>
               </div>
               <p class="prose-line" data-reveal>Por eso una Radiografía Digital no empieza por los sistemas. Empieza por quien ejecuta el proceso:</p>
               <ul class="ticks" data-reveal>{personas.map((p) => <li>{p}</li>)}</ul>
