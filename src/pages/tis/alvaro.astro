@@ -192,6 +192,8 @@ const bands = patrones.map((c) => (c / (COLS - 1)) * 100);
         <a class="wordmark" href="#inicio" aria-label="IA Operators, volver al inicio de la página"><img src="/brand/ia-operators-logo.png" alt="" width="453" height="82" /></a>
         <nav class="top-nav" aria-label="Página">
           <a class="top-link" href="#piloto">El piloto</a>
+          <a class="top-link top-link-x" href="/es/hoteles/" data-cta="nav_hoteles">Hoteles</a>
+          <a class="top-link top-link-x" href="/es/hoteles/reservas-directas-ia/" data-cta="nav_reservas_directas">Reservas directas</a>
           <a class="top-cta" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="header">Hablar con Luiz</a>
         </nav>
       </div>
@@ -971,6 +973,10 @@ const bands = patrones.map((c) => (c / (COLS - 1)) * 100);
         .js .field-map:not(.is-in) .frow-track i.f:not(.p) { background: transparent; box-shadow: inset 0 0 0 1.5px var(--amber); }
         .js .field-map:not(.is-in) .band { opacity: 1; }
         .video-play, .top, .button, .top-cta { transition: none; }
+      }
+      .top-nav .top-link-x { display: none; }
+      @media (min-width: 900px) {
+        .top-nav .top-link-x { display: inline; }
       }
     </style>
   </body>

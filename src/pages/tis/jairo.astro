@@ -1,7 +1,25 @@
 ---
 import PresenterVideo from "../../components/PresenterVideo.astro";
-// Landing personalizada para Jairo González, consejero y director de expansión
-// de Petit Palace. Se llega por el QR de una tarjeta entregada en mano.
+// Landing personalizada para Jairo González Monje, cofundador y socio de
+// Atalaya Hospitality (vertical hotelero de Atalaya Asset Management), que con
+// Summum Hotel Group lanza Atalum Hospitality. En TIS (06/10/2026) habló como
+// director de expansión de Petit Palace; el cambio se anunció el 19-20/10/2026.
+// Reescrita el 11/11/2026: de "la columna de una cadena" a "cuánto cuesta
+// coser cada activo comprado a la columna del operador" (antes de invertir).
+//
+// Datos públicos de Atalum (Hosteltur 19/10/2026, Forbes/EP 19/10/2026,
+// Brainsre 20/10/2026): objetivo de más de 2.000 M€ en cinco años; más de 50
+// oportunidades en estudio; España, Italia y Portugal; hoteles urbanos y
+// vacacionales que necesitan reforma, reposicionamiento o mejora operativa,
+// conversiones y apartamentos con servicios; un vehículo por operación y un
+// plan de negocio único desde el inicio. Summum: 47 hoteles (42 en operación).
+// Cita de Jairo (Brainsre): «unir capital, criterio inmobiliario y
+// conocimiento hotelero en una misma plataforma». Cita de Aurelio Vázquez
+// (Hosteltur): «incorporar la mirada operativa antes de invertir, no después».
+// Caso de referencia: cadena de 4 hoteles en Menorca (unas 25 herramientas
+// declaradas, 47 encontradas; 23 % de coste SaaS reducible).
+//
+// Texto original (Petit Palace). Se llega por el QR de una tarjeta entregada en mano.
 // Privada: noindex,nofollow y fuera del sitemap ("/tis/" en NOINDEX_PATHS).
 //
 // Concepto: la "columna vertebral digital" de la que habló en TIS. Una cadena
@@ -73,8 +91,8 @@ const VIDEO = {
 };
 
 const wa = (t: string) => `https://wa.me/34662423523?text=${encodeURIComponent(t)}`;
-const CONTACT_HREF = wa("Hola Luiz, soy Jairo González, de Petit Palace. He visto la página que preparaste después de TIS y me gustaría hablarlo.");
-const INTRO_HREF = wa("Hola Luiz, soy Jairo González, de Petit Palace. Te pongo en contacto con la persona que lleva nuestra columna digital: ");
+const CONTACT_HREF = wa("Hola Luiz, soy Jairo González, de Atalaya Hospitality. He visto la página que preparaste después de TIS y me gustaría hablarlo.");
+const INTRO_HREF = wa("Hola Luiz, soy Jairo González, de Atalaya Hospitality. Te pongo en contacto con la persona que analiza los activos: ");
 const GTM_ID = "GTM-572KJ7HZ";
 // -----------------------------------------------------------------------------
 
@@ -82,7 +100,7 @@ const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const pageUrl = new URL("/tis/jairo/", site).toString();
 const ogImage = new URL("/og/jairo.png", site).toString();
 const title = "Jairo González × IA Operators | Radiografía Digital";
-const description = "Después de «CapEx or TechEx?» en TIS: la columna vertebral digital y sus costuras. Una reflexión preparada por IA Operators para Jairo González y Petit Palace.";
+const description = "Después de «CapEx or TechEx?» en TIS: cuánto cuesta coser cada hotel comprado a la columna digital del operador. Una reflexión preparada por IA Operators para Jairo González y Atalum Hospitality.";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -106,26 +124,26 @@ const costuras = [
 ];
 
 const datos = [
-  { n: "+50", k: "hoteles abiertos", s: "unas 3.300 habitaciones" },
-  { n: "≈25", k: "en camino", s: "según contaste en TIS" },
-  { n: "12", k: "hoteles Soho", s: "en la primera fase de la alianza" },
-  { n: "×2", k: "en cinco años", s: "España, Italia, Portugal y Alemania" },
+  { n: "+2.000", k: "millones de euros", s: "objetivo en cinco años" },
+  { n: "+50", k: "oportunidades", s: "en estudio, en distintas fases" },
+  { n: "3", k: "países", s: "España, Italia y Portugal" },
+  { n: "47", k: "hoteles de Summum", s: "42 en operación y 5 en desarrollo" },
 ];
 
 // 20 hoteles: sin columna, cada uno con su variante; con columna, todos iguales.
 const variantes = [0, 3, 1, 4, 2, 2, 0, 4, 1, 3, 4, 1, 3, 0, 2, 1, 4, 2, 3, 0];
 
 const pasos = [
-  "Elegimos un proceso que cruce varios sistemas y varios hoteles.",
-  "Lo seguimos con las personas que lo ejecutan, de principio a fin.",
+  "Inventariamos lo que hay de verdad: sistemas, contratos, integraciones y quién depende de cada uno.",
+  "Seguimos los procesos clave con las personas que los ejecutan, de la reserva al cierre.",
   "Marcamos cada unión: dónde se transfiere, se espera, se repite o se corrige.",
-  "Pasamos cada fricción por tus cuatro preguntas.",
+  "Pasamos cada fricción por tus cuatro preguntas y estimamos qué hace falta para conectar el activo a la columna del operador.",
 ];
 
 const hoteles = [
-  { k: "Hotel A", d: "Petit Palace de siempre" },
-  { k: "Hotel B", d: "integrado en los últimos años" },
-  { k: "Hotel C", d: "recién llegado" },
+  { k: "Activo A", d: "hotel urbano que viene de una cadena" },
+  { k: "Activo B", d: "vacacional independiente" },
+  { k: "Activo C", d: "apartamentos con servicios" },
 ];
 const proceso = ["Reserva", "Llegada", "Estancia", "Salida", "Cierre"];
 // Diferencias ilustrativas por hotel (índice del paso con fricción).
@@ -152,7 +170,7 @@ const friccion: Record<number, number[]> = { 0: [], 1: [1, 4], 2: [0, 2, 4] };
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Otros 20 hoteles, sin que se noten las costuras. Una idea para Jairo González." />
+    <meta property="og:image:alt" content="Otros 20 hoteles, sin que se noten las costuras. Una idea para Jairo González y Atalum Hospitality." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -183,16 +201,17 @@ const friccion: Record<number, number[]> = { 0: [], 1: [1, 4], 2: [0, 2, 4] };
       <!-- Hero -->
       <section id="inicio" class="hero wrap" aria-labelledby="hero-title">
         <p class="label">Después de «CapEx or TechEx?» · TIS 2026</p>
-        <h1 id="hero-title" class="greeting">Jairo, en TIS lo dijiste sin rodeos: una compañía que quiere crecer o tiene una <b>columna vertebral digital</b> que le permite escalar, o está muerta.</h1>
-        <p class="big">Lo que cruje al crecer no suelen ser las piezas.<span>Son las uniones.</span></p>
+        <h1 id="hero-title" class="greeting">Jairo, los hoteles que entren en Atalum llegarán, cada uno, <b>de su padre y de su madre</b>.</h1>
+        <p class="big">Lo que cruje al integrarlos no suelen ser las piezas.<span>Son las uniones.</span></p>
 
         <div class="hero-grid">
           <PresenterVideo src={VIDEO.src} poster={VIDEO.poster} label="Vídeo de Luiz Brazão para Jairo González" duracion={VIDEO.duracion} />
 
           <div class="hero-copy">
-            <p>Pusiste un ejemplo muy claro: cualquier hotel funciona razonablemente con cualquier tecnología. El problema llega en el hotel 20, cuando cada uno es de su padre y de su madre.</p>
-            <p>Petit Palace está justo ahí: más de 50 hoteles, unos 25 en camino y una integración en marcha.</p>
-            <p class="hero-strong">La pregunta que me gustaría explorar contigo es dónde está la próxima costura, antes de que se note.</p>
+            <p>Enhorabuena por Atalaya Hospitality y por el lanzamiento de Atalum con Summum.</p>
+            <p>Te escuché en TIS, todavía como Petit Palace: una compañía que quiere crecer o tiene una columna vertebral digital que le permite escalar, o está muerta. Cualquier hotel funciona con cualquier tecnología; el problema llega en el hotel 20, cuando cada uno es de su padre y de su madre.</p>
+            <p>Ahora el reto cambia de lado: hoteles que necesitan reforma, reposicionamiento o mejora operativa, cada uno con su historia y sus sistemas.</p>
+            <p class="hero-strong">La pregunta que me gustaría explorar contigo es cuánto pesa esa columna en el plan de negocio de cada activo. Antes de comprar.</p>
           </div>
         </div>
       </section>
@@ -203,7 +222,7 @@ const friccion: Record<number, number[]> = { 0: [], 1: [1, 4], 2: [0, 2, 4] };
           <p class="label label-accent" data-reveal>01 · Tu filtro</p>
           <div>
             <h2 id="fi-title" class="h2" data-reveal>Cuatro preguntas antes de invertir un euro.</h2>
-            <p class="lede" data-reveal>Las planteaste al final de la sesión. Juan Carlos dijo estar de acuerdo «al 97,3 %».</p>
+            <p class="lede" data-reveal>Las planteaste al final de la sesión, pensando en una cadena. Juan Carlos dijo estar de acuerdo «al 97,3 %». Para un inversor sirven igual: cada euro tiene que acabar en EBITDA.</p>
             <ol class="filter" data-reveal>
               {filtro.map((f, i) => (
                 <li class:list={{ "filter-last": i === filtro.length - 1 }}>
@@ -230,7 +249,7 @@ const friccion: Record<number, number[]> = { 0: [], 1: [1, 4], 2: [0, 2, 4] };
           <h2 id="co-title" class="h2 h2-wide" data-reveal>Un ecosistema en el que los sistemas hablan entre ellos.</h2>
           <div class="spine-grid">
             <div>
-              <p class="lede" data-reveal>Así la describiste: PMS, ERP, CRM, revenue, automatizaciones y business intelligence sobre datos comunes. Y con un matiz que en la práctica lo decide casi todo.</p>
+              <p class="lede" data-reveal>Así la describiste en TIS: PMS, ERP, CRM, revenue, automatizaciones y business intelligence sobre datos comunes. Y con un matiz que en la práctica lo decide casi todo.</p>
               <p class="prose-line" data-reveal>Las soluciones completas suelen ser cerradas. Siempre hay alguien que hace mejor una pieza concreta, pero que luego no habla con el resto.</p>
               <p class="statement" data-reveal>
                 <span class="muted">Las piezas se eligen.</span>
@@ -271,16 +290,16 @@ const friccion: Record<number, number[]> = { 0: [], 1: [1, 4], 2: [0, 2, 4] };
           <span></span>
           <div>
             <p class="prose-line prose-ink" data-reveal>Lo resumiste como la pescadilla que se muerde la cola: si escalas es porque tienes un sistema que te lo permite. Sin él, aparecen cuerpos extraños, cada uno funcionando lo mejor que sabe, y equipos que corren sin cabeza.</p>
-            <p class="prose-line" data-reveal>Y añadiste la pregunta incómoda: el PMS que hoy funciona en España, ¿servirá dentro de cinco años para 50 hoteles en Italia?</p>
+            <p class="prose-line" data-reveal>Y añadiste la pregunta incómoda: el PMS que hoy funciona en España, ¿servirá dentro de cinco años para 50 hoteles en Italia? Atalum mira justo a España, Italia y Portugal.</p>
           </div>
         </div>
       </section>
 
-      <!-- Petit Palace -->
-      <section id="petit-palace" class="night" aria-labelledby="pp-title">
+      <!-- Atalum -->
+      <section id="atalum" class="night" aria-labelledby="pp-title">
         <div class="wrap section">
-          <p class="label label-night" data-reveal>04 · Petit Palace</p>
-          <h2 id="pp-title" class="h2 h2-wide" data-reveal>Una cadena que nació como High Tech Hoteles y hoy crece integrando.</h2>
+          <p class="label label-night" data-reveal>04 · Atalum</p>
+          <h2 id="pp-title" class="h2 h2-wide" data-reveal>Comprar, reposicionar, operar y salir, con un plan de negocio único desde el primer día.</h2>
           <dl class="stats" data-reveal>
             {datos.map((d) => (
               <div>
@@ -293,14 +312,14 @@ const friccion: Record<number, number[]> = { 0: [], 1: [1, 4], 2: [0, 2, 4] };
             <span></span>
             <div>
               <figure class="quote" data-reveal>
-                <blockquote>«Tenemos capacidad para fondear el CAPEX y seleccionamos solo proyectos que aporten una rentabilidad que permita una expansión sólida y sostenible.»</blockquote>
-                <figcaption>Jairo González · septiembre de 2025</figcaption>
+                <blockquote>«Unir capital, criterio inmobiliario y conocimiento hotelero en una misma plataforma.»</blockquote>
+                <figcaption>Jairo González · octubre de 2026</figcaption>
               </figure>
-              <p class="prose-line prose-night" data-reveal>En TIS lo resumiste así: no hay algoritmo que arregle un mal colchón, y el techo de precio lo marca el CapEx, pero la cuenta de resultados la marca la tecnología. En la columna digital no quitarías nada, porque es lo que sostiene un crecimiento de años. Pero también dijiste que hay capas de tecnología superpuestas y que alguna sobra.</p>
-              <p class="prose-line prose-night" data-reveal>Sunotel en 2024, la marca única en 2025, doce hoteles Soho ahora y el resto antes de que acabe 2027. Cada integración trae sus sistemas, sus procesos y sus costumbres.</p>
+              <p class="prose-line prose-night" data-reveal>En TIS lo resumiste así: no hay algoritmo que arregle un mal colchón, y el techo de precio lo marca el CapEx, pero la cuenta de resultados la marca la tecnología. También dijiste que hay capas de tecnología superpuestas y que alguna sobra.</p>
+              <p class="prose-line prose-night" data-reveal>En la presentación de Atalum, Aurelio Vázquez, de Summum, lo dijo con otras palabras: incorporar la mirada operativa antes de invertir, no después. El colchón y el CapEx entran en ese análisis. Los sistemas de cada activo, sus contratos y sus costuras suelen verse cuando el hotel ya es tuyo.</p>
             </div>
           </div>
-          <p class="huge" data-reveal>La expansión se firma en meses. Las costuras se notan durante años.</p>
+          <p class="huge" data-reveal>La compra se firma en meses. Las costuras se notan durante años.</p>
         </div>
       </section>
 
@@ -325,13 +344,14 @@ const friccion: Record<number, number[]> = { 0: [], 1: [1, 4], 2: [0, 2, 4] };
             <p class="label label-accent" data-reveal>06 · Radiografía Digital</p>
             <div>
               <h2 id="rd-title" class="h2" data-reveal>Mirar las uniones antes de cambiar las piezas.</h2>
-              <p class="lede" data-reveal>Una Radiografía Digital no evalúa proveedores ni propone una plataforma. Sigue el trabajo real a través de los sistemas.</p>
+              <p class="lede" data-reveal>Una Radiografía Digital no evalúa proveedores ni propone una plataforma. Sigue el trabajo real a través de los sistemas de un activo, antes o justo después de comprarlo.</p>
               <ol class="steps" data-reveal>{pasos.map((p, i) => <li><span class="n">{pad(i + 1)}</span>{p}</li>)}</ol>
-              <p class="prose-line" data-reveal>El resultado no es una lista de ideas. Es saber qué costuras merecen inversión, cuáles basta con ordenar y cuáles pueden esperar.</p>
+              <p class="prose-line" data-reveal>El resultado no es una lista de ideas. Es saber qué costuras merecen inversión, cuáles basta con ordenar y cuáles pueden esperar, en un formato que entra en el plan de negocio.</p>
+              <p class="prose-line" data-reveal>En una cadena de cuatro hoteles en Menorca, la dirección declaraba unas 25 herramientas. Encontramos 47, y un 23 % del gasto en SaaS que se podía recortar. <a class="inline-link" href="/es/portfolio/radiografia-cadena-hotelera-menorca/" data-cta="case">Ver el caso</a></p>
               <ul class="nots" data-reveal>
                 <li>No vendemos un PMS, un RMS ni un CRM.</li>
                 <li>No tenemos una plataforma que colocar.</li>
-                <li>Integramos cuando hace falta, pero la decisión es tuya y va antes.</li>
+                <li>No sustituimos al operador: le damos el mapa.</li>
               </ul>
             </div>
           </div>
@@ -343,8 +363,8 @@ const friccion: Record<number, number[]> = { 0: [], 1: [1, 4], 2: [0, 2, 4] };
         <div class="split">
           <p class="label label-accent" data-reveal>Una idea concreta</p>
           <div>
-            <h2 id="pr-title" class="h2 h2-pair" data-reveal><span>No empecemos por toda la columna.</span><span class="h2-accent">Empecemos por una costura.</span></h2>
-            <p class="lede" data-reveal>Un mismo proceso, seguido en tres hoteles de origen distinto. Es la forma más rápida de ver dónde la columna ya sostiene y dónde todavía no.</p>
+            <h2 id="pr-title" class="h2 h2-pair" data-reveal><span>No empecemos por toda la cartera.</span><span class="h2-accent">Empecemos por un activo.</span></h2>
+            <p class="lede" data-reveal>Uno de los hoteles que ya estáis estudiando, o uno recién comprado. Una Radiografía acotada que responda qué sistemas hay, qué costuras cuestan dinero y qué hace falta para conectarlo a la operación.</p>
             <figure class="cmp" data-reveal aria-label="Ejemplo ilustrativo: el mismo proceso en tres hoteles">
               {hoteles.map((h, r) => (
                 <div class="cmp-row">
@@ -354,10 +374,10 @@ const friccion: Record<number, number[]> = { 0: [], 1: [1, 4], 2: [0, 2, 4] };
                   </ol>
                 </div>
               ))}
-              <figcaption>Ejemplo ilustrativo. No describe ningún proceso real de Petit Palace.</figcaption>
+              <figcaption>Ejemplo ilustrativo. No describe ningún activo real.</figcaption>
             </figure>
-            <p class="prose-line" data-reveal>Lo elegiríamos con quien lleve la operación y la tecnología, y lo mediríamos con tus cuatro preguntas delante.</p>
-            <p class="worth" data-reveal>¿Se notan las costuras?</p>
+            <p class="prose-line" data-reveal>Lo haríamos con quien analiza los activos en Atalaya y con el equipo que va a operarlos, con tus cuatro preguntas delante.</p>
+            <p class="worth" data-reveal>¿Cuánto cuesta coser este hotel a la columna?</p>
           </div>
         </div>
       </section>
@@ -366,7 +386,7 @@ const friccion: Record<number, number[]> = { 0: [], 1: [1, 4], 2: [0, 2, 4] };
       <section id="cierre" class="closing wrap" aria-labelledby="ci-title">
         <p class="cl-1" data-reveal>Otros 20 hoteles.</p>
         <h2 id="ci-title" class="cl-big" data-reveal>Sin que se noten las costuras.</h2>
-        <p class="cl-3" data-reveal>Ese es el trabajo que me gustaría enseñarte, o enseñar a quien lleve la columna digital de Petit Palace.</p>
+        <p class="cl-3" data-reveal>Ese es el trabajo que me gustaría enseñarte, o enseñar a quien analiza los activos en Atalum.</p>
       </section>
 
       <!-- CTA -->
@@ -647,6 +667,8 @@ const friccion: Record<number, number[]> = { 0: [], 1: [1, 4], 2: [0, 2, 4] };
         .js .cmp-steps li.hot { border-color: var(--orange); color: var(--orange-ink); background: rgba(241, 101, 50, .08); transition: none; }
         .top, .button, .top-cta { transition: none; }
       }
+      .inline-link { color: var(--slate); text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+      .inline-link:hover { color: var(--ink); }
     </style>
   </body>
 </html>

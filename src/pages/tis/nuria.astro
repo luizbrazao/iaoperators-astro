@@ -145,6 +145,8 @@ const planta = [
         <a class="wordmark" href="#inicio" aria-label="IA Operators, volver al inicio de la página"><img src="/brand/ia-operators-logo.png" alt="" width="453" height="82" /></a>
         <nav class="top-nav" aria-label="Página">
           <a class="top-link" href="#radiografia">Radiografía Digital</a>
+          <a class="top-link top-link-x" href="/es/hoteles/" data-cta="nav_hoteles">Hoteles</a>
+          <a class="top-link top-link-x" href="/es/hoteles/reservas-directas-ia/" data-cta="nav_reservas_directas">Reservas directas</a>
           <a class="top-cta" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="header">Hablar con Luiz</a>
         </nav>
       </div>
@@ -736,6 +738,10 @@ const planta = [
         html { scroll-behavior: auto; }
         .js [data-reveal], .js .path li, .js .elev-scale .elev-floor { opacity: 1 !important; transform: none !important; transition: none !important; }
         .m-dot, .video-play, .button span, .top, .floors-l { transition: none !important; }
+      }
+      .top-nav .top-link-x { display: none; }
+      @media (min-width: 900px) {
+        .top-nav .top-link-x { display: inline-flex; }
       }
     </style>
   </body>

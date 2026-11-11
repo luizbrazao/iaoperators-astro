@@ -173,6 +173,8 @@ const pasos = [
         <a class="wordmark" href="#inicio" aria-label="IA Operators, volver al inicio de la página"><img src="/brand/ia-operators-logo.png" alt="" width="453" height="82" /></a>
         <nav class="top-nav" aria-label="Página">
           <a class="top-link" href="#encaje">Partner tecnológico</a>
+          <a class="top-link top-link-x" href="/es/hoteles/" data-cta="nav_hoteles">Hoteles</a>
+          <a class="top-link top-link-x" href="/es/hoteles/reservas-directas-ia/" data-cta="nav_reservas_directas">Reservas directas</a>
           <a class="top-cta" href={CONTACT_HREF} target="_blank" rel="noopener" data-cta="header" data-cta-event="click_contact">Hablar con Luiz</a>
         </nav>
       </div>
@@ -587,6 +589,10 @@ const pasos = [
         .js .brain .b-line { stroke-dashoffset: 0; transition: none; }
         .js .layers .ly-cell.b { background: var(--orange); border-color: var(--orange); transition: none; }
         .top, .button, .top-cta { transition: none; }
+      }
+      .top-nav .top-link-x { display: none; }
+      @media (min-width: 900px) {
+        .top-nav .top-link-x { display: inline; }
       }
     </style>
   </body>
