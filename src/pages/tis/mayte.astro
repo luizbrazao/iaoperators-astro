@@ -15,6 +15,27 @@ import PresenterVideo from "../../components/PresenterVideo.astro";
 // Baya para los patrones, grises para lo individual. Sin datos inventados:
 // todas las figuras van marcadas como ilustración.
 //
+// v2 (11/11/2026): alineada con la mesa que moderó en TIS, «De los datos a
+// la estrategia: ecosistemas Big Data» (06/10/2026, 11:30, con Álvaro
+// Carrillo de Albornoz, de ITH; Pablo Hernández, de Hoteles RH, y Daniel
+// Caro, de Andalucía Nexus). Verificado contra la transcripción oficial.
+// De Mayte:
+//   - 00:44: Biontrend, «plataforma colaborativa de inteligencia de datos»,
+//     sin fin comercial; más de 145 establecimientos con su PMS conectado,
+//     más de 22 PMS volcando datos dos veces al día; ADR, RevPAR, canales,
+//     forecast con módulos de IA; más de 20 destinos integrados.
+//   - 14:43: en la Comunidad Valenciana el uso nace del propio empresariado;
+//     «provocación» al sector: los hoteleros son los primeros que pueden usar
+//     la plataforma para su propia gestión.
+//   - 16:57: «¿Qué va a pasar en el puente de octubre?»
+//   - 24:17: dato agregado y confidencialidad, factores clave.
+//   - 37:22: «Diez años tenemos ya la herramienta funcionando», «estoy
+//     convencida de que esto es una cuestión, además, de colaboración».
+// De la mesa (no de Mayte): «los datos son del hotelero» y nadie ve los de
+// otro (Álvaro, ITH); «no va de tecnología, va de gestión del cambio»
+// (Daniel Caro).
+// Nombre oficial: Biontrend (smartdata.andalucia.org, valenciaplaza.com).
+//
 // Verificado a 04/10/2026:
 // - Mayte García, directora ejecutiva desde febrero de 2025 (Hosteltur,
 //   07/02/2025): servicios a asociados, innovación y tecnología, entre otras.
@@ -35,7 +56,7 @@ const VIDEO = {
 };
 
 const CONTACT_HREF = `https://wa.me/34662423523?text=${encodeURIComponent(
-  "Hola Luiz, soy Mayte García, de HOSBEC. He visto la propuesta de la Radiografía Operativa Hotelera y me gustaría hablarlo.",
+  "Hola Luiz, soy Mayte García, de HOSBEC. He visto la página que preparaste después de TIS y me gustaría hablarlo.",
 )}`;
 const MAIL_HREF = `mailto:info@iaoperators.com?subject=${encodeURIComponent("Radiografía Operativa Hotelera · HOSBEC")}`;
 const CASE_HREF = "/es/portfolio/radiografia-cadena-hotelera-menorca/";
@@ -46,7 +67,7 @@ const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const pageUrl = new URL("/tis/mayte/", site).toString();
 const ogImage = new URL("/og/mayte.png", site).toString();
 const title = "Mayte García × IA Operators | Radiografía Operativa Hotelera";
-const description = "Una propuesta de piloto de Radiografía Digital para hoteles asociados a HOSBEC.";
+const description = "Después de «De los datos a la estrategia» en TIS: Biontrend mide el mercado; ¿y si observamos también la operación? Una propuesta de piloto para hoteles asociados a HOSBEC.";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -183,8 +204,8 @@ const celdas = Array.from({ length: 16 }, (_, i) => i);
     <main>
       <!-- Hero -->
       <section id="inicio" class="hero wrap" aria-labelledby="hero-title">
-        <p class="kicker"><i aria-hidden="true"></i>Una idea para Mayte García y HOSBEC</p>
-        <p class="greeting">Mayte, HOSBEC conoce muy bien lo que ocurre alrededor de los hoteles.</p>
+        <p class="kicker"><i aria-hidden="true"></i>Después de «De los datos a la estrategia» · TIS 2026</p>
+        <p class="greeting">Mayte, en TIS presentaste Biontrend: más de 145 hoteles con su PMS conectado, volcando datos dos veces al día.</p>
         <h1 id="hero-title" class="question">¿Y si observamos también lo que ocurre dentro?</h1>
         <p class="hero-sub">Además de medir el mercado, observar las fricciones de la operación.</p>
         <p class="sample"><span class="sample-net" aria-hidden="true"><i></i><i></i><i></i><i class="opt"></i><i class="opt"></i></span>3–5 hoteles. Una misma metodología.</p>
@@ -193,7 +214,7 @@ const celdas = Array.from({ length: 16 }, (_, i) => i);
           <PresenterVideo src={VIDEO.src} poster={VIDEO.poster} label="Vídeo de Luiz Brazão para Mayte García" duracion={VIDEO.duracion} />
 
           <div class="hero-copy">
-            <p>Ocupación, mercados, estacionalidad y destinos ayudan a entender cómo funciona el negocio desde fuera.</p>
+            <p>Ocupación, ADR, RevPAR, canales y, ahora, forecast: ayudan a entender cómo funciona el negocio desde fuera, y también hacia delante. «¿Qué va a pasar en el puente de octubre?» ya tiene respuesta en vuestras oficinas.</p>
             <p>Pero hay otra capa de información que normalmente no aparece en los datos del sector: <b>cómo circula de verdad el trabajo dentro de un hotel.</b></p>
             <ul class="inside">{dentro.map((t) => <li>{t}</li>)}</ul>
             <p class="hero-strong">Eso es lo que buscamos con una Radiografía Digital.</p>
@@ -366,7 +387,7 @@ const celdas = Array.from({ length: 16 }, (_, i) => i);
                 <p class="lane-what">Patrones agregados<small>Sin datos que identifiquen a nadie</small></p>
               </div>
             </div>
-            <p class="lede" data-reveal>La información operativa de cada hotel se quedaría en ese hotel. Para el análisis conjunto:</p>
+            <p class="lede" data-reveal>Es la misma regla que se repitió en la mesa sobre Biontrend: el dato es del hotelero, y solo se comparte agregado. La información operativa de cada hotel se quedaría en ese hotel. Para el análisis conjunto:</p>
             <ol class="privacy" data-reveal>{privacidad.map((p, i) => <li style={`--i:${i}`}><b>{p.k}</b><span>{p.d}</span></li>)}</ol>
           </div>
         </div>
@@ -414,7 +435,9 @@ const celdas = Array.from({ length: 16 }, (_, i) => i);
           <p class="kicker" data-reveal><i aria-hidden="true"></i>Datos y operación</p>
           <div>
             <h2 id="datos-title" class="h2" data-reveal>HOSBEC ya convierte actividad turística en información.</h2>
-            <p class="lede" data-reveal>Lleva desde 1985 recogiendo datos de ocupación de sus asociados. La pregunta es si podríamos hacer algo parecido con otra materia prima:</p>
+            <p class="lede" data-reveal>Lleva desde 1985 recogiendo datos de ocupación de sus asociados y, como recordaste al cerrar la mesa, diez años con Biontrend funcionando.</p>
+            <p class="lede" data-reveal>También lanzaste una provocación al sector: que los hoteleros son los primeros que pueden usar esa plataforma para su propia gestión. La Radiografía sigue esa misma lógica: el primero que gana es el hotel que participa.</p>
+            <p class="lede" data-reveal>La pregunta es si podríamos hacer algo parecido con otra materia prima:</p>
             <p class="h2 h2-accent q-op" data-reveal>¿Podríamos convertir también la operación en conocimiento?</p>
           </div>
         </div>
@@ -427,7 +450,7 @@ const celdas = Array.from({ length: 16 }, (_, i) => i);
         </div>
         <div class="split">
           <span></span>
-          <p class="note" data-reveal>Sin promesas de resultados. El valor estaría en sumar una perspectiva que hoy casi no se mide.</p>
+          <p class="note" data-reveal>Sin promesas de resultados. El valor estaría en sumar una perspectiva que hoy casi no se mide. Y, como se dijo en la mesa, no va de tecnología: va de gestión del cambio.</p>
         </div>
       </section>
 
