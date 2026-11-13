@@ -5,6 +5,28 @@ import PresenterVideo from "../../components/PresenterVideo.astro";
 // en mano. Privada: noindex,nofollow y fuera del sitemap (NOINDEX_PATHS en
 // astro.config.mjs).
 //
+// v2 (13/11/2026): alineada con la mesa que Francisca moderó en TIS, «IA en
+// marketing hotelero: ¿segmentación inteligente o automatización del ruido?»
+// (07/10/2026, 15:30; con Juanma García, de One Shot; Judit Segura, de Spirit
+// Hotels, y Milton León, de Cometa Web). Organizada por el CIDH, que ella
+// preside en Andalucía. Verificado contra la transcripción oficial. De
+// Francisca (moderadora):
+//   - 13:03: con tantas herramientas, «ese reto de saber cuál es realmente tu
+//     partner, con quién tienes que ir de la mano y con quién apostar en los
+//     siguientes pasos, no es ninguna cuestión ligera»; dedicar tiempo a ver
+//     quién se adecua «a tu negocio, a tu cliente, a tu forma de gestionar».
+//   - 20:29: no usar bien los datos fomenta el ruido.
+//   - 21:58: tras decir Judit que le encantaría juntar los datos del PMS con
+//     otros y que no hay integraciones: «Señores del auditorio, están ustedes
+//     tomando nota, lo que quiere una cadena y lo que necesita. Que cojan el
+//     testigo, que aquí hay potencial de negocio.»
+//   - 24:45 (cierre): definir primero la estrategia y lo que aporta valor al
+//     cliente, y luego elegir la herramienta que se adapte a lo que el hotel
+//     necesita, «y no a la que tenga el standing feature más grande y más chulo
+//     y reparta más jamón».
+// Elisabeth Martínez (COO) habló en otra mesa (IA y Revenue Management, 16:00);
+// no verificada aquí: no se le atribuye nada. Francisca y Luiz: primer grado.
+//
 // Página autónoma, sin BaseLayout: necesita una cabecera y un pie mínimos y no
 // la navegación completa del sitio. Reutiliza la identidad editorial (marfil,
 // grafito, naranja, salvia y Manrope local) sin cargar Tailwind ni React.
@@ -29,7 +51,7 @@ const VIDEO = {
 // Destino del CTA "Hablar con Luiz". Hoy abre WhatsApp con un mensaje preparado;
 // para pasar a Cal.com o Calendly basta con sustituir esta URL.
 const CONTACT_HREF = `https://wa.me/34662423523?text=${encodeURIComponent(
-  "Hola Luiz, he visto la página que preparaste para Casa 1800 y me gustaría hablar sobre la Radiografía Digital.",
+  "Hola Luiz, soy Francisca García, de Casa 1800. He visto la página que preparaste después de TIS y me gustaría hablarlo.",
 )}`;
 
 const GTM_ID = "GTM-572KJ7HZ";
@@ -39,7 +61,7 @@ const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const pageUrl = new URL("/tis/casa1800/", site).toString();
 const ogImage = new URL("/og/casa1800.png", site).toString();
 const title = "Casa 1800 × IA Operators | Radiografía Digital";
-const description = "Una propuesta de Radiografía Digital preparada por IA Operators para Hoteles Casa 1800.";
+const description = "Después de «IA en marketing hotelero» en TIS: primero la estrategia, después la herramienta. Una propuesta de Radiografía Digital para Hoteles Casa 1800.";
 
 const preguntas = [
   "¿Qué tareas siguen siendo manuales?",
@@ -110,17 +132,18 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
     <main id="inicio">
       <section class="hero wrap" aria-labelledby="hero-title">
-        <p class="eyebrow" data-reveal style="--d:0ms">Una idea para Casa 1800</p>
-        <h1 id="hero-title" class="greeting" data-reveal style="--d:80ms">Francisca, Elisabeth: preparé esto pensando en Casa&nbsp;1800.</h1>
+        <p class="eyebrow" data-reveal style="--d:0ms">Después de «IA en marketing hotelero» · TIS 2026</p>
+        <h1 id="hero-title" class="greeting" data-reveal style="--d:80ms">Francisca, cerraste la mesa de TIS con una regla: primero la estrategia; después, la herramienta que se adapte a lo que el hotel necesita.</h1>
         <p class="thesis" data-reveal style="--d:180ms">Crecer sin multiplicar la complejidad.</p>
 
         <div class="hero-grid">
           <PresenterVideo src={VIDEO.src} poster={VIDEO.poster} label="Vídeo de Luiz Brazão para Casa 1800" duracion={VIDEO.duracion} />
 
           <div class="hero-copy" data-reveal style="--d:380ms">
-            <p class="lead">Casa 1800 ya ha demostrado que la tecnología puede eliminar límites al crecimiento.</p>
+            <p class="lead">Y no la que tenga la funcionalidad más vistosa y «reparta más jamón». Casa 1800 ya ha demostrado que la tecnología puede eliminar límites al crecimiento.</p>
             <p>Ahora, con Sevilla y Granada en operación y Córdoba en el horizonte, aparece una pregunta diferente:</p>
             <p class="hero-question">¿Qué procesos, sistemas y tareas actuales deberían revisarse antes de hacer crecer nuevamente la operación?</p>
+            <p>Lo he preparado pensando también en Elisabeth y en la operación del día a día.</p>
           </div>
         </div>
       </section>
@@ -134,6 +157,8 @@ const pad = (n: number) => String(n).padStart(2, "0");
               <p>Porque no parece que vuestro reto sea simplemente incorporar más tecnología.</p>
               <p>Ya habéis avanzado en digitalización, distribución, revenue y experiencia del huésped.</p>
               <p class="prose-strong">La oportunidad puede estar ahora en mirar la operación de forma transversal.</p>
+              <p>En la mesa lo planteaste como el reto de fondo: con tantas herramientas, saber cuál es de verdad tu partner y con quién apostar en los siguientes pasos «no es ninguna cuestión ligera».</p>
+              <p>Y cuando Judit Segura contó que le encantaría juntar los datos del PMS con los de otras herramientas y que no hay integraciones, le dijiste al auditorio que tomara nota, que ahí había potencial de negocio. Tomé nota.</p>
             </div>
           </div>
         </div>
@@ -155,6 +180,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
             <div>
               <h2 id="radiografia-title" class="h2" data-reveal>Eso es lo que buscamos en una Radiografía Digital.</h2>
               <p class="statement" data-reveal>No empezamos recomendando software.</p>
+              <p class="dark-note" data-reveal>Seguimos tu orden: primero el problema y lo que aporta valor al cliente; después, si hace falta, la herramienta.</p>
             </div>
           </div>
 
@@ -573,6 +599,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
       @media (min-width: 900px) {
         .top-nav .top-link-x { display: inline-flex; }
       }
+      .dark-note { margin-top: 18px; max-width: 34em; color: var(--dark-muted); }
     </style>
   </body>
 </html>
