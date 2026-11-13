@@ -7,7 +7,33 @@ import PresenterVideo from "../../components/PresenterVideo.astro";
 //
 // Concepto: la lógica de "planta piloto" habitual en reformas hoteleras
 // (probar, escuchar al cliente, ajustar y después extender) aplicada a la
-// operación. Se plantea como idea general, no como un hecho sobre el Plaza. La metáfora visual es un alzado de edificio: una planta marcada en
+// operación.
+//
+// v2 (13/11/2026): alineada con su mesa de TIS «Dirigir un hotel en 2026»
+// (06/10/2026, 12:55; moderó Cinta Massó, de James and Rita; con Ricardo
+// Sánchez, de Cap Negret, y Víctor Sánchez, de Tres Reyes). Verificado contra
+// la transcripción oficial. La planta piloto ya no es una idea general: la
+// contó ella. De Nuria:
+//   - 01:35: tercera generación familiar.
+//   - 04:31: cambio de herramientas; el mayor margen de mejora, trabajar mejor
+//     la segmentación con los datos del channel manager (tipo de tarifa por
+//     canal); que el marketing funcione de forma «superpredictible».
+//   - 13:30: CapEx con datos; mantenimiento impecable («muy detallista, muy
+//     perfeccionista»); el Avenida, remodelado de 2018 a 2021, nota media de
+//     nueve en Booking.
+//   - 15:51: «en nuestro Hotel Plaza este año, reformamos también la planta
+//     piloto del hotel para testar» materiales, proveedores, tiempos y
+//     resultado al cabo de un año; ver si se puede «escalar una reforma a
+//     largo plazo»; novena planta en reforma desde noviembre, categoría
+//     superior; «Es toda una rueda a nivel probar y ver si una vez que
+//     pruebas, poder escalarlo», si el cliente está dispuesto a pagar.
+//   - 27:19: pagar mejor, meritocracia con objetivos por equipo,
+//     «minimalismo profesional», recepcionista con redes sociales, Sky Bar.
+//   - 39:33 (cierre): tecnologías integradas, datos confiables y limpios,
+//     «que no por cada herramienta se tenga como una isla», un cuadro de
+//     mando que integre toda la tecnología.
+// LinkedIn: invitación de Luiz pendiente (13/11/2026); 9 en Booking en el
+// Avenida y agradecimiento a Jaippy (reputación online). La metáfora visual es un alzado de edificio: una planta marcada en
 // el hero y, más abajo, el resto de plantas que se completan al llegar.
 //
 // Página autónoma (sin BaseLayout): identidad de IA Operators (Manrope local,
@@ -29,7 +55,7 @@ const VIDEO = {
 // "Hablar con Luiz": hoy WhatsApp con mensaje preparado. Para Cal.com o
 // Calendly basta con sustituir la URL.
 const CONTACT_HREF = `https://wa.me/34662423523?text=${encodeURIComponent(
-  "Hola Luiz, soy Nuria Blanco. He visto la página sobre la Radiografía Digital y me gustaría hablarlo.",
+  "Hola Luiz, soy Nuria Blanco. He visto la página que preparaste después de TIS y me gustaría hablarlo.",
 )}`;
 const GTM_ID = "GTM-572KJ7HZ";
 // -----------------------------------------------------------------------------
@@ -38,7 +64,7 @@ const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const pageUrl = new URL("/tis/nuria/", site).toString();
 const ogImage = new URL("/og/nuria.png", site).toString();
 const title = "Nuria Blanco × IA Operators | Radiografía Digital";
-const description = "Una propuesta de Radiografía Digital preparada por IA Operators para Nuria Blanco y Blancohostel.";
+const description = "Después de «Dirigir un hotel en 2026» en TIS: la lógica de la planta piloto del Hotel Plaza aplicada a la operación. Una propuesta de IA Operators para Nuria Blanco.";
 
 const escalan = [
   "Hay procesos que escalan perfectamente.",
@@ -163,8 +189,8 @@ const planta = [
     <main>
       <!-- 00 · La idea -->
       <section id="inicio" class="hero wrap" data-floor aria-labelledby="hero-title">
-        <p class="eyebrow" data-reveal style="--d:0ms">Una idea para Nuria Blanco</p>
-        <h1 id="hero-title" class="greeting" data-reveal style="--d:80ms">Nuria, cuando un hotel se renueva, muchas veces empieza por una sola planta.</h1>
+        <p class="eyebrow" data-reveal style="--d:0ms">Después de «Dirigir un hotel en 2026» · TIS 2026</p>
+        <h1 id="hero-title" class="greeting" data-reveal style="--d:80ms">Nuria, en TIS contaste que este año reformasteis una planta piloto en el Hotel Plaza para probar antes de escalar.</h1>
 
         <div class="hero-grid">
           <p class="triad" aria-label="Probar. Aprender. Después escalar.">
@@ -193,7 +219,7 @@ const planta = [
 
         <div class="hero-copy">
           <div class="hero-text" data-reveal>
-            <p>Se reforma una planta piloto, se escucha al cliente, se ajustan los detalles y solo después se extiende al resto del edificio.</p>
+            <p>Materiales, proveedores, tiempos y el resultado al cabo de un año, antes de llevarlo al resto del edificio. «Es toda una rueda», dijiste: probar y, si funciona, escalar, siempre mirando si el cliente está dispuesto a pagar por ello.</p>
             <p>Es una forma prudente de abordar un cambio.</p>
           </div>
           <p class="hero-question" data-reveal>¿Y si aplicamos la misma lógica a los procesos y la tecnología del Plaza y del Avenida?</p>
@@ -249,6 +275,12 @@ const planta = [
           <div class="question-pair" data-reveal>
             <p class="qp-muted">La pregunta no es cuánta tecnología incorporar.</p>
             <p class="qp-ink">La pregunta es dónde eliminar complejidad antes de seguir creciendo.</p>
+          </div>
+          <div class="split">
+            <span></span>
+            <div class="prose" data-reveal>
+              <p>En TIS lo concretaste: después de cambiar herramientas, el mayor margen de mejora está en segmentar mejor con los datos que bajan del channel manager, para que el marketing sea «superpredictible». Para eso los datos tienen que circular bien entre sistemas, y no siempre lo hacen.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -380,6 +412,7 @@ const planta = [
             <div class="prose" data-reveal>
               <p>IA Operators trabaja de forma independiente de las plataformas.</p>
               <p>No necesitamos encontrar un lugar para introducir inteligencia artificial.</p>
+              <p>Partimos de lo que pediste al cerrar la mesa: tecnologías integradas, datos limpios y confiables, que ninguna herramienta sea una isla y un cuadro de mando que lo junte todo.</p>
             </div>
             <ul class="maybe" data-reveal>
               <li>Puede que la conclusión sea automatizar.</li>

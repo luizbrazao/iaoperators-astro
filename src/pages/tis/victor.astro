@@ -13,6 +13,27 @@ import PresenterVideo from "../../components/PresenterVideo.astro";
 // para el "después", gris para el "antes" y naranja solo para la fricción que
 // queda.
 //
+// v2 (12/11/2026): alineada con su mesa de TIS «Dirigir un hotel en 2026»
+// (06/10/2026, 12:55; moderó Cinta Massó, de James and Rita; con Ricardo
+// Sánchez, de Cap Negret, y Nuria Blanco, de Hotel Plaza y Hotel Avenida).
+// Verificado contra la transcripción oficial. De Víctor:
+//   - 03:28: margen de mejora «en todo»; Ormuz y la luz (+60 o 70 %).
+//   - 10:13: lo que valora el cliente es el CapEx; cafeteras y kettle en las
+//     habitaciones por los comentarios de clientes.
+//   - 12:15: renovación con dos habitaciones piloto; los clientes eligieron,
+//     55 %–45 %, y se hizo medio hotel de cada tipo; «hay que escuchar al
+//     cliente».
+//   - 22:05: Pamplona, 65 años de historia; San Sebastián, cinco.
+//   - 25:01: «hace falta estar ordenados»; negociando con empresas externas;
+//     no incorporaría una persona de IT («a lo mejor en tres o cuatro años
+//     está anquilosada»); fuera hay «100 y pico personas pensando».
+//   - 37:47: «parálisis por análisis»; «seguir creciendo, pero
+//     ordenadamente»; 10 programas (housekeeping, mantenimiento, CRM, PMS,
+//     RMS, «mil cosas»); este año dio de baja dos; 6.000 € al año por dos
+//     hoteles, 12.000; diez herramientas, 120.000 €; «prueba, error».
+// La v1 partía de un programa de IA agéntica (contexto de Luiz, no
+// verificado públicamente). En la v2 el hero ya no lo afirma.
+//
 // Contexto aportado por Luiz (no verificado públicamente a 04/10/2026):
 // programa de IA agéntica con la Alianza Hotelera en Comercial, Marketing,
 // Revenue, F&B, Mantenimiento y Housekeeping; nueva etapa de crecimiento.
@@ -30,7 +51,7 @@ const VIDEO = {
 };
 
 const CONTACT_HREF = `https://wa.me/34662423523?text=${encodeURIComponent(
-  "Hola Luiz, soy Víctor Sánchez, de Tres Reyes Hoteles. He visto la página sobre la Radiografía Digital y me gustaría hablarlo.",
+  "Hola Luiz, soy Víctor Sánchez, de Tres Reyes Hoteles. He visto la página que preparaste después de TIS y me gustaría hablarlo.",
 )}`;
 const GTM_ID = "GTM-572KJ7HZ";
 // -----------------------------------------------------------------------------
@@ -39,11 +60,11 @@ const site = Astro.site?.toString() ?? "https://iaoperators.com";
 const pageUrl = new URL("/tis/victor/", site).toString();
 const ogImage = new URL("/og/victor.png", site).toString();
 const title = "Víctor Sánchez × IA Operators | Radiografía Digital";
-const description = "Una reflexión sobre medición, automatización e impacto preparada por IA Operators para Tres Reyes Hoteles.";
+const description = "Después de «Dirigir un hotel en 2026» en TIS: diez herramientas, 120.000 euros al año, ¿cuáles merecen quedarse? Una reflexión preparada por IA Operators para Tres Reyes Hoteles.";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-const areasIA = ["Comercial", "Marketing", "Revenue", "F&B", "Mantenimiento", "Housekeeping"];
+const areasIA = ["Housekeeping", "Mantenimiento", "CRM", "PMS", "RMS"];
 
 const peroPuede = [
   "ser poco utilizada",
@@ -168,17 +189,17 @@ const preguntasInd = ["¿Funcionó?", "¿Cuánto?", "¿Para quién?", "¿A qué 
     <main>
       <!-- Hero -->
       <section id="inicio" class="hero wrap" aria-labelledby="hero-title">
-        <p class="label">Una reflexión para Víctor Sánchez</p>
-        <h1 id="hero-title" class="greeting">Víctor, acabáis de dar un paso importante con la IA.</h1>
-        <p class="start">Implantar es solo el principio.</p>
-        <p class="sub">Ahora toca demostrar impacto.</p>
+        <p class="label">Después de «Dirigir un hotel en 2026» · TIS 2026</p>
+        <h1 id="hero-title" class="greeting">Víctor, en TIS hiciste una cuenta que pocos hacen en voz alta: diez herramientas a 6.000 euros al año en dos hoteles son 120.000 euros.</h1>
+        <p class="start">Este año diste de baja dos.</p>
+        <p class="sub">¿Cómo saber cuáles merecen quedarse?</p>
 
         <div class="hero-grid">
           <PresenterVideo src={VIDEO.src} poster={VIDEO.poster} label="Vídeo de Luiz Brazão para Víctor Sánchez" duracion={VIDEO.duracion} />
 
           <div class="hero-copy">
             <ul class="areas" aria-label="Áreas">{areasIA.map((a) => <li>{a}</li>)}</ul>
-            <p>ya están entrando en una nueva forma de trabajar.</p>
+            <p>«y mil cosas», como dijiste. Cada una con su cuota, que empieza como inversión y se perpetúa como gasto.</p>
             <p>El siguiente reto quizá no sea incorporar más tecnología. Puede ser algo más difícil:</p>
             <p class="hero-strong">saber qué está funcionando de verdad.</p>
           </div>
@@ -192,7 +213,7 @@ const preguntasInd = ["¿Funcionó?", "¿Cuánto?", "¿Para quién?", "¿A qué 
             <span class="tl-line tl-dashed"></span>
             <span class="tl-node tl-end">¿Qué cambió?</span>
           </div>
-          <p class="horizon-q">Dentro de seis meses, ¿cómo sabremos qué automatizaciones merecen <span class="k">quedarse</span>, <span class="k">escalar</span> o <span class="k k-off">desaparecer</span>?</p>
+          <p class="horizon-q">Dentro de seis meses, ¿cómo sabremos qué herramientas y automatizaciones merecen <span class="k">quedarse</span>, <span class="k">escalar</span> o <span class="k k-off">desaparecer</span>?</p>
         </div>
       </section>
 
@@ -248,6 +269,7 @@ const preguntasInd = ["¿Funcionó?", "¿Cuánto?", "¿Para quién?", "¿A qué 
           ))}
         </div>
         <p class="huge" data-reveal>Si no conocemos el antes, es muy difícil demostrar el después.</p>
+        <p class="prose-line" data-reveal>Lo hicisteis con las habitaciones: dos habitaciones piloto, los clientes eligieron y salió un 55 %–45 %. No dependió de tu gusto, sino del dato. Con las herramientas se puede hacer igual.</p>
       </section>
 
       <!-- Radiografía hacia atrás -->
@@ -364,7 +386,7 @@ const preguntasInd = ["¿Funcionó?", "¿Cuánto?", "¿Para quién?", "¿A qué 
           <p class="label" data-reveal><b>Δ</b> Tres Reyes</p>
           <div>
             <h2 id="cr-title" class="h2" data-reveal>El mejor momento para validar un modelo es antes de replicarlo.</h2>
-            <p class="lede" data-reveal>De Pamplona a San Sebastián, y ahora hacia una nueva etapa de crecimiento. Es un buen momento para observar qué nuevos procesos deberían</p>
+            <p class="lede" data-reveal>Pamplona, con 65 años de historia, y San Sebastián, con cinco. Y lo dijiste en la mesa: hay que seguir creciendo, pero ordenadamente. Es un buen momento para observar qué procesos deberían</p>
             <ul class="tags" data-reveal>{replicar.map((r) => <li>{r}</li>)}<li class="tag-alt">o rediseñarse antes de llevarse a nuevas operaciones</li></ul>
             <p class="pair" data-reveal><span class="muted">Primero validar.</span> <span>Después escalar.</span></p>
           </div>
@@ -377,7 +399,7 @@ const preguntasInd = ["¿Funcionó?", "¿Cuánto?", "¿Para quién?", "¿A qué 
           <div class="split">
             <p class="label label-accent" data-reveal>Una idea para Tres Reyes</p>
             <div>
-              <h2 id="pr-title" class="h2 h2-pair" data-reveal><span>Elijamos una automatización ya implantada.</span><span class="h2-accent">Y midamos qué cambió realmente.</span></h2>
+              <h2 id="pr-title" class="h2 h2-pair" data-reveal><span>Elijamos una herramienta o automatización ya implantada.</span><span class="h2-accent">Y midamos qué cambió realmente.</span></h2>
               <p class="prose-line prose-dark" data-reveal>La elegiríamos contigo. Podría estar en</p>
               <ul class="tags" data-reveal>{iniciativas.map((a) => <li>{a}</li>)}</ul>
               <p class="note" data-reveal>Sin dar por hecho qué área es prioritaria.</p>
@@ -412,6 +434,7 @@ const preguntasInd = ["¿Funcionó?", "¿Cuánto?", "¿Para quién?", "¿A qué 
               <div class="prose prose-on-ink" data-reveal>
                 <p>Quien implanta conoce la tecnología por dentro. Una mirada externa puede medir el proceso desde fuera. Son papeles distintos y complementarios.</p>
                 <p>IA Operators no necesita justificar la tecnología implantada. No vendemos la plataforma ni participamos en la implantación original. Eso permite hacer preguntas sin compromiso con la solución:</p>
+                <p>Es lo que contaste: no meterías a una persona de IT en plantilla, prefieres empresas externas con más gente pensando. Una Radiografía es eso, aplicado a un proceso concreto y sin parálisis por análisis.</p>
               </div>
               <ul class="qrow" data-reveal>{preguntasInd.map((q) => <li>{q}</li>)}</ul>
             </div>
